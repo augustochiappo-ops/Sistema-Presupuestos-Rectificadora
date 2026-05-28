@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Test-Path \"C:\\\\Users\\\\Usuario\\\\Documents\\\\Sistema de Presupuestos\"; \\(Get-Item \"C:\\\\Users\\\\Usuario\\\\Documents\\\\Sistema de Presupuestos\"\\).GetFileSystemInfos\\(\\).Count)"
+    ]
+  }
+}
