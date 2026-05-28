@@ -2,6 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Memoria del proyecto
+
+Los archivos de memoria están en `.claude/memory/`. **Leerlos al inicio de cada sesión.**
+
+- [`.claude/memory/estado.md`](.claude/memory/estado.md) — qué está hecho, qué falta, próximo paso
+- [`.claude/memory/decisiones.md`](.claude/memory/decisiones.md) — decisiones técnicas tomadas y su contexto
+
+**Al cerrar cada sesión:** actualizar `estado.md` con lo que se completó y el próximo paso.
+
+---
+
 ## Project overview
 
 Sistema de Presupuestos para una **rectificadora de motores**. Permite generar presupuestos semiautomáticos seleccionando un motor, que el sistema calcule repuestos + mano de obra, y emita un PDF. Corre **100% local**, sin dependencia de servicios en la nube.
