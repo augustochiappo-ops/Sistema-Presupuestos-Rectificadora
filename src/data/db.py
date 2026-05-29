@@ -81,3 +81,91 @@ def init_db():
         }
         if "diametro" not in columnas_existentes:
             conn.execute("ALTER TABLE motores ADD COLUMN diametro REAL")
+
+
+def guardar_presupuesto(
+    cliente_nombre: str,
+    motor_id: int,
+    items: list[dict],
+) -> int:
+    """
+    Crea (o reutiliza) el cliente, inserta el presupuesto y sus ítems.
+    items: list of {servicio_id, descripcion, precio_aplicado}
+    Retorna el id del presupuesto creado.
+    """
+    from datetime import date
+
+    total = sum(
+        (i["precio_aplicado"] or 0.0) for i in items
+    )
+
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT id FROM clientes WHERE nombre = ? COLLATE NOCASE",
+            (cliente_nombre.strip(),),
+        ).fetchone()
+
+        if row:
+            cliente_id = row[0]
+        else:
+            cur = conn.execute(
+                "INSERT INTO clientes (nombre) VALUES (?)",
+                (cliente_nombre.strip(),),
+            )
+            cliente_id = cur.lastrowid
+
+        cur = conn.execute(
+            "INSERT INTO presupuestos (cliente_id, motor_id, fecha, total) VALUES (?, ?, ?, ?)",
+            (cliente_id, motor_id, date.today().isoformat(), total),
+        )
+        presupuesto_id = cur.lastrowid
+
+        for item in items:
+            conn.execute(
+                """
+                INSERT INTO presupuesto_items (presupuesto_id, servicio_id, precio_aplicado)
+                VALUES (?, ?, ?)
+                """,
+                (presupuesto_id, item.get("servicio_id"), item.get("precio_aplicado")),
+            )
+
+        return presupuesto_id
+
+
+def update_presupuesto_pdf(presupuesto_id: int, pdf_path: str) -> None:
+    with get_connection() as conn:
+        conn.execute(
+            "UPDATE presupuestos SET pdf_path = ? WHERE id = ?",
+            (pdf_path, presupuesto_id),
+        )
+
+
+def get_presupuestos() -> list[dict]:
+    with get_connection() as conn:
+        cur = conn.execute(
+            """
+            SELECT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path
+            FROM presupuestos p
+            LEFT JOIN clientes  c ON c.id = p.cliente_id
+            LEFT JOIN motores   m ON m.id = p.motor_id
+            ORDER BY p.fecha DESC, p.id DESC
+            """
+        )
+        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path"]
+        return [dict(zip(cols, row)) for row in cur.fetchall()]
+
+
+def get_presupuesto_items(presupuesto_id: int) -> list[dict]:
+    with get_connection() as conn:
+        cur = conn.execute(
+            """
+            SELECT pi.id, s.item_num, s.descripcion, pi.precio_aplicado
+            FROM presupuesto_items pi
+            LEFT JOIN servicios s ON s.id = pi.servicio_id
+            WHERE pi.presupuesto_id = ?
+            ORDER BY s.item_num
+            """,
+            (presupuesto_id,),
+        )
+        cols = ["id", "item_num", "descripcion", "precio_aplicado"]
+        return [dict(zip(cols, row)) for row in cur.fetchall()]

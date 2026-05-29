@@ -95,17 +95,22 @@ class MainWindow(QMainWindow):
         self.stack = QStackedWidget()
         self.stack.setStyleSheet(f"background-color: {COLOR_CONTENT_BG};")
 
-        self._motores_widget    = MotoresWidget()
-        self._actualizar_widget = ActualizarWidget()
+        self._motores_widget      = MotoresWidget()
+        self._actualizar_widget   = ActualizarWidget()
+        self._presupuestos_widget = PresupuestosWidget()
 
         # Cuando se importan datos, refrescamos el listado de motores
         self._actualizar_widget.datos_actualizados.connect(
             self._motores_widget.recargar
         )
+        # También reseteamos el selector de motor interno del wizard
+        self._actualizar_widget.datos_actualizados.connect(
+            lambda: self._presupuestos_widget._selector_motor.recargar()
+        )
 
         self.stack.addWidget(self._motores_widget)                                   # 0
         self.stack.addWidget(self._actualizar_widget)                                # 1
-        self.stack.addWidget(PresupuestosWidget())                                   # 2
+        self.stack.addWidget(self._presupuestos_widget)                              # 2
         self.stack.addWidget(PlaceholderWidget(                                      # 3
             "💲  Editar Precios",
             "Este módulo estará disponible en una próxima versión.",

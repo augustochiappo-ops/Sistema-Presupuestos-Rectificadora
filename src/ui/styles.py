@@ -117,13 +117,14 @@ QLineEdit:focus {{ border-color: {COLOR_BTN_PRIMARY}; }}
 QLineEdit::placeholder {{ color: {COLOR_TEXT_PLACEHOLDER}; }}
 """
 
-TABLE_STYLE = f"""
+def make_table_style(font_px: int = FONT_SIZE_MD) -> str:
+    return f"""
 QTableWidget {{
     background: {COLOR_WHITE};
     border: none;
     border-radius: 0px;
     gridline-color: {COLOR_GRID};
-    font-size: {FONT_SIZE_MD}px;
+    font-size: {font_px}px;
     font-family: {FONT_FAMILY};
 }}
 QHeaderView::section {{
@@ -151,6 +152,8 @@ QTableWidget::item:alternate {{
     background-color: {COLOR_ROW_ALT};
 }}
 """
+
+TABLE_STYLE = make_table_style()
 
 BRANDS_PANEL_STYLE = f"""
 QFrame {{

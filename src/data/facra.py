@@ -189,6 +189,22 @@ def get_marcas() -> list[str]:
         return [row[0] for row in cur.fetchall()]
 
 
+def get_servicios_para_lista(lista_num: int | None) -> list[dict]:
+    """
+    Devuelve todos los servicios con el precio de la lista indicada.
+    Si lista_num es None o fuera de rango 1-13, precio=None en todos.
+    """
+    col = f"l{lista_num}" if lista_num and 1 <= lista_num <= 13 else "NULL"
+    with get_connection() as conn:
+        cur = conn.execute(
+            f"SELECT id, item_num, descripcion, {col} AS precio FROM servicios ORDER BY item_num"
+        )
+        return [
+            {"id": r[0], "item_num": r[1], "descripcion": r[2], "precio": r[3]}
+            for r in cur.fetchall()
+        ]
+
+
 def get_motores(marca: str | None = None, busqueda: str | None = None) -> list[dict]:
     """
     Devuelve motores filtrados por marca y/o texto de búsqueda.

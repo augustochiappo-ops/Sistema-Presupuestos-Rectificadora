@@ -45,20 +45,41 @@
 - [x] **Base de datos SQLite** con tablas: motores, servicios, clientes, presupuestos, presupuesto_items
 - [x] **Migración automática** de columnas nuevas (ALTER TABLE si no existen)
 
+## Completado (continuación sesión 2026-05-29)
+- [x] **Click en motor → Lista orientadora de mano de obra**
+  - Clic en cualquier celda de una fila abre la lista orientadora correspondiente
+  - Muestra el precio de la lista asignada al motor (columna Ln de servicios)
+  - Botón "← Volver al listado" regresa al listado de motores
+  - Widget refactorizado: MotoresWidget usa MotorSelectorWidget reutilizable
+- [x] **Ctrl + rueda del ratón → zoom de fuente en todas las tablas**
+  - `ZoomableTable(QTableWidget)` en `src/ui/widgets.py`
+  - Ajusta font size de 8 a 24 px
+  - Ajusta altura de filas proporcionalmente
+- [x] **Flujo completo de Nuevo Presupuesto**
+  - Paso 1: ingresar nombre del cliente
+  - Paso 2: selector de motor (mismo look que Listado de Motores)
+  - Paso 3: lista orientadora con checkboxes, total calculado en tiempo real
+  - Finalizar: guarda en DB + genera PDF + lo abre automáticamente
+  - Historial de presupuestos en tabla (doble clic → abre PDF)
+- [x] **PDF profesional** con reportlab
+  - Encabezado: Rectificaciones Chicappo
+  - Tabla de servicios, total destacado, nota de validez 7 días
+  - Guardado en carpeta `Presupuestos/` del proyecto
+- [x] **Arquitectura refactorizada**
+  - `src/ui/motor_selector_widget.py` — selector reutilizable con señal `motor_seleccionado`
+  - `src/ui/widgets.py` — ZoomableTable
+  - `src/utils/pdf_gen.py` — generación de PDF
+  - `src/ui/styles.py` — `make_table_style(font_px)` para zoom dinámico
+
 ## Pendiente
-- [ ] **Módulo Presupuestos** (próximo paso principal)
-  - Historial de presupuestos en tabla
-  - Formulario: cliente, fecha, selector de motor (con buscador)
-  - Botón "+" para crear motor manual si no está en FACRA
-  - Lista de servicios con checkboxes + precios de la lista del motor
-  - Total calculado automático
-  - Generación de PDF
 - [ ] Módulo Clientes (CRUD)
 - [ ] Módulo Editar Precios (factor de ajuste sobre lista FACRA)
 - [ ] Buscador de repuestos CRAC (cuando se habilite)
+- [ ] Edición post-creación de presupuestos
+- [ ] Botón "+" para crear motor manual si no está en FACRA
 
 ## Próximo paso
-Construir el módulo de Presupuestos: formulario de creación → selector de motor → servicios → PDF.
+Definir con el usuario qué módulo construir a continuación (Clientes o Editar Precios).
 
 ## Para correr el programa
 ```
