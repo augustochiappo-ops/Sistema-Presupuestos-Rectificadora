@@ -7,14 +7,17 @@ import os
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QTableWidgetItem, QHeaderView, QStackedWidget, QFrame,
-    QLineEdit, QSizePolicy, QMessageBox,
+    QLineEdit, QSizePolicy, QMessageBox, QListWidget, QListWidgetItem,
 )
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont, QDesktopServices
+from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtGui import QFont, QDesktopServices, QColor
 from PyQt6.QtCore import QUrl
 
 from ..data.facra import get_servicios_para_lista
-from ..data.db import guardar_presupuesto, get_presupuestos, update_presupuesto_pdf
+from ..data.db import (
+    guardar_presupuesto, get_presupuestos, update_presupuesto_pdf,
+    get_clientes_nombres, guardar_pdf_historial,
+)
 from ..utils.pdf_gen import generar_pdf
 from .motor_selector_widget import MotorSelectorWidget
 from .widgets import ZoomableTable
@@ -70,6 +73,9 @@ QPushButton:hover {{
 
 
 class PresupuestosWidget(QWidget):
+    # Emite el id del presupuesto a abrir en la vista detalle
+    abrir_presupuesto = pyqtSignal(int)
+
     def __init__(self):
         super().__init__()
         # Estado del wizard
@@ -148,8 +154,8 @@ class PresupuestosWidget(QWidget):
         self.tabla_historial.setColumnWidth(2, 200)
         self.tabla_historial.setColumnWidth(4, 140)
 
-        # Doble clic en una fila → abrir PDF si existe
-        self.tabla_historial.cellDoubleClicked.connect(self._abrir_pdf)
+        # Clic en una fila → abrir detalle del presupuesto
+        self.tabla_historial.cellClicked.connect(self._on_fila_historial_click)
 
         layout.addWidget(self.tabla_historial, 1)  # stretch=1 para que ocupe todo el espacio
 
@@ -210,13 +216,11 @@ class PresupuestosWidget(QWidget):
             total_item.setTextAlignment(RIGHT)
             self.tabla_historial.setItem(fila, 4, total_item)
 
-    def _abrir_pdf(self, row: int, col: int):
-        if not hasattr(self, "_presupuestos_actuales"):
+    def _on_fila_historial_click(self, row: int, col: int):
+        if row >= len(self._presupuestos_actuales):
             return
         p = self._presupuestos_actuales[row]
-        pdf_path = p.get("pdf_path")
-        if pdf_path and os.path.exists(pdf_path):
-            QDesktopServices.openUrl(QUrl.fromLocalFile(pdf_path))
+        self.abrir_presupuesto.emit(p["id"])
 
     def showEvent(self, event):
         super().showEvent(event)
@@ -264,6 +268,26 @@ class PresupuestosWidget(QWidget):
         self.input_cliente.returnPressed.connect(self._avanzar_a_motor)
         c_layout.addWidget(self.input_cliente)
 
+        # Lista de sugerencias de clientes existentes
+        self.lista_sugerencias = QListWidget()
+        self.lista_sugerencias.setMaximumWidth(480)
+        self.lista_sugerencias.setMaximumHeight(150)
+        self.lista_sugerencias.setVisible(False)
+        self.lista_sugerencias.setStyleSheet(f"""
+            QListWidget {{
+                border: 1px solid #3b5090;
+                border-radius: 6px;
+                background: white;
+                font-size: {FONT_SIZE_MD}px;
+                font-family: {FONT_FAMILY};
+            }}
+            QListWidget::item {{ padding: 7px 12px; }}
+            QListWidget::item:hover {{ background: #dce4f5; }}
+            QListWidget::item:selected {{ background: #3b5090; color: white; }}
+        """)
+        self.lista_sugerencias.itemClicked.connect(self._seleccionar_sugerencia)
+        c_layout.addWidget(self.lista_sugerencias)
+
         self.btn_siguiente_cliente = QPushButton("Siguiente  →")
         self.btn_siguiente_cliente.setStyleSheet(BUTTON_PRIMARY)
         self.btn_siguiente_cliente.setFixedHeight(42)
@@ -279,6 +303,28 @@ class PresupuestosWidget(QWidget):
 
     def _on_cliente_changed(self, texto: str):
         self.btn_siguiente_cliente.setEnabled(bool(texto.strip()))
+        self._actualizar_sugerencias(texto)
+
+    def _actualizar_sugerencias(self, texto: str):
+        texto = texto.strip()
+        if not texto:
+            self.lista_sugerencias.setVisible(False)
+            return
+        nombres = get_clientes_nombres()
+        matches = [n for n in nombres if texto.lower() in n.lower()]
+        if not matches:
+            self.lista_sugerencias.setVisible(False)
+            return
+        self.lista_sugerencias.blockSignals(True)
+        self.lista_sugerencias.clear()
+        for n in matches[:8]:
+            self.lista_sugerencias.addItem(QListWidgetItem(n))
+        self.lista_sugerencias.blockSignals(False)
+        self.lista_sugerencias.setVisible(True)
+
+    def _seleccionar_sugerencia(self, item: QListWidgetItem):
+        self.input_cliente.setText(item.text())
+        self.lista_sugerencias.setVisible(False)
 
     def _avanzar_a_motor(self):
         texto = self.input_cliente.text().strip()
@@ -468,16 +514,37 @@ class PresupuestosWidget(QWidget):
         )
         check.setCheckState(nuevo_estado)
 
+    _COLOR_CHECK_BG = QColor("#c8e6c9")
+    _COLOR_CHECK_FG = QColor("#1b5e20")
+
     def _recalcular_total(self):
         total = 0.0
         alguno_tildado = False
+        n_cols = self.tabla_servicios_wiz.columnCount()
+
         for fila in range(self.tabla_servicios_wiz.rowCount()):
             check = self.tabla_servicios_wiz.item(fila, 0)
-            if check and check.checkState() == Qt.CheckState.Checked:
+            if not check:
+                continue
+            checked = check.checkState() == Qt.CheckState.Checked
+
+            # Color de fila según estado del checkbox
+            for c in range(n_cols):
+                item = self.tabla_servicios_wiz.item(fila, c)
+                if item:
+                    if checked:
+                        item.setBackground(self._COLOR_CHECK_BG)
+                        item.setForeground(self._COLOR_CHECK_FG)
+                    else:
+                        item.setData(Qt.ItemDataRole.BackgroundRole, None)
+                        item.setData(Qt.ItemDataRole.ForegroundRole, None)
+
+            if checked:
                 alguno_tildado = True
                 datos = check.data(Qt.ItemDataRole.UserRole)
                 if datos and datos.get("precio") is not None:
                     total += float(datos["precio"])
+
         self.lbl_total.setText(_fmt_precio(total))
         self.btn_finalizar.setEnabled(alguno_tildado)
 
@@ -551,6 +618,7 @@ class PresupuestosWidget(QWidget):
 
     def _iniciar_wizard(self):
         self.input_cliente.clear()
+        self.lista_sugerencias.setVisible(False)
         self._ir(1)
 
     def _build_nav_bar(self, texto_boton: str, callback) -> QWidget:

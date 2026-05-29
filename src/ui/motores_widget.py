@@ -5,7 +5,7 @@ Clic en cualquier fila → muestra la lista orientadora de mano de obra para ese
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QTableWidgetItem, QHeaderView, QStackedWidget, QFrame,
-    QSizePolicy,
+    QSizePolicy, QLineEdit,
 )
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
@@ -17,6 +17,7 @@ from .styles import (
     FONT_FAMILY, FONT_SIZE_MD, FONT_SIZE_LG, FONT_SIZE_XL,
     COLOR_TEXT_PRIMARY, COLOR_TEXT_MUTED, COLOR_CONTENT_BG,
     COLOR_PANEL_BORDER, COLOR_BTN_PRIMARY, COLOR_BTN_PRIMARY_HOV,
+    SEARCH_INPUT,
 )
 
 CENTER = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter
@@ -85,7 +86,7 @@ class MotoresWidget(QWidget):
                 text-decoration: underline;
             }}
         """)
-        btn_volver.clicked.connect(lambda: self._stack.setCurrentIndex(0))
+        btn_volver.clicked.connect(self._volver_al_listado)
 
         self.lbl_motor_nombre = QLabel("")
         self.lbl_motor_nombre.setFont(QFont(FONT_FAMILY, FONT_SIZE_LG, QFont.Weight.Bold))
@@ -112,6 +113,23 @@ class MotoresWidget(QWidget):
         sep.setStyleSheet(f"color: {COLOR_PANEL_BORDER}; margin: 0;")
         layout.addWidget(sep)
 
+        # Barra de búsqueda
+        search_bar = QWidget()
+        search_bar.setStyleSheet(f"background-color: {COLOR_CONTENT_BG};")
+        sb_layout = QHBoxLayout(search_bar)
+        sb_layout.setContentsMargins(20, 8, 20, 4)
+        sb_layout.setSpacing(8)
+        lupa = QLabel("🔍")
+        lupa.setStyleSheet("font-size: 14px;")
+        self.buscador_servicios = QLineEdit()
+        self.buscador_servicios.setPlaceholderText("Buscar por Nº o descripción del servicio...")
+        self.buscador_servicios.setStyleSheet(SEARCH_INPUT)
+        self.buscador_servicios.setFixedHeight(34)
+        self.buscador_servicios.textChanged.connect(self._filtrar_servicios)
+        sb_layout.addWidget(lupa)
+        sb_layout.addWidget(self.buscador_servicios)
+        layout.addWidget(search_bar)
+
         # Tabla de servicios
         self.tabla_servicios = ZoomableTable()
         self.tabla_servicios.setColumnCount(3)
@@ -134,6 +152,10 @@ class MotoresWidget(QWidget):
         layout.addWidget(self.tabla_servicios)
         return page
 
+    def _volver_al_listado(self):
+        self.buscador_servicios.clear()
+        self._stack.setCurrentIndex(0)
+
     def _mostrar_detalle(self, motor: dict):
         lista_num = motor.get("lista_num")
         motor_desc = motor.get("motor", "Motor")
@@ -148,6 +170,18 @@ class MotoresWidget(QWidget):
         servicios = get_servicios_para_lista(lista_num)
         self._poblar_servicios(servicios)
         self._stack.setCurrentIndex(1)
+
+    def _filtrar_servicios(self, texto: str):
+        texto = texto.strip().lower()
+        for row in range(self.tabla_servicios.rowCount()):
+            if not texto:
+                self.tabla_servicios.setRowHidden(row, False)
+                continue
+            num  = self.tabla_servicios.item(row, 0)
+            desc = self.tabla_servicios.item(row, 1)
+            num_t  = num.text().lower()  if num  else ""
+            desc_t = desc.text().lower() if desc else ""
+            self.tabla_servicios.setRowHidden(row, texto not in num_t and texto not in desc_t)
 
     def _poblar_servicios(self, servicios: list[dict]):
         self.tabla_servicios.setRowCount(len(servicios))

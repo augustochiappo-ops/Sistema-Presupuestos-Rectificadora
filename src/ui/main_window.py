@@ -9,10 +9,12 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
 
-from .motores_widget     import MotoresWidget
-from .actualizar_widget  import ActualizarWidget
-from .presupuestos_widget import PresupuestosWidget
-from .placeholder_widget import PlaceholderWidget
+from .motores_widget              import MotoresWidget
+from .actualizar_widget           import ActualizarWidget
+from .presupuestos_widget         import PresupuestosWidget
+from .clientes_widget             import ClientesWidget
+from .presupuesto_detalle_widget  import PresupuestoDetalleWidget
+from .placeholder_widget          import PlaceholderWidget
 from .styles import FONT_FAMILY, FONT_SIZE_MD, FONT_SIZE_LG, SIDEBAR_STYLE, COLOR_CONTENT_BG
 
 
@@ -98,29 +100,52 @@ class MainWindow(QMainWindow):
         self._motores_widget      = MotoresWidget()
         self._actualizar_widget   = ActualizarWidget()
         self._presupuestos_widget = PresupuestosWidget()
+        self._clientes_widget     = ClientesWidget()
+        self._detalle_widget      = PresupuestoDetalleWidget()
 
-        # Cuando se importan datos, refrescamos el listado de motores
+        # ── Señales de actualización de datos ────────────────────────────────
         self._actualizar_widget.datos_actualizados.connect(
             self._motores_widget.recargar
         )
-        # También reseteamos el selector de motor interno del wizard
         self._actualizar_widget.datos_actualizados.connect(
             lambda: self._presupuestos_widget._selector_motor.recargar()
         )
 
-        self.stack.addWidget(self._motores_widget)                                   # 0
-        self.stack.addWidget(self._actualizar_widget)                                # 1
-        self.stack.addWidget(self._presupuestos_widget)                              # 2
-        self.stack.addWidget(PlaceholderWidget(                                      # 3
+        # ── Señales de apertura del detalle de presupuesto ───────────────────
+        # Desde Presupuestos (stack index 2) → detalle (stack index 5)
+        self._presupuestos_widget.abrir_presupuesto.connect(
+            lambda pid: self._abrir_detalle(pid, back=2)
+        )
+        # Desde Clientes (stack index 4) → detalle (stack index 5)
+        self._clientes_widget.abrir_presupuesto.connect(
+            lambda pid: self._abrir_detalle(pid, back=4)
+        )
+        # Desde el detalle → volver al stack anterior
+        self._detalle_widget.volver.connect(self._volver_desde_detalle)
+
+        self.stack.addWidget(self._motores_widget)      # 0
+        self.stack.addWidget(self._actualizar_widget)   # 1
+        self.stack.addWidget(self._presupuestos_widget) # 2
+        self.stack.addWidget(PlaceholderWidget(         # 3
             "💲  Editar Precios",
             "Este módulo estará disponible en una próxima versión.",
         ))
-        self.stack.addWidget(PlaceholderWidget(                                      # 4
-            "👥  Clientes",
-            "Este módulo estará disponible en una próxima versión.",
-        ))
+        self.stack.addWidget(self._clientes_widget)     # 4
+        self.stack.addWidget(self._detalle_widget)      # 5 (sin ítem de menú)
 
         return self.stack
+
+    def _abrir_detalle(self, presupuesto_id: int, back: int):
+        self._detalle_widget.abrir(presupuesto_id, back)
+        self.stack.setCurrentIndex(5)
+
+    def _volver_desde_detalle(self, back_index: int):
+        self.stack.setCurrentIndex(back_index)
+        # Sincronizar el ítem seleccionado en el sidebar (solo para índices 0-4)
+        if 0 <= back_index <= 4:
+            self.nav.blockSignals(True)
+            self.nav.setCurrentRow(back_index)
+            self.nav.blockSignals(False)
 
     # ── Navegación ────────────────────────────────────────────────────────────
     def _cambiar_pagina(self, index: int):

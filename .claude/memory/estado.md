@@ -71,15 +71,36 @@
   - `src/utils/pdf_gen.py` — generación de PDF
   - `src/ui/styles.py` — `make_table_style(font_px)` para zoom dinámico
 
+## Completado (continuación sesión 2026-05-29 — parte 2)
+- [x] **Pestaña Clientes** — tabla con Nombre | Cant. presupuestos | Último presupuesto
+  - Clic en cliente → lista de sus presupuestos → clic → abre detalle
+- [x] **Autocompletado de cliente** en el wizard (lista de sugerencias filtrada por texto)
+- [x] **Vista detalle de presupuesto** (desde historial y desde clientes, clic en fila)
+  - Info bar: cliente, motor, fecha
+  - Tabla de servicios con buscador (filtra por Nº o descripción)
+  - Sección de notas (read-only en vista)
+  - Historial de PDFs: último PDF + "Ver versiones anteriores"
+- [x] **Modo edición del presupuesto**
+  - Precios editables (QLineEdit por celda)
+  - Fila en blanco al final para agregar servicios custom (aparece nueva cuando se llena)
+  - Notas editables
+  - Botón "Guardar cambios" / "Cancelar"
+  - Confirmación si intenta salir con cambios sin guardar
+- [x] **Reconstruir PDF** — genera v2, v3, etc. sin borrar los anteriores
+- [x] **Buscador en lista orientadora** (desde motores y desde detalle de presupuesto)
+- [x] **Checkboxes verdes** al tildar servicios en el wizard
+- [x] **DB expandida**: tabla `presupuesto_pdfs`, columna `descripcion_custom` en items
+  - Migración automática de `pdf_path` existente → `presupuesto_pdfs`
+- [x] **PresupuestoDetalleWidget** en stack[5] (sin ítem de menú); volver sincroniza sidebar
+
 ## Pendiente
-- [ ] Módulo Clientes (CRUD)
 - [ ] Módulo Editar Precios (factor de ajuste sobre lista FACRA)
 - [ ] Buscador de repuestos CRAC (cuando se habilite)
-- [ ] Edición post-creación de presupuestos
 - [ ] Botón "+" para crear motor manual si no está en FACRA
+- [ ] CRUD de clientes (editar nombre, teléfono, notas)
 
 ## Próximo paso
-Definir con el usuario qué módulo construir a continuación (Clientes o Editar Precios).
+Definir con el usuario el siguiente módulo a construir.
 
 ## Para correr el programa
 ```
