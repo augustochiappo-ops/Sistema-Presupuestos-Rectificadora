@@ -412,6 +412,22 @@ class PresupuestosWidget(QWidget):
         self.tabla_servicios_wiz.setColumnWidth(1, 52)
         self.tabla_servicios_wiz.setColumnWidth(3, 140)
 
+        # CSS del indicador de checkbox: cuadrado verde cuando está tildado
+        self.tabla_servicios_wiz.set_extra_style("""
+            QTableWidget::indicator:unchecked {
+                width: 18px; height: 18px;
+                border: 2px solid #9e9e9e;
+                border-radius: 3px;
+                background: #ffffff;
+            }
+            QTableWidget::indicator:checked {
+                width: 18px; height: 18px;
+                border: 2px solid #2e7d32;
+                border-radius: 3px;
+                background-color: #43a047;
+            }
+        """)
+
         self.tabla_servicios_wiz.itemChanged.connect(self._recalcular_total)
         self.tabla_servicios_wiz.cellClicked.connect(self._toggle_check)
 

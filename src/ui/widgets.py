@@ -15,8 +15,14 @@ class ZoomableTable(QTableWidget):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._font_px = FONT_SIZE_MD
+        self._font_px   = FONT_SIZE_MD
+        self._extra_css = ""
         self.setStyleSheet(make_table_style(self._font_px))
+
+    def set_extra_style(self, css: str):
+        """Agrega CSS extra que se preserva en cada re-estilización por zoom."""
+        self._extra_css = css
+        self.setStyleSheet(make_table_style(self._font_px) + css)
 
     def wheelEvent(self, event):
         if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
@@ -25,7 +31,7 @@ class ZoomableTable(QTableWidget):
                 self._font_px = min(self._font_px + 1, _ZOOM_MAX)
             elif delta < 0:
                 self._font_px = max(self._font_px - 1, _ZOOM_MIN)
-            self.setStyleSheet(make_table_style(self._font_px))
+            self.setStyleSheet(make_table_style(self._font_px) + self._extra_css)
             row_h = max(22, int(self._font_px * 2.2))
             for row in range(self.rowCount()):
                 self.setRowHeight(row, row_h)
