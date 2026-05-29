@@ -522,28 +522,34 @@ class PresupuestosWidget(QWidget):
         alguno_tildado = False
         n_cols = self.tabla_servicios_wiz.columnCount()
 
-        for fila in range(self.tabla_servicios_wiz.rowCount()):
-            check = self.tabla_servicios_wiz.item(fila, 0)
-            if not check:
-                continue
-            checked = check.checkState() == Qt.CheckState.Checked
+        # Bloqueamos señales para evitar recursión:
+        # setBackground/setData dispararían itemChanged → _recalcular_total de nuevo.
+        self.tabla_servicios_wiz.blockSignals(True)
+        try:
+            for fila in range(self.tabla_servicios_wiz.rowCount()):
+                check = self.tabla_servicios_wiz.item(fila, 0)
+                if not check:
+                    continue
+                checked = check.checkState() == Qt.CheckState.Checked
 
-            # Color de fila según estado del checkbox
-            for c in range(n_cols):
-                item = self.tabla_servicios_wiz.item(fila, c)
-                if item:
-                    if checked:
-                        item.setBackground(self._COLOR_CHECK_BG)
-                        item.setForeground(self._COLOR_CHECK_FG)
-                    else:
-                        item.setData(Qt.ItemDataRole.BackgroundRole, None)
-                        item.setData(Qt.ItemDataRole.ForegroundRole, None)
+                # Color de fila según estado del checkbox
+                for c in range(n_cols):
+                    item = self.tabla_servicios_wiz.item(fila, c)
+                    if item:
+                        if checked:
+                            item.setBackground(self._COLOR_CHECK_BG)
+                            item.setForeground(self._COLOR_CHECK_FG)
+                        else:
+                            item.setData(Qt.ItemDataRole.BackgroundRole, None)
+                            item.setData(Qt.ItemDataRole.ForegroundRole, None)
 
-            if checked:
-                alguno_tildado = True
-                datos = check.data(Qt.ItemDataRole.UserRole)
-                if datos and datos.get("precio") is not None:
-                    total += float(datos["precio"])
+                if checked:
+                    alguno_tildado = True
+                    datos = check.data(Qt.ItemDataRole.UserRole)
+                    if datos and datos.get("precio") is not None:
+                        total += float(datos["precio"])
+        finally:
+            self.tabla_servicios_wiz.blockSignals(False)
 
         self.lbl_total.setText(_fmt_precio(total))
         self.btn_finalizar.setEnabled(alguno_tildado)
