@@ -14,6 +14,9 @@ venv/
 # Excel diario del proveedor (se reemplaza cada día, no se versiona)
 Excel/Proveedor/
 
+# PDFs generados por la app (archivos de runtime, no código)
+Presupuestos/
+
 # Builds y distribución
 dist/
 build/
