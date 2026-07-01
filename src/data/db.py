@@ -83,6 +83,11 @@ def init_db():
                 pdf_path       TEXT NOT NULL,
                 fecha          TEXT NOT NULL
             );
+
+            -- Servicios marcados como favoritos
+            CREATE TABLE IF NOT EXISTS favoritos_servicios (
+                servicio_id INTEGER PRIMARY KEY REFERENCES servicios(id) ON DELETE CASCADE
+            );
         """)
 
         # ── Migraciones automáticas ───────────────────────────────────────────
@@ -366,3 +371,33 @@ def get_pdfs_presupuesto(presupuesto_id: int) -> list[dict]:
         )
         cols = ["id", "version", "pdf_path", "fecha"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
+
+
+# ─── Favoritos de servicios ───────────────────────────────────────────────────
+
+def toggle_favorito_servicio(servicio_id: int) -> bool:
+    """Alterna el favorito de un servicio. Retorna True si ahora es favorito."""
+    with get_connection() as conn:
+        existe = conn.execute(
+            "SELECT 1 FROM favoritos_servicios WHERE servicio_id = ?",
+            (servicio_id,),
+        ).fetchone()
+        if existe:
+            conn.execute(
+                "DELETE FROM favoritos_servicios WHERE servicio_id = ?",
+                (servicio_id,),
+            )
+            return False
+        else:
+            conn.execute(
+                "INSERT INTO favoritos_servicios (servicio_id) VALUES (?)",
+                (servicio_id,),
+            )
+            return True
+
+
+def get_favoritos_ids() -> set[int]:
+    """IDs de todos los servicios marcados como favoritos."""
+    with get_connection() as conn:
+        cur = conn.execute("SELECT servicio_id FROM favoritos_servicios")
+        return {row[0] for row in cur.fetchall()}

@@ -17,6 +17,7 @@ from ..data.facra import get_servicios_para_lista
 from ..data.db import (
     guardar_presupuesto, get_presupuestos, update_presupuesto_pdf,
     get_clientes_nombres, guardar_pdf_historial,
+    toggle_favorito_servicio, get_favoritos_ids,
 )
 from ..utils.pdf_gen import generar_pdf
 from .motor_selector_widget import MotorSelectorWidget
@@ -33,11 +34,15 @@ CENTER = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignHCenter
 LEFT   = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
 RIGHT  = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignRight
 
-# Carpeta donde se guardan los PDFs generados
 _PDF_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
     "Presupuestos",
 )
+
+_STAR_ON  = "#f59e0b"
+_STAR_OFF = "#bdbdbd"
+_SEP_BG   = "#e8ecf5"
+_SEP_FG   = "#5a6a8a"
 
 
 def _fmt_precio(valor) -> str:
@@ -82,6 +87,10 @@ class PresupuestosWidget(QWidget):
         self._cliente_nombre: str = ""
         self._motor_actual: dict = {}
         self._presupuestos_actuales: list[dict] = []
+        # Favoritos
+        self._fav_ids: set[int] = set()
+        self._star_btns: dict[int, QPushButton] = {}
+        self._separador_row: int | None = None
 
         self._build_ui()
 
@@ -154,12 +163,10 @@ class PresupuestosWidget(QWidget):
         self.tabla_historial.setColumnWidth(2, 200)
         self.tabla_historial.setColumnWidth(4, 140)
 
-        # Clic en una fila → abrir detalle del presupuesto
         self.tabla_historial.cellClicked.connect(self._on_fila_historial_click)
 
-        layout.addWidget(self.tabla_historial, 1)  # stretch=1 para que ocupe todo el espacio
+        layout.addWidget(self.tabla_historial, 1)
 
-        # Placeholder cuando no hay presupuestos
         self._lbl_vacio = QLabel(
             "No hay presupuestos aún.\nUsá el botón para crear el primero."
         )
@@ -189,11 +196,10 @@ class PresupuestosWidget(QWidget):
         for fila, p in enumerate(presupuestos):
             self.tabla_historial.setRowHeight(fila, 28)
 
-            # Nº
             nro = QTableWidgetItem(f"{p['id']:04d}")
             nro.setTextAlignment(CENTER)
             self.tabla_historial.setItem(fila, 0, nro)
-            # Fecha
+
             fecha = p.get("fecha") or ""
             try:
                 y, m, d = fecha.split("-")
@@ -203,15 +209,15 @@ class PresupuestosWidget(QWidget):
             fecha_item = QTableWidgetItem(fecha_fmt)
             fecha_item.setTextAlignment(CENTER)
             self.tabla_historial.setItem(fila, 1, fecha_item)
-            # Cliente
+
             cliente_item = QTableWidgetItem(p.get("cliente") or "—")
             cliente_item.setTextAlignment(LEFT)
             self.tabla_historial.setItem(fila, 2, cliente_item)
-            # Motor
+
             motor_item = QTableWidgetItem(p.get("motor") or "—")
             motor_item.setTextAlignment(LEFT)
             self.tabla_historial.setItem(fila, 3, motor_item)
-            # Total
+
             total_item = QTableWidgetItem(_fmt_precio(p.get("total")))
             total_item.setTextAlignment(RIGHT)
             self.tabla_historial.setItem(fila, 4, total_item)
@@ -236,7 +242,6 @@ class PresupuestosWidget(QWidget):
 
         layout.addWidget(self._build_nav_bar("Cancelar", lambda: self._ir(0)))
 
-        # Contenido centrado
         content = QWidget()
         content.setStyleSheet(f"background-color: {COLOR_CONTENT_BG};")
         c_layout = QVBoxLayout(content)
@@ -268,7 +273,6 @@ class PresupuestosWidget(QWidget):
         self.input_cliente.returnPressed.connect(self._avanzar_a_motor)
         c_layout.addWidget(self.input_cliente)
 
-        # Lista de sugerencias de clientes existentes
         self.lista_sugerencias = QListWidget()
         self.lista_sugerencias.setMaximumWidth(480)
         self.lista_sugerencias.setMaximumHeight(150)
@@ -357,7 +361,7 @@ class PresupuestosWidget(QWidget):
         self._poblar_servicios(servicios, lista_num)
         self._ir(3)
 
-    # ─── PÁGINA 3: Servicios con checkboxes ──────────────────────────────────
+    # ─── PÁGINA 3: Servicios con checkboxes, buscador y favoritos ─────────────
     def _build_servicios_page(self) -> QWidget:
         page = QWidget()
         page.setStyleSheet(f"background-color: {COLOR_CONTENT_BG};")
@@ -369,7 +373,9 @@ class PresupuestosWidget(QWidget):
 
         # Cabecera informativa
         info_bar = QWidget()
-        info_bar.setStyleSheet(f"background-color: {COLOR_PANEL_BG}; border-bottom: 1px solid {COLOR_PANEL_BORDER};")
+        info_bar.setStyleSheet(
+            f"background-color: {COLOR_PANEL_BG}; border-bottom: 1px solid {COLOR_PANEL_BORDER};"
+        )
         info_layout = QHBoxLayout(info_bar)
         info_layout.setContentsMargins(20, 10, 20, 10)
 
@@ -378,10 +384,14 @@ class PresupuestosWidget(QWidget):
         self.lbl_motor_wiz.setStyleSheet(f"color: {COLOR_TEXT_PRIMARY};")
 
         self.lbl_lista_wiz = QLabel("")
-        self.lbl_lista_wiz.setStyleSheet(f"color: {COLOR_TEXT_MUTED}; font-size: {FONT_SIZE_SM}px;")
+        self.lbl_lista_wiz.setStyleSheet(
+            f"color: {COLOR_TEXT_MUTED}; font-size: {FONT_SIZE_SM}px;"
+        )
 
         lbl_hint = QLabel("Tildá los servicios a realizar")
-        lbl_hint.setStyleSheet(f"color: {COLOR_TEXT_MUTED}; font-size: {FONT_SIZE_SM}px;")
+        lbl_hint.setStyleSheet(
+            f"color: {COLOR_TEXT_MUTED}; font-size: {FONT_SIZE_SM}px;"
+        )
 
         info_layout.addWidget(self.lbl_motor_wiz)
         info_layout.addWidget(self.lbl_lista_wiz)
@@ -389,11 +399,27 @@ class PresupuestosWidget(QWidget):
         info_layout.addWidget(lbl_hint)
         layout.addWidget(info_bar)
 
-        # Tabla de servicios con checkboxes
+        # Buscador de servicios
+        search_bar = QWidget()
+        search_bar.setStyleSheet(f"background-color: {COLOR_CONTENT_BG};")
+        sl = QHBoxLayout(search_bar)
+        sl.setContentsMargins(16, 8, 16, 8)
+
+        self.buscador_servicios = QLineEdit()
+        self.buscador_servicios.setPlaceholderText("🔍  Buscar servicio…")
+        self.buscador_servicios.setStyleSheet(SEARCH_INPUT)
+        self.buscador_servicios.setFixedHeight(36)
+        self.buscador_servicios.textChanged.connect(self._filtrar_servicios)
+
+        sl.addWidget(self.buscador_servicios)
+        layout.addWidget(search_bar)
+
+        # Tabla de servicios
+        # Col 0: ★ favorito  |  Col 1: ✓ checkbox  |  Col 2: Nº  |  Col 3: Descripción  |  Col 4: Precio
         self.tabla_servicios_wiz = ZoomableTable()
-        self.tabla_servicios_wiz.setColumnCount(4)
+        self.tabla_servicios_wiz.setColumnCount(5)
         self.tabla_servicios_wiz.setHorizontalHeaderLabels(
-            ["", "Nº", "Descripción", "Precio"]
+            ["★", "✓", "Nº", "Descripción", "Precio"]
         )
         self.tabla_servicios_wiz.setEditTriggers(ZoomableTable.EditTrigger.NoEditTriggers)
         self.tabla_servicios_wiz.setSelectionBehavior(ZoomableTable.SelectionBehavior.SelectRows)
@@ -406,13 +432,14 @@ class PresupuestosWidget(QWidget):
         hdr.setDefaultAlignment(Qt.AlignmentFlag.AlignCenter)
         hdr.setSectionResizeMode(0, QHeaderView.ResizeMode.Fixed)
         hdr.setSectionResizeMode(1, QHeaderView.ResizeMode.Fixed)
-        hdr.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
-        hdr.setSectionResizeMode(3, QHeaderView.ResizeMode.Fixed)
+        hdr.setSectionResizeMode(2, QHeaderView.ResizeMode.Fixed)
+        hdr.setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
+        hdr.setSectionResizeMode(4, QHeaderView.ResizeMode.Fixed)
         self.tabla_servicios_wiz.setColumnWidth(0, 36)
-        self.tabla_servicios_wiz.setColumnWidth(1, 52)
-        self.tabla_servicios_wiz.setColumnWidth(3, 140)
+        self.tabla_servicios_wiz.setColumnWidth(1, 36)
+        self.tabla_servicios_wiz.setColumnWidth(2, 52)
+        self.tabla_servicios_wiz.setColumnWidth(4, 140)
 
-        # CSS del indicador de checkbox: cuadrado verde cuando está tildado
         self.tabla_servicios_wiz.set_extra_style("""
             QTableWidget::indicator:unchecked {
                 width: 18px; height: 18px;
@@ -471,56 +498,151 @@ class PresupuestosWidget(QWidget):
         lista_str = f"Lista {lista_num}" if lista_num else "sin lista de precios"
         self.lbl_lista_wiz.setText(f"  |  {lista_str}")
         self.tabla_servicios_wiz.setHorizontalHeaderLabels(
-            ["", "Nº", "Descripción", f"Precio (L{lista_num})" if lista_num else "Precio"]
+            ["★", "✓", "Nº", "Descripción",
+             f"Precio (L{lista_num})" if lista_num else "Precio"]
         )
 
+        # Resetear buscador sin disparar el filtro
+        self.buscador_servicios.blockSignals(True)
+        self.buscador_servicios.clear()
+        self.buscador_servicios.blockSignals(False)
+
+        # Cargar favoritos y separar listas
+        self._fav_ids = get_favoritos_ids()
+        self._star_btns.clear()
+        self._separador_row = None
+
+        favs    = [s for s in servicios if s.get("id") in self._fav_ids]
+        no_favs = [s for s in servicios if s.get("id") not in self._fav_ids]
+        con_sep = bool(favs and no_favs)
+        total_rows = len(servicios) + (1 if con_sep else 0)
+
         self.tabla_servicios_wiz.blockSignals(True)
-        self.tabla_servicios_wiz.setRowCount(len(servicios))
+        self.tabla_servicios_wiz.setRowCount(total_rows)
 
-        for fila, s in enumerate(servicios):
-            self.tabla_servicios_wiz.setRowHeight(fila, 28)
+        fila = 0
 
-            # Col 0: checkbox — guarda servicio_id y precio como UserRole
-            check = QTableWidgetItem()
-            check.setFlags(
-                Qt.ItemFlag.ItemIsEnabled
-                | Qt.ItemFlag.ItemIsUserCheckable
-                | Qt.ItemFlag.ItemIsSelectable
+        for s in favs:
+            self._add_servicio_row(fila, s, is_fav=True)
+            fila += 1
+
+        if con_sep:
+            self._separador_row = fila
+            self.tabla_servicios_wiz.setRowHeight(fila, 22)
+            self.tabla_servicios_wiz.setSpan(fila, 0, 1, 5)
+            sep_lbl = QLabel("  ─── Lista de la Cámara de Rectificadores ───")
+            sep_lbl.setAlignment(LEFT)
+            sep_lbl.setStyleSheet(
+                f"background-color: {_SEP_BG}; color: {_SEP_FG}; "
+                "font-size: 11px; font-style: italic;"
             )
-            check.setCheckState(Qt.CheckState.Unchecked)
-            check.setData(Qt.ItemDataRole.UserRole, {
-                "servicio_id": s.get("id"),
-                "item_num":    s.get("item_num"),
-                "descripcion": s.get("descripcion"),
-                "precio":      s.get("precio"),
-            })
-            self.tabla_servicios_wiz.setItem(fila, 0, check)
+            self.tabla_servicios_wiz.setCellWidget(fila, 0, sep_lbl)
+            fila += 1
 
-            # Col 1: Nº
-            num = QTableWidgetItem(str(s.get("item_num") or ""))
-            num.setTextAlignment(CENTER)
-            num.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
-            self.tabla_servicios_wiz.setItem(fila, 1, num)
-
-            # Col 2: Descripción
-            desc = QTableWidgetItem(s.get("descripcion") or "")
-            desc.setTextAlignment(LEFT)
-            desc.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
-            self.tabla_servicios_wiz.setItem(fila, 2, desc)
-
-            # Col 3: Precio
-            precio = s.get("precio")
-            precio_item = QTableWidgetItem(_fmt_precio(precio))
-            precio_item.setTextAlignment(RIGHT)
-            precio_item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
-            self.tabla_servicios_wiz.setItem(fila, 3, precio_item)
+        for s in no_favs:
+            self._add_servicio_row(fila, s, is_fav=False)
+            fila += 1
 
         self.tabla_servicios_wiz.blockSignals(False)
         self._recalcular_total()
 
+    def _add_servicio_row(self, fila: int, s: dict, is_fav: bool):
+        self.tabla_servicios_wiz.setRowHeight(fila, 28)
+        servicio_id = s.get("id")
+
+        # Col 0: botón de estrella (favorito)
+        btn_star = QPushButton("★" if is_fav else "☆")
+        btn_star.setCursor(Qt.CursorShape.PointingHandCursor)
+        btn_star.setStyleSheet(
+            f"QPushButton {{ background: transparent; border: none; font-size: 15px; "
+            f"color: {_STAR_ON if is_fav else _STAR_OFF}; }}"
+            f"QPushButton:hover {{ color: {_STAR_ON}; }}"
+        )
+        btn_star.clicked.connect(
+            lambda checked, sid=servicio_id: self._toggle_favorito(sid)
+        )
+        self.tabla_servicios_wiz.setCellWidget(fila, 0, btn_star)
+        self._star_btns[servicio_id] = btn_star
+
+        # Col 1: checkbox — guarda los datos del servicio como UserRole
+        check = QTableWidgetItem()
+        check.setFlags(
+            Qt.ItemFlag.ItemIsEnabled
+            | Qt.ItemFlag.ItemIsUserCheckable
+            | Qt.ItemFlag.ItemIsSelectable
+        )
+        check.setCheckState(Qt.CheckState.Unchecked)
+        check.setData(Qt.ItemDataRole.UserRole, {
+            "servicio_id": servicio_id,
+            "item_num":    s.get("item_num"),
+            "descripcion": s.get("descripcion"),
+            "precio":      s.get("precio"),
+        })
+        self.tabla_servicios_wiz.setItem(fila, 1, check)
+
+        # Col 2: Nº
+        num = QTableWidgetItem(str(s.get("item_num") or ""))
+        num.setTextAlignment(CENTER)
+        num.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
+        self.tabla_servicios_wiz.setItem(fila, 2, num)
+
+        # Col 3: Descripción
+        desc = QTableWidgetItem(s.get("descripcion") or "")
+        desc.setTextAlignment(LEFT)
+        desc.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
+        self.tabla_servicios_wiz.setItem(fila, 3, desc)
+
+        # Col 4: Precio
+        precio_item = QTableWidgetItem(_fmt_precio(s.get("precio")))
+        precio_item.setTextAlignment(RIGHT)
+        precio_item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
+        self.tabla_servicios_wiz.setItem(fila, 4, precio_item)
+
+    def _toggle_favorito(self, servicio_id: int):
+        es_fav = toggle_favorito_servicio(servicio_id)
+        if es_fav:
+            self._fav_ids.add(servicio_id)
+        else:
+            self._fav_ids.discard(servicio_id)
+        btn = self._star_btns.get(servicio_id)
+        if btn:
+            btn.setText("★" if es_fav else "☆")
+            btn.setStyleSheet(
+                f"QPushButton {{ background: transparent; border: none; font-size: 15px; "
+                f"color: {_STAR_ON if es_fav else _STAR_OFF}; }}"
+                f"QPushButton:hover {{ color: {_STAR_ON}; }}"
+            )
+
+    def _filtrar_servicios(self, texto: str):
+        texto = texto.strip().lower()
+        alguno_fav_visible = False
+
+        for fila in range(self.tabla_servicios_wiz.rowCount()):
+            if fila == self._separador_row:
+                continue
+            item_desc = self.tabla_servicios_wiz.item(fila, 3)
+            item_num  = self.tabla_servicios_wiz.item(fila, 2)
+            if item_desc is None:
+                self.tabla_servicios_wiz.setRowHidden(fila, True)
+                continue
+            desc_t = (item_desc.text() or "").lower()
+            num_t  = (item_num.text() if item_num else "").lower()
+            match = (not texto) or texto in desc_t or texto in num_t
+            self.tabla_servicios_wiz.setRowHidden(fila, not match)
+            if match and self._separador_row is not None and fila < self._separador_row:
+                alguno_fav_visible = True
+
+        # El separador se oculta si ningún favorito pasa el filtro
+        if self._separador_row is not None:
+            self.tabla_servicios_wiz.setRowHidden(
+                self._separador_row, not alguno_fav_visible
+            )
+
     def _toggle_check(self, row: int, col: int):
-        """Clic en cualquier celda de la fila togglea el checkbox."""
-        check = self.tabla_servicios_wiz.item(row, 0)
+        """Clic en cualquier celda (excepto col 0 = estrella y la fila separadora) togglea el checkbox."""
+        if col == 0 or row == self._separador_row:
+            return
+        check = self.tabla_servicios_wiz.item(row, 1)
         if not check:
             return
         nuevo_estado = (
@@ -538,18 +660,18 @@ class PresupuestosWidget(QWidget):
         alguno_tildado = False
         n_cols = self.tabla_servicios_wiz.columnCount()
 
-        # Bloqueamos señales para evitar recursión:
-        # setBackground/setData dispararían itemChanged → _recalcular_total de nuevo.
         self.tabla_servicios_wiz.blockSignals(True)
         try:
             for fila in range(self.tabla_servicios_wiz.rowCount()):
-                check = self.tabla_servicios_wiz.item(fila, 0)
+                if fila == self._separador_row:
+                    continue
+                check = self.tabla_servicios_wiz.item(fila, 1)  # col 1 = checkbox
                 if not check:
                     continue
                 checked = check.checkState() == Qt.CheckState.Checked
 
-                # Color de fila según estado del checkbox
-                for c in range(n_cols):
+                # Col 0 es un widget (estrella), se maneja aparte; colorear cols 1-4
+                for c in range(1, n_cols):
                     item = self.tabla_servicios_wiz.item(fila, c)
                     if item:
                         if checked:
@@ -574,7 +696,9 @@ class PresupuestosWidget(QWidget):
     def _finalizar(self):
         items = []
         for fila in range(self.tabla_servicios_wiz.rowCount()):
-            check = self.tabla_servicios_wiz.item(fila, 0)
+            if fila == self._separador_row:
+                continue
+            check = self.tabla_servicios_wiz.item(fila, 1)  # col 1 = checkbox
             if check and check.checkState() == Qt.CheckState.Checked:
                 datos = check.data(Qt.ItemDataRole.UserRole)
                 if datos:
@@ -599,7 +723,6 @@ class PresupuestosWidget(QWidget):
                 items=items,
             )
 
-            # Generar PDF
             pdf_path = os.path.join(_PDF_DIR, f"presupuesto_{presupuesto_id:04d}.pdf")
             generar_pdf(
                 presupuesto_id=presupuesto_id,
@@ -615,7 +738,6 @@ class PresupuestosWidget(QWidget):
             )
             update_presupuesto_pdf(presupuesto_id, pdf_path)
 
-            # Abrir PDF
             if os.path.exists(pdf_path):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(pdf_path))
 
@@ -627,7 +749,6 @@ class PresupuestosWidget(QWidget):
             )
             return
 
-        # Volver al historial
         self._cliente_nombre = ""
         self._motor_actual   = {}
         self.input_cliente.clear()
