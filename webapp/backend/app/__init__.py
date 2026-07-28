@@ -9,6 +9,7 @@ from .routes.servicios import bp as servicios_bp
 from .routes.excel import bp as excel_bp
 from .routes.clientes import bp as clientes_bp
 from .routes.presupuestos import bp as presupuestos_bp
+from .routes.deploy import bp as deploy_bp
 from .static_frontend import bp as static_bp
 
 
@@ -30,6 +31,7 @@ def create_app():
     app.register_blueprint(excel_bp)
     app.register_blueprint(clientes_bp)
     app.register_blueprint(presupuestos_bp)
+    app.register_blueprint(deploy_bp)
     app.register_blueprint(static_bp)
 
     return app
