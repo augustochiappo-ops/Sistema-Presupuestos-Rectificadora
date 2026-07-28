@@ -35,6 +35,8 @@ export default function DetallePresupuesto() {
   const [guardando, setGuardando] = React.useState(false)
   const [reconstruyendo, setReconstruyendo] = React.useState(false)
   const [confirmarSalir, setConfirmarSalir] = React.useState(false)
+  const [confirmarEliminar, setConfirmarEliminar] = React.useState(false)
+  const [eliminando, setEliminando] = React.useState(false)
 
   const cargar = React.useCallback(() => {
     api.get(`/presupuestos/${id}`).then(setDetalle)
@@ -92,6 +94,19 @@ export default function DetallePresupuesto() {
     }
   }
 
+  const eliminar = async () => {
+    setEliminando(true)
+    setError('')
+    try {
+      await api.del(`/presupuestos/${id}`)
+      navigate('/presupuestos')
+    } catch (err) {
+      setError(err.message || 'No se pudo eliminar el presupuesto')
+      setEliminando(false)
+      setConfirmarEliminar(false)
+    }
+  }
+
   const reconstruirPdf = async () => {
     setReconstruyendo(true)
     setError('')
@@ -124,7 +139,10 @@ export default function DetallePresupuesto() {
           <>
             <Button variant="secondary" iconLeft={<Icon n="arrow-left" s={16} />} onClick={intentarVolver}>Volver</Button>
             {!editMode && (
-              <Button variant="primary" iconLeft={<Icon n="pencil" s={16} />} onClick={entrarEdicion}>Editar</Button>
+              <>
+                <Button variant="primary" iconLeft={<Icon n="pencil" s={16} />} onClick={entrarEdicion}>Editar</Button>
+                <Button variant="danger" iconLeft={<Icon n="trash" s={16} />} onClick={() => setConfirmarEliminar(true)}>Eliminar</Button>
+              </>
             )}
           </>
         }
@@ -252,6 +270,16 @@ export default function DetallePresupuesto() {
         danger
         onCancel={() => setConfirmarSalir(false)}
         onConfirm={() => { setConfirmarSalir(false); setEditMode(false); navigate(-1) }}
+      />
+
+      <ConfirmDialog
+        open={confirmarEliminar}
+        title="¿Eliminar presupuesto?"
+        message={`Se va a eliminar el presupuesto #${String(detalle.id).padStart(4, '0')} junto con sus PDFs. Esta acción no se puede deshacer.`}
+        confirmLabel={eliminando ? 'Eliminando…' : 'Eliminar'}
+        danger
+        onCancel={() => setConfirmarEliminar(false)}
+        onConfirm={eliminar}
       />
     </div>
   )
