@@ -151,8 +151,18 @@ A pedido del usuario (quiere poder pedir cambios desde el celular sin depender d
 - Confirmado con GitHub que `github.com`/`api.github.com`/`*.githubusercontent.com` están en la whitelist de internet del plan free de PythonAnywhere, así que el `git pull` desde dentro de la app funciona sin problema.
 - **Flujo de trabajo actual para cambios futuros**: Claude edita código → prueba en local → si toca el frontend, corre `npm run build` y commitea `static_build/` de nuevo → `git push` → `source webapp/backend/.deploy_secrets && curl -X POST https://chiapppo.pythonanywhere.com/api/deploy -H "X-Deploy-Secret: $DEPLOY_SECRET"`. Cero pasos manuales para el usuario.
 
+## Confirmado: hay más de una sesión de Claude trabajando en este proyecto (2026-07-28)
+
+El usuario usa **la app de Claude Code desde el celular** además de esta sesión de escritorio, y ambas trabajan sobre el mismo repo de GitHub. La sesión mobile corre en un entorno separado (no esta PC) y empuja su trabajo a ramas propias tipo `claude/<nombre>-<hash>` en vez de a `master` directamente — hay que revisar `git branch -a` / `git ls-remote --heads origin` al empezar una sesión para ver si hay ramas de otra sesión esperando ser mergeadas.
+
+**Bug real encontrado por la sesión mobile y corregido (2026-07-28):** el `.gitignore` de la raíz tenía `Presupuestos/` (sin `/` inicial) para ignorar los PDFs de la app de escritorio, pero eso también ignoraba silenciosamente `webapp/frontend/src/screens/Presupuestos/` en cualquier profundidad del árbol — 5 archivos (Historial, Detalle, y todo el Wizard) **nunca estuvieron en git**, aunque sí estaban desplegados (el build ya compilado sí los tenía, porque se generó localmente con los archivos reales presentes en disco). Corregido a `/Presupuestos/` (ancla a la raíz) y se agregaron los archivos faltantes. Lección: cualquier regla de `.gitignore` pensada para una carpeta específica del proyecto raíz debe llevar `/` inicial si no se quiere que aplique a subcarpetas con el mismo nombre en cualquier parte del árbol (ej. `webapp/frontend/src/screens/Presupuestos/`).
+
+**Mejoras mobile ya mergeadas** (rama `claude/mobile-system-optimization-8cz2nw`, mergeada a `master`): sidebar tipo drawer con botón hamburguesa en pantallas angostas (`webapp/frontend/src/layout/Shell.jsx`, `Sidebar.jsx`, nuevo `styles/layout.css` con breakpoint `@media (max-width: 860px)`), anchos fluidos en vez de fijos en Login/ConfirmDialog/SearchInput, grillas de Excel con `auto-fit` para no romperse en pantallas chicas, rail de marcas horizontal-scroll en el selector de motores para mobile.
+
+**Pendiente:** quedó un presupuesto de prueba (id=7, "cliente 2", Fiat Fire, $461.460,09) en la base de datos real de producción, generado sin querer por la sesión mobile al probar el wizard contra el sitio real. El usuario confirmó que hay que borrarlo pero no tenía la consola de PythonAnywhere a mano — instrucciones exactas guardadas en una tarea de background ("Borrar presupuesto de prueba #0007 en producción").
+
 ## Próximo paso
-Sistema en producción y funcionando, con deploy remoto automatizado. Ítems abiertos: unificar las ramas de git (tarea de background ya creada), y considerar si vale la pena migrar a un plan pago de PythonAnywhere si el uso crece (más CPU/disco).
+Sistema en producción y funcionando, con deploy remoto automatizado. Ítems abiertos: borrar el presupuesto de prueba #7 (tarea de background ya creada), unificar las ramas main/master de git (tarea de background ya creada), y considerar si vale la pena migrar a un plan pago de PythonAnywhere si el uso crece (más CPU/disco). Como puede haber más de una sesión de Claude tocando este repo en paralelo (celular + escritorio), conviene chequear ramas remotas pendientes al empezar cada sesión.
 
 ## Para correr el programa
 ```
