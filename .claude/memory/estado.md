@@ -1,7 +1,7 @@
 # Estado del proyecto
 
 ## Fase actual
-**Desarrollo activo** — scaffold completo corriendo. Próximo paso: módulo de Presupuestos.
+**Migración a versión web en curso.** La app de escritorio (PyQt6) está completa y funcional, se usa como referencia funcional 1:1. Se construyó una versión web completa en `webapp/` (backend Flask + frontend React/Vite) que replica todas las pantallas activas y ya fue probada localmente con los datos reales del negocio. Próximo paso: el usuario tiene que crear una cuenta gratuita en PythonAnywhere para el deploy (ver sección "Migración web" abajo).
 
 ## Completado
 - [x] CLAUDE.md con visión completa del sistema, dominio, fuentes de datos y features
@@ -99,14 +99,45 @@
 - [x] **Favoritos al inicio** — al poblar el paso 3, los servicios favoritos aparecen primero, luego un separador "─── Lista de la Cámara ───" y después el resto. El separador se oculta si el buscador filtra todos los favoritos.
 - [x] **DB**: tabla `favoritos_servicios` + migración automática (CREATE IF NOT EXISTS) + `toggle_favorito_servicio()` + `get_favoritos_ids()`.
 
-## Pendiente
+## Pendiente (app de escritorio)
 - [ ] Módulo Editar Precios (factor de ajuste sobre lista FACRA)
 - [ ] Buscador de repuestos CRAC (cuando se habilite)
 - [ ] Botón "+" para crear motor manual si no está en FACRA
 - [ ] CRUD de clientes (editar nombre, teléfono, notas)
 
+## Migración web (sesión 2026-07-28)
+
+Se construyó una versión web completa en `webapp/` (mismo repo, la app de escritorio en `main.py`/`src/`/`db/` queda intacta como backup). Decisiones tomadas con el usuario — ver `decisiones.md`.
+
+**Backend** (`webapp/backend/`, Flask):
+- `app/db.py`, `app/facra.py`, `app/pdf_gen.py` — portados de `src/data/` y `src/utils/` sin cambiar lógica de negocio (mismo esquema SQLite, mismo parser regex de motores, mismo PDF con reportlab).
+- `app/helpers.py` — `formato_precio_ars()` centralizado (antes duplicado 5 veces en el código de escritorio).
+- `app/auth.py` — login por sesión (usuario/password hasheado por env vars `APP_USERNAME`/`APP_PASSWORD_HASH`), sin OAuth/JWT (un solo usuario).
+- `app/routes/{motores,servicios,excel,clientes,presupuestos}.py` — API REST completa.
+- **Importante — paridad de precios**: al CREAR un presupuesto, el precio de los ítems de FACRA se recalcula server-side contra la lista vigente (no se confía en el precio que manda el navegador — protección agregada, no rompe nada porque en el wizard de escritorio el precio nunca era editable al crear). Al EDITAR un presupuesto, el precio de CUALQUIER ítem (incluidos los de FACRA) es libre — así funciona ya la app de escritorio (permite descuentos/ajustes manuales), y se respetó ese comportamiento en `_resolver_items_edicion` (ver `routes/presupuestos.py`).
+- `app/static_frontend.py` — sirve el build de React con fallback de SPA. Probado: `vite build` + Flask sirviendo standalone en `http://127.0.0.1:5000` sin el dev server de Vite, funciona igual que en dev.
+
+**Frontend** (`webapp/frontend/`, Vite + React + react-router-dom + lucide-react):
+- Tokens y `styles.css` copiados tal cual desde `Rectificadora Design System/`.
+- Componentes base (`Button`, `SearchInput`, `NavItem`, `PageHeader`, `DataTable`, `StatusBadge`) traducidos del design system a JSX compilado (sin el hack de Babel-en-browser del prototipo).
+- Las 6 pantallas activas construidas: Login (nueva), Motores, Excel, Clientes, Presupuestos (historial + wizard de 3 pasos + detalle/edición), Precios (placeholder igual que en escritorio).
+- **Cambio de UX pedido explícitamente por el usuario**: en el wizard de creación ahora SÍ se pueden agregar ítems custom (botón "+ agregar"), a diferencia de la app de escritorio donde eso solo era posible al editar un presupuesto ya creado.
+- **Bug encontrado y corregido**: `window.open()` para abrir el PDF generado, llamado después de un `await`, puede ser bloqueado como popup por el navegador. Se corrigió abriendo una pestaña en blanco de forma síncrona dentro del handler de click y seteando `location.href` recién cuando llega la respuesta (en `WizardPresupuesto.jsx` y `Detalle.jsx`).
+- `estadoPresupuesto()` en `utils/format.js` calcula Vigente/Vencido a partir de la fecha + 7 días (mismo criterio que la nota de validez del PDF) — es un dato calculado, no viene de la DB.
+
+**Probado localmente**:
+- Los 3 archivos Excel reales de FACRA (491 motores, 235 servicios — coincide con `CAMARA_RECTIFICADORES_FACRA.md`).
+- Circuito completo de presupuestos por curl y por la UI real (login, wizard con ítem de catálogo + ítem custom, PDF generado y descargable, editar con override de precio, reconstruir PDF con historial de versiones).
+- Se copiaron `db/presupuestos.db` y `Presupuestos/*.pdf` reales a `webapp/backend/data/` y se verificaron los 6 presupuestos / 2 clientes reales en todas las pantallas — coinciden exactamente con la app de escritorio.
+
+**Pendiente para terminar la migración**:
+- [ ] El usuario tiene que crear una cuenta gratuita en pythonanywhere.com (Claude no puede crear cuentas de terceros).
+- [ ] Deploy: subir código, configurar `wsgi.py`, variables de entorno (`APP_USERNAME`, `APP_PASSWORD_HASH`, `SECRET_KEY`, `DATA_DIR`, `SESSION_COOKIE_SECURE=1`), subir `presupuestos.db` y los PDFs reales por la pestaña Files.
+- [ ] Confirmar con el usuario la contraseña real de login antes de dejarlo expuesto a internet (localmente se usó `admin` / `test123` solo para pruebas — **no usar en producción**).
+- [ ] Decidir si se hace commit + push de `webapp/` al repo de GitHub ya existente.
+
 ## Próximo paso
-Definir con el usuario el siguiente módulo a construir.
+Guiar al usuario paso a paso para crear la cuenta de PythonAnywhere y desplegar `webapp/`.
 
 ## Para correr el programa
 ```
