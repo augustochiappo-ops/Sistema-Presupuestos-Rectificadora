@@ -130,14 +130,18 @@ Se construyó una versión web completa en `webapp/` (mismo repo, la app de escr
 - Circuito completo de presupuestos por curl y por la UI real (login, wizard con ítem de catálogo + ítem custom, PDF generado y descargable, editar con override de precio, reconstruir PDF con historial de versiones).
 - Se copiaron `db/presupuestos.db` y `Presupuestos/*.pdf` reales a `webapp/backend/data/` y se verificaron los 6 presupuestos / 2 clientes reales en todas las pantallas — coinciden exactamente con la app de escritorio.
 
-**Pendiente para terminar la migración**:
-- [ ] El usuario tiene que crear una cuenta gratuita en pythonanywhere.com (Claude no puede crear cuentas de terceros).
-- [ ] Deploy: subir código, configurar `wsgi.py`, variables de entorno (`APP_USERNAME`, `APP_PASSWORD_HASH`, `SECRET_KEY`, `DATA_DIR`, `SESSION_COOKIE_SECURE=1`), subir `presupuestos.db` y los PDFs reales por la pestaña Files.
-- [ ] Confirmar con el usuario la contraseña real de login antes de dejarlo expuesto a internet (localmente se usó `admin` / `test123` solo para pruebas — **no usar en producción**).
-- [ ] Decidir si se hace commit + push de `webapp/` al repo de GitHub ya existente.
+**Deploy completado (2026-07-28) — EN PRODUCCIÓN:**
+- URL: https://chiapppo.pythonanywhere.com — usuario `admin`, contraseña elegida por el usuario (hash guardado en el WSGI config del servidor, no en git).
+- Cuenta PythonAnywhere del usuario: `chiapppo` (plan free).
+- Repo GitHub: se pasó de privado a **público** (necesario para que PythonAnywhere pueda clonarlo sin token) — no tiene secretos, `.gitignore` excluye `data/`, `venv/`, `node_modules/`.
+- **Importante**: el repo tiene dos ramas — `main` (default de GitHub, casi vacía, solo un README) y `master` (todo el código real). Quedó pendiente unificarlas (ver tarea de background "Unificar ramas main/master"); mientras tanto, clonar siempre con `git clone -b master ...`.
+- Entorno del servidor: Python 3.10 en un virtualenv (`presupuestos-env`) — **Python 3.11 en ese servidor tiene el módulo `_posixsubprocess` roto**, no usar.
+- El build de producción del frontend (`webapp/backend/app/static_build/`) se versiona en git a propósito, para no necesitar Node.js instalado en PythonAnywhere — hay que correr `npm run build` en `frontend/` y commitear de nuevo cada vez que se toque el frontend.
+- **Bug real encontrado y corregido post-deploy**: la DB de escritorio guardaba `pdf_path` como ruta absoluta de Windows (`C:\Users\...\Presupuestos\...`), inválida en el servidor Linux → los PDFs devolvían 404. Se corrigió para guardar solo el nombre de archivo (la ruta completa se arma siempre contra `config.PDFS_DIR` del servidor actual) + migración automática en `init_db()` para las rutas viejas ya guardadas.
+- Smoke test completo en producción: motores, marcas, servicios por motor, favoritos, clientes, presupuestos, detalle, PDFs (descarga real verificada), login/logout — todo correcto contra los datos reales del negocio.
 
 ## Próximo paso
-Guiar al usuario paso a paso para crear la cuenta de PythonAnywhere y desplegar `webapp/`.
+Sistema en producción y funcionando. Ítems abiertos: unificar las ramas de git (tarea de background ya creada), y considerar si vale la pena migrar a un plan pago de PythonAnywhere si el uso crece (más CPU/disco).
 
 ## Para correr el programa
 ```
