@@ -11,21 +11,31 @@ const ITEMS = [
   { to: '/clientes', label: 'Clientes', icon: 'users' },
 ]
 
-export function Sidebar() {
+export function Sidebar({ open = false, onClose }) {
   const { user, logout } = useAuth()
 
   return (
-    <aside style={{ width: 248, flexShrink: 0, padding: '28px 20px', display: 'flex', flexDirection: 'column', gap: 28, borderRight: '1px solid var(--border-subtle)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '0 8px' }}>
-        <div style={{ width: 40, height: 40, borderRadius: 'var(--radius-md)', background: 'var(--brand-ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
-          <Icon n="wrench" s={22} />
+    <aside className={`sidebar ${open ? 'open' : ''}`}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '0 8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ width: 40, height: 40, borderRadius: 'var(--radius-md)', background: 'var(--brand-ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+            <Icon n="wrench" s={22} />
+          </div>
+          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 19, color: 'var(--text-strong)' }}>Rectifi</span>
         </div>
-        <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 19, color: 'var(--text-strong)' }}>Rectifi</span>
+        <button
+          onClick={onClose}
+          className="shell-topbar-toggle"
+          aria-label="Cerrar menú"
+          style={{ display: open ? 'flex' : 'none' }}
+        >
+          <Icon n="x" s={20} />
+        </button>
       </div>
 
       <nav style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
         {ITEMS.map((it) => (
-          <NavLink key={it.to} to={it.to} style={{ textDecoration: 'none' }}>
+          <NavLink key={it.to} to={it.to} style={{ textDecoration: 'none' }} onClick={onClose}>
             {({ isActive }) => (
               <NavItem icon={<Icon n={it.icon} />} active={isActive}>{it.label}</NavItem>
             )}

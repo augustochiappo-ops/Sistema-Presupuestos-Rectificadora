@@ -14,7 +14,7 @@ export function SearchInput({
     <div
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 10,
-        width, height: 44, padding: '0 16px',
+        width, maxWidth: '100%', boxSizing: 'border-box', height: 44, padding: '0 16px',
         background: 'var(--surface-card)',
         border: `1px solid ${focused ? 'var(--border-strong)' : 'var(--border-default)'}`,
         borderRadius: 'var(--radius-pill)',

@@ -33,8 +33,9 @@ export default function Login() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-app)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       <form onSubmit={submit} style={{
-        width: 380, background: 'var(--surface-card)', borderRadius: 'var(--radius-2xl)',
+        width: '100%', maxWidth: 380, background: 'var(--surface-card)', borderRadius: 'var(--radius-2xl)',
         boxShadow: 'var(--shadow-lg)', padding: '36px 32px', display: 'flex', flexDirection: 'column', gap: 18,
+        boxSizing: 'border-box',
       }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, marginBottom: 8 }}>
           <div style={{ width: 52, height: 52, borderRadius: 'var(--radius-md)', background: 'var(--brand-ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>

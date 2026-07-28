@@ -48,15 +48,16 @@ export function MotorSelector({ onSelect }) {
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
       />
-      <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr', gap: 18, alignItems: 'start' }}>
-        <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', padding: '14px 10px', maxHeight: 560, overflow: 'auto' }}>
+      <div className="motor-selector-grid">
+        <div className="motor-selector-brands" style={{ background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', padding: '14px 10px', minWidth: 0 }}>
           <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-faint)', padding: '6px 12px' }}>Marcas</div>
           {['Todos', ...marcas].map((m) => (
             <button
               key={m}
               onClick={() => setMarcaSel(m)}
+              className="motor-brand-btn"
               style={{
-                display: 'block', width: '100%', textAlign: 'left', border: 'none', cursor: 'pointer',
+                textAlign: 'left', border: 'none', cursor: 'pointer',
                 padding: '10px 12px', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: 14,
                 fontWeight: marcaSel === m ? 600 : 500,
                 background: marcaSel === m ? 'var(--surface-inverse)' : 'transparent',
@@ -72,6 +73,7 @@ export function MotorSelector({ onSelect }) {
           rows={motores}
           onRowClick={onSelect}
           emptyMessage={cargando ? 'Buscando…' : 'No se encontraron motores.'}
+          style={{ minWidth: 0 }}
         />
       </div>
     </div>

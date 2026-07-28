@@ -76,7 +76,7 @@ export default function ExcelScreen() {
       <PageHeader title="Actualizar Excel" subtitle="Importá los archivos de FACRA para mantener motores y precios al día." />
 
       <Eyebrow>FACRA</Eyebrow>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
         <CardImport
           icon="file-text"
           title="Nomenclador de Motores"
@@ -92,7 +92,7 @@ export default function ExcelScreen() {
       </div>
 
       <Eyebrow>CRAC — Próximamente</Eyebrow>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
         <CardImport icon="package" title="Lista de Precios CRAC" desc="Precios de repuestos del proveedor CRAC. Se habilitará en una próxima versión." disabled />
         <CardImport icon="tag" title="Lista de Prefijos CRAC" desc="Codificación y prefijos de partes CRAC. Se habilitará en una próxima versión." disabled />
       </div>

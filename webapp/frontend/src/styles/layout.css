@@ -1,0 +1,48 @@
+/* Shell */
+.shell-outer{min-height:100vh;background:var(--bg-app);padding:24px;box-sizing:border-box}
+.shell-inner{max-width:1360px;margin:0 auto;background:var(--surface-shell);border-radius:var(--radius-2xl);box-shadow:var(--shadow-lg);display:flex;overflow:hidden;min-height:calc(100vh - 48px)}
+.shell-main{flex:1;padding:28px 30px;overflow:auto;min-width:0}
+.shell-topbar{display:none}
+.shell-topbar-toggle{border:none;background:transparent;cursor:pointer;padding:8px;display:flex;color:var(--text-strong)}
+
+/* Sidebar */
+.sidebar{width:var(--sidebar-width);flex-shrink:0;padding:28px 20px;display:flex;flex-direction:column;gap:28px;border-right:1px solid var(--border-subtle);box-sizing:border-box}
+.sidebar-backdrop{display:none}
+
+/* Motor selector: brand rail + table */
+.motor-selector-grid{display:grid;grid-template-columns:180px 1fr;gap:18px;align-items:start}
+.motor-selector-brands{max-height:560px;overflow:auto}
+.motor-brand-btn{display:block;width:100%}
+
+@media (max-width: 860px){
+  .shell-outer{padding:0}
+  .shell-inner{border-radius:0;box-shadow:none;min-height:100vh;display:block}
+  .shell-main{padding:18px 16px 28px}
+
+  .shell-topbar{
+    display:flex;align-items:center;gap:12px;padding:14px 16px;
+    border-bottom:1px solid var(--border-subtle);position:sticky;top:0;
+    background:var(--surface-shell);z-index:20;
+  }
+
+  .sidebar{
+    position:fixed;top:0;left:0;height:100vh;z-index:40;
+    transform:translateX(-100%);transition:transform .22s ease;
+    background:var(--surface-shell);box-shadow:var(--shadow-lg);
+    width:280px;max-width:82vw;
+  }
+  .sidebar.open{transform:translateX(0)}
+
+  .sidebar-backdrop{
+    display:block;position:fixed;inset:0;background:rgba(20,22,25,.4);
+    z-index:30;opacity:0;pointer-events:none;transition:opacity .2s ease;
+  }
+  .sidebar-backdrop.open{opacity:1;pointer-events:auto}
+
+  .motor-selector-grid{grid-template-columns:1fr;gap:12px}
+  .motor-selector-brands{
+    display:flex;flex-direction:row;gap:8px;max-height:none;
+    overflow-x:auto;overflow-y:hidden;padding-bottom:4px;
+  }
+  .motor-brand-btn{width:auto;flex-shrink:0;white-space:nowrap}
+}
