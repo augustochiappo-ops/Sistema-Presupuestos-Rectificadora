@@ -1,10 +1,12 @@
 # Backend
 backend/venv/
 backend/data/
-backend/app/static_build/
 backend/.env
 __pycache__/
 *.pyc
+# NOTA: backend/app/static_build/ (el build de producción del frontend) SÍ se versiona
+# a propósito, para no necesitar Node.js instalado en el servidor de PythonAnywhere.
+# Reconstruir con `npm run build` en frontend/ y commitear después de cada cambio de UI.
 
 # Frontend
 frontend/node_modules/
