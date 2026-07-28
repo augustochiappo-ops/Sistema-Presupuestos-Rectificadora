@@ -108,6 +108,17 @@ def init_db():
                 (row[0], row[1], row[2] or date.today().isoformat()),
             )
 
+        # Normaliza pdf_path a solo el nombre de archivo: la app de escritorio guardaba
+        # la ruta absoluta de Windows (ej. "C:\...\Presupuestos\presupuesto_0001.pdf"),
+        # que deja de ser válida al migrar la DB a otro entorno (otro SO, otro servidor).
+        # La ruta completa se reconstruye siempre contra config.PDFS_DIR al servir el archivo.
+        for tabla in ("presupuestos", "presupuesto_pdfs"):
+            filas = conn.execute(f"SELECT id, pdf_path FROM {tabla} WHERE pdf_path IS NOT NULL").fetchall()
+            for row_id, pdf_path in filas:
+                nombre = pdf_path.replace("\\", "/").rsplit("/", 1)[-1]
+                if nombre != pdf_path:
+                    conn.execute(f"UPDATE {tabla} SET pdf_path = ? WHERE id = ?", (nombre, row_id))
+
 
 def guardar_presupuesto(
     cliente_nombre: str,

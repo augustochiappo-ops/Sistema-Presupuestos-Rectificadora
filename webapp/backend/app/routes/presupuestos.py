@@ -124,12 +124,16 @@ def crear():
     presupuesto_id = db.guardar_presupuesto(cliente_nombre, motor_id, items_resueltos)
 
     detalle = db.get_presupuesto_detalle(presupuesto_id)
-    pdf_path = os.path.join(config.PDFS_DIR, f"presupuesto_{presupuesto_id:04d}.pdf")
+    nombre_archivo = f"presupuesto_{presupuesto_id:04d}.pdf"
     pdf_gen.generar_pdf(
         presupuesto_id, detalle["cliente"], detalle["motor"],
-        _items_para_pdf(presupuesto_id), detalle["total"], pdf_path,
+        _items_para_pdf(presupuesto_id), detalle["total"],
+        os.path.join(config.PDFS_DIR, nombre_archivo),
     )
-    db.guardar_pdf_historial(presupuesto_id, pdf_path)
+    # Se guarda solo el nombre del archivo (no la ruta completa) para que la DB
+    # sea portable entre entornos — la ruta completa se reconstruye siempre
+    # contra config.PDFS_DIR del servidor donde corre la app en ese momento.
+    db.guardar_pdf_historial(presupuesto_id, nombre_archivo)
 
     return jsonify(db.get_presupuesto_detalle(presupuesto_id)), 201
 
@@ -162,13 +166,14 @@ def reconstruir_pdf(presupuesto_id):
 
     versiones = db.get_pdfs_presupuesto(presupuesto_id)
     siguiente_version = (versiones[0]["version"] + 1) if versiones else 1
-    pdf_path = os.path.join(config.PDFS_DIR, f"presupuesto_{presupuesto_id:04d}_v{siguiente_version}.pdf")
+    nombre_archivo = f"presupuesto_{presupuesto_id:04d}_v{siguiente_version}.pdf"
 
     pdf_gen.generar_pdf(
         presupuesto_id, detalle["cliente"], detalle["motor"],
-        _items_para_pdf(presupuesto_id), detalle["total"], pdf_path,
+        _items_para_pdf(presupuesto_id), detalle["total"],
+        os.path.join(config.PDFS_DIR, nombre_archivo),
     )
-    db.guardar_pdf_historial(presupuesto_id, pdf_path)
+    db.guardar_pdf_historial(presupuesto_id, nombre_archivo)
 
     return jsonify(db.get_pdfs_presupuesto(presupuesto_id))
 
@@ -187,6 +192,5 @@ def ver_pdf(presupuesto_id, version):
     if not match:
         abort(404)
 
-    directorio, archivo = os.path.split(match["pdf_path"])
     descargar = request.args.get("descargar") == "1"
-    return send_from_directory(directorio, archivo, as_attachment=descargar, download_name=archivo)
+    return send_from_directory(config.PDFS_DIR, match["pdf_path"], as_attachment=descargar, download_name=match["pdf_path"])
