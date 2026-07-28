@@ -2,7 +2,7 @@ import {
   Wrench, Folder, FileText, DollarSign, Users, Search, Download, Plus,
   AlertTriangle, ArrowUpRight, MoreHorizontal, Package, Tag, X, Star,
   Pencil, Save, ArrowLeft, ChevronDown, ChevronRight, Check, RotateCw,
-  FileUp, LogOut, Eye, History, Menu,
+  FileUp, LogOut, Eye, History, Menu, Trash2,
 } from 'lucide-react'
 
 const MAP = {
@@ -13,6 +13,7 @@ const MAP = {
   pencil: Pencil, save: Save, 'arrow-left': ArrowLeft, 'chevron-down': ChevronDown,
   'chevron-right': ChevronRight, check: Check, 'rotate-cw': RotateCw,
   'file-up': FileUp, 'log-out': LogOut, eye: Eye, history: History, menu: Menu,
+  trash: Trash2,
 }
 
 export function Icon({ n, s = 18, style, ...rest }) {

@@ -328,6 +328,20 @@ def actualizar_presupuesto(
     return total
 
 
+def eliminar_presupuesto(presupuesto_id: int) -> bool:
+    """Elimina un presupuesto junto con sus ítems e historial de PDFs. Retorna False si no existía."""
+    with get_connection() as conn:
+        existe = conn.execute(
+            "SELECT 1 FROM presupuestos WHERE id = ?", (presupuesto_id,)
+        ).fetchone()
+        if not existe:
+            return False
+        conn.execute("DELETE FROM presupuesto_items WHERE presupuesto_id = ?", (presupuesto_id,))
+        conn.execute("DELETE FROM presupuesto_pdfs WHERE presupuesto_id = ?", (presupuesto_id,))
+        conn.execute("DELETE FROM presupuestos WHERE id = ?", (presupuesto_id,))
+        return True
+
+
 # ─── Historial de PDFs ────────────────────────────────────────────────────────
 
 def guardar_pdf_historial(presupuesto_id: int, pdf_path: str) -> int:

@@ -157,6 +157,21 @@ def actualizar(presupuesto_id):
     return jsonify(db.get_presupuesto_detalle(presupuesto_id))
 
 
+@bp.delete("/<int:presupuesto_id>")
+@login_required
+def eliminar(presupuesto_id):
+    if not db.get_presupuesto_detalle(presupuesto_id):
+        return jsonify({"error": "Presupuesto no encontrado"}), 404
+
+    for pdf in db.get_pdfs_presupuesto(presupuesto_id):
+        ruta = os.path.join(config.PDFS_DIR, pdf["pdf_path"])
+        if os.path.exists(ruta):
+            os.remove(ruta)
+
+    db.eliminar_presupuesto(presupuesto_id)
+    return "", 204
+
+
 @bp.post("/<int:presupuesto_id>/pdf")
 @login_required
 def reconstruir_pdf(presupuesto_id):
