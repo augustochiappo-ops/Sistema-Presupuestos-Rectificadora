@@ -140,8 +140,19 @@ Se construyó una versión web completa en `webapp/` (mismo repo, la app de escr
 - **Bug real encontrado y corregido post-deploy**: la DB de escritorio guardaba `pdf_path` como ruta absoluta de Windows (`C:\Users\...\Presupuestos\...`), inválida en el servidor Linux → los PDFs devolvían 404. Se corrigió para guardar solo el nombre de archivo (la ruta completa se arma siempre contra `config.PDFS_DIR` del servidor actual) + migración automática en `init_db()` para las rutas viejas ya guardadas.
 - Smoke test completo en producción: motores, marcas, servicios por motor, favoritos, clientes, presupuestos, detalle, PDFs (descarga real verificada), login/logout — todo correcto contra los datos reales del negocio.
 
+## Deploy remoto automático (2026-07-28)
+
+A pedido del usuario (quiere poder pedir cambios desde el celular sin depender de una compu), se armó un webhook de deploy: **`POST https://chiapppo.pythonanywhere.com/api/deploy`** con header `X-Deploy-Secret: <secreto>` hace `git pull` en el servidor + reload de la web app vía la API oficial de PythonAnywhere — todo en una sola llamada, sin tocar la consola ni el dashboard.
+
+- Código: `webapp/backend/app/routes/deploy.py`. El reload se dispara en un hilo aparte con delay (`threading.Timer`) para no cortar la respuesta HTTP del propio request que lo dispara (si no, a veces devuelve 502 aunque el reinicio haya funcionado bien).
+- Credenciales (**NO están en git**, viven en dos lugares):
+  1. `webapp/backend/.deploy_secrets` (local, gitignored) — para que Claude las cargue con `source` en futuras sesiones y llame al webhook directamente.
+  2. El WSGI config file de PythonAnywhere (`/var/www/chiapppo_pythonanywhere_com_wsgi.py`, no versionado) — tiene las mismas 4 variables (`PA_USERNAME`, `PA_DOMAIN`, `PA_API_TOKEN`, `DEPLOY_SECRET`) más las que ya tenía (`APP_USERNAME`, `APP_PASSWORD_HASH`, `SECRET_KEY`, `DATA_DIR`, `SESSION_COOKIE_SECURE`).
+- Confirmado con GitHub que `github.com`/`api.github.com`/`*.githubusercontent.com` están en la whitelist de internet del plan free de PythonAnywhere, así que el `git pull` desde dentro de la app funciona sin problema.
+- **Flujo de trabajo actual para cambios futuros**: Claude edita código → prueba en local → si toca el frontend, corre `npm run build` y commitea `static_build/` de nuevo → `git push` → `source webapp/backend/.deploy_secrets && curl -X POST https://chiapppo.pythonanywhere.com/api/deploy -H "X-Deploy-Secret: $DEPLOY_SECRET"`. Cero pasos manuales para el usuario.
+
 ## Próximo paso
-Sistema en producción y funcionando. Ítems abiertos: unificar las ramas de git (tarea de background ya creada), y considerar si vale la pena migrar a un plan pago de PythonAnywhere si el uso crece (más CPU/disco).
+Sistema en producción y funcionando, con deploy remoto automatizado. Ítems abiertos: unificar las ramas de git (tarea de background ya creada), y considerar si vale la pena migrar a un plan pago de PythonAnywhere si el uso crece (más CPU/disco).
 
 ## Para correr el programa
 ```
