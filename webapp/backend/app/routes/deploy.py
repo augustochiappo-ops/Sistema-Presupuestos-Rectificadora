@@ -1,5 +1,6 @@
 import hmac
 import subprocess
+import threading
 import urllib.error
 import urllib.request
 
@@ -38,9 +39,13 @@ def deploy():
         capture_output=True, text=True, timeout=60,
     )
 
-    reload_ok, reload_error = _reload_webapp()
+    # El reload mata el proceso que está respondiendo esta misma petición, así que
+    # se dispara en un hilo aparte con un pequeño delay para que la respuesta HTTP
+    # llegue al cliente antes de que el servidor se reinicie (si no, a veces corta
+    # la respuesta a mitad de camino con un 502, aunque el reload haya funcionado bien).
+    threading.Timer(1.5, _reload_webapp).start()
 
     return jsonify({
         "git_pull": {"ok": pull.returncode == 0, "stdout": pull.stdout, "stderr": pull.stderr},
-        "reload": {"ok": reload_ok, "error": reload_error},
+        "reload": {"scheduled": True},
     })
