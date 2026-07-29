@@ -76,8 +76,11 @@ def generar_pdf(
     """
     Genera el PDF del presupuesto y lo guarda en output_path.
     items: list of {item_num, descripcion, precio_aplicado} (servicios de mano de obra)
-    repuestos: list of {codigo, descripcion, cantidad, precio_unitario, precio_aplicado};
-    van en una sección propia, después de los servicios. El total ya los incluye.
+    repuestos: list of {descripcion, cantidad, precio_unitario, precio_aplicado};
+    van en una sección propia, después de los servicios, y `descripcion` es la
+    categoría del repuesto (ej. "Aros") — el código y la descripción del proveedor
+    no salen en el PDF. `precio_unitario` puede ser None (filas agrupadas con
+    precios distintos). El total ya los incluye.
     Retorna output_path.
     """
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -177,14 +180,12 @@ def generar_pdf(
         story.append(Spacer(1, 0.3 * cm))
 
     if repuestos:
-        col_cod  = 2.5 * cm
-        col_cant = 1.3 * cm
-        col_unit = 2.6 * cm
-        col_sub  = 2.6 * cm
-        col_desc = page_w - col_cod - col_cant - col_unit - col_sub
+        col_cant = 1.6 * cm
+        col_unit = 3.0 * cm
+        col_sub  = 3.0 * cm
+        col_desc = page_w - col_cant - col_unit - col_sub
 
         rep_data = [[
-            _hd("Código"),
             _hd("Repuesto"),
             _hd("Cant.", TA_CENTER),
             _hd("P. unitario", TA_RIGHT),
@@ -192,17 +193,19 @@ def generar_pdf(
         ]]
 
         for rep in repuestos:
+            # El unitario puede venir vacío cuando la fila agrupa repuestos de la
+            # misma categoría con precios distintos: ahí solo cierra el subtotal.
+            unitario = rep.get("precio_unitario")
             rep_data.append([
-                Paragraph(str(rep.get("codigo") or "—"), E["celda_desc"]),
                 Paragraph(str(rep.get("descripcion") or ""), E["celda_desc"]),
                 Paragraph(_fmt_cantidad(rep.get("cantidad")), E["celda_num"]),
-                Paragraph(_fmt_precio(rep.get("precio_unitario")), E["celda_precio"]),
+                Paragraph(_fmt_precio(unitario) if unitario is not None else "—", E["celda_precio"]),
                 Paragraph(_fmt_precio(rep.get("precio_aplicado")), E["celda_precio"]),
             ])
 
         tabla_repuestos = Table(
             rep_data,
-            colWidths=[col_cod, col_desc, col_cant, col_unit, col_sub],
+            colWidths=[col_desc, col_cant, col_unit, col_sub],
             repeatRows=1,
         )
         tabla_repuestos.setStyle(estilo_tabla_items)

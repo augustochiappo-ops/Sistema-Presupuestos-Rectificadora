@@ -70,6 +70,7 @@ export function MotorSelector({ onSelect }) {
         </div>
         <DataTable
           columns={COLUMNS}
+          reorderKey="motores"
           rows={motores}
           onRowClick={onSelect}
           emptyMessage={cargando ? 'Buscando…' : 'No se encontraron motores.'}

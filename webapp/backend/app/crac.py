@@ -252,17 +252,24 @@ def get_repuestos(
 
 def get_repuesto_por_codigo(codigo: str) -> dict | None:
     """
-    Un repuesto puntual por código exacto (para congelar precio/stock/descripción
-    al agregarlo a un presupuesto). None si el código no está en el catálogo.
+    Un repuesto puntual por código exacto (para congelar precio/stock/descripción/
+    categoría al agregarlo a un presupuesto). None si el código no está en el catálogo.
     """
     with get_connection() as conn:
         row = conn.execute(
-            "SELECT codigo, aplicacion, precio, stock FROM crac_repuestos WHERE codigo = ? LIMIT 1",
+            """
+            SELECT r.codigo, r.aplicacion, r.precio, r.stock,
+                   COALESCE(pc.nombre, r.cat_prefijo) AS categoria
+            FROM crac_repuestos r
+            LEFT JOIN crac_prefijos pc ON pc.tipo = 'categoria' AND pc.prefijo = r.cat_prefijo
+            WHERE r.codigo = ?
+            LIMIT 1
+            """,
             (codigo,),
         ).fetchone()
         if not row:
             return None
-        return dict(zip(["codigo", "aplicacion", "precio", "stock"], row))
+        return dict(zip(["codigo", "aplicacion", "precio", "stock", "categoria"], row))
 
 
 def get_repuestos_count(

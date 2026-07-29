@@ -5,6 +5,8 @@ import { PageHeader } from '../../components/PageHeader'
 import { DataTable } from '../../components/DataTable'
 import { Button } from '../../components/Button'
 import { TextField } from '../../components/TextField'
+import { CategoriaField } from '../../components/CategoriaField'
+import { RepuestoPicker } from '../../components/RepuestoPicker'
 import { Icon } from '../../components/Icon'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
@@ -63,6 +65,9 @@ export default function DetallePresupuesto() {
   const [confirmarSalir, setConfirmarSalir] = React.useState(false)
   const [confirmarEliminar, setConfirmarEliminar] = React.useState(false)
   const [eliminando, setEliminando] = React.useState(false)
+  const [sugeridos, setSugeridos] = React.useState([])
+  const [aviso, setAviso] = React.useState('')
+  const pdfParaCompartir = React.useRef(null)
 
   const cargar = React.useCallback(() => {
     api.get(`/presupuestos/${id}`).then(setDetalle)
@@ -76,6 +81,9 @@ export default function DetallePresupuesto() {
     setEditItems(items.map((it) => ({ ...it })))
     setEditNotas(detalle?.notas || '')
     setEditMode(true)
+    if (detalle?.motor_id) {
+      api.get(`/motores/${detalle.motor_id}/repuestos-sugeridos`).then(setSugeridos).catch(() => {})
+    }
   }
 
   const cancelarEdicion = () => setEditMode(false)
@@ -94,14 +102,35 @@ export default function DetallePresupuesto() {
   const agregarItemCustom = () => {
     setEditItems((prev) => [...prev, { id: `nuevo-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null, descripcion_custom: '', precio_aplicado: '' }])
   }
-  // En edición los repuestos se agregan solo a mano (código/descripción/precio);
-  // el buscador de catálogo completo vive en el wizard de creación.
   const agregarItemRepuesto = () => {
     setEditItems((prev) => [...prev, {
       id: `nuevo-rep-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null,
-      tipo: 'repuesto', repuesto_codigo: '', descripcion_custom: '',
+      tipo: 'repuesto', repuesto_codigo: '', descripcion_custom: '', categoria: '',
       cantidad: 1, precio_unitario: '', stock_al_cotizar: null,
     }])
+  }
+
+  // Cantidades ya cargadas por código: el picker las usa para el ×N y para
+  // saber si tiene que sumar una línea nueva o pisar la cantidad de una existente.
+  const cantidadPorCodigo = React.useMemo(() => {
+    const m = new Map()
+    editItems.forEach((it) => {
+      if (it.tipo === 'repuesto' && it.repuesto_codigo) m.set(it.repuesto_codigo, Number(it.cantidad) || 0)
+    })
+    return m
+  }, [editItems])
+
+  const agregarDeCatalogo = ({ codigo, descripcion, precio, stock, categoria }, cantidad) => {
+    setEditItems((prev) => {
+      const idx = prev.findIndex((it) => it.tipo === 'repuesto' && it.repuesto_codigo === codigo)
+      if (idx >= 0) return prev.map((it, i) => (i === idx ? { ...it, cantidad } : it))
+      return [...prev, {
+        id: `nuevo-rep-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null,
+        tipo: 'repuesto', repuesto_codigo: codigo, descripcion_custom: descripcion || codigo,
+        categoria: categoria || '', cantidad, precio_unitario: precio || 0,
+        stock_al_cotizar: stock ?? null,
+      }]
+    })
   }
 
   const guardar = async () => {
@@ -123,6 +152,9 @@ export default function DetallePresupuesto() {
           tipo: 'repuesto',
           repuesto_codigo: (it.repuesto_codigo || '').trim() || null,
           descripcion: it.descripcion_custom,
+          // La categoría congelada al cotizar viaja de vuelta tal cual: es lo que
+          // sale en el PDF y editar el presupuesto no tiene por qué borrarla.
+          categoria: it.categoria,
           cantidad: it.cantidad,
           precio_unitario: it.precio_unitario,
           // Se devuelve el stock congelado tal cual vino: la edición no re-lee
@@ -169,6 +201,54 @@ export default function DetallePresupuesto() {
     }
   }
 
+  const nombreArchivoPdf = detalle
+    ? `Presupuesto ${String(detalle.id).padStart(4, '0')} - ${detalle.cliente || 'cliente'}.pdf`
+    : 'presupuesto.pdf'
+
+  // El PDF se baja apenas se abre el detalle y queda guardado: navigator.share()
+  // exige el gesto del usuario, y si el fetch se hace recién dentro del click el
+  // navegador (iOS sobre todo) considera vencida la interacción y lo rechaza.
+  React.useEffect(() => {
+    pdfParaCompartir.current = null
+    const version = pdfs[0]?.version
+    if (!version) return undefined
+    let vigente = true
+    fetch(`/api/presupuestos/${id}/pdf/${version}`, { credentials: 'include' })
+      .then((res) => (res.ok ? res.blob() : null))
+      .then((blob) => { if (vigente) pdfParaCompartir.current = blob })
+      .catch(() => {})
+    return () => { vigente = false }
+  }, [id, pdfs])
+
+  const compartirPdf = async () => {
+    const version = pdfs[0]?.version
+    if (!version) return
+    setAviso('')
+    const blob = pdfParaCompartir.current
+    const archivo = blob ? new File([blob], nombreArchivoPdf, { type: 'application/pdf' }) : null
+
+    if (archivo && navigator.canShare?.({ files: [archivo] })) {
+      try {
+        await navigator.share({ files: [archivo], title: nombreArchivoPdf })
+      } catch (err) {
+        // El usuario cerró el menú de compartir: no es un error que mostrar.
+        if (err?.name !== 'AbortError') setAviso('No se pudo abrir el menú de compartir. Probá descargando el PDF.')
+      }
+      return
+    }
+
+    // Sin Web Share (Firefox de escritorio, navegadores viejos): se descarga y
+    // desde la carpeta de descargas se puede copiar y pegar en WhatsApp.
+    const enlace = document.createElement('a')
+    enlace.href = blob ? URL.createObjectURL(blob) : `/api/presupuestos/${id}/pdf/${version}?descargar=1`
+    enlace.download = nombreArchivoPdf
+    document.body.appendChild(enlace)
+    enlace.click()
+    document.body.removeChild(enlace)
+    if (blob) setTimeout(() => URL.revokeObjectURL(enlace.href), 10000)
+    setAviso('Este navegador no permite compartir archivos: se descargó el PDF. Copialo desde la carpeta Descargas y pegalo en WhatsApp.')
+  }
+
   if (!detalle) {
     return <div style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>Cargando…</div>
   }
@@ -191,6 +271,7 @@ export default function DetallePresupuesto() {
             <Button variant="secondary" iconLeft={<Icon n="arrow-left" s={16} />} onClick={intentarVolver}>Volver</Button>
             {!editMode && (
               <>
+                <Button variant="secondary" iconLeft={<Icon n="share" s={16} />} disabled={!ultimoPdf} onClick={compartirPdf}>Compartir PDF</Button>
                 <Button variant="primary" iconLeft={<Icon n="pencil" s={16} />} onClick={entrarEdicion}>Editar</Button>
                 <Button variant="danger" iconLeft={<Icon n="trash" s={16} />} onClick={() => setConfirmarEliminar(true)}>Eliminar</Button>
               </>
@@ -200,6 +281,19 @@ export default function DetallePresupuesto() {
       />
 
       <ErrorBanner message={error} onClose={() => setError('')} />
+
+      {aviso && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+          padding: '10px 14px', background: 'var(--surface-sunken)', color: 'var(--text-body)',
+          borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
+        }}>
+          {aviso}
+          <button onClick={() => setAviso('')} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
+            <Icon n="x" s={16} />
+          </button>
+        </div>
+      )}
 
       <div style={{ display: 'flex', gap: 40, padding: '18px 22px', background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)' }}>
         <Campo label="Cliente" valor={detalle.cliente} />
@@ -217,6 +311,7 @@ export default function DetallePresupuesto() {
                 { key: 'desc', header: 'Descripción', wrap: true, render: (_, row) => row.desc_facra || row.descripcion_custom },
                 { key: 'precio_aplicado', header: 'Precio', align: 'right', width: 140, render: formatPrecioARS },
               ]}
+              reorderKey="detalle-servicios"
               rows={serviciosItems}
             />
           )}
@@ -261,16 +356,26 @@ export default function DetallePresupuesto() {
                       )
                     },
                   },
+                  { key: 'categoria', header: 'Categoría', width: 140, render: (v, row) => v || row.descripcion_custom },
                   { key: 'cantidad', header: 'Cant.', align: 'center', width: 70, render: fmtCantidad },
                   { key: 'precio_unitario', header: 'P. unitario', align: 'right', width: 130, render: formatPrecioARS },
                   { key: 'precio_aplicado', header: 'Subtotal', align: 'right', width: 130, render: formatPrecioARS },
                 ]}
+                reorderKey="detalle-repuestos"
                 rows={repuestoItems}
               />
             </div>
           )}
         </>
       ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <RepuestoPicker
+          sugeridos={sugeridos}
+          cantidadPorCodigo={cantidadPorCodigo}
+          onAgregar={agregarDeCatalogo}
+          reorderKey="repuestos-presupuesto"
+        />
+
         <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
           {editItems.map((it, idx) => (
             it.tipo === 'repuesto' ? (
@@ -286,6 +391,11 @@ export default function DetallePresupuesto() {
                   value={it.descripcion_custom || ''}
                   onChange={(e) => actualizarDescCustom(idx, e.target.value)}
                   style={{ flex: 1, minWidth: 160 }}
+                />
+                <CategoriaField
+                  value={it.categoria || ''}
+                  onChange={(v) => actualizarCampo(idx, 'categoria', v)}
+                  style={{ width: 150 }}
                 />
                 <TextField
                   type="number" min="0" step="1" placeholder="Cant."
@@ -332,9 +442,10 @@ export default function DetallePresupuesto() {
               Agregar ítem
             </Button>
             <Button variant="ghost" size="sm" iconLeft={<Icon n="plus" s={14} />} onClick={agregarItemRepuesto}>
-              Agregar repuesto
+              Agregar repuesto a mano
             </Button>
           </div>
+        </div>
         </div>
       )}
 

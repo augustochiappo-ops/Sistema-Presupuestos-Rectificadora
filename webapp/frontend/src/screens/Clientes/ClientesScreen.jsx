@@ -23,6 +23,7 @@ export default function ClientesScreen() {
           { key: 'total_presupuestos', header: 'Presupuestos', align: 'center', width: 130 },
           { key: 'ultimo_presupuesto', header: 'Último presupuesto', align: 'right', width: 160, render: formatFechaAR },
         ]}
+        reorderKey="clientes"
         rows={clientes}
         onRowClick={(c) => navigate(`/clientes/${c.id}`)}
         emptyMessage={cargando ? 'Cargando…' : 'Todavía no hay clientes. Se crean automáticamente al hacer un presupuesto.'}

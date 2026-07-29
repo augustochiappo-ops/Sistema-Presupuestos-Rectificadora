@@ -53,6 +53,7 @@ export default function MotoresScreen() {
             { key: 'descripcion', header: 'Descripción', wrap: true },
             { key: 'precio', header: 'Precio', align: 'right', width: 140, render: formatPrecioARS },
           ]}
+          reorderKey="motor-servicios"
           rows={filtrados}
           emptyMessage={cargando ? 'Cargando servicios…' : 'Este motor no tiene servicios con precio.'}
         />

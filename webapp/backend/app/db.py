@@ -76,7 +76,8 @@ def init_db():
                 repuesto_codigo   TEXT,     -- código del proveedor congelado; NULL en servicios y manuales
                 cantidad          REAL NOT NULL DEFAULT 1,
                 precio_unitario   REAL,     -- unitario congelado al cotizar (NULL en servicios)
-                stock_al_cotizar  INTEGER   -- 1/0 al cotizar; NULL en servicios y manuales
+                stock_al_cotizar  INTEGER,  -- 1/0 al cotizar; NULL en servicios y manuales
+                categoria         TEXT      -- categoría congelada al cotizar; es lo único que sale en el PDF
             );
 
             CREATE TABLE IF NOT EXISTS presupuesto_pdfs (
@@ -132,6 +133,8 @@ def init_db():
             conn.execute("ALTER TABLE presupuesto_items ADD COLUMN cantidad REAL NOT NULL DEFAULT 1")
             conn.execute("ALTER TABLE presupuesto_items ADD COLUMN precio_unitario REAL")
             conn.execute("ALTER TABLE presupuesto_items ADD COLUMN stock_al_cotizar INTEGER")
+        if "categoria" not in cols_items:
+            conn.execute("ALTER TABLE presupuesto_items ADD COLUMN categoria TEXT")
 
         pdfs_sin_migrar = conn.execute(
             """
@@ -169,7 +172,8 @@ def guardar_presupuesto(
     """
     Crea (o reutiliza) el cliente, inserta el presupuesto y sus ítems.
     items: list of {servicio_id, descripcion_custom, precio_aplicado,
-                    tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar}
+                    tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
+                    categoria}
     (servicio_id es None para ítems custom; los campos de repuesto son opcionales
     y solo vienen en ítems con tipo='repuesto')
     Retorna el id del presupuesto creado.
@@ -202,8 +206,9 @@ def guardar_presupuesto(
                 """
                 INSERT INTO presupuesto_items
                     (presupuesto_id, servicio_id, descripcion_custom, precio_aplicado,
-                     tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
+                     categoria)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     presupuesto_id,
@@ -215,6 +220,7 @@ def guardar_presupuesto(
                     item.get("cantidad") or 1,
                     item.get("precio_unitario"),
                     item.get("stock_al_cotizar"),
+                    item.get("categoria"),
                 ),
             )
 
@@ -338,7 +344,7 @@ def get_presupuesto_items_full(presupuesto_id: int) -> list[dict]:
                    s.descripcion AS desc_facra, pi.descripcion_custom,
                    pi.precio_aplicado,
                    pi.tipo, pi.repuesto_codigo, pi.cantidad,
-                   pi.precio_unitario, pi.stock_al_cotizar,
+                   pi.precio_unitario, pi.stock_al_cotizar, pi.categoria,
                    (SELECT cr.precio FROM crac_repuestos cr
                      WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS precio_actual,
                    (SELECT cr.stock FROM crac_repuestos cr
@@ -355,7 +361,7 @@ def get_presupuesto_items_full(presupuesto_id: int) -> list[dict]:
         cols = ["id", "servicio_id", "item_num", "desc_facra",
                 "descripcion_custom", "precio_aplicado",
                 "tipo", "repuesto_codigo", "cantidad",
-                "precio_unitario", "stock_al_cotizar",
+                "precio_unitario", "stock_al_cotizar", "categoria",
                 "precio_actual", "stock_actual"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
@@ -367,7 +373,8 @@ def actualizar_presupuesto(
 ) -> float:
     """
     items_data: [{servicio_id, descripcion_custom, precio_aplicado,
-                  tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar}]
+                  tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
+                  categoria}]
     Elimina los ítems anteriores y los reinserta. Retorna el nuevo total.
     """
     total = sum((i.get("precio_aplicado") or 0.0) for i in items_data)
@@ -381,8 +388,9 @@ def actualizar_presupuesto(
                 """
                 INSERT INTO presupuesto_items
                     (presupuesto_id, servicio_id, descripcion_custom, precio_aplicado,
-                     tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
+                     categoria)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     presupuesto_id,
@@ -394,6 +402,7 @@ def actualizar_presupuesto(
                     item.get("cantidad") or 1,
                     item.get("precio_unitario"),
                     item.get("stock_al_cotizar"),
+                    item.get("categoria"),
                 ),
             )
         conn.execute(

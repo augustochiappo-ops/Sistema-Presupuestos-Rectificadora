@@ -1,7 +1,68 @@
 import React from 'react'
 
-export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 'No hay datos para mostrar.', style, striped = false, ...rest }) {
+const PREFIJO_ORDEN = 'tabla-orden:'
+
+function leerOrden(reorderKey) {
+  if (!reorderKey) return null
+  try {
+    const guardado = JSON.parse(localStorage.getItem(PREFIJO_ORDEN + reorderKey))
+    return Array.isArray(guardado) ? guardado : null
+  } catch {
+    return null
+  }
+}
+
+function guardarOrden(reorderKey, keys) {
+  try {
+    if (keys) localStorage.setItem(PREFIJO_ORDEN + reorderKey, JSON.stringify(keys))
+    else localStorage.removeItem(PREFIJO_ORDEN + reorderKey)
+  } catch {
+    // localStorage lleno o bloqueado: el orden vale solo para esta pantalla.
+  }
+}
+
+/*
+ * Aplica el orden guardado sin confiar en que coincida con las columnas de hoy:
+ * se ignoran las keys que ya no existen y las columnas nuevas quedan al final,
+ * así un cambio de columnas nunca deja la tabla rota ni vacía.
+ */
+function aplicarOrden(columns, orden) {
+  if (!orden) return columns
+  const porKey = new Map(columns.map((c) => [c.key, c]))
+  // Sin keys únicas no se puede reordenar sin perder columnas (hay tablas que
+  // muestran el mismo campo dos veces): se deja el orden original.
+  if (porKey.size !== columns.length) return columns
+  const ordenadas = orden.map((k) => porKey.get(k)).filter(Boolean)
+  const yaPuestas = new Set(ordenadas.map((c) => c.key))
+  return [...ordenadas, ...columns.filter((c) => !yaPuestas.has(c.key))]
+}
+
+export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 'No hay datos para mostrar.', style, striped = false, reorderKey, ...rest }) {
   const [hover, setHover] = React.useState(-1)
+  const [orden, setOrden] = React.useState(() => leerOrden(reorderKey))
+  const [arrastrando, setArrastrando] = React.useState(null)
+  const [destino, setDestino] = React.useState(null)
+
+  React.useEffect(() => { setOrden(leerOrden(reorderKey)) }, [reorderKey])
+
+  const cols = React.useMemo(() => aplicarOrden(columns, orden), [columns, orden])
+
+  const soltar = (indiceDestino) => {
+    setDestino(null)
+    setArrastrando(null)
+    if (arrastrando === null || arrastrando === indiceDestino) return
+    const nuevas = [...cols]
+    const [movida] = nuevas.splice(arrastrando, 1)
+    nuevas.splice(indiceDestino, 0, movida)
+    const keys = nuevas.map((c) => c.key)
+    setOrden(keys)
+    guardarOrden(reorderKey, keys)
+  }
+
+  const restablecer = () => {
+    setOrden(null)
+    guardarOrden(reorderKey, null)
+  }
 
   if (rows.length === 0) {
     return (
@@ -12,46 +73,79 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
   }
 
   return (
-    <div style={{ overflow: 'auto', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', ...style }} {...rest}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-body)' }}>
-        <thead>
-          <tr>
-            {columns.map((c, i) => (
-              <th key={i} style={{
-                textAlign: c.align || 'left', padding: '16px 20px',
-                fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-semibold)',
-                color: 'var(--text-muted)', borderBottom: '1px solid var(--border-default)',
-                width: c.width, whiteSpace: 'nowrap',
-              }}>{c.header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, ri) => (
-            <tr
-              key={row.id ?? ri}
-              onMouseEnter={() => setHover(ri)}
-              onMouseLeave={() => setHover(-1)}
-              onClick={() => onRowClick && onRowClick(row, ri)}
-              style={{
-                background: hover === ri ? 'var(--surface-sunken)' : (striped && ri % 2 === 1 ? 'var(--surface-stripe)' : 'transparent'),
-                cursor: onRowClick ? 'pointer' : 'default',
-                transition: 'background .12s ease',
-              }}
-            >
-              {columns.map((c, ci) => (
-                <td key={ci} style={{
-                  textAlign: c.align || 'left', padding: '15px 20px',
-                  fontSize: 'var(--text-sm)', color: c.strong ? 'var(--text-strong)' : 'var(--text-body)',
-                  fontWeight: c.strong ? 'var(--weight-semibold)' : 'var(--weight-regular)',
-                  borderBottom: ri < rows.length - 1 ? '1px solid var(--border-subtle)' : 'none',
-                  whiteSpace: c.wrap ? 'normal' : 'nowrap',
-                }}>{c.render ? c.render(row[c.key], row) : row[c.key]}</td>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0 }}>
+      {reorderKey && orden && (
+        <button
+          onClick={restablecer}
+          style={{
+            alignSelf: 'flex-end', border: 'none', background: 'transparent', cursor: 'pointer',
+            padding: 0, fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)',
+          }}
+        >
+          ↺ Orden original de las columnas
+        </button>
+      )}
+
+      <div style={{ overflow: 'auto', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', ...style }} {...rest}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-body)' }}>
+          <thead>
+            <tr>
+              {cols.map((c, i) => (
+                <th
+                  key={i}
+                  draggable={Boolean(reorderKey)}
+                  onDragStart={reorderKey ? (e) => { setArrastrando(i); e.dataTransfer.effectAllowed = 'move' } : undefined}
+                  onDragOver={reorderKey ? (e) => { e.preventDefault(); setDestino(i) } : undefined}
+                  onDragEnd={reorderKey ? () => { setArrastrando(null); setDestino(null) } : undefined}
+                  onDrop={reorderKey ? (e) => { e.preventDefault(); soltar(i) } : undefined}
+                  title={reorderKey ? 'Arrastrá para mover la columna' : undefined}
+                  style={{
+                    textAlign: c.align || 'left', padding: '16px 20px',
+                    fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-semibold)',
+                    color: 'var(--text-muted)', borderBottom: '1px solid var(--border-default)',
+                    width: c.width, whiteSpace: 'nowrap',
+                    cursor: reorderKey ? 'grab' : 'default',
+                    opacity: arrastrando === i ? 0.4 : 1,
+                    // Línea de inserción: a la izquierda si la columna viaja hacia
+                    // atrás, a la derecha si viaja hacia adelante.
+                    boxShadow: destino === i && arrastrando !== null && arrastrando !== i
+                      ? (arrastrando > i ? 'inset 2px 0 0 var(--text-strong)' : 'inset -2px 0 0 var(--text-strong)')
+                      : 'none',
+                    userSelect: 'none',
+                  }}
+                >
+                  {c.header}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((row, ri) => (
+              <tr
+                key={row.id ?? ri}
+                onMouseEnter={() => setHover(ri)}
+                onMouseLeave={() => setHover(-1)}
+                onClick={() => onRowClick && onRowClick(row, ri)}
+                style={{
+                  background: hover === ri ? 'var(--surface-sunken)' : (striped && ri % 2 === 1 ? 'var(--surface-stripe)' : 'transparent'),
+                  cursor: onRowClick ? 'pointer' : 'default',
+                  transition: 'background .12s ease',
+                }}
+              >
+                {cols.map((c, ci) => (
+                  <td key={ci} style={{
+                    textAlign: c.align || 'left', padding: '15px 20px',
+                    fontSize: 'var(--text-sm)', color: c.strong ? 'var(--text-strong)' : 'var(--text-body)',
+                    fontWeight: c.strong ? 'var(--weight-semibold)' : 'var(--weight-regular)',
+                    borderBottom: ri < rows.length - 1 ? '1px solid var(--border-subtle)' : 'none',
+                    whiteSpace: c.wrap ? 'normal' : 'nowrap',
+                  }}>{c.render ? c.render(row[c.key], row) : row[c.key]}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

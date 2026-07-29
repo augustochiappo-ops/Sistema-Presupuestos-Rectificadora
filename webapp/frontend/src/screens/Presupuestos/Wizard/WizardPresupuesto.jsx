@@ -44,6 +44,7 @@ export default function WizardPresupuesto() {
           tipo: 'repuesto',
           repuesto_codigo: r.repuesto_codigo,
           descripcion: r.descripcion,
+          categoria: r.categoria,
           cantidad: r.cantidad,
           precio_unitario: r.precio_unitario,
         })),

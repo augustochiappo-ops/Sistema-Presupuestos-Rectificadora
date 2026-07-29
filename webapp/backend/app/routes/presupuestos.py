@@ -8,6 +8,57 @@ from ..auth import login_required
 bp = Blueprint("presupuestos", __name__, url_prefix="/api/presupuestos")
 
 
+def _categoria_de_item(it):
+    """
+    Nombre que sale en el PDF para una línea de repuesto. Se usa la categoría
+    congelada al cotizar; para presupuestos anteriores a esa columna se resuelve
+    por código contra el catálogo vigente, y si tampoco está (repuesto manual o
+    código dado de baja) se cae a la descripción, que es lo único que queda.
+    """
+    categoria = (it.get("categoria") or "").strip()
+    if categoria:
+        return categoria
+    codigo = it.get("repuesto_codigo")
+    if codigo:
+        del_catalogo = crac.get_repuesto_por_codigo(codigo)
+        if del_catalogo and del_catalogo.get("categoria"):
+            return del_catalogo["categoria"]
+    return (it.get("descripcion_custom") or "").strip() or "Repuesto"
+
+
+def _agrupar_repuestos(items_repuesto):
+    """
+    El PDF muestra los repuestos por categoría (ej. "Aros"), sin código ni
+    descripción del proveedor: son datos internos que el cliente no necesita.
+    Varias líneas de la misma categoría se suman en una sola fila; el precio
+    unitario solo tiene sentido si todas comparten el mismo, si no va None y el
+    PDF imprime "—". Se respeta el orden de aparición de la primera línea.
+    """
+    agrupados = {}
+    for it in items_repuesto:
+        categoria = _categoria_de_item(it)
+        grupo = agrupados.get(categoria)
+        if grupo is None:
+            grupo = {
+                "descripcion": categoria,
+                "cantidad": 0,
+                "precio_unitario": None,
+                "precio_aplicado": 0,
+                "_unitarios": set(),
+            }
+            agrupados[categoria] = grupo
+        grupo["cantidad"] += it["cantidad"] or 0
+        grupo["precio_aplicado"] += it["precio_aplicado"] or 0
+        grupo["_unitarios"].add(it["precio_unitario"])
+
+    resultado = []
+    for grupo in agrupados.values():
+        unitarios = grupo.pop("_unitarios")
+        grupo["precio_unitario"] = unitarios.pop() if len(unitarios) == 1 else None
+        resultado.append(grupo)
+    return resultado
+
+
 def _items_para_pdf(presupuesto_id):
     """Separa servicios y repuestos: el PDF los imprime en secciones distintas."""
     items_full = db.get_presupuesto_items_full(presupuesto_id)
@@ -20,17 +71,7 @@ def _items_para_pdf(presupuesto_id):
         for it in items_full
         if it["tipo"] != "repuesto"
     ]
-    repuestos = [
-        {
-            "codigo": it["repuesto_codigo"],
-            "descripcion": it["descripcion_custom"],
-            "cantidad": it["cantidad"],
-            "precio_unitario": it["precio_unitario"],
-            "precio_aplicado": it["precio_aplicado"],
-        }
-        for it in items_full
-        if it["tipo"] == "repuesto"
-    ]
+    repuestos = _agrupar_repuestos([it for it in items_full if it["tipo"] == "repuesto"])
     return servicios, repuestos
 
 
@@ -56,6 +97,10 @@ def _resolver_repuesto(it, congelar_stock=True):
     desc = (it.get("descripcion") or it.get("descripcion_custom") or "").strip()
     precio_unitario = it.get("precio_unitario")
     stock_al_cotizar = None if congelar_stock else it.get("stock_al_cotizar")
+    # La categoría es lo único del repuesto que sale en el PDF, así que se congela
+    # igual que el precio: el catálogo manda, y si el ítem es manual (o su código
+    # ya no está en la lista) se usa la que haya cargado el usuario.
+    categoria = (it.get("categoria") or "").strip() or None
 
     if codigo:
         del_catalogo = crac.get_repuesto_por_codigo(codigo)
@@ -64,6 +109,8 @@ def _resolver_repuesto(it, congelar_stock=True):
                 precio_unitario = del_catalogo["precio"]
             if not desc:
                 desc = (del_catalogo["aplicacion"] or "").strip() or codigo
+            if del_catalogo.get("categoria"):
+                categoria = del_catalogo["categoria"]
             if congelar_stock:
                 stock_al_cotizar = del_catalogo["stock"]
         # Código que ya no está en el catálogo (ej. reimport a mitad del wizard):
@@ -86,6 +133,7 @@ def _resolver_repuesto(it, congelar_stock=True):
         "cantidad": cantidad,
         "precio_unitario": precio_unitario,
         "stock_al_cotizar": stock_al_cotizar,
+        "categoria": categoria,
     }
 
 

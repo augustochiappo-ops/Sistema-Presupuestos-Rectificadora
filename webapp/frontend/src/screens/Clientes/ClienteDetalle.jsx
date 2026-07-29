@@ -38,6 +38,7 @@ export default function ClienteDetalle() {
           { key: 'motor', header: 'Motor', wrap: true },
           { key: 'total', header: 'Total', align: 'right', width: 140, render: formatPrecioARS },
         ]}
+        reorderKey="cliente-presupuestos"
         rows={presupuestos}
         onRowClick={(p) => navigate(`/presupuestos/${p.id}`)}
         emptyMessage={cargando ? 'Cargando…' : 'Este cliente no tiene presupuestos.'}
