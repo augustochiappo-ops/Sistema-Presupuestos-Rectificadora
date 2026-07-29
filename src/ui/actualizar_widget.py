@@ -10,6 +10,7 @@ from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QFont
 
 from ..data.facra import importar_nomenclador, importar_lista_orientadora
+from ..data.crac import importar_prefijos, importar_precio_stock
 from .styles import (
     FONT_FAMILY, FONT_SIZE_MD, FONT_SIZE_LG, FONT_SIZE_XL,
     COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY, COLOR_TEXT_MUTED,
@@ -41,10 +42,12 @@ class _CardExcel(QFrame):
     importado = pyqtSignal()   # se emite cuando la importación termina con éxito
 
     def __init__(self, titulo: str, descripcion: str, boton_texto: str,
-                 func_importar, habilitado: bool = True, parent=None):
+                 func_importar, habilitado: bool = True, parent=None,
+                 filtro_archivo: str = "Excel (*.xls *.xlsx)"):
         super().__init__(parent)
         self._func = func_importar
         self._hilo = None
+        self._filtro_archivo = filtro_archivo
         self._build(titulo, descripcion, boton_texto, habilitado)
 
     def _build(self, titulo, descripcion, boton_texto, habilitado):
@@ -86,7 +89,7 @@ class _CardExcel(QFrame):
 
     def _seleccionar_archivo(self):
         path, _ = QFileDialog.getOpenFileName(
-            self, "Seleccionar archivo Excel", "", "Excel (*.xls *.xlsx)"
+            self, "Seleccionar archivo", "", self._filtro_archivo
         )
         if not path:
             return
@@ -168,26 +171,30 @@ class ActualizarWidget(QWidget):
         card_lista.importado.connect(self.datos_actualizados)
         layout.addWidget(card_lista)
 
-        # ── Sección CRAC (deshabilitada) ──────────────────────────
-        layout.addWidget(self._separador("CRAC  —  próximamente"))
+        # ── Sección CRAC (repuestos) ──────────────────────────────
+        layout.addWidget(self._separador("CRAC"))
 
-        def _no_disponible(path):
-            return 0, "✗ Módulo no disponible aún"
-
-        layout.addWidget(_CardExcel(
-            "📦  Lista de Precios CRAC",
-            "Precios de repuestos del proveedor CRAC. Se habilitará en una próxima versión.",
-            "Cargar precios_crac.xls",
-            _no_disponible,
-            habilitado=False,
-        ))
-        layout.addWidget(_CardExcel(
+        card_prefijos = _CardExcel(
             "🔖  Lista de Prefijos CRAC",
-            "Codificación y prefijos de partes CRAC. Se habilitará en una próxima versión.",
-            "Cargar prefijos_crac.xls",
-            _no_disponible,
-            habilitado=False,
-        ))
+            "Categorías y marcas del proveedor de repuestos. Cargala primero: "
+            "sin esto, los repuestos igual se guardan pero sin categoría ni marca legibles.",
+            "Cargar prefijos_crac.csv",
+            importar_prefijos,
+            filtro_archivo="CSV (*.csv)",
+        )
+        card_prefijos.importado.connect(self.datos_actualizados)
+        layout.addWidget(card_prefijos)
+
+        card_precios = _CardExcel(
+            "📦  Lista de Precios y Stock CRAC",
+            "Precios y disponibilidad de repuestos del proveedor. Se actualiza a diario: "
+            "cada carga reemplaza por completo la lista anterior.",
+            "Cargar precio-stock.csv",
+            importar_precio_stock,
+            filtro_archivo="CSV (*.csv)",
+        )
+        card_precios.importado.connect(self.datos_actualizados)
+        layout.addWidget(card_precios)
 
         layout.addStretch()
 
