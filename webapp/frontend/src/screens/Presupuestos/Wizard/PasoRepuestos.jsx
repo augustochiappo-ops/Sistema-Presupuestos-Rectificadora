@@ -134,16 +134,6 @@ export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServi
         {value.map((r) => (
           <div key={r.key} style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: '8px 0', borderBottom: '1px solid var(--border-subtle)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-muted)', width: 110, flexShrink: 0 }}>
-                {r.repuesto_codigo || '—'}
-              </span>
-              <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', minWidth: 160 }}>
-                {r.descripcion}
-                {r.categoria && (
-                  <span style={{ color: 'var(--text-faint)' }}> · {r.categoria}</span>
-                )}
-              </span>
-
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <button style={botonCantidad} onClick={() => cambiarCantidad(r.key, Math.max(0, (r.cantidad || 0) - 1))}>−</button>
                 <input
@@ -157,6 +147,16 @@ export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServi
                 />
                 <button style={botonCantidad} onClick={() => cambiarCantidad(r.key, (r.cantidad || 0) + 1)}>+</button>
               </div>
+
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-muted)', width: 110, flexShrink: 0 }}>
+                {r.repuesto_codigo || '—'}
+              </span>
+              <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', minWidth: 160 }}>
+                {r.descripcion}
+                {r.categoria && (
+                  <span style={{ color: 'var(--text-faint)' }}> · {r.categoria}</span>
+                )}
+              </span>
 
               <TextField
                 placeholder="Precio unit."

@@ -7,6 +7,7 @@ import { Button } from '../../components/Button'
 import { TextField } from '../../components/TextField'
 import { CategoriaField } from '../../components/CategoriaField'
 import { RepuestoPicker } from '../../components/RepuestoPicker'
+import { ContadorServicio } from '../../components/ContadorServicio'
 import { Icon } from '../../components/Icon'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
@@ -78,7 +79,14 @@ export default function DetallePresupuesto() {
   React.useEffect(() => { cargar() }, [cargar])
 
   const entrarEdicion = () => {
-    setEditItems(items.map((it) => ({ ...it })))
+    setEditItems(items.map((it) => (
+      it.tipo === 'repuesto'
+        ? { ...it }
+        // Presupuestos armados antes de soportar cantidad en servicios no
+        // tienen precio_unitario guardado: se asume cantidad 1 y que
+        // precio_aplicado YA era el unitario.
+        : { ...it, cantidad: it.cantidad || 1, precio_unitario: it.precio_unitario ?? it.precio_aplicado }
+    )))
     setEditNotas(detalle?.notas || '')
     setEditMode(true)
     if (detalle?.motor_id) {
@@ -96,11 +104,13 @@ export default function DetallePresupuesto() {
   const actualizarCampo = (idx, campo, valor) => {
     setEditItems((prev) => prev.map((it, i) => (i === idx ? { ...it, [campo]: valor } : it)))
   }
-  const actualizarPrecio = (idx, valor) => actualizarCampo(idx, 'precio_aplicado', valor)
+  // Para servicios este campo edita el precio UNITARIO: el subtotal
+  // (precio_aplicado) se recalcula server-side como cantidad × unitario.
+  const actualizarPrecio = (idx, valor) => actualizarCampo(idx, 'precio_unitario', valor)
   const actualizarDescCustom = (idx, valor) => actualizarCampo(idx, 'descripcion_custom', valor)
   const quitarItem = (idx) => setEditItems((prev) => prev.filter((_, i) => i !== idx))
   const agregarItemCustom = () => {
-    setEditItems((prev) => [...prev, { id: `nuevo-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null, descripcion_custom: '', precio_aplicado: '' }])
+    setEditItems((prev) => [...prev, { id: `nuevo-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null, descripcion_custom: '', cantidad: 1, precio_unitario: '' }])
   }
   const agregarItemRepuesto = () => {
     setEditItems((prev) => [...prev, {
@@ -139,11 +149,12 @@ export default function DetallePresupuesto() {
     try {
       const servicios = editItems
         .filter((it) => it.tipo !== 'repuesto')
-        .filter((it) => (it.desc_facra || (it.descripcion_custom || '').trim()) && it.precio_aplicado !== '')
+        .filter((it) => (it.desc_facra || (it.descripcion_custom || '').trim()) && it.precio_unitario !== '' && Number(it.cantidad) > 0)
         .map((it) => ({
           servicio_id: it.servicio_id,
           descripcion_custom: it.descripcion_custom,
-          precio_aplicado: it.precio_aplicado,
+          cantidad: it.cantidad,
+          precio_unitario: it.precio_unitario,
         }))
       const repuestos = editItems
         .filter((it) => it.tipo === 'repuesto')
@@ -309,6 +320,7 @@ export default function DetallePresupuesto() {
               columns={[
                 { key: 'item_num', header: 'Nº', width: 70 },
                 { key: 'desc', header: 'Descripción', wrap: true, render: (_, row) => row.desc_facra || row.descripcion_custom },
+                { key: 'cantidad', header: 'Cant.', align: 'center', width: 70, render: fmtCantidad },
                 { key: 'precio_aplicado', header: 'Precio', align: 'right', width: 140, render: formatPrecioARS },
               ]}
               reorderKey="detalle-servicios"
@@ -381,6 +393,12 @@ export default function DetallePresupuesto() {
             it.tipo === 'repuesto' ? (
               <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                 <TextField
+                  type="number" min="0" step="1" placeholder="Cant."
+                  value={it.cantidad}
+                  onChange={(e) => actualizarCampo(idx, 'cantidad', e.target.value)}
+                  style={{ width: 80 }}
+                />
+                <TextField
                   placeholder="Código"
                   value={it.repuesto_codigo || ''}
                   onChange={(e) => actualizarCampo(idx, 'repuesto_codigo', e.target.value)}
@@ -398,12 +416,6 @@ export default function DetallePresupuesto() {
                   style={{ width: 150 }}
                 />
                 <TextField
-                  type="number" min="0" step="1" placeholder="Cant."
-                  value={it.cantidad}
-                  onChange={(e) => actualizarCampo(idx, 'cantidad', e.target.value)}
-                  style={{ width: 80 }}
-                />
-                <TextField
                   type="number" step="0.01" placeholder="P. unitario"
                   value={it.precio_unitario}
                   onChange={(e) => actualizarCampo(idx, 'precio_unitario', e.target.value)}
@@ -415,6 +427,7 @@ export default function DetallePresupuesto() {
               </div>
             ) : (
               <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <ContadorServicio cantidad={Number(it.cantidad) || 0} onChange={(n) => actualizarCampo(idx, 'cantidad', n)} />
                 {it.desc_facra ? (
                   <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{it.desc_facra}</span>
                 ) : (
@@ -426,11 +439,14 @@ export default function DetallePresupuesto() {
                   />
                 )}
                 <TextField
-                  type="number" step="0.01" placeholder="Precio"
-                  value={it.precio_aplicado}
+                  type="number" step="0.01" placeholder="Precio unit."
+                  value={it.precio_unitario}
                   onChange={(e) => actualizarPrecio(idx, e.target.value)}
-                  style={{ width: 140 }}
+                  style={{ width: 130 }}
                 />
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 120, textAlign: 'right' }}>
+                  {formatPrecioARS((Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0))}
+                </span>
                 <button onClick={() => quitarItem(idx)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
                   <Icon n="x" s={16} />
                 </button>

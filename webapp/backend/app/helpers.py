@@ -1,3 +1,16 @@
+import re
+
+
+def formato_nombre_titulo(texto: str) -> str:
+    """
+    Title Case por palabra para nombres de cliente: "juan garcia" o
+    "JUAN GARCIA" -> "Juan Garcia". Usa str.capitalize() (Unicode-aware, respeta
+    acentos y ñ) en vez de str.title(), que rompe con apóstrofos y mayúsculas
+    internas. Se preservan los espacios tal cual vinieron (incluidos dobles).
+    """
+    return "".join(w.capitalize() if w.strip() else w for w in re.split(r"(\s+)", texto))
+
+
 def formato_precio_ars(valor) -> str:
     """Formatea un número como precio argentino: $ 1.234,50"""
     if valor is None:

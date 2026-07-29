@@ -19,7 +19,7 @@ export default function WizardPresupuesto() {
   const [motor, setMotor] = React.useState(null)
   // La selección de servicios y repuestos vive acá (no en cada paso) para que
   // ir atrás y adelante en el wizard no pierda lo ya elegido.
-  const [serviciosSel, setServiciosSel] = React.useState({ ids: [], customItems: [] })
+  const [serviciosSel, setServiciosSel] = React.useState({ cantidades: {}, customItems: [] })
   const [totalServicios, setTotalServicios] = React.useState(0)
   const [repuestos, setRepuestos] = React.useState([])
   const [error, setError] = React.useState('')
@@ -34,12 +34,17 @@ export default function WizardPresupuesto() {
     const pdfTab = window.open('', '_blank')
     try {
       const items = [
-        ...serviciosSel.ids.map((id) => ({ servicio_id: id })),
-        ...serviciosSel.customItems.map((c) => ({
-          servicio_id: null,
-          descripcion_custom: c.descripcion_custom,
-          precio_aplicado: c.precio_aplicado,
-        })),
+        ...Object.entries(serviciosSel.cantidades)
+          .filter(([, cantidad]) => cantidad > 0)
+          .map(([id, cantidad]) => ({ servicio_id: Number(id), cantidad })),
+        ...serviciosSel.customItems
+          .filter((c) => (c.cantidad || 0) > 0)
+          .map((c) => ({
+            servicio_id: null,
+            descripcion_custom: c.descripcion_custom,
+            precio_aplicado: c.precio_aplicado,
+            cantidad: c.cantidad,
+          })),
         ...repuestos.map((r) => ({
           tipo: 'repuesto',
           repuesto_codigo: r.repuesto_codigo,
@@ -69,7 +74,8 @@ export default function WizardPresupuesto() {
     setPaso((p) => p - 1)
   }
 
-  const cantidadItemsServicios = serviciosSel.ids.length + serviciosSel.customItems.length
+  const cantidadItemsServicios = Object.values(serviciosSel.cantidades).filter((c) => c > 0).length
+    + serviciosSel.customItems.filter((c) => (c.cantidad || 0) > 0).length
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -94,7 +100,7 @@ export default function WizardPresupuesto() {
           if (motor && m.id !== motor.id) {
             // Cambió el motor: la selección de servicios (y sus precios de lista)
             // ya no aplica. Los repuestos se conservan: no dependen del motor.
-            setServiciosSel({ ids: [], customItems: [] })
+            setServiciosSel({ cantidades: {}, customItems: [] })
             setTotalServicios(0)
           }
           setMotor(m)

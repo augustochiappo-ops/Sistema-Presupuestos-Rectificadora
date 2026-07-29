@@ -9,6 +9,7 @@ import sqlite3
 from datetime import date
 
 from . import config
+from .helpers import formato_nombre_titulo
 
 
 def get_connection() -> sqlite3.Connection:
@@ -179,19 +180,24 @@ def guardar_presupuesto(
     Retorna el id del presupuesto creado.
     """
     total = sum((i.get("precio_aplicado") or 0.0) for i in items)
+    nombre_normalizado = formato_nombre_titulo(cliente_nombre.strip())
 
     with get_connection() as conn:
         row = conn.execute(
-            "SELECT id FROM clientes WHERE nombre = ? COLLATE NOCASE",
-            (cliente_nombre.strip(),),
+            "SELECT id, nombre FROM clientes WHERE nombre = ? COLLATE NOCASE",
+            (nombre_normalizado,),
         ).fetchone()
 
         if row:
             cliente_id = row[0]
+            # Prolija oportunistamente nombres viejos guardados antes de esta
+            # normalización (ej. todo en minúscula).
+            if row[1] != nombre_normalizado:
+                conn.execute("UPDATE clientes SET nombre = ? WHERE id = ?", (nombre_normalizado, cliente_id))
         else:
             cur = conn.execute(
                 "INSERT INTO clientes (nombre) VALUES (?)",
-                (cliente_nombre.strip(),),
+                (nombre_normalizado,),
             )
             cliente_id = cur.lastrowid
 

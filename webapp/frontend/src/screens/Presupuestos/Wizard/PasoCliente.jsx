@@ -2,6 +2,7 @@ import React from 'react'
 import { api } from '../../../api/client'
 import { TextField } from '../../../components/TextField'
 import { Button } from '../../../components/Button'
+import { formatearNombreTitulo } from '../../../utils/format'
 
 export function PasoCliente({ valorInicial, onSiguiente }) {
   const [nombre, setNombre] = React.useState(valorInicial || '')
@@ -18,7 +19,8 @@ export function PasoCliente({ valorInicial, onSiguiente }) {
 
   const confirmar = (e) => {
     e?.preventDefault()
-    if (nombre.trim()) onSiguiente(nombre.trim())
+    // Solo feedback visual: el backend normaliza igual al guardar.
+    if (nombre.trim()) onSiguiente(formatearNombreTitulo(nombre.trim()))
   }
 
   return (

@@ -20,6 +20,13 @@ export function parsePrecioARS(texto) {
   return Number.isNaN(n) ? null : n
 }
 
+// Title Case por palabra para nombres de cliente: "juan garcia" o
+// "JUAN GARCIA" -> "Juan Garcia". Es solo feedback visual antes de confirmar
+// — el backend normaliza igual al guardar, que es la fuente de verdad.
+export function formatearNombreTitulo(texto) {
+  return texto.replace(/\S+/g, (palabra) => palabra[0].toUpperCase() + palabra.slice(1).toLowerCase())
+}
+
 export function formatFechaAR(fechaIso) {
   if (!fechaIso) return '—'
   const [y, m, d] = fechaIso.split('-')

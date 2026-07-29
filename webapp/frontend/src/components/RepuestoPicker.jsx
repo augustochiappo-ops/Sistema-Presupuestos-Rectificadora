@@ -8,8 +8,8 @@ import { CategoriasPanel } from './CategoriasPanel'
 import { Icon } from './Icon'
 import { formatPrecioARS } from '../utils/format'
 
-// Cantidades típicas de un motor: una unidad, o un juego por cilindro.
-const CANTIDADES = [1, 4, 8, 16]
+// Cantidades típicas de un motor: una unidad, o un juego por cilindro/válvula.
+const CANTIDADES = [1, 4, 6, 8, 12, 16]
 
 const selectStyle = {
   height: 44, padding: '0 14px', borderRadius: 'var(--radius-pill)',
@@ -123,6 +123,13 @@ export function SelectorCantidad({ cantidadActual, onElegir }) {
  * descripción. Sube el repuesto elegido con onAgregar(repuesto, cantidad);
  * `cantidadPorCodigo` es lo que ya está cargado, para mostrar el ×N.
  */
+const botonMenos = {
+  border: '1px solid var(--border-default)', background: 'var(--surface-card)',
+  borderRadius: 8, width: 30, height: 30, cursor: 'pointer', fontSize: 16, lineHeight: 1,
+  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+  color: 'var(--text-strong)', padding: 0,
+}
+
 export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, reorderKey = 'repuestos-presupuesto' }) {
   const [marcas, setMarcas] = React.useState([])
   const [categoriaSel, setCategoriaSel] = React.useState('')
@@ -175,26 +182,32 @@ export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, r
   }, cantidad)
 
   const columnas = [
-    { key: 'codigo', header: 'Código', width: 130, strong: true },
-    { key: 'aplicacion', header: 'Descripción', wrap: true },
-    { key: 'marca', header: 'Marca', width: 130, render: (v) => v || '—' },
-    { key: 'categoria', header: 'Categoría', width: 150, render: (v) => v || '—' },
-    { key: 'precio', header: 'Precio', align: 'right', width: 120, render: (v) => (v ? formatPrecioARS(v) : '—') },
     {
-      key: 'stock', header: 'Stock', align: 'center', width: 80,
-      render: (v) => <StatusBadge status={v ? 'active' : 'expired'}>{v ? 'Sí' : 'No'}</StatusBadge>,
-    },
-    {
-      key: '_agregar', header: '', align: 'center', width: 110,
+      key: '_agregar', header: '', align: 'center', width: 150,
       render: (_, row) => {
         const cantidad = cantidadPorCodigo.get(row.codigo)
         return (
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <button
+              style={botonMenos}
+              disabled={!cantidad}
+              onClick={(e) => { e.stopPropagation(); agregarFila(row, Math.max(0, (cantidad || 0) - 1)) }}
+            >
+              −
+            </button>
             {cantidad ? <StatusBadge status="active">×{cantidad}</StatusBadge> : null}
             <SelectorCantidad cantidadActual={cantidad} onElegir={(n) => agregarFila(row, n)} />
           </span>
         )
       },
+    },
+    { key: 'codigo', header: 'Código', width: 130, strong: true },
+    { key: 'aplicacion', header: 'Descripción', wrap: true },
+    { key: 'marca', header: 'Marca', width: 130, render: (v) => v || '—' },
+    { key: 'precio', header: 'Precio', align: 'right', width: 120, render: (v) => (v ? formatPrecioARS(v) : '—') },
+    {
+      key: 'stock', header: 'Stock', align: 'center', width: 80,
+      render: (v) => <StatusBadge status={v ? 'active' : 'expired'}>{v ? 'Sí' : 'No'}</StatusBadge>,
     },
   ]
 
@@ -216,6 +229,16 @@ export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, r
                 <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 110, textAlign: 'right' }}>
                   {s.precio_actual ? formatPrecioARS(s.precio_actual) : '—'}
                 </span>
+                <button
+                  style={botonMenos}
+                  disabled={!cantidad}
+                  onClick={() => onAgregar({
+                    codigo: s.codigo, descripcion: s.descripcion,
+                    precio: s.precio_actual, stock: s.stock_actual, categoria: s.categoria,
+                  }, Math.max(0, (cantidad || 0) - 1))}
+                >
+                  −
+                </button>
                 {cantidad ? <StatusBadge status="active">×{cantidad}</StatusBadge> : null}
                 <SelectorCantidad
                   cantidadActual={cantidad}

@@ -84,6 +84,17 @@
 **Fecha:** 2026-05-28
 **Actualización 2026-07-29:** se habilitó (ver decisiones más abajo). Este registro queda como historial.
 
+## Cantidad en mano de obra: mismo modelo de columnas que repuestos, botones aditivos
+**Decisión:** en vez de agregar una tabla/columna nueva para "cantidad de servicio", se reusan las columnas `cantidad`/`precio_unitario` que `presupuesto_items` ya tenía (pensadas en su momento solo para repuestos) — servicios FACRA y custom ahora también las completan, y `precio_aplicado` sigue siendo siempre cantidad × unitario, calculado server-side.
+**Por qué:** cero migración de esquema, y mantiene el invariante ya establecido de que `precio_aplicado` es siempre el total de línea — todo el código que ya suma `precio_aplicado` para sacar el total del presupuesto sigue funcionando sin tocarlo.
+**Botones de cantidad — dos comportamientos distintos a propósito:** `SelectorCantidad` (repuestos, ya existía) fija la cantidad final al elegir una opción del popover ("de esto van 8"). El componente nuevo `ContadorServicio` (mano de obra) es aditivo: cada botón (1/4/6/8) SUMA a la cantidad actual, porque el pedido explícito fue poder tocar "8" dos veces para llegar a 16 sin escribirlo a mano. No se unificó en un solo componente porque son dos mentalidades de uso distintas y confundirlas sería un bug de UX, no una simplificación.
+**Fecha:** 2026-07-29
+
+## Normalización de nombre de cliente: Title Case en el backend, con corrección oportunista de nombres viejos
+**Decisión:** `guardar_presupuesto()` normaliza el nombre a Title Case (`formato_nombre_titulo()`, capitalize por palabra, Unicode-aware para acentos/ñ) antes de buscar o crear el cliente. Si ya existía un cliente con el mismo nombre pero otra capitalización (match `COLLATE NOCASE`), se actualiza su nombre guardado al normalizado en vez de dejarlo como estaba.
+**Por qué:** el usuario pidió explícitamente que no importe cómo se tipee el nombre (todo minúscula, todo mayúscula), siempre quede prolijo. Corregir oportunistamente nombres viejos evita que queden clientes "sucios" dando vueltas indefinidamente solo porque se crearon antes de este cambio.
+**Fecha:** 2026-07-29
+
 ## Pestaña Repuestos (CRAC): persistencia, carga inicial y prefijos inactivos
 **Decisiones confirmadas con el usuario (vía preguntas explícitas antes de programar):**
 1. **Persistencia:** `precio-stock.csv` y `prefijos_crac.csv` se importan a SQLite (tablas `crac_repuestos` y `crac_prefijos`), igual que FACRA — cada carga reemplaza todo lo anterior. Se descartó leer el CSV en vivo en cada apertura de la pestaña.

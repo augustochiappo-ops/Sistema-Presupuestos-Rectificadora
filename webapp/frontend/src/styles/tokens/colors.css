@@ -32,7 +32,7 @@
   --surface-shell:#ffffff;          /* the big rounded app container */
   --surface-card:#ffffff;           /* stat cards, panels */
   --surface-sunken:#f5f6f7;         /* input wells, hovered rows */
-  --surface-stripe:#faf8f3;         /* alternating table rows (subtle warm off-white) */
+  --surface-stripe:#f0e9d8;         /* alternating table rows (warmer beige, more contrast against white) */
   --surface-inverse:#141619;        /* black pill / active nav / primary btn */
 
   --text-strong:#141619;            /* headings, big numbers */

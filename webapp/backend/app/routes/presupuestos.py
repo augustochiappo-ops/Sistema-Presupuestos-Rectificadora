@@ -67,6 +67,7 @@ def _items_para_pdf(presupuesto_id):
             "item_num": it["item_num"],
             "descripcion": it["desc_facra"] or it["descripcion_custom"],
             "precio_aplicado": it["precio_aplicado"],
+            "cantidad": it["cantidad"],
         }
         for it in items_full
         if it["tipo"] != "repuesto"
@@ -151,6 +152,11 @@ def _resolver_items(items_payload, lista_num):
     que mande el cliente); los ítems custom usan el precio que carga el usuario
     a mano, porque no existe otra fuente de verdad para un servicio ad-hoc.
     Los repuestos congelan código, unitario y stock al momento de cotizar.
+
+    Los servicios (FACRA o custom) admiten una cantidad (default 1, ej. "Reunir
+    cilindros" ×4 en un motor de 4 cilindros): el subtotal siempre se calcula acá
+    como cantidad × unitario, igual que ya se hace con repuestos.
+
     Retorna (resueltos, descartados): descartados lleva una descripción por cada
     ítem inválido, para avisar en vez de perderlo en silencio.
     """
@@ -165,15 +171,27 @@ def _resolver_items(items_payload, lista_num):
                 descartados.append(_descripcion_descartado(it))
             continue
 
+        try:
+            cantidad = float(it.get("cantidad", 1))
+        except (TypeError, ValueError):
+            descartados.append(_descripcion_descartado(it))
+            continue
+        if cantidad <= 0:
+            descartados.append(_descripcion_descartado(it))
+            continue
+
         servicio_id = it.get("servicio_id")
         if servicio_id:
             if servicio_id not in precios_lista:
                 descartados.append(_descripcion_descartado(it))
                 continue
+            precio_unitario = precios_lista[servicio_id]
             resueltos.append({
                 "servicio_id": servicio_id,
                 "descripcion_custom": None,
-                "precio_aplicado": precios_lista[servicio_id],
+                "precio_aplicado": round(precio_unitario * cantidad, 2),
+                "cantidad": cantidad,
+                "precio_unitario": precio_unitario,
             })
         else:
             desc = (it.get("descripcion_custom") or "").strip()
@@ -181,14 +199,17 @@ def _resolver_items(items_payload, lista_num):
                 descartados.append(_descripcion_descartado(it))
                 continue
             try:
-                precio = float(it.get("precio_aplicado"))
+                # El campo que carga el usuario a mano es el precio unitario.
+                precio_unitario = float(it.get("precio_aplicado"))
             except (TypeError, ValueError):
                 descartados.append(desc)
                 continue
             resueltos.append({
                 "servicio_id": None,
                 "descripcion_custom": desc,
-                "precio_aplicado": precio,
+                "precio_aplicado": round(precio_unitario * cantidad, 2),
+                "cantidad": cantidad,
+                "precio_unitario": precio_unitario,
             })
     return resueltos, descartados
 
@@ -198,10 +219,12 @@ def _resolver_items_edicion(items_payload):
     A diferencia de la creación, al editar un presupuesto ya existente el precio
     de CUALQUIER ítem (incluidos los de FACRA) es editable a mano — así es como
     ya funciona la app de escritorio (permite ajustar/descontar un precio en la
-    edición), así que acá se confía en el precio que manda el cliente en vez de
-    recalcularlo contra el catálogo. Para repuestos se confía en cantidad y
-    unitario, pero el subtotal se recalcula igual server-side, y se preservan
-    el código y el stock congelados que el frontend devuelve intactos.
+    edición), así que acá se confía en el unitario que manda el cliente en vez
+    de recalcularlo contra el catálogo. El subtotal (precio_aplicado) se
+    recalcula igual server-side como cantidad × unitario, tanto para servicios
+    como para repuestos, para no arrastrar drift de redondeo entre cliente y
+    servidor. Para repuestos se preservan además el código y el stock
+    congelados que el frontend devuelve intactos.
     """
     resueltos = []
     for it in items_payload:
@@ -212,17 +235,30 @@ def _resolver_items_edicion(items_payload):
             continue
 
         try:
-            precio = float(it.get("precio_aplicado"))
+            # precio_unitario es el campo nuevo; se acepta precio_aplicado como
+            # fallback para presupuestos armados antes de este cambio (cantidad 1).
+            precio_unitario = float(it.get("precio_unitario", it.get("precio_aplicado")))
+            cantidad = float(it.get("cantidad", 1))
         except (TypeError, ValueError):
             continue
+        if cantidad <= 0:
+            continue
+        precio_aplicado = round(precio_unitario * cantidad, 2)
+
         servicio_id = it.get("servicio_id")
         if servicio_id:
-            resueltos.append({"servicio_id": servicio_id, "descripcion_custom": None, "precio_aplicado": precio})
+            resueltos.append({
+                "servicio_id": servicio_id, "descripcion_custom": None,
+                "precio_aplicado": precio_aplicado, "cantidad": cantidad, "precio_unitario": precio_unitario,
+            })
         else:
             desc = (it.get("descripcion_custom") or "").strip()
             if not desc:
                 continue
-            resueltos.append({"servicio_id": None, "descripcion_custom": desc, "precio_aplicado": precio})
+            resueltos.append({
+                "servicio_id": None, "descripcion_custom": desc,
+                "precio_aplicado": precio_aplicado, "cantidad": cantidad, "precio_unitario": precio_unitario,
+            })
     return resueltos
 
 

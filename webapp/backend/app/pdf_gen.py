@@ -75,7 +75,10 @@ def generar_pdf(
 ) -> str:
     """
     Genera el PDF del presupuesto y lo guarda en output_path.
-    items: list of {item_num, descripcion, precio_aplicado} (servicios de mano de obra)
+    items: list of {item_num, descripcion, precio_aplicado, cantidad} (servicios
+    de mano de obra); `cantidad` es opcional (default 1) y se muestra como
+    "×N" junto a la descripción cuando es distinta de 1 (ej. "Reunir cilindros
+    ×4"). `precio_aplicado` ya viene multiplicado por la cantidad.
     repuestos: list of {descripcion, cantidad, precio_unitario, precio_aplicado};
     van en una sección propia, después de los servicios, y `descripcion` es la
     categoría del repuesto (ej. "Aros") — el código y la descripción del proveedor
@@ -168,9 +171,13 @@ def generar_pdf(
         ]]
 
         for item in items:
+            desc = str(item.get("descripcion") or "")
+            cantidad = item.get("cantidad")
+            if cantidad is not None and float(cantidad) != 1:
+                desc = f"{desc} ×{_fmt_cantidad(cantidad)}"
             tabla_data.append([
                 Paragraph(str(item.get("item_num") or ""), E["celda_num"]),
-                Paragraph(str(item.get("descripcion") or ""), E["celda_desc"]),
+                Paragraph(desc, E["celda_desc"]),
                 Paragraph(_fmt_precio(item.get("precio_aplicado")), E["celda_precio"]),
             ])
 

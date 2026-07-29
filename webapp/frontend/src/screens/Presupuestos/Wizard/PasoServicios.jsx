@@ -4,10 +4,14 @@ import { SearchInput } from '../../../components/SearchInput'
 import { TextField } from '../../../components/TextField'
 import { Button } from '../../../components/Button'
 import { Icon } from '../../../components/Icon'
+import { ContadorServicio } from '../../../components/ContadorServicio'
 import { formatPrecioARS } from '../../../utils/format'
 
-// Componente controlado: la selección (value = {ids, customItems}) vive en el
-// wizard, así volver atrás desde el paso de repuestos no la pierde.
+// Componente controlado: la selección (value = {cantidades, customItems}) vive
+// en el wizard, así volver atrás desde el paso de repuestos no la pierde.
+// cantidades: { [servicioId]: cantidad } — un servicio sin entrada (o en 0) no
+// está incluido en el presupuesto; cantidad > 1 multiplica el precio de lista
+// (ej. "Reunir cilindros" ×4 en un motor de 4 cilindros).
 export function PasoServicios({ motor, value, onChange, onSiguiente }) {
   const [servicios, setServicios] = React.useState([])
   const [favoritos, setFavoritos] = React.useState(new Set())
@@ -15,7 +19,7 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
   const [nuevoCustomDesc, setNuevoCustomDesc] = React.useState('')
   const [nuevoCustomPrecio, setNuevoCustomPrecio] = React.useState('')
 
-  const seleccionados = React.useMemo(() => new Set(value.ids), [value.ids])
+  const cantidades = value.cantidades
   const customItems = value.customItems
 
   React.useEffect(() => {
@@ -32,11 +36,11 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
     })
   }
 
-  const toggleSeleccion = (id) => {
-    const ids = seleccionados.has(id)
-      ? value.ids.filter((x) => x !== id)
-      : [...value.ids, id]
-    onChange({ ...value, ids })
+  const cambiarCantidad = (id, cantidad) => {
+    const nuevas = { ...cantidades }
+    if (cantidad > 0) nuevas[id] = cantidad
+    else delete nuevas[id]
+    onChange({ ...value, cantidades: nuevas })
   }
 
   const agregarCustom = () => {
@@ -45,11 +49,16 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
     if (!desc || Number.isNaN(precio)) return
     onChange({
       ...value,
-      customItems: [...customItems, { id: `custom-${Date.now()}`, descripcion_custom: desc, precio_aplicado: precio }],
+      customItems: [...customItems, { id: `custom-${Date.now()}`, descripcion_custom: desc, precio_aplicado: precio, cantidad: 1 }],
     })
     setNuevoCustomDesc('')
     setNuevoCustomPrecio('')
   }
+
+  const cambiarCantidadCustom = (id, cantidad) => onChange({
+    ...value,
+    customItems: customItems.map((c) => (c.id === id ? { ...c, cantidad: Math.max(0, cantidad) } : c)),
+  })
 
   const quitarCustom = (id) => onChange({ ...value, customItems: customItems.filter((c) => c.id !== id) })
 
@@ -61,39 +70,33 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
   const favoritosVisibles = filtrados.filter((s) => favoritos.has(s.id))
   const restoVisibles = filtrados.filter((s) => !favoritos.has(s.id))
 
-  const totalFacra = servicios
-    .filter((s) => seleccionados.has(s.id))
-    .reduce((acc, s) => acc + (s.precio || 0), 0)
-  const totalCustom = customItems.reduce((acc, c) => acc + c.precio_aplicado, 0)
+  const totalFacra = servicios.reduce((acc, s) => acc + (cantidades[s.id] || 0) * (s.precio || 0), 0)
+  const totalCustom = customItems.reduce((acc, c) => acc + c.precio_aplicado * (c.cantidad || 0), 0)
   const total = totalFacra + totalCustom
 
-  const Fila = ({ s }) => (
-    <div
-      onClick={() => toggleSeleccion(s.id)}
-      style={{
-        display: 'grid', gridTemplateColumns: '40px 40px 60px 1fr 130px', alignItems: 'center',
-        padding: '10px 16px', cursor: 'pointer', borderRadius: 'var(--radius-md)',
-        background: seleccionados.has(s.id) ? 'var(--status-active-bg)' : 'transparent',
-      }}
-    >
-      <span
-        onClick={(e) => { e.stopPropagation(); toggleFavorito(s.id) }}
-        style={{ display: 'flex', color: favoritos.has(s.id) ? '#e8b400' : 'var(--text-faint)' }}
+  const Fila = ({ s }) => {
+    const cantidad = cantidades[s.id] || 0
+    return (
+      <div
+        style={{
+          display: 'grid', gridTemplateColumns: '40px auto 60px 1fr 130px', alignItems: 'center', gap: 10,
+          padding: '10px 16px', borderRadius: 'var(--radius-md)',
+          background: cantidad > 0 ? 'var(--status-active-bg)' : 'transparent',
+        }}
       >
-        <Icon n="star" s={16} style={{ fill: favoritos.has(s.id) ? '#e8b400' : 'none' }} />
-      </span>
-      <span style={{
-        width: 20, height: 20, borderRadius: 6, border: `1.5px solid ${seleccionados.has(s.id) ? 'var(--status-active-fg)' : 'var(--border-strong)'}`,
-        background: seleccionados.has(s.id) ? 'var(--status-active-fg)' : 'transparent',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>
-        {seleccionados.has(s.id) && <Icon n="check" s={13} style={{ color: '#fff' }} />}
-      </span>
-      <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{s.item_num}</span>
-      <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{s.descripcion}</span>
-      <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', textAlign: 'right', fontWeight: 600 }}>{formatPrecioARS(s.precio)}</span>
-    </div>
-  )
+        <span
+          onClick={() => toggleFavorito(s.id)}
+          style={{ display: 'flex', cursor: 'pointer', color: favoritos.has(s.id) ? '#e8b400' : 'var(--text-faint)' }}
+        >
+          <Icon n="star" s={16} style={{ fill: favoritos.has(s.id) ? '#e8b400' : 'none' }} />
+        </span>
+        <ContadorServicio cantidad={cantidad} onChange={(n) => cambiarCantidad(s.id, n)} />
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{s.item_num}</span>
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{s.descripcion}</span>
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', textAlign: 'right', fontWeight: 600 }}>{formatPrecioARS(s.precio)}</span>
+      </div>
+    )
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -120,8 +123,12 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
         </div>
         {customItems.map((c) => (
           <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)' }}>{c.descripcion_custom}</span>
-            <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600 }}>{formatPrecioARS(c.precio_aplicado)}</span>
+            <ContadorServicio cantidad={c.cantidad || 0} onChange={(n) => cambiarCantidadCustom(c.id, n)} />
+            <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)' }}>
+              {c.descripcion_custom}
+              <span style={{ color: 'var(--text-faint)' }}> ({formatPrecioARS(c.precio_aplicado)} c/u)</span>
+            </span>
+            <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600 }}>{formatPrecioARS(c.precio_aplicado * (c.cantidad || 0))}</span>
             <button onClick={() => quitarCustom(c.id)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
               <Icon n="x" s={16} />
             </button>
@@ -129,7 +136,7 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
         ))}
         <div style={{ display: 'flex', gap: 10 }}>
           <TextField placeholder="Descripción" value={nuevoCustomDesc} onChange={(e) => setNuevoCustomDesc(e.target.value)} style={{ flex: 1 }} />
-          <TextField placeholder="Precio" value={nuevoCustomPrecio} onChange={(e) => setNuevoCustomPrecio(e.target.value)} style={{ width: 140 }} />
+          <TextField placeholder="Precio unit." value={nuevoCustomPrecio} onChange={(e) => setNuevoCustomPrecio(e.target.value)} style={{ width: 140 }} />
           <Button variant="secondary" iconLeft={<Icon n="plus" s={16} />} onClick={agregarCustom}>Agregar</Button>
         </div>
       </div>
