@@ -1,0 +1,297 @@
+tipo;prefijo;nombre;activo;codigos_ref
+marca;3B;3B;si;
+marca;AA;A.A.;si;
+marca;SP;A.M.C;no;
+marca;AC;AceroMetal;si;
+marca;AE;Eurasia;si;
+marca;AJ;Ajusa;si;
+marca;AK;Akuro;si;
+marca;AO;Amoroso;si;
+marca;PA;Arduino;si;ATPA 6594 | ATPA 6595
+marca;AM;Argen-Maq;si;
+marca;AS;Asiaticos;si;
+marca;AU;AutoLinea;si;
+marca;BH;Bayerque;si;
+marca;BZ;Baztarrica;si;
+marca;BL;BLK Diesel;si;
+marca;FX;Borgonova;si;
+marca;BT;BTA;no;HEBT132020 | HEBT191206
+marca;BU;Buxton;si;
+marca;BY;BYC;si;BDBY 136
+marca;CL;Carpla;no;
+marca;CT;Centrinel;si;
+marca;CP;Cepall;si;
+marca;CH;Champion;si;BECH CJ8 | BPCH 0139
+marca;CY;Chrysler Original;si;MOCY7095928
+marca;C;Clapp;si;F C 8189 STD
+marca;NH;CNH;si;
+marca;CR;Cordero;si;BRCR152004 | BRCR152005 | BRCR152006
+marca;DY;Correas Dayco;si;CODY059P7.43M1 | CODY065SHP+127 | CODY070SP160H
+marca;CO;Corteco;si;
+marca;CA;CRAC;si;
+marca;CK;Crako;si;
+marca;CU;Cummins Original;si;
+marca;PB;DC;no;
+marca;DE;Deutz Original;si;
+marca;DC;Difac;si;
+marca;DW;Dowel;si;G DW490B03102 | P DW498B040011
+marca;DU;Duncan;si;
+marca;EF;E.F.N.;si;
+marca;EL;ELF;si;LUEL203906
+marca;EA;Eurasia;si;
+marca;FM;F.Mogul Importado;si;A FM114907 0.5
+marca;CE;Fadecya;si;
+marca;FA;Fallone;si;
+marca;FE;Fapersa;si;
+marca;F;Federal Mogul;si;
+marca;FT;Fenix Pavan;si;
+marca;FI;Fiat Original;si;
+marca;FO;Ford Original;si;
+marca;FS;FOS;si;CTFS 700
+marca;FP;FP Diesel;si;
+marca;G;Garbossa;si;CDG 476 | CDG 482 | CDG 506E
+marca;GL;Glyco;si;
+marca;GM;GM Original;si;
+marca;GO;Goetze;si;A GO181700 STD
+marca;HD;Heavy Duty;si;
+marca;HE;Helicoil;no;HEHE 190312
+marca;IL;Illinois;si;JCIL1150700 | JCIL1150800
+marca;AH;Importadas;si;G AH6150111140
+marca;EZ;Importado;si;
+marca;IA;INA;si;TZIA110483/3 | TZIA123305/1 | TZIA239678
+marca;ID;Indenor Original;si;RVID XD2-3
+marca;I;Indubron;si;
+marca;IY;INDY;si;
+marca;IV;Iveco Original;si;
+marca;JM;J.M.;si;BAJMJD-B70
+marca;JD;John Deere Alternativo;si;
+marca;KG;King;si;
+marca;KM;KMP Brand;si;
+marca;KT;KMP Brands;si;
+marca;KS;KS;si;
+marca;KU;Kubota Original;si;
+marca;LP;La Plata;si;
+marca;LS;Lister Petter;si;S LS128401040
+marca;LO;Loctite;si;SELO18581 | SELO18718 | SELO23435
+marca;LU;Lujor;si;CRLU 099 | CRLU 100-M
+marca;ME;M. Benz Original;si;
+marca;MH;M.H.;si;
+marca;MA;Maet;si;
+marca;MG;Magrini;si;
+marca;BE;Mahle;si;
+marca;MN;Maringa;si;
+marca;MM;Master Parts;si;
+marca;MO;Maxiforce;si;
+marca;MX;Maxion Original;si;
+marca;MT;Metalgama;si;
+marca;MI;MIBA;si;
+marca;MU;Motor Plus;si;
+marca;MJ;Motores Japoneses;si;
+marca;MS;Mpis;si;
+marca;MW;MWM Original;si;
+marca;NV;Navistar;si;
+marca;B;Nubo;si;ARB 1227
+marca;NB;Nubo;si;
+marca;OC;O. Cravero;si;PGOC10000 | PGOC10001 | PGOC10003
+marca;OD;Oddi;si;
+marca;JO;Ombu;si;IBJO 1450 38 | IBJO 1450 40 | IBJO 1450 42
+marca;PP;Pampa;si;OCPP15459 | OCPP15727 | OCPP27457
+marca;PL;Pellacani;si;
+marca;P;Perfect Circle;si;
+marca;PT;Perkins Alternativo;si;
+marca;PK;Perkins Orig.;si;
+marca;PS;Persan;si;
+marca;PE;Pescara;si;
+marca;PF;Pesefa;si;E PF 010 | E PF 095 | E PF4008
+marca;PW;Power Engine;si;
+marca;RD;RD;si;RERD 056T
+marca;RE;Renault Original;si;
+marca;R;RYC;si;
+marca;SA;SABI;si;
+marca;SO;SABO;si;
+marca;SR;Seeger Reno;si;
+marca;SC;Shadek;si;
+marca;SI;Silva;si;
+marca;SN;Sintermetal;si;
+marca;SK;SKF;si;TZSK VKM 04839 | TZSK VKM 32005
+marca;SH;Stahl;si;
+marca;SU;Sural;si;
+marca;SF;Susin Francescutti;si;
+marca;SY;Sylicum;no;
+marca;TC;tahuhilco;si;
+marca;TR;Tarabusi;si;
+marca;TA;Taranto;si;JCTA220370 02 | JCTA300770 095 | JCTA300770 115
+marca;TN;Thompson;si;
+marca;TM;TMR;si;BWTM 1950
+marca;TT;Total;si;LUTT1107163 | LUTT133623 | LUTT159212
+marca;TY;Toyota;si;
+marca;TS;Trabasil;si;SETS200000 | SETS200008 | SETS200009
+marca;UN;Universal;si;V UN11502050 | V UN12702105
+marca;VM;V.M.;si;
+marca;VW;V.W. Original;si;
+marca;VA;Valotto;si;PVVA 1012  235
+marca;VT;Valtra;si;
+marca;VV;Vandervell;si;
+marca;VG;VMG;si;BWVG 027
+marca;EW;Wega;si;BEWEW-G17Y
+marca;WE;Weichai Original;si;
+marca;ZT;Zetor;si;A ZT52110096 | A ZT80003096 | A ZT950950
+marca;ZO;Zodda;si;
+marca;BA;Bel-Ar;no;
+marca;CM;Importado UE;no;
+marca;IM;Importados;no;
+categoria;JC;Anillo Supl. Camisa;si;JCIL1150700 | JCIL1150800 | JCTA220370 02
+categoria;AT;Aradelas p/Tornillos;si;ATPA 6594 | ATPA 6595 | ATSR08FI013A
+categoria;AN;Arand. de Precamara;si;ANFP2S8959 | ANFP2S8960 | ANFP4N7253
+categoria;AR;Arand. Res. de Valv.;si;ARB 1227 | ARCU3972757 | ARJD20168
+categoria;AV;Arandelas Varias;si;AVFP5M2894 | AVFP8T3282 | AVMW2903400744
+categoria;AC;Arbol Comando;si;ACAM 3066 | ACAO 140 | ACVM 007
+categoria;AL;Arboles de Levas;si;ALAO 200 | ALBE21008 | ALBH 113
+categoria;A;Aros;si;A AK302052 STD | A AK304050RSTD | A AK304052 0.5
+categoria;F;Asientos / Casquillos;si;F C 8189 STD | F IY 5032 | F IY 5032 005
+categoria;TZ;Autotensor;si;TZIA110483/3 | TZIA123305/1 | TZIA239678
+categoria;BL;Balancin de Levas;si;BLAK206190 | BLAK206191 | BLAK301190
+categoria;IB;Bermuda;si;IBJO 1450 38 | IBJO 1450 40 | IBJO 1450 42
+categoria;BI;Bielas;si;BIAK302250 | BIBE0130930 | BIJD86986
+categoria;BK;Block de Motor;si;BKAU01-00126 | BKFI 1700D | BKFO1330205
+categoria;BS;Block Semiarmado;si;BSAU01-00339 | BSFI178F4055 | BSFO8E5Z6009D
+categoria;BO;Bobina de Encedido;si;BOBE 001
+categoria;BN;Bomba de Combustible;si;BNJD38009 | BNMJ154355 | BNMW5202000021
+categoria;BY;Bomba Inyectora;si;BYMW0707270024 | BYMX77548
+categoria;BA;Bombas de Aceite;si;BAAK302350 | BADU01118 | BASA CM5000
+categoria;BW;Bombas de Agua;si;BWAK302360 | BWMW0757310055 | BWTM 1950
+categoria;BV;Botadores de Válv.;si;BVAK502170 | BVBE 57738 | BVJD52773
+categoria;BD;Buje de Directa;si;BDBY 136 | BDMW2903300044
+categoria;BT;Buje Tapa Cil.;si;BTCA 001
+categoria;B;Bujes de Biela;si;B BE131210 STD | B CU3939371 | B KS77728  SMT
+categoria;CD;Bujes de levas;si;CDBE25096 | CDG 476 | CDMJ249070 | CDVM 001 | CDWE2600010990
+categoria;BE;Bujias Encendido;si;BECH F11YC | BECH F14YC | BECH J8C
+categoria;BP;Bujias Precalentamiento;si;BPEA17050 | BPEA46869 | BPFP2326662
+categoria;BM;Bulon Bancadas;si;BMCU3916369 | BMCU3927948 | BMDE3023238
+categoria;BB;Bulon de Biela;si;BBCU3928870 | BBCU3939409 | BBCU3944679
+categoria;BC;Bulon de Cigüeñal;si;BCMJ213601 | BCMJ333601 | BCMJ333602
+categoria;BR;Bulon Reg. Valvula;si;BRCR152004 | BRCR152005 | BRCR152006
+categoria;BU;Bulones Varios;si;BUPT32162203
+categoria;IO;Buzo Polar;no;IOJO 100
+categoria;CV;Cable de Bujias;si;CVBE0140018 | CVBE0140034 | CVBE0140037
+categoria;D;Cadenas de Distribución;si;D AK562300 | D BWD455-64 | D FO1097626
+categoria;CP;Camisa Portainyector;si;CPFP1193061 | CPFP2271200 | CPFP8925981
+categoria;C;Camisas;si;
+categoria;IC;Camisas de Trabajo;no;
+categoria;CI;Cigüeñales;si;CIJDRE89869 | CIJDRE95027 | CIFP5S7988
+categoria;CF;Cojinete axial;si;CFAC007 STD | CFAC009 STD | CFGL001/4 STD
+categoria;CB;Cojinetes bancada;si;CBAC309100 STD | CBAC309200 STD | CBGL1180/4 STD
+categoria;CA;Cojinetes biela;si;CAAC202100 STD | CAAC202200 STD | CAAC202300 STD
+categoria;CM;Compensador de Mazas;si;CMMW1207040016 | CMMW1207040026 | CMMW1209740014
+categoria;CE;Compresor de Aire;si;CEMW1200510014
+categoria;CT;Conj. Tacitas y Tapon;si;CTMJ104290 | CTMJ123290 | CTMJ132290
+categoria;T;Conjuntos;si;TADE3032014 | TADE3032015 | TADE3032016
+categoria;E;Conjuntos Embrague;no;
+categoria;EK;Conjuntos Embrague (Alt.);no;
+categoria;CR;Corona Arranque;si;CRJD114282 | CRJD28811 | CRMJ132390
+categoria;CO;Correas;si;COAK211330 | COAK212330 | COAK212331
+categoria;ER;Crapodinas de Embrague;no;
+categoria;CU;Cuna Arbol de Levas;si;CUCA CAL-002 | CUCA CAL-003
+categoria;ED;Discos de Embrague;no;
+categoria;EB;Ejes de Balancin;si;EBDE3002163 | EBFP23500714 | EBFP5116072
+categoria;EA;Eng. Arbol de Levas;si;EABEZ70500 | EAFX4769412 | EAFX4769414
+categoria;EX;Eng. Cdo. Auxiliar;si;EXPL 10218 | EXPL 10219
+categoria;EY;Eng. Mdo. Bba. Inyect.;si;EYFX4769596 | EYMJ153001 | EYMJ182001
+categoria;EP;Eng. Mdo. Correa Dist.;si;EPMJ123317
+categoria;EG;Engr. de Cigüeñal;si;EGDE4238296 | EGEA24276 | EGEA24581
+categoria;EI;Engr. Intermediario;si;EIDE4154591 | EIFX4607743 | EIFX98435129
+categoria;EL;Engran. Balanceador;si;ELFP1P1722 | ELMJ274314 | ELMJ274315
+categoria;EO;Engranaje Bba. Aceite;si;EOMJ123370 | EOMJ206370 | EOMJ206371
+categoria;EN;Engranaje de Mando;si;ENEA24335 | ENFP8921172 | ENFX4669958
+categoria;EZ;Engranaje Loco Distr.;si;EZMJ238315 | EZMJ274315 | EZMJ274316
+categoria;EV;Engranajes Varios;si;EVMW7000972C1 | EVPIP15-05-030
+categoria;ES;Esparragos;si;ESMW2903510194 | ESMX70820125 | ESPA 3021  415
+categoria;FC;Filtro Combustible;si;FCFP2998229 | FCNVFF5078
+categoria;FO;Filtro de Aceite;si;FOFP4621171 | FONVLF3883
+categoria;FA;Filtro de Aire;si;FABE LX0273 | FABE LX0524
+categoria;FH;Filtro de Habitaculo;no;FHBE LA0168
+categoria;FI;Filtros Importado;si;FICM3322246974 | FIDE1164620 | FIDE1174417
+categoria;GE;Grupos Generadores;no;GEDW926080.5
+categoria;G;Guías de válvulas;si;
+categoria;HE;Herramientas;si;HEBT191206 | HEBT191268.2 | HEBT195050.1
+categoria;H;Herramientas (Varios);no;
+categoria;IS;Indumentaria Seguridad;no;
+categoria;IA;Inyector de Aceite;si;IAAK544375 | IAAK721375 | IAAK753375
+categoria;IN;Inyectores Comb.;si;INJD36939 | INJD37503 | INJD48786
+categoria;JK;Jgo. Juntas c/Ret. y Bulones;si;JKTA550400-SK
+categoria;JR;Jgo. Juntas c/Retenes;si;JRAK305201 | JRAK308200 | JRAK309200
+categoria;JE;Jgo. Juntas Completo;si;JEIL176-05 | JEIL202-05 | JEIL337-15
+categoria;JV;Juegos Juntas Varios;si;JVFO1322526 | JVFO1748634 | JVMJ251223
+categoria;BJ;Junta Tapa Lateral;si;BJIL2742100 | BJME3660150060 | BJSO78599
+categoria;JD;Juntas Descarboniz.;si;JDAK130205 | JDAK201205 | JDAK201205 140
+categoria;JI;Juntas Tapa Cilindro;si;JIAK309210 | JIAK310211 151 | JIAK543211
+categoria;AB;Kit Arbol y Balancin;si;ABMC190.302/E1
+categoria;KF;Kit de Filtros;si;KFBE 14000 | KFBE 14100
+categoria;KM;Kit Motor;no;KMCH 001
+categoria;KR;Kit Resortes Valvulas;no;KRVM 001
+categoria;KD;Kits de Distribucion;si;KDAK306305 | KDAK306306 | KDAK306307
+categoria;LU;Lubricantes;si;LUEL203906 | LUPW10130760 | LUPW10130761
+categoria;IM;Mamelucos;no;
+categoria;MC;Motor Completo;no;
+categoria;MP;Motor Parcial;no;MPVM 001
+categoria;MS;Motor Semi Armado;no;MSFI50041399
+categoria;MO;Motores Armado;si;MOFI178D8011 | MOFI327A055 | MOFI7095916
+categoria;MU;Multiple de Escape;si;MUMW1009210064 | MUMW1009300086 | MUMW1209200014
+categoria;OC;Oring Camisa;si;OCBEU13910 | OCBEU48930 | OCBEU48990
+categoria;OP;Oring de Precamara;si;OPFP3107255 | OPFP3107257 | OPFP7S3206
+categoria;OR;Oring Navistar;si;ORNV1822322C93
+categoria;OV;Oring Varios;si;OVFX14465282 | OVFX14476582 | OVFX722962
+categoria;IP;Pantalones Trabajo;no;
+categoria;PF;Paraflamas;no;PFCA 100
+categoria;PV;Pastilla Reg. Valvula;si;PVMJ360440 | PVMJ360440 270 | PVMJ360440 275
+categoria;PE;Pernos;si;PEFP5111764 | PEFP5111777 | PEFP5S4207
+categoria;PB;Pernos de Fijacion;si;PBMW0703100054
+categoria;P;Pistones;si;
+categoria;EC;Placas de Embrague;no;
+categoria;PT;Platillo Valvula;si;PTAH6150414510 | PTDE3358979 | PTFP2768133
+categoria;PA;Polea Arbol Levas;no;
+categoria;PG;Polea de Cigüeñal;si;PGAK704516 | PGAK704517 | PGBL3925561
+categoria;PO;Polea Viscosa;no;
+categoria;PC;Precámaras;si;PCCA 001 | PCCA 002 | PCCA 003
+categoria;PL;Productos Limpieza;no;
+categoria;PR;Protector de Biela;si;PRBL3933384
+categoria;RA;Rampa de Balancin;si;RAMW1006100027 | RAMX70993630R | RAMXERR2855A
+categoria;RE;Refriger. de Aceite;si;RECU3957544 | RECU5284362 | REEA53251
+categoria;RR;Registro de Valvulas;si;RRMJ206425 | RRMJ602427 | RRMJ602428
+categoria;RP;Repuestos Varios;si;RPDE1137239 | RPDE2131029 | RPDE2230216
+categoria;RV;Resortes de Valvulas;si;RVBL3916691 | RVBL3926700 | RVCU3926700
+categoria;SV;Resortes de Valvulas (Alt.);si;SVMJ621430 | SVAK228430 | SVAK704430
+categoria;JB;Ret. Banc. Soga/Baston;si;JBSO48879.00 | JBSO48880.00 | JBTA43058
+categoria;R;Retenes;si;RSO48840.00 | RSO48849.00 | RSO48862.00
+categoria;SP;Seguros de Pernos;si;SPAN016 | SPAN019X125C | SPAN019X150C
+categoria;SE;Selladores;si;SEIL2099100 | SEIL2099200 | SEIL2099800
+categoria;SM;Soporte de Motor;si;SMMW0706010064 | SMMW1006010014 | SMMW1006010154
+categoria;S;Subconjuntos;si;
+categoria;TB;Tapa Bancada Arbol de Levas;si;TBAM3007 | TBAM3011 | TBAM3014
+categoria;TL;Tapa Lateral Botador;si;TLMJ601328
+categoria;TD;Tapa Radiador Aceite;si;TDMJ132460 | TDMJ134460 | TDMJ134461
+categoria;TC;Tapas de cilindros;si;TCSHT1402760 | TCSHT1403376 | TCSHT1413414
+categoria;TO;Tapon Roscado;si;TODE1170580 | TOCA 001 | TOCA 002
+categoria;TA;Tapones Tacitas;si;TAFP3907254 | TAFP3907285 | TAFP3909001
+categoria;TQ;Taquete de Valvulas;si;TQCA08100 | TQCA08600 | TQCA09200
+categoria;TF;Tensor Correa Fijo;si;TFMJ101323 | TFMJ106324 | TFMJ123322
+categoria;TM;Tensor Correa Movil;si;TMAK775324 | TMAK775325 | TMEA36108
+categoria;TP;Tensor Poly-V;si;TPSK VKM 04781 | TPSK VKM 31004
+categoria;TS;Tensores de Cadena;si;TSAK509320 | TSAK581320 | TSAK828320
+categoria;TT;Termostato;si;TTBETI 12 87 | TTBETI 122 87D | TTBETI 136 84
+categoria;TN;Tornillos de tapa;si;TNAK309810 | TNAK309811 | TNAK309812
+categoria;TR;Trapos de Limpieza;no;
+categoria;TV;Tubo p/Guia;si;TVKL 1841 | TVKL 1842
+categoria;TU;Tuercas;si;TUFP5117629 | TUFP5S6348 | TUFP9L7669
+categoria;TG;Turbocargador;si;TGAK701610 | TGBETC0010091 | TGBETC0010101
+categoria;V;Válvulas;si;VUNV0027 | VUNV0028 | VUNV0030
+categoria;VR;Valv. Reg. Pres.;si;VRMJ333512 | VRMJ333513 | VRMW4527420042
+categoria;VV;Varilla Lev. Valvula;si;VVAK304450 | VVAS00999 | VVAS12190500
+categoria;I;Varios;no;
+categoria;J;Varios;no;
+categoria;K;Varios;no;
+categoria;L;Varios;no;
+categoria;M;Varios;no;
+categoria;O;Varios;no;
+categoria;VM;Volante de Motor;si;VMVM 001 | VMVM 002
+categoria;VO;Volante Motor;si;VOMW0701450015 | VOMW0701450096 | VOMW0701450175
