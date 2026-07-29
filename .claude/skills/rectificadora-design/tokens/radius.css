@@ -1,0 +1,9 @@
+/* Rectificadora — Radius tokens (generous rounding, Jobgio-style) */
+:root{
+  --radius-sm:10px;    /* badges, small chips */
+  --radius-md:14px;    /* inputs, buttons */
+  --radius-lg:20px;    /* stat cards */
+  --radius-xl:26px;    /* panels, table container */
+  --radius-2xl:34px;   /* outer app shell */
+  --radius-pill:999px; /* nav pill, avatars, status pills */
+}

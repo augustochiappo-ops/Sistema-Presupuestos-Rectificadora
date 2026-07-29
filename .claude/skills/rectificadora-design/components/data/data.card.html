@@ -1,0 +1,30 @@
+<!-- @dsCard group="Components" viewport="700x360" name="Data — DataTable, BarChart" subtitle="Listings table and monochrome bar chart" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;font-family:var(--font-body);background:var(--surface-shell);padding:26px}.chart{border:1px solid var(--border-default);border-radius:var(--radius-xl);padding:20px 22px;margin-bottom:22px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { DataTable, BarChart, StatusBadge } = window.RectificadoraDesignSystem_cc48ac;
+const meses=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const data=[6,8,3,5,7,6.4,4,5,3,6,4,5].map((a,i)=>({label:meses[i],a,b:a*0.6+1}));
+ReactDOM.createRoot(document.getElementById('root')).render(<>
+  <div className="chart"><BarChart data={data} height={140} /></div>
+  <DataTable
+    columns={[
+      {key:'code',header:'Código',strong:true,width:120},
+      {key:'motor',header:'Motor'},
+      {key:'cliente',header:'Cliente'},
+      {key:'total',header:'Total',align:'right'},
+      {key:'estado',header:'Estado',render:v=><StatusBadge status={v}/>},
+    ]}
+    rows={[
+      {code:'0006',motor:'CHEVROLET MERIVA 1.8 8V *4CIL* 80.5mm',cliente:'Cliente 2',total:'$ 494.677',estado:'pending'},
+      {code:'0005',motor:'BEDFORD 350 DIESEL *4CIL* 106.3mm',cliente:'Cliente 2',total:'$ 35.492',estado:'active'},
+      {code:'0004',motor:'BEDFORD 300 DIESEL *4CIL* 98.4mm',cliente:'Prueba',total:'$ 289.737',estado:'expired'},
+    ]}
+  />
+</>);
+</script></body></html>

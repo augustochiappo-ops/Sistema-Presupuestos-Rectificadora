@@ -1,0 +1,10 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Status pills" subtitle="Pending / Active / Expired — the only colour in the UI" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;font-family:var(--font-body);background:#fff;padding:24px;display:flex;gap:16px;align-items:center}
+.pill{padding:8px 18px;border-radius:var(--radius-pill);font-weight:600;font-size:14px}
+.lab{display:flex;flex-direction:column;gap:8px;align-items:center}.v{font-size:10px;font-family:monospace;color:var(--text-muted)}</style></head>
+<body>
+<div class="lab"><span class="pill" style="background:var(--status-pending-bg);color:var(--status-pending-fg)">Pending</span><span class="v">pending</span></div>
+<div class="lab"><span class="pill" style="background:var(--status-active-bg);color:var(--status-active-fg)">Active</span><span class="v">active · #1f7a46</span></div>
+<div class="lab"><span class="pill" style="background:var(--status-expired-bg);color:var(--status-expired-fg)">Expired</span><span class="v">expired · #a23b3b</span></div>
+</body></html>

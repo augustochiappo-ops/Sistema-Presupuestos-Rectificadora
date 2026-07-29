@@ -1,0 +1,32 @@
+<!-- @dsCard group="Components" viewport="700x300" name="Data display — StatCard, Badge, ListItem, Avatar" subtitle="Metric cards, status pills, list rows, avatars" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;font-family:var(--font-body);background:var(--surface-shell);padding:26px}.stats{display:flex;gap:14px;margin-bottom:22px}.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}.pills{display:flex;gap:10px;margin-bottom:16px}.panel{border:1px solid var(--border-default);border-radius:var(--radius-xl);padding:16px 18px}[data-lucide]{width:20px;height:20px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { StatCard, StatusBadge, ListItem, Avatar } = window.RectificadoraDesignSystem_cc48ac;
+const I = ({n})=> <i data-lucide={n}></i>;
+ReactDOM.createRoot(document.getElementById('root')).render(<>
+  <div className="stats">
+    <StatCard icon={<I n="users"/>} value="1.2K" label="Clientes" />
+    <StatCard icon={<I n="file-text"/>} value="3.5K" label="Presupuestos activos" active corner={<I n="arrow-up-right"/>} />
+    <StatCard icon={<I n="wrench"/>} value="491" label="Motores" />
+    <StatCard icon={<I n="alert-triangle"/>} value="80" label="Por aprobar" />
+  </div>
+  <div className="two">
+    <div>
+      <div className="pills"><StatusBadge status="pending"/><StatusBadge status="active"/><StatusBadge status="expired"/></div>
+      <div className="pills"><StatusBadge status="active">Aprobado</StatusBadge><StatusBadge status="expired">Vencido</StatusBadge></div>
+    </div>
+    <div className="panel">
+      <ListItem leading={<I n="building-2"/>} title="Caterpillar S.A." meta="Jun 10 03:20 · $494.677" trailing={<StatusBadge status="pending"/>} />
+      <ListItem leading={<Avatar name="Cliente 2" size={40}/>} title="Cliente 2" meta="5 presupuestos" trailing={<StatusBadge status="active"/>} />
+    </div>
+  </div>
+</>);
+setTimeout(()=>lucide.createIcons(),30);
+</script></body></html>

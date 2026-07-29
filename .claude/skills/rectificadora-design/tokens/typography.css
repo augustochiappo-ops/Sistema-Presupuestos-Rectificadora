@@ -1,0 +1,30 @@
+/* Rectificadora — Type tokens */
+:root{
+  --font-display:'Poppins','Plus Jakarta Sans',system-ui,sans-serif; /* wordmark, titles, big numbers */
+  --font-body:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif; /* everything else */
+
+  /* Type scale */
+  --text-3xl:32px;   /* page numbers e.g. 500K */
+  --text-2xl:26px;   /* page titles: "Listado de Motores" */
+  --text-xl:20px;    /* panel titles: "Quick Stats" */
+  --text-lg:17px;
+  --text-md:15px;    /* body default */
+  --text-sm:13px;    /* table cells, secondary */
+  --text-xs:12px;    /* captions, badges */
+  --text-2xs:11px;   /* eyebrow labels: MARCAS */
+
+  /* Weights */
+  --weight-regular:400;
+  --weight-medium:500;
+  --weight-semibold:600;
+  --weight-bold:700;
+
+  /* Line heights */
+  --leading-tight:1.15;
+  --leading-snug:1.3;
+  --leading-normal:1.5;
+
+  /* Tracking */
+  --tracking-eyebrow:0.14em; /* uppercase section labels */
+  --tracking-tight:-0.01em;
+}
