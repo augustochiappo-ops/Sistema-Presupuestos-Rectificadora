@@ -1,0 +1,27 @@
+<!-- @dsCard group="Components" viewport="700x330" name="Navigation — Sidebar NavItem, PageHeader" subtitle="Nav rows with active black pill, page title + actions" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;font-family:var(--font-body);background:var(--surface-shell);padding:26px}.wrap{display:grid;grid-template-columns:248px 1fr;gap:28px}.nav{display:flex;flex-direction:column;gap:6px}[data-lucide]{width:20px;height:20px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { NavItem, PageHeader, Button, SearchInput } = window.RectificadoraDesignSystem_cc48ac;
+const I = ({n})=> <i data-lucide={n}></i>;
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <div className="wrap">
+    <div className="nav">
+      <NavItem icon={<I n="wrench"/>} active>Listado de Motores</NavItem>
+      <NavItem icon={<I n="folder"/>}>Actualizar Excel</NavItem>
+      <NavItem icon={<I n="file-text"/>}>Presupuestos</NavItem>
+      <NavItem icon={<I n="dollar-sign"/>}>Editar Precios</NavItem>
+      <NavItem icon={<I n="users"/>}>Clientes</NavItem>
+    </div>
+    <PageHeader title="Presupuestos" subtitle="6 presupuestos · todos los clientes"
+      actions={<><SearchInput width={240} icon={<I n="search"/>} placeholder="Buscar…"/><Button variant="success" iconLeft={<I n="plus"/>}>Nuevo</Button></>} />
+  </div>
+);
+setTimeout(()=>lucide.createIcons(),30);
+</script></body></html>

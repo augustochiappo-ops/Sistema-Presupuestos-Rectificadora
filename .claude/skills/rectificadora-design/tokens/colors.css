@@ -1,0 +1,53 @@
+/* Rectificadora — Color tokens (monochrome, Jobgio-style) */
+:root{
+  /* Neutral scale: white -> black */
+  --neutral-0:#ffffff;
+  --neutral-25:#fbfbfc;
+  --neutral-50:#f5f6f7;
+  --neutral-100:#eceef0;
+  --neutral-200:#e2e4e8;
+  --neutral-300:#cfd2d8;
+  --neutral-400:#a7abb4;
+  --neutral-500:#7c818c;
+  --neutral-600:#565b66;
+  --neutral-700:#3a3e47;
+  --neutral-800:#22252b;
+  --neutral-900:#141619;
+  --neutral-950:#0b0c0e;
+
+  /* Brand = pure black / white contrast */
+  --brand-ink:#141619;
+  --brand-contrast:#ffffff;
+
+  /* Semantic status (kept desaturated to match the monochrome UI) */
+  --status-pending-bg:#eceef0;
+  --status-pending-fg:#565b66;
+  --status-active-bg:#e6f4ec;
+  --status-active-fg:#1f7a46;
+  --status-expired-bg:#f4e9e9;
+  --status-expired-fg:#a23b3b;
+
+  /* Semantic aliases */
+  --bg-app:#e9eaec;                 /* gray desk behind the app shell */
+  --surface-shell:#ffffff;          /* the big rounded app container */
+  --surface-card:#ffffff;           /* stat cards, panels */
+  --surface-sunken:#f5f6f7;         /* input wells, hovered rows */
+  --surface-inverse:#141619;        /* black pill / active nav / primary btn */
+
+  --text-strong:#141619;            /* headings, big numbers */
+  --text-body:#3a3e47;              /* default body */
+  --text-muted:#7c818c;             /* secondary / captions */
+  --text-faint:#a7abb4;             /* placeholder, disabled */
+  --text-on-inverse:#ffffff;
+
+  --border-subtle:#eceef0;          /* row dividers */
+  --border-default:#e2e4e8;         /* card & input borders */
+  --border-strong:#cfd2d8;
+
+  --focus-ring:#141619;
+
+  /* Chart */
+  --chart-bar:#141619;              /* primary series (Presupuestos) */
+  --chart-bar-alt:#d5d8dd;          /* secondary series (Aprobados) */
+  --chart-grid:#eceef0;
+}

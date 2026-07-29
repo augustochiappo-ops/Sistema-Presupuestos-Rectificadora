@@ -1,0 +1,32 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="styles.css">
+<style>
+  html,body{margin:0}
+  .tile{width:1280px;height:854px;display:flex;font-family:var(--font-display)}
+  .main{flex:1;background:var(--brand-ink);display:flex;align-items:center;justify-content:center}
+  .mark{display:flex;align-items:center;gap:26px}
+  .glyph{width:132px;height:132px;border-radius:34px;background:#fff;display:flex;align-items:center;justify-content:center}
+  .glyph svg{width:76px;height:76px}
+  .name{color:#fff;font-weight:700;font-size:96px;letter-spacing:-.02em;line-height:.95}
+  .name small{display:block;font-family:var(--font-body);font-weight:500;font-size:30px;letter-spacing:.02em;color:#a7abb4;margin-top:10px}
+  .strip{width:180px;display:flex;flex-direction:column}
+  .strip>div{flex:1}
+</style></head>
+<body>
+  <div class="tile">
+    <div class="main">
+      <div class="mark">
+        <div class="glyph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#141619" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 0-5.4 5.9l1.3 1.3-5.2 5.2a1.5 1.5 0 0 0 2.1 2.1l5.2-5.2 1.3 1.3a4 4 0 0 0 5.9-5.4l-2.5 2.5-1.8-.5-.5-1.8 2.5-2.5z"/></svg>
+        </div>
+        <div class="name">Rectifi<small>Sistema de Presupuestos</small></div>
+      </div>
+    </div>
+    <div class="strip">
+      <div style="background:#e6f4ec"></div>
+      <div style="background:#1f7a46"></div>
+      <div style="background:#a23b3b"></div>
+      <div style="background:#565b66"></div>
+    </div>
+  </div>
+</body></html>

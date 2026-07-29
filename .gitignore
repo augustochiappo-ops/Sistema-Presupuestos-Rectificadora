@@ -24,3 +24,6 @@ build/
 # OS
 Thumbs.db
 desktop.ini
+
+# Config local de Claude Code (permisos especificos de esta maquina)
+.claude/settings.local.json

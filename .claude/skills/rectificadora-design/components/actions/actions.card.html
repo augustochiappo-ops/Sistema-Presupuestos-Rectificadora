@@ -1,0 +1,32 @@
+<!-- @dsCard group="Components" viewport="700x230" name="Actions — Button, Search, Select" subtitle="Black / outline / green buttons, search field, dropdown" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;font-family:var(--font-body);background:var(--surface-shell);padding:26px}.row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}[data-lucide]{width:16px;height:16px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { Button, SearchInput, Select } = window.RectificadoraDesignSystem_cc48ac;
+const I = ({n})=> <i data-lucide={n}></i>;
+ReactDOM.createRoot(document.getElementById('root')).render(<>
+  <div className="row">
+    <Button variant="primary" iconRight={<I n="download"/>}>Exportar</Button>
+    <Button variant="secondary">Status</Button>
+    <Button variant="success" iconLeft={<I n="plus"/>}>Nuevo Presupuesto</Button>
+    <Button variant="ghost">Cancelar</Button>
+    <Button variant="primary" disabled>Próximamente</Button>
+  </div>
+  <div className="row">
+    <Button variant="primary" size="sm">sm</Button>
+    <Button variant="primary" size="md">md</Button>
+    <Button variant="primary" size="lg">lg</Button>
+  </div>
+  <div className="row">
+    <SearchInput icon={<I n="search"/>} placeholder="Buscar por marca, modelo o código…" />
+    <Select label="Status" />
+  </div>
+</>);
+setTimeout(()=>lucide.createIcons(),30);
+</script></body></html>
