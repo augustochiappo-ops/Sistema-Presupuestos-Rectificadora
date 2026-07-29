@@ -8,18 +8,24 @@ import { ErrorBanner } from '../../../components/ErrorBanner'
 import { MotorSelector } from '../../../components/MotorSelector'
 import { PasoCliente } from './PasoCliente'
 import { PasoServicios } from './PasoServicios'
+import { PasoRepuestos } from './PasoRepuestos'
 
-const PASOS = ['Cliente', 'Motor', 'Servicios']
+const PASOS = ['Cliente', 'Motor', 'Servicios', 'Repuestos']
 
 export default function WizardPresupuesto() {
   const navigate = useNavigate()
   const [paso, setPaso] = React.useState(0)
   const [cliente, setCliente] = React.useState('')
   const [motor, setMotor] = React.useState(null)
+  // La selección de servicios y repuestos vive acá (no en cada paso) para que
+  // ir atrás y adelante en el wizard no pierda lo ya elegido.
+  const [serviciosSel, setServiciosSel] = React.useState({ ids: [], customItems: [] })
+  const [totalServicios, setTotalServicios] = React.useState(0)
+  const [repuestos, setRepuestos] = React.useState([])
   const [error, setError] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
 
-  const finalizar = async (items) => {
+  const finalizar = async () => {
     setGuardando(true)
     setError('')
     // Se abre la pestaña ya (en blanco) dentro del gesto de click, sin esperar la
@@ -27,6 +33,21 @@ export default function WizardPresupuesto() {
     // suele bloquearla como popup por no considerarla parte de la interacción del usuario.
     const pdfTab = window.open('', '_blank')
     try {
+      const items = [
+        ...serviciosSel.ids.map((id) => ({ servicio_id: id })),
+        ...serviciosSel.customItems.map((c) => ({
+          servicio_id: null,
+          descripcion_custom: c.descripcion_custom,
+          precio_aplicado: c.precio_aplicado,
+        })),
+        ...repuestos.map((r) => ({
+          tipo: 'repuesto',
+          repuesto_codigo: r.repuesto_codigo,
+          descripcion: r.descripcion,
+          cantidad: r.cantidad,
+          precio_unitario: r.precio_unitario,
+        })),
+      ]
       const presupuesto = await api.post('/presupuestos', {
         cliente_nombre: cliente,
         motor_id: motor.id,
@@ -47,11 +68,13 @@ export default function WizardPresupuesto() {
     setPaso((p) => p - 1)
   }
 
+  const cantidadItemsServicios = serviciosSel.ids.length + serviciosSel.customItems.length
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       <PageHeader
         title="Nuevo Presupuesto"
-        subtitle={`Paso ${paso + 1} de 3 — ${PASOS[paso]}`}
+        subtitle={`Paso ${paso + 1} de ${PASOS.length} — ${PASOS[paso]}`}
         actions={
           <Button variant="secondary" iconLeft={<Icon n="arrow-left" s={16} />} onClick={volver}>
             Volver
@@ -66,11 +89,37 @@ export default function WizardPresupuesto() {
       )}
 
       {paso === 1 && (
-        <MotorSelector onSelect={(m) => { setMotor(m); setPaso(2) }} />
+        <MotorSelector onSelect={(m) => {
+          if (motor && m.id !== motor.id) {
+            // Cambió el motor: la selección de servicios (y sus precios de lista)
+            // ya no aplica. Los repuestos se conservan: no dependen del motor.
+            setServiciosSel({ ids: [], customItems: [] })
+            setTotalServicios(0)
+          }
+          setMotor(m)
+          setPaso(2)
+        }} />
       )}
 
       {paso === 2 && motor && (
-        <PasoServicios motor={motor} onFinalizar={finalizar} guardando={guardando} />
+        <PasoServicios
+          motor={motor}
+          value={serviciosSel}
+          onChange={setServiciosSel}
+          onSiguiente={(total) => { setTotalServicios(total); setPaso(3) }}
+        />
+      )}
+
+      {paso === 3 && motor && (
+        <PasoRepuestos
+          motor={motor}
+          value={repuestos}
+          onChange={setRepuestos}
+          totalServicios={totalServicios}
+          hayServicios={cantidadItemsServicios > 0}
+          onConfirmar={finalizar}
+          guardando={guardando}
+        />
       )}
     </div>
   )

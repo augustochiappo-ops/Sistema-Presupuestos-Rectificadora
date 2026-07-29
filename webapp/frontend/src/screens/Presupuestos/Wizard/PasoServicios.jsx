@@ -6,14 +6,17 @@ import { Button } from '../../../components/Button'
 import { Icon } from '../../../components/Icon'
 import { formatPrecioARS } from '../../../utils/format'
 
-export function PasoServicios({ motor, onFinalizar, guardando }) {
+// Componente controlado: la selección (value = {ids, customItems}) vive en el
+// wizard, así volver atrás desde el paso de repuestos no la pierde.
+export function PasoServicios({ motor, value, onChange, onSiguiente }) {
   const [servicios, setServicios] = React.useState([])
   const [favoritos, setFavoritos] = React.useState(new Set())
-  const [seleccionados, setSeleccionados] = React.useState(new Set())
   const [busqueda, setBusqueda] = React.useState('')
-  const [customItems, setCustomItems] = React.useState([])
   const [nuevoCustomDesc, setNuevoCustomDesc] = React.useState('')
   const [nuevoCustomPrecio, setNuevoCustomPrecio] = React.useState('')
+
+  const seleccionados = React.useMemo(() => new Set(value.ids), [value.ids])
+  const customItems = value.customItems
 
   React.useEffect(() => {
     api.get(`/motores/${motor.id}/servicios`).then(setServicios)
@@ -30,23 +33,25 @@ export function PasoServicios({ motor, onFinalizar, guardando }) {
   }
 
   const toggleSeleccion = (id) => {
-    setSeleccionados((prev) => {
-      const next = new Set(prev)
-      if (next.has(id)) next.delete(id); else next.add(id)
-      return next
-    })
+    const ids = seleccionados.has(id)
+      ? value.ids.filter((x) => x !== id)
+      : [...value.ids, id]
+    onChange({ ...value, ids })
   }
 
   const agregarCustom = () => {
     const desc = nuevoCustomDesc.trim()
     const precio = parseFloat(nuevoCustomPrecio.replace(',', '.'))
     if (!desc || Number.isNaN(precio)) return
-    setCustomItems((prev) => [...prev, { id: `custom-${Date.now()}`, descripcion_custom: desc, precio_aplicado: precio }])
+    onChange({
+      ...value,
+      customItems: [...customItems, { id: `custom-${Date.now()}`, descripcion_custom: desc, precio_aplicado: precio }],
+    })
     setNuevoCustomDesc('')
     setNuevoCustomPrecio('')
   }
 
-  const quitarCustom = (id) => setCustomItems((prev) => prev.filter((c) => c.id !== id))
+  const quitarCustom = (id) => onChange({ ...value, customItems: customItems.filter((c) => c.id !== id) })
 
   const filtrados = servicios.filter((s) => {
     if (!busqueda) return true
@@ -61,15 +66,6 @@ export function PasoServicios({ motor, onFinalizar, guardando }) {
     .reduce((acc, s) => acc + (s.precio || 0), 0)
   const totalCustom = customItems.reduce((acc, c) => acc + c.precio_aplicado, 0)
   const total = totalFacra + totalCustom
-  const hayItems = seleccionados.size > 0 || customItems.length > 0
-
-  const finalizar = () => {
-    const items = [
-      ...[...seleccionados].map((id) => ({ servicio_id: id })),
-      ...customItems.map((c) => ({ servicio_id: null, descripcion_custom: c.descripcion_custom, precio_aplicado: c.precio_aplicado })),
-    ]
-    onFinalizar(items)
-  }
 
   const Fila = ({ s }) => (
     <div
@@ -139,12 +135,14 @@ export function PasoServicios({ motor, onFinalizar, guardando }) {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)' }}>
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total</span>
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total servicios</span>
         <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(total)}</span>
       </div>
 
-      <Button variant="success" fullWidth disabled={!hayItems || guardando} onClick={finalizar}>
-        {guardando ? 'Generando presupuesto…' : 'Finalizar presupuesto'}
+      {/* Se puede seguir sin servicios: un presupuesto puede ser de solo repuestos.
+          La validación de "al menos un ítem" está en el paso de confirmación. */}
+      <Button variant="primary" fullWidth iconRight={<Icon n="chevron-right" s={16} />} onClick={() => onSiguiente(total)}>
+        Siguiente: Repuestos
       </Button>
     </div>
   )
