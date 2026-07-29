@@ -1,0 +1,5 @@
+/* Rectificadora — Webfonts.
+   NOTE: the original desktop app's exact font is unknown; these are the closest
+   Google Fonts matches for the rounded-geometric wordmark + clean body.
+   Swap the @import for self-hosted @font-face if you get the real files. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');

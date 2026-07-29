@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Base de datos local (generada en runtime)
+*.db
+*.sqlite
+*.sqlite3
+
+# Excel diario del proveedor (se reemplaza cada día, no se versiona)
+Excel/Proveedor/
+
+# PDFs generados por la app (archivos de runtime, no código)
+/Presupuestos/
+
+# Builds y distribución
+dist/
+build/
+
+# OS
+Thumbs.db
+desktop.ini

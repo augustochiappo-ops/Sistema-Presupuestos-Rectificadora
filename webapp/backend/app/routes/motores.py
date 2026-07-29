@@ -1,0 +1,47 @@
+from flask import Blueprint, jsonify, request
+
+from .. import facra, db
+from ..auth import login_required
+
+bp = Blueprint("motores", __name__, url_prefix="/api/motores")
+
+
+@bp.get("")
+@login_required
+def listar():
+    marca = request.args.get("marca")
+    busqueda = request.args.get("busqueda")
+    return jsonify(facra.get_motores(marca=marca, busqueda=busqueda))
+
+
+@bp.get("/marcas")
+@login_required
+def marcas():
+    return jsonify(facra.get_marcas())
+
+
+@bp.get("/<int:motor_id>")
+@login_required
+def detalle(motor_id):
+    motor = db.get_motor(motor_id)
+    if not motor:
+        return jsonify({"error": "Motor no encontrado"}), 404
+    return jsonify(motor)
+
+
+@bp.get("/<int:motor_id>/servicios")
+@login_required
+def servicios(motor_id):
+    motor = db.get_motor(motor_id)
+    if not motor:
+        return jsonify({"error": "Motor no encontrado"}), 404
+    return jsonify(facra.get_servicios_para_lista(motor.get("lista_num")))
+
+
+@bp.get("/<int:motor_id>/repuestos-sugeridos")
+@login_required
+def repuestos_sugeridos(motor_id):
+    motor = db.get_motor(motor_id)
+    if not motor:
+        return jsonify({"error": "Motor no encontrado"}), 404
+    return jsonify(db.get_repuestos_sugeridos_motor(motor_id))
