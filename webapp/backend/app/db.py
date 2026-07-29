@@ -68,7 +68,15 @@ def init_db():
                 presupuesto_id    INTEGER REFERENCES presupuestos(id) ON DELETE CASCADE,
                 servicio_id       INTEGER REFERENCES servicios(id),
                 descripcion_custom TEXT,
-                precio_aplicado   REAL
+                precio_aplicado   REAL,
+                -- Repuestos dentro del presupuesto. Se referencia por código (TEXT) y
+                -- nunca por crac_repuestos.id: el import diario del CSV hace
+                -- DELETE + reinsert y los ids no son estables.
+                tipo              TEXT NOT NULL DEFAULT 'servicio',  -- 'servicio' | 'repuesto'
+                repuesto_codigo   TEXT,     -- código del proveedor congelado; NULL en servicios y manuales
+                cantidad          REAL NOT NULL DEFAULT 1,
+                precio_unitario   REAL,     -- unitario congelado al cotizar (NULL en servicios)
+                stock_al_cotizar  INTEGER   -- 1/0 al cotizar; NULL en servicios y manuales
             );
 
             CREATE TABLE IF NOT EXISTS presupuesto_pdfs (
@@ -118,6 +126,12 @@ def init_db():
         cols_items = {r[1] for r in conn.execute("PRAGMA table_info(presupuesto_items)")}
         if "descripcion_custom" not in cols_items:
             conn.execute("ALTER TABLE presupuesto_items ADD COLUMN descripcion_custom TEXT")
+        if "tipo" not in cols_items:
+            conn.execute("ALTER TABLE presupuesto_items ADD COLUMN tipo TEXT NOT NULL DEFAULT 'servicio'")
+            conn.execute("ALTER TABLE presupuesto_items ADD COLUMN repuesto_codigo TEXT")
+            conn.execute("ALTER TABLE presupuesto_items ADD COLUMN cantidad REAL NOT NULL DEFAULT 1")
+            conn.execute("ALTER TABLE presupuesto_items ADD COLUMN precio_unitario REAL")
+            conn.execute("ALTER TABLE presupuesto_items ADD COLUMN stock_al_cotizar INTEGER")
 
         pdfs_sin_migrar = conn.execute(
             """
@@ -154,8 +168,10 @@ def guardar_presupuesto(
 ) -> int:
     """
     Crea (o reutiliza) el cliente, inserta el presupuesto y sus ítems.
-    items: list of {servicio_id, descripcion_custom, precio_aplicado}
-    (servicio_id es None para ítems custom, igual que en actualizar_presupuesto)
+    items: list of {servicio_id, descripcion_custom, precio_aplicado,
+                    tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar}
+    (servicio_id es None para ítems custom; los campos de repuesto son opcionales
+    y solo vienen en ítems con tipo='repuesto')
     Retorna el id del presupuesto creado.
     """
     total = sum((i.get("precio_aplicado") or 0.0) for i in items)
@@ -184,10 +200,22 @@ def guardar_presupuesto(
         for item in items:
             conn.execute(
                 """
-                INSERT INTO presupuesto_items (presupuesto_id, servicio_id, descripcion_custom, precio_aplicado)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO presupuesto_items
+                    (presupuesto_id, servicio_id, descripcion_custom, precio_aplicado,
+                     tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (presupuesto_id, item.get("servicio_id"), item.get("descripcion_custom"), item.get("precio_aplicado")),
+                (
+                    presupuesto_id,
+                    item.get("servicio_id"),
+                    item.get("descripcion_custom"),
+                    item.get("precio_aplicado"),
+                    item.get("tipo") or "servicio",
+                    item.get("repuesto_codigo"),
+                    item.get("cantidad") or 1,
+                    item.get("precio_unitario"),
+                    item.get("stock_al_cotizar"),
+                ),
             )
 
         return presupuesto_id
@@ -300,22 +328,35 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
 
 
 def get_presupuesto_items_full(presupuesto_id: int) -> list[dict]:
+    # precio_actual/stock_actual: valores vigentes en el catálogo del proveedor
+    # (por código, con subqueries para no duplicar filas si el CSV trae un código
+    # repetido). NULL cuando el código ya no está en la lista → "fuera de lista".
     with get_connection() as conn:
         cur = conn.execute(
             """
             SELECT pi.id, pi.servicio_id, s.item_num,
                    s.descripcion AS desc_facra, pi.descripcion_custom,
-                   pi.precio_aplicado
+                   pi.precio_aplicado,
+                   pi.tipo, pi.repuesto_codigo, pi.cantidad,
+                   pi.precio_unitario, pi.stock_al_cotizar,
+                   (SELECT cr.precio FROM crac_repuestos cr
+                     WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS precio_actual,
+                   (SELECT cr.stock FROM crac_repuestos cr
+                     WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS stock_actual
             FROM presupuesto_items pi
             LEFT JOIN servicios s ON s.id = pi.servicio_id
             WHERE pi.presupuesto_id = ?
-            ORDER BY CASE WHEN s.item_num IS NULL THEN 9999 ELSE s.item_num END,
+            ORDER BY CASE WHEN pi.tipo = 'repuesto' THEN 1 ELSE 0 END,
+                     CASE WHEN s.item_num IS NULL THEN 9999 ELSE s.item_num END,
                      pi.id
             """,
             (presupuesto_id,),
         )
         cols = ["id", "servicio_id", "item_num", "desc_facra",
-                "descripcion_custom", "precio_aplicado"]
+                "descripcion_custom", "precio_aplicado",
+                "tipo", "repuesto_codigo", "cantidad",
+                "precio_unitario", "stock_al_cotizar",
+                "precio_actual", "stock_actual"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
@@ -325,7 +366,8 @@ def actualizar_presupuesto(
     notas: str,
 ) -> float:
     """
-    items_data: [{servicio_id, descripcion_custom, precio_aplicado}]
+    items_data: [{servicio_id, descripcion_custom, precio_aplicado,
+                  tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar}]
     Elimina los ítems anteriores y los reinserta. Retorna el nuevo total.
     """
     total = sum((i.get("precio_aplicado") or 0.0) for i in items_data)
@@ -338,14 +380,20 @@ def actualizar_presupuesto(
             conn.execute(
                 """
                 INSERT INTO presupuesto_items
-                    (presupuesto_id, servicio_id, descripcion_custom, precio_aplicado)
-                VALUES (?, ?, ?, ?)
+                    (presupuesto_id, servicio_id, descripcion_custom, precio_aplicado,
+                     tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     presupuesto_id,
                     item.get("servicio_id"),
                     item.get("descripcion_custom"),
                     item.get("precio_aplicado"),
+                    item.get("tipo") or "servicio",
+                    item.get("repuesto_codigo"),
+                    item.get("cantidad") or 1,
+                    item.get("precio_unitario"),
+                    item.get("stock_al_cotizar"),
                 ),
             )
         conn.execute(
@@ -450,3 +498,37 @@ def get_motor(motor_id: int) -> dict | None:
         cols = ["id", "indice", "motor", "marca", "lista_num",
                 "cilindros", "tipo", "cilindrada", "diametro", "origen"]
         return dict(zip(cols, row))
+
+
+def get_repuestos_sugeridos_motor(motor_id: int) -> list[dict]:
+    """
+    Repuestos usados en presupuestos anteriores del mismo motor, con el precio
+    y stock vigentes en el catálogo del proveedor. Derivado del historial: no
+    hay tabla de asociación motor-repuesto, la asociación nace de haberlos
+    cotizado juntos alguna vez.
+    """
+    with get_connection() as conn:
+        cur = conn.execute(
+            """
+            SELECT pi.repuesto_codigo               AS codigo,
+                   MAX(pi.descripcion_custom)       AS descripcion,
+                   COUNT(*)                         AS veces_usado,
+                   MAX(p.fecha)                     AS ultima_fecha,
+                   (SELECT cr.precio FROM crac_repuestos cr
+                     WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS precio_actual,
+                   (SELECT cr.stock FROM crac_repuestos cr
+                     WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS stock_actual
+            FROM presupuesto_items pi
+            JOIN presupuestos p ON p.id = pi.presupuesto_id
+            WHERE p.motor_id = ?
+              AND pi.tipo = 'repuesto'
+              AND pi.repuesto_codigo IS NOT NULL
+            GROUP BY pi.repuesto_codigo
+            ORDER BY ultima_fecha DESC, veces_usado DESC
+            LIMIT 20
+            """,
+            (motor_id,),
+        )
+        cols = ["codigo", "descripcion", "veces_usado", "ultima_fecha",
+                "precio_actual", "stock_actual"]
+        return [dict(zip(cols, row)) for row in cur.fetchall()]
