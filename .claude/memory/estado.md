@@ -101,9 +101,38 @@
 
 ## Pendiente (app de escritorio)
 - [ ] Módulo Editar Precios (factor de ajuste sobre lista FACRA)
-- [ ] Buscador de repuestos CRAC (cuando se habilite)
 - [ ] Botón "+" para crear motor manual si no está en FACRA
 - [ ] CRUD de clientes (editar nombre, teléfono, notas)
+
+## Pestaña Repuestos — CRAC (sesión 2026-07-29, solo app de escritorio)
+
+Se agregó la pestaña **Repuestos** (ítem de menú al final del sidebar, `🔩 Repuestos`) para navegar el catálogo del proveedor de repuestos (nombre interno "CRAC" — ver `CRAC/CRAC.md` y `CRAC/INTEGRACION-PENDIENTE.md`, documentos autocontenidos con el formato de datos, el algoritmo de decodificación de prefijos y las decisiones de negocio pendientes). Todavía **no está integrada con motores ni presupuestos** — es solo la pantalla de navegación/búsqueda, a propósito (pedido explícito del usuario: "por ahora hagamos esta pestaña, después vemos cómo lo integramos").
+
+- **`src/data/crac.py`** — módulo nuevo:
+  - `importar_prefijos(path)` — lee `prefijos_crac.csv` (con encabezado, `;`, UTF-8) → tabla `crac_prefijos` (tipo, prefijo, nombre). La columna `activo` del CSV **no se usa** (decisión explícita del usuario: se muestran todas las categorías/marcas sin importar si siguen vigentes hoy).
+  - `importar_precio_stock(path)` — lee `precio-stock.csv` (sin encabezado, `;`, comillas dobles, **Latin-1**, ~64.250 filas) → tabla `crac_repuestos`. Decodifica cada código contra los prefijos ya cargados (algoritmo longest-match de `CRAC.md` sección 3.2: 2 chars de categoría → si no, 1 char; después 2 chars de marca → si no, 1 char; el resto es opaco). Si el código no decodifica (~1.1%, ej. `"ALQUILER"`), se guarda igual sin categoría/marca. Precio con coma decimal (`473219,41` → `473219.41`); nunca se muestra `$0` como precio real (se muestra "—" en la UI cuando `precio == 0`).
+  - Cada importación **reemplaza por completo** la tabla correspondiente (mismo patrón que FACRA).
+  - **Validado contra los CSV reales**: 296 prefijos, 64.250 repuestos, 63.542 decodificados / 708 no estándar (coincide exacto con las cifras de `CRAC.md`), 565 filas con precio 0 y stock, 12.249 con precio 0 sin stock — mismos números documentados.
+  - Orden de carga recomendado: prefijos primero, precio-stock después (si se invierte, los repuestos igual se guardan pero sin categoría/marca legibles hasta la próxima carga de precio-stock).
+- **`src/data/db.py`** — tablas nuevas `crac_prefijos` (PK tipo+prefijo) y `crac_repuestos` (codigo, aplicacion, precio, stock, cat_prefijo, marca_prefijo, resto) con índices en código/categoría/marca.
+- **`src/ui/actualizar_widget.py`** — las dos cards de CRAC (antes deshabilitadas / placeholder) ahora funcionan: "Lista de Prefijos CRAC" y "Lista de Precios y Stock CRAC", con selector de archivo `.csv` (se generalizó `_CardExcel` con un parámetro `filtro_archivo`).
+- **`src/ui/repuestos_widget.py`** — pantalla nueva:
+  - Panel izquierdo con lista de categorías (mismo look que el panel de marcas de Motores).
+  - Selector de marca (combo), filtro de código y filtro de descripción (buscan sobre `aplicacion` del CSV), con debounce de 280ms.
+  - **Decisión de UX confirmada con el usuario**: con ~64.250 repuestos, la tabla arranca **vacía** con un mensaje pidiendo elegir un filtro — no carga todo de entrada. En cuanto se aplica cualquier filtro (categoría, marca, código o descripción) se dispara la búsqueda, con tope de 1000 filas mostradas y contador que avisa si hay más resultados que los mostrados.
+  - Columnas: Código, Descripción (aplicación), Marca, Categoría, Precio (formato `$ 1.234,56`, "—" si es 0), Stock ("Sí"/"No" en verde/rojo).
+  - `recargar()` se conecta a la señal `datos_actualizados` de Actualizar Excel, igual que motores y presupuestos.
+- **`src/ui/main_window.py`** — "Repuestos" agregado al final del sidebar (índice 5). El widget de detalle de presupuesto (sin ítem de menú) pasó de índice 5 a **índice 6** en el stack.
+- **`src/ui/styles.py`** — token nuevo `COMBO_INPUT` (estilo QSS para QComboBox, mismo criterio visual que `SEARCH_INPUT`).
+- **Regla de confidencialidad respetada**: la palabra "CRAC" solo aparece en código interno, nombres de módulo/función, y en la pantalla interna "Actualizar Excel" (panel de administración, no la ve el cliente). La pestaña visible para el usuario del sistema se llama "Repuestos", sin mencionar el proveedor.
+- **Probado de punta a punta headless** (PyQt6 con `QT_QPA_PLATFORM=offscreen`, hubo que instalar `libegl1`/`libgl1` en el entorno): importación real de los dos CSV, carga de categorías/marcas, filtro por código, filtro por categoría, estado vacío al limpiar filtros — todo verificado contra los datos reales del proveedor.
+
+**Pendiente para una próxima sesión** (ver `CRAC/INTEGRACION-PENDIENTE.md` para el detalle completo de las decisiones de negocio abiertas):
+- Asociar repuestos a motores (la idea final: al elegir un motor, sugerir/recordar los repuestos ya usados antes para ese motor).
+- Combinar mano de obra + repuesto en la misma línea de un presupuesto.
+- Qué pasa si el precio/stock de un repuesto cambia después de emitido el presupuesto (advertencia).
+- Repuesto sin stock al momento de presupuestar: ¿se puede agregar igual con aviso, o se bloquea?
+- Esta pestaña **no se portó a la versión web** (`webapp/`) — por ahora existe solo en la app de escritorio, igual que "Editar Precios".
 
 ## Migración web (sesión 2026-07-28)
 

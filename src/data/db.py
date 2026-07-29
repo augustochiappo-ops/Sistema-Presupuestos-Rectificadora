@@ -88,6 +88,29 @@ def init_db():
             CREATE TABLE IF NOT EXISTS favoritos_servicios (
                 servicio_id INTEGER PRIMARY KEY REFERENCES servicios(id) ON DELETE CASCADE
             );
+
+            -- Prefijos del proveedor de repuestos (categoría y marca)
+            CREATE TABLE IF NOT EXISTS crac_prefijos (
+                tipo    TEXT NOT NULL,   -- 'categoria' | 'marca'
+                prefijo TEXT NOT NULL,
+                nombre  TEXT NOT NULL,
+                PRIMARY KEY (tipo, prefijo)
+            );
+
+            -- Repuestos del proveedor: precio y stock, actualizado a diario
+            CREATE TABLE IF NOT EXISTS crac_repuestos (
+                id            INTEGER PRIMARY KEY AUTOINCREMENT,
+                codigo        TEXT NOT NULL,
+                aplicacion    TEXT,
+                precio        REAL,
+                stock         INTEGER NOT NULL DEFAULT 0,   -- 1 = con stock, 0 = sin stock
+                cat_prefijo   TEXT,
+                marca_prefijo TEXT,
+                resto         TEXT
+            );
+            CREATE INDEX IF NOT EXISTS idx_crac_repuestos_codigo ON crac_repuestos(codigo);
+            CREATE INDEX IF NOT EXISTS idx_crac_repuestos_cat    ON crac_repuestos(cat_prefijo);
+            CREATE INDEX IF NOT EXISTS idx_crac_repuestos_marca  ON crac_repuestos(marca_prefijo);
         """)
 
         # ── Migraciones automáticas ───────────────────────────────────────────

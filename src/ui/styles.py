@@ -117,6 +117,28 @@ QLineEdit:focus {{ border-color: {COLOR_BTN_PRIMARY}; }}
 QLineEdit::placeholder {{ color: {COLOR_TEXT_PLACEHOLDER}; }}
 """
 
+COMBO_INPUT = f"""
+QComboBox {{
+    border: 1px solid {COLOR_BORDER};
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: {FONT_SIZE_MD}px;
+    font-family: {FONT_FAMILY};
+    background: {COLOR_WHITE};
+    color: {COLOR_TEXT_PRIMARY};
+}}
+QComboBox:focus {{ border-color: {COLOR_BTN_PRIMARY}; }}
+QComboBox::drop-down {{ border: none; width: 22px; }}
+QComboBox QAbstractItemView {{
+    background: {COLOR_WHITE};
+    border: 1px solid {COLOR_BORDER};
+    selection-background-color: {COLOR_BTN_PRIMARY};
+    selection-color: white;
+    font-family: {FONT_FAMILY};
+    font-size: {FONT_SIZE_MD}px;
+}}
+"""
+
 def make_table_style(font_px: int = FONT_SIZE_MD) -> str:
     return f"""
 QTableWidget {{

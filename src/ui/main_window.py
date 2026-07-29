@@ -13,6 +13,7 @@ from .motores_widget              import MotoresWidget
 from .actualizar_widget           import ActualizarWidget
 from .presupuestos_widget         import PresupuestosWidget
 from .clientes_widget             import ClientesWidget
+from .repuestos_widget            import RepuestosWidget
 from .presupuesto_detalle_widget  import PresupuestoDetalleWidget
 from .placeholder_widget          import PlaceholderWidget
 from .styles import FONT_FAMILY, FONT_SIZE_MD, FONT_SIZE_LG, SIDEBAR_STYLE, COLOR_CONTENT_BG
@@ -25,6 +26,7 @@ MENU_ITEMS = [
     ("📋   Presupuestos",        2),
     ("💲   Editar Precios",      3),
     ("👥   Clientes",            4),
+    ("🔩   Repuestos",           5),
 ]
 
 
@@ -101,6 +103,7 @@ class MainWindow(QMainWindow):
         self._actualizar_widget   = ActualizarWidget()
         self._presupuestos_widget = PresupuestosWidget()
         self._clientes_widget     = ClientesWidget()
+        self._repuestos_widget    = RepuestosWidget()
         self._detalle_widget      = PresupuestoDetalleWidget()
 
         # ── Señales de actualización de datos ────────────────────────────────
@@ -110,13 +113,16 @@ class MainWindow(QMainWindow):
         self._actualizar_widget.datos_actualizados.connect(
             lambda: self._presupuestos_widget._selector_motor.recargar()
         )
+        self._actualizar_widget.datos_actualizados.connect(
+            self._repuestos_widget.recargar
+        )
 
         # ── Señales de apertura del detalle de presupuesto ───────────────────
-        # Desde Presupuestos (stack index 2) → detalle (stack index 5)
+        # Desde Presupuestos (stack index 2) → detalle (stack index 6)
         self._presupuestos_widget.abrir_presupuesto.connect(
             lambda pid: self._abrir_detalle(pid, back=2)
         )
-        # Desde Clientes (stack index 4) → detalle (stack index 5)
+        # Desde Clientes (stack index 4) → detalle (stack index 6)
         self._clientes_widget.abrir_presupuesto.connect(
             lambda pid: self._abrir_detalle(pid, back=4)
         )
@@ -131,18 +137,19 @@ class MainWindow(QMainWindow):
             "Este módulo estará disponible en una próxima versión.",
         ))
         self.stack.addWidget(self._clientes_widget)     # 4
-        self.stack.addWidget(self._detalle_widget)      # 5 (sin ítem de menú)
+        self.stack.addWidget(self._repuestos_widget)    # 5
+        self.stack.addWidget(self._detalle_widget)      # 6 (sin ítem de menú)
 
         return self.stack
 
     def _abrir_detalle(self, presupuesto_id: int, back: int):
         self._detalle_widget.abrir(presupuesto_id, back)
-        self.stack.setCurrentIndex(5)
+        self.stack.setCurrentIndex(6)
 
     def _volver_desde_detalle(self, back_index: int):
         self.stack.setCurrentIndex(back_index)
-        # Sincronizar el ítem seleccionado en el sidebar (solo para índices 0-4)
-        if 0 <= back_index <= 4:
+        # Sincronizar el ítem seleccionado en el sidebar (solo para índices 0-5)
+        if 0 <= back_index <= 5:
             self.nav.blockSignals(True)
             self.nav.setCurrentRow(back_index)
             self.nav.blockSignals(False)
