@@ -132,7 +132,24 @@ Se agregó la pestaña **Repuestos** (ítem de menú al final del sidebar, `🔩
 - Combinar mano de obra + repuesto en la misma línea de un presupuesto.
 - Qué pasa si el precio/stock de un repuesto cambia después de emitido el presupuesto (advertencia).
 - Repuesto sin stock al momento de presupuestar: ¿se puede agregar igual con aviso, o se bloquea?
-- Esta pestaña **no se portó a la versión web** (`webapp/`) — por ahora existe solo en la app de escritorio, igual que "Editar Precios".
+- ~~Esta pestaña no se portó a la versión web~~ → **se portó el mismo día** (ver sección siguiente), a pedido del usuario que usa la web como interfaz principal.
+
+## Repuestos portado a la versión web (sesión 2026-07-29, misma tarde)
+
+El usuario esperaba ver la pestaña en **chiapppo.pythonanywhere.com** (su interfaz principal), no en la app de escritorio. Se portó todo a `webapp/` con la misma lógica y decisiones (SQLite, tabla vacía hasta filtrar, columna `activo` ignorada):
+
+- **`webapp/backend/app/crac.py`** — copia exacta de `src/data/crac.py` (mismo parser, mismo algoritmo de decodificación, sin cambios de lógica). Reutiliza `from .db import get_connection` como el resto de módulos portados (`facra.py`).
+- **`webapp/backend/app/db.py`** — mismas tablas `crac_prefijos` y `crac_repuestos`.
+- **`webapp/backend/app/routes/repuestos.py`** (nuevo blueprint `/api/repuestos`):
+  - `GET /categorias`, `GET /marcas`
+  - `GET /` con query params `categoria`, `marca`, `codigo`, `descripcion` → `{total, repuestos}` (si no hay ningún filtro, devuelve vacío sin tocar la DB — mismo criterio que el desktop)
+  - `POST /importar-prefijos`, `POST /importar-precio-stock` — reciben el archivo por `multipart/form-data` (`request.files`), igual que los endpoints de FACRA en `routes/excel.py` (`_guardar_temporal` a un archivo temporal, se borra después de importar).
+- **`webapp/frontend/src/screens/Repuestos/RepuestosScreen.jsx`** (nuevo): panel de categorías (mismo componente visual que el panel de marcas de `MotorSelector`, clase CSS `.motor-selector-grid` reutilizada), `<select>` de marca, dos `SearchInput` (código y descripción) con debounce de 280ms, `DataTable` con columnas Código/Descripción/Marca/Categoría/Precio/Stock. Precio nunca muestra `$0` (`render: v => v ? formatPrecioARS(v) : '—'`); Stock usa `StatusBadge` reutilizando los colores verde/rojo ya definidos para Vigente/Vencido.
+- **`webapp/frontend/src/screens/Excel/ExcelScreen.jsx`** — las cards de CRAC (antes "Próximamente", deshabilitadas) ahora suben `.csv` de verdad a los endpoints nuevos (se generalizó `CardImport` con props `accept`/`extension`).
+- **`webapp/frontend/src/layout/Sidebar.jsx`** y **`App.jsx`** — ítem "Repuestos" al final del menú, ruta `/repuestos`.
+- **Probado end-to-end con Flask test client** (sin servidor real): login, import de los dos CSV reales (mismos resultados exactos que el desktop: 296 prefijos, 64.250 repuestos, 63.542 decodificados), filtro por código, endpoint sin filtro devuelve vacío, ruta protegida por `@login_required` devuelve 401 sin sesión, SPA fallback sirve `/repuestos` correctamente.
+- **`npm run build`** corrido y el nuevo `static_build/` (incluye `assets/index-jibsO7Aj.js`, reemplaza al anterior) se versiona en git, siguiendo la convención ya establecida del proyecto (PythonAnywhere no tiene Node instalado).
+- Después de mergear esto, falta correr el deploy remoto: `git pull` en el servidor + reload vía el webhook `POST /api/deploy` (ver sección "Deploy remoto automático" más arriba) para que el cambio llegue a producción.
 
 ## Migración web (sesión 2026-07-28)
 

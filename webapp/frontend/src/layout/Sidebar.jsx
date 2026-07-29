@@ -9,6 +9,7 @@ const ITEMS = [
   { to: '/presupuestos', label: 'Presupuestos', icon: 'file-text' },
   { to: '/precios', label: 'Editar Precios', icon: 'dollar-sign' },
   { to: '/clientes', label: 'Clientes', icon: 'users' },
+  { to: '/repuestos', label: 'Repuestos', icon: 'package' },
 ]
 
 export function Sidebar({ open = false, onClose }) {

@@ -12,7 +12,7 @@ function Eyebrow({ children }) {
   )
 }
 
-function CardImport({ icon, title, desc, endpoint, disabled }) {
+function CardImport({ icon, title, desc, endpoint, disabled, accept = '.xls', extension = '.xls' }) {
   const inputRef = React.useRef(null)
   const [estado, setEstado] = React.useState(null) // { ok: bool, mensaje: string } | null
   const [cargando, setCargando] = React.useState(false)
@@ -48,14 +48,14 @@ function CardImport({ icon, title, desc, endpoint, disabled }) {
       </div>
       <p style={{ margin: '0 0 16px', fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-muted)' }}>{desc}</p>
 
-      <input ref={inputRef} type="file" accept=".xls" onChange={onFile} style={{ display: 'none' }} />
+      <input ref={inputRef} type="file" accept={accept} onChange={onFile} style={{ display: 'none' }} />
       <Button
         variant={disabled ? 'secondary' : 'primary'}
         disabled={disabled || cargando}
         iconLeft={<Icon n="file-up" s={16} />}
         onClick={() => inputRef.current?.click()}
       >
-        {disabled ? 'No disponible aún' : cargando ? 'Importando…' : 'Cargar archivo .xls'}
+        {disabled ? 'No disponible aún' : cargando ? 'Importando…' : `Cargar archivo ${extension}`}
       </Button>
 
       {estado && (
@@ -91,10 +91,24 @@ export default function ExcelScreen() {
         />
       </div>
 
-      <Eyebrow>CRAC — Próximamente</Eyebrow>
+      <Eyebrow>CRAC</Eyebrow>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
-        <CardImport icon="package" title="Lista de Precios CRAC" desc="Precios de repuestos del proveedor CRAC. Se habilitará en una próxima versión." disabled />
-        <CardImport icon="tag" title="Lista de Prefijos CRAC" desc="Codificación y prefijos de partes CRAC. Se habilitará en una próxima versión." disabled />
+        <CardImport
+          icon="tag"
+          title="Lista de Prefijos CRAC"
+          desc="Categorías y marcas del proveedor de repuestos. Cargala primero: sin esto, los repuestos igual se guardan pero sin categoría ni marca legibles."
+          endpoint="/repuestos/importar-prefijos"
+          accept=".csv"
+          extension=".csv"
+        />
+        <CardImport
+          icon="package"
+          title="Lista de Precios y Stock CRAC"
+          desc="Precios y disponibilidad de repuestos del proveedor. Se actualiza a diario: cada carga reemplaza por completo la lista anterior."
+          endpoint="/repuestos/importar-precio-stock"
+          accept=".csv"
+          extension=".csv"
+        />
       </div>
     </div>
   )

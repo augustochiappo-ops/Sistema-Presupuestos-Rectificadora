@@ -10,6 +10,7 @@ import HistorialPresupuestos from './screens/Presupuestos/Historial'
 import WizardPresupuesto from './screens/Presupuestos/Wizard/WizardPresupuesto'
 import DetallePresupuesto from './screens/Presupuestos/Detalle'
 import PreciosPlaceholder from './screens/Precios/PlaceholderScreen'
+import RepuestosScreen from './screens/Repuestos/RepuestosScreen'
 
 function Cargando() {
   return (
@@ -48,6 +49,7 @@ function App() {
         <Route path="presupuestos/nuevo" element={<WizardPresupuesto />} />
         <Route path="presupuestos/:id" element={<DetallePresupuesto />} />
         <Route path="precios" element={<PreciosPlaceholder />} />
+        <Route path="repuestos" element={<RepuestosScreen />} />
         <Route path="*" element={<Navigate to="/motores" replace />} />
       </Route>
     </Routes>
