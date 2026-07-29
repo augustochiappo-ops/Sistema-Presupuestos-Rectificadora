@@ -29,6 +29,8 @@ const selectStyle = {
 export default function RepuestosScreen() {
   const [categorias, setCategorias] = React.useState([])
   const [marcas, setMarcas] = React.useState([])
+  const [favoritos, setFavoritos] = React.useState(new Set())
+  const [categoriaBusqueda, setCategoriaBusqueda] = React.useState('')
   const [categoriaSel, setCategoriaSel] = React.useState('')
   const [marcaSel, setMarcaSel] = React.useState('')
   const [codigo, setCodigo] = React.useState('')
@@ -38,8 +40,37 @@ export default function RepuestosScreen() {
 
   React.useEffect(() => {
     api.get('/repuestos/categorias').then(setCategorias).catch(() => {})
-    api.get('/repuestos/marcas').then(setMarcas).catch(() => {})
+    api.get('/repuestos/categorias/favoritos').then((ids) => setFavoritos(new Set(ids))).catch(() => {})
   }, [])
+
+  // Las marcas se recalculan según la categoría elegida: al entrar a
+  // "Válvulas" solo deben verse las marcas que tienen repuestos en esa categoría.
+  React.useEffect(() => {
+    const params = new URLSearchParams()
+    if (categoriaSel) params.set('categoria', categoriaSel)
+    api.get(`/repuestos/marcas?${params.toString()}`)
+      .then((data) => {
+        setMarcas(data)
+        setMarcaSel((prev) => (data.some((m) => m.prefijo === prev) ? prev : ''))
+      })
+      .catch(() => {})
+  }, [categoriaSel])
+
+  const toggleFavorito = async (prefijo, e) => {
+    e.stopPropagation()
+    const data = await api.post(`/repuestos/categorias/${prefijo}/favorito`)
+    setFavoritos((prev) => {
+      const next = new Set(prev)
+      if (data.favorito) next.add(prefijo); else next.delete(prefijo)
+      return next
+    })
+  }
+
+  const categoriasFiltradas = categorias.filter((c) =>
+    !categoriaBusqueda || c.nombre.toLowerCase().includes(categoriaBusqueda.toLowerCase())
+  )
+  const categoriasFavoritas = categoriasFiltradas.filter((c) => favoritos.has(c.prefijo))
+  const categoriasResto = categoriasFiltradas.filter((c) => !favoritos.has(c.prefijo))
 
   const hayFiltro = Boolean(categoriaSel || marcaSel || codigo || descripcion)
 
@@ -93,37 +124,58 @@ export default function RepuestosScreen() {
       </div>
 
       <div className="motor-selector-grid">
-        <div className="motor-selector-brands" style={{ background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', padding: '14px 10px', minWidth: 0 }}>
+        <div className="repuestos-categorias-panel" style={{ background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', padding: '14px 10px', minWidth: 0 }}>
           <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-faint)', padding: '6px 12px' }}>Categorías</div>
-          <button
-            onClick={() => setCategoriaSel('')}
-            className="motor-brand-btn"
-            style={{
-              textAlign: 'left', border: 'none', cursor: 'pointer',
-              padding: '10px 12px', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: 14,
-              fontWeight: categoriaSel === '' ? 600 : 500,
-              background: categoriaSel === '' ? 'var(--surface-inverse)' : 'transparent',
-              color: categoriaSel === '' ? '#fff' : 'var(--text-body)',
-            }}
-          >
-            Todas
-          </button>
-          {categorias.map((c) => (
+          <div style={{ padding: '0 4px 8px' }}>
+            <SearchInput
+              width="100%"
+              icon={<Icon n="search" s={14} />}
+              placeholder="Buscar categoría…"
+              value={categoriaBusqueda}
+              onChange={(e) => setCategoriaBusqueda(e.target.value)}
+              style={{ height: 36 }}
+            />
+          </div>
+
+          <div className="categoria-chips-row">
             <button
-              key={c.prefijo}
-              onClick={() => setCategoriaSel(c.prefijo)}
+              onClick={() => setCategoriaSel('')}
               className="motor-brand-btn"
               style={{
                 textAlign: 'left', border: 'none', cursor: 'pointer',
                 padding: '10px 12px', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: 14,
-                fontWeight: categoriaSel === c.prefijo ? 600 : 500,
-                background: categoriaSel === c.prefijo ? 'var(--surface-inverse)' : 'transparent',
-                color: categoriaSel === c.prefijo ? '#fff' : 'var(--text-body)',
+                fontWeight: categoriaSel === '' ? 600 : 500,
+                background: categoriaSel === '' ? 'var(--surface-inverse)' : 'transparent',
+                color: categoriaSel === '' ? '#fff' : 'var(--text-body)',
               }}
             >
-              {c.nombre}
+              Todas
             </button>
-          ))}
+
+            {categoriasFavoritas.length > 0 && (
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)', padding: '10px 12px 4px' }}>
+                Favoritas
+              </div>
+            )}
+            {categoriasFavoritas.map((c) => (
+              <CategoriaBoton key={c.prefijo} c={c} activo={categoriaSel === c.prefijo} esFavorita onSeleccionar={setCategoriaSel} onToggleFavorito={toggleFavorito} />
+            ))}
+
+            {categoriasFavoritas.length > 0 && categoriasResto.length > 0 && (
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)', padding: '10px 12px 4px' }}>
+                Todas
+              </div>
+            )}
+            {categoriasResto.map((c) => (
+              <CategoriaBoton key={c.prefijo} c={c} activo={categoriaSel === c.prefijo} esFavorita={false} onSeleccionar={setCategoriaSel} onToggleFavorito={toggleFavorito} />
+            ))}
+
+            {categoriasFiltradas.length === 0 && (
+              <div style={{ padding: '16px 12px', fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-faint)' }}>
+                Sin categorías para "{categoriaBusqueda}".
+              </div>
+            )}
+          </div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
@@ -133,9 +185,39 @@ export default function RepuestosScreen() {
               {resultado.total > resultado.repuestos.length && ` — mostrando los primeros ${resultado.repuestos.length}`}
             </div>
           )}
-          <DataTable columns={COLUMNS} rows={resultado.repuestos} emptyMessage={emptyMessage} style={{ minWidth: 0 }} />
+          <DataTable columns={COLUMNS} rows={resultado.repuestos} emptyMessage={emptyMessage} striped style={{ minWidth: 0 }} />
         </div>
       </div>
+    </div>
+  )
+}
+
+function CategoriaBoton({ c, activo, esFavorita, onSeleccionar, onToggleFavorito }) {
+  return (
+    <div className="motor-brand-btn" style={{ display: 'flex', alignItems: 'flex-start', gap: 0 }}>
+      <button
+        onClick={() => onSeleccionar(c.prefijo)}
+        style={{
+          flex: 1, minWidth: 0, textAlign: 'left', border: 'none', cursor: 'pointer',
+          padding: '10px 4px 10px 12px', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: 14,
+          fontWeight: activo ? 600 : 500,
+          background: activo ? 'var(--surface-inverse)' : 'transparent',
+          color: activo ? '#fff' : 'var(--text-body)',
+        }}
+      >
+        {c.nombre}
+      </button>
+      <button
+        onClick={(e) => onToggleFavorito(c.prefijo, e)}
+        title={esFavorita ? 'Quitar de favoritas' : 'Agregar a favoritas'}
+        style={{
+          border: 'none', background: 'transparent', cursor: 'pointer', display: 'flex',
+          alignItems: 'center', justifyContent: 'center', padding: '10px 10px 10px 4px', flexShrink: 0,
+          color: esFavorita ? '#e8b400' : 'var(--text-faint)',
+        }}
+      >
+        <Icon n="star" s={14} style={{ fill: esFavorita ? '#e8b400' : 'none' }} />
+      </button>
     </div>
   )
 }

@@ -153,19 +153,55 @@ def get_categorias() -> list[dict]:
         return [{"prefijo": r[0], "nombre": r[1]} for r in cur.fetchall()]
 
 
-def get_marcas() -> list[dict]:
-    """Marcas presentes en los repuestos importados, con nombre resuelto."""
+def get_marcas(categoria: str | None = None) -> list[dict]:
+    """
+    Marcas presentes en los repuestos importados, con nombre resuelto.
+    Si se pasa `categoria`, solo devuelve las marcas que tienen repuestos
+    en esa categoría (para que el selector de marcas se actualice según
+    la categoría elegida).
+    """
+    query = """
+        SELECT DISTINCT r.marca_prefijo, COALESCE(p.nombre, r.marca_prefijo) AS nombre
+        FROM crac_repuestos r
+        LEFT JOIN crac_prefijos p ON p.tipo = 'marca' AND p.prefijo = r.marca_prefijo
+        WHERE r.marca_prefijo IS NOT NULL
+    """
+    params: list = []
+    if categoria:
+        query += " AND r.cat_prefijo = ?"
+        params.append(categoria)
+    query += " ORDER BY nombre COLLATE NOCASE"
+
     with get_connection() as conn:
-        cur = conn.execute(
-            """
-            SELECT DISTINCT r.marca_prefijo, COALESCE(p.nombre, r.marca_prefijo) AS nombre
-            FROM crac_repuestos r
-            LEFT JOIN crac_prefijos p ON p.tipo = 'marca' AND p.prefijo = r.marca_prefijo
-            WHERE r.marca_prefijo IS NOT NULL
-            ORDER BY nombre COLLATE NOCASE
-            """
-        )
+        cur = conn.execute(query, params)
         return [{"prefijo": r[0], "nombre": r[1]} for r in cur.fetchall()]
+
+
+# ─── Favoritos de categorías ───────────────────────────────────────────────────
+def toggle_favorito_categoria(cat_prefijo: str) -> bool:
+    with get_connection() as conn:
+        existe = conn.execute(
+            "SELECT 1 FROM favoritos_categorias WHERE cat_prefijo = ?",
+            (cat_prefijo,),
+        ).fetchone()
+        if existe:
+            conn.execute(
+                "DELETE FROM favoritos_categorias WHERE cat_prefijo = ?",
+                (cat_prefijo,),
+            )
+            return False
+        else:
+            conn.execute(
+                "INSERT INTO favoritos_categorias (cat_prefijo) VALUES (?)",
+                (cat_prefijo,),
+            )
+            return True
+
+
+def get_favoritos_categorias() -> set[str]:
+    with get_connection() as conn:
+        cur = conn.execute("SELECT cat_prefijo FROM favoritos_categorias")
+        return {row[0] for row in cur.fetchall()}
 
 
 def _where_filtros(categoria, marca, descripcion, codigo):

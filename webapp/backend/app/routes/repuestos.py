@@ -27,7 +27,21 @@ def categorias():
 @bp.get("/marcas")
 @login_required
 def marcas():
-    return jsonify(crac.get_marcas())
+    categoria = request.args.get("categoria")
+    return jsonify(crac.get_marcas(categoria))
+
+
+@bp.get("/categorias/favoritos")
+@login_required
+def categorias_favoritos():
+    return jsonify(sorted(crac.get_favoritos_categorias()))
+
+
+@bp.post("/categorias/<string:prefijo>/favorito")
+@login_required
+def toggle_categoria_favorito(prefijo):
+    es_favorito = crac.toggle_favorito_categoria(prefijo)
+    return jsonify({"prefijo": prefijo, "favorito": es_favorito})
 
 
 @bp.get("")

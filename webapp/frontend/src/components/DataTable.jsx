@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 'No hay datos para mostrar.', style, ...rest }) {
+export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 'No hay datos para mostrar.', style, striped = false, ...rest }) {
   const [hover, setHover] = React.useState(-1)
 
   if (rows.length === 0) {
@@ -34,7 +34,7 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
               onMouseLeave={() => setHover(-1)}
               onClick={() => onRowClick && onRowClick(row, ri)}
               style={{
-                background: hover === ri ? 'var(--surface-sunken)' : 'transparent',
+                background: hover === ri ? 'var(--surface-sunken)' : (striped && ri % 2 === 1 ? 'var(--surface-stripe)' : 'transparent'),
                 cursor: onRowClick ? 'pointer' : 'default',
                 transition: 'background .12s ease',
               }}

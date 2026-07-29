@@ -14,6 +14,9 @@
 .motor-selector-brands{max-height:560px;overflow:auto}
 .motor-brand-btn{display:block;width:100%}
 
+/* Repuestos: categoría rail (header con buscador fijo + rail de chips con scroll) */
+.repuestos-categorias-panel{max-height:560px;overflow:auto}
+
 @media (max-width: 860px){
   .shell-outer{padding:0}
   .shell-inner{border-radius:0;box-shadow:none;min-height:100vh;display:block}
@@ -45,4 +48,10 @@
     overflow-x:auto;overflow-y:hidden;padding-bottom:4px;
   }
   .motor-brand-btn{width:auto;flex-shrink:0;white-space:nowrap}
+
+  .repuestos-categorias-panel{max-height:none}
+  .categoria-chips-row{
+    display:flex;flex-direction:row;gap:8px;
+    overflow-x:auto;overflow-y:hidden;padding-bottom:4px;
+  }
 }

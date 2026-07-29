@@ -83,6 +83,10 @@ def init_db():
                 servicio_id INTEGER PRIMARY KEY REFERENCES servicios(id) ON DELETE CASCADE
             );
 
+            CREATE TABLE IF NOT EXISTS favoritos_categorias (
+                cat_prefijo TEXT PRIMARY KEY
+            );
+
             -- Prefijos del proveedor de repuestos (categoría y marca)
             CREATE TABLE IF NOT EXISTS crac_prefijos (
                 tipo    TEXT NOT NULL,   -- 'categoria' | 'marca'
