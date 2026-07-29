@@ -36,3 +36,12 @@ def servicios(motor_id):
     if not motor:
         return jsonify({"error": "Motor no encontrado"}), 404
     return jsonify(facra.get_servicios_para_lista(motor.get("lista_num")))
+
+
+@bp.get("/<int:motor_id>/repuestos-sugeridos")
+@login_required
+def repuestos_sugeridos(motor_id):
+    motor = db.get_motor(motor_id)
+    if not motor:
+        return jsonify({"error": "Motor no encontrado"}), 404
+    return jsonify(db.get_repuestos_sugeridos_motor(motor_id))

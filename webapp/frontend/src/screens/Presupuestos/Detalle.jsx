@@ -10,6 +10,32 @@ import { ErrorBanner } from '../../components/ErrorBanner'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { formatPrecioARS, formatFechaAR } from '../../utils/format'
 
+// Avisos de cambios post-emisión: cada línea de repuesto guarda el precio y el
+// stock congelados al cotizar; el backend manda además precio_actual/stock_actual
+// del catálogo vigente. Si difieren, se avisa acá (nunca en el PDF).
+function warningsRepuesto(it) {
+  const w = []
+  if (!it.repuesto_codigo) return w
+  // stock es NOT NULL en el catálogo: si vino null, el código ya no está en la lista.
+  if (it.stock_actual === null || it.stock_actual === undefined) {
+    w.push('Ya no está en la lista del catálogo')
+    return w
+  }
+  if (it.precio_actual && it.precio_unitario !== null && it.precio_actual !== it.precio_unitario) {
+    w.push(`Precio de lista cambió: ${formatPrecioARS(it.precio_unitario)} → ${formatPrecioARS(it.precio_actual)}`)
+  }
+  if (it.stock_al_cotizar === 1 && it.stock_actual === 0) {
+    w.push('Ya no tiene stock')
+  }
+  return w
+}
+
+function fmtCantidad(cantidad) {
+  const c = Number(cantidad)
+  if (Number.isNaN(c)) return String(cantidad ?? '')
+  return c === Math.trunc(c) ? String(Math.trunc(c)) : String(c)
+}
+
 function Campo({ label, valor }) {
   return (
     <div>
@@ -59,31 +85,51 @@ export default function DetallePresupuesto() {
     navigate(-1)
   }
 
-  const actualizarPrecio = (idx, valor) => {
-    setEditItems((prev) => prev.map((it, i) => (i === idx ? { ...it, precio_aplicado: valor } : it)))
+  const actualizarCampo = (idx, campo, valor) => {
+    setEditItems((prev) => prev.map((it, i) => (i === idx ? { ...it, [campo]: valor } : it)))
   }
-  const actualizarDescCustom = (idx, valor) => {
-    setEditItems((prev) => prev.map((it, i) => (i === idx ? { ...it, descripcion_custom: valor } : it)))
-  }
+  const actualizarPrecio = (idx, valor) => actualizarCampo(idx, 'precio_aplicado', valor)
+  const actualizarDescCustom = (idx, valor) => actualizarCampo(idx, 'descripcion_custom', valor)
   const quitarItem = (idx) => setEditItems((prev) => prev.filter((_, i) => i !== idx))
   const agregarItemCustom = () => {
     setEditItems((prev) => [...prev, { id: `nuevo-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null, descripcion_custom: '', precio_aplicado: '' }])
+  }
+  // En edición los repuestos se agregan solo a mano (código/descripción/precio);
+  // el buscador de catálogo completo vive en el wizard de creación.
+  const agregarItemRepuesto = () => {
+    setEditItems((prev) => [...prev, {
+      id: `nuevo-rep-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null,
+      tipo: 'repuesto', repuesto_codigo: '', descripcion_custom: '',
+      cantidad: 1, precio_unitario: '', stock_al_cotizar: null,
+    }])
   }
 
   const guardar = async () => {
     setGuardando(true)
     setError('')
     try {
-      const payload = {
-        items: editItems
-          .filter((it) => (it.desc_facra || (it.descripcion_custom || '').trim()) && it.precio_aplicado !== '')
-          .map((it) => ({
-            servicio_id: it.servicio_id,
-            descripcion_custom: it.descripcion_custom,
-            precio_aplicado: it.precio_aplicado,
-          })),
-        notas: editNotas,
-      }
+      const servicios = editItems
+        .filter((it) => it.tipo !== 'repuesto')
+        .filter((it) => (it.desc_facra || (it.descripcion_custom || '').trim()) && it.precio_aplicado !== '')
+        .map((it) => ({
+          servicio_id: it.servicio_id,
+          descripcion_custom: it.descripcion_custom,
+          precio_aplicado: it.precio_aplicado,
+        }))
+      const repuestos = editItems
+        .filter((it) => it.tipo === 'repuesto')
+        .filter((it) => (it.descripcion_custom || '').trim() && it.precio_unitario !== '' && Number(it.cantidad) > 0)
+        .map((it) => ({
+          tipo: 'repuesto',
+          repuesto_codigo: (it.repuesto_codigo || '').trim() || null,
+          descripcion: it.descripcion_custom,
+          cantidad: it.cantidad,
+          precio_unitario: it.precio_unitario,
+          // Se devuelve el stock congelado tal cual vino: la edición no re-lee
+          // el catálogo, para no pisar la foto tomada al cotizar.
+          stock_al_cotizar: it.stock_al_cotizar,
+        }))
+      const payload = { items: [...servicios, ...repuestos], notas: editNotas }
       await api.put(`/presupuestos/${id}`, payload)
       setEditMode(false)
       cargar()
@@ -130,6 +176,11 @@ export default function DetallePresupuesto() {
   const ultimoPdf = pdfs[0]
   const anteriores = pdfs.slice(1)
 
+  const serviciosItems = items.filter((it) => it.tipo !== 'repuesto')
+  const repuestoItems = items.filter((it) => it.tipo === 'repuesto')
+  const warningsPorItem = new Map(repuestoItems.map((it) => [it.id, warningsRepuesto(it)]))
+  const hayWarnings = [...warningsPorItem.values()].some((w) => w.length > 0)
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       <PageHeader
@@ -158,42 +209,132 @@ export default function DetallePresupuesto() {
       </div>
 
       {!editMode ? (
-        <DataTable
-          columns={[
-            { key: 'item_num', header: 'Nº', width: 70 },
-            { key: 'desc', header: 'Descripción', wrap: true, render: (_, row) => row.desc_facra || row.descripcion_custom },
-            { key: 'precio_aplicado', header: 'Precio', align: 'right', width: 140, render: formatPrecioARS },
-          ]}
-          rows={items}
-        />
+        <>
+          {serviciosItems.length > 0 && (
+            <DataTable
+              columns={[
+                { key: 'item_num', header: 'Nº', width: 70 },
+                { key: 'desc', header: 'Descripción', wrap: true, render: (_, row) => row.desc_facra || row.descripcion_custom },
+                { key: 'precio_aplicado', header: 'Precio', align: 'right', width: 140, render: formatPrecioARS },
+              ]}
+              rows={serviciosItems}
+            />
+          )}
+
+          {repuestoItems.length > 0 && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+                Repuestos
+              </div>
+
+              {hayWarnings && (
+                <div style={{
+                  display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px',
+                  background: 'var(--status-expired-bg)', color: 'var(--status-expired-fg)',
+                  borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
+                }}>
+                  <Icon n="rotate-cw" s={15} />
+                  La lista de repuestos cambió desde la emisión de este presupuesto — revisá los avisos antes de reconfirmar.
+                </div>
+              )}
+
+              <DataTable
+                columns={[
+                  { key: 'repuesto_codigo', header: 'Código', width: 120, strong: true, render: (v) => v || '—' },
+                  {
+                    key: 'desc', header: 'Descripción', wrap: true,
+                    render: (_, row) => {
+                      const warns = warningsPorItem.get(row.id) || []
+                      return (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                          <span>{row.descripcion_custom}</span>
+                          {warns.map((w) => (
+                            <span key={w} style={{
+                              alignSelf: 'flex-start', fontFamily: 'var(--font-body)', fontSize: 12,
+                              color: 'var(--status-expired-fg)', background: 'var(--status-expired-bg)',
+                              borderRadius: 'var(--radius-pill)', padding: '2px 10px',
+                            }}>
+                              {w}
+                            </span>
+                          ))}
+                        </div>
+                      )
+                    },
+                  },
+                  { key: 'cantidad', header: 'Cant.', align: 'center', width: 70, render: fmtCantidad },
+                  { key: 'precio_unitario', header: 'P. unitario', align: 'right', width: 130, render: formatPrecioARS },
+                  { key: 'precio_aplicado', header: 'Subtotal', align: 'right', width: 130, render: formatPrecioARS },
+                ]}
+                rows={repuestoItems}
+              />
+            </div>
+          )}
+        </>
       ) : (
         <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
           {editItems.map((it, idx) => (
-            <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              {it.desc_facra ? (
-                <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{it.desc_facra}</span>
-              ) : (
+            it.tipo === 'repuesto' ? (
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                 <TextField
-                  placeholder="Descripción"
+                  placeholder="Código"
+                  value={it.repuesto_codigo || ''}
+                  onChange={(e) => actualizarCampo(idx, 'repuesto_codigo', e.target.value)}
+                  style={{ width: 120 }}
+                />
+                <TextField
+                  placeholder="Descripción del repuesto"
                   value={it.descripcion_custom || ''}
                   onChange={(e) => actualizarDescCustom(idx, e.target.value)}
-                  style={{ flex: 1 }}
+                  style={{ flex: 1, minWidth: 160 }}
                 />
-              )}
-              <TextField
-                type="number" step="0.01" placeholder="Precio"
-                value={it.precio_aplicado}
-                onChange={(e) => actualizarPrecio(idx, e.target.value)}
-                style={{ width: 140 }}
-              />
-              <button onClick={() => quitarItem(idx)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
-                <Icon n="x" s={16} />
-              </button>
-            </div>
+                <TextField
+                  type="number" min="0" step="1" placeholder="Cant."
+                  value={it.cantidad}
+                  onChange={(e) => actualizarCampo(idx, 'cantidad', e.target.value)}
+                  style={{ width: 80 }}
+                />
+                <TextField
+                  type="number" step="0.01" placeholder="P. unitario"
+                  value={it.precio_unitario}
+                  onChange={(e) => actualizarCampo(idx, 'precio_unitario', e.target.value)}
+                  style={{ width: 130 }}
+                />
+                <button onClick={() => quitarItem(idx)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
+                  <Icon n="x" s={16} />
+                </button>
+              </div>
+            ) : (
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                {it.desc_facra ? (
+                  <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{it.desc_facra}</span>
+                ) : (
+                  <TextField
+                    placeholder="Descripción"
+                    value={it.descripcion_custom || ''}
+                    onChange={(e) => actualizarDescCustom(idx, e.target.value)}
+                    style={{ flex: 1 }}
+                  />
+                )}
+                <TextField
+                  type="number" step="0.01" placeholder="Precio"
+                  value={it.precio_aplicado}
+                  onChange={(e) => actualizarPrecio(idx, e.target.value)}
+                  style={{ width: 140 }}
+                />
+                <button onClick={() => quitarItem(idx)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
+                  <Icon n="x" s={16} />
+                </button>
+              </div>
+            )
           ))}
-          <Button variant="ghost" size="sm" iconLeft={<Icon n="plus" s={14} />} onClick={agregarItemCustom} style={{ alignSelf: 'flex-start' }}>
-            Agregar ítem
-          </Button>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <Button variant="ghost" size="sm" iconLeft={<Icon n="plus" s={14} />} onClick={agregarItemCustom}>
+              Agregar ítem
+            </Button>
+            <Button variant="ghost" size="sm" iconLeft={<Icon n="plus" s={14} />} onClick={agregarItemRepuesto}>
+              Agregar repuesto
+            </Button>
+          </div>
         </div>
       )}
 

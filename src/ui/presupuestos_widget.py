@@ -1,6 +1,6 @@
 """
 Pantalla: Presupuestos.
-Historial de presupuestos + wizard de creación (4 pasos).
+Historial de presupuestos + wizard de creación (Cliente → Motor → Servicios → Repuestos).
 """
 import os
 
@@ -8,8 +8,9 @@ from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QTableWidgetItem, QHeaderView, QStackedWidget, QFrame,
     QLineEdit, QSizePolicy, QMessageBox, QListWidget, QListWidgetItem,
+    QComboBox, QSpinBox,
 )
-from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtCore import Qt, pyqtSignal, QTimer
 from PyQt6.QtGui import QFont, QDesktopServices, QColor
 from PyQt6.QtCore import QUrl
 
@@ -18,7 +19,9 @@ from ..data.db import (
     guardar_presupuesto, get_presupuestos, update_presupuesto_pdf,
     get_clientes_nombres, guardar_pdf_historial,
     toggle_favorito_servicio, get_favoritos_ids,
+    get_repuestos_sugeridos_motor,
 )
+from ..data.crac import get_categorias, get_marcas, get_repuestos, get_repuestos_count
 from ..utils.pdf_gen import generar_pdf
 from .motor_selector_widget import MotorSelectorWidget
 from .widgets import ZoomableTable
@@ -87,6 +90,15 @@ class PresupuestosWidget(QWidget):
         self._cliente_nombre: str = ""
         self._motor_actual: dict = {}
         self._presupuestos_actuales: list[dict] = []
+        # Servicios elegidos (se congelan al pasar al paso Repuestos)
+        self._items_servicios: list[dict] = []
+        self._total_servicios: float = 0.0
+        # Repuestos agregados al presupuesto en curso. Cada línea:
+        # {repuesto_codigo, descripcion, cantidad, precio_unitario, stock_al_cotizar}
+        # (repuesto_codigo/stock None en ítems manuales fuera de catálogo)
+        self._repuestos: list[dict] = []
+        self._resultados_rep: list[dict] = []
+        self._sugeridos_rep: list[dict] = []
         # Favoritos
         self._fav_ids: set[int] = set()
         self._star_btns: dict[int, QPushButton] = {}
@@ -106,6 +118,7 @@ class PresupuestosWidget(QWidget):
         self._stack.addWidget(self._build_cliente_page())      # 1
         self._stack.addWidget(self._build_motor_page())        # 2
         self._stack.addWidget(self._build_servicios_page())    # 3
+        self._stack.addWidget(self._build_repuestos_page())    # 4
 
         root.addWidget(self._stack)
 
@@ -253,7 +266,7 @@ class PresupuestosWidget(QWidget):
         titulo.setStyleSheet(f"color: {COLOR_TEXT_PRIMARY};")
         c_layout.addWidget(titulo)
 
-        subtitulo = QLabel("Paso 1 de 3  —  Ingresá el nombre del cliente")
+        subtitulo = QLabel("Paso 1 de 4  —  Ingresá el nombre del cliente")
         subtitulo.setStyleSheet(f"color: {COLOR_TEXT_MUTED}; font-size: {FONT_SIZE_MD}px;")
         c_layout.addWidget(subtitulo)
 
@@ -477,18 +490,19 @@ class PresupuestosWidget(QWidget):
         self.lbl_total.setFont(QFont(FONT_FAMILY, FONT_SIZE_LG, QFont.Weight.Bold))
         self.lbl_total.setStyleSheet("color: #1a2744;")
 
-        self.btn_finalizar = QPushButton("Finalizar presupuesto  ✓")
-        self.btn_finalizar.setStyleSheet(BUTTON_SUCCESS)
-        self.btn_finalizar.setFixedHeight(42)
-        self.btn_finalizar.setFixedWidth(240)
-        self.btn_finalizar.setEnabled(False)
-        self.btn_finalizar.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.btn_finalizar.clicked.connect(self._finalizar)
+        # Ahora un presupuesto puede ser de solo repuestos: este botón avanza al
+        # paso Repuestos siempre, y la validación final vive en ese paso.
+        self.btn_siguiente_repuestos = QPushButton("Siguiente: Repuestos  →")
+        self.btn_siguiente_repuestos.setStyleSheet(BUTTON_PRIMARY)
+        self.btn_siguiente_repuestos.setFixedHeight(42)
+        self.btn_siguiente_repuestos.setFixedWidth(240)
+        self.btn_siguiente_repuestos.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.btn_siguiente_repuestos.clicked.connect(self._avanzar_a_repuestos)
 
         bottom_layout.addWidget(lbl_total_titulo)
         bottom_layout.addWidget(self.lbl_total)
         bottom_layout.addStretch()
-        bottom_layout.addWidget(self.btn_finalizar)
+        bottom_layout.addWidget(self.btn_siguiente_repuestos)
         layout.addWidget(bottom_bar)
 
         return page
@@ -657,7 +671,6 @@ class PresupuestosWidget(QWidget):
 
     def _recalcular_total(self):
         total = 0.0
-        alguno_tildado = False
         n_cols = self.tabla_servicios_wiz.columnCount()
 
         self.tabla_servicios_wiz.blockSignals(True)
@@ -682,7 +695,6 @@ class PresupuestosWidget(QWidget):
                             item.setData(Qt.ItemDataRole.ForegroundRole, None)
 
                 if checked:
-                    alguno_tildado = True
                     datos = check.data(Qt.ItemDataRole.UserRole)
                     if datos and datos.get("precio") is not None:
                         total += float(datos["precio"])
@@ -690,10 +702,10 @@ class PresupuestosWidget(QWidget):
             self.tabla_servicios_wiz.blockSignals(False)
 
         self.lbl_total.setText(_fmt_precio(total))
-        self.btn_finalizar.setEnabled(alguno_tildado)
 
-    # ─── Finalizar presupuesto ────────────────────────────────────────────────
-    def _finalizar(self):
+    # ─── Avanzar al paso Repuestos ────────────────────────────────────────────
+    def _avanzar_a_repuestos(self):
+        """Congela la selección de servicios y pasa al paso 4 (Repuestos)."""
         items = []
         for fila in range(self.tabla_servicios_wiz.rowCount()):
             if fila == self._separador_row:
@@ -708,6 +720,503 @@ class PresupuestosWidget(QWidget):
                         "descripcion":     datos.get("descripcion"),
                         "precio_aplicado": datos.get("precio"),
                     })
+
+        self._items_servicios = items
+        self._total_servicios = sum((i.get("precio_aplicado") or 0) for i in items)
+        self._preparar_pagina_repuestos()
+        self._ir(4)
+
+    # ─── PÁGINA 4: Repuestos ──────────────────────────────────────────────────
+    def _build_repuestos_page(self) -> QWidget:
+        page = QWidget()
+        page.setStyleSheet(f"background-color: {COLOR_CONTENT_BG};")
+        layout = QVBoxLayout(page)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+
+        layout.addWidget(self._build_nav_bar("Volver", lambda: self._ir(3)))
+
+        # Cabecera informativa
+        info_bar = QWidget()
+        info_bar.setStyleSheet(
+            f"background-color: {COLOR_PANEL_BG}; border-bottom: 1px solid {COLOR_PANEL_BORDER};"
+        )
+        info_layout = QHBoxLayout(info_bar)
+        info_layout.setContentsMargins(20, 10, 20, 10)
+
+        self.lbl_motor_rep = QLabel("")
+        self.lbl_motor_rep.setFont(QFont(FONT_FAMILY, FONT_SIZE_MD, QFont.Weight.Bold))
+        self.lbl_motor_rep.setStyleSheet(f"color: {COLOR_TEXT_PRIMARY};")
+
+        lbl_hint = QLabel("Paso 4 de 4 — Agregá repuestos (opcional)")
+        lbl_hint.setStyleSheet(f"color: {COLOR_TEXT_MUTED}; font-size: {FONT_SIZE_SM}px;")
+
+        info_layout.addWidget(self.lbl_motor_rep)
+        info_layout.addStretch()
+        info_layout.addWidget(lbl_hint)
+        layout.addWidget(info_bar)
+
+        # Sugeridos: repuestos usados antes en presupuestos del mismo motor
+        self.lbl_sugeridos = QLabel("  Usados antes en este motor — click para agregar")
+        self.lbl_sugeridos.setStyleSheet(
+            f"color: {COLOR_TEXT_MUTED}; font-size: {FONT_SIZE_SM}px; padding: 6px 10px;"
+        )
+        layout.addWidget(self.lbl_sugeridos)
+
+        self.tabla_sugeridos = ZoomableTable()
+        self.tabla_sugeridos.setColumnCount(4)
+        self.tabla_sugeridos.setHorizontalHeaderLabels(["Código", "Descripción", "Precio actual", "Stock"])
+        self._config_tabla_repuestos(self.tabla_sugeridos, col_desc=1)
+        self.tabla_sugeridos.setMaximumHeight(140)
+        self.tabla_sugeridos.cellClicked.connect(self._on_sugerido_click)
+        layout.addWidget(self.tabla_sugeridos)
+
+        # Filtros de búsqueda en el catálogo
+        filtros = QWidget()
+        filtros.setStyleSheet(f"background-color: {COLOR_CONTENT_BG};")
+        fl = QHBoxLayout(filtros)
+        fl.setContentsMargins(16, 8, 16, 4)
+        fl.setSpacing(8)
+
+        self.combo_cat_rep = QComboBox()
+        self.combo_cat_rep.setFixedHeight(34)
+        self.combo_cat_rep.currentIndexChanged.connect(self._programar_busqueda_rep)
+
+        self.combo_marca_rep = QComboBox()
+        self.combo_marca_rep.setFixedHeight(34)
+        self.combo_marca_rep.currentIndexChanged.connect(self._programar_busqueda_rep)
+
+        self.input_codigo_rep = QLineEdit()
+        self.input_codigo_rep.setPlaceholderText("Código…")
+        self.input_codigo_rep.setStyleSheet(SEARCH_INPUT)
+        self.input_codigo_rep.setFixedHeight(34)
+        self.input_codigo_rep.textChanged.connect(self._programar_busqueda_rep)
+
+        self.input_desc_rep = QLineEdit()
+        self.input_desc_rep.setPlaceholderText("🔍  Descripción…")
+        self.input_desc_rep.setStyleSheet(SEARCH_INPUT)
+        self.input_desc_rep.setFixedHeight(34)
+        self.input_desc_rep.textChanged.connect(self._programar_busqueda_rep)
+
+        fl.addWidget(self.combo_cat_rep, 2)
+        fl.addWidget(self.combo_marca_rep, 2)
+        fl.addWidget(self.input_codigo_rep, 2)
+        fl.addWidget(self.input_desc_rep, 3)
+        layout.addWidget(filtros)
+
+        # El mismo debounce que la pestaña Repuestos
+        self._timer_busqueda_rep = QTimer(self)
+        self._timer_busqueda_rep.setSingleShot(True)
+        self._timer_busqueda_rep.setInterval(280)
+        self._timer_busqueda_rep.timeout.connect(self._buscar_repuestos_wizard)
+
+        self.lbl_resultados_rep = QLabel(
+            "  Elegí una categoría, una marca, o escribí un código o descripción — click en una fila para agregar"
+        )
+        self.lbl_resultados_rep.setStyleSheet(
+            f"color: {COLOR_TEXT_PLACEHOLDER}; font-size: {FONT_SIZE_SM}px; padding: 2px 10px;"
+        )
+        layout.addWidget(self.lbl_resultados_rep)
+
+        self.tabla_resultados_rep = ZoomableTable()
+        self.tabla_resultados_rep.setColumnCount(5)
+        self.tabla_resultados_rep.setHorizontalHeaderLabels(["Código", "Descripción", "Marca", "Precio", "Stock"])
+        self._config_tabla_repuestos(self.tabla_resultados_rep, col_desc=1)
+        self.tabla_resultados_rep.cellClicked.connect(self._on_resultado_rep_click)
+        layout.addWidget(self.tabla_resultados_rep, 1)
+
+        # Alta manual (fuera de catálogo)
+        manual = QWidget()
+        manual.setStyleSheet(f"background-color: {COLOR_CONTENT_BG};")
+        ml = QHBoxLayout(manual)
+        ml.setContentsMargins(16, 4, 16, 4)
+        ml.setSpacing(8)
+
+        lbl_manual = QLabel("Fuera de catálogo:")
+        lbl_manual.setStyleSheet(f"color: {COLOR_TEXT_MUTED}; font-size: {FONT_SIZE_SM}px;")
+
+        self.input_manual_codigo = QLineEdit()
+        self.input_manual_codigo.setPlaceholderText("Código (opcional)")
+        self.input_manual_codigo.setStyleSheet(SEARCH_INPUT)
+        self.input_manual_codigo.setFixedHeight(32)
+        self.input_manual_codigo.setMaximumWidth(150)
+
+        self.input_manual_desc = QLineEdit()
+        self.input_manual_desc.setPlaceholderText("Descripción")
+        self.input_manual_desc.setStyleSheet(SEARCH_INPUT)
+        self.input_manual_desc.setFixedHeight(32)
+
+        self.input_manual_precio = QLineEdit()
+        self.input_manual_precio.setPlaceholderText("Precio unit.")
+        self.input_manual_precio.setStyleSheet(SEARCH_INPUT)
+        self.input_manual_precio.setFixedHeight(32)
+        self.input_manual_precio.setMaximumWidth(120)
+
+        self.spin_manual_cant = QSpinBox()
+        self.spin_manual_cant.setRange(1, 999)
+        self.spin_manual_cant.setFixedHeight(32)
+
+        btn_manual = QPushButton("＋ Agregar")
+        btn_manual.setStyleSheet(BUTTON_PRIMARY)
+        btn_manual.setFixedHeight(32)
+        btn_manual.setCursor(Qt.CursorShape.PointingHandCursor)
+        btn_manual.clicked.connect(self._agregar_repuesto_manual)
+
+        ml.addWidget(lbl_manual)
+        ml.addWidget(self.input_manual_codigo)
+        ml.addWidget(self.input_manual_desc, 1)
+        ml.addWidget(self.input_manual_precio)
+        ml.addWidget(self.spin_manual_cant)
+        ml.addWidget(btn_manual)
+        layout.addWidget(manual)
+
+        # Repuestos agregados
+        lbl_agregados = QLabel("  Repuestos agregados")
+        lbl_agregados.setFont(QFont(FONT_FAMILY, FONT_SIZE_SM, QFont.Weight.Bold))
+        lbl_agregados.setStyleSheet(f"color: {COLOR_TEXT_PRIMARY}; padding: 6px 10px 2px;")
+        layout.addWidget(lbl_agregados)
+
+        self.tabla_rep_agregados = ZoomableTable()
+        self.tabla_rep_agregados.setColumnCount(6)
+        self.tabla_rep_agregados.setHorizontalHeaderLabels(
+            ["Código", "Descripción", "Cant.", "P. unitario", "Subtotal", ""]
+        )
+        self._config_tabla_repuestos(self.tabla_rep_agregados, col_desc=1)
+        hdr = self.tabla_rep_agregados.horizontalHeader()
+        hdr.setSectionResizeMode(2, QHeaderView.ResizeMode.Fixed)
+        hdr.setSectionResizeMode(3, QHeaderView.ResizeMode.Fixed)
+        hdr.setSectionResizeMode(4, QHeaderView.ResizeMode.Fixed)
+        hdr.setSectionResizeMode(5, QHeaderView.ResizeMode.Fixed)
+        self.tabla_rep_agregados.setColumnWidth(2, 80)
+        self.tabla_rep_agregados.setColumnWidth(3, 120)
+        self.tabla_rep_agregados.setColumnWidth(4, 130)
+        self.tabla_rep_agregados.setColumnWidth(5, 46)
+        self.tabla_rep_agregados.setMaximumHeight(190)
+        layout.addWidget(self.tabla_rep_agregados)
+
+        # Barra inferior: totales + confirmar
+        bottom_bar = QWidget()
+        bottom_bar.setStyleSheet(
+            f"background-color: {COLOR_WHITE}; border-top: 2px solid #1a2744;"
+        )
+        bottom_bar.setFixedHeight(60)
+        bottom_layout = QHBoxLayout(bottom_bar)
+        bottom_layout.setContentsMargins(20, 0, 20, 0)
+
+        self.lbl_total_desglose = QLabel("")
+        self.lbl_total_desglose.setStyleSheet(
+            f"color: {COLOR_TEXT_MUTED}; font-size: {FONT_SIZE_SM}px;"
+        )
+
+        lbl_total_titulo = QLabel("Total:")
+        lbl_total_titulo.setFont(QFont(FONT_FAMILY, FONT_SIZE_LG, QFont.Weight.Bold))
+        lbl_total_titulo.setStyleSheet(f"color: {COLOR_TEXT_PRIMARY};")
+
+        self.lbl_total_general = QLabel("$ 0,00")
+        self.lbl_total_general.setFont(QFont(FONT_FAMILY, FONT_SIZE_LG, QFont.Weight.Bold))
+        self.lbl_total_general.setStyleSheet("color: #1a2744;")
+
+        self.btn_confirmar = QPushButton("Confirmar presupuesto  ✓")
+        self.btn_confirmar.setStyleSheet(BUTTON_SUCCESS)
+        self.btn_confirmar.setFixedHeight(42)
+        self.btn_confirmar.setFixedWidth(240)
+        self.btn_confirmar.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.btn_confirmar.clicked.connect(self._finalizar)
+
+        bottom_layout.addWidget(self.lbl_total_desglose)
+        bottom_layout.addStretch()
+        bottom_layout.addWidget(lbl_total_titulo)
+        bottom_layout.addWidget(self.lbl_total_general)
+        bottom_layout.addSpacing(16)
+        bottom_layout.addWidget(self.btn_confirmar)
+        layout.addWidget(bottom_bar)
+
+        return page
+
+    @staticmethod
+    def _config_tabla_repuestos(tabla: ZoomableTable, col_desc: int):
+        tabla.setEditTriggers(ZoomableTable.EditTrigger.NoEditTriggers)
+        tabla.setSelectionBehavior(ZoomableTable.SelectionBehavior.SelectRows)
+        tabla.setAlternatingRowColors(True)
+        tabla.verticalHeader().setVisible(False)
+        tabla.setShowGrid(True)
+        tabla.setSortingEnabled(False)
+        hdr = tabla.horizontalHeader()
+        hdr.setDefaultAlignment(Qt.AlignmentFlag.AlignCenter)
+        for c in range(tabla.columnCount()):
+            hdr.setSectionResizeMode(
+                c,
+                QHeaderView.ResizeMode.Stretch if c == col_desc else QHeaderView.ResizeMode.Fixed,
+            )
+        tabla.setColumnWidth(0, 110)
+
+    def _preparar_pagina_repuestos(self):
+        """Se llama al entrar al paso 4: refresca sugeridos, filtros y totales."""
+        self.lbl_motor_rep.setText(self._motor_actual.get("motor", "—"))
+
+        # Sugeridos del historial de este motor
+        self._sugeridos_rep = get_repuestos_sugeridos_motor(self._motor_actual.get("id"))
+        hay_sugeridos = bool(self._sugeridos_rep)
+        self.lbl_sugeridos.setVisible(hay_sugeridos)
+        self.tabla_sugeridos.setVisible(hay_sugeridos)
+        if hay_sugeridos:
+            self.tabla_sugeridos.setRowCount(len(self._sugeridos_rep))
+            for fila, s in enumerate(self._sugeridos_rep):
+                self.tabla_sugeridos.setRowHeight(fila, 26)
+                self._set_celda(self.tabla_sugeridos, fila, 0, s.get("codigo") or "—", CENTER)
+                self._set_celda(self.tabla_sugeridos, fila, 1, s.get("descripcion") or "", LEFT)
+                precio = s.get("precio_actual")
+                self._set_celda(self.tabla_sugeridos, fila, 2, _fmt_precio(precio) if precio else "—", RIGHT)
+                self._set_celda_stock(self.tabla_sugeridos, fila, 3, s.get("stock_actual"))
+
+        # Filtros del catálogo (se recargan por si hubo un import nuevo)
+        self.combo_cat_rep.blockSignals(True)
+        self.combo_cat_rep.clear()
+        self.combo_cat_rep.addItem("Todas las categorías", None)
+        for c in get_categorias():
+            self.combo_cat_rep.addItem(c["nombre"], c["prefijo"])
+        self.combo_cat_rep.blockSignals(False)
+
+        self.combo_marca_rep.blockSignals(True)
+        self.combo_marca_rep.clear()
+        self.combo_marca_rep.addItem("Todas las marcas", None)
+        for m in get_marcas():
+            self.combo_marca_rep.addItem(m["nombre"], m["prefijo"])
+        self.combo_marca_rep.blockSignals(False)
+
+        self._refrescar_agregados()
+
+    @staticmethod
+    def _set_celda(tabla, fila, col, texto, align):
+        item = QTableWidgetItem(str(texto))
+        item.setTextAlignment(align)
+        item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
+        tabla.setItem(fila, col, item)
+
+    _COLOR_SIN_STOCK = QColor("#c62828")
+
+    def _set_celda_stock(self, tabla, fila, col, stock):
+        texto = "Sí" if stock else ("—" if stock is None else "No")
+        item = QTableWidgetItem(texto)
+        item.setTextAlignment(CENTER)
+        item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
+        if stock == 0:
+            item.setForeground(self._COLOR_SIN_STOCK)
+        tabla.setItem(fila, col, item)
+
+    def _programar_busqueda_rep(self, *_):
+        self._timer_busqueda_rep.start()
+
+    def _buscar_repuestos_wizard(self):
+        categoria = self.combo_cat_rep.currentData()
+        marca = self.combo_marca_rep.currentData()
+        codigo = self.input_codigo_rep.text().strip()
+        descripcion = self.input_desc_rep.text().strip()
+
+        # Igual que la pestaña Repuestos: sin filtro no se consulta (catálogo enorme)
+        if not (categoria or marca or codigo or descripcion):
+            self._resultados_rep = []
+            self.tabla_resultados_rep.setRowCount(0)
+            self.lbl_resultados_rep.setText(
+                "  Elegí una categoría, una marca, o escribí un código o descripción — click en una fila para agregar"
+            )
+            return
+
+        self._resultados_rep = get_repuestos(
+            categoria=categoria, marca=marca,
+            descripcion=descripcion or None, codigo=codigo or None,
+        )
+        total = get_repuestos_count(
+            categoria=categoria, marca=marca,
+            descripcion=descripcion or None, codigo=codigo or None,
+        )
+        extra = f" — mostrando los primeros {len(self._resultados_rep)}" if total > len(self._resultados_rep) else ""
+        self.lbl_resultados_rep.setText(
+            f"  {total} repuesto{'s' if total != 1 else ''} encontrado{'s' if total != 1 else ''}{extra} — click en una fila para agregar"
+        )
+
+        self.tabla_resultados_rep.setRowCount(len(self._resultados_rep))
+        for fila, r in enumerate(self._resultados_rep):
+            self.tabla_resultados_rep.setRowHeight(fila, 26)
+            self._set_celda(self.tabla_resultados_rep, fila, 0, r.get("codigo") or "", CENTER)
+            self._set_celda(self.tabla_resultados_rep, fila, 1, r.get("aplicacion") or "", LEFT)
+            self._set_celda(self.tabla_resultados_rep, fila, 2, r.get("marca") or "—", LEFT)
+            precio = r.get("precio")
+            self._set_celda(self.tabla_resultados_rep, fila, 3, _fmt_precio(precio) if precio else "—", RIGHT)
+            self._set_celda_stock(self.tabla_resultados_rep, fila, 4, r.get("stock"))
+
+    def _on_sugerido_click(self, row: int, col: int):
+        if row >= len(self._sugeridos_rep):
+            return
+        s = self._sugeridos_rep[row]
+        self._agregar_repuesto(
+            codigo=s.get("codigo"), descripcion=s.get("descripcion") or s.get("codigo"),
+            precio=s.get("precio_actual"), stock=s.get("stock_actual"),
+        )
+
+    def _on_resultado_rep_click(self, row: int, col: int):
+        if row >= len(self._resultados_rep):
+            return
+        r = self._resultados_rep[row]
+        self._agregar_repuesto(
+            codigo=r.get("codigo"), descripcion=r.get("aplicacion") or r.get("codigo"),
+            precio=r.get("precio"), stock=r.get("stock"),
+        )
+
+    def _agregar_repuesto(self, codigo, descripcion, precio, stock):
+        # Si el código ya estaba agregado, se suma una unidad en vez de duplicar
+        for rep in self._repuestos:
+            if codigo and rep.get("repuesto_codigo") == codigo:
+                rep["cantidad"] += 1
+                self._refrescar_agregados()
+                return
+        self._repuestos.append({
+            "repuesto_codigo": codigo,
+            "descripcion": descripcion,
+            "cantidad": 1,
+            "precio_unitario": float(precio or 0),
+            "stock_al_cotizar": stock,
+        })
+        self._refrescar_agregados()
+
+    def _agregar_repuesto_manual(self):
+        desc = self.input_manual_desc.text().strip()
+        try:
+            precio = float(self.input_manual_precio.text().strip().replace(".", "").replace(",", "."))
+        except ValueError:
+            QMessageBox.warning(self, "Repuesto manual", "Ingresá un precio válido (ej: 15300,50).")
+            return
+        if not desc:
+            QMessageBox.warning(self, "Repuesto manual", "Ingresá la descripción del repuesto.")
+            return
+        self._repuestos.append({
+            "repuesto_codigo": self.input_manual_codigo.text().strip() or None,
+            "descripcion": desc,
+            "cantidad": self.spin_manual_cant.value(),
+            "precio_unitario": precio,
+            "stock_al_cotizar": None,
+        })
+        self.input_manual_codigo.clear()
+        self.input_manual_desc.clear()
+        self.input_manual_precio.clear()
+        self.spin_manual_cant.setValue(1)
+        self._refrescar_agregados()
+
+    def _refrescar_agregados(self):
+        tabla = self.tabla_rep_agregados
+        tabla.setRowCount(len(self._repuestos))
+        for fila, rep in enumerate(self._repuestos):
+            tabla.setRowHeight(fila, 32)
+            self._set_celda(tabla, fila, 0, rep.get("repuesto_codigo") or "—", CENTER)
+
+            desc = rep.get("descripcion") or ""
+            if rep.get("stock_al_cotizar") == 0:
+                desc += "   ⚠ Sin stock — sujeto a disponibilidad"
+            self._set_celda(tabla, fila, 1, desc, LEFT)
+            if rep.get("stock_al_cotizar") == 0:
+                tabla.item(fila, 1).setForeground(self._COLOR_SIN_STOCK)
+
+            spin = QSpinBox()
+            spin.setRange(1, 999)
+            spin.setValue(int(rep.get("cantidad") or 1))
+            spin.valueChanged.connect(
+                lambda val, idx=fila: self._cambiar_cantidad_rep(idx, val)
+            )
+            tabla.setCellWidget(fila, 2, spin)
+
+            editor_precio = QLineEdit(f"{rep.get('precio_unitario') or 0:.2f}".replace(".", ","))
+            editor_precio.setAlignment(Qt.AlignmentFlag.AlignRight)
+            editor_precio.textChanged.connect(
+                lambda texto, idx=fila: self._cambiar_precio_rep(idx, texto)
+            )
+            tabla.setCellWidget(fila, 3, editor_precio)
+
+            subtotal = (rep.get("precio_unitario") or 0) * (rep.get("cantidad") or 0)
+            self._set_celda(tabla, fila, 4, _fmt_precio(subtotal), RIGHT)
+
+            btn_quitar = QPushButton("✕")
+            btn_quitar.setCursor(Qt.CursorShape.PointingHandCursor)
+            btn_quitar.setStyleSheet(
+                "QPushButton { background: transparent; border: none; color: #c62828; font-size: 14px; }"
+                "QPushButton:hover { color: #8e0000; }"
+            )
+            btn_quitar.clicked.connect(lambda checked, idx=fila: self._quitar_repuesto(idx))
+            tabla.setCellWidget(fila, 5, btn_quitar)
+
+        self._actualizar_totales_rep()
+
+    def _cambiar_cantidad_rep(self, idx: int, valor: int):
+        if idx >= len(self._repuestos):
+            return
+        self._repuestos[idx]["cantidad"] = valor
+        self._actualizar_subtotal_rep(idx)
+
+    def _cambiar_precio_rep(self, idx: int, texto: str):
+        if idx >= len(self._repuestos):
+            return
+        try:
+            precio = float(texto.strip().replace(".", "").replace(",", "."))
+        except ValueError:
+            precio = None  # precio inválido: bloquea el confirmar hasta corregirlo
+        self._repuestos[idx]["precio_unitario"] = precio
+        self._actualizar_subtotal_rep(idx)
+
+    def _actualizar_subtotal_rep(self, idx: int):
+        rep = self._repuestos[idx]
+        subtotal = (rep.get("precio_unitario") or 0) * (rep.get("cantidad") or 0)
+        item = self.tabla_rep_agregados.item(idx, 4)
+        if item:
+            item.setText(_fmt_precio(subtotal))
+        self._actualizar_totales_rep()
+
+    def _quitar_repuesto(self, idx: int):
+        if idx >= len(self._repuestos):
+            return
+        del self._repuestos[idx]
+        self._refrescar_agregados()
+
+    def _actualizar_totales_rep(self):
+        total_rep = sum(
+            (r.get("precio_unitario") or 0) * (r.get("cantidad") or 0)
+            for r in self._repuestos
+        )
+        total_general = self._total_servicios + total_rep
+        self.lbl_total_desglose.setText(
+            f"Servicios: {_fmt_precio(self._total_servicios)}   ·   Repuestos: {_fmt_precio(total_rep)}"
+        )
+        self.lbl_total_general.setText(_fmt_precio(total_general))
+
+        hay_items = bool(self._items_servicios or self._repuestos)
+        precios_ok = all(r.get("precio_unitario") is not None for r in self._repuestos)
+        self.btn_confirmar.setEnabled(hay_items and precios_ok)
+
+    # ─── Finalizar presupuesto ────────────────────────────────────────────────
+    def _finalizar(self):
+        items = list(self._items_servicios)
+        items_repuestos_pdf = []
+        for rep in self._repuestos:
+            cantidad = rep.get("cantidad") or 0
+            unitario = rep.get("precio_unitario")
+            if cantidad <= 0 or unitario is None:
+                continue
+            subtotal = round(cantidad * unitario, 2)
+            items.append({
+                "servicio_id": None,
+                "descripcion_custom": rep.get("descripcion"),
+                "precio_aplicado": subtotal,
+                "tipo": "repuesto",
+                "repuesto_codigo": rep.get("repuesto_codigo"),
+                "cantidad": cantidad,
+                "precio_unitario": unitario,
+                "stock_al_cotizar": rep.get("stock_al_cotizar"),
+            })
+            items_repuestos_pdf.append({
+                "codigo": rep.get("repuesto_codigo"),
+                "descripcion": rep.get("descripcion"),
+                "cantidad": cantidad,
+                "precio_unitario": unitario,
+                "precio_aplicado": subtotal,
+            })
 
         if not items:
             return
@@ -732,9 +1241,10 @@ class PresupuestosWidget(QWidget):
                     "item_num":        i.get("item_num"),
                     "descripcion":     i.get("descripcion"),
                     "precio_aplicado": i.get("precio_aplicado"),
-                } for i in items],
+                } for i in self._items_servicios],
                 total=total,
                 output_path=pdf_path,
+                repuestos=items_repuestos_pdf,
             )
             update_presupuesto_pdf(presupuesto_id, pdf_path)
 
@@ -751,6 +1261,9 @@ class PresupuestosWidget(QWidget):
 
         self._cliente_nombre = ""
         self._motor_actual   = {}
+        self._items_servicios = []
+        self._total_servicios = 0.0
+        self._repuestos = []
         self.input_cliente.clear()
         self._cargar_historial()
         self._ir(0)
@@ -762,6 +1275,18 @@ class PresupuestosWidget(QWidget):
     def _iniciar_wizard(self):
         self.input_cliente.clear()
         self.lista_sugerencias.setVisible(False)
+        # Arranque limpio: lo elegido en un wizard anterior no debe arrastrarse
+        self._items_servicios = []
+        self._total_servicios = 0.0
+        self._repuestos = []
+        self.input_codigo_rep.blockSignals(True)
+        self.input_desc_rep.blockSignals(True)
+        self.input_codigo_rep.clear()
+        self.input_desc_rep.clear()
+        self.input_codigo_rep.blockSignals(False)
+        self.input_desc_rep.blockSignals(False)
+        self._resultados_rep = []
+        self.tabla_resultados_rep.setRowCount(0)
         self._ir(1)
 
     def _build_nav_bar(self, texto_boton: str, callback) -> QWidget:

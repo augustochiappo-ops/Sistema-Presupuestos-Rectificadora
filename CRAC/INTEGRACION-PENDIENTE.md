@@ -1,47 +1,39 @@
-# Integración CRAC → Sistema de presupuestos — decisiones pendientes
+# Integración CRAC → Sistema de presupuestos — decisiones
 
-Este documento lista lo que **todavía no está definido** y debe resolverse (con el dueño del negocio) antes o durante la implementación. No son suposiciones — son preguntas abiertas a propósito. Ver `CRAC.md` para todo lo que sí está confirmado (formato de datos, precios, prefijos).
+Este documento listaba lo que **todavía no estaba definido**. El 2026-07-29 el dueño del negocio resolvió los puntos 2 a 6 y la integración se implementó (rama `claude/revisar-codigo-master-vye67l`): el wizard de presupuestos tiene un paso 4 "Repuestos" en web y escritorio. Ver `CRAC.md` para el formato de datos confirmado.
 
 ---
 
-## 1. Actualización diaria del archivo
+## 1. Actualización diaria del archivo — PENDIENTE (único punto abierto)
 
 El archivo `precio-stock.csv` llega actualizado todos los días (cambios menores, no drásticos).
 
 **A definir:**
-- Mecanismo de carga: ¿se sube manualmente cada archivo nuevo, o hay una carpeta/proceso que lo detecta automáticamente?
-- ¿Se conserva el histórico de archivos anteriores, o cada carga reemplaza a la anterior sin dejar rastro?
+- Mecanismo de carga: ¿se sube manualmente cada archivo nuevo, o hay una carpeta/proceso que lo detecta automáticamente? (Hoy: subida manual desde la pestaña Repuestos de la web.)
+- ¿Se conserva el histórico de archivos anteriores, o cada carga reemplaza a la anterior sin dejar rastro? (Hoy: cada import reemplaza todo, sin histórico.)
 
-## 2. Presupuesto ya emitido vs. archivo actualizado
+## 2. Presupuesto ya emitido vs. archivo actualizado — RESUELTO ✔
 
-Confirmado por el negocio: **si el precio o el stock de un repuesto cambia después de que el presupuesto ya se generó, el sistema debe advertir en el panel.**
+Cada línea de repuesto **congela** al cotizar: `repuesto_codigo`, `precio_unitario`, `stock_al_cotizar` y la descripción (columnas nuevas de `presupuesto_items`). La comparación se dispara **al abrir el detalle del presupuesto**: el mismo GET de ítems trae `precio_actual`/`stock_actual` del catálogo vigente (lookup por código, nunca por id — los ids no sobreviven al reimport).
 
-**A definir:**
-- ¿Cómo se dispara la comparación? (¿al abrir el presupuesto guardado, al cargar el archivo nuevo, con un chequeo periódico?)
-- ¿Qué guarda cada línea de presupuesto: el precio congelado al momento de creación, o siempre referencia el precio vivo del archivo más reciente? (Necesario para poder detectar el cambio y mostrar la advertencia — si no se guarda el precio original, no hay con qué comparar.)
-- ¿Cómo se ve la advertencia? (¿ícono en la línea, alerta general del presupuesto, bloqueo hasta que se revise?)
-- Misma lógica para stock: si una pieza pasa de `alistado: si` a `alistado: no` (o viceversa) después de presupuestada, ¿qué debe pasar?
+La advertencia se ve así: aviso por línea ("Precio de lista cambió: $X → $Y", "Ya no tiene stock", "Ya no está en la lista del catálogo") + banner general arriba de la sección Repuestos. No bloquea nada; es informativa. Nada de esto aparece en el PDF.
 
-## 3. Repuesto sin stock al momento de presupuestar
+## 3. Repuesto sin stock al momento de presupuestar — RESUELTO ✔
 
-**A definir:**
-- Si `alistado = "no"` cuando se arma el presupuesto, ¿se puede agregar igual (con aviso de "sin stock, sujeto a disponibilidad"), o el sistema debe bloquear esa pieza?
+Se puede agregar igual, con el aviso visible "Sin stock — sujeto a disponibilidad" en el wizard. El PDF no menciona el stock.
 
-## 4. Búsqueda de repuestos en el presupuesto
+## 4. Búsqueda de repuestos en el presupuesto — RESUELTO ✔
 
-**A definir:**
-- ¿Cómo busca el usuario una pieza CRAC dentro del picker del presupuesto? Opciones no excluyentes: por código exacto, por texto libre contra el campo `aplicacion` (vehículo/motor), por categoría + marca decodificadas.
-- ¿Se combina mano de obra + repuesto en la misma línea del presupuesto, o son dos líneas separadas que se muestran agrupadas? (El negocio confirmó que **se combinan** — falta definir cómo se ve esa línea combinada en la UI y en el PDF final.)
+El picker del paso Repuestos busca por las cuatro vías, no excluyentes: categoría, marca, código (LIKE) y texto libre contra `aplicacion`. Misma regla que la pestaña Repuestos: vacío hasta que haya un filtro, tope de 1000 resultados.
 
-## 5. Códigos que no decodifican (1.1% del archivo)
+Sobre la línea combinada: se optó por una **sección "Repuestos" separada** en el presupuesto y el PDF (código / descripción / cantidad / precio unitario / subtotal), en lugar de fusionar mano de obra y repuesto en una sola línea. Además el paso arranca sugiriendo los repuestos ya usados en presupuestos anteriores del mismo motor (derivado del historial, sin tabla de asociación).
 
-Ver `CRAC.md` sección 3.4 para el detalle y ejemplos.
+Un presupuesto puede ser de solo repuestos (sin mano de obra) y también de solo servicios.
 
-**A definir:**
-- ¿Esas piezas se excluyen del picker de búsqueda, o se muestran igual sin categoría/marca "linda" (solo código + aplicación + precio)?
+## 5. Códigos que no decodifican (1.1% del archivo) — RESUELTO ✔
 
-## 6. Margen sobre el precio
+Se muestran igual en el picker, sin categoría/marca "linda" (solo código + aplicación + precio), como recomendaba `CRAC.md`.
 
-Confirmado por el negocio: **el precio del CSV ya es el precio final al cliente** (no es costo interno). Por lo tanto, en principio **no hace falta aplicar margen adicional** sobre el valor del repuesto dentro del presupuesto.
+## 6. Margen sobre el precio — RESUELTO ✔
 
-**A confirmar igual:** si en algún caso puntual el negocio quiere sumar algo extra sobre ese precio (traslado, urgencia, etc.), definir dónde vive ese ajuste — no debería ser parte del dato CRAC en sí.
+El precio del CSV va tal cual al presupuesto (ya es precio final al cliente, sin margen). El precio unitario de cada línea es editable a mano en el wizard y en la edición, que cubre el caso puntual de sumar algo extra (traslado, urgencia) sin tocar el dato CRAC.
