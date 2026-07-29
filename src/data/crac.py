@@ -213,6 +213,21 @@ def get_repuestos(
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
+def get_repuesto_por_codigo(codigo: str) -> dict | None:
+    """
+    Un repuesto puntual por código exacto (para congelar precio/stock/descripción
+    al agregarlo a un presupuesto). None si el código no está en el catálogo.
+    """
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT codigo, aplicacion, precio, stock FROM crac_repuestos WHERE codigo = ? LIMIT 1",
+            (codigo,),
+        ).fetchone()
+        if not row:
+            return None
+        return dict(zip(["codigo", "aplicacion", "precio", "stock"], row))
+
+
 def get_repuestos_count(
     categoria: str | None = None,
     marca: str | None = None,
