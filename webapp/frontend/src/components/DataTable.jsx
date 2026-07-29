@@ -87,7 +87,7 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
       )}
 
       <div style={{ overflow: 'auto', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', ...style }} {...rest}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-body)' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-body)', tableLayout: 'fixed' }}>
           <thead>
             <tr>
               {cols.map((c, i) => (
@@ -100,10 +100,10 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
                   onDrop={reorderKey ? (e) => { e.preventDefault(); soltar(i) } : undefined}
                   title={reorderKey ? 'Arrastrá para mover la columna' : undefined}
                   style={{
-                    textAlign: c.align || 'left', padding: '16px 20px',
+                    textAlign: c.align || 'left', padding: '14px 14px',
                     fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-semibold)',
                     color: 'var(--text-muted)', borderBottom: '1px solid var(--border-default)',
-                    width: c.width, whiteSpace: 'nowrap',
+                    width: c.width, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                     cursor: reorderKey ? 'grab' : 'default',
                     opacity: arrastrando === i ? 0.4 : 1,
                     // Línea de inserción: a la izquierda si la columna viaja hacia
@@ -134,11 +134,13 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
               >
                 {cols.map((c, ci) => (
                   <td key={ci} style={{
-                    textAlign: c.align || 'left', padding: '15px 20px',
+                    textAlign: c.align || 'left', padding: '13px 14px',
                     fontSize: 'var(--text-sm)', color: c.strong ? 'var(--text-strong)' : 'var(--text-body)',
                     fontWeight: c.strong ? 'var(--weight-semibold)' : 'var(--weight-regular)',
                     borderBottom: ri < rows.length - 1 ? '1px solid var(--border-subtle)' : 'none',
                     whiteSpace: c.wrap ? 'normal' : 'nowrap',
+                    overflow: c.wrap ? 'visible' : 'hidden',
+                    textOverflow: c.wrap ? 'clip' : 'ellipsis',
                   }}>{c.render ? c.render(row[c.key], row) : row[c.key]}</td>
                 ))}
               </tr>

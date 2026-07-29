@@ -100,6 +100,25 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      {/* Total y "Siguiente" arriba de todo: no hace falta bajar hasta el final
+          de la lista de servicios para ver cuánto lleva el presupuesto o avanzar. */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, padding: '16px 20px', background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total servicios</span>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(total)}</span>
+        </div>
+        {/* Se puede seguir sin servicios: un presupuesto puede ser de solo repuestos.
+            La validación de "al menos un ítem" está en el paso de confirmación. */}
+        <Button
+          variant="secondary"
+          iconRight={<Icon n="chevron-right" s={16} />}
+          onClick={() => onSiguiente(total)}
+          style={{ background: '#fff', border: 'none', color: 'var(--text-strong)' }}
+        >
+          Siguiente: Repuestos
+        </Button>
+      </div>
+
       <SearchInput icon={<Icon n="search" s={16} />} placeholder="Buscar por número o descripción…" value={busqueda} onChange={(e) => setBusqueda(e.target.value)} />
 
       <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', maxHeight: 420, overflow: 'auto', padding: '8px 0' }}>
@@ -140,17 +159,6 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
           <Button variant="secondary" iconLeft={<Icon n="plus" s={16} />} onClick={agregarCustom}>Agregar</Button>
         </div>
       </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)' }}>
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total servicios</span>
-        <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(total)}</span>
-      </div>
-
-      {/* Se puede seguir sin servicios: un presupuesto puede ser de solo repuestos.
-          La validación de "al menos un ítem" está en el paso de confirmación. */}
-      <Button variant="primary" fullWidth iconRight={<Icon n="chevron-right" s={16} />} onClick={() => onSiguiente(total)}>
-        Siguiente: Repuestos
-      </Button>
     </div>
   )
 }

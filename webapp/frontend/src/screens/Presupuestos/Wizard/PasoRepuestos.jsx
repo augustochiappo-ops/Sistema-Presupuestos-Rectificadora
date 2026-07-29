@@ -115,6 +115,31 @@ export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServi
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
+      {/* Total y "Confirmar presupuesto" arriba de todo, igual que en el paso
+          de Servicios: no hace falta bajar hasta el final para ver el total o confirmar. */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)', flexWrap: 'wrap', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 18, flexWrap: 'wrap' }}>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
+            Servicios <strong style={{ color: '#fff' }}>{formatPrecioARS(totalServicios)}</strong>
+          </span>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
+            Repuestos <strong style={{ color: '#fff' }}>{formatPrecioARS(totalRepuestos)}</strong>
+          </span>
+          <span style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+            <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total</span>
+            <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(totalGeneral)}</span>
+          </span>
+        </div>
+        <Button variant="success" disabled={!hayItems || hayInvalidos || guardando} onClick={onConfirmar}>
+          {guardando ? 'Generando presupuesto…' : 'Confirmar presupuesto'}
+        </Button>
+      </div>
+      {!hayItems && (
+        <div style={{ textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-faint)' }}>
+          Agregá al menos un servicio o un repuesto para confirmar.
+        </div>
+      )}
+
       <RepuestoPicker
         sugeridos={sugeridos}
         cantidadPorCodigo={cantidadPorCodigo}
@@ -199,30 +224,6 @@ export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServi
           La categoría es lo que va a leer el cliente en el PDF (ej. "Aros"). Si la dejás vacía se usa la descripción.
         </div>
       </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)', flexWrap: 'wrap', gap: 8 }}>
-        <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
-            Servicios <strong style={{ color: '#fff' }}>{formatPrecioARS(totalServicios)}</strong>
-          </span>
-          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
-            Repuestos <strong style={{ color: '#fff' }}>{formatPrecioARS(totalRepuestos)}</strong>
-          </span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total</span>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(totalGeneral)}</span>
-        </div>
-      </div>
-
-      <Button variant="success" fullWidth disabled={!hayItems || hayInvalidos || guardando} onClick={onConfirmar}>
-        {guardando ? 'Generando presupuesto…' : 'Confirmar presupuesto'}
-      </Button>
-      {!hayItems && (
-        <div style={{ textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-faint)' }}>
-          Agregá al menos un servicio o un repuesto para confirmar.
-        </div>
-      )}
     </div>
   )
 }

@@ -5,14 +5,14 @@ import { DataTable } from './DataTable'
 import { Icon } from './Icon'
 
 const COLUMNS = [
-  { key: 'indice', header: 'Código', strong: true, width: 100 },
+  { key: 'indice', header: 'Código', strong: true, width: 105 },
   { key: 'motor', header: 'Motor', wrap: true },
-  { key: 'marca', header: 'Marca', width: 130 },
-  { key: 'cilindrada', header: 'Cilindrada', width: 90 },
-  { key: 'tipo', header: 'Tipo', width: 120 },
-  { key: 'cilindros', header: 'Cil.', align: 'center', width: 50 },
-  { key: 'diametro', header: 'Diámetro', align: 'right', width: 90, render: (v) => (v ? `${v} mm` : '—') },
-  { key: 'lista_num', header: 'Lista', align: 'center', width: 60, render: (v) => v ?? '—' },
+  { key: 'marca', header: 'Marca', width: 105 },
+  { key: 'cilindrada', header: 'Cilindrada', width: 80 },
+  { key: 'tipo', header: 'Tipo', width: 95 },
+  { key: 'cilindros', header: 'Cil.', align: 'center', width: 45 },
+  { key: 'diametro', header: 'Diámetro', align: 'right', width: 80, render: (v) => (v ? `${v} mm` : '—') },
+  { key: 'lista_num', header: 'Lista', align: 'center', width: 55, render: (v) => v ?? '—' },
 ]
 
 export function MotorSelector({ onSelect }) {

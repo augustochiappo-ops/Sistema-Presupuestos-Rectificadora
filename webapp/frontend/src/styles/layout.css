@@ -1,7 +1,7 @@
-/* Shell */
-.shell-outer{min-height:100vh;background:var(--bg-app);padding:24px;box-sizing:border-box}
-.shell-inner{max-width:1360px;margin:0 auto;background:var(--surface-shell);border-radius:var(--radius-2xl);box-shadow:var(--shadow-lg);display:flex;overflow:hidden;min-height:calc(100vh - 48px)}
-.shell-main{flex:1;padding:28px 30px;overflow:auto;min-width:0}
+/* Shell — sin marco gris: el shell ocupa todo el viewport, sidebar y contenido van a los bordes */
+.shell-outer{min-height:100vh;background:var(--surface-shell);box-sizing:border-box}
+.shell-inner{background:var(--surface-shell);display:flex;overflow:hidden;min-height:100vh}
+.shell-main{flex:1;padding:24px 28px;overflow:auto;min-width:0}
 .shell-topbar{display:none}
 .shell-topbar-toggle{border:none;background:transparent;cursor:pointer;padding:8px;display:flex;color:var(--text-strong)}
 
@@ -10,7 +10,7 @@
 .sidebar-backdrop{display:none}
 
 /* Motor selector: brand rail + table */
-.motor-selector-grid{display:grid;grid-template-columns:180px 1fr;gap:18px;align-items:start}
+.motor-selector-grid{display:grid;grid-template-columns:160px 1fr;gap:14px;align-items:start}
 .motor-selector-brands{max-height:560px;overflow:auto}
 .motor-brand-btn{display:block;width:100%}
 
