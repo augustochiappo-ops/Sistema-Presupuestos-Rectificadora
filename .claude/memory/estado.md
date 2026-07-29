@@ -127,11 +127,11 @@ Se agregó la pestaña **Repuestos** (ítem de menú al final del sidebar, `🔩
 - **Regla de confidencialidad respetada**: la palabra "CRAC" solo aparece en código interno, nombres de módulo/función, y en la pantalla interna "Actualizar Excel" (panel de administración, no la ve el cliente). La pestaña visible para el usuario del sistema se llama "Repuestos", sin mencionar el proveedor.
 - **Probado de punta a punta headless** (PyQt6 con `QT_QPA_PLATFORM=offscreen`, hubo que instalar `libegl1`/`libgl1` en el entorno): importación real de los dos CSV, carga de categorías/marcas, filtro por código, filtro por categoría, estado vacío al limpiar filtros — todo verificado contra los datos reales del proveedor.
 
-**Pendiente para una próxima sesión** (ver `CRAC/INTEGRACION-PENDIENTE.md` para el detalle completo de las decisiones de negocio abiertas):
-- Asociar repuestos a motores (la idea final: al elegir un motor, sugerir/recordar los repuestos ya usados antes para ese motor).
-- Combinar mano de obra + repuesto en la misma línea de un presupuesto.
-- Qué pasa si el precio/stock de un repuesto cambia después de emitido el presupuesto (advertencia).
-- Repuesto sin stock al momento de presupuestar: ¿se puede agregar igual con aviso, o se bloquea?
+**Pendiente para una próxima sesión** — ~~todo esto~~ → **RESUELTO el 2026-07-29** (ver sección "Repuestos integrados a los presupuestos" más abajo y `CRAC/INTEGRACION-PENDIENTE.md` actualizado):
+- ~~Asociar repuestos a motores~~ → sugerencias derivadas del historial de presupuestos del motor.
+- ~~Combinar mano de obra + repuesto en la misma línea~~ → el dueño eligió sección "Repuestos" separada.
+- ~~Advertencia si precio/stock cambia post-emisión~~ → implementada (precio/stock congelados + comparación al abrir el Detalle).
+- ~~Repuesto sin stock~~ → se agrega igual, con aviso en pantalla (nunca en el PDF).
 - ~~Esta pestaña no se portó a la versión web~~ → **se portó el mismo día** (ver sección siguiente), a pedido del usuario que usa la web como interfaz principal.
 
 ## Repuestos portado a la versión web (sesión 2026-07-29, misma tarde)
@@ -150,6 +150,27 @@ El usuario esperaba ver la pestaña en **chiapppo.pythonanywhere.com** (su inter
 - **Probado end-to-end con Flask test client** (sin servidor real): login, import de los dos CSV reales (mismos resultados exactos que el desktop: 296 prefijos, 64.250 repuestos, 63.542 decodificados), filtro por código, endpoint sin filtro devuelve vacío, ruta protegida por `@login_required` devuelve 401 sin sesión, SPA fallback sirve `/repuestos` correctamente.
 - **`npm run build`** corrido y el nuevo `static_build/` (incluye `assets/index-jibsO7Aj.js`, reemplaza al anterior) se versiona en git, siguiendo la convención ya establecida del proyecto (PythonAnywhere no tiene Node instalado).
 - Después de mergear esto, falta correr el deploy remoto: `git pull` en el servidor + reload vía el webhook `POST /api/deploy` (ver sección "Deploy remoto automático" más arriba) para que el cambio llegue a producción.
+
+## Repuestos integrados a los presupuestos (sesión 2026-07-29, rama `claude/revisar-codigo-master-vye67l`)
+
+El wizard de presupuestos pasó de 3 a **4 pasos** (Cliente → Motor → Servicios → **Repuestos**) en **ambas** versiones (web y escritorio). Decisiones tomadas con el dueño en esta sesión (todas asentadas en `CRAC/INTEGRACION-PENDIENTE.md`, que quedó con un solo punto abierto: el mecanismo de carga diaria del CSV):
+
+- Precio CRAC tal cual (es precio final, sin margen), con unitario editable por línea; cantidad editable; ítems manuales fuera de catálogo permitidos.
+- El paso Repuestos siempre se muestra pero es opcional; **se permite un presupuesto de solo repuestos** (la validación del backend pasó de "al menos un servicio" a "al menos un ítem").
+- PDF y Detalle: sección "Repuestos" separada (Código / Descripción / Cant. / P. unitario / Subtotal). La palabra "CRAC" sigue sin aparecer en nada que vea el cliente (verificado por grep).
+- Sin stock: se agrega igual con aviso "Sin stock — sujeto a disponibilidad" (solo en pantalla).
+- Aviso post-emisión: cada línea congela `repuesto_codigo` + `precio_unitario` + `stock_al_cotizar`; al abrir el Detalle se compara contra el catálogo vigente y se avisa por línea + banner ("Precio de lista cambió", "Ya no tiene stock", "Ya no está en la lista").
+- Sugerencias por motor: el paso arranca con "Usados antes en este motor" (query derivada del historial `presupuesto_items` × `presupuestos.motor_id` — **sin tabla de asociación nueva**).
+
+**Modelo de datos** (idéntico en `webapp/backend/app/db.py` y `src/data/db.py`, migración aditiva con el patrón `PRAGMA table_info`): `presupuesto_items` ganó `tipo` ('servicio'|'repuesto'), `repuesto_codigo` TEXT, `cantidad` REAL DEFAULT 1, `precio_unitario` REAL, `stock_al_cotizar` INTEGER. **Clave**: `precio_aplicado` sigue siendo el TOTAL de línea (cantidad × unitario, calculado siempre server-side), así `total = sum(precio_aplicado)` y todo el código viejo siguen funcionando. La referencia al catálogo es SIEMPRE por `codigo` (los ids de `crac_repuestos` no sobreviven al reimport diario del CSV).
+
+**Backend web**: `_resolver_items` acepta ítems `{tipo:'repuesto', repuesto_codigo, descripcion, cantidad, precio_unitario}` (congela desc/stock del catálogo server-side; ítems inválidos ahora devuelven 400 con detalle en vez de descartarse en silencio); `GET /api/motores/:id/repuestos-sugeridos`; `crac.get_repuesto_por_codigo()`; `pdf_gen.generar_pdf(..., repuestos=None)` retrocompatible (omite la tabla de servicios si el presupuesto es de solo repuestos).
+
+**Frontend web**: la selección de servicios y repuestos ahora vive en `WizardPresupuesto` (ir atrás/adelante no pierde nada; `PasoServicios` pasó a componente controlado con botón "Siguiente"); `PasoRepuestos.jsx` nuevo (sugeridos + picker compacto con selects de categoría/marca + búsqueda por código/descripción, click en fila agrega, código repetido suma cantidad, stepper de cantidad, unitario editable, alta manual, totales desglosados); `Detalle.jsx` con sección Repuestos, warnings y edición (cantidad/unitario, alta manual — el picker de catálogo completo quedó solo en el wizard, a propósito). Cambiar de motor a mitad del wizard resetea servicios (los precios son por lista) pero conserva repuestos.
+
+**Escritorio**: página 5.ª en el `QStackedWidget` del wizard (los subtítulos pasaron a "de 4"), calcada de la web con los patrones de `repuestos_widget.py`; Detalle con separador "─── Repuestos ───" en vista, banner de warnings, y en edición la tabla pasa a 4 columnas (Cant. con QSpinBox solo para repuestos) + botón "＋ Repuesto".
+
+**Probado**: suite funcional del backend (migración sobre DB vieja, resolución de ítems, congelados, detección de cambios tras tocar el catálogo, sugerencias, PDFs solo-repuestos/mixto/retrocompatible), integración Flask test client punta a punta (POST/GET/PUT/400s), `npm run build` + oxlint limpios, y UI Qt offscreen (wizard + detalle con edición). Presupuestos viejos se ven igual que antes (filas `tipo='servicio'`, `cantidad=1`).
 
 ## Migración web (sesión 2026-07-28)
 
@@ -208,7 +229,7 @@ El usuario usa **la app de Claude Code desde el celular** además de esta sesió
 **Pendiente:** quedó un presupuesto de prueba (id=7, "cliente 2", Fiat Fire, $461.460,09) en la base de datos real de producción, generado sin querer por la sesión mobile al probar el wizard contra el sitio real. El usuario confirmó que hay que borrarlo pero no tenía la consola de PythonAnywhere a mano — instrucciones exactas guardadas en una tarea de background ("Borrar presupuesto de prueba #0007 en producción").
 
 ## Próximo paso
-Sistema en producción y funcionando, con deploy remoto automatizado. Ítems abiertos: borrar el presupuesto de prueba #7 (tarea de background ya creada), unificar las ramas main/master de git (tarea de background ya creada), y considerar si vale la pena migrar a un plan pago de PythonAnywhere si el uso crece (más CPU/disco). Como puede haber más de una sesión de Claude tocando este repo en paralelo (celular + escritorio), conviene chequear ramas remotas pendientes al empezar cada sesión.
+Sistema en producción y funcionando, con deploy remoto automatizado. Ítems abiertos: **mergear la rama `claude/revisar-codigo-master-vye67l` (repuestos en presupuestos) a `master` y correr el deploy remoto** (`POST /api/deploy`), borrar el presupuesto de prueba #7 (tarea de background ya creada), unificar las ramas main/master de git (tarea de background ya creada), definir el mecanismo de carga diaria del CSV de CRAC (único punto abierto de `INTEGRACION-PENDIENTE.md`), y considerar si vale la pena migrar a un plan pago de PythonAnywhere si el uso crece (más CPU/disco). Como puede haber más de una sesión de Claude tocando este repo en paralelo (celular + escritorio), conviene chequear ramas remotas pendientes al empezar cada sesión.
 
 ## Para correr el programa
 ```
