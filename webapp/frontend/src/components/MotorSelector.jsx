@@ -6,7 +6,19 @@ import { Icon } from './Icon'
 
 const COLUMNS = [
   { key: 'indice', header: 'Código', strong: true, width: 105 },
-  { key: 'motor', header: 'Motor', wrap: true },
+  {
+    key: 'motor', header: 'Motor', wrap: true,
+    render: (v, row) => (
+      row.usado_antes
+        ? (
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <Icon n="history" s={13} style={{ color: 'var(--status-active-fg)', flexShrink: 0 }} />
+            {v}
+          </span>
+        )
+        : v
+    ),
+  },
   { key: 'marca', header: 'Marca', width: 105 },
   { key: 'cilindrada', header: 'Cilindrada', width: 80 },
   { key: 'tipo', header: 'Tipo', width: 95 },
@@ -73,6 +85,7 @@ export function MotorSelector({ onSelect }) {
           reorderKey="motores"
           rows={motores}
           onRowClick={onSelect}
+          getRowBackground={(row) => (row.usado_antes ? 'var(--status-active-bg)' : null)}
           emptyMessage={cargando ? 'Buscando…' : 'No se encontraron motores.'}
           style={{ minWidth: 0 }}
         />

@@ -180,9 +180,13 @@ def get_servicios_para_lista(lista_num: int | None) -> list[dict]:
 
 
 def get_motores(marca: str | None = None, busqueda: str | None = None) -> list[dict]:
+    # usado_antes: el motor ya tiene al menos un presupuesto hecho. Van primero
+    # (mismo orden alfabético entre ellos), con un fondo distinto en la UI, para
+    # no tener que buscarlos entre el resto cada vez que se repite un motor.
     query = """
         SELECT id, indice, motor, marca, lista_num,
-               cilindros, tipo, cilindrada, diametro, origen
+               cilindros, tipo, cilindrada, diametro, origen,
+               EXISTS(SELECT 1 FROM presupuestos p WHERE p.motor_id = motores.id) AS usado_antes
         FROM motores
         WHERE 1=1
     """
@@ -197,10 +201,10 @@ def get_motores(marca: str | None = None, busqueda: str | None = None) -> list[d
         query += " AND (motor LIKE ? OR marca LIKE ? OR indice LIKE ?)"
         params.extend([term, term, term])
 
-    query += " ORDER BY marca, motor"
+    query += " ORDER BY usado_antes DESC, marca, motor"
 
     with get_connection() as conn:
         cur = conn.execute(query, params)
         cols = ["id", "indice", "motor", "marca", "lista_num",
-                "cilindros", "tipo", "cilindrada", "diametro", "origen"]
+                "cilindros", "tipo", "cilindrada", "diametro", "origen", "usado_antes"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]

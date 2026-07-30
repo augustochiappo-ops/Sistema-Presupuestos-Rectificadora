@@ -68,6 +68,8 @@ export default function DetallePresupuesto() {
   const [eliminando, setEliminando] = React.useState(false)
   const [sugeridos, setSugeridos] = React.useState([])
   const [aviso, setAviso] = React.useState('')
+  const [ajusteTexto, setAjusteTexto] = React.useState('')
+  const [ajustePct, setAjustePct] = React.useState(0)
   const pdfParaCompartir = React.useRef(null)
 
   const cargar = React.useCallback(() => {
@@ -84,14 +86,39 @@ export default function DetallePresupuesto() {
         ? { ...it }
         // Presupuestos armados antes de soportar cantidad en servicios no
         // tienen precio_unitario guardado: se asume cantidad 1 y que
-        // precio_aplicado YA era el unitario.
-        : { ...it, cantidad: it.cantidad || 1, precio_unitario: it.precio_unitario ?? it.precio_aplicado }
+        // precio_aplicado YA era el unitario. precioBase congela el unitario
+        // con el que se entró a editar, para que el ajuste % de abajo tenga
+        // un punto de partida fijo (no compone sobre sí mismo si se cambia
+        // el % varias veces).
+        : { ...it, cantidad: it.cantidad || 1, precio_unitario: it.precio_unitario ?? it.precio_aplicado, precioBase: it.precio_unitario ?? it.precio_aplicado }
     )))
     setEditNotas(detalle?.notas || '')
+    setAjusteTexto('')
+    setAjustePct(0)
     setEditMode(true)
     if (detalle?.motor_id) {
       api.get(`/motores/${detalle.motor_id}/repuestos-sugeridos`).then(setSugeridos).catch(() => {})
     }
+  }
+
+  // Aumento/descuento en % sobre la mano de obra, igual criterio que en el
+  // wizard: solo toca servicios de la lista FACRA (desc_facra presente), no
+  // ítems manuales ni repuestos, que ya tienen un precio elegido a mano. Se
+  // aplica siempre desde precioBase (el valor con el que se entró a editar),
+  // así que pisa cualquier edición manual de precio hecha después de tocar
+  // el %, pero no compone si se cambia el % varias veces seguidas.
+  const aplicarAjusteTexto = (texto) => {
+    setAjusteTexto(texto)
+    const normalizado = texto.replace(',', '.').trim()
+    const pct = normalizado === '' || normalizado === '-' ? 0 : parseFloat(normalizado)
+    const pctValido = Number.isNaN(pct) ? 0 : pct
+    setAjustePct(pctValido)
+    const factor = 1 + pctValido / 100
+    setEditItems((prev) => prev.map((it) => (
+      it.tipo !== 'repuesto' && it.desc_facra
+        ? { ...it, precio_unitario: Math.round((it.precioBase || 0) * factor * 100) / 100 }
+        : it
+    )))
   }
 
   const cancelarEdicion = () => setEditMode(false)
@@ -267,6 +294,9 @@ export default function DetallePresupuesto() {
   const ultimoPdf = pdfs[0]
   const anteriores = pdfs.slice(1)
 
+  const totalEditado = editItems.reduce((acc, it) => acc + (Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0), 0)
+  const colorAjuste = ajustePct > 0 ? 'var(--status-active-fg)' : ajustePct < 0 ? 'var(--status-expired-fg)' : 'var(--border-default)'
+
   const serviciosItems = items.filter((it) => it.tipo !== 'repuesto')
   const repuestoItems = items.filter((it) => it.tipo === 'repuesto')
   const warningsPorItem = new Map(repuestoItems.map((it) => [it.id, warningsRepuesto(it)]))
@@ -306,11 +336,34 @@ export default function DetallePresupuesto() {
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: 40, padding: '18px 22px', background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)' }}>
+      <div style={{ display: 'flex', gap: 40, alignItems: 'flex-end', flexWrap: 'wrap', padding: '18px 22px', background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)' }}>
         <Campo label="Cliente" valor={detalle.cliente} />
         <Campo label="Motor" valor={detalle.motor} />
         <Campo label="Fecha" valor={formatFechaAR(detalle.fecha)} />
-        <Campo label="Total" valor={formatPrecioARS(detalle.total)} />
+        <Campo label="Total" valor={formatPrecioARS(editMode ? totalEditado : detalle.total)} />
+        {editMode && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+              Ajuste mano de obra
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <input
+                type="text"
+                inputMode="decimal"
+                placeholder="0"
+                value={ajusteTexto}
+                onChange={(e) => aplicarAjusteTexto(e.target.value)}
+                title="Porcentaje de aumento (positivo) o descuento (negativo) sobre la mano de obra"
+                style={{
+                  width: 64, height: 34, textAlign: 'center', borderRadius: 8,
+                  border: `2px solid ${colorAjuste}`, background: 'var(--surface-card)', color: 'var(--text-strong)',
+                  fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, outline: 'none',
+                }}
+              />
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>%</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {!editMode ? (

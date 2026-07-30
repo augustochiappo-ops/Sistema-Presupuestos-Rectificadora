@@ -37,7 +37,7 @@ function aplicarOrden(columns, orden) {
   return [...ordenadas, ...columns.filter((c) => !yaPuestas.has(c.key))]
 }
 
-export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 'No hay datos para mostrar.', style, striped = false, reorderKey, ...rest }) {
+export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 'No hay datos para mostrar.', style, striped = false, reorderKey, getRowBackground, ...rest }) {
   const [hover, setHover] = React.useState(-1)
   const [orden, setOrden] = React.useState(() => leerOrden(reorderKey))
   const [arrastrando, setArrastrando] = React.useState(null)
@@ -127,7 +127,9 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
                 onMouseLeave={() => setHover(-1)}
                 onClick={() => onRowClick && onRowClick(row, ri)}
                 style={{
-                  background: hover === ri ? 'var(--surface-sunken)' : (striped && ri % 2 === 1 ? 'var(--surface-stripe)' : 'transparent'),
+                  background: hover === ri
+                    ? 'var(--surface-sunken)'
+                    : (getRowBackground?.(row) || (striped && ri % 2 === 1 ? 'var(--surface-stripe)' : 'transparent')),
                   cursor: onRowClick ? 'pointer' : 'default',
                   transition: 'background .12s ease',
                 }}
