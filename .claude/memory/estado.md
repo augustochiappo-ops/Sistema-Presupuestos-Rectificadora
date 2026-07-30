@@ -274,9 +274,13 @@ A pedido explícito del usuario, sin rama nueva:
 - Se reconstruyó `static_build/` (`npm run build`) y se commiteó junto con el resto — necesario para que PythonAnywhere sirva el cambio sin tener Node instalado.
 - **Pendiente**: correr el deploy remoto (`POST /api/deploy`) para que esto llegue a producción.
 
-## Nota operativa — el entorno remoto de Claude Code no puede pegarle a producción
+## Nota operativa — el entorno remoto de Claude Code ya puede pegarle a producción (actualizado 2026-07-30)
 
-El deploy remoto (`POST https://chiapppo.pythonanywhere.com/api/deploy`) funciona, pero **el proxy de red de esta sesión de Claude Code (la que corre en la nube, no en la compu del usuario) bloquea la salida a `chiapppo.pythonanywhere.com` con 403** (policy denial confirmado en `$HTTPS_PROXY/__agentproxy/status` → `recentRelayFailures`). No es un error transitorio: no hay que reintentarlo ni buscar la vuelta. El usuario tiene que correr el `curl` del deploy él mismo (o pedirlo desde un entorno que sí tenga ese host habilitado). El comando queda listo para copiar/pegar cada vez que hay cambios pendientes de deployar.
+**Superado.** El bloqueo de red de esta sección (proxy de egress devolviendo 403 al pegarle a `chiapppo.pythonanywhere.com`) ya no aplica: el usuario agregó ese dominio a la whitelist de su entorno de Claude Code. Confirmado con `curl -X POST https://chiapppo.pythonanywhere.com/api/deploy` (sin secreto) → **401** de la propia app (no 403 del proxy), o sea el tráfico sale y llega al servidor.
+
+**Flujo nuevo:** el usuario le pasa el `DEPLOY_SECRET` a Claude **en cada sesión** (no se guarda de sesión a sesión ni se versiona). Con ese valor, Claude corre el `curl` del deploy directamente al terminar una tanda de cambios, en vez de solo entregarle el comando al usuario para que lo pegue él en la consola de PythonAnywhere. Si Claude no tiene el secreto en la sesión actual, lo pide antes de intentar deployar.
+
+Nota histórica: el `webapp/backend/.deploy_secrets` (gitignored) mencionado en "Deploy remoto automático" arriba seguía siendo una opción para persistir el secreto localmente, pero el usuario prefirió pasarlo a mano cada vez.
 
 ## Ajuste % de mano de obra + PDF sin precios + edición de clientes + buscador difuso (sesión 2026-07-30, `master` directo)
 

@@ -28,12 +28,12 @@ Así se trabaja en este repo, a pedido explícito del usuario:
 
 1. El usuario pide un cambio. Claude lo implementa, lo prueba localmente (levantando `webapp/backend` + `webapp/frontend` en dev, ver sección de abajo) y, si tocó el frontend, corre `npm run build` y commitea `static_build/` de nuevo.
 2. Claude **commitea y pushea directo a `master`** — no se usan ramas nuevas ni PRs para este repo. `master` es la única rama y es la que sirve producción.
-3. Producción (PythonAnywhere, `chiapppo.pythonanywhere.com`) no se actualiza sola: alguien tiene que correr el deploy. **El entorno de Claude Code en la nube no tiene salida de red hacia `chiapppo.pythonanywhere.com`** (403 de policy en el proxy de egress, confirmado — no es transitorio, no hay que reintentarlo). Por eso, al final de cada tanda de cambios, Claude le pasa al usuario el comando exacto para pegar en la **consola Bash de PythonAnywhere** (o donde corresponda) — típicamente el webhook de deploy:
+3. Producción (PythonAnywhere, `chiapppo.pythonanywhere.com`) no se actualiza sola: hay que correr el deploy. **Desde el 2026-07-30 el entorno de Claude Code en la nube tiene salida de red habilitada hacia `chiapppo.pythonanywhere.com`** (el usuario agregó el dominio a la whitelist de su entorno) — antes esto daba 403 de policy en el proxy de egress, ya no. El usuario le pasa a Claude el `DEPLOY_SECRET` **en cada sesión** (no vive en el repo ni se guarda de una sesión a otra); con ese valor Claude ejecuta el deploy directamente al terminar una tanda de cambios:
    ```bash
-   curl -X POST https://chiapppo.pythonanywhere.com/api/deploy -H "X-Deploy-Secret: <secreto>"
+   curl -X POST https://chiapppo.pythonanywhere.com/api/deploy -H "X-Deploy-Secret: <secreto pasado por el usuario en esta sesión>"
    ```
-   Si hace falta algo más que el deploy (migración manual, revisar un log, etc.), Claude también da esos comandos listos para copiar/pegar, explicando qué hace cada uno.
-4. El usuario corre el/los comando(s) y pega el resultado si algo falla, para poder diagnosticar sin acceso directo al servidor.
+   Si Claude no tiene el secreto en la sesión actual, se lo pide al usuario antes de deployar — nunca lo inventa ni lo reusa de una sesión vieja. Si hace falta algo más que el deploy (migración manual, revisar un log, etc.) y no hay un endpoint para eso, Claude le pasa al usuario el comando para pegar en la **consola Bash de PythonAnywhere**, explicando qué hace.
+4. Si Claude corrió el deploy, confirma el resultado (status HTTP) en el chat. Si en cambio le pasó un comando manual al usuario, este lo corre y pega el resultado si algo falla, para poder diagnosticar sin acceso directo al servidor.
 
 ## Cómo levantar la app web (dev) y sacar capturas de pantalla
 

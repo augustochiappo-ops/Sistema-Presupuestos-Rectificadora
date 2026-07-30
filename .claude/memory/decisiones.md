@@ -1,5 +1,11 @@
 # Decisiones técnicas y de diseño
 
+## Claude Code habilitado para deployar directo a producción (2026-07-30)
+**Decisión:** el usuario agregó `chiapppo.pythonanywhere.com` a la whitelist de red del entorno de Claude Code en la nube. Antes esto daba 403 de policy en el proxy de egress (ver `estado.md`, sección "Nota operativa" — ahora marcada como superada); confirmado con un `curl -X POST https://chiapppo.pythonanywhere.com/api/deploy` que devolvió 401 de la propia app (no 403 del proxy), es decir el tráfico ya sale.
+**Por qué:** hasta ahora, después de cada tanda de cambios, Claude solo podía entregarle al usuario el comando de deploy (`curl ... -H "X-Deploy-Secret: <secreto>"`) para que él lo corriera manualmente. Con la whitelist puesta, Claude puede correr el deploy directamente y cerrar el ciclo sin ese paso manual.
+**Cómo queda el secreto:** el `DEPLOY_SECRET` no se guarda de sesión a sesión ni se versiona en el repo — el usuario se lo pasa a Claude **en cada sesión** en la que haga falta deployar. Si Claude no lo tiene en la sesión actual, lo pide antes de intentar el deploy; nunca lo inventa ni reusa uno de una sesión anterior.
+**Fecha:** 2026-07-30
+
 ## Migración a versión web (2026-07-28)
 **Decisión:** reescribir la app como web (backend Flask + frontend React/Vite), manteniendo la app de escritorio PyQt6 intacta como backup hasta validar la web en uso real.
 **Por qué:** el usuario pidió poder acceder desde el navegador, incluso desde fuera del taller (internet), no solo en red local.
