@@ -14,11 +14,14 @@ const tituloSeccion = {
   letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-faint)',
 }
 
+// wrap:true en precio unitario y subtotal: aunque el ancho de columna no
+// alcance para un monto grande, el valor pasa a una segunda línea en vez de
+// recortarse con "…" — nunca se pierde el dato.
 const COLUMNAS_PREVIEW = [
   { key: 'descripcion', header: 'Descripción', wrap: true },
   { key: 'cantidad', header: 'Cant.', align: 'right', width: 72 },
-  { key: 'precioUnitario', header: 'P. unitario', align: 'right', width: 118, render: formatPrecioARS },
-  { key: 'subtotal', header: 'Subtotal', align: 'right', width: 150, strong: true, render: formatPrecioARS },
+  { key: 'precioUnitario', header: 'P. unitario', align: 'right', width: 130, wrap: true, render: formatPrecioARS },
+  { key: 'subtotal', header: 'Subtotal', align: 'right', width: 130, wrap: true, strong: true, render: formatPrecioARS },
 ]
 
 // Componente controlado: la selección (value = {cantidades, customItems, grupos})
