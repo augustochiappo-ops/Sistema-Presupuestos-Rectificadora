@@ -417,7 +417,7 @@ export default function DetallePresupuesto() {
 
               <DataTable
                 columns={[
-                  { key: 'repuesto_codigo', header: 'Código', width: 120, strong: true, render: (v) => v || '—' },
+                  { key: 'repuesto_codigo', header: 'Código', width: 120, strong: true, wrap: true, render: (v) => v || '—' },
                   {
                     key: 'desc', header: 'Descripción', wrap: true,
                     render: (_, row) => {
@@ -511,7 +511,7 @@ export default function DetallePresupuesto() {
                   placeholder="Código"
                   value={it.repuesto_codigo || ''}
                   onChange={(e) => actualizarCampo(idx, 'repuesto_codigo', e.target.value)}
-                  style={{ width: 120 }}
+                  style={{ width: 180 }}
                 />
                 <TextField
                   placeholder="Descripción del repuesto"

@@ -201,7 +201,7 @@ export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, r
         )
       },
     },
-    { key: 'codigo', header: 'Código', width: 130, strong: true },
+    { key: 'codigo', header: 'Código', width: 130, strong: true, wrap: true },
     { key: 'aplicacion', header: 'Descripción', wrap: true },
     { key: 'marca', header: 'Marca', width: 130, render: (v) => v || '—' },
     { key: 'precio', header: 'Precio', align: 'right', width: 120, render: (v) => (v ? formatPrecioARS(v) : '—') },
@@ -223,8 +223,13 @@ export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, r
             const cantidad = cantidadPorCodigo.get(s.codigo)
             return (
               <div key={s.codigo} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-muted)', width: 110, flexShrink: 0 }}>{s.codigo}</span>
-                <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', minWidth: 0 }}>{s.descripcion}</span>
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-muted)', width: 110, flexShrink: 0, overflowWrap: 'anywhere' }}>{s.codigo}</span>
+                <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', minWidth: 0 }}>
+                  {s.descripcion}
+                  {s.categoria && (
+                    <span style={{ color: 'var(--text-faint)' }}> · {s.categoria}</span>
+                  )}
+                </span>
                 {s.stock_actual === 0 && <StatusBadge status="expired">Sin stock</StatusBadge>}
                 <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 110, textAlign: 'right' }}>
                   {s.precio_actual ? formatPrecioARS(s.precio_actual) : '—'}
@@ -275,7 +280,7 @@ export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, r
                 {' · '}Click en la fila para agregar uno, o el + para elegir la cantidad
               </div>
             )}
-            <div style={{ maxHeight: 420, overflow: 'auto' }}>
+            <div style={{ maxHeight: 560, overflow: 'auto' }}>
               <DataTable
                 columns={columnas}
                 reorderKey={reorderKey}

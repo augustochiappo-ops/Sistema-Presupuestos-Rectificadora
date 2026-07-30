@@ -173,7 +173,7 @@ export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServi
                 <button style={botonCantidad} onClick={() => cambiarCantidad(r.key, (r.cantidad || 0) + 1)}>+</button>
               </div>
 
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-muted)', width: 110, flexShrink: 0 }}>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-muted)', width: 110, flexShrink: 0, overflowWrap: 'anywhere' }}>
                 {r.repuesto_codigo || '—'}
               </span>
               <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', minWidth: 160 }}>
