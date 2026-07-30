@@ -280,17 +280,18 @@ def get_presupuestos() -> list[dict]:
 def buscar_presupuestos(
     repuesto: str | None = None,
     motor: str | None = None,
+    cliente: str | None = None,
     desde: str | None = None,
     hasta: str | None = None,
 ) -> list[dict]:
     """
     Busca presupuestos por repuesto usado (contra descripción, categoría y
-    código congelados, no el catálogo vigente), por nombre de motor y/o por
-    rango de fechas de emisión (fecha ISO 'YYYY-MM-DD', inclusive en ambas
-    puntas). Cualquier combinación de filtros es válida; sin ninguno, es
-    equivalente a get_presupuestos(). DISTINCT porque el join con
-    presupuesto_items puede traer más de una fila por presupuesto si tiene
-    varios repuestos que matchean el filtro.
+    código congelados, no el catálogo vigente), por nombre de motor, por
+    cliente (nombre o descripción interna) y/o por rango de fechas de emisión
+    (fecha ISO 'YYYY-MM-DD', inclusive en ambas puntas). Cualquier combinación
+    de filtros es válida; sin ninguno, es equivalente a get_presupuestos().
+    DISTINCT porque el join con presupuesto_items puede traer más de una fila
+    por presupuesto si tiene varios repuestos que matchean el filtro.
     """
     query = """
         SELECT DISTINCT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path
@@ -309,6 +310,10 @@ def buscar_presupuestos(
     if motor:
         where.append("m.motor LIKE ?")
         params.append(f"%{motor}%")
+    if cliente:
+        term = f"%{cliente}%"
+        where.append("(c.nombre LIKE ? OR c.notas LIKE ?)")
+        params.extend([term, term])
     if desde:
         where.append("p.fecha >= ?")
         params.append(desde)
@@ -345,10 +350,13 @@ def get_presupuesto_items(presupuesto_id: int) -> list[dict]:
 # ─── Clientes ─────────────────────────────────────────────────────────────────
 
 def get_clientes_lista() -> list[dict]:
+    # notas (descripción interna) viaja acá para que el buscador de la pantalla
+    # Clientes pueda indexarla del lado del cliente, sin pedir cada cliente
+    # por separado.
     with get_connection() as conn:
         cur = conn.execute(
             """
-            SELECT c.id, c.nombre,
+            SELECT c.id, c.nombre, c.notas,
                    COUNT(p.id)   AS total_presupuestos,
                    MAX(p.fecha)  AS ultimo_presupuesto
             FROM clientes c
@@ -357,7 +365,7 @@ def get_clientes_lista() -> list[dict]:
             ORDER BY c.nombre COLLATE NOCASE
             """
         )
-        cols = ["id", "nombre", "total_presupuestos", "ultimo_presupuesto"]
+        cols = ["id", "nombre", "notas", "total_presupuestos", "ultimo_presupuesto"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 

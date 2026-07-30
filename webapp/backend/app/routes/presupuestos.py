@@ -275,10 +275,11 @@ def _resolver_items_edicion(items_payload):
 def listar():
     repuesto = request.args.get("repuesto") or None
     motor = request.args.get("motor") or None
+    cliente = request.args.get("cliente") or None
     desde = request.args.get("desde") or None
     hasta = request.args.get("hasta") or None
-    if repuesto or motor or desde or hasta:
-        return jsonify(db.buscar_presupuestos(repuesto=repuesto, motor=motor, desde=desde, hasta=hasta))
+    if repuesto or motor or cliente or desde or hasta:
+        return jsonify(db.buscar_presupuestos(repuesto=repuesto, motor=motor, cliente=cliente, desde=desde, hasta=hasta))
     return jsonify(db.get_presupuestos())
 
 

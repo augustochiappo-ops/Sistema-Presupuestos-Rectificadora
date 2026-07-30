@@ -12,22 +12,24 @@ import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { formatPrecioARS, formatFechaAR, estadoPresupuesto } from '../../utils/format'
 
-// Filtros que viven en la URL (?repuesto=...&motor=...&desde=...&hasta=...):
+// Filtros que viven en la URL (?repuesto=...&motor=...&cliente=...&desde=...&hasta=...):
 // así el estado del filtro es explícito y sobrevive un refresh de página.
 function filtrosDesdeUrl(params) {
   return {
     repuesto: params.get('repuesto') || '',
     motor: params.get('motor') || '',
+    cliente: params.get('cliente') || '',
     desde: params.get('desde') || '',
     hasta: params.get('hasta') || '',
   }
 }
 
 function hayFiltrosActivos(f) {
-  return Boolean(f.repuesto || f.motor || f.desde || f.hasta)
+  return Boolean(f.repuesto || f.motor || f.cliente || f.desde || f.hasta)
 }
 
 function BuscarPresupuestosModal({ open, valorInicial, onCerrar, onBuscar }) {
+  const [cliente, setCliente] = React.useState(valorInicial.cliente)
   const [repuesto, setRepuesto] = React.useState(valorInicial.repuesto)
   const [motor, setMotor] = React.useState(valorInicial.motor)
   const [desde, setDesde] = React.useState(valorInicial.desde)
@@ -35,6 +37,7 @@ function BuscarPresupuestosModal({ open, valorInicial, onCerrar, onBuscar }) {
 
   React.useEffect(() => {
     if (open) {
+      setCliente(valorInicial.cliente)
       setRepuesto(valorInicial.repuesto)
       setMotor(valorInicial.motor)
       setDesde(valorInicial.desde)
@@ -45,17 +48,23 @@ function BuscarPresupuestosModal({ open, valorInicial, onCerrar, onBuscar }) {
 
   const buscar = (e) => {
     e.preventDefault()
-    onBuscar({ repuesto: repuesto.trim(), motor: motor.trim(), desde, hasta })
+    onBuscar({ cliente: cliente.trim(), repuesto: repuesto.trim(), motor: motor.trim(), desde, hasta })
   }
 
   return (
-    <Modal open={open} title="Buscar presupuestos por repuesto" onClose={onCerrar} maxWidth={480}>
+    <Modal open={open} title="Buscar presupuestos" onClose={onCerrar} maxWidth={480}>
       <form onSubmit={buscar} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>
+            Cliente (nombre o descripción interna)
+          </label>
+          <TextField value={cliente} onChange={(e) => setCliente(e.target.value)} placeholder="Ej: Juan García" autoFocus />
+        </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>
             Repuesto (código, categoría o descripción)
           </label>
-          <TextField value={repuesto} onChange={(e) => setRepuesto(e.target.value)} placeholder="Ej: aros" autoFocus />
+          <TextField value={repuesto} onChange={(e) => setRepuesto(e.target.value)} placeholder="Ej: aros" />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>
@@ -100,11 +109,12 @@ export default function HistorialPresupuestos() {
     const params = new URLSearchParams()
     if (filtros.repuesto) params.set('repuesto', filtros.repuesto)
     if (filtros.motor) params.set('motor', filtros.motor)
+    if (filtros.cliente) params.set('cliente', filtros.cliente)
     if (filtros.desde) params.set('desde', filtros.desde)
     if (filtros.hasta) params.set('hasta', filtros.hasta)
     api.get(`/presupuestos?${params.toString()}`).then(setPresupuestos).finally(() => setCargando(false))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filtros.repuesto, filtros.motor, filtros.desde, filtros.hasta])
+  }, [filtros.repuesto, filtros.motor, filtros.cliente, filtros.desde, filtros.hasta])
 
   const confirmarEliminar = async () => {
     setEliminando(true)
@@ -124,6 +134,7 @@ export default function HistorialPresupuestos() {
     const params = new URLSearchParams()
     if (nuevos.repuesto) params.set('repuesto', nuevos.repuesto)
     if (nuevos.motor) params.set('motor', nuevos.motor)
+    if (nuevos.cliente) params.set('cliente', nuevos.cliente)
     if (nuevos.desde) params.set('desde', nuevos.desde)
     if (nuevos.hasta) params.set('hasta', nuevos.hasta)
     setSearchParams(params)
@@ -133,6 +144,7 @@ export default function HistorialPresupuestos() {
   const quitarFiltros = () => setSearchParams(new URLSearchParams())
 
   const descripcionFiltro = [
+    filtros.cliente && `cliente "${filtros.cliente}"`,
     filtros.repuesto && `repuesto "${filtros.repuesto}"`,
     filtros.motor && `motor "${filtros.motor}"`,
     (filtros.desde || filtros.hasta) && `del ${filtros.desde ? formatFechaAR(filtros.desde) : '…'} al ${filtros.hasta ? formatFechaAR(filtros.hasta) : '…'}`,
