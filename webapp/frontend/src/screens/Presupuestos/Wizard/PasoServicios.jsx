@@ -5,13 +5,31 @@ import { TextField } from '../../../components/TextField'
 import { Button } from '../../../components/Button'
 import { Icon } from '../../../components/Icon'
 import { ContadorServicio } from '../../../components/ContadorServicio'
+import { SelectorCantidadServicio } from '../../../components/SelectorCantidadServicio'
+import { DataTable } from '../../../components/DataTable'
 import { formatPrecioARS } from '../../../utils/format'
 
-// Componente controlado: la selección (value = {cantidades, customItems}) vive
-// en el wizard, así volver atrás desde el paso de repuestos no la pierde.
+const tituloSeccion = {
+  fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
+  letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-faint)',
+}
+
+const COLUMNAS_PREVIEW = [
+  { key: 'descripcion', header: 'Descripción', wrap: true },
+  { key: 'cantidad', header: 'Cant.', align: 'right', width: 72 },
+  { key: 'precioUnitario', header: 'P. unitario', align: 'right', width: 118, render: formatPrecioARS },
+  { key: 'subtotal', header: 'Subtotal', align: 'right', width: 150, strong: true, render: formatPrecioARS },
+]
+
+// Componente controlado: la selección (value = {cantidades, customItems, grupos})
+// vive en el wizard, así volver atrás desde el paso de repuestos no la pierde.
 // cantidades: { [servicioId]: cantidad } — un servicio sin entrada (o en 0) no
 // está incluido en el presupuesto; cantidad > 1 multiplica el precio de lista
 // (ej. "Reunir cilindros" ×4 en un motor de 4 cilindros).
+// grupos: { [servicioId]: 'a'|'b' } — a qué familia de cantidades rápidas
+// pertenece la última elección hecha desde el botón "+" de ese ítem ('a' para
+// 4/8/16, 'b' para 6/12). Solo se usa para decidir qué par muestran los
+// recuadros adaptativos (ver parAdaptativo más abajo); tipear a mano no tagea.
 export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctChange, onSiguiente }) {
   const [servicios, setServicios] = React.useState([])
   const [favoritos, setFavoritos] = React.useState(new Set())
@@ -22,6 +40,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
 
   const cantidades = value.cantidades
   const customItems = value.customItems
+  const grupos = value.grupos
 
   React.useEffect(() => {
     api.get(`/motores/${motor.id}/servicios`).then(setServicios)
@@ -37,12 +56,47 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
     })
   }
 
+  // Tipeo a mano en el recuadro: fija la cantidad tal cual y limpia el tag de
+  // grupo (un valor tipeado a mano no participa del cálculo del par adaptativo).
   const cambiarCantidad = (id, cantidad) => {
     const nuevas = { ...cantidades }
     if (cantidad > 0) nuevas[id] = cantidad
     else delete nuevas[id]
-    onChange({ ...value, cantidades: nuevas })
+    const nuevosGrupos = { ...grupos }
+    delete nuevosGrupos[id]
+    onChange({ ...value, cantidades: nuevas, grupos: nuevosGrupos })
   }
+
+  // Botón "+" o recuadro adaptativo: fija la cantidad y tagea el ítem con su
+  // familia (4/8/16 → 'a', 6/12 → 'b') para que el par adaptativo global se
+  // recalcule según cuál familia predomina en el presupuesto.
+  const elegirCantidad = (id, cantidad) => {
+    onChange({
+      ...value,
+      cantidades: { ...cantidades, [id]: cantidad },
+      grupos: { ...grupos, [id]: (cantidad === 6 || cantidad === 12) ? 'b' : 'a' },
+    })
+  }
+
+  // Click en cualquier parte de la fila (fuera de los controles): suma 1 a la
+  // cantidad actual, sin tocar el tag de grupo.
+  const sumarUno = (id) => {
+    onChange({ ...value, cantidades: { ...cantidades, [id]: (cantidades[id] || 0) + 1 } })
+  }
+
+  // Par que muestran los recuadros adaptativos: la familia con más ítems
+  // activos (cantidad > 0) en el presupuesto gana; empate (incluido el caso
+  // inicial, sin nada elegido todavía) se resuelve a favor de 4/8.
+  const parAdaptativo = React.useMemo(() => {
+    let cuentaA = 0
+    let cuentaB = 0
+    Object.entries(grupos).forEach(([id, g]) => {
+      if ((cantidades[id] || 0) <= 0) return
+      if (g === 'b') cuentaB += 1
+      else cuentaA += 1
+    })
+    return cuentaB > cuentaA ? [6, 12] : [4, 8]
+  }, [grupos, cantidades])
 
   const agregarCustom = () => {
     const desc = nuevoCustomDesc.trim()
@@ -96,24 +150,47 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   const totalCustom = customItems.reduce((acc, c) => acc + c.precio_aplicado * (c.cantidad || 0), 0)
   const total = totalFacra + totalCustom
 
+  // Previsualización del lado derecho: todo lo que ya está incluido en el
+  // presupuesto (catálogo + ítems manuales), con su subtotal ya calculado.
+  const filasPreview = [
+    ...servicios
+      .filter((s) => (cantidades[s.id] || 0) > 0)
+      .map((s) => {
+        const cantidad = cantidades[s.id]
+        const precioUnitario = precioConAjuste(s.precio)
+        return { id: s.id, descripcion: s.descripcion, cantidad, precioUnitario, subtotal: precioUnitario * cantidad }
+      }),
+    ...customItems
+      .filter((c) => (c.cantidad || 0) > 0)
+      .map((c) => ({
+        id: c.id, descripcion: c.descripcion_custom, cantidad: c.cantidad,
+        precioUnitario: c.precio_aplicado, subtotal: c.precio_aplicado * c.cantidad,
+      })),
+  ]
+
   const Fila = ({ s }) => {
     const cantidad = cantidades[s.id] || 0
     return (
       <div
+        onClick={() => sumarUno(s.id)}
         style={{
-          display: 'grid', gridTemplateColumns: '40px auto 60px 1fr 130px', alignItems: 'center', gap: 10,
-          padding: '10px 16px', borderRadius: 'var(--radius-md)',
+          display: 'grid', gridTemplateColumns: '32px auto 1fr 110px', alignItems: 'center', gap: 10,
+          padding: '10px 16px', borderRadius: 'var(--radius-md)', cursor: 'pointer',
           background: cantidad > 0 ? 'var(--status-active-bg)' : 'transparent',
         }}
       >
         <span
-          onClick={() => toggleFavorito(s.id)}
+          onClick={(e) => { e.stopPropagation(); toggleFavorito(s.id) }}
           style={{ display: 'flex', cursor: 'pointer', color: favoritos.has(s.id) ? '#e8b400' : 'var(--text-faint)' }}
         >
           <Icon n="star" s={16} style={{ fill: favoritos.has(s.id) ? '#e8b400' : 'none' }} />
         </span>
-        <ContadorServicio cantidad={cantidad} onChange={(n) => cambiarCantidad(s.id, n)} />
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{s.item_num}</span>
+        <SelectorCantidadServicio
+          cantidad={cantidad}
+          par={parAdaptativo}
+          onEscribir={(n) => cambiarCantidad(s.id, n)}
+          onElegir={(n) => elegirCantidad(s.id, n)}
+        />
         <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{s.descripcion}</span>
         <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', textAlign: 'right', fontWeight: 600 }}>{formatPrecioARS(precioConAjuste(s.precio))}</span>
       </div>
@@ -164,27 +241,40 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
         </Button>
       </div>
 
-      <SearchInput icon={<Icon n="search" s={16} />} placeholder="Buscar por número o descripción…" value={busqueda} onChange={(e) => setBusqueda(e.target.value)} />
+      {/* Izquierda: catálogo completo de mano de obra para ir eligiendo.
+          Derecha: previsualización de cómo va quedando el presupuesto. */}
+      <div className="servicios-picker-grid">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
+          <SearchInput icon={<Icon n="search" s={16} />} placeholder="Buscar por número o descripción…" value={busqueda} onChange={(e) => setBusqueda(e.target.value)} />
 
-      <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', maxHeight: 420, overflow: 'auto', padding: '8px 0' }}>
-        {favoritosVisibles.map((s) => <Fila key={s.id} s={s} />)}
-        {favoritosVisibles.length > 0 && restoVisibles.length > 0 && (
-          <div style={{ textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--text-faint)', padding: '10px 0' }}>
-            ─── Lista de la Cámara de Rectificadores ───
+          <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', maxHeight: 520, overflow: 'auto', padding: '8px 0' }}>
+            {favoritosVisibles.map((s) => <Fila key={s.id} s={s} />)}
+            {favoritosVisibles.length > 0 && restoVisibles.length > 0 && (
+              <div style={{ textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--text-faint)', padding: '10px 0' }}>
+                ─── Lista de la Cámara de Rectificadores ───
+              </div>
+            )}
+            {restoVisibles.map((s) => <Fila key={s.id} s={s} />)}
+            {filtrados.length === 0 && (
+              <div style={{ padding: '32px 0', textAlign: 'center', color: 'var(--text-faint)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)' }}>
+                No se encontraron servicios.
+              </div>
+            )}
           </div>
-        )}
-        {restoVisibles.map((s) => <Fila key={s.id} s={s} />)}
-        {filtrados.length === 0 && (
-          <div style={{ padding: '32px 0', textAlign: 'center', color: 'var(--text-faint)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)' }}>
-            No se encontraron servicios.
-          </div>
-        )}
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
+          <div style={tituloSeccion}>Presupuesto</div>
+          <DataTable
+            columns={COLUMNAS_PREVIEW}
+            rows={filasPreview}
+            emptyMessage="Todavía no elegiste servicios. Tocá un ítem de la lista para agregarlo acá."
+          />
+        </div>
       </div>
 
       <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
-          Agregar ítem manual
-        </div>
+        <div style={tituloSeccion}>Agregar ítem manual</div>
         {customItems.map((c) => (
           <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <ContadorServicio cantidad={c.cantidad || 0} onChange={(n) => cambiarCantidadCustom(c.id, n)} />

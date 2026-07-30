@@ -19,7 +19,7 @@ export default function WizardPresupuesto() {
   const [motor, setMotor] = React.useState(null)
   // La selección de servicios y repuestos vive acá (no en cada paso) para que
   // ir atrás y adelante en el wizard no pierda lo ya elegido.
-  const [serviciosSel, setServiciosSel] = React.useState({ cantidades: {}, customItems: [] })
+  const [serviciosSel, setServiciosSel] = React.useState({ cantidades: {}, customItems: [], grupos: {} })
   const [totalServicios, setTotalServicios] = React.useState(0)
   // Aumento/descuento en % sobre los precios de lista de mano de obra (positivo
   // = aumento, negativo = descuento). Vive acá (no en el paso) para no perderse
@@ -105,7 +105,7 @@ export default function WizardPresupuesto() {
           if (motor && m.id !== motor.id) {
             // Cambió el motor: la selección de servicios (y sus precios de lista)
             // ya no aplica. Los repuestos se conservan: no dependen del motor.
-            setServiciosSel({ cantidades: {}, customItems: [] })
+            setServiciosSel({ cantidades: {}, customItems: [], grupos: {} })
             setTotalServicios(0)
           }
           setMotor(m)
