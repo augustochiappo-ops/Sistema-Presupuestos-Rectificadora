@@ -70,6 +70,11 @@ export default function DetallePresupuesto() {
   const [aviso, setAviso] = React.useState('')
   const [ajusteTexto, setAjusteTexto] = React.useState('')
   const [ajustePct, setAjustePct] = React.useState(0)
+  // Precio de lista VIGENTE por servicio_id (no el que quedó guardado en este
+  // presupuesto, que puede ya tener un ajuste anterior aplicado): el ajuste %
+  // de acá siempre parte de este valor, así cambiarlo no compone sobre un
+  // ajuste de una edición anterior.
+  const [preciosListaPorServicio, setPreciosListaPorServicio] = React.useState(new Map())
   const pdfParaCompartir = React.useRef(null)
 
   const cargar = React.useCallback(() => {
@@ -86,27 +91,31 @@ export default function DetallePresupuesto() {
         ? { ...it }
         // Presupuestos armados antes de soportar cantidad en servicios no
         // tienen precio_unitario guardado: se asume cantidad 1 y que
-        // precio_aplicado YA era el unitario. precioBase congela el unitario
-        // con el que se entró a editar, para que el ajuste % de abajo tenga
-        // un punto de partida fijo (no compone sobre sí mismo si se cambia
-        // el % varias veces).
-        : { ...it, cantidad: it.cantidad || 1, precio_unitario: it.precio_unitario ?? it.precio_aplicado, precioBase: it.precio_unitario ?? it.precio_aplicado }
+        // precio_aplicado YA era el unitario.
+        : { ...it, cantidad: it.cantidad || 1, precio_unitario: it.precio_unitario ?? it.precio_aplicado }
     )))
     setEditNotas(detalle?.notas || '')
-    setAjusteTexto('')
-    setAjustePct(0)
+    // El % se restaura tal cual quedó guardado la última vez, solo como
+    // referencia — los precios ya cargados arriba reflejan ese ajuste, así
+    // que no hay que volver a aplicarlo. Recién se recalcula algo si el
+    // usuario toca la casilla de nuevo.
+    setAjustePct(detalle?.ajuste_pct || 0)
+    setAjusteTexto(detalle?.ajuste_pct ? String(detalle.ajuste_pct) : '')
     setEditMode(true)
     if (detalle?.motor_id) {
       api.get(`/motores/${detalle.motor_id}/repuestos-sugeridos`).then(setSugeridos).catch(() => {})
+      api.get(`/motores/${detalle.motor_id}/servicios`)
+        .then((servicios) => setPreciosListaPorServicio(new Map(servicios.map((s) => [s.id, s.precio]))))
+        .catch(() => {})
     }
   }
 
   // Aumento/descuento en % sobre la mano de obra, igual criterio que en el
-  // wizard: solo toca servicios de la lista FACRA (desc_facra presente), no
-  // ítems manuales ni repuestos, que ya tienen un precio elegido a mano. Se
-  // aplica siempre desde precioBase (el valor con el que se entró a editar),
-  // así que pisa cualquier edición manual de precio hecha después de tocar
-  // el %, pero no compone si se cambia el % varias veces seguidas.
+  // wizard: solo toca servicios de la lista FACRA (servicio_id presente), no
+  // ítems manuales ni repuestos, que ya tienen un precio elegido a mano.
+  // Parte siempre del precio de lista VIGENTE (preciosListaPorServicio), no
+  // del que quedó guardado la última vez, para no componer sobre un ajuste
+  // anterior si se cambia el % de nuevo en esta edición.
   const aplicarAjusteTexto = (texto) => {
     setAjusteTexto(texto)
     const normalizado = texto.replace(',', '.').trim()
@@ -114,11 +123,12 @@ export default function DetallePresupuesto() {
     const pctValido = Number.isNaN(pct) ? 0 : pct
     setAjustePct(pctValido)
     const factor = 1 + pctValido / 100
-    setEditItems((prev) => prev.map((it) => (
-      it.tipo !== 'repuesto' && it.desc_facra
-        ? { ...it, precio_unitario: Math.round((it.precioBase || 0) * factor * 100) / 100 }
-        : it
-    )))
+    setEditItems((prev) => prev.map((it) => {
+      if (it.tipo === 'repuesto' || !it.servicio_id) return it
+      const base = preciosListaPorServicio.get(it.servicio_id)
+      if (base === undefined || base === null) return it
+      return { ...it, precio_unitario: Math.round(base * factor * 100) / 100 }
+    }))
   }
 
   const cancelarEdicion = () => setEditMode(false)
@@ -199,7 +209,7 @@ export default function DetallePresupuesto() {
           // el catálogo, para no pisar la foto tomada al cotizar.
           stock_al_cotizar: it.stock_al_cotizar,
         }))
-      const payload = { items: [...servicios, ...repuestos], notas: editNotas }
+      const payload = { items: [...servicios, ...repuestos], notas: editNotas, ajuste_pct: ajustePct || 0 }
       await api.put(`/presupuestos/${id}`, payload)
       setEditMode(false)
       cargar()
@@ -434,6 +444,48 @@ export default function DetallePresupuesto() {
         </>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        {/* Detalle de mano de obra arriba de todo: entre la tarjeta de
+            Cliente/Motor/Fecha/Total(+Ajuste) y "Usados antes en este motor"
+            del buscador de repuestos, de abajo. */}
+        <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+            Detalle de mano de obra
+          </div>
+          {editItems
+            .map((it, idx) => ({ it, idx }))
+            .filter(({ it }) => it.tipo !== 'repuesto')
+            .map(({ it, idx }) => (
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <ContadorServicio cantidad={Number(it.cantidad) || 0} onChange={(n) => actualizarCampo(idx, 'cantidad', n)} />
+                {it.desc_facra ? (
+                  <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{it.desc_facra}</span>
+                ) : (
+                  <TextField
+                    placeholder="Descripción"
+                    value={it.descripcion_custom || ''}
+                    onChange={(e) => actualizarDescCustom(idx, e.target.value)}
+                    style={{ flex: 1 }}
+                  />
+                )}
+                <TextField
+                  type="number" step="0.01" placeholder="Precio unit."
+                  value={it.precio_unitario}
+                  onChange={(e) => actualizarPrecio(idx, e.target.value)}
+                  style={{ width: 130 }}
+                />
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 120, textAlign: 'right' }}>
+                  {formatPrecioARS((Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0))}
+                </span>
+                <button onClick={() => quitarItem(idx)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
+                  <Icon n="x" s={16} />
+                </button>
+              </div>
+            ))}
+          <Button variant="ghost" size="sm" iconLeft={<Icon n="plus" s={14} />} onClick={agregarItemCustom} style={{ alignSelf: 'flex-start' }}>
+            Agregar ítem
+          </Button>
+        </div>
+
         <RepuestoPicker
           sugeridos={sugeridos}
           cantidadPorCodigo={cantidadPorCodigo}
@@ -442,8 +494,13 @@ export default function DetallePresupuesto() {
         />
 
         <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {editItems.map((it, idx) => (
-            it.tipo === 'repuesto' ? (
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+            Repuestos
+          </div>
+          {editItems
+            .map((it, idx) => ({ it, idx }))
+            .filter(({ it }) => it.tipo === 'repuesto')
+            .map(({ it, idx }) => (
               <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                 <TextField
                   type="number" min="0" step="1" placeholder="Cant."
@@ -478,42 +535,10 @@ export default function DetallePresupuesto() {
                   <Icon n="x" s={16} />
                 </button>
               </div>
-            ) : (
-              <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <ContadorServicio cantidad={Number(it.cantidad) || 0} onChange={(n) => actualizarCampo(idx, 'cantidad', n)} />
-                {it.desc_facra ? (
-                  <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{it.desc_facra}</span>
-                ) : (
-                  <TextField
-                    placeholder="Descripción"
-                    value={it.descripcion_custom || ''}
-                    onChange={(e) => actualizarDescCustom(idx, e.target.value)}
-                    style={{ flex: 1 }}
-                  />
-                )}
-                <TextField
-                  type="number" step="0.01" placeholder="Precio unit."
-                  value={it.precio_unitario}
-                  onChange={(e) => actualizarPrecio(idx, e.target.value)}
-                  style={{ width: 130 }}
-                />
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 120, textAlign: 'right' }}>
-                  {formatPrecioARS((Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0))}
-                </span>
-                <button onClick={() => quitarItem(idx)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
-                  <Icon n="x" s={16} />
-                </button>
-              </div>
-            )
-          ))}
-          <div style={{ display: 'flex', gap: 10 }}>
-            <Button variant="ghost" size="sm" iconLeft={<Icon n="plus" s={14} />} onClick={agregarItemCustom}>
-              Agregar ítem
-            </Button>
-            <Button variant="ghost" size="sm" iconLeft={<Icon n="plus" s={14} />} onClick={agregarItemRepuesto}>
-              Agregar repuesto a mano
-            </Button>
-          </div>
+            ))}
+          <Button variant="ghost" size="sm" iconLeft={<Icon n="plus" s={14} />} onClick={agregarItemRepuesto} style={{ alignSelf: 'flex-start' }}>
+            Agregar repuesto a mano
+          </Button>
         </div>
         </div>
       )}

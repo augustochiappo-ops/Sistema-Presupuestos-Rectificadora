@@ -321,7 +321,7 @@ def crear():
     if not items_resueltos:
         return jsonify({"error": "Agregá al menos un servicio o repuesto"}), 400
 
-    presupuesto_id = db.guardar_presupuesto(cliente_nombre, motor_id, items_resueltos)
+    presupuesto_id = db.guardar_presupuesto(cliente_nombre, motor_id, items_resueltos, ajuste_pct)
 
     detalle = db.get_presupuesto_detalle(presupuesto_id)
     nombre_archivo = f"presupuesto_{presupuesto_id:04d}.pdf"
@@ -350,12 +350,16 @@ def actualizar(presupuesto_id):
     data = request.get_json(silent=True) or {}
     items_payload = data.get("items") or []
     notas = data.get("notas") or ""
+    try:
+        ajuste_pct = float(data.get("ajuste_pct") or 0)
+    except (TypeError, ValueError):
+        ajuste_pct = 0
 
     items_resueltos = _resolver_items_edicion(items_payload)
     if not items_resueltos:
         return jsonify({"error": "Agregá al menos un servicio o repuesto"}), 400
 
-    db.actualizar_presupuesto(presupuesto_id, items_resueltos, notas)
+    db.actualizar_presupuesto(presupuesto_id, items_resueltos, notas, ajuste_pct)
     return jsonify(db.get_presupuesto_detalle(presupuesto_id))
 
 

@@ -44,4 +44,28 @@ def repuestos_sugeridos(motor_id):
     motor = db.get_motor(motor_id)
     if not motor:
         return jsonify({"error": "Motor no encontrado"}), 404
-    return jsonify(db.get_repuestos_sugeridos_motor(motor_id))
+    incluir_ocultos = request.args.get("incluir_ocultos") == "1"
+    return jsonify(db.get_repuestos_sugeridos_motor(motor_id, incluir_ocultos=incluir_ocultos))
+
+
+@bp.post("/<int:motor_id>/repuestos-sugeridos/ocultar")
+@login_required
+def ocultar_repuesto_sugerido(motor_id):
+    motor = db.get_motor(motor_id)
+    if not motor:
+        return jsonify({"error": "Motor no encontrado"}), 404
+    data = request.get_json(silent=True) or {}
+    codigo = (data.get("codigo") or "").strip()
+    if not codigo:
+        return jsonify({"error": "Falta el código del repuesto"}), 400
+    oculto = db.toggle_repuesto_oculto_motor(motor_id, codigo)
+    return jsonify({"codigo": codigo, "oculto": oculto})
+
+
+@bp.get("/<int:motor_id>/presupuestos")
+@login_required
+def presupuestos_del_motor(motor_id):
+    motor = db.get_motor(motor_id)
+    if not motor:
+        return jsonify({"error": "Motor no encontrado"}), 404
+    return jsonify(db.get_presupuestos_por_motor(motor_id))

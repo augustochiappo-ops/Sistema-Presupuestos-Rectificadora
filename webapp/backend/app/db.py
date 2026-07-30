@@ -61,7 +61,11 @@ def init_db():
                 fecha      TEXT,
                 total      REAL,
                 pdf_path   TEXT,
-                notas      TEXT
+                notas      TEXT,
+                -- % de aumento/descuento sobre mano de obra aplicado al cotizar
+                -- (o al último guardado en edición); se guarda para mostrarlo de
+                -- nuevo la próxima vez que se abra a editar, no para recalcular nada.
+                ajuste_pct REAL DEFAULT 0
             );
 
             CREATE TABLE IF NOT EXISTS presupuesto_items (
@@ -97,6 +101,15 @@ def init_db():
                 cat_prefijo TEXT PRIMARY KEY
             );
 
+            -- Repuestos sugeridos (usados antes en presupuestos de este motor) que
+            -- el usuario ocultó a mano desde "Listado de Motores". No borra el
+            -- historial: solo deja de sugerirse en cualquier pantalla del sistema.
+            CREATE TABLE IF NOT EXISTS repuestos_ocultos_motor (
+                motor_id        INTEGER NOT NULL REFERENCES motores(id) ON DELETE CASCADE,
+                repuesto_codigo TEXT NOT NULL,
+                PRIMARY KEY (motor_id, repuesto_codigo)
+            );
+
             -- Prefijos del proveedor de repuestos (categoría y marca)
             CREATE TABLE IF NOT EXISTS crac_prefijos (
                 tipo    TEXT NOT NULL,   -- 'categoria' | 'marca'
@@ -124,6 +137,10 @@ def init_db():
         cols_motores = {r[1] for r in conn.execute("PRAGMA table_info(motores)")}
         if "diametro" not in cols_motores:
             conn.execute("ALTER TABLE motores ADD COLUMN diametro REAL")
+
+        cols_presupuestos = {r[1] for r in conn.execute("PRAGMA table_info(presupuestos)")}
+        if "ajuste_pct" not in cols_presupuestos:
+            conn.execute("ALTER TABLE presupuestos ADD COLUMN ajuste_pct REAL DEFAULT 0")
 
         cols_items = {r[1] for r in conn.execute("PRAGMA table_info(presupuesto_items)")}
         if "descripcion_custom" not in cols_items:
@@ -169,6 +186,7 @@ def guardar_presupuesto(
     cliente_nombre: str,
     motor_id: int,
     items: list[dict],
+    ajuste_pct: float = 0,
 ) -> int:
     """
     Crea (o reutiliza) el cliente, inserta el presupuesto y sus ítems.
@@ -177,6 +195,9 @@ def guardar_presupuesto(
                     categoria}
     (servicio_id es None para ítems custom; los campos de repuesto son opcionales
     y solo vienen en ítems con tipo='repuesto')
+    ajuste_pct: % de aumento/descuento sobre mano de obra usado al cotizar (ya
+    aplicado en los precios de `items`); se guarda solo para mostrarlo de nuevo
+    la próxima vez que se abra a editar.
     Retorna el id del presupuesto creado.
     """
     total = sum((i.get("precio_aplicado") or 0.0) for i in items)
@@ -202,8 +223,8 @@ def guardar_presupuesto(
             cliente_id = cur.lastrowid
 
         cur = conn.execute(
-            "INSERT INTO presupuestos (cliente_id, motor_id, fecha, total) VALUES (?, ?, ?, ?)",
-            (cliente_id, motor_id, date.today().isoformat(), total),
+            "INSERT INTO presupuestos (cliente_id, motor_id, fecha, total, ajuste_pct) VALUES (?, ?, ?, ?, ?)",
+            (cliente_id, motor_id, date.today().isoformat(), total, ajuste_pct or 0),
         )
         presupuesto_id = cur.lastrowid
 
@@ -337,7 +358,7 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
     with get_connection() as conn:
         row = conn.execute(
             """
-            SELECT p.id, p.fecha, p.total, p.notas,
+            SELECT p.id, p.fecha, p.total, p.notas, p.ajuste_pct,
                    c.id AS cliente_id, c.nombre AS cliente,
                    m.id AS motor_id,   m.motor,  m.lista_num
             FROM presupuestos p
@@ -349,7 +370,7 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
         ).fetchone()
         if not row:
             return None
-        cols = ["id", "fecha", "total", "notas",
+        cols = ["id", "fecha", "total", "notas", "ajuste_pct",
                 "cliente_id", "cliente", "motor_id", "motor", "lista_num"]
         return dict(zip(cols, row))
 
@@ -391,6 +412,7 @@ def actualizar_presupuesto(
     presupuesto_id: int,
     items_data: list[dict],
     notas: str,
+    ajuste_pct: float = 0,
 ) -> float:
     """
     items_data: [{servicio_id, descripcion_custom, precio_aplicado,
@@ -427,8 +449,8 @@ def actualizar_presupuesto(
                 ),
             )
         conn.execute(
-            "UPDATE presupuestos SET total = ?, notas = ? WHERE id = ?",
-            (total, notas.strip() if notas else None, presupuesto_id),
+            "UPDATE presupuestos SET total = ?, notas = ?, ajuste_pct = ? WHERE id = ?",
+            (total, notas.strip() if notas else None, ajuste_pct or 0, presupuesto_id),
         )
     return total
 
@@ -530,12 +552,18 @@ def get_motor(motor_id: int) -> dict | None:
         return dict(zip(cols, row))
 
 
-def get_repuestos_sugeridos_motor(motor_id: int) -> list[dict]:
+def get_repuestos_sugeridos_motor(motor_id: int, incluir_ocultos: bool = False) -> list[dict]:
     """
     Repuestos usados en presupuestos anteriores del mismo motor, con el precio
     y stock vigentes en el catálogo del proveedor. Derivado del historial: no
     hay tabla de asociación motor-repuesto, la asociación nace de haberlos
     cotizado juntos alguna vez.
+
+    Los ocultados a mano (repuestos_ocultos_motor) se excluyen por defecto —
+    ocultar es un solo criterio compartido por todas las pantallas (wizard,
+    edición de presupuesto y el detalle de motor en "Listado de Motores"), no
+    algo separado por pantalla. incluir_ocultos=True devuelve todo (con el
+    campo `oculto`) y es solo para la pantalla que necesita poder revertirlo.
     """
     with get_connection() as conn:
         cur = conn.execute(
@@ -547,7 +575,11 @@ def get_repuestos_sugeridos_motor(motor_id: int) -> list[dict]:
                    (SELECT cr.precio FROM crac_repuestos cr
                      WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS precio_actual,
                    (SELECT cr.stock FROM crac_repuestos cr
-                     WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS stock_actual
+                     WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS stock_actual,
+                   EXISTS(
+                     SELECT 1 FROM repuestos_ocultos_motor rom
+                     WHERE rom.motor_id = ? AND rom.repuesto_codigo = pi.repuesto_codigo
+                   ) AS oculto
             FROM presupuesto_items pi
             JOIN presupuestos p ON p.id = pi.presupuesto_id
             WHERE p.motor_id = ?
@@ -555,10 +587,52 @@ def get_repuestos_sugeridos_motor(motor_id: int) -> list[dict]:
               AND pi.repuesto_codigo IS NOT NULL
             GROUP BY pi.repuesto_codigo
             ORDER BY ultima_fecha DESC, veces_usado DESC
-            LIMIT 20
+            """,
+            (motor_id, motor_id),
+        )
+        cols = ["codigo", "descripcion", "veces_usado", "ultima_fecha",
+                "precio_actual", "stock_actual", "oculto"]
+        filas = [dict(zip(cols, row)) for row in cur.fetchall()]
+
+    if incluir_ocultos:
+        return filas
+    return [f for f in filas if not f["oculto"]][:20]
+
+
+def toggle_repuesto_oculto_motor(motor_id: int, codigo: str) -> bool:
+    """Oculta/muestra un repuesto sugerido para un motor. No borra nada del
+    historial de presupuestos, solo deja de aparecer como sugerencia. Retorna
+    True si quedó oculto, False si quedó visible de nuevo."""
+    with get_connection() as conn:
+        existe = conn.execute(
+            "SELECT 1 FROM repuestos_ocultos_motor WHERE motor_id = ? AND repuesto_codigo = ?",
+            (motor_id, codigo),
+        ).fetchone()
+        if existe:
+            conn.execute(
+                "DELETE FROM repuestos_ocultos_motor WHERE motor_id = ? AND repuesto_codigo = ?",
+                (motor_id, codigo),
+            )
+            return False
+        conn.execute(
+            "INSERT INTO repuestos_ocultos_motor (motor_id, repuesto_codigo) VALUES (?, ?)",
+            (motor_id, codigo),
+        )
+        return True
+
+
+def get_presupuestos_por_motor(motor_id: int) -> list[dict]:
+    with get_connection() as conn:
+        cur = conn.execute(
+            """
+            SELECT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path
+            FROM presupuestos p
+            LEFT JOIN clientes c ON c.id = p.cliente_id
+            LEFT JOIN motores  m ON m.id = p.motor_id
+            WHERE p.motor_id = ?
+            ORDER BY p.fecha DESC, p.id DESC
             """,
             (motor_id,),
         )
-        cols = ["codigo", "descripcion", "veces_usado", "ultima_fecha",
-                "precio_actual", "stock_actual"]
+        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
