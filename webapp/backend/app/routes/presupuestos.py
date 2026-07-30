@@ -146,7 +146,7 @@ def _descripcion_descartado(it):
     )
 
 
-def _resolver_items(items_payload, lista_num):
+def _resolver_items(items_payload, lista_num, ajuste_pct=0):
     """
     Recalcula el precio server-side para ítems de FACRA (no confía en el precio
     que mande el cliente); los ítems custom usan el precio que carga el usuario
@@ -157,9 +157,17 @@ def _resolver_items(items_payload, lista_num):
     cilindros" ×4 en un motor de 4 cilindros): el subtotal siempre se calcula acá
     como cantidad × unitario, igual que ya se hace con repuestos.
 
+    ajuste_pct: aumento (positivo) o descuento (negativo) en porcentaje sobre el
+    precio de lista de mano de obra, ej. 5 = +5%, -10 = -10%. Se aplica SOLO a
+    los servicios de la lista FACRA (no a ítems custom ni a repuestos): esos ya
+    tienen un precio que el usuario eligió a mano, adjustarlos de nuevo por un
+    % global sería doble ajuste. El precio ajustado queda grabado como si fuera
+    el precio de lista (no se persiste el % por separado).
+
     Retorna (resueltos, descartados): descartados lleva una descripción por cada
     ítem inválido, para avisar en vez de perderlo en silencio.
     """
+    factor_ajuste = 1 + (float(ajuste_pct or 0) / 100)
     precios_lista = {s["id"]: s["precio"] for s in facra.get_servicios_para_lista(lista_num)}
     resueltos, descartados = [], []
     for it in items_payload:
@@ -185,7 +193,7 @@ def _resolver_items(items_payload, lista_num):
             if servicio_id not in precios_lista:
                 descartados.append(_descripcion_descartado(it))
                 continue
-            precio_unitario = precios_lista[servicio_id]
+            precio_unitario = round(precios_lista[servicio_id] * factor_ajuste, 2)
             resueltos.append({
                 "servicio_id": servicio_id,
                 "descripcion_custom": None,
@@ -290,6 +298,10 @@ def crear():
     cliente_nombre = (data.get("cliente_nombre") or "").strip()
     motor_id = data.get("motor_id")
     items_payload = data.get("items") or []
+    try:
+        ajuste_pct = float(data.get("ajuste_pct") or 0)
+    except (TypeError, ValueError):
+        ajuste_pct = 0
 
     if not cliente_nombre:
         return jsonify({"error": "Falta el nombre del cliente"}), 400
@@ -300,7 +312,7 @@ def crear():
     if not motor:
         return jsonify({"error": "Motor no encontrado"}), 404
 
-    items_resueltos, descartados = _resolver_items(items_payload, motor.get("lista_num"))
+    items_resueltos, descartados = _resolver_items(items_payload, motor.get("lista_num"), ajuste_pct)
     if descartados:
         return jsonify({
             "error": "Algunos ítems no se pudieron procesar: " + ", ".join(descartados),

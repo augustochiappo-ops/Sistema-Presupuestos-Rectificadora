@@ -291,12 +291,27 @@ def get_clientes_lista() -> list[dict]:
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
-def get_clientes_nombres() -> list[str]:
+def get_cliente(cliente_id: int) -> dict | None:
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT id, nombre, notas FROM clientes WHERE id = ?",
+            (cliente_id,),
+        ).fetchone()
+        if not row:
+            return None
+        return {"id": row[0], "nombre": row[1], "notas": row[2]}
+
+
+def actualizar_cliente(cliente_id: int, nombre: str, notas: str | None) -> bool:
+    """Renombra un cliente y/o actualiza su descripción interna (notas). No
+    fusiona con otro cliente si el nuevo nombre coincide con uno existente —
+    caso borde que se deja para una limpieza manual futura."""
     with get_connection() as conn:
         cur = conn.execute(
-            "SELECT nombre FROM clientes ORDER BY nombre COLLATE NOCASE"
+            "UPDATE clientes SET nombre = ?, notas = ? WHERE id = ?",
+            (nombre.strip(), (notas or "").strip() or None, cliente_id),
         )
-        return [row[0] for row in cur.fetchall()]
+        return cur.rowcount > 0
 
 
 def get_presupuestos_por_cliente(cliente_id: int) -> list[dict]:

@@ -21,6 +21,10 @@ export default function WizardPresupuesto() {
   // ir atrás y adelante en el wizard no pierda lo ya elegido.
   const [serviciosSel, setServiciosSel] = React.useState({ cantidades: {}, customItems: [] })
   const [totalServicios, setTotalServicios] = React.useState(0)
+  // Aumento/descuento en % sobre los precios de lista de mano de obra (positivo
+  // = aumento, negativo = descuento). Vive acá (no en el paso) para no perderse
+  // al ir y volver entre pasos, igual que serviciosSel.
+  const [ajustePct, setAjustePct] = React.useState(0)
   const [repuestos, setRepuestos] = React.useState([])
   const [error, setError] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
@@ -58,6 +62,7 @@ export default function WizardPresupuesto() {
         cliente_nombre: cliente,
         motor_id: motor.id,
         items,
+        ajuste_pct: ajustePct || 0,
       })
       if (pdfTab) pdfTab.location.href = `/api/presupuestos/${presupuesto.id}/pdf/1`
       navigate('/presupuestos')
@@ -113,6 +118,8 @@ export default function WizardPresupuesto() {
           motor={motor}
           value={serviciosSel}
           onChange={setServiciosSel}
+          ajustePct={ajustePct}
+          onAjustePctChange={setAjustePct}
           onSiguiente={(total) => { setTotalServicios(total); setPaso(3) }}
         />
       )}

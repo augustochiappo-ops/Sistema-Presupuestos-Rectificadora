@@ -12,12 +12,13 @@ import { formatPrecioARS } from '../../../utils/format'
 // cantidades: { [servicioId]: cantidad } — un servicio sin entrada (o en 0) no
 // está incluido en el presupuesto; cantidad > 1 multiplica el precio de lista
 // (ej. "Reunir cilindros" ×4 en un motor de 4 cilindros).
-export function PasoServicios({ motor, value, onChange, onSiguiente }) {
+export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctChange, onSiguiente }) {
   const [servicios, setServicios] = React.useState([])
   const [favoritos, setFavoritos] = React.useState(new Set())
   const [busqueda, setBusqueda] = React.useState('')
   const [nuevoCustomDesc, setNuevoCustomDesc] = React.useState('')
   const [nuevoCustomPrecio, setNuevoCustomPrecio] = React.useState('')
+  const [ajusteTexto, setAjusteTexto] = React.useState(ajustePct ? String(ajustePct) : '')
 
   const cantidades = value.cantidades
   const customItems = value.customItems
@@ -70,7 +71,28 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
   const favoritosVisibles = filtrados.filter((s) => favoritos.has(s.id))
   const restoVisibles = filtrados.filter((s) => !favoritos.has(s.id))
 
-  const totalFacra = servicios.reduce((acc, s) => acc + (cantidades[s.id] || 0) * (s.precio || 0), 0)
+  // Aumento/descuento en % sobre la mano de obra (positivo = aumento, negativo
+  // = descuento). Solo afecta los precios de lista de servicios FACRA — los
+  // ítems manuales ya tienen un precio elegido a mano, no se ajustan de nuevo.
+  // El redondeo por unidad tiene que ser igual al que hace el backend
+  // (_resolver_items) para que el total que se ve acá coincida con el final.
+  const factorAjuste = 1 + (ajustePct || 0) / 100
+  const precioConAjuste = (precio) => Math.round((precio || 0) * factorAjuste * 100) / 100
+
+  const aplicarAjusteTexto = (texto) => {
+    setAjusteTexto(texto)
+    const normalizado = texto.replace(',', '.').trim()
+    if (normalizado === '' || normalizado === '-') {
+      onAjustePctChange(0)
+      return
+    }
+    const n = parseFloat(normalizado)
+    onAjustePctChange(Number.isNaN(n) ? 0 : n)
+  }
+
+  const colorAjuste = ajustePct > 0 ? 'var(--status-active-fg)' : ajustePct < 0 ? 'var(--status-expired-fg)' : 'var(--border-default)'
+
+  const totalFacra = servicios.reduce((acc, s) => acc + (cantidades[s.id] || 0) * precioConAjuste(s.precio), 0)
   const totalCustom = customItems.reduce((acc, c) => acc + c.precio_aplicado * (c.cantidad || 0), 0)
   const total = totalFacra + totalCustom
 
@@ -93,7 +115,7 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
         <ContadorServicio cantidad={cantidad} onChange={(n) => cambiarCantidad(s.id, n)} />
         <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{s.item_num}</span>
         <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{s.descripcion}</span>
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', textAlign: 'right', fontWeight: 600 }}>{formatPrecioARS(s.precio)}</span>
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', textAlign: 'right', fontWeight: 600 }}>{formatPrecioARS(precioConAjuste(s.precio))}</span>
       </div>
     )
   }
@@ -103,9 +125,32 @@ export function PasoServicios({ motor, value, onChange, onSiguiente }) {
       {/* Total y "Siguiente" arriba de todo: no hace falta bajar hasta el final
           de la lista de servicios para ver cuánto lleva el presupuesto o avanzar. */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, padding: '16px 20px', background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total servicios</span>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(total)}</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <label style={{ fontFamily: 'var(--font-body)', fontSize: 10, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,.65)' }}>
+              Ajuste mano de obra
+            </label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <input
+                type="text"
+                inputMode="decimal"
+                placeholder="0"
+                value={ajusteTexto}
+                onChange={(e) => aplicarAjusteTexto(e.target.value)}
+                title="Porcentaje de aumento (positivo) o descuento (negativo) sobre la mano de obra"
+                style={{
+                  width: 64, height: 34, textAlign: 'center', borderRadius: 8,
+                  border: `2px solid ${colorAjuste}`, background: '#fff', color: 'var(--text-strong)',
+                  fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, outline: 'none',
+                }}
+              />
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>%</span>
+            </div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+            <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total servicios</span>
+            <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(total)}</span>
+          </div>
         </div>
         {/* Se puede seguir sin servicios: un presupuesto puede ser de solo repuestos.
             La validación de "al menos un ítem" está en el paso de confirmación. */}
