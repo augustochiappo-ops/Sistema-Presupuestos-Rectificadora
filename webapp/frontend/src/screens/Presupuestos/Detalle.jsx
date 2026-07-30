@@ -320,7 +320,14 @@ export default function DetallePresupuesto() {
         actions={
           <>
             <Button variant="secondary" iconLeft={<Icon n="arrow-left" s={16} />} onClick={intentarVolver}>Volver</Button>
-            {!editMode && (
+            {editMode ? (
+              <>
+                <Button variant="primary" iconLeft={<Icon n="save" s={16} />} disabled={guardando} onClick={guardar}>
+                  {guardando ? 'Guardando…' : 'Guardar cambios'}
+                </Button>
+                <Button variant="secondary" onClick={cancelarEdicion}>Cancelar</Button>
+              </>
+            ) : (
               <>
                 <Button variant="secondary" iconLeft={<Icon n="share" s={16} />} disabled={!ultimoPdf} onClick={compartirPdf}>Compartir PDF</Button>
                 <Button variant="primary" iconLeft={<Icon n="pencil" s={16} />} onClick={entrarEdicion}>Editar</Button>
@@ -444,9 +451,10 @@ export default function DetallePresupuesto() {
         </>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-        {/* Detalle de mano de obra arriba de todo: entre la tarjeta de
-            Cliente/Motor/Fecha/Total(+Ajuste) y "Usados antes en este motor"
-            del buscador de repuestos, de abajo. */}
+        {/* Mano de obra y repuestos ya cargados en un solo bloque, arriba de
+            todo (entre la tarjeta Cliente/Motor/Fecha/Total(+Ajuste) y
+            "Usados antes en este motor" del buscador de abajo), separados
+            adentro por el título "Repuestos". */}
         <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
             Detalle de mano de obra
@@ -484,17 +492,8 @@ export default function DetallePresupuesto() {
           <Button variant="ghost" size="sm" iconLeft={<Icon n="plus" s={14} />} onClick={agregarItemCustom} style={{ alignSelf: 'flex-start' }}>
             Agregar ítem
           </Button>
-        </div>
 
-        <RepuestoPicker
-          sugeridos={sugeridos}
-          cantidadPorCodigo={cantidadPorCodigo}
-          onAgregar={agregarDeCatalogo}
-          reorderKey="repuestos-presupuesto"
-        />
-
-        <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)', marginTop: 8, paddingTop: 10, borderTop: '1px solid var(--border-subtle)' }}>
             Repuestos
           </div>
           {editItems
@@ -540,6 +539,13 @@ export default function DetallePresupuesto() {
             Agregar repuesto a mano
           </Button>
         </div>
+
+        <RepuestoPicker
+          sugeridos={sugeridos}
+          cantidadPorCodigo={cantidadPorCodigo}
+          onAgregar={agregarDeCatalogo}
+          reorderKey="repuestos-presupuesto"
+        />
         </div>
       )}
 
@@ -553,15 +559,6 @@ export default function DetallePresupuesto() {
           <TextField as="textarea" rows={3} value={editNotas} onChange={(e) => setEditNotas(e.target.value)} />
         )}
       </div>
-
-      {editMode && (
-        <div style={{ display: 'flex', gap: 10 }}>
-          <Button variant="primary" iconLeft={<Icon n="save" s={16} />} disabled={guardando} onClick={guardar}>
-            {guardando ? 'Guardando…' : 'Guardar cambios'}
-          </Button>
-          <Button variant="secondary" onClick={cancelarEdicion}>Cancelar</Button>
-        </div>
-      )}
 
       {!editMode && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '18px 22px', background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)' }}>

@@ -22,7 +22,9 @@ export function Sidebar({ open = false, onClose }) {
           <div style={{ width: 40, height: 40, borderRadius: 'var(--radius-md)', background: 'var(--brand-ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
             <Icon n="wrench" s={22} />
           </div>
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 19, color: 'var(--text-strong)' }}>Rectifi</span>
+          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, lineHeight: 1.15, color: 'var(--text-strong)' }}>
+            Rectificaciones<br />Chiappo
+          </span>
         </div>
         <button
           onClick={onClose}

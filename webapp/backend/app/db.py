@@ -277,6 +277,55 @@ def get_presupuestos() -> list[dict]:
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
+def buscar_presupuestos(
+    repuesto: str | None = None,
+    motor: str | None = None,
+    desde: str | None = None,
+    hasta: str | None = None,
+) -> list[dict]:
+    """
+    Busca presupuestos por repuesto usado (contra descripción, categoría y
+    código congelados, no el catálogo vigente), por nombre de motor y/o por
+    rango de fechas de emisión (fecha ISO 'YYYY-MM-DD', inclusive en ambas
+    puntas). Cualquier combinación de filtros es válida; sin ninguno, es
+    equivalente a get_presupuestos(). DISTINCT porque el join con
+    presupuesto_items puede traer más de una fila por presupuesto si tiene
+    varios repuestos que matchean el filtro.
+    """
+    query = """
+        SELECT DISTINCT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path
+        FROM presupuestos p
+        LEFT JOIN clientes c ON c.id = p.cliente_id
+        LEFT JOIN motores  m ON m.id = p.motor_id
+    """
+    where: list[str] = []
+    params: list = []
+
+    if repuesto:
+        query += " JOIN presupuesto_items pi ON pi.presupuesto_id = p.id AND pi.tipo = 'repuesto'"
+        term = f"%{repuesto}%"
+        where.append("(pi.descripcion_custom LIKE ? OR pi.categoria LIKE ? OR pi.repuesto_codigo LIKE ?)")
+        params.extend([term, term, term])
+    if motor:
+        where.append("m.motor LIKE ?")
+        params.append(f"%{motor}%")
+    if desde:
+        where.append("p.fecha >= ?")
+        params.append(desde)
+    if hasta:
+        where.append("p.fecha <= ?")
+        params.append(hasta)
+
+    if where:
+        query += " WHERE " + " AND ".join(where)
+    query += " ORDER BY p.fecha DESC, p.id DESC"
+
+    with get_connection() as conn:
+        cur = conn.execute(query, params)
+        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path"]
+        return [dict(zip(cols, row)) for row in cur.fetchall()]
+
+
 def get_presupuesto_items(presupuesto_id: int) -> list[dict]:
     with get_connection() as conn:
         cur = conn.execute(
@@ -570,6 +619,7 @@ def get_repuestos_sugeridos_motor(motor_id: int, incluir_ocultos: bool = False) 
             """
             SELECT pi.repuesto_codigo               AS codigo,
                    MAX(pi.descripcion_custom)       AS descripcion,
+                   MAX(pi.categoria)                AS categoria,
                    COUNT(*)                         AS veces_usado,
                    MAX(p.fecha)                     AS ultima_fecha,
                    (SELECT cr.precio FROM crac_repuestos cr
@@ -590,7 +640,7 @@ def get_repuestos_sugeridos_motor(motor_id: int, incluir_ocultos: bool = False) 
             """,
             (motor_id, motor_id),
         )
-        cols = ["codigo", "descripcion", "veces_usado", "ultima_fecha",
+        cols = ["codigo", "descripcion", "categoria", "veces_usado", "ultima_fecha",
                 "precio_actual", "stock_actual", "oculto"]
         filas = [dict(zip(cols, row)) for row in cur.fetchall()]
 

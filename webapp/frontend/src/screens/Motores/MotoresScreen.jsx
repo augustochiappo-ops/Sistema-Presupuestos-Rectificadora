@@ -25,6 +25,9 @@ function FilaRepuestoSugerido({ r, onToggle }) {
       <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-muted)', width: 110, flexShrink: 0 }}>
         {r.codigo || '—'}
       </span>
+      <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)', width: 130, flexShrink: 0 }}>
+        {r.categoria || '—'}
+      </span>
       <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', minWidth: 0 }}>
         {r.descripcion}
       </span>

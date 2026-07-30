@@ -17,7 +17,9 @@ export function Shell() {
             <div style={{ width: 30, height: 30, borderRadius: 'var(--radius-md)', background: 'var(--brand-ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
               <Icon n="wrench" s={16} />
             </div>
-            <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 16, color: 'var(--text-strong)' }}>Rectifi</span>
+            <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 13, lineHeight: 1.15, color: 'var(--text-strong)' }}>
+              Rectificaciones<br />Chiappo
+            </span>
           </div>
         </div>
 

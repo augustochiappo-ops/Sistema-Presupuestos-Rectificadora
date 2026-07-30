@@ -17,6 +17,51 @@ Los archivos de memoria están en `.claude/memory/`. **Leerlos al inicio de cada
 
 Sistema de Presupuestos para una **rectificadora de motores**. Permite generar presupuestos semiautomáticos seleccionando un motor, que el sistema calcule repuestos + mano de obra, y emita un PDF. Corre **100% local**, sin dependencia de servicios en la nube.
 
+## Entorno de trabajo del usuario
+
+- El usuario trabaja con **Claude Code en su versión web** (claude.ai/code), no en una compu con la consola instalada. **Todos los cambios de esta app se hacen sobre la versión web** (`webapp/backend` + `webapp/frontend`).
+- La **versión de escritorio** (`main.py`, PyQt6, sección "Commands" abajo) está **en desuso**. No priorizar desarrollo ahí salvo pedido explícito del usuario.
+
+## Flujo de trabajo de este proyecto (importante, seguirlo siempre)
+
+Así se trabaja en este repo, a pedido explícito del usuario:
+
+1. El usuario pide un cambio. Claude lo implementa, lo prueba localmente (levantando `webapp/backend` + `webapp/frontend` en dev, ver sección de abajo) y, si tocó el frontend, corre `npm run build` y commitea `static_build/` de nuevo.
+2. Claude **commitea y pushea directo a `master`** — no se usan ramas nuevas ni PRs para este repo. `master` es la única rama y es la que sirve producción.
+3. Producción (PythonAnywhere, `chiapppo.pythonanywhere.com`) no se actualiza sola: alguien tiene que correr el deploy. **El entorno de Claude Code en la nube no tiene salida de red hacia `chiapppo.pythonanywhere.com`** (403 de policy en el proxy de egress, confirmado — no es transitorio, no hay que reintentarlo). Por eso, al final de cada tanda de cambios, Claude le pasa al usuario el comando exacto para pegar en la **consola Bash de PythonAnywhere** (o donde corresponda) — típicamente el webhook de deploy:
+   ```bash
+   curl -X POST https://chiapppo.pythonanywhere.com/api/deploy -H "X-Deploy-Secret: <secreto>"
+   ```
+   Si hace falta algo más que el deploy (migración manual, revisar un log, etc.), Claude también da esos comandos listos para copiar/pegar, explicando qué hace cada uno.
+4. El usuario corre el/los comando(s) y pega el resultado si algo falla, para poder diagnosticar sin acceso directo al servidor.
+
+## Cómo levantar la app web (dev) y sacar capturas de pantalla
+
+Para verificar visualmente un cambio en la versión web o generar una captura de pantalla de la app:
+
+1. **Backend Flask**: parado en `webapp/backend`, corre en `http://127.0.0.1:5000`.
+   ```bash
+   cd webapp/backend
+   pip install -r requirements.txt
+   python wsgi.py   # o: flask --app wsgi run
+   ```
+   Necesita `APP_USERNAME`/`APP_PASSWORD_HASH` en el entorno para poder loguearse en dev (generar el hash con `werkzeug.security.generate_password_hash`).
+2. **Frontend Vite (dev server)**: parado en `webapp/frontend`, corre en `http://localhost:5173` y proxea `/api` al backend Flask (ver `vite.config.js`).
+   ```bash
+   cd webapp/frontend
+   npm install
+   npm run dev
+   ```
+3. **Captura con browser headless**: con ambos servidores arriba, usar el Chromium headless preinstalado en el entorno remoto (Playwright, `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`) para navegar a `http://localhost:5173` y sacar el screenshot. No hace falta correr `playwright install`: el browser ya está listo (usar `playwright-core` + `executablePath` apuntando al Chromium ya instalado).
+4. Para probar features reales conviene importar datos de FACRA (`Excel/Facra/*.xls`, endpoints `/api/excel/nomenclador` y `/api/excel/lista-orientadora`) en la base de datos local de prueba — la DB vive en `webapp/backend/data/` (gitignored), así que no contamina el repo ni la base real de producción.
+5. Recordar matar los procesos de backend y frontend al terminar si quedaron corriendo en background.
+
+## Ramas y producción
+
+- **`master` es la única rama y sirve producción.** El deploy (PythonAnywhere) hace `git pull` sobre `master`. Todo cambio se pushea ahí directamente (ver "Flujo de trabajo" arriba).
+- La rama `main` existió como espejo/respaldo pero **se eliminó** (remota y local) a pedido del usuario para no tener dos ramas iguales dando confusión. No recrearla salvo pedido explícito.
+- Ver `.claude/memory/estado.md` para el historial completo de por qué existían dos ramas y cuándo se unificaron.
+
 ## Commands
 
 ```bash

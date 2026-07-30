@@ -1,26 +1,110 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { api } from '../../api/client'
 import { PageHeader } from '../../components/PageHeader'
 import { DataTable } from '../../components/DataTable'
 import { StatusBadge } from '../../components/StatusBadge'
 import { Button } from '../../components/Button'
+import { TextField } from '../../components/TextField'
 import { Icon } from '../../components/Icon'
+import { Modal } from '../../components/Modal'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { formatPrecioARS, formatFechaAR, estadoPresupuesto } from '../../utils/format'
 
+// Filtros que viven en la URL (?repuesto=...&motor=...&desde=...&hasta=...):
+// así el estado del filtro es explícito y sobrevive un refresh de página.
+function filtrosDesdeUrl(params) {
+  return {
+    repuesto: params.get('repuesto') || '',
+    motor: params.get('motor') || '',
+    desde: params.get('desde') || '',
+    hasta: params.get('hasta') || '',
+  }
+}
+
+function hayFiltrosActivos(f) {
+  return Boolean(f.repuesto || f.motor || f.desde || f.hasta)
+}
+
+function BuscarPresupuestosModal({ open, valorInicial, onCerrar, onBuscar }) {
+  const [repuesto, setRepuesto] = React.useState(valorInicial.repuesto)
+  const [motor, setMotor] = React.useState(valorInicial.motor)
+  const [desde, setDesde] = React.useState(valorInicial.desde)
+  const [hasta, setHasta] = React.useState(valorInicial.hasta)
+
+  React.useEffect(() => {
+    if (open) {
+      setRepuesto(valorInicial.repuesto)
+      setMotor(valorInicial.motor)
+      setDesde(valorInicial.desde)
+      setHasta(valorInicial.hasta)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
+
+  const buscar = (e) => {
+    e.preventDefault()
+    onBuscar({ repuesto: repuesto.trim(), motor: motor.trim(), desde, hasta })
+  }
+
+  return (
+    <Modal open={open} title="Buscar presupuestos por repuesto" onClose={onCerrar} maxWidth={480}>
+      <form onSubmit={buscar} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>
+            Repuesto (código, categoría o descripción)
+          </label>
+          <TextField value={repuesto} onChange={(e) => setRepuesto(e.target.value)} placeholder="Ej: aros" autoFocus />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>
+            Motor
+          </label>
+          <TextField value={motor} onChange={(e) => setMotor(e.target.value)} placeholder="Ej: Citroen 3 CV" />
+        </div>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
+            <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Desde</label>
+            <TextField type="date" value={desde} onChange={(e) => setDesde(e.target.value)} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
+            <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Hasta</label>
+            <TextField type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', marginTop: 6 }}>
+          <Button type="button" variant="secondary" onClick={onCerrar}>Cancelar</Button>
+          <Button type="submit" variant="primary" iconLeft={<Icon n="search" s={16} />}>Buscar</Button>
+        </div>
+      </form>
+    </Modal>
+  )
+}
+
 export default function HistorialPresupuestos() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const filtros = filtrosDesdeUrl(searchParams)
+  const filtrando = hayFiltrosActivos(filtros)
+
   const [presupuestos, setPresupuestos] = React.useState([])
   const [cargando, setCargando] = React.useState(true)
   const [aEliminar, setAEliminar] = React.useState(null)
   const [eliminando, setEliminando] = React.useState(false)
   const [error, setError] = React.useState('')
+  const [modalBusqueda, setModalBusqueda] = React.useState(false)
   const navigate = useNavigate()
 
   React.useEffect(() => {
-    api.get('/presupuestos').then(setPresupuestos).finally(() => setCargando(false))
-  }, [])
+    setCargando(true)
+    const params = new URLSearchParams()
+    if (filtros.repuesto) params.set('repuesto', filtros.repuesto)
+    if (filtros.motor) params.set('motor', filtros.motor)
+    if (filtros.desde) params.set('desde', filtros.desde)
+    if (filtros.hasta) params.set('hasta', filtros.hasta)
+    api.get(`/presupuestos?${params.toString()}`).then(setPresupuestos).finally(() => setCargando(false))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtros.repuesto, filtros.motor, filtros.desde, filtros.hasta])
 
   const confirmarEliminar = async () => {
     setEliminando(true)
@@ -36,18 +120,58 @@ export default function HistorialPresupuestos() {
     }
   }
 
+  const aplicarBusqueda = (nuevos) => {
+    const params = new URLSearchParams()
+    if (nuevos.repuesto) params.set('repuesto', nuevos.repuesto)
+    if (nuevos.motor) params.set('motor', nuevos.motor)
+    if (nuevos.desde) params.set('desde', nuevos.desde)
+    if (nuevos.hasta) params.set('hasta', nuevos.hasta)
+    setSearchParams(params)
+    setModalBusqueda(false)
+  }
+
+  const quitarFiltros = () => setSearchParams(new URLSearchParams())
+
+  const descripcionFiltro = [
+    filtros.repuesto && `repuesto "${filtros.repuesto}"`,
+    filtros.motor && `motor "${filtros.motor}"`,
+    (filtros.desde || filtros.hasta) && `del ${filtros.desde ? formatFechaAR(filtros.desde) : '…'} al ${filtros.hasta ? formatFechaAR(filtros.hasta) : '…'}`,
+  ].filter(Boolean).join(' · ')
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       <PageHeader
         title="Presupuestos"
         subtitle={`${presupuestos.length} presupuesto${presupuestos.length === 1 ? '' : 's'}`}
         actions={
-          <Button variant="success" iconLeft={<Icon n="plus" s={16} />} onClick={() => navigate('/presupuestos/nuevo')}>
-            Nuevo Presupuesto
-          </Button>
+          <>
+            <Button variant="secondary" iconLeft={<Icon n="search" s={16} />} onClick={() => setModalBusqueda(true)}>
+              Buscar
+            </Button>
+            <Button variant="success" iconLeft={<Icon n="plus" s={16} />} onClick={() => navigate('/presupuestos/nuevo')}>
+              Nuevo Presupuesto
+            </Button>
+          </>
         }
       />
       <ErrorBanner message={error} onClose={() => setError('')} />
+
+      {filtrando && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+          padding: '10px 14px', background: 'var(--status-active-bg)', color: 'var(--status-active-fg)',
+          borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
+        }}>
+          <span><strong>Filtrado</strong> por {descripcionFiltro}</span>
+          <button
+            onClick={quitarFiltros}
+            style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--status-active-fg)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, textDecoration: 'underline' }}
+          >
+            Quitar filtros
+          </button>
+        </div>
+      )}
+
       <DataTable
         columns={[
           { key: 'id', header: 'Nº', strong: true, width: 80, render: (v) => `#${String(v).padStart(4, '0')}` },
@@ -74,7 +198,14 @@ export default function HistorialPresupuestos() {
         reorderKey="presupuestos"
         rows={presupuestos}
         onRowClick={(p) => navigate(`/presupuestos/${p.id}`)}
-        emptyMessage={cargando ? 'Cargando…' : 'Todavía no hay presupuestos.'}
+        emptyMessage={cargando ? 'Cargando…' : (filtrando ? 'Ningún presupuesto coincide con la búsqueda.' : 'Todavía no hay presupuestos.')}
+      />
+
+      <BuscarPresupuestosModal
+        open={modalBusqueda}
+        valorInicial={filtros}
+        onCerrar={() => setModalBusqueda(false)}
+        onBuscar={aplicarBusqueda}
       />
 
       <ConfirmDialog
