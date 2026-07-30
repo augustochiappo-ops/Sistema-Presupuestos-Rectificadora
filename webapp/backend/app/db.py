@@ -634,6 +634,9 @@ def get_repuestos_sugeridos_motor(motor_id: int, incluir_ocultos: bool = False) 
                      WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS precio_actual,
                    (SELECT cr.stock FROM crac_repuestos cr
                      WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS stock_actual,
+                   (SELECT COALESCE(pm.nombre, cr.marca_prefijo) FROM crac_repuestos cr
+                     LEFT JOIN crac_prefijos pm ON pm.tipo = 'marca' AND pm.prefijo = cr.marca_prefijo
+                     WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS marca,
                    EXISTS(
                      SELECT 1 FROM repuestos_ocultos_motor rom
                      WHERE rom.motor_id = ? AND rom.repuesto_codigo = pi.repuesto_codigo
@@ -649,7 +652,7 @@ def get_repuestos_sugeridos_motor(motor_id: int, incluir_ocultos: bool = False) 
             (motor_id, motor_id),
         )
         cols = ["codigo", "descripcion", "categoria", "veces_usado", "ultima_fecha",
-                "precio_actual", "stock_actual", "oculto"]
+                "precio_actual", "stock_actual", "marca", "oculto"]
         filas = [dict(zip(cols, row)) for row in cur.fetchall()]
 
     if incluir_ocultos:

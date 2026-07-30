@@ -5,6 +5,7 @@ import { DataTable } from './DataTable'
 import { SearchInput } from './SearchInput'
 import { StatusBadge } from './StatusBadge'
 import { CategoriasPanel } from './CategoriasPanel'
+import { Button } from './Button'
 import { Icon } from './Icon'
 import { formatPrecioARS } from '../utils/format'
 
@@ -130,7 +131,13 @@ const botonMenos = {
   color: 'var(--text-strong)', padding: 0,
 }
 
-export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, reorderKey = 'repuestos-presupuesto' }) {
+export function RepuestoPicker({
+  sugeridos = [], cantidadPorCodigo, onAgregar, reorderKey = 'repuestos-presupuesto',
+  // Botón "Ver repuestos" opcional: solo lo pantallas que manejan una lista de
+  // agregados aparte (el wizard) lo pasan. Sin esto, RepuestoPicker se
+  // comporta como antes (usado también en la edición del detalle).
+  onVerAgregados, cantidadAgregados = 0,
+}) {
   const [marcas, setMarcas] = React.useState([])
   const [categoriaSel, setCategoriaSel] = React.useState('')
   const [marcaSel, setMarcaSel] = React.useState('')
@@ -179,6 +186,7 @@ export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, r
     precio: row.precio,
     stock: row.stock,
     categoria: row.categoria,
+    marca: row.marca,
   }, cantidad)
 
   const columnas = [
@@ -239,7 +247,7 @@ export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, r
                   disabled={!cantidad}
                   onClick={() => onAgregar({
                     codigo: s.codigo, descripcion: s.descripcion,
-                    precio: s.precio_actual, stock: s.stock_actual, categoria: s.categoria,
+                    precio: s.precio_actual, stock: s.stock_actual, categoria: s.categoria, marca: s.marca,
                   }, Math.max(0, (cantidad || 0) - 1))}
                 >
                   −
@@ -249,7 +257,7 @@ export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, r
                   cantidadActual={cantidad}
                   onElegir={(n) => onAgregar({
                     codigo: s.codigo, descripcion: s.descripcion,
-                    precio: s.precio_actual, stock: s.stock_actual, categoria: s.categoria,
+                    precio: s.precio_actual, stock: s.stock_actual, categoria: s.categoria, marca: s.marca,
                   }, n)}
                 />
               </div>
@@ -260,13 +268,18 @@ export function RepuestoPicker({ sugeridos = [], cantidadPorCodigo, onAgregar, r
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={tituloSeccion}>Buscar en el catálogo</div>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
           <select value={marcaSel} onChange={(e) => setMarcaSel(e.target.value)} style={selectStyle}>
             <option value="">Todas las marcas</option>
             {marcas.map((m) => <option key={m.prefijo} value={m.prefijo}>{m.nombre}</option>)}
           </select>
           <SearchInput width={180} icon={<Icon n="tag" s={16} />} placeholder="Código…" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
           <SearchInput width={240} icon={<Icon n="search" s={16} />} placeholder="Descripción…" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+          {onVerAgregados && (
+            <Button variant="secondary" iconLeft={<Icon n="eye" s={16} />} onClick={onVerAgregados}>
+              Ver repuestos{cantidadAgregados > 0 ? ` (${cantidadAgregados})` : ''}
+            </Button>
+          )}
         </div>
 
         <div className="motor-selector-grid">

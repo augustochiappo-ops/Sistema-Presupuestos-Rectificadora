@@ -39,6 +39,40 @@ function fmtCantidad(cantidad) {
   return c === Math.trunc(c) ? String(Math.trunc(c)) : String(c)
 }
 
+// Misma normalización que manda el PUT de guardado: se usa tanto para armar
+// el payload real al guardar como para la "foto" inicial al entrar en modo
+// edición, así comparar ambas dice si hubo cambios de verdad (y por lo tanto
+// si hay que reconstruir el PDF).
+function construirPayload(lista, notas, ajustePct) {
+  // cantidad/precio_unitario se normalizan a Number: los inputs numéricos del
+  // formulario los guardan como string en cuanto el usuario toca el campo,
+  // aunque el valor final sea igual — sin esto, comparar el payload contra la
+  // foto inicial (para saber si hubo cambios de verdad) daría un falso
+  // positivo solo por el cambio de tipo string/number.
+  const servicios = lista
+    .filter((it) => it.tipo !== 'repuesto')
+    .filter((it) => (it.desc_facra || (it.descripcion_custom || '').trim()) && it.precio_unitario !== '' && Number(it.cantidad) > 0)
+    .map((it) => ({
+      servicio_id: it.servicio_id,
+      descripcion_custom: it.descripcion_custom,
+      cantidad: Number(it.cantidad),
+      precio_unitario: Number(it.precio_unitario),
+    }))
+  const repuestos = lista
+    .filter((it) => it.tipo === 'repuesto')
+    .filter((it) => (it.descripcion_custom || '').trim() && it.precio_unitario !== '' && Number(it.cantidad) > 0)
+    .map((it) => ({
+      tipo: 'repuesto',
+      repuesto_codigo: (it.repuesto_codigo || '').trim() || null,
+      descripcion: it.descripcion_custom,
+      categoria: it.categoria,
+      cantidad: Number(it.cantidad),
+      precio_unitario: Number(it.precio_unitario),
+      stock_al_cotizar: it.stock_al_cotizar,
+    }))
+  return { items: [...servicios, ...repuestos], notas, ajuste_pct: ajustePct || 0 }
+}
+
 function Campo({ label, valor }) {
   return (
     <div>
@@ -76,6 +110,10 @@ export default function DetallePresupuesto() {
   // ajuste de una edición anterior.
   const [preciosListaPorServicio, setPreciosListaPorServicio] = React.useState(new Map())
   const pdfParaCompartir = React.useRef(null)
+  // "Foto" del payload al entrar en modo edición (ver construirPayload):
+  // compararla contra lo que se manda al guardar dice si hubo cambios de
+  // verdad, para no reconstruir el PDF en un guardado que no cambió nada.
+  const payloadOriginalRef = React.useRef('')
 
   const cargar = React.useCallback(() => {
     api.get(`/presupuestos/${id}`).then(setDetalle)
@@ -86,21 +124,25 @@ export default function DetallePresupuesto() {
   React.useEffect(() => { cargar() }, [cargar])
 
   const entrarEdicion = () => {
-    setEditItems(items.map((it) => (
+    const itemsIniciales = items.map((it) => (
       it.tipo === 'repuesto'
         ? { ...it }
         // Presupuestos armados antes de soportar cantidad en servicios no
         // tienen precio_unitario guardado: se asume cantidad 1 y que
         // precio_aplicado YA era el unitario.
         : { ...it, cantidad: it.cantidad || 1, precio_unitario: it.precio_unitario ?? it.precio_aplicado }
-    )))
-    setEditNotas(detalle?.notas || '')
+    ))
+    setEditItems(itemsIniciales)
+    const notasIniciales = detalle?.notas || ''
+    setEditNotas(notasIniciales)
     // El % se restaura tal cual quedó guardado la última vez, solo como
     // referencia — los precios ya cargados arriba reflejan ese ajuste, así
     // que no hay que volver a aplicarlo. Recién se recalcula algo si el
     // usuario toca la casilla de nuevo.
-    setAjustePct(detalle?.ajuste_pct || 0)
-    setAjusteTexto(detalle?.ajuste_pct ? String(detalle.ajuste_pct) : '')
+    const ajusteInicial = detalle?.ajuste_pct || 0
+    setAjustePct(ajusteInicial)
+    setAjusteTexto(ajusteInicial ? String(ajusteInicial) : '')
+    payloadOriginalRef.current = JSON.stringify(construirPayload(itemsIniciales, notasIniciales, ajusteInicial))
     setEditMode(true)
     if (detalle?.motor_id) {
       api.get(`/motores/${detalle.motor_id}/repuestos-sugeridos`).then(setSugeridos).catch(() => {})
@@ -184,33 +226,22 @@ export default function DetallePresupuesto() {
     setGuardando(true)
     setError('')
     try {
-      const servicios = editItems
-        .filter((it) => it.tipo !== 'repuesto')
-        .filter((it) => (it.desc_facra || (it.descripcion_custom || '').trim()) && it.precio_unitario !== '' && Number(it.cantidad) > 0)
-        .map((it) => ({
-          servicio_id: it.servicio_id,
-          descripcion_custom: it.descripcion_custom,
-          cantidad: it.cantidad,
-          precio_unitario: it.precio_unitario,
-        }))
-      const repuestos = editItems
-        .filter((it) => it.tipo === 'repuesto')
-        .filter((it) => (it.descripcion_custom || '').trim() && it.precio_unitario !== '' && Number(it.cantidad) > 0)
-        .map((it) => ({
-          tipo: 'repuesto',
-          repuesto_codigo: (it.repuesto_codigo || '').trim() || null,
-          descripcion: it.descripcion_custom,
-          // La categoría congelada al cotizar viaja de vuelta tal cual: es lo que
-          // sale en el PDF y editar el presupuesto no tiene por qué borrarla.
-          categoria: it.categoria,
-          cantidad: it.cantidad,
-          precio_unitario: it.precio_unitario,
-          // Se devuelve el stock congelado tal cual vino: la edición no re-lee
-          // el catálogo, para no pisar la foto tomada al cotizar.
-          stock_al_cotizar: it.stock_al_cotizar,
-        }))
-      const payload = { items: [...servicios, ...repuestos], notas: editNotas, ajuste_pct: ajustePct || 0 }
+      const payload = construirPayload(editItems, editNotas, ajustePct)
+      // Si el payload es idéntico al que había al entrar en modo edición, no
+      // hubo cambios de verdad: no tiene sentido generar una versión de PDF
+      // nueva (y consumir un número de versión) por un guardado que no cambió nada.
+      const huboCambios = JSON.stringify(payload) !== payloadOriginalRef.current
       await api.put(`/presupuestos/${id}`, payload)
+      if (huboCambios) {
+        // El PDF se reconstruye solo, en silencio (sin abrir pestaña): así
+        // "Compartir PDF" y "Abrir" siempre reflejan la última edición, sin
+        // depender de que el usuario se acuerde de tocar "Reconstruir PDF".
+        try {
+          await reconstruirPdfSilencioso()
+        } catch {
+          setAviso('Los cambios se guardaron, pero no se pudo reconstruir el PDF automáticamente. Probá con "Reconstruir PDF" más abajo.')
+        }
+      }
       setEditMode(false)
       cargar()
     } catch (err) {
@@ -233,13 +264,18 @@ export default function DetallePresupuesto() {
     }
   }
 
+  const reconstruirPdfSilencioso = async () => {
+    const nuevaLista = await api.post(`/presupuestos/${id}/pdf`)
+    setPdfs(nuevaLista)
+    return nuevaLista
+  }
+
   const reconstruirPdf = async () => {
     setReconstruyendo(true)
     setError('')
     const pdfTab = window.open('', '_blank')
     try {
-      const nuevaLista = await api.post(`/presupuestos/${id}/pdf`)
-      setPdfs(nuevaLista)
+      const nuevaLista = await reconstruirPdfSilencioso()
       if (pdfTab) pdfTab.location.href = `/api/presupuestos/${id}/pdf/${nuevaLista[0].version}`
     } catch (err) {
       if (pdfTab) pdfTab.close()
