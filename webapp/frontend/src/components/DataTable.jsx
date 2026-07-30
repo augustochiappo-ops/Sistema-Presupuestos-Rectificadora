@@ -143,6 +143,7 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
                     whiteSpace: c.wrap ? 'normal' : 'nowrap',
                     overflow: c.wrap ? 'visible' : 'hidden',
                     textOverflow: c.wrap ? 'clip' : 'ellipsis',
+                    overflowWrap: c.wrap ? 'anywhere' : 'normal',
                   }}>{c.render ? c.render(row[c.key], row) : row[c.key]}</td>
                 ))}
               </tr>

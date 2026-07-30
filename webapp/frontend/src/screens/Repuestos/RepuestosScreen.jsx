@@ -9,7 +9,7 @@ import { Icon } from '../../components/Icon'
 import { formatPrecioARS } from '../../utils/format'
 
 const COLUMNS = [
-  { key: 'codigo', header: 'Código', width: 140, strong: true },
+  { key: 'codigo', header: 'Código', width: 140, strong: true, wrap: true },
   { key: 'aplicacion', header: 'Descripción', wrap: true },
   { key: 'marca', header: 'Marca', width: 140, render: (v) => v || '—' },
   { key: 'categoria', header: 'Categoría', width: 160, render: (v) => v || '—' },
