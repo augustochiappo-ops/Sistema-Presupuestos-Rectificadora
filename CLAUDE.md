@@ -20,7 +20,7 @@ Sistema de Presupuestos para una **rectificadora de motores**. Permite generar p
 ## Entorno de trabajo del usuario
 
 - El usuario trabaja con **Claude Code en su versión web** (claude.ai/code), no en una compu con la consola instalada. **Todos los cambios de esta app se hacen sobre la versión web** (`webapp/backend` + `webapp/frontend`).
-- La **versión de escritorio** (`main.py`, PyQt6, sección "Commands" abajo) está **en desuso**. No priorizar desarrollo ahí salvo pedido explícito del usuario.
+- La versión de escritorio (PyQt6) que existía en `main.py`/`src/` se eliminó del repo (2026-07-31): el sistema quedó exclusivamente como app web.
 
 ## Flujo de trabajo de este proyecto (importante, seguirlo siempre)
 
@@ -63,22 +63,6 @@ Para verificar visualmente un cambio en la versión web o generar una captura de
 - La rama `main` existió como espejo/respaldo pero **se eliminó** (remota y local) a pedido del usuario para no tener dos ramas iguales dando confusión. No recrearla salvo pedido explícito.
 - Ver `.claude/memory/estado.md` para el historial completo de por qué existían dos ramas y cuándo se unificaron.
 
-## Commands
-
-```bash
-# Instalar dependencias
-pip install -r requirements.txt
-
-# Ejecutar la app
-python main.py
-
-# Dependencias principales
-# PyQt6        → UI de escritorio
-# pandas       → lectura del Excel del proveedor
-# reportlab    → generación de PDF
-# SQLite3      → base de datos local (incluido en Python stdlib)
-```
-
 ## Domain concepts
 
 | Término | Descripción |
@@ -117,14 +101,14 @@ Estas skills deben usarse **proactivamente** cuando la tarea corresponda a su es
 | `engineering:tech-debt` | Al detectar problemas de diseño o deuda técnica acumulada |
 | `engineering:debug` | Al diagnosticar errores difíciles de rastrear |
 | `engineering:deploy-checklist` | Al preparar una versión para entregar al usuario final |
-| `design:design-system` | Al definir la paleta visual, tipografía y componentes PyQt6 reutilizables |
+| `design:design-system` | Al definir la paleta visual, tipografía y componentes reutilizables del frontend |
 | `design:ux-copy` | Al redactar textos de la interfaz: botones, labels, mensajes de error, tooltips |
 | `design:accessibility-review` | Al revisar que la UI sea clara y usable |
 | `design:design-critique` | Al evaluar decisiones de UI/UX antes de implementarlas |
 
 ## Architecture notes
 
-- **Local-first**: toda la lógica y el almacenamiento son locales. Sin backend remoto.
+- **Local-first**: toda la lógica y el almacenamiento son locales. Corre en PythonAnywhere, sin dependencia de servicios en la nube de terceros.
 - **Base de datos interna**: persiste las asociaciones motor → repuestos (códigos del proveedor). Se va enriqueciendo a medida que se usan presupuestos.
 - **Actualización de precios**: el sistema debe poder reimportar la lista de la Cámara y el Excel del proveedor sin perder las asociaciones guardadas.
-- **Stack**: Python + PyQt6 para la UI de escritorio. pandas para leer el Excel del proveedor. reportlab (o similar) para generar PDF. SQLite como base de datos local.
+- **Stack**: Flask (backend) + React/Vite (frontend) en `webapp/`. pandas para leer el Excel del proveedor. reportlab (o similar) para generar PDF. SQLite como base de datos local.
