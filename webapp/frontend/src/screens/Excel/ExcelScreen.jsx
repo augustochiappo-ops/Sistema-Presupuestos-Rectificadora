@@ -3,6 +3,7 @@ import { api } from '../../api/client'
 import { PageHeader } from '../../components/PageHeader'
 import { Button } from '../../components/Button'
 import { Icon } from '../../components/Icon'
+import BackupPanel from './BackupPanel'
 
 function Eyebrow({ children }) {
   return (
@@ -110,6 +111,9 @@ export default function ExcelScreen() {
           extension=".csv"
         />
       </div>
+
+      <Eyebrow>Copia de seguridad</Eyebrow>
+      <BackupPanel />
     </div>
   )
 }

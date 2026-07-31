@@ -11,6 +11,7 @@ from .routes.clientes import bp as clientes_bp
 from .routes.presupuestos import bp as presupuestos_bp
 from .routes.repuestos import bp as repuestos_bp
 from .routes.deploy import bp as deploy_bp
+from .routes.backup import bp as backup_bp
 from .static_frontend import bp as static_bp
 
 
@@ -20,7 +21,9 @@ def create_app():
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
     # En dev (http://localhost) tiene que ser "0"; en PythonAnywhere (https) se pone en "1".
     app.config["SESSION_COOKIE_SECURE"] = os.environ.get("SESSION_COOKIE_SECURE", "0") == "1"
-    app.config["MAX_CONTENT_LENGTH"] = 20 * 1024 * 1024  # 20MB, de sobra para un .xls de FACRA
+    # 100MB: de sobra para un .xls de FACRA y también para subir una copia de
+    # seguridad completa (DB + todos los PDFs generados hasta la fecha).
+    app.config["MAX_CONTENT_LENGTH"] = 100 * 1024 * 1024
 
     os.makedirs(config.DATA_DIR, exist_ok=True)
     os.makedirs(config.PDFS_DIR, exist_ok=True)
@@ -34,6 +37,7 @@ def create_app():
     app.register_blueprint(presupuestos_bp)
     app.register_blueprint(repuestos_bp)
     app.register_blueprint(deploy_bp)
+    app.register_blueprint(backup_bp)
     app.register_blueprint(static_bp)
 
     return app
