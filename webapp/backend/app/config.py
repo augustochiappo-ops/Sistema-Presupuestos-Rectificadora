@@ -11,6 +11,11 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me")
 APP_USERNAME = os.environ.get("APP_USERNAME", "admin")
 APP_PASSWORD_HASH = os.environ.get("APP_PASSWORD_HASH")  # generado con werkzeug.security.generate_password_hash
 
+# Duración de la sesión: se cuenta desde el momento del login y no se renueva
+# con el uso, así cada jornada hay que volver a escribir la contraseña (y no se
+# olvida). Configurable con SESSION_HORAS por si hace falta cambiarla.
+SESSION_HORAS = int(os.environ.get("SESSION_HORAS", "8"))
+
 NOMBRE_TALLER = os.environ.get("NOMBRE_TALLER", "Rectificaciones Chicappo")
 
 # Deploy remoto: POST /api/deploy con header X-Deploy-Secret hace `git pull` +

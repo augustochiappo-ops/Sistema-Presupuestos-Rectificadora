@@ -7,7 +7,7 @@ import { ErrorBanner } from '../components/ErrorBanner'
 import { Icon } from '../components/Icon'
 
 export default function Login() {
-  const { login } = useAuth()
+  const { login, avisoSesion } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const [usuario, setUsuario] = React.useState('')
@@ -47,7 +47,7 @@ export default function Login() {
           </div>
         </div>
 
-        <ErrorBanner message={error} />
+        <ErrorBanner message={error || avisoSesion} />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Usuario</label>

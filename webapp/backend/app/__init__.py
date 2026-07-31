@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 from flask import Flask
 
@@ -21,6 +22,10 @@ def create_app():
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
     # En dev (http://localhost) tiene que ser "0"; en PythonAnywhere (https) se pone en "1".
     app.config["SESSION_COOKIE_SECURE"] = os.environ.get("SESSION_COOKIE_SECURE", "0") == "1"
+    # La sesión vence a las N horas del login (no se renueva con cada request:
+    # SESSION_REFRESH_EACH_REQUEST=False), así el vencimiento es absoluto.
+    app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=config.SESSION_HORAS)
+    app.config["SESSION_REFRESH_EACH_REQUEST"] = False
     # 100MB: de sobra para un .xls de FACRA y también para subir una copia de
     # seguridad completa (DB + todos los PDFs generados hasta la fecha).
     app.config["MAX_CONTENT_LENGTH"] = 100 * 1024 * 1024

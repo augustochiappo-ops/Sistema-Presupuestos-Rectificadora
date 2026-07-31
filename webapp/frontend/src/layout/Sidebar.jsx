@@ -12,8 +12,14 @@ const ITEMS = [
   { to: '/repuestos', label: 'Repuestos', icon: 'package' },
 ]
 
+function horaVencimiento(venceTs) {
+  if (!venceTs) return 'Sesión activa'
+  const hora = new Date(venceTs * 1000).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false })
+  return `Sesión hasta las ${hora}`
+}
+
 export function Sidebar({ open = false, onClose }) {
-  const { user, logout } = useAuth()
+  const { user, logout, venceTs } = useAuth()
 
   return (
     <aside className={`sidebar ${open ? 'open' : ''}`}>
@@ -49,7 +55,7 @@ export function Sidebar({ open = false, onClose }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 8px', borderTop: '1px solid var(--border-subtle)' }}>
         <div>
           <div style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: 14, color: 'var(--text-strong)' }}>{user}</div>
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>Sesión activa</div>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>{horaVencimiento(venceTs)}</div>
         </div>
         <button
           onClick={logout}

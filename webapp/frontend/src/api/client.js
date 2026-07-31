@@ -13,6 +13,11 @@ async function request(path, options = {}) {
   })
 
   if (res.status === 401) {
+    // La sesión venció (o nunca existió): avisamos para que la app vuelva al login.
+    // El chequeo inicial de /auth/session no cuenta, ahí todavía no hay nada que cortar.
+    if (path !== '/auth/session' && path !== '/auth/login') {
+      window.dispatchEvent(new CustomEvent('sesion-vencida'))
+    }
     throw new ApiError('No autenticado', 401)
   }
 
