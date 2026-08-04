@@ -51,12 +51,17 @@ def init_db():
                 nombre   TEXT NOT NULL,
                 telefono TEXT,
                 email    TEXT,
-                notas    TEXT
+                notas    TEXT,
+                -- 'mecanico' | 'dueno' | NULL (sin clasificar todavía)
+                tipo     TEXT
             );
 
             CREATE TABLE IF NOT EXISTS presupuestos (
                 id         INTEGER PRIMARY KEY AUTOINCREMENT,
                 cliente_id INTEGER REFERENCES clientes(id),
+                -- Contraparte opcional (si cliente_id es el dueño, acá va el
+                -- mecánico que lo trajo, y viceversa). NULL si no se cargó.
+                contacto_id INTEGER REFERENCES clientes(id),
                 motor_id   INTEGER REFERENCES motores(id),
                 fecha      TEXT,
                 total      REAL,
@@ -141,6 +146,12 @@ def init_db():
         cols_presupuestos = {r[1] for r in conn.execute("PRAGMA table_info(presupuestos)")}
         if "ajuste_pct" not in cols_presupuestos:
             conn.execute("ALTER TABLE presupuestos ADD COLUMN ajuste_pct REAL DEFAULT 0")
+        if "contacto_id" not in cols_presupuestos:
+            conn.execute("ALTER TABLE presupuestos ADD COLUMN contacto_id INTEGER REFERENCES clientes(id)")
+
+        cols_clientes = {r[1] for r in conn.execute("PRAGMA table_info(clientes)")}
+        if "tipo" not in cols_clientes:
+            conn.execute("ALTER TABLE clientes ADD COLUMN tipo TEXT")
 
         cols_items = {r[1] for r in conn.execute("PRAGMA table_info(presupuesto_items)")}
         if "descripcion_custom" not in cols_items:
@@ -182,11 +193,43 @@ def init_db():
                     conn.execute(f"UPDATE {tabla} SET pdf_path = ? WHERE id = ?", (nombre, row_id))
 
 
+_TIPO_OPUESTO = {"mecanico": "dueno", "dueno": "mecanico"}
+
+
+def _resolver_cliente(conn: sqlite3.Connection, nombre: str, tipo: str | None) -> int:
+    """Busca un cliente por nombre exacto (case-insensitive) o lo crea. Si ya
+    existe pero todavía no tiene `tipo` clasificado y se pasa uno, lo clasifica
+    ahora (nunca pisa un tipo ya asignado)."""
+    nombre_normalizado = formato_nombre_titulo(nombre.strip())
+    row = conn.execute(
+        "SELECT id, nombre, tipo FROM clientes WHERE nombre = ? COLLATE NOCASE",
+        (nombre_normalizado,),
+    ).fetchone()
+
+    if row:
+        cliente_id = row[0]
+        # Prolija oportunistamente nombres viejos guardados antes de esta
+        # normalización (ej. todo en minúscula).
+        if row[1] != nombre_normalizado:
+            conn.execute("UPDATE clientes SET nombre = ? WHERE id = ?", (nombre_normalizado, cliente_id))
+        if tipo and not row[2]:
+            conn.execute("UPDATE clientes SET tipo = ? WHERE id = ?", (tipo, cliente_id))
+        return cliente_id
+
+    cur = conn.execute(
+        "INSERT INTO clientes (nombre, tipo) VALUES (?, ?)",
+        (nombre_normalizado, tipo),
+    )
+    return cur.lastrowid
+
+
 def guardar_presupuesto(
     cliente_nombre: str,
     motor_id: int,
     items: list[dict],
     ajuste_pct: float = 0,
+    cliente_tipo: str | None = None,
+    contacto_nombre: str | None = None,
 ) -> int:
     """
     Crea (o reutiliza) el cliente, inserta el presupuesto y sus ítems.
@@ -198,33 +241,30 @@ def guardar_presupuesto(
     ajuste_pct: % de aumento/descuento sobre mano de obra usado al cotizar (ya
     aplicado en los precios de `items`); se guarda solo para mostrarlo de nuevo
     la próxima vez que se abra a editar.
+    cliente_tipo: 'mecanico' | 'dueno' | None — clasificación del cliente
+    principal (solo se usa si el cliente es nuevo o todavía no tiene tipo).
+    contacto_nombre: nombre opcional de la contraparte (el mecánico si el
+    cliente es el dueño, o viceversa); se resuelve como otro cliente, con el
+    tipo inverso al del cliente principal.
     Retorna el id del presupuesto creado.
     """
     total = sum((i.get("precio_aplicado") or 0.0) for i in items)
-    nombre_normalizado = formato_nombre_titulo(cliente_nombre.strip())
 
     with get_connection() as conn:
-        row = conn.execute(
-            "SELECT id, nombre FROM clientes WHERE nombre = ? COLLATE NOCASE",
-            (nombre_normalizado,),
-        ).fetchone()
+        cliente_id = _resolver_cliente(conn, cliente_nombre, cliente_tipo)
 
-        if row:
-            cliente_id = row[0]
-            # Prolija oportunistamente nombres viejos guardados antes de esta
-            # normalización (ej. todo en minúscula).
-            if row[1] != nombre_normalizado:
-                conn.execute("UPDATE clientes SET nombre = ? WHERE id = ?", (nombre_normalizado, cliente_id))
-        else:
-            cur = conn.execute(
-                "INSERT INTO clientes (nombre) VALUES (?)",
-                (nombre_normalizado,),
-            )
-            cliente_id = cur.lastrowid
+        contacto_id = None
+        if contacto_nombre and contacto_nombre.strip():
+            tipo_principal = cliente_tipo
+            if not tipo_principal:
+                row_tipo = conn.execute("SELECT tipo FROM clientes WHERE id = ?", (cliente_id,)).fetchone()
+                tipo_principal = row_tipo[0] if row_tipo else None
+            tipo_contraparte = _TIPO_OPUESTO.get(tipo_principal)
+            contacto_id = _resolver_cliente(conn, contacto_nombre, tipo_contraparte)
 
         cur = conn.execute(
-            "INSERT INTO presupuestos (cliente_id, motor_id, fecha, total, ajuste_pct) VALUES (?, ?, ?, ?, ?)",
-            (cliente_id, motor_id, date.today().isoformat(), total, ajuste_pct or 0),
+            "INSERT INTO presupuestos (cliente_id, contacto_id, motor_id, fecha, total, ajuste_pct) VALUES (?, ?, ?, ?, ?, ?)",
+            (cliente_id, contacto_id, motor_id, date.today().isoformat(), total, ajuste_pct or 0),
         )
         presupuesto_id = cur.lastrowid
 
@@ -352,60 +392,71 @@ def get_presupuesto_items(presupuesto_id: int) -> list[dict]:
 def get_clientes_lista() -> list[dict]:
     # notas (descripción interna) viaja acá para que el buscador de la pantalla
     # Clientes pueda indexarla del lado del cliente, sin pedir cada cliente
-    # por separado.
+    # por separado. total_presupuestos/ultimo_presupuesto cuentan tanto los
+    # presupuestos donde este cliente es el principal como aquellos donde
+    # aparece solo como contraparte (ej. un mecánico que trae autos ajenos).
     with get_connection() as conn:
         cur = conn.execute(
             """
-            SELECT c.id, c.nombre, c.notas,
-                   COUNT(p.id)   AS total_presupuestos,
-                   MAX(p.fecha)  AS ultimo_presupuesto
+            SELECT c.id, c.nombre, c.notas, c.tipo,
+                   COUNT(DISTINCT p.id) AS total_presupuestos,
+                   MAX(p.fecha)         AS ultimo_presupuesto
             FROM clientes c
-            LEFT JOIN presupuestos p ON p.cliente_id = c.id
+            LEFT JOIN presupuestos p ON p.cliente_id = c.id OR p.contacto_id = c.id
             GROUP BY c.id
             ORDER BY c.nombre COLLATE NOCASE
             """
         )
-        cols = ["id", "nombre", "notas", "total_presupuestos", "ultimo_presupuesto"]
+        cols = ["id", "nombre", "notas", "tipo", "total_presupuestos", "ultimo_presupuesto"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
 def get_cliente(cliente_id: int) -> dict | None:
     with get_connection() as conn:
         row = conn.execute(
-            "SELECT id, nombre, notas FROM clientes WHERE id = ?",
+            "SELECT id, nombre, notas, tipo FROM clientes WHERE id = ?",
             (cliente_id,),
         ).fetchone()
         if not row:
             return None
-        return {"id": row[0], "nombre": row[1], "notas": row[2]}
+        return {"id": row[0], "nombre": row[1], "notas": row[2], "tipo": row[3]}
 
 
-def actualizar_cliente(cliente_id: int, nombre: str, notas: str | None) -> bool:
-    """Renombra un cliente y/o actualiza su descripción interna (notas). No
-    fusiona con otro cliente si el nuevo nombre coincide con uno existente —
-    caso borde que se deja para una limpieza manual futura."""
+def actualizar_cliente(cliente_id: int, nombre: str, notas: str | None, tipo: str | None = None) -> bool:
+    """Renombra un cliente y/o actualiza su descripción interna (notas) y su
+    tipo (mecánico/dueño). No fusiona con otro cliente si el nuevo nombre
+    coincide con uno existente — caso borde que se deja para una limpieza
+    manual futura."""
     with get_connection() as conn:
         cur = conn.execute(
-            "UPDATE clientes SET nombre = ?, notas = ? WHERE id = ?",
-            (nombre.strip(), (notas or "").strip() or None, cliente_id),
+            "UPDATE clientes SET nombre = ?, notas = ?, tipo = ? WHERE id = ?",
+            (nombre.strip(), (notas or "").strip() or None, tipo, cliente_id),
         )
         return cur.rowcount > 0
 
 
 def get_presupuestos_por_cliente(cliente_id: int) -> list[dict]:
+    # Incluye tanto los presupuestos donde este cliente es el principal como
+    # aquellos donde aparece solo como contraparte; en ese caso "cliente"
+    # muestra el nombre de la otra persona y "rol" indica que este cliente fue
+    # la contraparte (útil en la ficha de un mecánico: qué dueños representó).
     with get_connection() as conn:
         cur = conn.execute(
             """
-            SELECT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path
+            SELECT p.id, p.fecha,
+                   CASE WHEN p.cliente_id = ? THEN ct.nombre ELSE c.nombre END AS cliente,
+                   CASE WHEN p.cliente_id = ? THEN 'cliente' ELSE 'contacto' END AS rol,
+                   m.motor, p.total, p.pdf_path
             FROM presupuestos p
-            LEFT JOIN clientes c ON c.id = p.cliente_id
-            LEFT JOIN motores  m ON m.id = p.motor_id
-            WHERE p.cliente_id = ?
+            LEFT JOIN clientes c  ON c.id = p.cliente_id
+            LEFT JOIN clientes ct ON ct.id = p.contacto_id
+            LEFT JOIN motores  m  ON m.id = p.motor_id
+            WHERE p.cliente_id = ? OR p.contacto_id = ?
             ORDER BY p.fecha DESC, p.id DESC
             """,
-            (cliente_id,),
+            (cliente_id, cliente_id, cliente_id, cliente_id),
         )
-        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path"]
+        cols = ["id", "fecha", "cliente", "rol", "motor", "total", "pdf_path"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
@@ -416,11 +467,13 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
         row = conn.execute(
             """
             SELECT p.id, p.fecha, p.total, p.notas, p.ajuste_pct,
-                   c.id AS cliente_id, c.nombre AS cliente,
+                   c.id AS cliente_id, c.nombre AS cliente, c.tipo AS cliente_tipo,
+                   ct.nombre AS contacto,
                    m.id AS motor_id,   m.motor,  m.lista_num
             FROM presupuestos p
-            LEFT JOIN clientes c ON c.id = p.cliente_id
-            LEFT JOIN motores  m ON m.id = p.motor_id
+            LEFT JOIN clientes c  ON c.id = p.cliente_id
+            LEFT JOIN clientes ct ON ct.id = p.contacto_id
+            LEFT JOIN motores  m  ON m.id = p.motor_id
             WHERE p.id = ?
             """,
             (presupuesto_id,),
@@ -428,7 +481,8 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
         if not row:
             return None
         cols = ["id", "fecha", "total", "notas", "ajuste_pct",
-                "cliente_id", "cliente", "motor_id", "motor", "lista_num"]
+                "cliente_id", "cliente", "cliente_tipo", "contacto",
+                "motor_id", "motor", "lista_num"]
         return dict(zip(cols, row))
 
 

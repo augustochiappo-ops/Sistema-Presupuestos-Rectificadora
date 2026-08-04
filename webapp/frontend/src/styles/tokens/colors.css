@@ -27,6 +27,12 @@
   --status-expired-bg:#f4e9e9;
   --status-expired-fg:#a23b3b;
 
+  /* Tipo de cliente (mecánico / dueño del vehículo), misma fórmula desaturada */
+  --tag-mecanico-bg:#e7eef7;
+  --tag-mecanico-fg:#3c5a85;
+  --tag-dueno-bg:#f0eaf6;
+  --tag-dueno-fg:#6b4a8c;
+
   /* Semantic aliases */
   --bg-app:#e9eaec;                 /* gray desk behind the app shell */
   --surface-shell:#ffffff;          /* the big rounded app container */

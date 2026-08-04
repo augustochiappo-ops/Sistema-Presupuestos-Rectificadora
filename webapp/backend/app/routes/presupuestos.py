@@ -7,6 +7,8 @@ from ..auth import login_required
 
 bp = Blueprint("presupuestos", __name__, url_prefix="/api/presupuestos")
 
+TIPOS_CLIENTE_VALIDOS = {"mecanico", "dueno"}
+
 
 def _categoria_de_item(it):
     """
@@ -310,6 +312,11 @@ def crear():
     except (TypeError, ValueError):
         ajuste_pct = 0
 
+    cliente_tipo = data.get("cliente_tipo") or None
+    if cliente_tipo is not None and cliente_tipo not in TIPOS_CLIENTE_VALIDOS:
+        return jsonify({"error": "Tipo de cliente inválido"}), 400
+    contacto_nombre = (data.get("contacto_nombre") or "").strip() or None
+
     if not cliente_nombre:
         return jsonify({"error": "Falta el nombre del cliente"}), 400
     if not motor_id:
@@ -328,7 +335,10 @@ def crear():
     if not items_resueltos:
         return jsonify({"error": "Agregá al menos un servicio o repuesto"}), 400
 
-    presupuesto_id = db.guardar_presupuesto(cliente_nombre, motor_id, items_resueltos, ajuste_pct)
+    presupuesto_id = db.guardar_presupuesto(
+        cliente_nombre, motor_id, items_resueltos, ajuste_pct,
+        cliente_tipo=cliente_tipo, contacto_nombre=contacto_nombre,
+    )
 
     detalle = db.get_presupuesto_detalle(presupuesto_id)
     nombre_archivo = f"presupuesto_{presupuesto_id:04d}.pdf"

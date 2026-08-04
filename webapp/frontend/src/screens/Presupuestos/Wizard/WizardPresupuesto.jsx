@@ -15,7 +15,7 @@ const PASOS = ['Cliente', 'Motor', 'Servicios', 'Repuestos']
 export default function WizardPresupuesto() {
   const navigate = useNavigate()
   const [paso, setPaso] = React.useState(0)
-  const [cliente, setCliente] = React.useState('')
+  const [cliente, setCliente] = React.useState({ nombre: '', tipo: null, contacto: null })
   const [motor, setMotor] = React.useState(null)
   // La selección de servicios y repuestos vive acá (no en cada paso) para que
   // ir atrás y adelante en el wizard no pierda lo ya elegido.
@@ -59,7 +59,9 @@ export default function WizardPresupuesto() {
         })),
       ]
       const presupuesto = await api.post('/presupuestos', {
-        cliente_nombre: cliente,
+        cliente_nombre: cliente.nombre,
+        cliente_tipo: cliente.tipo,
+        contacto_nombre: cliente.contacto,
         motor_id: motor.id,
         items,
         ajuste_pct: ajustePct || 0,
@@ -97,7 +99,7 @@ export default function WizardPresupuesto() {
       <ErrorBanner message={error} onClose={() => setError('')} />
 
       {paso === 0 && (
-        <PasoCliente valorInicial={cliente} onSiguiente={(nombre) => { setCliente(nombre); setPaso(1) }} />
+        <PasoCliente valorInicial={cliente.nombre} onSiguiente={(info) => { setCliente(info); setPaso(1) }} />
       )}
 
       {paso === 1 && (

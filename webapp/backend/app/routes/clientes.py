@@ -6,6 +6,8 @@ from ..helpers import formato_nombre_titulo
 
 bp = Blueprint("clientes", __name__, url_prefix="/api/clientes")
 
+TIPOS_VALIDOS = {"mecanico", "dueno"}
+
 
 @bp.get("")
 @login_required
@@ -33,7 +35,11 @@ def actualizar(cliente_id):
     if not nombre:
         return jsonify({"error": "Falta el nombre del cliente"}), 400
 
-    db.actualizar_cliente(cliente_id, formato_nombre_titulo(nombre), data.get("notas"))
+    tipo = data.get("tipo") or None
+    if tipo is not None and tipo not in TIPOS_VALIDOS:
+        return jsonify({"error": "Tipo de cliente inválido"}), 400
+
+    db.actualizar_cliente(cliente_id, formato_nombre_titulo(nombre), data.get("notas"), tipo)
     return jsonify(db.get_cliente(cliente_id))
 
 

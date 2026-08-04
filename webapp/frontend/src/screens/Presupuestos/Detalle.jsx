@@ -11,7 +11,11 @@ import { ContadorServicio } from '../../components/ContadorServicio'
 import { Icon } from '../../components/Icon'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
+import { StatusBadge } from '../../components/StatusBadge'
 import { formatPrecioARS, formatFechaAR } from '../../utils/format'
+
+const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
+const TIPO_OPUESTO = { mecanico: 'dueno', dueno: 'mecanico' }
 
 // Avisos de cambios post-emisión: cada línea de repuesto guarda el precio y el
 // stock congelados al cotizar; el backend manda además precio_actual/stock_actual
@@ -391,6 +395,10 @@ export default function DetallePresupuesto() {
 
       <div style={{ display: 'flex', gap: 40, alignItems: 'flex-end', flexWrap: 'wrap', padding: '18px 22px', background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)' }}>
         <Campo label="Cliente" valor={detalle.cliente} />
+        {detalle.cliente_tipo && <Campo label="Tipo" valor={<StatusBadge status={detalle.cliente_tipo} />} />}
+        {detalle.contacto && (
+          <Campo label={TIPO_LABEL[TIPO_OPUESTO[detalle.cliente_tipo]] || 'Contacto'} valor={detalle.contacto} />
+        )}
         <Campo label="Motor" valor={detalle.motor} />
         <Campo label="Fecha" valor={formatFechaAR(detalle.fecha)} />
         <Campo label="Total" valor={formatPrecioARS(editMode ? totalEditado : detalle.total)} />

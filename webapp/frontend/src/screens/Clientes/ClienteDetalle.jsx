@@ -5,9 +5,12 @@ import { PageHeader } from '../../components/PageHeader'
 import { DataTable } from '../../components/DataTable'
 import { Button } from '../../components/Button'
 import { TextField } from '../../components/TextField'
+import { StatusBadge } from '../../components/StatusBadge'
 import { Icon } from '../../components/Icon'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { formatPrecioARS, formatFechaAR } from '../../utils/format'
+
+const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
 
 export default function ClienteDetalle() {
   const { id } = useParams()
@@ -18,6 +21,7 @@ export default function ClienteDetalle() {
   const [editando, setEditando] = React.useState(false)
   const [nombreEdit, setNombreEdit] = React.useState('')
   const [notasEdit, setNotasEdit] = React.useState('')
+  const [tipoEdit, setTipoEdit] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
   const [error, setError] = React.useState('')
 
@@ -36,6 +40,7 @@ export default function ClienteDetalle() {
   const empezarEdicion = () => {
     setNombreEdit(cliente?.nombre || '')
     setNotasEdit(cliente?.notas || '')
+    setTipoEdit(cliente?.tipo || '')
     setError('')
     setEditando(true)
   }
@@ -46,7 +51,7 @@ export default function ClienteDetalle() {
     setGuardando(true)
     setError('')
     try {
-      const actualizado = await api.put(`/clientes/${id}`, { nombre: nombreEdit.trim(), notas: notasEdit })
+      const actualizado = await api.put(`/clientes/${id}`, { nombre: nombreEdit.trim(), notas: notasEdit, tipo: tipoEdit || null })
       setCliente(actualizado)
       setEditando(false)
     } catch (err) {
@@ -60,7 +65,12 @@ export default function ClienteDetalle() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       <PageHeader
         title={cliente?.nombre || (cargando ? 'Cargando…' : 'Cliente')}
-        subtitle={`${presupuestos.length} presupuesto${presupuestos.length === 1 ? '' : 's'}`}
+        subtitle={cliente && (
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            {`${presupuestos.length} presupuesto${presupuestos.length === 1 ? '' : 's'}`}
+            <StatusBadge status={cliente.tipo || 'sin_clasificar'} />
+          </span>
+        )}
         actions={
           <>
             {!editando && (
@@ -84,6 +94,22 @@ export default function ClienteDetalle() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Nombre</label>
             <TextField value={nombreEdit} onChange={(e) => setNombreEdit(e.target.value)} autoFocus />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Tipo</label>
+            <select
+              value={tipoEdit}
+              onChange={(e) => setTipoEdit(e.target.value)}
+              style={{
+                width: '100%', height: 42, border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)',
+                padding: '0 14px', background: 'var(--surface-card)', color: 'var(--text-strong)',
+                fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', outline: 'none',
+              }}
+            >
+              <option value="">Sin clasificar</option>
+              <option value="mecanico">{TIPO_LABEL.mecanico}</option>
+              <option value="dueno">{TIPO_LABEL.dueno}</option>
+            </select>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>
@@ -124,6 +150,10 @@ export default function ClienteDetalle() {
           { key: 'id', header: 'Nº', strong: true, width: 80, render: (v) => `#${String(v).padStart(4, '0')}` },
           { key: 'fecha', header: 'Fecha', width: 130, render: formatFechaAR },
           { key: 'motor', header: 'Motor', wrap: true },
+          {
+            key: 'cliente', header: 'Vínculo', width: 200, wrap: true,
+            render: (v, row) => (row.rol === 'contacto' ? `Contraparte de ${v}` : '—'),
+          },
           { key: 'total', header: 'Total', align: 'right', width: 140, render: formatPrecioARS },
         ]}
         reorderKey="cliente-presupuestos"
