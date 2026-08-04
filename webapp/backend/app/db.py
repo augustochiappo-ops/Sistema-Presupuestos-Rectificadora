@@ -306,14 +306,14 @@ def get_presupuestos() -> list[dict]:
     with get_connection() as conn:
         cur = conn.execute(
             """
-            SELECT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path
+            SELECT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path, c.tipo AS cliente_tipo
             FROM presupuestos p
             LEFT JOIN clientes  c ON c.id = p.cliente_id
             LEFT JOIN motores   m ON m.id = p.motor_id
             ORDER BY p.fecha DESC, p.id DESC
             """
         )
-        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path"]
+        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path", "cliente_tipo"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
@@ -334,7 +334,7 @@ def buscar_presupuestos(
     por presupuesto si tiene varios repuestos que matchean el filtro.
     """
     query = """
-        SELECT DISTINCT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path
+        SELECT DISTINCT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path, c.tipo AS cliente_tipo
         FROM presupuestos p
         LEFT JOIN clientes c ON c.id = p.cliente_id
         LEFT JOIN motores  m ON m.id = p.motor_id
@@ -367,7 +367,7 @@ def buscar_presupuestos(
 
     with get_connection() as conn:
         cur = conn.execute(query, params)
-        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path"]
+        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path", "cliente_tipo"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 

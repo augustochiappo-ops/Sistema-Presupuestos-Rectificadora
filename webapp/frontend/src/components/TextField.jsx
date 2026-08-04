@@ -1,4 +1,4 @@
-export function TextField({ as = 'input', style, ...rest }) {
+export function TextField({ as = 'input', style, onFocus, onBlur, ...rest }) {
   const Tag = as
   return (
     <Tag
@@ -12,8 +12,8 @@ export function TextField({ as = 'input', style, ...rest }) {
         transition: 'border-color .15s ease, box-shadow .15s ease',
         ...style,
       }}
-      onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--border-strong)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(20,22,25,.05)' }}
-      onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border-default)'; e.currentTarget.style.boxShadow = 'none' }}
+      onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--border-strong)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(20,22,25,.05)'; onFocus?.(e) }}
+      onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border-default)'; e.currentTarget.style.boxShadow = 'none'; onBlur?.(e) }}
       {...rest}
     />
   )

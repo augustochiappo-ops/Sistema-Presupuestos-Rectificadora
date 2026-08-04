@@ -189,6 +189,7 @@ export default function HistorialPresupuestos() {
           { key: 'id', header: 'Nº', strong: true, width: 80, render: (v) => `#${String(v).padStart(4, '0')}` },
           { key: 'fecha', header: 'Fecha', width: 120, render: formatFechaAR },
           { key: 'cliente', header: 'Cliente', width: 180 },
+          { key: 'cliente_tipo', header: 'Tipo de cliente', width: 220, render: (v) => <StatusBadge status={v || 'sin_clasificar'} /> },
           { key: 'motor', header: 'Motor', wrap: true },
           { key: 'total', header: 'Total', align: 'right', width: 140, render: formatPrecioARS },
           // key propia (no 'fecha' de nuevo): las columnas se identifican por key

@@ -4,6 +4,7 @@ import { SearchInput } from '../../../components/SearchInput'
 import { TextField } from '../../../components/TextField'
 import { Button } from '../../../components/Button'
 import { Icon } from '../../../components/Icon'
+import { StatusBadge } from '../../../components/StatusBadge'
 import { formatearNombreTitulo, formatFechaAR } from '../../../utils/format'
 import { filtrarClientesPorBusqueda } from '../../../utils/fuzzyMatch'
 
@@ -34,10 +35,12 @@ export function PasoCliente({ valorInicial, onSiguiente }) {
   const [cargando, setCargando] = React.useState(true)
   const [tipoElegido, setTipoElegido] = React.useState(null)
   const [contactoNombre, setContactoNombre] = React.useState('')
+  const [contactoFocado, setContactoFocado] = React.useState(false)
   const [contactoVisible, setContactoVisible] = React.useState(false)
   const [filaHover, setFilaHover] = React.useState(null)
   const [filaContactoAbierta, setFilaContactoAbierta] = React.useState(null)
   const [contactoInline, setContactoInline] = React.useState('')
+  const [contactoInlineFocado, setContactoInlineFocado] = React.useState(false)
 
   React.useEffect(() => {
     api.get('/clientes').then(setClientes).finally(() => setCargando(false))
@@ -81,6 +84,15 @@ export function PasoCliente({ valorInicial, onSiguiente }) {
 
   const tipoContactoInput = tipoEfectivo ? TIPO_OPUESTO[tipoEfectivo] : null
 
+  // Sugerencias del campo de contraparte, filtradas al tipo opuesto: si hay
+  // que cargar el dueño, solo aparecen dueños existentes, nunca mecánicos.
+  const sugerenciasContacto = React.useMemo(() => {
+    if (!tipoContactoInput || !contactoNombre.trim()) return []
+    return filtrarClientesPorBusqueda(clientes, contactoNombre)
+      .filter((c) => c.tipo === tipoContactoInput)
+      .slice(0, 8)
+  }, [clientes, contactoNombre, tipoContactoInput])
+
   return (
     <div style={{ maxWidth: 640, display: 'flex', flexDirection: 'column', gap: 14 }}>
       <form onSubmit={confirmar} style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
@@ -106,11 +118,38 @@ export function PasoCliente({ valorInicial, onSiguiente }) {
             }}
           >
             <label style={labelStyle}>{TIPO_LABEL[tipoContactoInput]} <span style={{ fontWeight: 400, color: 'var(--text-faint)' }}>(opcional)</span></label>
-            <TextField
-              value={contactoNombre}
-              onChange={(e) => setContactoNombre(e.target.value)}
-              placeholder={`Nombre del ${TIPO_LABEL[tipoContactoInput].toLowerCase()}…`}
-            />
+            <div style={{ position: 'relative' }}>
+              <TextField
+                value={contactoNombre}
+                onChange={(e) => setContactoNombre(e.target.value)}
+                onFocus={() => setContactoFocado(true)}
+                onBlur={() => setContactoFocado(false)}
+                placeholder={`Nombre del ${TIPO_LABEL[tipoContactoInput].toLowerCase()}…`}
+              />
+              {contactoFocado && sugerenciasContacto.length > 0 && (
+                <div
+                  onMouseDown={(e) => e.preventDefault()}
+                  style={{
+                    position: 'absolute', top: 'calc(100% + 4px)', left: 0, right: 0, zIndex: 10,
+                    border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)',
+                    background: 'var(--surface-card)', boxShadow: 'var(--shadow-sm)',
+                    maxHeight: 220, overflow: 'auto',
+                  }}
+                >
+                  {sugerenciasContacto.map((s) => (
+                    <div
+                      key={s.id}
+                      onClick={() => { setContactoNombre(s.nombre); setContactoFocado(false) }}
+                      style={{ padding: '8px 12px', cursor: 'pointer', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-sunken)' }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+                    >
+                      {s.nombre}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -146,9 +185,12 @@ export function PasoCliente({ valorInicial, onSiguiente }) {
             onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; setFilaHover(null) }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-strong)' }}>
-                {c.nombre}
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-strong)' }}>
+                  {c.nombre}
+                </span>
+                <StatusBadge status={c.tipo || 'sin_clasificar'} />
+              </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)', whiteSpace: 'nowrap' }}>
                   {c.total_presupuestos} presupuesto{c.total_presupuestos === 1 ? '' : 's'}
@@ -174,14 +216,48 @@ export function PasoCliente({ valorInicial, onSiguiente }) {
 
             {c.tipo && filaContactoAbierta === c.id && (
               <div onClick={(e) => e.stopPropagation()} style={{ display: 'flex', gap: 8 }}>
-                <TextField
-                  autoFocus
-                  value={contactoInline}
-                  onChange={(e) => setContactoInline(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); confirmarInline(c) } }}
-                  placeholder={`Nombre del ${TIPO_LABEL[TIPO_OPUESTO[c.tipo]].toLowerCase()}…`}
-                  style={{ height: 34, fontSize: 'var(--text-sm)' }}
-                />
+                <div style={{ position: 'relative', flex: 1 }}>
+                  <TextField
+                    autoFocus
+                    value={contactoInline}
+                    onChange={(e) => setContactoInline(e.target.value)}
+                    onFocus={() => setContactoInlineFocado(true)}
+                    onBlur={() => setContactoInlineFocado(false)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); confirmarInline(c) } }}
+                    placeholder={`Nombre del ${TIPO_LABEL[TIPO_OPUESTO[c.tipo]].toLowerCase()}…`}
+                    style={{ height: 34, fontSize: 'var(--text-sm)' }}
+                  />
+                  {contactoInlineFocado && contactoInline.trim() && (() => {
+                    const tipoBuscado = TIPO_OPUESTO[c.tipo]
+                    const sugerenciasInline = filtrarClientesPorBusqueda(clientes, contactoInline)
+                      .filter((x) => x.tipo === tipoBuscado)
+                      .slice(0, 8)
+                    if (sugerenciasInline.length === 0) return null
+                    return (
+                      <div
+                        onMouseDown={(e) => e.preventDefault()}
+                        style={{
+                          position: 'absolute', top: 'calc(100% + 4px)', left: 0, right: 0, zIndex: 10,
+                          border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)',
+                          background: 'var(--surface-card)', boxShadow: 'var(--shadow-sm)',
+                          maxHeight: 180, overflow: 'auto',
+                        }}
+                      >
+                        {sugerenciasInline.map((s) => (
+                          <div
+                            key={s.id}
+                            onClick={() => { setContactoInline(s.nombre); setContactoInlineFocado(false) }}
+                            style={{ padding: '7px 12px', cursor: 'pointer', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-sunken)' }}
+                            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+                          >
+                            {s.nombre}
+                          </div>
+                        ))}
+                      </div>
+                    )
+                  })()}
+                </div>
                 <Button type="button" size="sm" variant="primary" onClick={() => confirmarInline(c)}>
                   <Icon n="check" s={14} />
                 </Button>
