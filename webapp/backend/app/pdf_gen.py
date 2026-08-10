@@ -185,24 +185,21 @@ def generar_pdf(
         story.append(tabla_servicios)
         story.append(Spacer(1, 0.3 * cm))
 
+    # Los repuestos van sin cantidad: con los grupos de opciones, la cantidad de
+    # una línea es la cantidad de ENVASES de la marca que ganó (una viene por
+    # juego de 8, otra por blíster de 2), así que ese número no significa nada
+    # para el cliente y cambiaría según qué marca se termine cotizando.
     if repuestos:
-        col_cant = 1.6 * cm
-        col_desc = page_w - col_cant
-
-        rep_data = [[
-            _hd("Repuesto"),
-            _hd("Cant.", TA_CENTER),
-        ]]
+        rep_data = [[_hd("Repuestos")]]
 
         for rep in repuestos:
             rep_data.append([
                 Paragraph(str(rep.get("descripcion") or ""), E["celda_desc"]),
-                Paragraph(_fmt_cantidad(rep.get("cantidad")), E["celda_num"]),
             ])
 
         tabla_repuestos = Table(
             rep_data,
-            colWidths=[col_desc, col_cant],
+            colWidths=[page_w],
             repeatRows=1,
         )
         tabla_repuestos.setStyle(estilo_tabla_items)

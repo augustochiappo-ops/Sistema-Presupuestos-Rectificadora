@@ -10,6 +10,9 @@ aparecer en este módulo (capa de datos interna) pero nunca debe llegar
 a una pantalla o PDF que vea el cliente.
 """
 import csv
+import re
+from datetime import datetime
+
 from .db import get_connection
 
 
@@ -85,6 +88,64 @@ def _decodificar(codigo: str, cat_2: dict, cat_1: dict, marca_2: dict, marca_1: 
     return cat, marca, resto.strip()
 
 
+# ─── Medidas (STD / 025 / 050 / …) ────────────────────────────────────────────
+# Una medida es un sufijo del código, separado por espacio: "A AK104050 STD",
+# "CAAC02740  010" (ojo: el CSV mezcla espacio simple y doble). Dos códigos que
+# comparten todo menos la medida son la misma pieza en otro tamaño.
+#
+# NO alcanza con mirar el último token del código: hay 13.458 códigos como
+# "ACAM 3066" cuyo último token es un número de parte, no una medida. La
+# diferencia está DESPUÉS de decodificar: en un código con medida, el `resto`
+# (lo que queda sacando categoría y marca) tiene dos tokens — número de parte y
+# medida — mientras que en "ACAM 3066" el resto es un solo token ("3066").
+_RE_MEDIDA = re.compile(r"^(STD|\d{1,4}([.,]\d+)?)$", re.IGNORECASE)
+
+
+def _partir_medida(codigo: str, resto: str | None) -> tuple[str | None, str | None]:
+    """
+    Devuelve (medida, base_codigo) para un código ya decodificado.
+    base_codigo es el código sin la medida y con los espacios colapsados, para
+    que "CAAC02740  010" y un hipotético "CAAC02740 STD" caigan en la misma
+    familia. Si el código no tiene medida devuelve (None, None): no participa
+    del agregado automático de medidas.
+    """
+    if not resto:
+        return None, None
+    tokens = resto.split()
+    if len(tokens) < 2 or not _RE_MEDIDA.match(tokens[-1]):
+        return None, None
+
+    medida = tokens[-1]
+    # El código completo sin el último token: se corta por la derecha para no
+    # depender de cómo quedó separada la categoría del resto.
+    partes = codigo.split()
+    base = " ".join(partes[:-1])
+    return medida, base
+
+
+def recalcular_medidas() -> int:
+    """
+    Recalcula medida/base_codigo de todo el catálogo ya cargado. Se usa en la
+    migración, para que un catálogo importado antes de que existieran estas
+    columnas no quede sin medidas hasta la próxima carga del CSV.
+    """
+    with get_connection() as conn:
+        cat_2, cat_1, marca_2, marca_1 = _cargar_tablas_prefijos(conn)
+        filas = conn.execute("SELECT id, codigo FROM crac_repuestos").fetchall()
+        actualizados = 0
+        for fila_id, codigo in filas:
+            decodificado = _decodificar(codigo, cat_2, cat_1, marca_2, marca_1)
+            resto = decodificado[2] if decodificado else None
+            medida, base = _partir_medida(codigo, resto)
+            conn.execute(
+                "UPDATE crac_repuestos SET medida = ?, base_codigo = ? WHERE id = ?",
+                (medida, base, fila_id),
+            )
+            if medida:
+                actualizados += 1
+    return actualizados
+
+
 # ─── Importación de precio + stock ─────────────────────────────────────────────
 def importar_precio_stock(path: str) -> tuple[int, str]:
     """
@@ -120,16 +181,27 @@ def importar_precio_stock(path: str) -> tuple[int, str]:
 
                     decodificado = _decodificar(codigo, cat_2, cat_1, marca_2, marca_1)
                     cat_pref, marca_pref, resto = decodificado or (None, None, None)
+                    medida, base_codigo = _partir_medida(codigo, resto)
 
                     conn.execute(
                         """
                         INSERT INTO crac_repuestos
-                            (codigo, aplicacion, precio, stock, cat_prefijo, marca_prefijo, resto)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                            (codigo, aplicacion, precio, stock, cat_prefijo, marca_prefijo,
+                             resto, medida, base_codigo)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """,
-                        (codigo, aplicacion.strip(), precio, stock, cat_pref, marca_pref, resto),
+                        (codigo, aplicacion.strip(), precio, stock, cat_pref, marca_pref,
+                         resto, medida, base_codigo),
                     )
                     count += 1
+
+            # Fecha de esta carga: los precios "de hoy" que muestra el sistema son
+            # en realidad los de la última importación, y conviene que se vea.
+            conn.execute(
+                "INSERT INTO app_meta (clave, valor) VALUES ('catalogo_importado_en', ?) "
+                "ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor",
+                (datetime.now().isoformat(timespec="seconds"),),
+            )
 
         return count, f"✓ {count} repuestos importados correctamente"
 
@@ -239,14 +311,16 @@ def get_repuestos(
     query = f"""
         SELECT r.codigo, r.aplicacion, r.precio, r.stock,
                COALESCE(pc.nombre, r.cat_prefijo)   AS categoria,
-               COALESCE(pm.nombre, r.marca_prefijo) AS marca
+               COALESCE(pm.nombre, r.marca_prefijo) AS marca,
+               r.cat_prefijo, r.medida
         {where}
         ORDER BY r.codigo
         LIMIT ?
     """
     with get_connection() as conn:
         cur = conn.execute(query, params + [limite])
-        cols = ["codigo", "aplicacion", "precio", "stock", "categoria", "marca"]
+        cols = ["codigo", "aplicacion", "precio", "stock", "categoria", "marca",
+                "cat_prefijo", "medida"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
@@ -259,9 +333,12 @@ def get_repuesto_por_codigo(codigo: str) -> dict | None:
         row = conn.execute(
             """
             SELECT r.codigo, r.aplicacion, r.precio, r.stock,
-                   COALESCE(pc.nombre, r.cat_prefijo) AS categoria
+                   COALESCE(pc.nombre, r.cat_prefijo)   AS categoria,
+                   COALESCE(pm.nombre, r.marca_prefijo) AS marca,
+                   r.cat_prefijo, r.medida
             FROM crac_repuestos r
             LEFT JOIN crac_prefijos pc ON pc.tipo = 'categoria' AND pc.prefijo = r.cat_prefijo
+            LEFT JOIN crac_prefijos pm ON pm.tipo = 'marca'     AND pm.prefijo = r.marca_prefijo
             WHERE r.codigo = ?
             LIMIT 1
             """,
@@ -269,7 +346,55 @@ def get_repuesto_por_codigo(codigo: str) -> dict | None:
         ).fetchone()
         if not row:
             return None
-        return dict(zip(["codigo", "aplicacion", "precio", "stock", "categoria"], row))
+        cols = ["codigo", "aplicacion", "precio", "stock", "categoria", "marca",
+                "cat_prefijo", "medida"]
+        return dict(zip(cols, row))
+
+
+def get_medidas_hermanas(codigo: str) -> list[dict]:
+    """
+    Todas las medidas de la misma pieza (mismo base_codigo), incluida la del
+    código que se pasa. Lista vacía si ese código no tiene medida: no todas las
+    piezas vienen en medidas, y ahí no hay nada que agregar solo.
+
+    Solo devuelve lo que existe de verdad en el catálogo del proveedor: nunca se
+    inventa una medida (si esa pieza no tiene 1.00, no aparece un 1.00).
+    """
+    with get_connection() as conn:
+        base = conn.execute(
+            "SELECT base_codigo FROM crac_repuestos WHERE codigo = ? LIMIT 1",
+            (codigo,),
+        ).fetchone()
+        if not base or not base[0]:
+            return []
+
+        cur = conn.execute(
+            """
+            SELECT r.codigo, r.aplicacion, r.precio, r.stock,
+                   COALESCE(pc.nombre, r.cat_prefijo)   AS categoria,
+                   COALESCE(pm.nombre, r.marca_prefijo) AS marca,
+                   r.cat_prefijo, r.medida
+            FROM crac_repuestos r
+            LEFT JOIN crac_prefijos pc ON pc.tipo = 'categoria' AND pc.prefijo = r.cat_prefijo
+            LEFT JOIN crac_prefijos pm ON pm.tipo = 'marca'     AND pm.prefijo = r.marca_prefijo
+            WHERE r.base_codigo = ?
+            ORDER BY r.medida
+            """,
+            (base[0],),
+        )
+        cols = ["codigo", "aplicacion", "precio", "stock", "categoria", "marca",
+                "cat_prefijo", "medida"]
+        return [dict(zip(cols, row)) for row in cur.fetchall()]
+
+
+def get_info_catalogo() -> dict:
+    """Cuándo se importó por última vez el catálogo del proveedor, y cuántos hay."""
+    with get_connection() as conn:
+        total = conn.execute("SELECT COUNT(*) FROM crac_repuestos").fetchone()[0]
+        fila = conn.execute(
+            "SELECT valor FROM app_meta WHERE clave = 'catalogo_importado_en'"
+        ).fetchone()
+    return {"importado_en": fila[0] if fila else None, "total": total}
 
 
 def get_repuestos_count(

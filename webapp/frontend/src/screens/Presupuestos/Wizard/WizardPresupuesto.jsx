@@ -9,6 +9,7 @@ import { MotorSelector } from '../../../components/MotorSelector'
 import { PasoCliente } from './PasoCliente'
 import { PasoServicios } from './PasoServicios'
 import { PasoRepuestos } from './PasoRepuestos'
+import { gruposParaPayload, itemsSueltosParaPayload } from '../../../utils/grupos'
 
 const PASOS = ['Cliente', 'Motor', 'Servicios', 'Repuestos']
 
@@ -26,8 +27,22 @@ export default function WizardPresupuesto() {
   // al ir y volver entre pasos, igual que serviciosSel.
   const [ajustePct, setAjustePct] = React.useState(0)
   const [repuestos, setRepuestos] = React.useState([])
+  // Cantidad vigente de cada grupo de repuestos: lo que se tilda después dentro
+  // de la misma categoría la hereda. Cada opción puede después ajustar la suya
+  // (una marca viene por blíster de 8 y otra por blíster de 4).
+  const [cantidadPorGrupo, setCantidadPorGrupo] = React.useState({})
+  // Grupo → código elegido a mano, cuando el usuario pisa al más caro.
+  const [elegidaAMano, setElegidaAMano] = React.useState({})
   const [error, setError] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
+
+  const setCantidadGrupo = React.useCallback((grupo, cantidad) => {
+    setCantidadPorGrupo((prev) => (prev[grupo] === cantidad ? prev : { ...prev, [grupo]: cantidad }))
+  }, [])
+
+  const setElegidaGrupo = React.useCallback((grupo, codigo) => {
+    setElegidaAMano((prev) => ({ ...prev, [grupo]: prev[grupo] === codigo ? null : codigo }))
+  }, [])
 
   const finalizar = async () => {
     setGuardando(true)
@@ -49,14 +64,10 @@ export default function WizardPresupuesto() {
             precio_aplicado: c.precio_aplicado,
             cantidad: c.cantidad,
           })),
-        ...repuestos.map((r) => ({
-          tipo: 'repuesto',
-          repuesto_codigo: r.repuesto_codigo,
-          descripcion: r.descripcion,
-          categoria: r.categoria,
-          cantidad: r.cantidad,
-          precio_unitario: r.precio_unitario,
-        })),
+        // Los repuestos sueltos (fuera de catálogo, sin categoría) siguen yendo
+        // como ítems normales; los agrupados van aparte en grupos_repuestos,
+        // donde el backend elige el más caro y guarda todas las opciones.
+        ...itemsSueltosParaPayload(repuestos),
       ]
       const presupuesto = await api.post('/presupuestos', {
         cliente_nombre: cliente.nombre,
@@ -64,6 +75,7 @@ export default function WizardPresupuesto() {
         contacto_nombre: cliente.contacto,
         motor_id: motor.id,
         items,
+        grupos_repuestos: gruposParaPayload(repuestos, elegidaAMano),
         ajuste_pct: ajustePct || 0,
       })
       if (pdfTab) pdfTab.location.href = `/api/presupuestos/${presupuesto.id}/pdf/1`
@@ -106,9 +118,13 @@ export default function WizardPresupuesto() {
         <MotorSelector onSelect={(m) => {
           if (motor && m.id !== motor.id) {
             // Cambió el motor: la selección de servicios (y sus precios de lista)
-            // ya no aplica. Los repuestos se conservan: no dependen del motor.
+            // ya no aplica. Los repuestos tampoco: ahora salen de la ficha del
+            // motor, así que arrancan de cero con la ficha del motor nuevo.
             setServiciosSel({ cantidades: {}, customItems: [], grupos: {} })
             setTotalServicios(0)
+            setRepuestos([])
+            setCantidadPorGrupo({})
+            setElegidaAMano({})
           }
           setMotor(m)
           setPaso(2)
@@ -135,6 +151,10 @@ export default function WizardPresupuesto() {
           hayServicios={cantidadItemsServicios > 0}
           onConfirmar={finalizar}
           guardando={guardando}
+          cantidadPorGrupo={cantidadPorGrupo}
+          onCantidadGrupo={setCantidadGrupo}
+          elegidaAMano={elegidaAMano}
+          onElegirAMano={setElegidaGrupo}
         />
       )}
     </div>

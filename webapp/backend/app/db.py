@@ -115,6 +115,65 @@ def init_db():
                 PRIMARY KEY (motor_id, repuesto_codigo)
             );
 
+            -- Opciones de un grupo de repuestos dentro de un presupuesto.
+            -- Un grupo es una necesidad del motor (ej. "Cojinetes biela") que se
+            -- puede cubrir con varias piezas intercambiables: distintas marcas y
+            -- distintas medidas. Se cotiza la de mayor subtotal (la tolerancia del
+            -- taller: si la barata no está el día de la compra, el presupuesto ya
+            -- cubre la cara) y las demás quedan guardadas para el pedido.
+            --
+            -- La opción elegida vive TAMBIÉN como fila de presupuesto_items (acá
+            -- con elegida=1). Es a propósito: así los totales, el PDF y las
+            -- búsquedas siguen viendo exactamente lo que veían antes, sin
+            -- filtros nuevos. Las dos filas se escriben desde la misma estructura
+            -- calculada en _resolver_grupo, así que no pueden divergir.
+            CREATE TABLE IF NOT EXISTS presupuesto_item_opciones (
+                id               INTEGER PRIMARY KEY AUTOINCREMENT,
+                presupuesto_id   INTEGER NOT NULL REFERENCES presupuestos(id) ON DELETE CASCADE,
+                grupo_num        INTEGER NOT NULL,
+                repuesto_codigo  TEXT,
+                descripcion      TEXT,
+                categoria        TEXT,
+                marca            TEXT,
+                medida           TEXT,
+                cantidad         REAL NOT NULL DEFAULT 1,
+                precio_unitario  REAL,
+                subtotal         REAL,       -- cantidad × unitario, congelado al cotizar
+                stock_al_cotizar INTEGER,
+                elegida          INTEGER NOT NULL DEFAULT 0,  -- 1 = es la que se cotizó
+                elegida_a_mano   INTEGER NOT NULL DEFAULT 0   -- 1 = el usuario pisó al más caro
+            );
+            CREATE INDEX IF NOT EXISTS idx_pio_presupuesto ON presupuesto_item_opciones(presupuesto_id);
+
+            -- Ficha de repuestos del motor: qué grupos y qué opciones sirven para
+            -- este motor. A diferencia del presupuesto, la ficha está VIVA: no
+            -- congela precio, stock ni descripción, se resuelven contra el catálogo
+            -- vigente en cada consulta. Lo único que se persiste de cada opción es
+            -- la cantidad, porque esa sí es una decisión del taller (cuántos
+            -- blísters hacen falta según cómo venga envasada esa marca).
+            CREATE TABLE IF NOT EXISTS motor_repuesto_grupos (
+                id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                motor_id    INTEGER NOT NULL REFERENCES motores(id) ON DELETE CASCADE,
+                categoria   TEXT NOT NULL,   -- nombre resuelto; es lo que lee el cliente en el PDF
+                cat_prefijo TEXT,            -- prefijo del proveedor, para volver al catálogo
+                UNIQUE (motor_id, categoria)
+            );
+
+            CREATE TABLE IF NOT EXISTS motor_repuesto_opciones (
+                grupo_id        INTEGER NOT NULL REFERENCES motor_repuesto_grupos(id) ON DELETE CASCADE,
+                repuesto_codigo TEXT NOT NULL,
+                cantidad        REAL NOT NULL DEFAULT 1,
+                PRIMARY KEY (grupo_id, repuesto_codigo)
+            );
+
+            -- Pares clave/valor de la instalación. Hoy guarda cuándo se importó por
+            -- última vez el catálogo del proveedor, para poder avisar en pantalla
+            -- que los precios "de hoy" son en realidad los de la última carga.
+            CREATE TABLE IF NOT EXISTS app_meta (
+                clave TEXT PRIMARY KEY,
+                valor TEXT
+            );
+
             -- Prefijos del proveedor de repuestos (categoría y marca)
             CREATE TABLE IF NOT EXISTS crac_prefijos (
                 tipo    TEXT NOT NULL,   -- 'categoria' | 'marca'
@@ -132,12 +191,20 @@ def init_db():
                 stock         INTEGER NOT NULL DEFAULT 0,   -- 1 = con stock, 0 = sin stock
                 cat_prefijo   TEXT,
                 marca_prefijo TEXT,
-                resto         TEXT
+                resto         TEXT,
+                -- Medida del código (STD, 025, 050…) y el código sin ella. Dos
+                -- códigos con el mismo base_codigo son la misma pieza en distintas
+                -- medidas, que es como se agregan solas al armar un grupo.
+                medida        TEXT,
+                base_codigo   TEXT
             );
             CREATE INDEX IF NOT EXISTS idx_crac_repuestos_codigo ON crac_repuestos(codigo);
             CREATE INDEX IF NOT EXISTS idx_crac_repuestos_cat    ON crac_repuestos(cat_prefijo);
             CREATE INDEX IF NOT EXISTS idx_crac_repuestos_marca  ON crac_repuestos(marca_prefijo);
         """)
+        # El índice de base_codigo NO va en el script de arriba: sobre una DB
+        # vieja, el CREATE TABLE IF NOT EXISTS no agrega la columna (la tabla ya
+        # existe) y el índice fallaría antes de llegar al ALTER de más abajo.
 
         cols_motores = {r[1] for r in conn.execute("PRAGMA table_info(motores)")}
         if "diametro" not in cols_motores:
@@ -148,6 +215,10 @@ def init_db():
             conn.execute("ALTER TABLE presupuestos ADD COLUMN ajuste_pct REAL DEFAULT 0")
         if "contacto_id" not in cols_presupuestos:
             conn.execute("ALTER TABLE presupuestos ADD COLUMN contacto_id INTEGER REFERENCES clientes(id)")
+        if "aprobado_en" not in cols_presupuestos:
+            # Fecha en que el cliente aprobó el presupuesto. NULL = todavía no.
+            # Sirve de flag y de fecha a la vez, así no hacen falta dos columnas.
+            conn.execute("ALTER TABLE presupuestos ADD COLUMN aprobado_en TEXT")
 
         cols_clientes = {r[1] for r in conn.execute("PRAGMA table_info(clientes)")}
         if "tipo" not in cols_clientes:
@@ -164,6 +235,18 @@ def init_db():
             conn.execute("ALTER TABLE presupuesto_items ADD COLUMN stock_al_cotizar INTEGER")
         if "categoria" not in cols_items:
             conn.execute("ALTER TABLE presupuesto_items ADD COLUMN categoria TEXT")
+        if "grupo_num" not in cols_items:
+            # Liga la línea cotizada con su grupo de opciones. NULL = repuesto
+            # suelto o servicio, o sea el comportamiento de siempre.
+            conn.execute("ALTER TABLE presupuesto_items ADD COLUMN grupo_num INTEGER")
+
+        cols_crac = {r[1] for r in conn.execute("PRAGMA table_info(crac_repuestos)")}
+        hay_catalogo = None
+        if "medida" not in cols_crac:
+            conn.execute("ALTER TABLE crac_repuestos ADD COLUMN medida TEXT")
+            conn.execute("ALTER TABLE crac_repuestos ADD COLUMN base_codigo TEXT")
+            hay_catalogo = conn.execute("SELECT 1 FROM crac_repuestos LIMIT 1").fetchone()
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_crac_repuestos_base ON crac_repuestos(base_codigo)")
 
         pdfs_sin_migrar = conn.execute(
             """
@@ -191,6 +274,14 @@ def init_db():
                 nombre = pdf_path.replace("\\", "/").rsplit("/", 1)[-1]
                 if nombre != pdf_path:
                     conn.execute(f"UPDATE {tabla} SET pdf_path = ? WHERE id = ?", (nombre, row_id))
+
+    # Catálogo importado antes de que existieran medida/base_codigo: se calculan
+    # ahora, para que las medidas funcionen sin tener que volver a cargar el CSV.
+    # Fuera del `with` porque recalcular_medidas abre su propia conexión, y el
+    # import es local para no crear un ciclo (crac importa de este módulo).
+    if hay_catalogo:
+        from . import crac
+        crac.recalcular_medidas()
 
 
 _TIPO_OPUESTO = {"mecanico": "dueno", "dueno": "mecanico"}
@@ -223,6 +314,64 @@ def _resolver_cliente(conn: sqlite3.Connection, nombre: str, tipo: str | None) -
     return cur.lastrowid
 
 
+_COLS_ITEM = (
+    "presupuesto_id, servicio_id, descripcion_custom, precio_aplicado, "
+    "tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar, "
+    "categoria, grupo_num"
+)
+
+
+def _insertar_item(conn: sqlite3.Connection, presupuesto_id: int, item: dict) -> None:
+    """Inserta una línea de presupuesto. Usado tanto al crear como al editar,
+    para que las dos rutas no se desincronicen cuando se agrega una columna."""
+    conn.execute(
+        f"INSERT INTO presupuesto_items ({_COLS_ITEM}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        (
+            presupuesto_id,
+            item.get("servicio_id"),
+            item.get("descripcion_custom"),
+            item.get("precio_aplicado"),
+            item.get("tipo") or "servicio",
+            item.get("repuesto_codigo"),
+            item.get("cantidad") or 1,
+            item.get("precio_unitario"),
+            item.get("stock_al_cotizar"),
+            item.get("categoria"),
+            item.get("grupo_num"),
+        ),
+    )
+
+
+def _insertar_opciones(conn: sqlite3.Connection, presupuesto_id: int, opciones: list[dict]) -> None:
+    """Guarda las opciones de todos los grupos del presupuesto (incluida la
+    elegida, que además va como línea en presupuesto_items)."""
+    for op in opciones or []:
+        conn.execute(
+            """
+            INSERT INTO presupuesto_item_opciones
+                (presupuesto_id, grupo_num, repuesto_codigo, descripcion, categoria,
+                 marca, medida, cantidad, precio_unitario, subtotal, stock_al_cotizar,
+                 elegida, elegida_a_mano)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                presupuesto_id,
+                op.get("grupo_num"),
+                op.get("repuesto_codigo"),
+                op.get("descripcion"),
+                op.get("categoria"),
+                op.get("marca"),
+                op.get("medida"),
+                op.get("cantidad") or 1,
+                op.get("precio_unitario"),
+                op.get("subtotal"),
+                op.get("stock_al_cotizar"),
+                1 if op.get("elegida") else 0,
+                1 if op.get("elegida_a_mano") else 0,
+            ),
+        )
+
+
 def guardar_presupuesto(
     cliente_nombre: str,
     motor_id: int,
@@ -230,12 +379,16 @@ def guardar_presupuesto(
     ajuste_pct: float = 0,
     cliente_tipo: str | None = None,
     contacto_nombre: str | None = None,
+    opciones: list[dict] | None = None,
 ) -> int:
     """
     Crea (o reutiliza) el cliente, inserta el presupuesto y sus ítems.
     items: list of {servicio_id, descripcion_custom, precio_aplicado,
                     tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
-                    categoria}
+                    categoria, grupo_num}
+    opciones: alternativas de cada grupo de repuestos (ver presupuesto_item_opciones).
+    Solo la opción elegida de cada grupo viene además en `items`, así que el
+    total nunca suma las alternativas.
     (servicio_id es None para ítems custom; los campos de repuesto son opcionales
     y solo vienen en ítems con tipo='repuesto')
     ajuste_pct: % de aumento/descuento sobre mano de obra usado al cotizar (ya
@@ -269,27 +422,8 @@ def guardar_presupuesto(
         presupuesto_id = cur.lastrowid
 
         for item in items:
-            conn.execute(
-                """
-                INSERT INTO presupuesto_items
-                    (presupuesto_id, servicio_id, descripcion_custom, precio_aplicado,
-                     tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
-                     categoria)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """,
-                (
-                    presupuesto_id,
-                    item.get("servicio_id"),
-                    item.get("descripcion_custom"),
-                    item.get("precio_aplicado"),
-                    item.get("tipo") or "servicio",
-                    item.get("repuesto_codigo"),
-                    item.get("cantidad") or 1,
-                    item.get("precio_unitario"),
-                    item.get("stock_al_cotizar"),
-                    item.get("categoria"),
-                ),
-            )
+            _insertar_item(conn, presupuesto_id, item)
+        _insertar_opciones(conn, presupuesto_id, opciones)
 
         return presupuesto_id
 
@@ -306,14 +440,15 @@ def get_presupuestos() -> list[dict]:
     with get_connection() as conn:
         cur = conn.execute(
             """
-            SELECT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path, c.tipo AS cliente_tipo
+            SELECT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path, c.tipo AS cliente_tipo,
+                   p.aprobado_en
             FROM presupuestos p
             LEFT JOIN clientes  c ON c.id = p.cliente_id
             LEFT JOIN motores   m ON m.id = p.motor_id
             ORDER BY p.fecha DESC, p.id DESC
             """
         )
-        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path", "cliente_tipo"]
+        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path", "cliente_tipo", "aprobado_en"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
@@ -334,7 +469,8 @@ def buscar_presupuestos(
     por presupuesto si tiene varios repuestos que matchean el filtro.
     """
     query = """
-        SELECT DISTINCT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path, c.tipo AS cliente_tipo
+        SELECT DISTINCT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path, c.tipo AS cliente_tipo,
+               p.aprobado_en
         FROM presupuestos p
         LEFT JOIN clientes c ON c.id = p.cliente_id
         LEFT JOIN motores  m ON m.id = p.motor_id
@@ -367,7 +503,7 @@ def buscar_presupuestos(
 
     with get_connection() as conn:
         cur = conn.execute(query, params)
-        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path", "cliente_tipo"]
+        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path", "cliente_tipo", "aprobado_en"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
@@ -466,10 +602,10 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
     with get_connection() as conn:
         row = conn.execute(
             """
-            SELECT p.id, p.fecha, p.total, p.notas, p.ajuste_pct,
+            SELECT p.id, p.fecha, p.total, p.notas, p.ajuste_pct, p.aprobado_en,
                    c.id AS cliente_id, c.nombre AS cliente, c.tipo AS cliente_tipo,
                    ct.nombre AS contacto,
-                   m.id AS motor_id,   m.motor,  m.lista_num
+                   m.id AS motor_id,   m.motor,  m.lista_num, m.cilindros
             FROM presupuestos p
             LEFT JOIN clientes c  ON c.id = p.cliente_id
             LEFT JOIN clientes ct ON ct.id = p.contacto_id
@@ -480,9 +616,9 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
         ).fetchone()
         if not row:
             return None
-        cols = ["id", "fecha", "total", "notas", "ajuste_pct",
+        cols = ["id", "fecha", "total", "notas", "ajuste_pct", "aprobado_en",
                 "cliente_id", "cliente", "cliente_tipo", "contacto",
-                "motor_id", "motor", "lista_num"]
+                "motor_id", "motor", "lista_num", "cilindros"]
         return dict(zip(cols, row))
 
 
@@ -497,7 +633,7 @@ def get_presupuesto_items_full(presupuesto_id: int) -> list[dict]:
                    s.descripcion AS desc_facra, pi.descripcion_custom,
                    pi.precio_aplicado,
                    pi.tipo, pi.repuesto_codigo, pi.cantidad,
-                   pi.precio_unitario, pi.stock_al_cotizar, pi.categoria,
+                   pi.precio_unitario, pi.stock_al_cotizar, pi.categoria, pi.grupo_num,
                    (SELECT cr.precio FROM crac_repuestos cr
                      WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS precio_actual,
                    (SELECT cr.stock FROM crac_repuestos cr
@@ -514,7 +650,7 @@ def get_presupuesto_items_full(presupuesto_id: int) -> list[dict]:
         cols = ["id", "servicio_id", "item_num", "desc_facra",
                 "descripcion_custom", "precio_aplicado",
                 "tipo", "repuesto_codigo", "cantidad",
-                "precio_unitario", "stock_al_cotizar", "categoria",
+                "precio_unitario", "stock_al_cotizar", "categoria", "grupo_num",
                 "precio_actual", "stock_actual"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
@@ -524,11 +660,13 @@ def actualizar_presupuesto(
     items_data: list[dict],
     notas: str,
     ajuste_pct: float = 0,
+    opciones: list[dict] | None = None,
 ) -> float:
     """
     items_data: [{servicio_id, descripcion_custom, precio_aplicado,
                   tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
-                  categoria}]
+                  categoria, grupo_num}]
+    opciones: alternativas de los grupos de repuestos (reemplazan a las anteriores).
     Elimina los ítems anteriores y los reinserta. Retorna el nuevo total.
     """
     total = sum((i.get("precio_aplicado") or 0.0) for i in items_data)
@@ -537,28 +675,13 @@ def actualizar_presupuesto(
             "DELETE FROM presupuesto_items WHERE presupuesto_id = ?",
             (presupuesto_id,),
         )
+        conn.execute(
+            "DELETE FROM presupuesto_item_opciones WHERE presupuesto_id = ?",
+            (presupuesto_id,),
+        )
         for item in items_data:
-            conn.execute(
-                """
-                INSERT INTO presupuesto_items
-                    (presupuesto_id, servicio_id, descripcion_custom, precio_aplicado,
-                     tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
-                     categoria)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """,
-                (
-                    presupuesto_id,
-                    item.get("servicio_id"),
-                    item.get("descripcion_custom"),
-                    item.get("precio_aplicado"),
-                    item.get("tipo") or "servicio",
-                    item.get("repuesto_codigo"),
-                    item.get("cantidad") or 1,
-                    item.get("precio_unitario"),
-                    item.get("stock_al_cotizar"),
-                    item.get("categoria"),
-                ),
-            )
+            _insertar_item(conn, presupuesto_id, item)
+        _insertar_opciones(conn, presupuesto_id, opciones)
         conn.execute(
             "UPDATE presupuestos SET total = ?, notas = ?, ajuste_pct = ? WHERE id = ?",
             (total, notas.strip() if notas else None, ajuste_pct or 0, presupuesto_id),
@@ -575,6 +698,7 @@ def eliminar_presupuesto(presupuesto_id: int) -> bool:
         if not existe:
             return False
         conn.execute("DELETE FROM presupuesto_items WHERE presupuesto_id = ?", (presupuesto_id,))
+        conn.execute("DELETE FROM presupuesto_item_opciones WHERE presupuesto_id = ?", (presupuesto_id,))
         conn.execute("DELETE FROM presupuesto_pdfs WHERE presupuesto_id = ?", (presupuesto_id,))
         conn.execute("DELETE FROM presupuestos WHERE id = ?", (presupuesto_id,))
         return True
@@ -663,77 +787,261 @@ def get_motor(motor_id: int) -> dict | None:
         return dict(zip(cols, row))
 
 
-def get_repuestos_sugeridos_motor(motor_id: int, incluir_ocultos: bool = False) -> list[dict]:
-    """
-    Repuestos usados en presupuestos anteriores del mismo motor, con el precio
-    y stock vigentes en el catálogo del proveedor. Derivado del historial: no
-    hay tabla de asociación motor-repuesto, la asociación nace de haberlos
-    cotizado juntos alguna vez.
+# ─── Ficha de repuestos del motor ─────────────────────────────────────────────
+# Reemplaza a las viejas "sugerencias" deducidas del historial de presupuestos.
+# Acá la asociación motor→repuesto es explícita: el taller decide qué piezas
+# sirven para el motor, agrupadas por categoría del proveedor. La ficha está
+# viva — precio, stock, descripción, marca y medida se resuelven contra el
+# catálogo vigente en cada consulta — y lo único propio que guarda de cada
+# opción es la cantidad (cuántos envases hacen falta, que cambia según cómo
+# venga envasada esa marca).
 
-    Los ocultados a mano (repuestos_ocultos_motor) se excluyen por defecto —
-    ocultar es un solo criterio compartido por todas las pantallas (wizard,
-    edición de presupuesto y el detalle de motor en "Listado de Motores"), no
-    algo separado por pantalla. incluir_ocultos=True devuelve todo (con el
-    campo `oculto`) y es solo para la pantalla que necesita poder revertirlo.
+def get_ficha_motor(motor_id: int) -> list[dict]:
+    """
+    Grupos de repuestos del motor con sus opciones resueltas contra el catálogo
+    de hoy. Cada grupo trae `elegida_codigo`: la opción de mayor subtotal, que
+    es con la que se cotizaría hoy.
+    """
+    with get_connection() as conn:
+        grupos = conn.execute(
+            """
+            SELECT id, categoria, cat_prefijo
+            FROM motor_repuesto_grupos
+            WHERE motor_id = ?
+            ORDER BY categoria COLLATE NOCASE
+            """,
+            (motor_id,),
+        ).fetchall()
+
+        resultado = []
+        for grupo_id, categoria, cat_prefijo in grupos:
+            cur = conn.execute(
+                """
+                SELECT mro.repuesto_codigo, mro.cantidad,
+                       cr.aplicacion, cr.precio, cr.stock, cr.medida,
+                       COALESCE(pm.nombre, cr.marca_prefijo) AS marca
+                FROM motor_repuesto_opciones mro
+                LEFT JOIN crac_repuestos cr ON cr.id = (
+                    SELECT id FROM crac_repuestos WHERE codigo = mro.repuesto_codigo LIMIT 1
+                )
+                LEFT JOIN crac_prefijos pm ON pm.tipo = 'marca' AND pm.prefijo = cr.marca_prefijo
+                WHERE mro.grupo_id = ?
+                ORDER BY marca COLLATE NOCASE, cr.medida
+                """,
+                (grupo_id,),
+            )
+            opciones = []
+            for codigo, cantidad, aplicacion, precio, stock, medida, marca in cur.fetchall():
+                # precio/stock en None = el código ya no está en el catálogo.
+                # Se conserva igual en la ficha: sigue siendo una pieza que
+                # sirve para el motor, solo que hoy el proveedor no la lista.
+                opciones.append({
+                    "codigo": codigo,
+                    "cantidad": cantidad,
+                    "descripcion": aplicacion,
+                    "precio_actual": precio,
+                    "stock_actual": stock,
+                    "medida": medida,
+                    "marca": marca,
+                    "en_catalogo": precio is not None,
+                    "subtotal": round((precio or 0) * (cantidad or 0), 2),
+                })
+            resultado.append({
+                "categoria": categoria,
+                "cat_prefijo": cat_prefijo,
+                "opciones": opciones,
+                "elegida_codigo": _codigo_mas_caro(opciones),
+            })
+        return resultado
+
+
+def _codigo_mas_caro(opciones: list[dict]) -> str | None:
+    """Código de la opción de mayor subtotal — la que se cotiza. Empate: la
+    primera. Devuelve None si no hay ninguna opción con precio."""
+    con_precio = [o for o in opciones if (o.get("subtotal") or 0) > 0]
+    if not con_precio:
+        return opciones[0]["codigo"] if opciones else None
+    return max(con_precio, key=lambda o: o["subtotal"])["codigo"]
+
+
+def guardar_ficha_motor(motor_id: int, grupos: list[dict]) -> None:
+    """
+    Reemplaza la ficha completa del motor.
+    grupos: [{categoria, cat_prefijo, opciones: [{codigo, cantidad}]}]
+    Los grupos sin opciones se descartan (un grupo vacío no significa nada).
+    """
+    with get_connection() as conn:
+        viejos = conn.execute(
+            "SELECT id FROM motor_repuesto_grupos WHERE motor_id = ?", (motor_id,)
+        ).fetchall()
+        for (grupo_id,) in viejos:
+            conn.execute("DELETE FROM motor_repuesto_opciones WHERE grupo_id = ?", (grupo_id,))
+        conn.execute("DELETE FROM motor_repuesto_grupos WHERE motor_id = ?", (motor_id,))
+
+        for grupo in grupos or []:
+            categoria = (grupo.get("categoria") or "").strip()
+            opciones = [o for o in (grupo.get("opciones") or []) if (o.get("codigo") or "").strip()]
+            if not categoria or not opciones:
+                continue
+            cur = conn.execute(
+                "INSERT INTO motor_repuesto_grupos (motor_id, categoria, cat_prefijo) VALUES (?, ?, ?)",
+                (motor_id, categoria, grupo.get("cat_prefijo")),
+            )
+            grupo_id = cur.lastrowid
+            for op in opciones:
+                try:
+                    cantidad = float(op.get("cantidad") or 1)
+                except (TypeError, ValueError):
+                    cantidad = 1
+                conn.execute(
+                    """
+                    INSERT INTO motor_repuesto_opciones (grupo_id, repuesto_codigo, cantidad)
+                    VALUES (?, ?, ?)
+                    ON CONFLICT(grupo_id, repuesto_codigo) DO UPDATE SET cantidad = excluded.cantidad
+                    """,
+                    (grupo_id, op["codigo"].strip(), max(cantidad, 0) or 1),
+                )
+
+
+def fusionar_ficha_motor(motor_id: int, grupos: list[dict]) -> None:
+    """
+    Suma los grupos de un presupuesto recién guardado a la ficha del motor, sin
+    pisar lo que ya había: los grupos nuevos se agregan, y en los que ya existen
+    se suman las opciones nuevas y se actualiza la cantidad de las repetidas
+    (la última decisión del taller es la que vale).
+    """
+    actuales = {g["categoria"]: g for g in get_ficha_motor(motor_id)}
+    for grupo in grupos or []:
+        categoria = (grupo.get("categoria") or "").strip()
+        if not categoria:
+            continue
+        existente = actuales.get(categoria)
+        if existente:
+            por_codigo = {o["codigo"]: dict(o) for o in existente["opciones"]}
+        else:
+            por_codigo = {}
+            actuales[categoria] = {
+                "categoria": categoria,
+                "cat_prefijo": grupo.get("cat_prefijo"),
+                "opciones": [],
+            }
+        for op in grupo.get("opciones") or []:
+            codigo = (op.get("codigo") or "").strip()
+            if not codigo:
+                continue
+            por_codigo[codigo] = {"codigo": codigo, "cantidad": op.get("cantidad") or 1}
+        actuales[categoria]["opciones"] = list(por_codigo.values())
+
+    guardar_ficha_motor(motor_id, list(actuales.values()))
+
+
+def copiar_ficha_motor(origen_id: int, destino_id: int) -> int:
+    """
+    Copia la ficha de otro motor sobre la del destino, fusionando (no pisa lo
+    que el destino ya tenga). Muchos motores comparten repuestos, así que esto
+    ahorra la mayor parte de la carga inicial. Retorna cuántos grupos quedaron.
+    """
+    origen = get_ficha_motor(origen_id)
+    grupos = [
+        {
+            "categoria": g["categoria"],
+            "cat_prefijo": g["cat_prefijo"],
+            "opciones": [{"codigo": o["codigo"], "cantidad": o["cantidad"]} for o in g["opciones"]],
+        }
+        for g in origen
+    ]
+    fusionar_ficha_motor(destino_id, grupos)
+    return len(get_ficha_motor(destino_id))
+
+
+# ─── Grupos dentro de un presupuesto ──────────────────────────────────────────
+
+def get_grupos_presupuesto(presupuesto_id: int) -> list[dict]:
+    """
+    Grupos congelados de un presupuesto, con todas sus opciones. Trae además el
+    precio y stock VIGENTES de cada opción, para poder comparar contra lo
+    congelado (mismo criterio que get_presupuesto_items_full).
     """
     with get_connection() as conn:
         cur = conn.execute(
             """
-            SELECT pi.repuesto_codigo               AS codigo,
-                   MAX(pi.descripcion_custom)       AS descripcion,
-                   MAX(pi.categoria)                AS categoria,
-                   COUNT(*)                         AS veces_usado,
-                   MAX(p.fecha)                     AS ultima_fecha,
+            SELECT o.grupo_num, o.repuesto_codigo, o.descripcion, o.categoria,
+                   o.marca, o.medida, o.cantidad, o.precio_unitario, o.subtotal,
+                   o.stock_al_cotizar, o.elegida, o.elegida_a_mano,
                    (SELECT cr.precio FROM crac_repuestos cr
-                     WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS precio_actual,
+                     WHERE cr.codigo = o.repuesto_codigo LIMIT 1) AS precio_actual,
                    (SELECT cr.stock FROM crac_repuestos cr
-                     WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS stock_actual,
-                   (SELECT COALESCE(pm.nombre, cr.marca_prefijo) FROM crac_repuestos cr
-                     LEFT JOIN crac_prefijos pm ON pm.tipo = 'marca' AND pm.prefijo = cr.marca_prefijo
-                     WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS marca,
-                   EXISTS(
-                     SELECT 1 FROM repuestos_ocultos_motor rom
-                     WHERE rom.motor_id = ? AND rom.repuesto_codigo = pi.repuesto_codigo
-                   ) AS oculto
-            FROM presupuesto_items pi
-            JOIN presupuestos p ON p.id = pi.presupuesto_id
-            WHERE p.motor_id = ?
-              AND pi.tipo = 'repuesto'
-              AND pi.repuesto_codigo IS NOT NULL
-            GROUP BY pi.repuesto_codigo
-            ORDER BY ultima_fecha DESC, veces_usado DESC
+                     WHERE cr.codigo = o.repuesto_codigo LIMIT 1) AS stock_actual
+            FROM presupuesto_item_opciones o
+            WHERE o.presupuesto_id = ?
+            ORDER BY o.grupo_num, o.elegida DESC, o.subtotal DESC
             """,
-            (motor_id, motor_id),
+            (presupuesto_id,),
         )
-        cols = ["codigo", "descripcion", "categoria", "veces_usado", "ultima_fecha",
-                "precio_actual", "stock_actual", "marca", "oculto"]
+        cols = ["grupo_num", "repuesto_codigo", "descripcion", "categoria", "marca",
+                "medida", "cantidad", "precio_unitario", "subtotal", "stock_al_cotizar",
+                "elegida", "elegida_a_mano", "precio_actual", "stock_actual"]
         filas = [dict(zip(cols, row)) for row in cur.fetchall()]
 
-    if incluir_ocultos:
-        return filas
-    return [f for f in filas if not f["oculto"]][:20]
+    grupos: dict[int, dict] = {}
+    for fila in filas:
+        num = fila["grupo_num"]
+        grupo = grupos.get(num)
+        if grupo is None:
+            grupo = {
+                "grupo_num": num,
+                "categoria": fila["categoria"],
+                "opciones": [],
+            }
+            grupos[num] = grupo
+        grupo["opciones"].append(fila)
+    return list(grupos.values())
 
 
-def toggle_repuesto_oculto_motor(motor_id: int, codigo: str) -> bool:
-    """Oculta/muestra un repuesto sugerido para un motor. No borra nada del
-    historial de presupuestos, solo deja de aparecer como sugerencia. Retorna
-    True si quedó oculto, False si quedó visible de nuevo."""
+def aprobar_presupuesto(presupuesto_id: int, aprobado: bool) -> str | None:
+    """Marca o desmarca el presupuesto como aprobado por el cliente.
+    Retorna la fecha de aprobación, o None si quedó sin aprobar."""
+    valor = date.today().isoformat() if aprobado else None
     with get_connection() as conn:
-        existe = conn.execute(
-            "SELECT 1 FROM repuestos_ocultos_motor WHERE motor_id = ? AND repuesto_codigo = ?",
-            (motor_id, codigo),
-        ).fetchone()
-        if existe:
-            conn.execute(
-                "DELETE FROM repuestos_ocultos_motor WHERE motor_id = ? AND repuesto_codigo = ?",
-                (motor_id, codigo),
-            )
-            return False
         conn.execute(
-            "INSERT INTO repuestos_ocultos_motor (motor_id, repuesto_codigo) VALUES (?, ?)",
-            (motor_id, codigo),
+            "UPDATE presupuestos SET aprobado_en = ? WHERE id = ?",
+            (valor, presupuesto_id),
         )
-        return True
+    return valor
+
+
+def borrar_datos_prueba() -> dict:
+    """
+    Vacía presupuestos y clientes para arrancar limpio, dejando intacto todo lo
+    que es dato de referencia importado: motores, mano de obra, catálogo del
+    proveedor y favoritos. Devuelve los nombres de los PDFs que quedaron
+    huérfanos, para que quien llame los borre del disco.
+
+    No toca la ficha de repuestos de los motores: es trabajo cargado a mano, no
+    dato de prueba.
+    """
+    with get_connection() as conn:
+        pdfs = [r[0] for r in conn.execute(
+            "SELECT pdf_path FROM presupuesto_pdfs WHERE pdf_path IS NOT NULL"
+        ).fetchall()]
+        pdfs += [r[0] for r in conn.execute(
+            "SELECT pdf_path FROM presupuestos WHERE pdf_path IS NOT NULL"
+        ).fetchall()]
+
+        resumen = {
+            "presupuestos": conn.execute("SELECT COUNT(*) FROM presupuestos").fetchone()[0],
+            "clientes": conn.execute("SELECT COUNT(*) FROM clientes").fetchone()[0],
+        }
+
+        conn.execute("DELETE FROM presupuesto_items")
+        conn.execute("DELETE FROM presupuesto_item_opciones")
+        conn.execute("DELETE FROM presupuesto_pdfs")
+        conn.execute("DELETE FROM presupuestos")
+        conn.execute("DELETE FROM clientes")
+        conn.execute("DELETE FROM repuestos_ocultos_motor")
+
+    resumen["pdfs"] = sorted(set(pdfs))
+    return resumen
 
 
 def get_presupuestos_por_motor(motor_id: int) -> list[dict]:

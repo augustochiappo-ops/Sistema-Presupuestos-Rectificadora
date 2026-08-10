@@ -3,6 +3,7 @@ import { api } from '../../api/client'
 import { PageHeader } from '../../components/PageHeader'
 import { Button } from '../../components/Button'
 import { Icon } from '../../components/Icon'
+import { ConfirmDialog } from '../../components/ConfirmDialog'
 import BackupPanel from './BackupPanel'
 
 function Eyebrow({ children }) {
@@ -71,6 +72,103 @@ function CardImport({ icon, title, desc, endpoint, disabled, accept = '.xls', ex
   )
 }
 
+// El sistema muestra "precio de hoy" en la ficha de repuestos y en el pedido,
+// pero en realidad son los de la última carga del CSV. Si pasaron días conviene
+// verlo antes de salir a comprar con esos números.
+function FechaCatalogo() {
+  const [info, setInfo] = React.useState(null)
+
+  React.useEffect(() => {
+    api.get('/repuestos/catalogo-info').then(setInfo).catch(() => {})
+  }, [])
+
+  if (!info) return null
+  return (
+    <div style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-muted)', marginTop: -8 }}>
+      {info.importado_en
+        ? <>Última carga: <strong>{formatFechaHora(info.importado_en)}</strong> · {info.total.toLocaleString('es-AR')} repuestos en la lista.</>
+        : 'Todavía no se cargó ninguna lista de precios del proveedor.'}
+    </div>
+  )
+}
+
+function formatFechaHora(iso) {
+  const [fecha, hora] = iso.split('T')
+  const [y, m, d] = fecha.split('-')
+  return `${d}/${m}/${y}${hora ? ` a las ${hora.slice(0, 5)}` : ''}`
+}
+
+/*
+ * Borrado de los datos de prueba: presupuestos y clientes, para arrancar limpio
+ * la primera vez que se usa en serio. No toca motores, mano de obra, catálogo
+ * del proveedor, favoritos ni las fichas de repuestos de los motores.
+ */
+function BorrarDatosPrueba() {
+  const [confirmando, setConfirmando] = React.useState(false)
+  const [borrando, setBorrando] = React.useState(false)
+  const [resultado, setResultado] = React.useState(null)
+  const [error, setError] = React.useState('')
+
+  const borrar = async () => {
+    setBorrando(true)
+    setError('')
+    try {
+      const r = await api.post('/mantenimiento/borrar-datos-prueba', { confirmar: 'BORRAR' })
+      setResultado(r)
+      setConfirmando(false)
+    } catch (err) {
+      setError(err.message || 'No se pudieron borrar los datos')
+    } finally {
+      setBorrando(false)
+    }
+  }
+
+  return (
+    <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', padding: '22px 24px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+        <div style={{ width: 40, height: 40, borderRadius: 'var(--radius-md)', background: 'var(--surface-sunken)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Icon n="trash" s={20} />
+        </div>
+        <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 18, color: 'var(--text-strong)' }}>
+          Borrar datos de prueba
+        </h3>
+      </div>
+      <p style={{ margin: '0 0 16px', fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-muted)' }}>
+        Borra <strong>todos los presupuestos y clientes</strong>, con sus PDFs. Se mantienen los motores, la mano de
+        obra, la lista del proveedor, los favoritos y las fichas de repuestos de los motores.
+        Generá antes una copia de seguridad acá arriba: esto no se puede deshacer.
+      </p>
+
+      <Button variant="danger" disabled={borrando} onClick={() => setConfirmando(true)}>
+        Borrar presupuestos y clientes
+      </Button>
+
+      {error && (
+        <div style={{ marginTop: 12, fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 600, color: 'var(--status-expired-fg)' }}>
+          ✗ {error}
+        </div>
+      )}
+      {resultado && (
+        <div style={{ marginTop: 12, fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 600, color: 'var(--status-active-fg)' }}>
+          ✓ Se borraron {resultado.presupuestos} presupuesto{resultado.presupuestos === 1 ? '' : 's'},{' '}
+          {resultado.clientes} cliente{resultado.clientes === 1 ? '' : 's'} y {resultado.pdfs_borrados} PDF
+          {resultado.pdfs_borrados === 1 ? '' : 's'}.
+        </div>
+      )}
+
+      <ConfirmDialog
+        open={confirmando}
+        title="¿Borrar todos los presupuestos y clientes?"
+        message="Se borran todos los presupuestos con sus PDFs y todos los clientes. Los motores, la mano de obra, la lista del proveedor y las fichas de repuestos quedan intactos. Esta acción no se puede deshacer."
+        confirmLabel={borrando ? 'Borrando…' : 'Sí, borrar todo'}
+        danger
+        onCancel={() => setConfirmando(false)}
+        onConfirm={borrar}
+      />
+    </div>
+  )
+}
+
 export default function ExcelScreen() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -111,9 +209,13 @@ export default function ExcelScreen() {
           extension=".csv"
         />
       </div>
+      <FechaCatalogo />
 
       <Eyebrow>Copia de seguridad</Eyebrow>
       <BackupPanel />
+
+      <Eyebrow>Mantenimiento</Eyebrow>
+      <BorrarDatosPrueba />
     </div>
   )
 }

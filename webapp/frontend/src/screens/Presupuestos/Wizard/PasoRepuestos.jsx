@@ -7,6 +7,8 @@ import { Button } from '../../../components/Button'
 import { Icon } from '../../../components/Icon'
 import { ModalRepuestosAgregados } from './ModalRepuestosAgregados'
 import { formatPrecioARS, parsePrecioARS } from '../../../utils/format'
+import { totalRepuestos } from '../../../utils/grupos'
+import { useRepuestosAgrupados, lineaDeCatalogo } from '../../../hooks/useRepuestosAgrupados'
 
 const tituloSeccion = {
   fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
@@ -14,74 +16,104 @@ const tituloSeccion = {
 }
 
 /*
- * Paso 4 del wizard. Componente controlado: la lista de repuestos agregados
- * (value) vive en el wizard. Cada línea:
- *   { key, repuesto_codigo, descripcion, categoria, marca, cantidad,
- *     precio_unitario, precioTexto, stock, esManual }
+ * Paso 4 del wizard. Componente controlado: la lista de repuestos (value) vive
+ * en el wizard. Cada línea:
+ *   { key, repuesto_codigo, descripcion, categoria, cat_prefijo, marca, medida,
+ *     grupo, cantidad, precio_unitario, precioTexto, stock, esManual }
+ *
+ * `grupo` es lo nuevo: el nombre de la categoría del proveedor. Todas las
+ * líneas con el mismo `grupo` son piezas intercambiables para la misma
+ * necesidad del motor, y solo se cotiza la de mayor subtotal. Las líneas sin
+ * grupo (repuesto fuera de catálogo sin categoría) se comportan como antes.
+ *
  * key = código de catálogo o 'manual-<ts>' (la API de repuestos no expone id).
- * categoria: lo único del repuesto que sale en el PDF.
- * marca: solo para mostrar en el pop-up "Ver repuestos" de este paso — no se
- * persiste en el presupuesto (los ítems fuera de catálogo no tienen marca).
  * stock: 1/0 congelado al agregar (null en manuales) — solo para el aviso en pantalla.
  */
-export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServicios, onConfirmar, guardando }) {
-  const [sugeridos, setSugeridos] = React.useState([])
+export function PasoRepuestos({
+  motor, value, onChange, totalServicios, hayServicios, onConfirmar, guardando,
+  cantidadPorGrupo, onCantidadGrupo, elegidaAMano, onElegirAMano,
+}) {
+  const [ficha, setFicha] = React.useState([])
   const [manualCodigo, setManualCodigo] = React.useState('')
   const [manualDesc, setManualDesc] = React.useState('')
   const [manualCategoria, setManualCategoria] = React.useState('')
   const [manualPrecio, setManualPrecio] = React.useState('')
   const [manualCantidad, setManualCantidad] = React.useState('1')
   const [modalAbierto, setModalAbierto] = React.useState(false)
+  const fichaCargadaPara = React.useRef(null)
 
+  // La ficha del motor es la asociación explícita motor→repuestos. Si el motor
+  // ya tiene ficha y todavía no se cargó nada, el paso arranca con todo puesto
+  // y con los precios de hoy: el segundo presupuesto del mismo motor es de un
+  // click. La ref evita recargarla al ir y volver entre pasos.
   React.useEffect(() => {
-    api.get(`/motores/${motor.id}/repuestos-sugeridos`).then(setSugeridos).catch(() => {})
-  }, [motor.id])
+    if (fichaCargadaPara.current === motor.id) return
+    fichaCargadaPara.current = motor.id
+    api.get(`/motores/${motor.id}/ficha-repuestos`).then((grupos) => {
+      setFicha(grupos)
+      if (!grupos.length) return
+      onChange((actual) => {
+        if (actual.length) return actual
+        const lineas = []
+        grupos.forEach((g) => {
+          g.opciones.forEach((o) => {
+            if (!o.en_catalogo) return
+            lineas.push(lineaDeFicha(g, o))
+          })
+          if (g.opciones.length) onCantidadGrupo(g.categoria, g.opciones[0].cantidad)
+        })
+        return lineas
+      })
+    }).catch(() => {})
+  }, [motor.id, onChange, onCantidadGrupo])
 
-  const porCodigo = React.useMemo(() => {
+  // Cantidad que el motor recuerda para cada código de su ficha: la cuenta
+  // "16 retenes ÷ blíster de 4 = 4" se hace una sola vez en la vida.
+  const cantidadRecordada = React.useMemo(() => {
     const m = new Map()
-    value.forEach((r) => { if (r.repuesto_codigo) m.set(r.repuesto_codigo, r) })
+    ficha.forEach((g) => g.opciones.forEach((o) => m.set(o.codigo, o.cantidad)))
     return m
-  }, [value])
+  }, [ficha])
 
-  const cantidadPorCodigo = React.useMemo(() => {
-    const m = new Map()
-    porCodigo.forEach((r, cod) => m.set(cod, r.cantidad))
-    return m
-  }, [porCodigo])
+  const { cantidadPorCodigo, agregar, cambiarCantidad, cambiarPrecio, quitar } = useRepuestosAgrupados({
+    lineas: value,
+    setLineas: onChange,
+    cantidadPorGrupo,
+    setCantidadGrupo: onCantidadGrupo,
+    cantidadRecordada,
+  })
 
-  // El picker manda siempre la cantidad final que quiere el usuario.
-  const agregarDeCatalogo = ({ codigo: cod, descripcion: desc, precio, stock, categoria, marca }, cantidad) => {
-    const existente = porCodigo.get(cod)
-    if (existente) {
-      cambiarCantidad(existente.key, cantidad)
-      return
-    }
-    const unitario = precio || 0
-    onChange([...value, {
-      key: cod,
-      repuesto_codigo: cod,
-      descripcion: desc || cod,
-      categoria: categoria || null,
-      marca: marca || null,
-      cantidad,
-      precio_unitario: unitario,
-      precioTexto: unitario ? formatPrecioARS(unitario) : '',
-      stock: stock ?? null,
-      esManual: false,
-    }])
-  }
+  const sugeridos = React.useMemo(
+    () => ficha.flatMap((g) => g.opciones.map((o) => ({
+      codigo: o.codigo,
+      descripcion: o.descripcion || o.codigo,
+      categoria: g.categoria,
+      cat_prefijo: g.cat_prefijo,
+      marca: o.marca,
+      medida: o.medida,
+      precio_actual: o.precio_actual,
+      stock_actual: o.stock_actual,
+    }))),
+    [ficha],
+  )
 
   const agregarManual = () => {
     const desc = manualDesc.trim()
     const precio = parsePrecioARS(manualPrecio)
     const cant = parseFloat(String(manualCantidad).replace(',', '.'))
     if (!desc || precio === null || Number.isNaN(cant) || cant <= 0) return
-    onChange([...value, {
+    const categoria = manualCategoria.trim()
+    onChange((actual) => [...actual, {
       key: `manual-${Date.now()}`,
       repuesto_codigo: manualCodigo.trim() || null,
       descripcion: desc,
-      categoria: manualCategoria.trim() || null,
+      categoria: categoria || null,
+      cat_prefijo: null,
       marca: null,
+      medida: null,
+      // Con categoría entra al grupo de esa categoría y compite por precio como
+      // una opción más; sin categoría queda como línea suelta, igual que antes.
+      grupo: categoria || null,
       cantidad: cant,
       precio_unitario: precio,
       precioTexto: formatPrecioARS(precio),
@@ -95,20 +127,8 @@ export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServi
     setManualCantidad('1')
   }
 
-  const cambiarCantidad = (key, cantidad) => {
-    if (Number.isNaN(cantidad) || cantidad < 0) return
-    onChange(value.map((r) => (r.key === key ? { ...r, cantidad } : r)))
-  }
-
-  const cambiarPrecio = (key, texto) => {
-    const precio = parsePrecioARS(texto)
-    onChange(value.map((r) => (r.key === key ? { ...r, precioTexto: texto, precio_unitario: precio } : r)))
-  }
-
-  const quitar = (key) => onChange(value.filter((r) => r.key !== key))
-
-  const totalRepuestos = value.reduce((acc, r) => acc + (r.precio_unitario || 0) * (r.cantidad || 0), 0)
-  const totalGeneral = totalServicios + totalRepuestos
+  const total = totalRepuestos(value, elegidaAMano)
+  const totalGeneral = totalServicios + total
   const hayInvalidos = value.some((r) => r.precio_unitario === null || !(r.cantidad > 0))
   const hayItems = hayServicios || value.length > 0
 
@@ -123,7 +143,7 @@ export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServi
             Servicios <strong style={{ color: '#fff' }}>{formatPrecioARS(totalServicios)}</strong>
           </span>
           <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
-            Repuestos <strong style={{ color: '#fff' }}>{formatPrecioARS(totalRepuestos)}</strong>
+            Repuestos <strong style={{ color: '#fff' }}>{formatPrecioARS(total)}</strong>
           </span>
           <span style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
             <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total</span>
@@ -143,10 +163,11 @@ export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServi
       <RepuestoPicker
         sugeridos={sugeridos}
         cantidadPorCodigo={cantidadPorCodigo}
-        onAgregar={agregarDeCatalogo}
+        onAgregar={agregar}
         reorderKey="repuestos-presupuesto"
         onVerAgregados={() => setModalAbierto(true)}
         cantidadAgregados={value.length}
+        ayudaFilas="Lo que agregues dentro de una categoría forma un grupo: se cotiza el más caro y quedan guardadas todas las opciones"
       />
 
       <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -160,13 +181,16 @@ export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServi
           <Button variant="secondary" iconLeft={<Icon n="plus" s={16} />} onClick={agregarManual}>Agregar</Button>
         </div>
         <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
-          La categoría es lo que va a leer el cliente en el PDF (ej. "Aros"). Si la dejás vacía se usa la descripción.
+          La categoría es lo que va a leer el cliente en el PDF (ej. "Aros"). Si ponés una que ya tiene grupo, se suma
+          a ese grupo y compite por precio; si la dejás vacía, va como línea aparte.
         </div>
       </div>
 
       <ModalRepuestosAgregados
         open={modalAbierto}
         items={value}
+        elegidaAMano={elegidaAMano}
+        onElegirAMano={onElegirAMano}
         onCambiarCantidad={cambiarCantidad}
         onCambiarPrecio={cambiarPrecio}
         onQuitar={quitar}
@@ -174,4 +198,17 @@ export function PasoRepuestos({ motor, value, onChange, totalServicios, hayServi
       />
     </div>
   )
+}
+
+function lineaDeFicha(grupo, opcion) {
+  return lineaDeCatalogo({
+    codigo: opcion.codigo,
+    descripcion: opcion.descripcion,
+    precio: opcion.precio_actual,
+    stock: opcion.stock_actual,
+    categoria: grupo.categoria,
+    cat_prefijo: grupo.cat_prefijo,
+    marca: opcion.marca,
+    medida: opcion.medida,
+  }, opcion.cantidad)
 }

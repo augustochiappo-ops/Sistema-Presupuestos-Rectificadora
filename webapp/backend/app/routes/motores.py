@@ -38,28 +38,46 @@ def servicios(motor_id):
     return jsonify(facra.get_servicios_para_lista(motor.get("lista_num")))
 
 
-@bp.get("/<int:motor_id>/repuestos-sugeridos")
+@bp.get("/<int:motor_id>/ficha-repuestos")
 @login_required
-def repuestos_sugeridos(motor_id):
+def ficha_repuestos(motor_id):
+    """
+    Qué repuestos sirven para este motor, agrupados por categoría del proveedor.
+    Reemplaza a las viejas sugerencias deducidas del historial: acá la
+    asociación es explícita y la carga el taller. Precio, stock, marca y medida
+    salen del catálogo vigente, no de lo que se cotizó alguna vez.
+    """
     motor = db.get_motor(motor_id)
     if not motor:
         return jsonify({"error": "Motor no encontrado"}), 404
-    incluir_ocultos = request.args.get("incluir_ocultos") == "1"
-    return jsonify(db.get_repuestos_sugeridos_motor(motor_id, incluir_ocultos=incluir_ocultos))
+    return jsonify(db.get_ficha_motor(motor_id))
 
 
-@bp.post("/<int:motor_id>/repuestos-sugeridos/ocultar")
+@bp.put("/<int:motor_id>/ficha-repuestos")
 @login_required
-def ocultar_repuesto_sugerido(motor_id):
+def guardar_ficha_repuestos(motor_id):
     motor = db.get_motor(motor_id)
     if not motor:
         return jsonify({"error": "Motor no encontrado"}), 404
     data = request.get_json(silent=True) or {}
-    codigo = (data.get("codigo") or "").strip()
-    if not codigo:
-        return jsonify({"error": "Falta el código del repuesto"}), 400
-    oculto = db.toggle_repuesto_oculto_motor(motor_id, codigo)
-    return jsonify({"codigo": codigo, "oculto": oculto})
+    db.guardar_ficha_motor(motor_id, data.get("grupos") or [])
+    return jsonify(db.get_ficha_motor(motor_id))
+
+
+@bp.post("/<int:motor_id>/ficha-repuestos/copiar-de/<int:origen_id>")
+@login_required
+def copiar_ficha_repuestos(motor_id, origen_id):
+    """Trae la ficha de otro motor y la fusiona con la de este, sin pisar lo que
+    ya tenga. Muchos motores comparten repuestos: es la forma rápida de cargar
+    un motor nuevo."""
+    if not db.get_motor(motor_id):
+        return jsonify({"error": "Motor no encontrado"}), 404
+    if not db.get_motor(origen_id):
+        return jsonify({"error": "Motor de origen no encontrado"}), 404
+    if motor_id == origen_id:
+        return jsonify({"error": "El motor de origen tiene que ser otro"}), 400
+    db.copiar_ficha_motor(origen_id, motor_id)
+    return jsonify(db.get_ficha_motor(motor_id))
 
 
 @bp.get("/<int:motor_id>/presupuestos")

@@ -128,3 +128,31 @@
 **Por qué absoluto y no por inactividad:** el pedido del usuario fue "que todos los días tenga que poner la contraseña, así no me la olvido". Con un vencimiento deslizante (el default de Flask, que refresca la cookie en cada request) alguien que usa el sistema todos los días nunca volvería a ver la pantalla de login — se conseguiría exactamente lo contrario de lo pedido. El vencimiento absoluto garantiza que cada jornada arranque tecleando la contraseña.
 **Por qué se chequea también en el servidor y no solo con la expiración de la cookie:** el navegador podría conservar la cookie (o el reloj del cliente estar mal); comparar `login_ts` contra `time.time()` en cada request protegido hace que el corte sea del lado del servidor. Efecto colateral buscado: las cookies emitidas antes de este cambio no tienen `login_ts` y se tratan como vencidas, así que el cambio fuerza un login nuevo al deployar.
 **Fecha:** 2026-07-31
+
+## Grupos de repuestos: cotizar el más caro por SUBTOTAL, y una sola cantidad por opción
+**Decisión:** una línea de repuesto puede ser un **grupo** de piezas intercambiables (marcas y medidas). Se cotiza la de **mayor subtotal** (precio × cantidad), no la de mayor precio de lista, y las demás quedan guardadas para el pedido.
+**Por qué por subtotal:** las marcas vienen en envases distintos. Ejemplo del dueño: un juego de 8 cojinetes a $1.000 vs. blísters de 2 a $400 — para el mismo motor hacen falta 4 blísters, o sea $1.600. Por precio de lista ganaría el juego (mal); por subtotal gana el blíster (bien).
+**El multiplicador descartado:** el primer diseño tenía, además de la cantidad, un campo "×N" por opción para normalizar envases. El dueño lo probó mentalmente contra el caso de los retenes de válvula (blíster de 4 vs. de 8 en un motor de 16 válvulas) y vio que con dos números **la cantidad quedaba sin usarse**: siempre había que poner 1 y jugar con el multiplicador. Se eliminó. Quedó **un solo número por opción: la cantidad**, que se hereda del grupo al agregar y se ajusta por opción cuando el envase difiere.
+**Las dos compensaciones** (para que el error de envases no pase desapercibido, ya que no hay dato de "piezas por envase" en el catálogo — se verificó que la descripción del proveedor no lo trae de forma confiable): (a) la ficha del motor **recuerda la cantidad de cada código**, así la cuenta se hace una sola vez por código y motor; (b) chip **"¿cantidad correcta?"** cuando el subtotal de una opción queda por debajo de la mitad de la mediana de su grupo — que es exactamente la firma de un blíster chico sin corregir.
+**Fecha:** 2026-08-10
+
+## Las alternativas van en tabla aparte, no como filas del presupuesto
+**Decisión:** las opciones no cotizadas de un grupo viven en `presupuesto_item_opciones`, no en `presupuesto_items`. La cotizada se escribe en las dos (con `elegida=1`), desde la misma estructura calculada en `_resolver_grupo`.
+**Por qué:** hay cuatro lugares que asumen que toda fila `tipo='repuesto'` de `presupuesto_items` fue efectivamente cotizada — el total (`sum(precio_aplicado)`) al crear y al editar, el agrupado del PDF, y el filtro por repuesto de `buscar_presupuestos`. Meter las alternativas ahí obligaba a agregar un guard en cada uno y a acordarse de él en todo lo que se escriba en el futuro. Con la tabla aparte, nada del código existente se entera y no hay forma de que una alternativa infle un total. El costo (la cotizada duplicada en dos tablas) se controla escribiéndolas juntas desde un solo lugar.
+**Fecha:** 2026-08-10
+
+## La ficha del motor reemplaza a las sugerencias derivadas del historial
+**Decisión:** la asociación motor→repuestos pasa a ser explícita (`motor_repuesto_grupos` + `motor_repuesto_opciones`), editable desde "Listado de Motores", y se actualiza sola al confirmar un presupuesto. Se eliminaron `get_repuestos_sugeridos_motor` y el mecanismo de "ocultar repuesto sugerido".
+**Por qué:** las sugerencias se deducían de haber cotizado algo alguna vez, así que un motor nuevo no sugería nada y un error de carga quedaba sugerido para siempre (de ahí que hiciera falta "ocultar"). Con una lista que el taller edita a mano, ocultar sobra: se saca y listo. La ficha es **viva** — precio, stock, marca y medida se resuelven contra el catálogo de hoy en cada consulta; lo único que persiste de cada opción es la cantidad, que sí es una decisión del taller. El dueño confirmó que todos los presupuestos existentes eran de prueba, así que no había historial que preservar.
+**Fecha:** 2026-08-10
+
+## Detección de medidas: decodificar primero, no mirar el último token
+**Decisión:** un código tiene medida solo si, **después de decodificarlo** con el algoritmo de prefijos de `CRAC.md`, el `resto` tiene dos o más tokens y el último matchea `STD|\d{1,4}([.,]\d+)?`.
+**Por qué:** la regla ingenua ("el último token del código es la medida si parece número") produce **13.458 falsos positivos** sobre 64.250 filas — códigos como `ACAM 3066`, donde `3066` es el número de parte. La diferencia recién aparece al decodificar: en un código con medida el resto son dos tokens (parte + medida), en `ACAM 3066` es uno solo. Verificado contra el CSV real: 26.039 códigos con medida, familia `CAAC02740` completa (STD/010/020/030/040/050/060), `ACAM 3066` descartado.
+**Qué queda afuera a propósito:** los sufijos `S60` y `60/`. No son medidas: son productos distintos, con otra aplicación y otro precio ($274.164 vs $236.191 en la misma familia). Agregarlos al grupo inflaría la cotización con algo que no es lo que se necesita.
+**Fecha:** 2026-08-10
+
+## El PDF de repuestos pierde la columna de cantidad
+**Decisión:** la tabla de repuestos del PDF quedó en una sola columna con la categoría.
+**Por qué:** con grupos, la cantidad de una línea es la cantidad de **envases** de la marca que ganó. Ese número no le dice nada al cliente (no sabe cuántas piezas trae cada envase) y además cambiaría según qué marca termine siendo la más cara — el mismo trabajo cotizado dos veces podría decir "2" o "4". La mano de obra sí conserva su cantidad, que ahí sí significa algo ("Reunir cilindros ×4").
+**Fecha:** 2026-08-10

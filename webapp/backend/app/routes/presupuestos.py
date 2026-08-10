@@ -224,6 +224,111 @@ def _resolver_items(items_payload, lista_num, ajuste_pct=0):
     return resueltos, descartados
 
 
+def _resolver_grupos(grupos_payload, congelar_stock=True):
+    """
+    Resuelve los grupos de opciones de repuesto.
+
+    Un grupo es una necesidad del motor (ej. "Cojinetes biela") cubierta por
+    varias piezas intercambiables. Se cotiza **la de mayor subtotal** — la
+    tolerancia del taller: si el día de la compra la barata no está, el
+    presupuesto ya cubre la cara. Medido por subtotal y no por precio de lista
+    porque las marcas vienen en envases distintos: un juego de 8 a $1.000 sale
+    menos que 4 blísters de 2 a $400 ($1.600), aunque el precio de lista del
+    primero sea más alto.
+
+    Devuelve (items, opciones, descartados):
+      - items: una línea por grupo (la elegida), para presupuesto_items. Así los
+        totales, el PDF y las búsquedas siguen viendo exactamente lo de antes.
+      - opciones: todas las alternativas, para presupuesto_item_opciones.
+      - descartados: grupos que no se pudieron resolver, para avisar.
+    """
+    items, opciones, descartados = [], [], []
+
+    for indice, grupo in enumerate(grupos_payload or [], start=1):
+        resueltas = []
+        for op in grupo.get("opciones") or []:
+            resuelto = _resolver_repuesto(op, congelar_stock=congelar_stock)
+            if not resuelto:
+                descartados.append(_descripcion_descartado(op))
+                continue
+            del_catalogo = crac.get_repuesto_por_codigo(resuelto["repuesto_codigo"]) if resuelto["repuesto_codigo"] else None
+            resueltas.append({
+                **resuelto,
+                "grupo_num": indice,
+                # marca y medida son datos del proveedor que no salen nunca en el
+                # PDF, pero sí hacen falta para armar el pedido después.
+                "marca": (del_catalogo or {}).get("marca") or op.get("marca"),
+                "medida": (del_catalogo or {}).get("medida") or op.get("medida"),
+            })
+
+        if not resueltas:
+            continue
+
+        # La categoría del grupo manda sobre la de cada opción: es lo único que
+        # lee el cliente en el PDF, y todas las opciones del grupo son la misma
+        # pieza. Si el grupo no la trae, se usa la de la primera opción resuelta.
+        categoria = (grupo.get("categoria") or "").strip() or resueltas[0].get("categoria")
+        for r in resueltas:
+            r["categoria"] = categoria
+
+        elegida = _elegir_opcion(resueltas, grupo.get("elegida_a_mano"))
+
+        for r in resueltas:
+            es_elegida = r is elegida
+            opciones.append({
+                "grupo_num": indice,
+                "repuesto_codigo": r["repuesto_codigo"],
+                "descripcion": r["descripcion_custom"],
+                "categoria": categoria,
+                "marca": r.get("marca"),
+                "medida": r.get("medida"),
+                "cantidad": r["cantidad"],
+                "precio_unitario": r["precio_unitario"],
+                "subtotal": r["precio_aplicado"],
+                "stock_al_cotizar": r["stock_al_cotizar"],
+                "elegida": es_elegida,
+                "elegida_a_mano": es_elegida and bool(grupo.get("elegida_a_mano")),
+            })
+
+        items.append({k: v for k, v in elegida.items() if k not in ("marca", "medida")})
+
+    return items, opciones, descartados
+
+
+def _elegir_opcion(resueltas, codigo_a_mano=None):
+    """
+    La opción con la que se cotiza el grupo. Normalmente la de mayor subtotal;
+    si el usuario pisó la elección a mano y ese código está en el grupo, gana ese.
+    Una opción sin precio (el catálogo tiene ~12.000 con precio 0) nunca puede
+    ganar por precio, pero queda igual guardada para el pedido.
+    """
+    if codigo_a_mano:
+        for r in resueltas:
+            if r["repuesto_codigo"] == codigo_a_mano:
+                return r
+
+    con_precio = [r for r in resueltas if (r["precio_aplicado"] or 0) > 0]
+    candidatas = con_precio or resueltas
+    # max() con clave devuelve el primero ante empate, que es lo que queremos.
+    return max(candidatas, key=lambda r: r["precio_aplicado"] or 0)
+
+
+def _grupos_para_ficha(opciones):
+    """Convierte las opciones resueltas al formato de la ficha del motor, para
+    que el motor quede cargado con lo que se acaba de presupuestar."""
+    por_grupo: dict[int, dict] = {}
+    for op in opciones:
+        if not op.get("repuesto_codigo"):
+            continue  # los repuestos fuera de catálogo no van a la ficha
+        grupo = por_grupo.setdefault(op["grupo_num"], {
+            "categoria": op.get("categoria"),
+            "cat_prefijo": None,
+            "opciones": [],
+        })
+        grupo["opciones"].append({"codigo": op["repuesto_codigo"], "cantidad": op["cantidad"]})
+    return [g for g in por_grupo.values() if g["categoria"] and g["opciones"]]
+
+
 def _resolver_items_edicion(items_payload):
     """
     A diferencia de la creación, al editar un presupuesto ya existente el precio
@@ -300,6 +405,114 @@ def items(presupuesto_id):
     return jsonify(db.get_presupuesto_items_full(presupuesto_id))
 
 
+@bp.get("/<int:presupuesto_id>/grupos")
+@login_required
+def grupos(presupuesto_id):
+    """Grupos de opciones congelados, para reconstruirlos al editar."""
+    if not db.get_presupuesto_detalle(presupuesto_id):
+        return jsonify({"error": "Presupuesto no encontrado"}), 404
+    return jsonify(db.get_grupos_presupuesto(presupuesto_id))
+
+
+@bp.post("/<int:presupuesto_id>/aprobar")
+@login_required
+def aprobar(presupuesto_id):
+    """Marca/desmarca que el cliente aprobó el presupuesto."""
+    if not db.get_presupuesto_detalle(presupuesto_id):
+        return jsonify({"error": "Presupuesto no encontrado"}), 404
+    data = request.get_json(silent=True) or {}
+    aprobado = bool(data.get("aprobado", True))
+    return jsonify({"aprobado_en": db.aprobar_presupuesto(presupuesto_id, aprobado)})
+
+
+@bp.get("/<int:presupuesto_id>/pedido")
+@login_required
+def pedido(presupuesto_id):
+    """
+    Qué hay que ir a comprar. A diferencia del presupuesto (que congela precios
+    al cotizar), acá todo se muestra con el precio y el stock de HOY: es el
+    momento de decidir a quién se le compra.
+
+    Cada grupo trae sus opciones agrupadas por marca, con las medidas debajo,
+    ordenadas de más barata a más cara. `ahorro` es lo que quedaría de margen si
+    se consigue la más barata con stock en vez de la que se cotizó.
+    """
+    detalle_p = db.get_presupuesto_detalle(presupuesto_id)
+    if not detalle_p:
+        return jsonify({"error": "Presupuesto no encontrado"}), 404
+
+    grupos_out = []
+    total_cotizado = 0.0
+    total_mas_barato = 0.0
+
+    for grupo in db.get_grupos_presupuesto(presupuesto_id):
+        opciones = []
+        for op in grupo["opciones"]:
+            # Precio de hoy si el código sigue en el catálogo; si ya no está, se
+            # cae al congelado y se marca, para que no desaparezca del pedido.
+            en_catalogo = op["precio_actual"] is not None
+            precio_hoy = op["precio_actual"] if en_catalogo else op["precio_unitario"]
+            cantidad = op["cantidad"] or 0
+            opciones.append({
+                **op,
+                "en_catalogo": en_catalogo,
+                "precio_hoy": precio_hoy,
+                "subtotal_hoy": round((precio_hoy or 0) * cantidad, 2),
+                "hay_stock": bool(op["stock_actual"]),
+            })
+
+        elegida = next((o for o in opciones if o["elegida"]), None)
+        cotizado = (elegida or {}).get("subtotal") or 0
+        con_stock = [o for o in opciones if o["hay_stock"] and (o["subtotal_hoy"] or 0) > 0]
+        mas_barata = min(con_stock, key=lambda o: o["subtotal_hoy"]) if con_stock else None
+
+        total_cotizado += cotizado
+        total_mas_barato += (mas_barata or {}).get("subtotal_hoy") or cotizado
+
+        grupos_out.append({
+            "grupo_num": grupo["grupo_num"],
+            "categoria": grupo["categoria"],
+            "cotizado": cotizado,
+            "sin_stock_total": not con_stock,
+            "mas_barata_codigo": (mas_barata or {}).get("repuesto_codigo"),
+            "ahorro": round(cotizado - mas_barata["subtotal_hoy"], 2) if mas_barata else 0,
+            "marcas": _agrupar_por_marca(opciones),
+        })
+
+    return jsonify({
+        "presupuesto": detalle_p,
+        "grupos": grupos_out,
+        "total_cotizado": round(total_cotizado, 2),
+        "total_mas_barato_con_stock": round(total_mas_barato, 2),
+        "catalogo": crac.get_info_catalogo(),
+    })
+
+
+def _agrupar_por_marca(opciones):
+    """
+    Con las medidas agregadas solas, un grupo puede tener 20 filas. Agruparlas
+    por marca (con las medidas debajo) lo vuelve legible de un vistazo. Las
+    marcas van de la más barata a la más cara.
+    """
+    por_marca: dict[str, dict] = {}
+    for op in opciones:
+        nombre = op.get("marca") or "Sin marca"
+        marca = por_marca.setdefault(nombre, {"marca": nombre, "medidas": []})
+        marca["medidas"].append(op)
+
+    salida = []
+    for marca in por_marca.values():
+        marca["medidas"].sort(key=lambda o: (o.get("medida") or ""))
+        precios = [o["subtotal_hoy"] for o in marca["medidas"] if (o["subtotal_hoy"] or 0) > 0]
+        marca["desde"] = min(precios) if precios else 0
+        marca["hay_stock"] = any(o["hay_stock"] for o in marca["medidas"])
+        marca["tiene_elegida"] = any(o["elegida"] for o in marca["medidas"])
+        salida.append(marca)
+
+    salida.sort(key=lambda m: (m["desde"] == 0, m["desde"]))
+    return salida
+
+
 @bp.post("")
 @login_required
 def crear():
@@ -327,18 +540,26 @@ def crear():
         return jsonify({"error": "Motor no encontrado"}), 404
 
     items_resueltos, descartados = _resolver_items(items_payload, motor.get("lista_num"), ajuste_pct)
+    items_grupos, opciones, descartados_grupos = _resolver_grupos(data.get("grupos_repuestos"))
+    descartados += descartados_grupos
     if descartados:
         return jsonify({
             "error": "Algunos ítems no se pudieron procesar: " + ", ".join(descartados),
             "items_descartados": descartados,
         }), 400
+    items_resueltos += items_grupos
     if not items_resueltos:
         return jsonify({"error": "Agregá al menos un servicio o repuesto"}), 400
 
     presupuesto_id = db.guardar_presupuesto(
         cliente_nombre, motor_id, items_resueltos, ajuste_pct,
         cliente_tipo=cliente_tipo, contacto_nombre=contacto_nombre,
+        opciones=opciones,
     )
+
+    # El motor queda cargado con lo que se acaba de presupuestar: la próxima vez
+    # el paso Repuestos arranca solo, con precios de hoy.
+    db.fusionar_ficha_motor(motor_id, _grupos_para_ficha(opciones))
 
     detalle = db.get_presupuesto_detalle(presupuesto_id)
     nombre_archivo = f"presupuesto_{presupuesto_id:04d}.pdf"
@@ -373,10 +594,16 @@ def actualizar(presupuesto_id):
         ajuste_pct = 0
 
     items_resueltos = _resolver_items_edicion(items_payload)
+    # congelar_stock=False: al editar se preserva el stock que quedó grabado al
+    # cotizar, igual que ya hace _resolver_items_edicion con los repuestos sueltos.
+    items_grupos, opciones, _ = _resolver_grupos(data.get("grupos_repuestos"), congelar_stock=False)
+    items_resueltos += items_grupos
     if not items_resueltos:
         return jsonify({"error": "Agregá al menos un servicio o repuesto"}), 400
 
-    db.actualizar_presupuesto(presupuesto_id, items_resueltos, notas, ajuste_pct)
+    db.actualizar_presupuesto(presupuesto_id, items_resueltos, notas, ajuste_pct, opciones=opciones)
+    if existente.get("motor_id"):
+        db.fusionar_ficha_motor(existente["motor_id"], _grupos_para_ficha(opciones))
     return jsonify(db.get_presupuesto_detalle(presupuesto_id))
 
 

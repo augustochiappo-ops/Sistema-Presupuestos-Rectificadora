@@ -194,7 +194,14 @@ export default function HistorialPresupuestos() {
           { key: 'total', header: 'Total', align: 'right', width: 140, render: formatPrecioARS },
           // key propia (no 'fecha' de nuevo): las columnas se identifican por key
           // para poder reordenarlas, así que no puede haber dos iguales.
-          { key: 'estado', header: 'Estado', align: 'center', width: 110, render: (_, row) => <StatusBadge status={estadoPresupuesto(row.fecha)} /> },
+          // Un presupuesto aprobado por el cliente ya no depende de la vigencia
+          // de 7 días: lo que importa es que está cerrado.
+          {
+            key: 'estado', header: 'Estado', align: 'center', width: 130,
+            render: (_, row) => (row.aprobado_en
+              ? <StatusBadge status="active">Aprobado</StatusBadge>
+              : <StatusBadge status={estadoPresupuesto(row.fecha)} />),
+          },
           {
             key: 'acciones', header: '', align: 'center', width: 50,
             render: (_, row) => (

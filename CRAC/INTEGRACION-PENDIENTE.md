@@ -4,13 +4,15 @@ Este documento listaba lo que **todavía no estaba definido**. El 2026-07-29 el 
 
 ---
 
-## 1. Actualización diaria del archivo — PENDIENTE (único punto abierto)
+## 1. Actualización diaria del archivo — PARCIALMENTE RESUELTO
 
 El archivo `precio-stock.csv` llega actualizado todos los días (cambios menores, no drásticos).
 
-**A definir:**
-- Mecanismo de carga: ¿se sube manualmente cada archivo nuevo, o hay una carpeta/proceso que lo detecta automáticamente? (Hoy: subida manual desde la pestaña Repuestos de la web.)
-- ¿Se conserva el histórico de archivos anteriores, o cada carga reemplaza a la anterior sin dejar rastro? (Hoy: cada import reemplaza todo, sin histórico.)
+**Resuelto el 2026-08-10:** cada importación guarda su fecha y hora en `app_meta.catalogo_importado_en`. Esa fecha se muestra en "Actualizar Excel" ("Última carga: …") y en la pantalla de Pedido de repuestos, porque todo lo que el sistema llama "precio de hoy" son en realidad los precios de esa carga — si pasaron días, conviene verlo antes de salir a comprar.
+
+**Todavía a definir:**
+- Mecanismo de carga: ¿se sube manualmente cada archivo nuevo, o hay una carpeta/proceso que lo detecta automáticamente? (Hoy: subida manual desde "Actualizar Excel".)
+- ¿Se conserva el histórico de archivos anteriores? (Hoy: cada import reemplaza todo; solo queda la fecha de la última carga.)
 
 ## 2. Presupuesto ya emitido vs. archivo actualizado — RESUELTO ✔
 
@@ -26,7 +28,9 @@ Se puede agregar igual, con el aviso visible "Sin stock — sujeto a disponibili
 
 El picker del paso Repuestos busca por las cuatro vías, no excluyentes: categoría, marca, código (LIKE) y texto libre contra `aplicacion`. Misma regla que la pestaña Repuestos: vacío hasta que haya un filtro, tope de 1000 resultados.
 
-Sobre la línea combinada: se optó por una **sección "Repuestos" separada** en el presupuesto y el PDF (código / descripción / cantidad / precio unitario / subtotal), en lugar de fusionar mano de obra y repuesto en una sola línea. Además el paso arranca sugiriendo los repuestos ya usados en presupuestos anteriores del mismo motor (derivado del historial, sin tabla de asociación).
+Sobre la línea combinada: se optó por una **sección "Repuestos" separada** en el presupuesto y el PDF, en lugar de fusionar mano de obra y repuesto en una sola línea.
+
+**Actualizado el 2026-08-10** (grupos de opciones): el PDF de repuestos quedó en **una sola columna con la categoría**, sin cantidad ni precio por línea — la cantidad de una línea es la de envases de la marca que ganó, que no significa nada para el cliente. Y el paso ya no "sugiere" repuestos del historial: arranca cargado con la **ficha de repuestos del motor** (`motor_repuesto_grupos`/`motor_repuesto_opciones`), que es una asociación explícita y editable.
 
 Un presupuesto puede ser de solo repuestos (sin mano de obra) y también de solo servicios.
 

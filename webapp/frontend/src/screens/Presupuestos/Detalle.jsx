@@ -12,7 +12,10 @@ import { Icon } from '../../components/Icon'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { StatusBadge } from '../../components/StatusBadge'
+import { ModalRepuestosAgregados } from './Wizard/ModalRepuestosAgregados'
 import { formatPrecioARS, formatFechaAR } from '../../utils/format'
+import { gruposParaPayload, totalRepuestos, agruparLineas, opcionElegida, subtotalDe } from '../../utils/grupos'
+import { useRepuestosAgrupados } from '../../hooks/useRepuestosAgrupados'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
 const TIPO_OPUESTO = { mecanico: 'dueno', dueno: 'mecanico' }
@@ -47,7 +50,7 @@ function fmtCantidad(cantidad) {
 // el payload real al guardar como para la "foto" inicial al entrar en modo
 // edición, así comparar ambas dice si hubo cambios de verdad (y por lo tanto
 // si hay que reconstruir el PDF).
-function construirPayload(lista, notas, ajustePct) {
+function construirPayload(lista, notas, ajustePct, lineasGrupos = [], elegidaAMano = {}) {
   // cantidad/precio_unitario se normalizan a Number: los inputs numéricos del
   // formulario los guardan como string en cuanto el usuario toca el campo,
   // aunque el valor final sea igual — sin esto, comparar el payload contra la
@@ -74,7 +77,42 @@ function construirPayload(lista, notas, ajustePct) {
       precio_unitario: Number(it.precio_unitario),
       stock_al_cotizar: it.stock_al_cotizar,
     }))
-  return { items: [...servicios, ...repuestos], notas, ajuste_pct: ajustePct || 0 }
+  return {
+    items: [...servicios, ...repuestos],
+    // Los grupos van aparte: el backend elige el más caro de cada uno y guarda
+    // todas las opciones. Los repuestos de arriba son los sueltos (sin grupo).
+    grupos_repuestos: gruposParaPayload(lineasGrupos, elegidaAMano),
+    notas,
+    ajuste_pct: ajustePct || 0,
+  }
+}
+
+// Una opción congelada del backend, en la forma de línea que usan el hook de
+// agrupado y el pop-up de repuestos (los mismos que el wizard).
+function lineaDeOpcion(grupo, o) {
+  return {
+    key: o.repuesto_codigo || `op-${grupo.grupo_num}-${o.descripcion}`,
+    repuesto_codigo: o.repuesto_codigo,
+    descripcion: o.descripcion,
+    categoria: grupo.categoria,
+    cat_prefijo: null,
+    marca: o.marca,
+    medida: o.medida,
+    grupo: grupo.categoria,
+    cantidad: o.cantidad,
+    precio_unitario: o.precio_unitario,
+    precioTexto: o.precio_unitario ? formatPrecioARS(o.precio_unitario) : '',
+    stock: o.stock_al_cotizar,
+    esManual: !o.repuesto_codigo,
+  }
+}
+
+function elegidaAManoInicial(grupos) {
+  return Object.fromEntries(
+    grupos
+      .filter((g) => g.opciones.some((o) => o.elegida_a_mano))
+      .map((g) => [g.categoria, g.opciones.find((o) => o.elegida_a_mano).repuesto_codigo]),
+  )
 }
 
 function Campo({ label, valor }) {
@@ -92,12 +130,21 @@ export default function DetallePresupuesto() {
 
   const [detalle, setDetalle] = React.useState(null)
   const [items, setItems] = React.useState([])
+  const [grupos, setGrupos] = React.useState([])
   const [pdfs, setPdfs] = React.useState([])
   const [verVersionesAnteriores, setVerVersionesAnteriores] = React.useState(false)
   const [error, setError] = React.useState('')
 
   const [editMode, setEditMode] = React.useState(false)
   const [editItems, setEditItems] = React.useState([])
+  // Los grupos de repuestos se editan aparte de editItems: una línea del
+  // presupuesto es la opción cotizada, pero el grupo entero (con todas sus
+  // alternativas) es lo que hay que mandar de vuelta al guardar.
+  const [editGrupos, setEditGrupos] = React.useState([])
+  const [cantidadPorGrupo, setCantidadPorGrupo] = React.useState({})
+  const [elegidaAMano, setElegidaAMano] = React.useState({})
+  const [modalRepuestos, setModalRepuestos] = React.useState(false)
+  const [aprobando, setAprobando] = React.useState(false)
   const [editNotas, setEditNotas] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
   const [reconstruyendo, setReconstruyendo] = React.useState(false)
@@ -122,20 +169,35 @@ export default function DetallePresupuesto() {
   const cargar = React.useCallback(() => {
     api.get(`/presupuestos/${id}`).then(setDetalle)
     api.get(`/presupuestos/${id}/items`).then(setItems)
+    api.get(`/presupuestos/${id}/grupos`).then(setGrupos).catch(() => {})
     api.get(`/presupuestos/${id}/pdfs`).then(setPdfs)
   }, [id])
 
   React.useEffect(() => { cargar() }, [cargar])
 
   const entrarEdicion = () => {
-    const itemsIniciales = items.map((it) => (
-      it.tipo === 'repuesto'
-        ? { ...it }
-        // Presupuestos armados antes de soportar cantidad en servicios no
-        // tienen precio_unitario guardado: se asume cantidad 1 y que
-        // precio_aplicado YA era el unitario.
-        : { ...it, cantidad: it.cantidad || 1, precio_unitario: it.precio_unitario ?? it.precio_aplicado }
+    // Las líneas que pertenecen a un grupo no se editan como ítems sueltos: el
+    // grupo entero (con sus alternativas) se maneja aparte y vuelve al backend
+    // por grupos_repuestos.
+    const lineasGrupos = grupos.flatMap((g) => g.opciones.map((o) => lineaDeOpcion(g, o)))
+    setEditGrupos(lineasGrupos)
+    setCantidadPorGrupo(Object.fromEntries(grupos.map((g) => [g.categoria, g.opciones[0]?.cantidad || 1])))
+    setElegidaAMano(Object.fromEntries(
+      grupos
+        .filter((g) => g.opciones.some((o) => o.elegida_a_mano))
+        .map((g) => [g.categoria, g.opciones.find((o) => o.elegida_a_mano).repuesto_codigo]),
     ))
+
+    const itemsIniciales = items
+      .filter((it) => it.grupo_num == null)
+      .map((it) => (
+        it.tipo === 'repuesto'
+          ? { ...it }
+          // Presupuestos armados antes de soportar cantidad en servicios no
+          // tienen precio_unitario guardado: se asume cantidad 1 y que
+          // precio_aplicado YA era el unitario.
+          : { ...it, cantidad: it.cantidad || 1, precio_unitario: it.precio_unitario ?? it.precio_aplicado }
+      ))
     setEditItems(itemsIniciales)
     const notasIniciales = detalle?.notas || ''
     setEditNotas(notasIniciales)
@@ -146,10 +208,23 @@ export default function DetallePresupuesto() {
     const ajusteInicial = detalle?.ajuste_pct || 0
     setAjustePct(ajusteInicial)
     setAjusteTexto(ajusteInicial ? String(ajusteInicial) : '')
-    payloadOriginalRef.current = JSON.stringify(construirPayload(itemsIniciales, notasIniciales, ajusteInicial))
+    payloadOriginalRef.current = JSON.stringify(
+      construirPayload(itemsIniciales, notasIniciales, ajusteInicial, lineasGrupos, elegidaAManoInicial(grupos)),
+    )
     setEditMode(true)
     if (detalle?.motor_id) {
-      api.get(`/motores/${detalle.motor_id}/repuestos-sugeridos`).then(setSugeridos).catch(() => {})
+      api.get(`/motores/${detalle.motor_id}/ficha-repuestos`)
+        .then((ficha) => setSugeridos(ficha.flatMap((g) => g.opciones.map((o) => ({
+          codigo: o.codigo,
+          descripcion: o.descripcion || o.codigo,
+          categoria: g.categoria,
+          cat_prefijo: g.cat_prefijo,
+          marca: o.marca,
+          medida: o.medida,
+          precio_actual: o.precio_actual,
+          stock_actual: o.stock_actual,
+        })))))
+        .catch(() => {})
       api.get(`/motores/${detalle.motor_id}/servicios`)
         .then((servicios) => setPreciosListaPorServicio(new Map(servicios.map((s) => [s.id, s.precio]))))
         .catch(() => {})
@@ -203,34 +278,31 @@ export default function DetallePresupuesto() {
     }])
   }
 
-  // Cantidades ya cargadas por código: el picker las usa para el ×N y para
-  // saber si tiene que sumar una línea nueva o pisar la cantidad de una existente.
-  const cantidadPorCodigo = React.useMemo(() => {
-    const m = new Map()
-    editItems.forEach((it) => {
-      if (it.tipo === 'repuesto' && it.repuesto_codigo) m.set(it.repuesto_codigo, Number(it.cantidad) || 0)
-    })
-    return m
-  }, [editItems])
+  const setCantidadGrupo = React.useCallback((grupo, cantidad) => {
+    setCantidadPorGrupo((prev) => (prev[grupo] === cantidad ? prev : { ...prev, [grupo]: cantidad }))
+  }, [])
 
-  const agregarDeCatalogo = ({ codigo, descripcion, precio, stock, categoria }, cantidad) => {
-    setEditItems((prev) => {
-      const idx = prev.findIndex((it) => it.tipo === 'repuesto' && it.repuesto_codigo === codigo)
-      if (idx >= 0) return prev.map((it, i) => (i === idx ? { ...it, cantidad } : it))
-      return [...prev, {
-        id: `nuevo-rep-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null,
-        tipo: 'repuesto', repuesto_codigo: codigo, descripcion_custom: descripcion || codigo,
-        categoria: categoria || '', cantidad, precio_unitario: precio || 0,
-        stock_al_cotizar: stock ?? null,
-      }]
-    })
-  }
+  const elegirAMano = React.useCallback((grupo, codigo) => {
+    setElegidaAMano((prev) => ({ ...prev, [grupo]: prev[grupo] === codigo ? null : codigo }))
+  }, [])
+
+  // Mismo agrupado automático que en el wizard: lo que se agrega dentro de una
+  // categoría entra al grupo de esa categoría, con las medidas hermanas.
+  const {
+    cantidadPorCodigo, agregar: agregarDeCatalogo,
+    cambiarCantidad: cambiarCantidadGrupo, cambiarPrecio: cambiarPrecioGrupo, quitar: quitarDeGrupo,
+  } = useRepuestosAgrupados({
+    lineas: editGrupos,
+    setLineas: setEditGrupos,
+    cantidadPorGrupo,
+    setCantidadGrupo,
+  })
 
   const guardar = async () => {
     setGuardando(true)
     setError('')
     try {
-      const payload = construirPayload(editItems, editNotas, ajustePct)
+      const payload = construirPayload(editItems, editNotas, ajustePct, editGrupos, elegidaAMano)
       // Si el payload es idéntico al que había al entrar en modo edición, no
       // hubo cambios de verdad: no tiene sentido generar una versión de PDF
       // nueva (y consumir un número de versión) por un guardado que no cambió nada.
@@ -265,6 +337,21 @@ export default function DetallePresupuesto() {
       setError(err.message || 'No se pudo eliminar el presupuesto')
       setEliminando(false)
       setConfirmarEliminar(false)
+    }
+  }
+
+  const cambiarAprobado = async () => {
+    setAprobando(true)
+    setError('')
+    try {
+      const { aprobado_en: aprobadoEn } = await api.post(`/presupuestos/${id}/aprobar`, {
+        aprobado: !detalle.aprobado_en,
+      })
+      setDetalle((prev) => ({ ...prev, aprobado_en: aprobadoEn }))
+    } catch (err) {
+      setError(err.message || 'No se pudo cambiar el estado de aprobación')
+    } finally {
+      setAprobando(false)
     }
   }
 
@@ -344,7 +431,11 @@ export default function DetallePresupuesto() {
   const ultimoPdf = pdfs[0]
   const anteriores = pdfs.slice(1)
 
+  // En edición el total suma los ítems sueltos más, de cada grupo, solo la
+  // opción con la que se cotiza (las alternativas no se cobran).
   const totalEditado = editItems.reduce((acc, it) => acc + (Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0), 0)
+    + totalRepuestos(editGrupos, elegidaAMano)
+  const gruposEditados = agruparLineas(editGrupos).grupos
   const colorAjuste = ajustePct > 0 ? 'var(--status-active-fg)' : ajustePct < 0 ? 'var(--status-expired-fg)' : 'var(--border-default)'
 
   const serviciosItems = items.filter((it) => it.tipo !== 'repuesto')
@@ -369,6 +460,17 @@ export default function DetallePresupuesto() {
               </>
             ) : (
               <>
+                <Button
+                  variant={detalle.aprobado_en ? 'primary' : 'secondary'}
+                  iconLeft={<Icon n="badge-check" s={16} />}
+                  disabled={aprobando}
+                  onClick={cambiarAprobado}
+                >
+                  {detalle.aprobado_en ? 'Aprobado' : 'Marcar aprobado'}
+                </Button>
+                <Button variant="secondary" iconLeft={<Icon n="cart" s={16} />} onClick={() => navigate(`/presupuestos/${id}/pedido`)}>
+                  Pedido de repuestos
+                </Button>
                 <Button variant="secondary" iconLeft={<Icon n="share" s={16} />} disabled={!ultimoPdf} onClick={compartirPdf}>Compartir PDF</Button>
                 <Button variant="primary" iconLeft={<Icon n="pencil" s={16} />} onClick={entrarEdicion}>Editar</Button>
                 <Button variant="danger" iconLeft={<Icon n="trash" s={16} />} onClick={() => setConfirmarEliminar(true)}>Eliminar</Button>
@@ -401,6 +503,9 @@ export default function DetallePresupuesto() {
         )}
         <Campo label="Motor" valor={detalle.motor} />
         <Campo label="Fecha" valor={formatFechaAR(detalle.fecha)} />
+        {detalle.aprobado_en && (
+          <Campo label="Aprobado" valor={<StatusBadge status="active">{formatFechaAR(detalle.aprobado_en)}</StatusBadge>} />
+        )}
         <Campo label="Total" valor={formatPrecioARS(editMode ? totalEditado : detalle.total)} />
         {editMode && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -492,6 +597,45 @@ export default function DetallePresupuesto() {
               />
             </div>
           )}
+
+          {grupos.length > 0 && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+                Opciones guardadas
+              </div>
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
+                Todas las marcas y medidas que sirven para cada repuesto de este presupuesto. Se cotizó la más cara;
+                el resto queda para decidir qué pedir.
+              </div>
+              {grupos.map((g) => (
+                <div key={g.grupo_num} style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+                  <div style={{ padding: '10px 14px', background: 'var(--surface-sunken)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-strong)' }}>
+                    {g.categoria} · {g.opciones.length} opcion{g.opciones.length === 1 ? '' : 'es'}
+                  </div>
+                  {g.opciones.map((o) => (
+                    <div key={o.repuesto_codigo || o.descripcion} style={{
+                      display: 'flex', alignItems: 'center', gap: 10, padding: '8px 14px',
+                      borderTop: '1px solid var(--border-subtle)',
+                      background: o.elegida ? 'var(--status-active-bg)' : undefined,
+                    }}>
+                      <span style={{ width: 150, flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
+                        {o.repuesto_codigo || '—'}
+                      </span>
+                      <span style={{ flex: 1, minWidth: 0, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{o.descripcion}</span>
+                      <span style={{ width: 110, flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>{o.marca || '—'}</span>
+                      <span style={{ width: 60, flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>{o.medida || '—'}</span>
+                      {o.elegida && <StatusBadge status="active">{o.elegida_a_mano ? 'Elegido a mano' : 'Cotizado'}</StatusBadge>}
+                      {o.stock_actual === 0 && <StatusBadge status="expired">Sin stock hoy</StatusBadge>}
+                      <span style={{ width: 60, textAlign: 'center', flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>×{fmtCantidad(o.cantidad)}</span>
+                      <span style={{ width: 130, textAlign: 'right', flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600 }}>
+                        {formatPrecioARS(o.subtotal)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
         </>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -537,8 +681,40 @@ export default function DetallePresupuesto() {
             Agregar ítem
           </Button>
 
+          {editGrupos.length > 0 && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginTop: 8, paddingTop: 10, borderTop: '1px solid var(--border-subtle)', flexWrap: 'wrap' }}>
+                <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+                  Grupos de repuestos
+                </div>
+                <Button variant="secondary" size="sm" iconLeft={<Icon n="layers" s={14} />} onClick={() => setModalRepuestos(true)}>
+                  Ver y editar ({editGrupos.length})
+                </Button>
+              </div>
+              {gruposEditados.map((g) => {
+                const elegida = opcionElegida(g.opciones, elegidaAMano[g.categoria])
+                return (
+                  <div key={g.categoria} style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                    <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-strong)', width: 170 }}>
+                      {g.categoria}
+                    </span>
+                    <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)', width: 90 }}>
+                      {g.opciones.length} opcion{g.opciones.length === 1 ? '' : 'es'}
+                    </span>
+                    <span style={{ flex: 1, minWidth: 0, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
+                      Cotiza: {elegida ? `${elegida.descripcion}${elegida.marca ? ` · ${elegida.marca}` : ''}` : '—'}
+                    </span>
+                    <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 120, textAlign: 'right' }}>
+                      {elegida ? formatPrecioARS(subtotalDe(elegida)) : '—'}
+                    </span>
+                  </div>
+                )
+              })}
+            </>
+          )}
+
           <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)', marginTop: 8, paddingTop: 10, borderTop: '1px solid var(--border-subtle)' }}>
-            Repuestos
+            Repuestos sueltos
           </div>
           {editItems
             .map((it, idx) => ({ it, idx }))
@@ -589,9 +765,23 @@ export default function DetallePresupuesto() {
           cantidadPorCodigo={cantidadPorCodigo}
           onAgregar={agregarDeCatalogo}
           reorderKey="repuestos-presupuesto"
+          onVerAgregados={() => setModalRepuestos(true)}
+          cantidadAgregados={editGrupos.length}
+          ayudaFilas="Lo que agregues dentro de una categoría forma un grupo: se cotiza el más caro y quedan guardadas todas las opciones"
         />
         </div>
       )}
+
+      <ModalRepuestosAgregados
+        open={modalRepuestos}
+        items={editGrupos}
+        elegidaAMano={elegidaAMano}
+        onElegirAMano={elegirAMano}
+        onCambiarCantidad={cambiarCantidadGrupo}
+        onCambiarPrecio={cambiarPrecioGrupo}
+        onQuitar={quitarDeGrupo}
+        onClose={() => setModalRepuestos(false)}
+      />
 
       <div>
         <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: 6 }}>Notas</div>

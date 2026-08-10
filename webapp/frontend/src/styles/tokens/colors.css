@@ -26,6 +26,10 @@
   --status-active-fg:#1f7a46;
   --status-expired-bg:#f4e9e9;
   --status-expired-fg:#a23b3b;
+  /* Aviso blando: algo para mirar, pero que no es un error (ej. "¿cantidad
+     correcta?" en una opción cuyo subtotal quedó muy por debajo del grupo). */
+  --status-aviso-bg:#f6efdf;
+  --status-aviso-fg:#8a6520;
 
   /* Tipo de cliente (mecánico / dueño del vehículo), misma fórmula desaturada */
   --tag-mecanico-bg:#e7eef7;

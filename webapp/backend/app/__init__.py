@@ -13,6 +13,7 @@ from .routes.presupuestos import bp as presupuestos_bp
 from .routes.repuestos import bp as repuestos_bp
 from .routes.deploy import bp as deploy_bp
 from .routes.backup import bp as backup_bp
+from .routes.mantenimiento import bp as mantenimiento_bp
 from .static_frontend import bp as static_bp
 
 
@@ -43,6 +44,7 @@ def create_app():
     app.register_blueprint(repuestos_bp)
     app.register_blueprint(deploy_bp)
     app.register_blueprint(backup_bp)
+    app.register_blueprint(mantenimiento_bp)
     app.register_blueprint(static_bp)
 
     return app

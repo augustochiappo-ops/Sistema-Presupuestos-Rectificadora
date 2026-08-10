@@ -31,6 +31,28 @@ def marcas():
     return jsonify(crac.get_marcas(categoria))
 
 
+@bp.get("/medidas")
+@login_required
+def medidas():
+    """
+    Las otras medidas de la misma pieza (STD, 025, 050…), para agregarlas solas
+    al grupo cuando se elige una. Devuelve solo lo que existe de verdad en el
+    catálogo: si esa pieza no tiene 1.00, no aparece un 1.00.
+    """
+    codigo = (request.args.get("codigo") or "").strip()
+    if not codigo:
+        return jsonify([])
+    return jsonify(crac.get_medidas_hermanas(codigo))
+
+
+@bp.get("/catalogo-info")
+@login_required
+def catalogo_info():
+    """Cuándo se cargó por última vez la lista del proveedor: los precios 'de
+    hoy' son en realidad los de esa carga, y conviene que se vea."""
+    return jsonify(crac.get_info_catalogo())
+
+
 @bp.get("/categorias/favoritos")
 @login_required
 def categorias_favoritos():

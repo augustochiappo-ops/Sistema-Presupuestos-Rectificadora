@@ -137,6 +137,8 @@ export function RepuestoPicker({
   // agregados aparte (el wizard) lo pasan. Sin esto, RepuestoPicker se
   // comporta como antes (usado también en la edición del detalle).
   onVerAgregados, cantidadAgregados = 0,
+  tituloSugeridos = 'Repuestos de este motor',
+  ayudaFilas = 'Click en la fila para agregar uno, o el + para elegir la cantidad',
 }) {
   const [marcas, setMarcas] = React.useState([])
   const [categoriaSel, setCategoriaSel] = React.useState('')
@@ -180,14 +182,31 @@ export function RepuestoPicker({
     return () => clearTimeout(t)
   }, [categoriaSel, marcaSel, codigo, descripcion, hayFiltro])
 
-  const agregarFila = (row, cantidad) => onAgregar({
+  // Único lugar donde se arma el repuesto que sube por onAgregar. `origen` deja
+  // que el consumidor distinga un click en la fila (que puede querer usar la
+  // cantidad que el motor recuerda) de una cantidad elegida a propósito en el
+  // menú "+". Quien no lo mire — la edición del detalle — sigue funcionando igual.
+  const agregarFila = (row, cantidad, origen = 'click') => onAgregar({
     codigo: row.codigo,
     descripcion: row.aplicacion,
     precio: row.precio,
     stock: row.stock,
     categoria: row.categoria,
+    cat_prefijo: row.cat_prefijo,
     marca: row.marca,
-  }, cantidad)
+    medida: row.medida,
+  }, cantidad, origen)
+
+  const agregarSugerido = (s, cantidad, origen = 'click') => onAgregar({
+    codigo: s.codigo,
+    descripcion: s.descripcion,
+    precio: s.precio_actual,
+    stock: s.stock_actual,
+    categoria: s.categoria,
+    cat_prefijo: s.cat_prefijo,
+    marca: s.marca,
+    medida: s.medida,
+  }, cantidad, origen)
 
   const columnas = [
     {
@@ -199,12 +218,12 @@ export function RepuestoPicker({
             <button
               style={botonMenos}
               disabled={!cantidad}
-              onClick={(e) => { e.stopPropagation(); agregarFila(row, Math.max(0, (cantidad || 0) - 1)) }}
+              onClick={(e) => { e.stopPropagation(); agregarFila(row, Math.max(0, (cantidad || 0) - 1), 'exacto') }}
             >
               −
             </button>
             {cantidad ? <StatusBadge status="active">×{cantidad}</StatusBadge> : null}
-            <SelectorCantidad cantidadActual={cantidad} onElegir={(n) => agregarFila(row, n)} />
+            <SelectorCantidad cantidadActual={cantidad} onElegir={(n) => agregarFila(row, n, 'exacto')} />
           </span>
         )
       },
@@ -215,6 +234,7 @@ export function RepuestoPicker({
       render: (v) => <span style={{ fontWeight: 'var(--weight-bold)', color: 'var(--text-strong)' }}>{v}</span>,
     },
     { key: 'marca', header: 'Marca', width: 130, render: (v) => v || '—' },
+    { key: 'medida', header: 'Medida', align: 'center', width: 90, render: (v) => v || '—' },
     { key: 'precio', header: 'Precio', align: 'right', width: 120, render: (v) => (v ? formatPrecioARS(v) : '—') },
     {
       key: 'stock', header: 'Stock', align: 'center', width: 80,
@@ -229,7 +249,7 @@ export function RepuestoPicker({
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       {sugeridos.length > 0 && (
         <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={tituloSeccion}>Usados antes en este motor</div>
+          <div style={tituloSeccion}>{tituloSugeridos}</div>
           {sugeridos.map((s) => {
             const cantidad = cantidadPorCodigo.get(s.codigo)
             return (
@@ -241,6 +261,7 @@ export function RepuestoPicker({
                     <span style={{ fontWeight: 'var(--weight-regular)', color: 'var(--text-faint)' }}> · {s.categoria}</span>
                   )}
                 </span>
+                {s.medida && <StatusBadge status="pending">{s.medida}</StatusBadge>}
                 {s.stock_actual === 0 && <StatusBadge status="expired">Sin stock</StatusBadge>}
                 <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 110, textAlign: 'right' }}>
                   {s.precio_actual ? formatPrecioARS(s.precio_actual) : '—'}
@@ -248,20 +269,14 @@ export function RepuestoPicker({
                 <button
                   style={botonMenos}
                   disabled={!cantidad}
-                  onClick={() => onAgregar({
-                    codigo: s.codigo, descripcion: s.descripcion,
-                    precio: s.precio_actual, stock: s.stock_actual, categoria: s.categoria, marca: s.marca,
-                  }, Math.max(0, (cantidad || 0) - 1))}
+                  onClick={() => agregarSugerido(s, Math.max(0, (cantidad || 0) - 1), 'exacto')}
                 >
                   −
                 </button>
                 {cantidad ? <StatusBadge status="active">×{cantidad}</StatusBadge> : null}
                 <SelectorCantidad
                   cantidadActual={cantidad}
-                  onElegir={(n) => onAgregar({
-                    codigo: s.codigo, descripcion: s.descripcion,
-                    precio: s.precio_actual, stock: s.stock_actual, categoria: s.categoria, marca: s.marca,
-                  }, n)}
+                  onElegir={(n) => agregarSugerido(s, n, 'exacto')}
                 />
               </div>
             )
@@ -293,7 +308,7 @@ export function RepuestoPicker({
               <div style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
                 {resultado.total} repuesto{resultado.total === 1 ? '' : 's'} encontrado{resultado.total === 1 ? '' : 's'}
                 {resultado.total > resultado.repuestos.length && ` — mostrando los primeros ${resultado.repuestos.length}`}
-                {' · '}Click en la fila para agregar uno, o el + para elegir la cantidad
+                {' · '}{ayudaFilas}
               </div>
             )}
             <div style={{ maxHeight: 560, overflow: 'auto' }}>
