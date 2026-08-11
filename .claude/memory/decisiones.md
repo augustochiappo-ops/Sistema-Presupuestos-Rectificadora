@@ -1,5 +1,22 @@
 # Decisiones técnicas y de diseño
 
+## Borrar un cliente se bloquea si tiene presupuestos, no se borra en cascada (2026-08-11)
+**Decisión:** `DELETE /api/clientes/<id>` devuelve **409** si el cliente aparece en algún presupuesto —como principal **o como contraparte**— e informa cuántos son. Solo se borra el cliente que no aparece en ninguno.
+**Por qué:** un presupuesto es plata cotizada y su PDF ya puede estar en manos del cliente; que se borre de rebote por limpiar una ficha de cliente sería un daño mucho mayor que el que se quería reparar. El camino queda explícito: primero se borran los presupuestos (uno por uno, con su propia confirmación) y recién ahí el cliente. La contraparte cuenta porque, si se borrara, el presupuesto perdería el nombre del mecánico que trajo el trabajo.
+**En pantalla:** el tacho del listado ya viene deshabilitado cuando `total_presupuestos > 0` (ese dato ya lo traía la lista), así el bloqueo se ve antes de tocar nada; el 409 igual existe porque el servidor es la fuente de verdad.
+**Fecha:** 2026-08-11
+
+## Los códigos del pedido se copian de a uno, y las marcas no se persisten
+**Decisión:** el botón "Copiar códigos" abre un pop-up con un renglón por código y su propio botón de copiar, en vez de mandar todo junto al portapapeles. Los que se van copiando quedan marcados, pero **esas marcas viven solo mientras la ventana esté abierta**.
+**Por qué:** el flujo real es copiar un código, salir a la web del proveedor, pegarlo y volver — copiar los siete juntos no servía para eso. Las marcas son para no perder el hilo en esa ida y vuelta; persistirlas obligaría a inventar un estado ("pedido") que hoy no existe y que se desincronizaría con la realidad apenas se arme el pedido dos veces.
+**Fecha:** 2026-08-11
+
+## Los repuestos del motor arrancan agrupados y cerrados
+**Decisión:** en el paso Repuestos (wizard y edición), la ficha del motor se muestra separada por categoría, con cada grupo **cerrado** y una flechita para abrirlo. Excepción: si hay un solo grupo, arranca abierto.
+**Por qué:** con varias categorías cargadas la lista plana mezclaba cojinetes de biela con los de bancada y no se entendía qué era qué. Cerrados, la pantalla se lee como un índice ("qué lleva este motor") y se abre solo lo que se va a tocar. Con un solo grupo la flechita sería un click sin ganancia.
+**Dónde se implementó:** dentro de `components/RepuestoPicker.jsx`, que ya compartían el wizard y la edición del detalle — así las dos pantallas cambian juntas sin tocar ninguna de las dos.
+**Fecha:** 2026-08-11
+
 ## Revalidar un presupuesto: solo repuestos, la mano de obra se avisa (2026-08-11)
 **Decisión:** el botón "Actualizar a precios de hoy" recotiza **solo los repuestos** contra el catálogo del proveedor. Si la lista de mano de obra de FACRA también cambió, el resumen lo muestra aparte con su diferencia, pero no la aplica.
 **Por qué:** el precio del proveedor es un dato externo que cambia solo, todos los días — actualizarlo es mecánico. El precio de mano de obra es una **decisión comercial del taller**: la lista de la Cámara es orientativa y el dueño ya tiene el ajuste % para trasladarla como quiera. Aplicarla sola le cambiaría el criterio de precio sin pedirle permiso. El aviso existe igual porque, si no, el dueño no se enteraría de que la lista se movió.
