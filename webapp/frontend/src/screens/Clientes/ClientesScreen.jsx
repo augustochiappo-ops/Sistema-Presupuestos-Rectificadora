@@ -7,6 +7,8 @@ import { SearchInput } from '../../components/SearchInput'
 import { StatusBadge } from '../../components/StatusBadge'
 import { Button } from '../../components/Button'
 import { Icon } from '../../components/Icon'
+import { ConfirmDialog } from '../../components/ConfirmDialog'
+import { ErrorBanner } from '../../components/ErrorBanner'
 import { formatFechaAR } from '../../utils/format'
 import { puntajeCoincidenciaCliente } from '../../utils/fuzzyMatch'
 
@@ -21,6 +23,9 @@ export default function ClientesScreen() {
   const [cargando, setCargando] = React.useState(true)
   const [busqueda, setBusqueda] = React.useState('')
   const [filtroTipo, setFiltroTipo] = React.useState('todos')
+  const [aEliminar, setAEliminar] = React.useState(null)
+  const [eliminando, setEliminando] = React.useState(false)
+  const [error, setError] = React.useState('')
   const navigate = useNavigate()
 
   React.useEffect(() => {
@@ -45,9 +50,27 @@ export default function ClientesScreen() {
       .map((x) => x.c)
   }, [porTipo, busqueda])
 
+  const eliminar = async () => {
+    if (!aEliminar) return
+    setEliminando(true)
+    setError('')
+    try {
+      await api.del(`/clientes/${aEliminar.id}`)
+      setClientes((actual) => actual.filter((c) => c.id !== aEliminar.id))
+      setAEliminar(null)
+    } catch (err) {
+      setError(err.message || 'No se pudo eliminar el cliente')
+      setAEliminar(null)
+    } finally {
+      setEliminando(false)
+    }
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       <PageHeader title="Clientes" subtitle={`${clientes.length} cliente${clientes.length === 1 ? '' : 's'}`} />
+
+      <ErrorBanner message={error} onClose={() => setError('')} />
 
       <div style={{ display: 'flex', gap: 8 }}>
         {FILTROS_TIPO.map((f) => (
@@ -75,11 +98,47 @@ export default function ClientesScreen() {
           { key: 'tipo', header: 'Tipo', width: 220, render: (v) => <StatusBadge status={v || 'sin_clasificar'} /> },
           { key: 'total_presupuestos', header: 'Presupuestos', align: 'center', width: 130 },
           { key: 'ultimo_presupuesto', header: 'Último presupuesto', align: 'right', width: 160, render: formatFechaAR },
+          {
+            // El tacho queda deshabilitado si el cliente aparece en algún
+            // presupuesto: el dato ya viene en la lista, así que el bloqueo se
+            // ve antes de tocar nada (el servidor igual lo rechaza).
+            key: '_eliminar', header: '', align: 'center', width: 60,
+            render: (_, row) => {
+              const bloqueado = row.total_presupuestos > 0
+              return (
+                <button
+                  title={bloqueado
+                    ? `Tiene ${row.total_presupuestos} presupuesto${row.total_presupuestos === 1 ? '' : 's'}: borralos primero`
+                    : `Eliminar a ${row.nombre}`}
+                  disabled={bloqueado}
+                  onClick={(e) => { e.stopPropagation(); setError(''); setAEliminar(row) }}
+                  style={{
+                    border: 'none', background: 'transparent', padding: 4,
+                    cursor: bloqueado ? 'not-allowed' : 'pointer',
+                    color: bloqueado ? 'var(--border-default)' : 'var(--status-expired-fg)',
+                    display: 'inline-flex',
+                  }}
+                >
+                  <Icon n="trash" s={16} />
+                </button>
+              )
+            },
+          },
         ]}
         reorderKey="clientes"
         rows={filtrados}
         onRowClick={(c) => navigate(`/clientes/${c.id}`)}
         emptyMessage={cargando ? 'Cargando…' : (busqueda.trim() ? 'Ningún cliente coincide con la búsqueda.' : 'Todavía no hay clientes. Se crean automáticamente al hacer un presupuesto.')}
+      />
+
+      <ConfirmDialog
+        open={Boolean(aEliminar)}
+        title="¿Eliminar cliente?"
+        message={`Se va a eliminar a ${aEliminar?.nombre || ''} de la lista. Esta acción no se puede deshacer.`}
+        confirmLabel={eliminando ? 'Eliminando…' : 'Eliminar'}
+        danger
+        onCancel={() => setAEliminar(null)}
+        onConfirm={eliminar}
       />
     </div>
   )

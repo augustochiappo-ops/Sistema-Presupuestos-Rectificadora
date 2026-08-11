@@ -102,7 +102,7 @@ def generar_pdf(
 
     header_data = [
         [Paragraph(config.NOMBRE_TALLER, E["taller"]), Paragraph("PRESUPUESTO", E["titulo_doc"])],
-        [Paragraph("Taller de rectificación de motores", E["subtaller"]), Paragraph(num_str, E["num_doc"])],
+        [Paragraph("Rectificación de motores", E["subtaller"]), Paragraph(num_str, E["num_doc"])],
         [Paragraph(f"Fecha: {fecha_hoy}", E["subtaller"]), Paragraph("", E["num_doc"])],
     ]
     header_table = Table(header_data, colWidths=[page_w * 0.55, page_w * 0.45])

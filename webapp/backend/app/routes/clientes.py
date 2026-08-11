@@ -43,6 +43,27 @@ def actualizar(cliente_id):
     return jsonify(db.get_cliente(cliente_id))
 
 
+@bp.delete("/<int:cliente_id>")
+@login_required
+def eliminar(cliente_id):
+    """Borra un cliente. Si tiene presupuestos (propios o donde figura como
+    contraparte) devuelve 409 con la cantidad, para que la pantalla pueda decir
+    exactamente cuántos hay que borrar primero."""
+    resultado = db.eliminar_cliente(cliente_id)
+    if resultado == "no_existe":
+        return jsonify({"error": "Cliente no encontrado"}), 404
+    if resultado == "tiene_presupuestos":
+        cuantos = db.contar_presupuestos_cliente(cliente_id)
+        return jsonify({
+            "error": (
+                f"Este cliente tiene {cuantos} presupuesto{'' if cuantos == 1 else 's'}. "
+                "Borralos primero y después vas a poder borrar el cliente."
+            ),
+            "presupuestos": cuantos,
+        }), 409
+    return "", 204
+
+
 @bp.get("/<int:cliente_id>/presupuestos")
 @login_required
 def presupuestos(cliente_id):

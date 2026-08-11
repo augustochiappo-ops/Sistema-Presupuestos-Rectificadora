@@ -147,6 +147,33 @@ export function RepuestoPicker({
   const [descripcion, setDescripcion] = React.useState('')
   const [resultado, setResultado] = React.useState({ total: 0, repuestos: [] })
   const [cargando, setCargando] = React.useState(false)
+  // null = nadie tocó las flechitas todavía (ver `abiertos` más abajo).
+  const [abiertos, setAbiertos] = React.useState(null)
+
+  // Los repuestos que el motor ya tiene cargados vienen en una lista plana; acá
+  // se separan por categoría del proveedor para que los cojinetes de biela no
+  // queden mezclados con los de bancada. El orden es el de llegada de la ficha.
+  const gruposSugeridos = React.useMemo(() => {
+    const porCategoria = new Map()
+    sugeridos.forEach((s) => {
+      const nombre = s.categoria || 'Sin categoría'
+      if (!porCategoria.has(nombre)) porCategoria.set(nombre, [])
+      porCategoria.get(nombre).push(s)
+    })
+    return [...porCategoria.entries()].map(([nombre, items]) => ({ nombre, items }))
+  }, [sugeridos])
+
+  // Arrancan cerrados: la lista de categorías se lee de un vistazo y se abre la
+  // que interesa. Con un solo grupo la flechita sería un click sin ganancia, así
+  // que ese arranca abierto (hasta que el usuario toque algo).
+  const abiertosEfectivos = abiertos
+    ?? (gruposSugeridos.length === 1 ? gruposSugeridos.map((g) => g.nombre) : [])
+
+  const alternarGrupo = (nombre) => setAbiertos(
+    abiertosEfectivos.includes(nombre)
+      ? abiertosEfectivos.filter((n) => n !== nombre)
+      : [...abiertosEfectivos, nombre],
+  )
 
   // Las marcas se recalculan según la categoría elegida: al entrar a "Válvulas"
   // solo deben verse las marcas que tienen repuestos en esa categoría.
@@ -249,35 +276,80 @@ export function RepuestoPicker({
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       {sugeridos.length > 0 && (
         <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={tituloSeccion}>{tituloSugeridos}</div>
-          {sugeridos.map((s) => {
-            const cantidad = cantidadPorCodigo.get(s.codigo)
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <div style={tituloSeccion}>{tituloSugeridos}</div>
+            {gruposSugeridos.length > 1 && (
+              <button
+                onClick={() => setAbiertos(
+                  abiertosEfectivos.length === gruposSugeridos.length ? [] : gruposSugeridos.map((g) => g.nombre),
+                )}
+                style={{
+                  marginLeft: 'auto', border: 'none', background: 'transparent', cursor: 'pointer', padding: 0,
+                  fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--text-muted)',
+                }}
+              >
+                {abiertosEfectivos.length === gruposSugeridos.length ? 'Colapsar todo' : 'Expandir todo'}
+              </button>
+            )}
+          </div>
+
+          {gruposSugeridos.map((g) => {
+            const abierto = abiertosEfectivos.includes(g.nombre)
+            const cargadas = g.items.filter((s) => cantidadPorCodigo.get(s.codigo)).length
             return (
-              <div key={s.codigo} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-muted)', width: 110, flexShrink: 0, overflowWrap: 'anywhere' }}>{s.codigo}</span>
-                <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-bold)', color: 'var(--text-strong)', minWidth: 0 }}>
-                  {s.descripcion}
-                  {s.categoria && (
-                    <span style={{ fontWeight: 'var(--weight-regular)', color: 'var(--text-faint)' }}> · {s.categoria}</span>
-                  )}
-                </span>
-                {s.medida && <StatusBadge status="pending">{s.medida}</StatusBadge>}
-                {s.stock_actual === 0 && <StatusBadge status="expired">Sin stock</StatusBadge>}
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 110, textAlign: 'right' }}>
-                  {s.precio_actual ? formatPrecioARS(s.precio_actual) : '—'}
-                </span>
+              <div key={g.nombre} style={{ borderTop: '1px solid var(--border-subtle)' }}>
                 <button
-                  style={botonMenos}
-                  disabled={!cantidad}
-                  onClick={() => agregarSugerido(s, Math.max(0, (cantidad || 0) - 1), 'exacto')}
+                  onClick={() => alternarGrupo(g.nombre)}
+                  aria-expanded={abierto}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 10, width: '100%', textAlign: 'left',
+                    border: 'none', background: 'transparent', cursor: 'pointer', padding: '10px 2px',
+                    fontFamily: 'var(--font-body)', color: 'var(--text-strong)',
+                  }}
                 >
-                  −
+                  <Icon n={abierto ? 'chevron-down' : 'chevron-right'} s={16} />
+                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-bold)' }}>{g.nombre}</span>
+                  <span style={{ fontSize: 12, color: 'var(--text-faint)' }}>
+                    {g.items.length} {g.items.length === 1 ? 'opción' : 'opciones'}
+                    {cargadas > 0 && ` · ${cargadas} cargada${cargadas === 1 ? '' : 's'}`}
+                  </span>
                 </button>
-                {cantidad ? <StatusBadge status="active">×{cantidad}</StatusBadge> : null}
-                <SelectorCantidad
-                  cantidadActual={cantidad}
-                  onElegir={(n) => agregarSugerido(s, n, 'exacto')}
-                />
+
+                {abierto && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8, padding: '2px 0 12px 26px' }}>
+                    {g.items.map((s) => {
+                      const cantidad = cantidadPorCodigo.get(s.codigo)
+                      return (
+                        <div key={s.codigo} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-muted)', width: 110, flexShrink: 0, overflowWrap: 'anywhere' }}>{s.codigo}</span>
+                          <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-bold)', color: 'var(--text-strong)', minWidth: 0 }}>
+                            {s.descripcion}
+                            {s.marca && (
+                              <span style={{ fontWeight: 'var(--weight-regular)', color: 'var(--text-faint)' }}> · {s.marca}</span>
+                            )}
+                          </span>
+                          {s.medida && <StatusBadge status="pending">{s.medida}</StatusBadge>}
+                          {s.stock_actual === 0 && <StatusBadge status="expired">Sin stock</StatusBadge>}
+                          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 110, textAlign: 'right' }}>
+                            {s.precio_actual ? formatPrecioARS(s.precio_actual) : '—'}
+                          </span>
+                          <button
+                            style={botonMenos}
+                            disabled={!cantidad}
+                            onClick={() => agregarSugerido(s, Math.max(0, (cantidad || 0) - 1), 'exacto')}
+                          >
+                            −
+                          </button>
+                          {cantidad ? <StatusBadge status="active">×{cantidad}</StatusBadge> : null}
+                          <SelectorCantidad
+                            cantidadActual={cantidad}
+                            onElegir={(n) => agregarSugerido(s, n, 'exacto')}
+                          />
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
               </div>
             )
           })}

@@ -60,6 +60,13 @@ if crac.get_info_catalogo()["total"] == 0:
 check("motores cargados", len(facra.get_motores()) == 491)
 check("catálogo cargado", crac.get_info_catalogo()["total"] == 64250)
 
+# Las fichas de repuestos de los motores sobreviven al borrado de datos de
+# prueba (a propósito: son trabajo cargado a mano). Para que dos corridas
+# seguidas sobre el mismo DATA_DIR den lo mismo, acá se arranca sin ninguna.
+with db.get_connection() as _conn:
+    _conn.execute("DELETE FROM motor_repuesto_opciones")
+    _conn.execute("DELETE FROM motor_repuesto_grupos")
+
 print("\n=== 1. Medidas del catálogo ===")
 familia = [r["medida"] for r in crac.get_medidas_hermanas("CAAC02740  STD")]
 check("familia CAAC02740 completa", sorted(familia) == ["010", "020", "030", "040", "050", "060", "STD"], familia)
@@ -246,6 +253,15 @@ check("el PDF dice Repuestos", "Repuestos" in texto)
 check("el PDF no filtra códigos del proveedor", codigos[0] not in texto)
 check("el PDF no nombra al proveedor", "CRAC" not in texto.upper())
 check("el PDF muestra la categoría", "Cojinetes biela" in texto)
+# Encabezado del PDF: el nombre del taller y el renglón de abajo, tal como los
+# pidió el dueño (antes decían "Chicappo" y "Taller de rectificación…").
+# El título entra en dos renglones, así que se compara sobre el texto con los
+# saltos de línea colapsados.
+texto_plano = " ".join(texto.split())
+check("el PDF dice Rectificaciones Chiappo", "Rectificaciones Chiappo" in texto_plano, texto_plano[:200])
+check("el PDF no dice Chicappo", "Chicappo" not in texto_plano)
+check("el PDF dice Rectificación de motores", "Rectificación de motores" in texto_plano, texto_plano[:200])
+check("el PDF no dice Taller de", "Taller de" not in texto_plano)
 
 print("\n=== 11. Actualizar a precios de hoy (revalidar) ===")
 
@@ -437,7 +453,39 @@ check("el original queda intacto",
       cliente.get(f"/api/presupuestos/{pid3}").get_json()["total"] == detalle3["total"])
 check("la copia genera su propio PDF", len(db.get_pdfs_presupuesto(pid_dup)) == 1)
 
-print("\n=== 13. Borrar datos de prueba ===")
+print("\n=== 13. Borrar un cliente ===")
+# Regla: solo se borra el cliente que no aparece en ningún presupuesto, ni como
+# principal ni como contraparte. Un presupuesto ya cotizado (con su PDF en manos
+# del cliente) no se pierde de rebote por borrar una ficha.
+cliente_con_presu = cliente.get(f"/api/presupuestos/{pid2}").get_json()["cliente_id"]
+r = cliente.delete(f"/api/clientes/{cliente_con_presu}")
+check("borrar un cliente con presupuestos da 409", r.status_code == 409, r.get_json())
+check("el 409 dice cuántos presupuestos tiene", r.get_json().get("presupuestos", 0) > 0, r.get_json())
+check("el cliente sigue existiendo", cliente.get(f"/api/clientes/{cliente_con_presu}").status_code == 200)
+
+# Cliente suelto (sin presupuestos): en la app solo puede quedar así después de
+# borrarle los presupuestos, acá se simula insertándolo directo.
+_sql("INSERT INTO clientes (nombre) VALUES ('Cliente Sin Presupuestos')")
+id_suelto = _sql("SELECT id FROM clientes WHERE nombre = 'Cliente Sin Presupuestos'")[0][0]
+r = cliente.delete(f"/api/clientes/{id_suelto}")
+check("borrar un cliente sin presupuestos da 204", r.status_code == 204, r.status_code)
+check("el cliente desapareció", cliente.get(f"/api/clientes/{id_suelto}").status_code == 404)
+
+# Contraparte: el mecánico que trajo el auto de un dueño también queda bloqueado.
+r = cliente.post("/api/presupuestos", json={
+    "cliente_nombre": "dueno con mecanico",
+    "contacto_nombre": "mecanico contraparte",
+    "motor_id": motor["id"],
+    "items": [{"descripcion_custom": "Trabajo suelto", "precio_aplicado": 1000, "cantidad": 1}],
+})
+check("presupuesto con contraparte creado", r.status_code == 201, r.get_json())
+id_contacto = [c["id"] for c in db.get_clientes_lista() if c["nombre"] == "Mecanico Contraparte"][0]
+r = cliente.delete(f"/api/clientes/{id_contacto}")
+check("la contraparte tampoco se puede borrar", r.status_code == 409, r.get_json())
+
+check("borrar un cliente inexistente da 404", cliente.delete("/api/clientes/999999").status_code == 404)
+
+print("\n=== 14. Borrar datos de prueba ===")
 motores_antes = len(facra.get_motores())
 servicios_antes = len(facra.get_servicios_para_lista(motor.get("lista_num")))
 catalogo_antes = crac.get_info_catalogo()["total"]

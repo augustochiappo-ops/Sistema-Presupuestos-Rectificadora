@@ -8,6 +8,7 @@ import { TextField } from '../../components/TextField'
 import { StatusBadge } from '../../components/StatusBadge'
 import { Icon } from '../../components/Icon'
 import { ErrorBanner } from '../../components/ErrorBanner'
+import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { formatPrecioARS, formatFechaAR } from '../../utils/format'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
@@ -24,6 +25,8 @@ export default function ClienteDetalle() {
   const [tipoEdit, setTipoEdit] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
   const [error, setError] = React.useState('')
+  const [confirmarEliminar, setConfirmarEliminar] = React.useState(false)
+  const [eliminando, setEliminando] = React.useState(false)
 
   const cargar = React.useCallback(() => {
     setCargando(true)
@@ -61,6 +64,23 @@ export default function ClienteDetalle() {
     }
   }
 
+  // El borrado se bloquea del lado del servidor si el cliente aparece en algún
+  // presupuesto (propio o como contraparte). El 409 trae el texto con la
+  // cantidad exacta, y los presupuestos ya están listados abajo en esta misma
+  // pantalla, así que el aviso alcanza para saber qué hay que borrar antes.
+  const eliminar = async () => {
+    setEliminando(true)
+    setError('')
+    try {
+      await api.del(`/clientes/${id}`)
+      navigate('/clientes')
+    } catch (err) {
+      setError(err.message || 'No se pudo eliminar el cliente')
+      setEliminando(false)
+      setConfirmarEliminar(false)
+    }
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       <PageHeader
@@ -78,12 +98,21 @@ export default function ClienteDetalle() {
                 Editar
               </Button>
             )}
+            {!editando && cliente && (
+              <Button variant="danger" iconLeft={<Icon n="trash" s={16} />} onClick={() => { setError(''); setConfirmarEliminar(true) }}>
+                Eliminar
+              </Button>
+            )}
             <Button variant="secondary" iconLeft={<Icon n="arrow-left" s={16} />} onClick={() => navigate('/clientes')}>
               Volver a Clientes
             </Button>
           </>
         }
       />
+
+      {/* Fuera del formulario: los errores de borrado también tienen que verse
+          cuando no se está editando. */}
+      {!editando && <ErrorBanner message={error} onClose={() => setError('')} />}
 
       {editando ? (
         <form
@@ -160,6 +189,16 @@ export default function ClienteDetalle() {
         rows={presupuestos}
         onRowClick={(p) => navigate(`/presupuestos/${p.id}`)}
         emptyMessage={cargando ? 'Cargando…' : 'Este cliente no tiene presupuestos.'}
+      />
+
+      <ConfirmDialog
+        open={confirmarEliminar}
+        title="¿Eliminar cliente?"
+        message={`Se va a eliminar a ${cliente?.nombre || 'este cliente'} de la lista. Esta acción no se puede deshacer.`}
+        confirmLabel={eliminando ? 'Eliminando…' : 'Eliminar'}
+        danger
+        onCancel={() => setConfirmarEliminar(false)}
+        onConfirm={eliminar}
       />
     </div>
   )

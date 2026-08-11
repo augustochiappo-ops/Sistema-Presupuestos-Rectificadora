@@ -17,7 +17,7 @@ línea por verificación y salen con código 1 si falla alguna.
 
 ## 1. Backend — `backend_grupos.py`
 
-104 verificaciones sobre la lógica, la base y el PDF.
+121 verificaciones sobre la lógica, la base y el PDF.
 
 ```bash
 # Una sola vez: entorno con las dependencias del backend + pypdf (para leer el PDF)
@@ -43,14 +43,15 @@ Qué cubre, por bloque:
 | Pedido | Precios de hoy, agrupado por marca, total cotizado coincide, fecha del catálogo, más barato ≤ cotizado |
 | HTTP | 401 sin sesión, 404 de motor inexistente, 400 al copiar la ficha del mismo motor, PUT que reemplaza la ficha |
 | Totales | El total nunca suma las alternativas |
-| PDF | Sin columna "Cant." en repuestos, sin códigos del proveedor, sin nombrar al proveedor, con la categoría |
+| PDF | Sin columna "Cant." en repuestos, sin códigos del proveedor, sin nombrar al proveedor, con la categoría, y el encabezado exacto ("Rectificaciones Chiappo" / "Rectificación de motores") |
 | Revalidar | Recién creado no detecta cambios; sube un precio y la diferencia es exacta; otra opción pasa a ser la más cara y cambia sola; el código fuera de catálogo conserva su precio y avisa; la mano de obra se informa pero NO se toca; al aplicar cambia el total, la fecha pasa a hoy, sobreviven notas/ajuste %/aprobado, y se genera **una** versión nueva de PDF; la segunda vez no acumula versiones |
 | Duplicar | La copia se crea con otro cliente, mismo motor y mismo ajuste %, a precios de hoy, con su propio PDF, sin tocar el original |
+| Borrar cliente | Con presupuestos da 409 (y dice cuántos) y el cliente sobrevive; sin presupuestos da 204 y desaparece; la contraparte de un presupuesto ajeno también queda bloqueada; id inexistente da 404 |
 | Borrado | Vacía presupuestos y clientes, deja intactos motores, mano de obra, catálogo, favoritos y fichas |
 
 ## 2. UI — `ui_grupos.mjs`
 
-52 verificaciones con navegador real, más capturas de pantalla en
+76 verificaciones con navegador real, más capturas de pantalla en
 `tests/capturas/`.
 
 ```bash
@@ -87,7 +88,18 @@ con cambios abre el resumen con las dos secciones, aplica, deja el PDF en Versi�
 cambió la mano de obra, no ofrece aplicar) · **duplicar** desde el listado y
 desde el detalle (wizard cargado, saltea el motor, repuestos copiados, el
 original queda intacto) · ficha de repuestos del motor y copiarla desde otro
-motor · fecha de última carga y borrado de datos de prueba en Actualizar Excel.
+motor · fecha de última carga y borrado de datos de prueba en Actualizar Excel ·
+**pop-up de códigos del pedido** (se abre desde "Copiar códigos", copia de a uno,
+contador "N de M copiados", el portapapeles queda con un solo código, copiar
+todos y reiniciar marcas) · **repuestos del motor separados por grupos** (arrancan
+cerrados, la flechita despliega uno solo, expandir/colapsar todo) · **eliminar
+cliente** (tacho habilitado solo sin presupuestos, confirmación, desaparece de la
+lista, y el aviso con la cantidad al intentarlo desde la ficha).
+
+Las dos suites **arrancan limpiando el estado que ellas mismas generan**
+(presupuestos, clientes y fichas de motor), así que se pueden correr dos veces
+seguidas sobre el mismo `DATA_DIR` y dan el mismo resultado. Los datos importados
+(motores, mano de obra, catálogo) no se tocan.
 
 También falla si la página tira **cualquier error de JavaScript**, aunque la
 verificación en sí pase.

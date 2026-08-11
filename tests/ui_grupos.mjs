@@ -54,6 +54,14 @@ page.on('pageerror', (e) => { console.log('  !! error de JS en la página:', e.m
 
 async function esperar(ms) { await page.waitForTimeout(ms) }
 
+// Estado limpio antes de empezar: la suite crea presupuestos, clientes y fichas
+// de motor. Si quedaran de una corrida anterior, el wizard arrancaría
+// precargado desde la ficha y las verificaciones de cantidades dejarían de
+// medir lo que dicen medir. No toca motores, mano de obra ni catálogo.
+py(`for t in ("presupuesto_items", "presupuesto_item_opciones", "presupuesto_pdfs",
+             "presupuestos", "clientes", "motor_repuesto_opciones", "motor_repuesto_grupos"):
+    c.execute("DELETE FROM " + t)`)
+
 console.log('\n=== Login ===')
 await page.goto(BASE, { waitUntil: 'networkidle' })
 await page.fill('input[autocomplete="username"]', 'admin')
@@ -211,10 +219,40 @@ check('muestra el cotizado y la diferencia', (await page.locator('text=Cotizado 
   && (await page.locator('text=Diferencia a favor').count()) > 0)
 await page.screenshot({ path: `${SHOT}/08-pedido.png`, fullPage: true })
 
-// Copiar códigos
+// Copiar códigos: se copian de a uno, para ir pegándolos en el sistema del
+// proveedor y volver por el siguiente.
 await page.context().grantPermissions(['clipboard-read', 'clipboard-write']).catch(() => {})
 const btnCopiar = page.locator('button', { hasText: /Copiar códigos/ })
 check('hay botón de copiar códigos', (await btnCopiar.count()) > 0)
+
+await btnCopiar.first().click()
+await esperar(900)
+check('el botón abre el pop-up de códigos', (await page.locator('text=Códigos para pedir').count()) > 0)
+const botonesCopiar = page.locator('button', { hasText: /^Copiar$/ })
+const nCodigos = await botonesCopiar.count()
+check('cada código tiene su propio botón', nCodigos > 0, `botones=${nCodigos}`)
+check('arranca sin nada copiado', (await page.locator('text=/0 de \\d+ copiados/').count()) > 0)
+
+await botonesCopiar.first().click()
+await esperar(700)
+check('copiar uno avanza el contador', (await page.locator('text=/1 de \\d+ copiados/').count()) > 0)
+check('el renglón copiado queda marcado',
+  (await page.locator('button', { hasText: /^Copiado$/ }).count()) === 1)
+// Lo que quedó en el portapapeles tiene que ser un código del pedido (no la
+// lista entera): en headless puede no haber permiso, por eso no aborta.
+const enPortapapeles = await page.evaluate(() => navigator.clipboard.readText()).catch(() => null)
+if (enPortapapeles !== null) {
+  check('el portapapeles tiene un solo código',
+    enPortapapeles.trim().length > 0 && !enPortapapeles.includes('\n'), JSON.stringify(enPortapapeles))
+}
+await page.screenshot({ path: `${SHOT}/08b-codigos-pedido.png`, fullPage: false })
+
+await page.locator('button', { hasText: /Copiar todos/ }).click()
+await esperar(700)
+check('"Copiar todos" marca todos', (await page.locator(`text=/${nCodigos} de ${nCodigos} copiados/`).count()) > 0)
+await page.locator('button', { hasText: /Reiniciar marcas/ }).click()
+await esperar(500)
+check('"Reiniciar marcas" vuelve a cero', (await page.locator('text=/0 de \\d+ copiados/').count()) > 0)
 
 console.log('\n=== Actualizar a precios de hoy ===')
 const pid = page.url().match(/presupuestos\/(\d+)/)[1]
@@ -359,6 +397,100 @@ await esperar(1000)
 check('muestra la última carga del catálogo', (await page.locator('text=/Última carga:/').count()) > 0)
 check('tiene la sección de borrar datos de prueba', (await page.locator('text=Borrar datos de prueba').count()) > 0)
 await page.screenshot({ path: `${SHOT}/11-excel.png`, fullPage: true })
+
+console.log('\n=== Repuestos del motor separados por grupos ===')
+// La ficha del motor quedó con un solo grupo; con uno solo el bloque arranca
+// abierto a propósito, así que se le agrega otro por SQL para verificar el
+// plegado de verdad.
+const codigoAros = py(`
+mid = c.execute("SELECT motor_id FROM presupuestos ORDER BY id LIMIT 1").fetchone()[0]
+cod = c.execute("SELECT codigo FROM crac_repuestos WHERE cat_prefijo = 'AR' AND precio > 0 LIMIT 1").fetchone()[0]
+c.execute("DELETE FROM motor_repuesto_grupos WHERE motor_id = ? AND categoria = 'Aros'", (mid,))
+gid = c.execute("INSERT INTO motor_repuesto_grupos (motor_id, categoria, cat_prefijo) VALUES (?, 'Aros', 'AR')", (mid,)).lastrowid
+c.execute("INSERT INTO motor_repuesto_opciones (grupo_id, repuesto_codigo, cantidad) VALUES (?, ?, 4)", (gid, cod))
+print(cod)`)
+
+await page.goto(`${BASE}/presupuestos/nuevo`, { waitUntil: 'networkidle' })
+await esperar(800)
+await page.fill('input[placeholder*="Buscar cliente"]', 'Cliente Grupos UI')
+await esperar(600)
+const btnMecanico3 = page.locator('button', { hasText: /^Mecánico$/ })
+if (await btnMecanico3.count()) { await btnMecanico3.click(); await esperar(400) }
+await page.locator('button', { hasText: /Siguiente|Continuar/i }).first().click()
+await esperar(700)
+await page.fill('input[placeholder*="Buscar" i]', 'CITROEN')
+await esperar(1000)
+await page.locator('table tbody tr').first().click()
+await esperar(1200)
+await page.locator('button', { hasText: /Siguiente.*Repuestos/i }).first().click()
+await esperar(2000)
+
+const cabeceras = page.locator('button[aria-expanded]')
+check('los repuestos del motor salen separados por grupos', (await cabeceras.count()) === 2,
+  `grupos=${await cabeceras.count()}`)
+check('las categorías se ven como títulos de grupo',
+  (await page.locator('button[aria-expanded]', { hasText: /Aros/ }).count()) === 1)
+check('los grupos arrancan cerrados',
+  (await page.locator('button[aria-expanded="true"]').count()) === 0)
+check('con los ítems escondidos', (await page.getByText(codigoAros, { exact: true }).count()) === 0)
+await page.screenshot({ path: `${SHOT}/13-grupos-cerrados.png`, fullPage: false })
+
+await page.locator('button[aria-expanded]', { hasText: /Aros/ }).click()
+await esperar(700)
+check('la flechita despliega ese grupo',
+  (await page.locator('button[aria-expanded="true"]').count()) === 1)
+check('y muestra sus ítems', (await page.getByText(codigoAros, { exact: true }).count()) >= 1)
+check('el otro grupo sigue cerrado',
+  (await page.locator('button[aria-expanded="false"]').count()) === 1)
+await page.screenshot({ path: `${SHOT}/14-grupo-abierto.png`, fullPage: false })
+
+await page.locator('button', { hasText: /^Expandir todo$/ }).click()
+await esperar(700)
+check('"Expandir todo" abre los dos',
+  (await page.locator('button[aria-expanded="true"]').count()) === 2)
+await page.locator('button', { hasText: /^Colapsar todo$/ }).click()
+await esperar(700)
+check('"Colapsar todo" los cierra',
+  (await page.locator('button[aria-expanded="true"]').count()) === 0)
+
+console.log('\n=== Eliminar cliente ===')
+// Un cliente sin presupuestos: en la app solo queda así después de borrarle los
+// presupuestos, acá se inserta directo.
+py("c.execute(\"INSERT INTO clientes (nombre) VALUES ('Cliente Borrable UI')\")")
+await page.goto(`${BASE}/clientes`, { waitUntil: 'networkidle' })
+await esperar(1200)
+const filaBorrable = page.locator('table tbody tr', { hasText: 'Cliente Borrable UI' })
+const filaConPresu = page.locator('table tbody tr', { hasText: 'Cliente Grupos UI' })
+check('el cliente sin presupuestos se puede borrar',
+  await filaBorrable.locator('button[title^="Eliminar"]').isEnabled())
+check('el cliente con presupuestos tiene el tacho bloqueado',
+  await filaConPresu.locator('button[title^="Tiene"]').isDisabled())
+await page.screenshot({ path: `${SHOT}/15-clientes.png`, fullPage: false })
+
+await filaBorrable.locator('button[title^="Eliminar"]').click()
+await esperar(600)
+check('pide confirmación antes de borrar',
+  (await page.locator('text=/¿Eliminar cliente\\?/').count()) > 0)
+await page.locator('button', { hasText: /^Eliminar$/ }).click()
+await esperar(1200)
+check('el cliente desaparece de la lista',
+  (await page.locator('table tbody tr', { hasText: 'Cliente Borrable UI' }).count()) === 0)
+
+// Desde la ficha del cliente: el botón existe y el bloqueo se explica.
+await filaConPresu.first().click()
+await page.waitForURL(/clientes\/\d+/, { timeout: 15000 })
+await esperar(1000)
+check('la ficha del cliente tiene botón Eliminar',
+  (await page.locator('button', { hasText: /^Eliminar$/ }).count()) > 0)
+await page.locator('button', { hasText: /^Eliminar$/ }).first().click()
+await esperar(500)
+// El diálogo de confirmación se monta al final del DOM: su botón es el último.
+await page.locator('button', { hasText: /^Eliminar$/ }).last().click()
+await esperar(1200)
+check('avisa cuántos presupuestos hay que borrar primero',
+  (await page.locator('text=/presupuesto.*Borralos primero/').count()) > 0)
+check('y no se fue de la ficha', /clientes\/\d+/.test(page.url()))
+await page.screenshot({ path: `${SHOT}/16-cliente-bloqueado.png`, fullPage: false })
 
 console.log('\n' + '='.repeat(50))
 if (fallos.length) { console.log(`FALLARON ${fallos.length}: ${JSON.stringify(fallos, null, 1)}`) }

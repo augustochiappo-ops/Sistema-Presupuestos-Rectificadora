@@ -571,6 +571,40 @@ def actualizar_cliente(cliente_id: int, nombre: str, notas: str | None, tipo: st
         return cur.rowcount > 0
 
 
+def contar_presupuestos_cliente(cliente_id: int) -> int:
+    """Presupuestos en los que aparece este cliente, sea como principal o como
+    contraparte (el mecánico que trajo el auto de un dueño). Los dos casos
+    cuentan: si se borrara el cliente, ese presupuesto quedaría con un nombre
+    menos."""
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT COUNT(*) FROM presupuestos WHERE cliente_id = ? OR contacto_id = ?",
+            (cliente_id, cliente_id),
+        ).fetchone()
+        return row[0]
+
+
+def eliminar_cliente(cliente_id: int) -> str:
+    """Borra un cliente que no tenga ningún presupuesto asociado.
+    Devuelve 'ok' | 'no_existe' | 'tiene_presupuestos'.
+
+    El borrado se bloquea a propósito en vez de arrastrar los presupuestos: un
+    presupuesto es plata cotizada y su PDF ya está en manos del cliente, así que
+    no se pierde de rebote por borrar una ficha. Primero se borran los
+    presupuestos (uno por uno, desde el detalle) y recién después el cliente."""
+    with get_connection() as conn:
+        if not conn.execute("SELECT 1 FROM clientes WHERE id = ?", (cliente_id,)).fetchone():
+            return "no_existe"
+        usado = conn.execute(
+            "SELECT COUNT(*) FROM presupuestos WHERE cliente_id = ? OR contacto_id = ?",
+            (cliente_id, cliente_id),
+        ).fetchone()[0]
+        if usado:
+            return "tiene_presupuestos"
+        conn.execute("DELETE FROM clientes WHERE id = ?", (cliente_id,))
+        return "ok"
+
+
 def get_presupuestos_por_cliente(cliente_id: int) -> list[dict]:
     # Incluye tanto los presupuestos donde este cliente es el principal como
     # aquellos donde aparece solo como contraparte; en ese caso "cliente"

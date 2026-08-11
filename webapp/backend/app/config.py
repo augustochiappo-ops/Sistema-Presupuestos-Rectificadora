@@ -16,7 +16,7 @@ APP_PASSWORD_HASH = os.environ.get("APP_PASSWORD_HASH")  # generado con werkzeug
 # olvida). Configurable con SESSION_HORAS por si hace falta cambiarla.
 SESSION_HORAS = int(os.environ.get("SESSION_HORAS", "8"))
 
-NOMBRE_TALLER = os.environ.get("NOMBRE_TALLER", "Rectificaciones Chicappo")
+NOMBRE_TALLER = os.environ.get("NOMBRE_TALLER", "Rectificaciones Chiappo")
 
 # Deploy remoto: POST /api/deploy con header X-Deploy-Secret hace `git pull` +
 # reload de la web app vía la API de PythonAnywhere, para poder actualizar el

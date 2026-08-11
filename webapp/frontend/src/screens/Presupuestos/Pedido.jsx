@@ -5,6 +5,7 @@ import { PageHeader } from '../../components/PageHeader'
 import { Button } from '../../components/Button'
 import { Icon } from '../../components/Icon'
 import { StatusBadge } from '../../components/StatusBadge'
+import { ModalCodigosPedido } from './ModalCodigosPedido'
 import { formatPrecioARS, formatFechaHoraAR } from '../../utils/format'
 
 /*
@@ -24,7 +25,7 @@ export default function PedidoRepuestos() {
   const [datos, setDatos] = React.useState(null)
   const [error, setError] = React.useState('')
   const [elegidas, setElegidas] = React.useState({})   // grupo_num → código a pedir
-  const [copiado, setCopiado] = React.useState(false)
+  const [modalCodigos, setModalCodigos] = React.useState(false)
 
   React.useEffect(() => {
     api.get(`/presupuestos/${id}/pedido`)
@@ -39,32 +40,31 @@ export default function PedidoRepuestos() {
       .catch((err) => setError(err.message || 'No se pudo cargar el pedido'))
   }, [id])
 
-  const codigosAPedir = React.useMemo(() => {
+  // Una línea por grupo con la opción elegida ya resuelta. La usan el pop-up de
+  // códigos y el total (antes cada uno la resolvía por su lado).
+  const lineasAPedir = React.useMemo(() => {
     if (!datos) return []
-    return datos.grupos
-      .map((g) => elegidas[g.grupo_num])
-      .filter(Boolean)
-  }, [datos, elegidas])
-
-  const copiarCodigos = async () => {
-    const texto = codigosAPedir.join('\n')
-    try {
-      await navigator.clipboard.writeText(texto)
-      setCopiado(true)
-      setTimeout(() => setCopiado(false), 2500)
-    } catch {
-      setError('No se pudieron copiar los códigos. Seleccionalos a mano de la lista.')
-    }
-  }
-
-  const totalAPedir = React.useMemo(() => {
-    if (!datos) return 0
-    return datos.grupos.reduce((acc, g) => {
+    return datos.grupos.map((g) => {
       const codigo = elegidas[g.grupo_num]
       const opcion = g.marcas.flatMap((m) => m.medidas).find((o) => o.repuesto_codigo === codigo)
-      return acc + (opcion?.subtotal_hoy || 0)
-    }, 0)
+      if (!opcion) return null
+      return {
+        grupo_num: g.grupo_num,
+        categoria: g.categoria,
+        codigo: opcion.repuesto_codigo,
+        marca: opcion.marca,
+        medida: opcion.medida,
+        cantidad: opcion.cantidad,
+        subtotal_hoy: opcion.subtotal_hoy,
+        hay_stock: opcion.hay_stock,
+      }
+    }).filter(Boolean)
   }, [datos, elegidas])
+
+  const totalAPedir = React.useMemo(
+    () => lineasAPedir.reduce((acc, l) => acc + (l.subtotal_hoy || 0), 0),
+    [lineasAPedir],
+  )
 
   if (error && !datos) {
     return (
@@ -93,10 +93,10 @@ export default function PedidoRepuestos() {
             <Button
               variant="primary"
               iconLeft={<Icon n="copy" s={16} />}
-              disabled={!codigosAPedir.length}
-              onClick={copiarCodigos}
+              disabled={!lineasAPedir.length}
+              onClick={() => setModalCodigos(true)}
             >
-              {copiado ? '¡Copiado!' : `Copiar códigos (${codigosAPedir.length})`}
+              {`Copiar códigos (${lineasAPedir.length})`}
             </Button>
           </>
         }
@@ -153,6 +153,12 @@ export default function PedidoRepuestos() {
           onElegir={(codigo) => setElegidas((prev) => ({ ...prev, [g.grupo_num]: codigo }))}
         />
       ))}
+
+      <ModalCodigosPedido
+        open={modalCodigos}
+        lineas={lineasAPedir}
+        onClose={() => setModalCodigos(false)}
+      />
     </div>
   )
 }
