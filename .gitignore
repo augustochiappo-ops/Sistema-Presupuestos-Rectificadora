@@ -27,3 +27,6 @@ desktop.ini
 
 # Config local de Claude Code (permisos especificos de esta maquina)
 .claude/settings.local.json
+
+# Capturas que generan las verificaciones de UI (tests/ui_grupos.mjs)
+tests/capturas/

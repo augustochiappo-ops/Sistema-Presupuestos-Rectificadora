@@ -1,7 +1,12 @@
 # Estado del proyecto
 
+> **Cómo leer este archivo.** Está ordenado como un diario: arriba lo más viejo,
+> abajo lo más nuevo. **El estado real de hoy está en la sección "Próximo paso",
+> casi al final** — lo de arriba es historia y en varios puntos ya no aplica.
+> Antes de tocar código, leer "Próximo paso" y `decisiones.md`.
+
 ## Fase actual
-**Migración a versión web en curso.** La app de escritorio (PyQt6) está completa y funcional, se usa como referencia funcional 1:1. Se construyó una versión web completa en `webapp/` (backend Flask + frontend React/Vite) que replica todas las pantallas activas y ya fue probada localmente con los datos reales del negocio. Próximo paso: el usuario tiene que crear una cuenta gratuita en PythonAnywhere para el deploy (ver sección "Migración web" abajo).
+**En producción y en uso.** El sistema es **solo web** (`webapp/`: Flask + React/Vite), corriendo en PythonAnywhere. La app de escritorio PyQt6 que se menciona más abajo **se eliminó del repo el 2026-07-31** (`main.py` y `src/` ya no existen): todo lo que sigue hablando de ella es historia de cómo se llegó hasta acá, no el estado actual.
 
 ## Completado
 - [x] CLAUDE.md con visión completa del sistema, dominio, fuentes de datos y features
@@ -419,15 +424,49 @@ El cambio más grande desde la integración de repuestos. Antes una línea de re
 
 **Anotado como "podría servir, no ahora"** (el dueño lo evaluó y lo dejó para más adelante): marcar una opción como **"no cotizar"** — que esté en la lista para pedir pero que nunca compita por ser la más cara (útil si el precio del catálogo está mal o es una marca que nunca compraría).
 
+## Cómo verificar que no se rompió nada (`tests/`)
+
+Desde el 2026-08-10 hay dos suites en `tests/`, escritas junto con los grupos de repuestos. **Correrlas antes de dar por terminado cualquier cambio que toque repuestos, presupuestos o el PDF.** Instrucciones completas en `tests/README.md`.
+
+- `tests/backend_grupos.py` — 55 verificaciones contra los datos reales del repo (se importan solas la primera vez). Exige `DATA_DIR` y aborta sin él: la suite **crea y borra datos**, nunca apuntarla a la base real ni a producción.
+- `tests/ui_grupos.mjs` — 26 verificaciones con Chromium headless contra los dos dev servers, con capturas en `tests/capturas/` (gitignoreado). Falla también si la página tira cualquier error de JavaScript.
+
+En el README están además los detalles que cuestan de redescubrir (el `text=` de Playwright matchea substrings y pisa los chips; el paso Cliente solo pide clasificar si el cliente es nuevo; `config` lee el entorno al importarse).
+
 ## Próximo paso
-Sistema en producción y funcionando, sincronizado con `master` en el commit `b9e4f0a` (deployado en esta sesión). Repositorio con una sola rama principal (`master`; `main` fue eliminada, ver arriba). Deploy remoto automatizado pero solo ejecutable por el usuario o un entorno con red habilitada hacia PythonAnywhere (ver nota arriba) — pasando el `DEPLOY_SECRET` de la sesión. Queda pendiente: borrar el presupuesto de prueba #7 (tarea de background ya creada), definir el mecanismo de carga diaria del CSV de CRAC (único punto abierto de `INTEGRACION-PENDIENTE.md` — una vez resuelto, sacar `CRAC/precio-stock.csv` de git como ya se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización), decidir si conviene unificar la grafía "Chiappo"/"Chicappo" entre el sidebar y el PDF, y **pagar el upgrade de PythonAnywhere al plan Developer** (necesario para la automatización de pedidos a CRAC — ver sección de arriba y `CRAC/AUTOMATIZACION-PEDIDOS.md` — y de paso da más CPU/disco para el resto del sistema). Como puede haber más de una sesión de Claude tocando este repo en paralelo (celular + escritorio), conviene chequear ramas remotas pendientes al empezar cada sesión.
+
+**Producción y `master` sincronizados** en el commit de los grupos de repuestos (`6e929b6`, deployado y verificado el 2026-08-10). Rama única `master` — `main` fue eliminada y no hay que recrearla. El deploy lo puede correr Claude desde el entorno remoto pasando el `DEPLOY_SECRET` de la sesión (ver nota operativa arriba).
+
+Pendientes, en orden de lo que más conviene atacar:
+
+1. **Que el dueño borre los datos de prueba.** Todo lo que hay en producción (presupuestos y clientes) es de prueba y él confirmó que no sirve ninguno. El botón está en *Actualizar Excel → Mantenimiento*; **generar antes la copia de seguridad** desde esa misma pantalla, porque no se puede deshacer. No lo puede hacer Claude: requiere estar logueado.
+2. **Verificación autenticada de los grupos en producción.** En la sesión del 2026-08-10 se verificó que el sitio levanta, que los endpoints nuevos están protegidos y que se sirve el build nuevo, pero **no** se pudo probar el flujo logueado: Claude tiene el `DEPLOY_SECRET` pero no la contraseña de la app. Si el dueño la pasa en una sesión, se puede hacer un smoke test real de punta a punta.
+3. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
+4. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
+5. **Unificar la grafía "Chiappo" / "Chicappo"** entre el sidebar y `config.NOMBRE_TALLER` (lo que sale en el PDF). Hay que decidir cuál es la correcta.
+6. **Opción "no cotizar" por repuesto** — que una opción esté en la lista para pedir pero nunca compita por ser la más cara. El dueño la evaluó el 2026-08-10 y la dejó para más adelante.
+
+Como puede haber más de una sesión de Claude tocando este repo en paralelo (celular + escritorio), conviene chequear ramas remotas pendientes al empezar cada sesión.
+
+**Rama huérfana en GitHub — la tiene que borrar el dueño.** Quedó `claude/excel-backup-restore-buttons-j71a22` en el remoto. Sus commits **ya están todos en `master`** (verificado: `cd8d87c` es ancestro), así que borrarla no pierde nada. Claude no puede: `git push origin --delete` devuelve **403** desde el entorno remoto (el token de la sesión no tiene permiso de borrado; ya pasó antes). Se borra en dos clicks desde GitHub → *Branches* → el tacho al lado de esa rama. Mientras tanto es solo ruido visual: no afecta a producción, que tira de `master`.
 
 ## Para correr el programa
+
+El sistema es **solo web** desde el 2026-07-31 (la app de escritorio PyQt6, `main.py` + `src/`, se eliminó del repo). En producción corre en PythonAnywhere; para levantarlo en desarrollo hacen falta los dos servidores:
+
+```bash
+# Backend Flask — http://127.0.0.1:5000
+cd webapp/backend
+pip install -r requirements.txt          # solo la primera vez
+DATA_DIR=/tmp/rect-dev APP_USERNAME=admin APP_PASSWORD_HASH="<hash>" python wsgi.py
+
+# Frontend Vite — http://localhost:5173, proxea /api al backend
+cd webapp/frontend
+npm install                              # solo la primera vez
+npm run dev
 ```
-cd "C:\Users\Usuario\Documents\Sistema de Presupuestos"
-pip install -r requirements.txt   # solo la primera vez
-python main.py
-```
+
+El hash de la contraseña se genera con `werkzeug.security.generate_password_hash`. Si se tocó el frontend, antes de commitear hay que correr `npm run build` y versionar `static_build/` (PythonAnywhere no tiene Node). Ver `tests/README.md` para el detalle de cómo dejarlo listo para las verificaciones.
 
 ## Archivos de datos disponibles
 - `Excel/Facra/nomenclador_1779985703.xls` — nomenclador de motores FACRA

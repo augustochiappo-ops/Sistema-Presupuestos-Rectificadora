@@ -1,0 +1,99 @@
+# Verificaciones
+
+Dos suites que cubren el bloque de **grupos de repuestos** (cotizar el más caro,
+ficha del motor, pedido, medidas automáticas). Se escribieron el 2026-08-10 junto
+con la feature y sirven para no romperla al tocar repuestos más adelante.
+
+No son tests unitarios ni usan pytest: son scripts que corren de punta a punta
+contra los **datos reales del repo** y contra la app de verdad. Imprimen una
+línea por verificación y salen con código 1 si falla alguna.
+
+> **Regla no negociable:** las dos suites **crean y borran datos**. La de backend
+> termina vaciando presupuestos y clientes. Corrélas siempre contra un `DATA_DIR`
+> descartable, **nunca** contra `webapp/backend/data/` si ahí vive la base que te
+> importa, y **nunca** contra producción.
+
+---
+
+## 1. Backend — `backend_grupos.py`
+
+55 verificaciones sobre la lógica, la base y el PDF.
+
+```bash
+# Una sola vez: entorno con las dependencias del backend + pypdf (para leer el PDF)
+python3 -m venv /tmp/rect-venv
+/tmp/rect-venv/bin/pip install -r webapp/backend/requirements.txt pypdf
+
+# Correr (DATA_DIR es obligatorio y tiene que ser una carpeta descartable)
+DATA_DIR=/tmp/rect-test /tmp/rect-venv/bin/python tests/backend_grupos.py
+```
+
+La primera corrida sobre un `DATA_DIR` nuevo importa sola los datos reales
+(FACRA + catálogo del proveedor). Tarda ~30s por las 64.250 filas del CSV; las
+corridas siguientes reusan lo importado.
+
+Qué cubre, por bloque:
+
+| Bloque | Qué verifica |
+|---|---|
+| Medidas | Familia `CAAC02740` completa (7 medidas), `ACAM 3066` sin hermanas (es número de parte, no medida), `S60`/`60/` excluidos, fecha de importación del catálogo |
+| Elección | Gana el de mayor **subtotal** con el caso real (juego de 8 a $1.000 vs. 4 blísters de 2 a $400 → $1.600), precio 0 nunca gana, elección manual pisa al más caro |
+| Presupuesto | Una sola línea cotizada por grupo, total = subtotal de la elegida, `grupo_num`, las alternativas guardadas con su marca |
+| Ficha del motor | Se crea sola al confirmar, resuelve precios de hoy, respeta la cantidad cargada, se copia a otro motor |
+| Pedido | Precios de hoy, agrupado por marca, total cotizado coincide, fecha del catálogo, más barato ≤ cotizado |
+| HTTP | 401 sin sesión, 404 de motor inexistente, 400 al copiar la ficha del mismo motor, PUT que reemplaza la ficha |
+| Totales | El total nunca suma las alternativas |
+| PDF | Sin columna "Cant." en repuestos, sin códigos del proveedor, sin nombrar al proveedor, con la categoría |
+| Borrado | Vacía presupuestos y clientes, deja intactos motores, mano de obra, catálogo, favoritos y fichas |
+
+## 2. UI — `ui_grupos.mjs`
+
+26 verificaciones con navegador real, más capturas de pantalla en
+`tests/capturas/`.
+
+```bash
+# Terminal 1 — backend contra una base descartable
+cd webapp/backend
+DATA_DIR=/tmp/rect-test APP_USERNAME=admin \
+  APP_PASSWORD_HASH="$(/tmp/rect-venv/bin/python -c "from werkzeug.security import generate_password_hash as g; print(g('test123'))")" \
+  SESSION_COOKIE_SECURE=0 /tmp/rect-venv/bin/python wsgi.py
+
+# Terminal 2 — frontend
+cd webapp/frontend && npm install && npm run dev
+
+# Terminal 3 — la suite
+cd webapp/frontend && npm install --no-save playwright-core   # solo la primera vez
+node tests/ui_grupos.mjs
+```
+
+El Chromium **ya está instalado** en el entorno remoto
+(`/opt/pw-browsers/chromium`): no hay que correr `playwright install`. Si está en
+otro lado, pasá `CHROMIUM_PATH`. La URL del frontend se puede cambiar con
+`BASE_URL`.
+
+La suite espera el usuario `admin` con contraseña `test123`, que es lo que
+configuran las variables de arriba.
+
+Qué cubre: login · agrupado automático al tildar dentro de una categoría ·
+cantidad heredada por el grupo · las 7 medidas hermanas entrando solas · chips
+"El más caro", "¿cantidad correcta?" y "Elegido a mano" · confirmación del
+presupuesto · detalle con "Opciones guardadas" · marcar aprobado · pantalla de
+pedido (agrupado por marca, fecha del catálogo, cotizado vs. diferencia, copiar
+códigos) · ficha de repuestos del motor y copiarla desde otro motor · fecha de
+última carga y borrado de datos de prueba en Actualizar Excel.
+
+También falla si la página tira **cualquier error de JavaScript**, aunque la
+verificación en sí pase.
+
+---
+
+## Detalles que cuestan de redescubrir
+
+- **`text=` de Playwright matchea substrings.** Buscar `text=El más caro` también
+  matchea el encabezado "Se cotiza el más caro de cada grupo". Para los chips hay
+  que usar `getByText('...', { exact: true })`.
+- **El paso Cliente del wizard** solo pide clasificar (Mecánico / Dueño) cuando el
+  cliente es nuevo. Si ya existe de una corrida anterior, ese botón no aparece —
+  la suite lo contempla.
+- **`config` del backend lee el entorno al importarse**, así que `APP_USERNAME` y
+  `APP_PASSWORD_HASH` tienen que estar seteados antes de importar `app`.
