@@ -1,5 +1,28 @@
 # Decisiones técnicas y de diseño
 
+## Revalidar un presupuesto: solo repuestos, la mano de obra se avisa (2026-08-11)
+**Decisión:** el botón "Actualizar a precios de hoy" recotiza **solo los repuestos** contra el catálogo del proveedor. Si la lista de mano de obra de FACRA también cambió, el resumen lo muestra aparte con su diferencia, pero no la aplica.
+**Por qué:** el precio del proveedor es un dato externo que cambia solo, todos los días — actualizarlo es mecánico. El precio de mano de obra es una **decisión comercial del taller**: la lista de la Cámara es orientativa y el dueño ya tiene el ajuste % para trasladarla como quiera. Aplicarla sola le cambiaría el criterio de precio sin pedirle permiso. El aviso existe igual porque, si no, el dueño no se enteraría de que la lista se movió.
+**Siempre previsualiza:** el resumen (diferencia por grupo, cambio de opción cotizada, avisos de stock, total viejo → total nuevo) se muestra en un pop-up y no se guarda nada hasta confirmar. Es plata.
+**Fecha:** 2026-08-11
+
+## Revalidar mueve la fecha del presupuesto a hoy
+**Decisión:** al aplicar la revalidación, `presupuestos.fecha` pasa a hoy.
+**Por qué:** los precios pasaron a ser los de hoy, así que la validez de una semana tiene que volver a contar desde hoy. Además el PDF **siempre** imprime la fecha del día (`pdf_gen`, `_fmt_fecha(None)`): si no se moviera la fecha, la app diría "Vencido" sobre un papel fechado hoy. `aprobado_en` no se toca.
+**Fecha:** 2026-08-11
+
+## Fuera de catálogo y sin stock al revalidar: se mantiene la regla, solo se avisa
+**Decisión:** dentro de un grupo sigue ganando la opción de mayor subtotal aunque no tenga stock (misma regla de siempre, con la misma `_elegir_opcion`). Un código que ya no está en el catálogo **conserva su precio cotizado** y se marca; no se elimina la línea.
+**Por qué:** preferir una opción con stock cambiaría la semántica del precio y podría bajar el total, dejando corto al taller si el día de la compra la barata tampoco está — que es justo lo que la regla del más caro viene a cubrir. Y borrar una línea porque el proveedor dio de baja un código perdería en silencio algo que el motor igual necesita.
+**Detalle de implementación:** `_resolver_repuesto` solo lee el precio del catálogo cuando le llega `precio_unitario` en `None`, y un código ausente del catálogo con precio `None` se descarta como inválido. Por eso el payload de revalidación decide **por línea**: código vigente → precio de hoy; código caído → precio congelado. La detección de "ya no está" es `stock_actual is None` (la columna `stock` es NOT NULL en el catálogo).
+**Fecha:** 2026-08-11
+
+## Duplicar: por el wizard, a precios de hoy, sin las notas
+**Decisión:** "Duplicar" no crea nada: abre el wizard de Nuevo Presupuesto cargado con el motor, los servicios, los grupos de repuestos y el ajuste % del original, salteando el selector de motor. Se elige el cliente ahí y recién al confirmar se crea. Arrastra el ajuste % pero **no** las notas.
+**Por qué:** el caso real es "el mismo motor para otro cliente" o "el cliente que vuelve": lo que cambia es el cliente, y casi siempre hay algo para retocar. Una copia directa obligaría a entrar a editarla. El ajuste % es una política de precio que se repite; las notas son de ese trabajo puntual (y el wizard no tiene campo de notas).
+**Precios de hoy sin código nuevo:** los repuestos se copian con `precio_actual`/`stock_actual` (`lineaDeOpcion(..., preciosDeHoy)`) y la mano de obra la recalcula sola el `POST /presupuestos`, que ya recotiza los servicios de FACRA contra la lista vigente aplicando el ajuste %.
+**Fecha:** 2026-08-11
+
 ## Claude Code habilitado para deployar directo a producción (2026-07-30)
 **Decisión:** el usuario agregó `chiapppo.pythonanywhere.com` a la whitelist de red del entorno de Claude Code en la nube. Antes esto daba 403 de policy en el proxy de egress (ver `estado.md`, sección "Nota operativa" — ahora marcada como superada); confirmado con un `curl -X POST https://chiapppo.pythonanywhere.com/api/deploy` que devolvió 401 de la propia app (no 403 del proxy), es decir el tráfico ya sale.
 **Por qué:** hasta ahora, después de cada tanda de cambios, Claude solo podía entregarle al usuario el comando de deploy (`curl ... -H "X-Deploy-Secret: <secreto>"`) para que él lo corriera manualmente. Con la whitelist puesta, Claude puede correr el deploy directamente y cerrar el ciclo sin ese paso manual.

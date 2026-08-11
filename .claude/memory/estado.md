@@ -424,6 +424,25 @@ El cambio más grande desde la integración de repuestos. Antes una línea de re
 
 **Anotado como "podría servir, no ahora"** (el dueño lo evaluó y lo dejó para más adelante): marcar una opción como **"no cotizar"** — que esté en la lista para pedir pero que nunca compita por ser la más cara (útil si el precio del catálogo está mal o es una marca que nunca compraría).
 
+## Actualizar a precios de hoy + duplicar presupuesto (sesión 2026-08-11, `master` directo)
+
+Dos botones nuevos en el detalle del presupuesto, pedidos por el dueño después de una recomendación de features. Las decisiones (qué se actualiza, qué solo se avisa, la fecha, cómo nace la copia) están en `decisiones.md`.
+
+- **"Actualizar a precios de hoy"** recotiza los repuestos contra el catálogo vigente y emite una versión nueva del PDF. Antes de tocar nada abre un pop-up con el resumen: por grupo, cuánto se cotizó y cuánto sale hoy, chip cuando **otra marca pasó a ser la más cara** (sigue mandando la regla del mayor subtotal, con la misma `_elegir_opcion` de la creación y la edición), avisos de "sin stock hoy" y de "ya no está en el catálogo" — en ese último caso la línea **conserva su precio cotizado**, no desaparece. La mano de obra se compara igual contra la lista de FACRA vigente pero **no se toca**: sale como sección de aviso aparte, con su diferencia. Si lo único que cambió fue la mano de obra, el pop-up no ofrece aplicar (no hay nada que aplicar). Al confirmar: se guardan los repuestos, la fecha pasa a hoy, y se genera **una** versión de PDF. Tocarlo de nuevo sin cambios no escribe nada ni acumula versiones.
+- **"Duplicar"** abre el wizard cargado con motor, servicios, grupos de repuestos y ajuste % de otro presupuesto, **a precios de hoy**, salteando el paso Motor. Está en el header del detalle y como icono en la fila del listado (`?duplicar=<id>`). No se crea nada hasta confirmar; las notas no se copian.
+
+**Backend** (`routes/presupuestos.py`): `_revalidacion(pid, detalle)` calcula el resumen y el payload de una sola pasada — lo que ve el dueño es exactamente lo que se guarda — y se aplica por el mismo camino que la edición (`_resolver_items_edicion` + `_resolver_grupos(congelar_stock=False)` + `db.actualizar_presupuesto`). No hace ni una consulta nueva al catálogo: `get_presupuesto_items_full` y `get_grupos_presupuesto` ya traían `precio_actual`/`stock_actual`. Endpoints `GET /<id>/revalidacion` (dry-run) y `POST /<id>/revalidar`. `_regenerar_pdf()` factorizado de `reconstruir_pdf` y compartido. `db.actualizar_fecha_presupuesto()` nueva. **Sin migración de esquema.** Duplicar no agregó nada al backend: el `POST /presupuestos` ya recotiza la mano de obra contra la lista vigente con el ajuste %.
+
+**Frontend**: `ModalRevalidacion.jsx` nuevo; `lineaDeOpcion` y `elegidaAManoInicial` salieron de `Detalle.jsx` a `utils/grupos.js` (con un flag `preciosDeHoy`) para poder reusarlas desde el wizard; `formatFechaHora` de `Pedido.jsx` a `utils/format.js` como `formatFechaHoraAR`. El banner rojo de "la lista de repuestos cambió" ahora lleva el botón al lado, que es donde el dueño se entera del problema.
+
+**Trampa que costó encontrar**: `_resolver_repuesto` solo lee el precio del catálogo cuando le llega `precio_unitario` en `None`, y un código que ya no está en el catálogo con precio `None` se **descarta como ítem inválido** — o sea que forzar la relectura a ciegas habría hecho desaparecer esas líneas del presupuesto. El payload decide por línea: código vigente → precio de hoy, código caído → precio congelado.
+
+**Verificado**: suite de backend ampliada a **104 checks** (de 55) y la de UI a **52** (de 26), las dos en verde contra los datos reales (491 motores, 235 servicios, 64.250 repuestos). Cubren el cambio de opción cotizada, la elección manual que no se pisa, el código fuera de catálogo, que la mano de obra se informe pero no se aplique, que sobrevivan notas/ajuste %/aprobado, la fecha de hoy, y que tocar el botón dos veces no genere una versión de PDF de más. `npm run build` + `oxlint` limpios.
+
+**Deployado y verificado en producción** (commit `9de7696`): `POST /api/deploy` OK (fast-forward `ad2f15d → 9de7696`), y con la contraseña de la app —que el dueño pasó en esta sesión— se probó de punta a punta contra los datos reales: creación, resumen de revalidación detectando una diferencia real contra el catálogo de producción, aplicación (total actualizado, fecha de hoy, PDF Versión 2 descargado y leído con `pypdf`), idempotencia, y duplicado a precios de hoy sin tocar el original. **Todo lo creado para probar se borró**: 3 presupuestos, sus PDFs, los 2 clientes de prueba (con el botón de Mantenimiento) y la ficha del motor 559 restaurada a vacía. Producción quedó como estaba: 0 presupuestos, 0 clientes, 491 motores, 64.250 repuestos.
+
+**No se pudo hacer**: manejar un browser real contra producción desde el entorno de Claude Code. Chromium a través del proxy de egress corta la conexión con `ERR_CONNECTION_RESET` contra `chiapppo.pythonanywhere.com` (con `curl` anda perfecto, y contra `github.com` da `ERR_CERT_AUTHORITY_INVALID`: el store NSS del browser está vacío, la CA del proxy nunca se importó). Se probó con `--proxy-server`, pin del SPKI de la CA, y desactivando ECH — sin éxito. Como reemplazo se verificó que el bundle que sirve producción contiene los textos nuevos de la UI. La UI en sí está cubierta por la suite de Playwright local, que corre contra los dos dev servers y sí funciona.
+
 ## Cómo verificar que no se rompió nada (`tests/`)
 
 Desde el 2026-08-10 hay dos suites en `tests/`, escritas junto con los grupos de repuestos. **Correrlas antes de dar por terminado cualquier cambio que toque repuestos, presupuestos o el PDF.** Instrucciones completas en `tests/README.md`.
@@ -435,16 +454,17 @@ En el README están además los detalles que cuestan de redescubrir (el `text=` 
 
 ## Próximo paso
 
-**Producción y `master` sincronizados** en el commit de los grupos de repuestos (`6e929b6`, deployado y verificado el 2026-08-10). Rama única `master` — `main` fue eliminada y no hay que recrearla. El deploy lo puede correr Claude desde el entorno remoto pasando el `DEPLOY_SECRET` de la sesión (ver nota operativa arriba).
+**Producción y `master` sincronizados** en `9de7696` (revalidar + duplicar, deployado y verificado con sesión real el 2026-08-11). Rama única `master` — `main` fue eliminada y no hay que recrearla. El deploy lo puede correr Claude desde el entorno remoto pasando el `DEPLOY_SECRET` de la sesión (ver nota operativa arriba).
+
+**Producción está limpia**: 0 presupuestos y 0 clientes (el dueño borró los datos de prueba), 491 motores y 64.250 repuestos cargados. El catálogo del proveedor **no tiene fecha de importación** (`app_meta.catalogo_importado_en` en `null`): se cargó antes de que existiera esa columna, así que la pantalla no muestra "última carga" hasta la próxima importación.
 
 Pendientes, en orden de lo que más conviene atacar:
 
-1. **Que el dueño borre los datos de prueba.** Todo lo que hay en producción (presupuestos y clientes) es de prueba y él confirmó que no sirve ninguno. El botón está en *Actualizar Excel → Mantenimiento*; **generar antes la copia de seguridad** desde esa misma pantalla, porque no se puede deshacer. No lo puede hacer Claude: requiere estar logueado.
-2. **Verificación autenticada de los grupos en producción.** En la sesión del 2026-08-10 se verificó que el sitio levanta, que los endpoints nuevos están protegidos y que se sirve el build nuevo, pero **no** se pudo probar el flujo logueado: Claude tiene el `DEPLOY_SECRET` pero no la contraseña de la app. Si el dueño la pasa en una sesión, se puede hacer un smoke test real de punta a punta.
-3. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
-4. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
-5. **Unificar la grafía "Chiappo" / "Chicappo"** entre el sidebar y `config.NOMBRE_TALLER` (lo que sale en el PDF). Hay que decidir cuál es la correcta.
-6. **Opción "no cotizar" por repuesto** — que una opción esté en la lista para pedir pero nunca compita por ser la más cara. El dueño la evaluó el 2026-08-10 y la dejó para más adelante.
+1. **Tablero de estados del trabajo** (Aprobado → Repuestos pedidos → En taller → Listo → Entregado). El dueño lo pidió explícitamente para más adelante, "cuando nos familiaricemos con el programa". Es la única parte del negocio que el sistema no toca: hoy `aprobado_en` es un flag binario sin consecuencia. Barato de hacer — los datos ya están, hace falta una columna `estado`, una tabla de cambios de estado y una pantalla.
+2. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
+3. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
+4. **Unificar la grafía "Chiappo" / "Chicappo"** entre el sidebar y `config.NOMBRE_TALLER` (lo que sale en el PDF). Hay que decidir cuál es la correcta.
+5. **Opción "no cotizar" por repuesto** — que una opción esté en la lista para pedir pero nunca compita por ser la más cara. El dueño la evaluó el 2026-08-10 y la dejó para más adelante.
 
 Como puede haber más de una sesión de Claude tocando este repo en paralelo (celular + escritorio), conviene chequear ramas remotas pendientes al empezar cada sesión.
 
