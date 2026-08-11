@@ -426,7 +426,11 @@ El cambio más grande desde la integración de repuestos. Antes una línea de re
 
 ## Actualizar a precios de hoy + duplicar presupuesto (sesión 2026-08-11, `master` directo)
 
-Dos botones nuevos en el detalle del presupuesto, pedidos por el dueño después de una recomendación de features. Las decisiones (qué se actualiza, qué solo se avisa, la fecha, cómo nace la copia) están en `decisiones.md`.
+Dos botones nuevos en el detalle del presupuesto. Las decisiones (qué se actualiza, qué solo se avisa, la fecha, cómo nace la copia) están en `decisiones.md`.
+
+**De dónde salieron.** El dueño arrancó la sesión preguntando qué función convenía agregar. Se le propusieron tres, en orden de recomendación: (1) **seguimiento del trabajo después de aprobado** — un tablero con los estados del motor en el taller, que es la única parte del negocio que el sistema todavía no toca; (2) **revalidar a precios de hoy**; (3) **duplicar presupuesto**. Eligió hacer las dos últimas ahora y dejó el tablero para más adelante, "cuando ya nos familiaricemos con el programa" — por eso quedó como pendiente #1 del *Próximo paso*, no como idea suelta.
+
+Antes de programar se cerraron 7 preguntas de alcance con `AskUserQuestion` (qué se recalcula, si previsualiza o aplica directo, qué hacer con lo que no tiene stock o se dio de baja, cómo nace la copia, si la fecha pasa a hoy, desde dónde se duplica, y qué arrastra la copia). El plan se escribió y se aprobó antes de tocar una línea, con el pedido explícito de **ejecutarlo de un tirón y verificar todos los pasos antes de avisar que estaba listo**.
 
 - **"Actualizar a precios de hoy"** recotiza los repuestos contra el catálogo vigente y emite una versión nueva del PDF. Antes de tocar nada abre un pop-up con el resumen: por grupo, cuánto se cotizó y cuánto sale hoy, chip cuando **otra marca pasó a ser la más cara** (sigue mandando la regla del mayor subtotal, con la misma `_elegir_opcion` de la creación y la edición), avisos de "sin stock hoy" y de "ya no está en el catálogo" — en ese último caso la línea **conserva su precio cotizado**, no desaparece. La mano de obra se compara igual contra la lista de FACRA vigente pero **no se toca**: sale como sección de aviso aparte, con su diferencia. Si lo único que cambió fue la mano de obra, el pop-up no ofrece aplicar (no hay nada que aplicar). Al confirmar: se guardan los repuestos, la fecha pasa a hoy, y se genera **una** versión de PDF. Tocarlo de nuevo sin cambios no escribe nada ni acumula versiones.
 - **"Duplicar"** abre el wizard cargado con motor, servicios, grupos de repuestos y ajuste % de otro presupuesto, **a precios de hoy**, salteando el paso Motor. Está en el header del detalle y como icono en la fila del listado (`?duplicar=<id>`). No se crea nada hasta confirmar; las notas no se copian.
@@ -443,12 +447,14 @@ Dos botones nuevos en el detalle del presupuesto, pedidos por el dueño después
 
 **No se pudo hacer**: manejar un browser real contra producción desde el entorno de Claude Code. Chromium a través del proxy de egress corta la conexión con `ERR_CONNECTION_RESET` contra `chiapppo.pythonanywhere.com` (con `curl` anda perfecto, y contra `github.com` da `ERR_CERT_AUTHORITY_INVALID`: el store NSS del browser está vacío, la CA del proxy nunca se importó). Se probó con `--proxy-server`, pin del SPKI de la CA, y desactivando ECH — sin éxito. Como reemplazo se verificó que el bundle que sirve producción contiene los textos nuevos de la UI. La UI en sí está cubierta por la suite de Playwright local, que corre contra los dos dev servers y sí funciona.
 
+**Sobre la rama**: esta sesión volvió a llegar con instrucciones del harness de trabajar en una rama nueva (`claude/system-feature-recommendations-rvw6mn`). Se ignoraron, como manda `CLAUDE.md` para este repo, y se trabajó y pusheó directo a `master`. La rama local que el entorno había dejado creada se borró al cerrar la sesión (no tenía commits propios y nunca se pusheó), así que en el remoto sigue habiendo una sola rama de línea principal.
+
 ## Cómo verificar que no se rompió nada (`tests/`)
 
 Desde el 2026-08-10 hay dos suites en `tests/`, escritas junto con los grupos de repuestos. **Correrlas antes de dar por terminado cualquier cambio que toque repuestos, presupuestos o el PDF.** Instrucciones completas en `tests/README.md`.
 
-- `tests/backend_grupos.py` — 55 verificaciones contra los datos reales del repo (se importan solas la primera vez). Exige `DATA_DIR` y aborta sin él: la suite **crea y borra datos**, nunca apuntarla a la base real ni a producción.
-- `tests/ui_grupos.mjs` — 26 verificaciones con Chromium headless contra los dos dev servers, con capturas en `tests/capturas/` (gitignoreado). Falla también si la página tira cualquier error de JavaScript.
+- `tests/backend_grupos.py` — 104 verificaciones contra los datos reales del repo (se importan solas la primera vez). Exige `DATA_DIR` y aborta sin él: la suite **crea y borra datos**, nunca apuntarla a la base real ni a producción.
+- `tests/ui_grupos.mjs` — 52 verificaciones con Chromium headless contra los dos dev servers, con capturas en `tests/capturas/` (gitignoreado). Falla también si la página tira cualquier error de JavaScript. **Desde el 2026-08-11 también necesita `DATA_DIR`**: simula por SQL que el proveedor actualizó su lista, para poder verificar el botón de revalidar.
 
 En el README están además los detalles que cuestan de redescubrir (el `text=` de Playwright matchea substrings y pisa los chips; el paso Cliente solo pide clasificar si el cliente es nuevo; `config` lee el entorno al importarse).
 
