@@ -12,6 +12,11 @@ import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { formatPrecioARS, formatFechaAR, estadoPresupuesto } from '../../utils/format'
 
+const accionFila = {
+  border: 'none', background: 'transparent', cursor: 'pointer',
+  color: 'var(--text-faint)', display: 'flex', padding: 2,
+}
+
 // Filtros que viven en la URL (?repuesto=...&motor=...&cliente=...&desde=...&hasta=...):
 // así el estado del filtro es explícito y sobrevive un refresh de página.
 function filtrosDesdeUrl(params) {
@@ -203,15 +208,24 @@ export default function HistorialPresupuestos() {
               : <StatusBadge status={estadoPresupuesto(row.fecha)} />),
           },
           {
-            key: 'acciones', header: '', align: 'center', width: 50,
+            key: 'acciones', header: '', align: 'center', width: 80,
             render: (_, row) => (
-              <button
-                onClick={(e) => { e.stopPropagation(); setAEliminar(row) }}
-                title="Eliminar presupuesto"
-                style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}
-              >
-                <Icon n="trash" s={16} />
-              </button>
+              <div style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
+                <button
+                  onClick={(e) => { e.stopPropagation(); navigate(`/presupuestos/nuevo?duplicar=${row.id}`) }}
+                  title="Duplicar presupuesto"
+                  style={accionFila}
+                >
+                  <Icon n="copy" s={16} />
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); setAEliminar(row) }}
+                  title="Eliminar presupuesto"
+                  style={accionFila}
+                >
+                  <Icon n="trash" s={16} />
+                </button>
+              </div>
             ),
           },
         ]}

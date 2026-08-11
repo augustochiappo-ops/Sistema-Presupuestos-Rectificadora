@@ -5,7 +5,7 @@ import { PageHeader } from '../../components/PageHeader'
 import { Button } from '../../components/Button'
 import { Icon } from '../../components/Icon'
 import { StatusBadge } from '../../components/StatusBadge'
-import { formatPrecioARS, formatFechaAR } from '../../utils/format'
+import { formatPrecioARS, formatFechaHoraAR } from '../../utils/format'
 
 /*
  * "Pedido de repuestos": qué hay que ir a comprar una vez que el cliente aprobó.
@@ -120,7 +120,7 @@ export default function PedidoRepuestos() {
         />
         <div style={{ marginLeft: 'auto', alignSelf: 'flex-end', fontFamily: 'var(--font-body)', fontSize: 12, color: 'rgba(255,255,255,.6)' }}>
           {datos.catalogo.importado_en
-            ? `Precios del proveedor actualizados el ${formatFechaHora(datos.catalogo.importado_en)}`
+            ? `Precios del proveedor actualizados el ${formatFechaHoraAR(datos.catalogo.importado_en)}`
             : 'Todavía no se cargó la lista del proveedor'}
         </div>
       </div>
@@ -261,8 +261,3 @@ function GrupoPedido({ grupo, elegida, onElegir }) {
 }
 
 // El backend guarda un ISO con hora; en pantalla alcanza fecha y hora corta.
-function formatFechaHora(iso) {
-  if (!iso) return '—'
-  const [fecha, hora] = iso.split('T')
-  return `${formatFechaAR(fecha)}${hora ? ` a las ${hora.slice(0, 5)}` : ''}`
-}

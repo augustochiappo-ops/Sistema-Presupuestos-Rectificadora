@@ -17,7 +17,7 @@ línea por verificación y salen con código 1 si falla alguna.
 
 ## 1. Backend — `backend_grupos.py`
 
-55 verificaciones sobre la lógica, la base y el PDF.
+104 verificaciones sobre la lógica, la base y el PDF.
 
 ```bash
 # Una sola vez: entorno con las dependencias del backend + pypdf (para leer el PDF)
@@ -44,11 +44,13 @@ Qué cubre, por bloque:
 | HTTP | 401 sin sesión, 404 de motor inexistente, 400 al copiar la ficha del mismo motor, PUT que reemplaza la ficha |
 | Totales | El total nunca suma las alternativas |
 | PDF | Sin columna "Cant." en repuestos, sin códigos del proveedor, sin nombrar al proveedor, con la categoría |
+| Revalidar | Recién creado no detecta cambios; sube un precio y la diferencia es exacta; otra opción pasa a ser la más cara y cambia sola; el código fuera de catálogo conserva su precio y avisa; la mano de obra se informa pero NO se toca; al aplicar cambia el total, la fecha pasa a hoy, sobreviven notas/ajuste %/aprobado, y se genera **una** versión nueva de PDF; la segunda vez no acumula versiones |
+| Duplicar | La copia se crea con otro cliente, mismo motor y mismo ajuste %, a precios de hoy, con su propio PDF, sin tocar el original |
 | Borrado | Vacía presupuestos y clientes, deja intactos motores, mano de obra, catálogo, favoritos y fichas |
 
 ## 2. UI — `ui_grupos.mjs`
 
-26 verificaciones con navegador real, más capturas de pantalla en
+52 verificaciones con navegador real, más capturas de pantalla en
 `tests/capturas/`.
 
 ```bash
@@ -63,7 +65,7 @@ cd webapp/frontend && npm install && npm run dev
 
 # Terminal 3 — la suite
 cd webapp/frontend && npm install --no-save playwright-core   # solo la primera vez
-node tests/ui_grupos.mjs
+DATA_DIR=/tmp/rect-test node tests/ui_grupos.mjs
 ```
 
 El Chromium **ya está instalado** en el entorno remoto
@@ -79,8 +81,13 @@ cantidad heredada por el grupo · las 7 medidas hermanas entrando solas · chips
 "El más caro", "¿cantidad correcta?" y "Elegido a mano" · confirmación del
 presupuesto · detalle con "Opciones guardadas" · marcar aprobado · pantalla de
 pedido (agrupado por marca, fecha del catálogo, cotizado vs. diferencia, copiar
-códigos) · ficha de repuestos del motor y copiarla desde otro motor · fecha de
-última carga y borrado de datos de prueba en Actualizar Excel.
+códigos) · **"Actualizar a precios de hoy"** (sin cambios avisa y no hace nada;
+con cambios abre el resumen con las dos secciones, aplica, deja el PDF en Versión
+2 y limpia el banner de avisos; la segunda vez no acumula versiones y, si solo
+cambió la mano de obra, no ofrece aplicar) · **duplicar** desde el listado y
+desde el detalle (wizard cargado, saltea el motor, repuestos copiados, el
+original queda intacto) · ficha de repuestos del motor y copiarla desde otro
+motor · fecha de última carga y borrado de datos de prueba en Actualizar Excel.
 
 También falla si la página tira **cualquier error de JavaScript**, aunque la
 verificación en sí pase.
@@ -95,5 +102,11 @@ verificación en sí pase.
 - **El paso Cliente del wizard** solo pide clasificar (Mecánico / Dueño) cuando el
   cliente es nuevo. Si ya existe de una corrida anterior, ese botón no aparece —
   la suite lo contempla.
+- **El catálogo de mano de obra del wizard no es una `<table>`**: son filas
+  sueltas dentro de `.servicios-picker-grid`. Para elegir un servicio hay que ir
+  por el botón `[title="Elegir cantidad"]`, no por `table tbody tr`.
+- **La suite de UI toca la base por SQL** (helper `py()`) para simular que el
+  proveedor actualizó su lista. Necesita el mismo `DATA_DIR` con el que se
+  levantó el backend: `DATA_DIR=/tmp/rect-test node tests/ui_grupos.mjs`.
 - **`config` del backend lee el entorno al importarse**, así que `APP_USERNAME` y
   `APP_PASSWORD_HASH` tienen que estar seteados antes de importar `app`.

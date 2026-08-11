@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify, request, send_from_directory, abort
 
 from .. import db, facra, pdf_gen, config, crac
 from ..auth import login_required
+from ..helpers import formato_precio_ars
 
 bp = Blueprint("presupuestos", __name__, url_prefix="/api/presupuestos")
 
@@ -377,6 +378,269 @@ def _resolver_items_edicion(items_payload):
     return resueltos
 
 
+def _linea_revalidada(fila):
+    """
+    Precio, stock y avisos de una línea congelada, medidos contra el catálogo de
+    HOY. La fila viene de get_presupuesto_items_full o de get_grupos_presupuesto,
+    que ya traen precio_actual/stock_actual resueltos por código.
+
+    Un código que ya no está en el catálogo CONSERVA su precio cotizado y se
+    marca: sacarlo del presupuesto perdería en silencio algo que el motor
+    necesita. stock es NOT NULL en el catálogo, así que stock_actual en None solo
+    puede significar que la fila ya no existe.
+
+    Devuelve (precio, stock, cambio, avisos).
+    """
+    en_catalogo = fila.get("stock_actual") is not None
+    precio_antes = fila.get("precio_unitario") or 0
+    stock_antes = fila.get("stock_al_cotizar")
+
+    if en_catalogo:
+        precio = fila.get("precio_actual") or 0
+        stock = fila.get("stock_actual")
+    else:
+        precio = precio_antes
+        stock = stock_antes
+
+    avisos = []
+    if not en_catalogo:
+        avisos.append("Ya no está en el catálogo — se mantiene el precio cotizado")
+    elif precio != precio_antes:
+        if precio == 0:
+            avisos.append("El catálogo de hoy no le pone precio")
+        else:
+            avisos.append(
+                f"Precio: {formato_precio_ars(precio_antes)} → {formato_precio_ars(precio)}"
+            )
+    if stock == 0:
+        avisos.append("Sin stock hoy")
+
+    return precio, stock, (precio != precio_antes or stock != stock_antes), avisos
+
+
+def _resumen_opcion(codigo, descripcion, marca, medida, cantidad, precio):
+    return {
+        "repuesto_codigo": codigo,
+        "descripcion": descripcion,
+        "marca": marca,
+        "medida": medida,
+        "cantidad": cantidad,
+        "precio_unitario": precio,
+        "subtotal": round((precio or 0) * (cantidad or 0), 2),
+    }
+
+
+def _revalidacion(presupuesto_id, detalle):
+    """
+    Recotiza el presupuesto contra el catálogo de HOY sin tocar nada, y devuelve
+    (resumen, payload): el resumen es lo que se le muestra al dueño para que
+    confirme, el payload es exactamente lo que se guarda si confirma. Los dos
+    salen del mismo cálculo, así que no pueden discrepar.
+
+    Solo se recotizan los repuestos. La mano de obra se compara igual contra la
+    lista FACRA vigente, pero NO se toca: cambiar un precio de mano de obra es
+    una decisión del taller (se hace a mano desde Editar, con el ajuste %), no
+    algo que dependa del proveedor. Se informa aparte, como aviso.
+
+    Dentro de cada grupo vuelve a ganar la de mayor subtotal — con la misma
+    _elegir_opcion que usan la creación y la edición, no una copia de la regla —
+    así que si otra marca pasó a ser la más cara, el resumen lo muestra.
+    """
+    grupos_resumen, grupos_payload = [], []
+    subtotal_rep_antes = subtotal_rep_ahora = 0.0
+    hay_cambios_repuestos = False
+
+    # Ordenado por grupo_num: _resolver_grupos reasigna el número por posición,
+    # así que mantener el orden mantiene los números que ya tenía el presupuesto.
+    for grupo in sorted(db.get_grupos_presupuesto(presupuesto_id), key=lambda g: g["grupo_num"]):
+        elegida_a_mano = next(
+            (o["repuesto_codigo"] for o in grupo["opciones"] if o["elegida_a_mano"]), None
+        )
+        anterior = next((o for o in grupo["opciones"] if o["elegida"]), None)
+
+        opciones_payload, avisos_por_codigo = [], {}
+        for o in grupo["opciones"]:
+            precio, stock, cambio, avisos = _linea_revalidada(o)
+            hay_cambios_repuestos = hay_cambios_repuestos or cambio
+            avisos_por_codigo[o["repuesto_codigo"]] = avisos
+            opciones_payload.append({
+                "repuesto_codigo": o["repuesto_codigo"],
+                "descripcion": o["descripcion"],
+                "categoria": o["categoria"],
+                "marca": o["marca"],
+                "medida": o["medida"],
+                "cantidad": o["cantidad"],
+                "precio_unitario": precio,
+                "stock_al_cotizar": stock,
+            })
+
+        if not opciones_payload:
+            continue
+
+        resueltas = [
+            {**op, "precio_aplicado": round((op["precio_unitario"] or 0) * (op["cantidad"] or 0), 2)}
+            for op in opciones_payload
+        ]
+        elegida = _elegir_opcion(resueltas, elegida_a_mano)
+
+        subtotal_antes = (anterior or {}).get("subtotal") or 0
+        subtotal_ahora = elegida["precio_aplicado"]
+        subtotal_rep_antes += subtotal_antes
+        subtotal_rep_ahora += subtotal_ahora
+
+        cambio_de_opcion = bool(
+            anterior and anterior["repuesto_codigo"] != elegida["repuesto_codigo"]
+        )
+        hay_cambios_repuestos = hay_cambios_repuestos or cambio_de_opcion
+
+        grupos_payload.append({
+            "categoria": grupo["categoria"],
+            "elegida_a_mano": elegida_a_mano,
+            "opciones": opciones_payload,
+        })
+        grupos_resumen.append({
+            "grupo_num": grupo["grupo_num"],
+            "categoria": grupo["categoria"],
+            "subtotal_antes": subtotal_antes,
+            "subtotal_ahora": subtotal_ahora,
+            "diferencia": round(subtotal_ahora - subtotal_antes, 2),
+            "cambio_de_opcion": cambio_de_opcion,
+            "elegida_a_mano": bool(elegida_a_mano),
+            "elegida_antes": _resumen_opcion(
+                (anterior or {}).get("repuesto_codigo"), (anterior or {}).get("descripcion"),
+                (anterior or {}).get("marca"), (anterior or {}).get("medida"),
+                (anterior or {}).get("cantidad"), (anterior or {}).get("precio_unitario"),
+            ) if anterior else None,
+            "elegida_ahora": _resumen_opcion(
+                elegida["repuesto_codigo"], elegida["descripcion"], elegida["marca"],
+                elegida["medida"], elegida["cantidad"], elegida["precio_unitario"],
+            ),
+            "avisos": avisos_por_codigo.get(elegida["repuesto_codigo"], []),
+        })
+
+    # Ítems sueltos (repuestos fuera de grupo) y servicios.
+    items_payload, sueltos_resumen, mano_obra_lineas = [], [], []
+    total_servicios = 0.0
+    subtotal_mo_antes = subtotal_mo_ahora = 0.0
+
+    factor_ajuste = 1 + (float(detalle.get("ajuste_pct") or 0) / 100)
+    precios_lista = {
+        s["id"]: s["precio"] for s in facra.get_servicios_para_lista(detalle.get("lista_num"))
+    }
+
+    for it in db.get_presupuesto_items_full(presupuesto_id):
+        if it["tipo"] == "repuesto":
+            if it["grupo_num"] is not None:
+                continue  # ya rearmado arriba, como parte de su grupo
+            precio, stock, cambio, avisos = _linea_revalidada(it)
+            hay_cambios_repuestos = hay_cambios_repuestos or cambio
+            items_payload.append({
+                "tipo": "repuesto",
+                "repuesto_codigo": it["repuesto_codigo"],
+                "descripcion": it["descripcion_custom"],
+                "categoria": it["categoria"],
+                "cantidad": it["cantidad"],
+                "precio_unitario": precio,
+                "stock_al_cotizar": stock,
+            })
+            subtotal_antes = it["precio_aplicado"] or 0
+            subtotal_ahora = round(precio * (it["cantidad"] or 0), 2)
+            subtotal_rep_antes += subtotal_antes
+            subtotal_rep_ahora += subtotal_ahora
+            if cambio:
+                sueltos_resumen.append({
+                    "repuesto_codigo": it["repuesto_codigo"],
+                    "descripcion": it["categoria"] or it["descripcion_custom"],
+                    "cantidad": it["cantidad"],
+                    "precio_antes": it["precio_unitario"],
+                    "precio_ahora": precio,
+                    "subtotal_antes": subtotal_antes,
+                    "subtotal_ahora": subtotal_ahora,
+                    "diferencia": round(subtotal_ahora - subtotal_antes, 2),
+                    "avisos": avisos,
+                })
+            continue
+
+        # Servicio: se copia tal cual. _resolver_items_edicion confía en el
+        # unitario recibido, que es justo lo que queremos para no tocarlo.
+        unitario = it["precio_unitario"] if it["precio_unitario"] is not None else it["precio_aplicado"]
+        items_payload.append({
+            "servicio_id": it["servicio_id"],
+            "descripcion_custom": it["descripcion_custom"],
+            "cantidad": it["cantidad"],
+            "precio_unitario": unitario,
+        })
+        total_servicios += it["precio_aplicado"] or 0
+
+        if not it["servicio_id"]:
+            continue  # ítem manual: no hay lista contra la cual compararlo
+        precio_lista = precios_lista.get(it["servicio_id"])
+        if precio_lista is None:
+            continue  # servicio sin precio en la lista de este motor
+        cantidad = it["cantidad"] or 1
+        precio_hoy = round(precio_lista * factor_ajuste, 2)
+        subtotal_mo_antes += round((unitario or 0) * cantidad, 2)
+        subtotal_mo_ahora += round(precio_hoy * cantidad, 2)
+        if precio_hoy != unitario:
+            mano_obra_lineas.append({
+                "descripcion": it["desc_facra"],
+                "cantidad": cantidad,
+                "precio_antes": unitario,
+                "precio_ahora": precio_hoy,
+                "diferencia": round((precio_hoy - (unitario or 0)) * cantidad, 2),
+            })
+
+    total_antes = detalle.get("total") or 0
+    total_nuevo = round(total_servicios + subtotal_rep_ahora, 2)
+
+    resumen = {
+        "hay_cambios": bool(hay_cambios_repuestos or mano_obra_lineas),
+        "hay_cambios_repuestos": bool(hay_cambios_repuestos),
+        "hay_cambios_mano_obra": bool(mano_obra_lineas),
+        "repuestos": {
+            "grupos": grupos_resumen,
+            "sueltos": sueltos_resumen,
+            "subtotal_antes": round(subtotal_rep_antes, 2),
+            "subtotal_ahora": round(subtotal_rep_ahora, 2),
+            "diferencia": round(subtotal_rep_ahora - subtotal_rep_antes, 2),
+        },
+        "mano_obra": {
+            "lineas": mano_obra_lineas,
+            "subtotal_antes": round(subtotal_mo_antes, 2),
+            "subtotal_ahora": round(subtotal_mo_ahora, 2),
+            "diferencia": round(subtotal_mo_ahora - subtotal_mo_antes, 2),
+        },
+        "total_antes": total_antes,
+        "total_nuevo": total_nuevo,
+        "diferencia": round(total_nuevo - total_antes, 2),
+        "catalogo": crac.get_info_catalogo(),
+    }
+    return resumen, {"items": items_payload, "grupos_repuestos": grupos_payload}
+
+
+def _regenerar_pdf(presupuesto_id):
+    """
+    Emite una versión nueva del PDF con el estado actual del presupuesto y la
+    registra en el historial. Se relee el detalle acá adentro a propósito: quien
+    llama puede haber cambiado el total justo antes, y el total es lo que se
+    imprime. Devuelve el historial de versiones ya actualizado.
+    """
+    detalle = db.get_presupuesto_detalle(presupuesto_id)
+    versiones = db.get_pdfs_presupuesto(presupuesto_id)
+    siguiente_version = (versiones[0]["version"] + 1) if versiones else 1
+    nombre_archivo = f"presupuesto_{presupuesto_id:04d}_v{siguiente_version}.pdf"
+
+    items_servicios, items_repuestos = _items_para_pdf(presupuesto_id)
+    pdf_gen.generar_pdf(
+        presupuesto_id, detalle["cliente"], detalle["motor"],
+        items_servicios, detalle["total"],
+        os.path.join(config.PDFS_DIR, nombre_archivo),
+        repuestos=items_repuestos,
+    )
+    db.guardar_pdf_historial(presupuesto_id, nombre_archivo)
+    return db.get_pdfs_presupuesto(presupuesto_id)
+
+
 @bp.get("")
 @login_required
 def listar():
@@ -423,6 +687,63 @@ def aprobar(presupuesto_id):
     data = request.get_json(silent=True) or {}
     aprobado = bool(data.get("aprobado", True))
     return jsonify({"aprobado_en": db.aprobar_presupuesto(presupuesto_id, aprobado)})
+
+
+@bp.get("/<int:presupuesto_id>/revalidacion")
+@login_required
+def revalidacion(presupuesto_id):
+    """Qué cambiaría si se recotizara contra el catálogo de hoy. No toca nada."""
+    detalle = db.get_presupuesto_detalle(presupuesto_id)
+    if not detalle:
+        return jsonify({"error": "Presupuesto no encontrado"}), 404
+
+    resumen, _payload = _revalidacion(presupuesto_id, detalle)
+    return jsonify(resumen)
+
+
+@bp.post("/<int:presupuesto_id>/revalidar")
+@login_required
+def revalidar(presupuesto_id):
+    """
+    Aplica los precios de hoy a los repuestos y emite una versión nueva del PDF.
+    Se recalcula todo acá de nuevo: no se confía en el resumen que vio el
+    navegador, que pudo quedar viejo si el catálogo se reimportó mientras tanto.
+
+    La mano de obra no se toca (ver _revalidacion), así que si lo único que
+    cambió fue la lista de FACRA no hay nada que guardar y no se emite versión
+    nueva de PDF — tocar el botón dos veces no acumula versiones.
+    """
+    detalle = db.get_presupuesto_detalle(presupuesto_id)
+    if not detalle:
+        return jsonify({"error": "Presupuesto no encontrado"}), 404
+
+    resumen, payload = _revalidacion(presupuesto_id, detalle)
+    if not resumen["hay_cambios_repuestos"]:
+        return jsonify({"sin_cambios": True, "resumen": resumen})
+
+    items_resueltos = _resolver_items_edicion(payload["items"])
+    # congelar_stock=False: el stock de hoy ya viene calculado en el payload, y
+    # así las líneas fuera de catálogo conservan el que tenían congelado.
+    items_grupos, opciones, _ = _resolver_grupos(payload["grupos_repuestos"], congelar_stock=False)
+    items_resueltos += items_grupos
+    if not items_resueltos:
+        return jsonify({"error": "El presupuesto quedaría vacío"}), 400
+
+    db.actualizar_presupuesto(
+        presupuesto_id, items_resueltos, detalle.get("notas") or "",
+        detalle.get("ajuste_pct") or 0, opciones=opciones,
+    )
+    # Los precios pasan a ser los de hoy, así que la semana de validez vuelve a
+    # contar desde hoy — y coincide con la fecha que imprime el PDF.
+    db.actualizar_fecha_presupuesto(presupuesto_id)
+    pdfs_actualizados = _regenerar_pdf(presupuesto_id)
+
+    return jsonify({
+        "sin_cambios": False,
+        "resumen": resumen,
+        "detalle": db.get_presupuesto_detalle(presupuesto_id),
+        "pdfs": pdfs_actualizados,
+    })
 
 
 @bp.get("/<int:presupuesto_id>/pedido")
@@ -625,24 +946,10 @@ def eliminar(presupuesto_id):
 @bp.post("/<int:presupuesto_id>/pdf")
 @login_required
 def reconstruir_pdf(presupuesto_id):
-    detalle = db.get_presupuesto_detalle(presupuesto_id)
-    if not detalle:
+    if not db.get_presupuesto_detalle(presupuesto_id):
         return jsonify({"error": "Presupuesto no encontrado"}), 404
 
-    versiones = db.get_pdfs_presupuesto(presupuesto_id)
-    siguiente_version = (versiones[0]["version"] + 1) if versiones else 1
-    nombre_archivo = f"presupuesto_{presupuesto_id:04d}_v{siguiente_version}.pdf"
-
-    items_servicios, items_repuestos = _items_para_pdf(presupuesto_id)
-    pdf_gen.generar_pdf(
-        presupuesto_id, detalle["cliente"], detalle["motor"],
-        items_servicios, detalle["total"],
-        os.path.join(config.PDFS_DIR, nombre_archivo),
-        repuestos=items_repuestos,
-    )
-    db.guardar_pdf_historial(presupuesto_id, nombre_archivo)
-
-    return jsonify(db.get_pdfs_presupuesto(presupuesto_id))
+    return jsonify(_regenerar_pdf(presupuesto_id))
 
 
 @bp.get("/<int:presupuesto_id>/pdfs")

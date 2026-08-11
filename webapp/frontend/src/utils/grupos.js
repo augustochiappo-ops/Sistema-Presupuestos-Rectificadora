@@ -13,7 +13,50 @@
  * categoría (que además es lo único que lee el cliente en el PDF).
  */
 
+import { formatPrecioARS } from './format'
+
 export const SIN_GRUPO = null
+
+/*
+ * Una opción congelada que devuelve el backend (get_grupos_presupuesto), en la
+ * forma de "línea" que usan el hook de agrupado, el pop-up de repuestos y el
+ * wizard.
+ *
+ * preciosDeHoy: al duplicar un presupuesto la copia arranca con el precio y el
+ * stock VIGENTES del catálogo, no con los congelados del original — es un
+ * presupuesto nuevo. Un código que ya no está en el catálogo conserva el precio
+ * cotizado (misma regla que la revalidación del backend: stock es NOT NULL en
+ * el catálogo, así que stock_actual nulo solo puede ser "la fila ya no existe").
+ */
+export function lineaDeOpcion(grupo, o, preciosDeHoy = false) {
+  const enCatalogo = o.stock_actual !== null && o.stock_actual !== undefined
+  const precio = preciosDeHoy && enCatalogo ? (o.precio_actual || 0) : o.precio_unitario
+  const stock = preciosDeHoy && enCatalogo ? o.stock_actual : o.stock_al_cotizar
+  return {
+    key: o.repuesto_codigo || `op-${grupo.grupo_num}-${o.descripcion}`,
+    repuesto_codigo: o.repuesto_codigo,
+    descripcion: o.descripcion,
+    categoria: grupo.categoria,
+    cat_prefijo: null,
+    marca: o.marca,
+    medida: o.medida,
+    grupo: grupo.categoria,
+    cantidad: o.cantidad,
+    precio_unitario: precio,
+    precioTexto: precio ? formatPrecioARS(precio) : '',
+    stock,
+    esManual: !o.repuesto_codigo,
+  }
+}
+
+/** Elección manual por categoría: { [categoria]: repuesto_codigo }. */
+export function elegidaAManoInicial(grupos) {
+  return Object.fromEntries(
+    grupos
+      .filter((g) => g.opciones.some((o) => o.elegida_a_mano))
+      .map((g) => [g.categoria, g.opciones.find((o) => o.elegida_a_mano).repuesto_codigo]),
+  )
+}
 
 export function subtotalDe(linea) {
   return (Number(linea.precio_unitario) || 0) * (Number(linea.cantidad) || 0)

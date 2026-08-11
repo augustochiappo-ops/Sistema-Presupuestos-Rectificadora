@@ -13,6 +13,7 @@ apuntarla a la base real ni correrla contra producción.
 """
 import os
 import sys
+from datetime import date
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BACKEND = os.path.join(RAIZ, "webapp", "backend")
@@ -246,7 +247,197 @@ check("el PDF no filtra códigos del proveedor", codigos[0] not in texto)
 check("el PDF no nombra al proveedor", "CRAC" not in texto.upper())
 check("el PDF muestra la categoría", "Cojinetes biela" in texto)
 
-print("\n=== 11. Borrar datos de prueba ===")
+print("\n=== 11. Actualizar a precios de hoy (revalidar) ===")
+
+
+def _sql(query, params=()):
+    with db.get_connection() as conn:
+        return conn.execute(query, params).fetchall()
+
+
+def _precio_catalogo(codigo):
+    return _sql("SELECT precio FROM crac_repuestos WHERE codigo = ?", (codigo,))[0][0]
+
+
+# El catálogo y la lista de mano de obra se dejan como estaban al terminar el
+# bloque: la suite reusa la misma base entre corridas y el bloque 0 verifica los
+# conteos y los datos reales importados.
+precios_catalogo_originales = {c: _precio_catalogo(c) for c in codigos[:2]}
+# Un servicio con precio en la lista de este motor: los hay con la celda vacía.
+servicio_rev = next(s for s in servicios if s["precio"])
+col_lista = "l%d" % motor["lista_num"]
+precio_servicio_original = _sql(f"SELECT {col_lista} FROM servicios WHERE id = ?",
+                                (servicio_rev["id"],))[0][0]
+
+# Precios conocidos para poder afirmar diferencias exactas.
+_sql("UPDATE crac_repuestos SET precio = 1000 WHERE codigo = ?", (codigos[0],))
+_sql("UPDATE crac_repuestos SET precio = 800 WHERE codigo = ?", (codigos[1],))
+
+body_rev = {
+    "cliente_nombre": "cliente revalidar",
+    "motor_id": motor["id"],
+    "ajuste_pct": 10,
+    "items": [{"servicio_id": servicio_rev["id"], "cantidad": 2}],
+    "grupos_repuestos": [{
+        "categoria": "Cojinetes biela",
+        "opciones": [
+            {"repuesto_codigo": codigos[0], "cantidad": 1},
+            {"repuesto_codigo": codigos[1], "cantidad": 1},
+        ],
+    }, {
+        # Repuesto con un código que no existe en el catálogo: al revalidar tiene
+        # que conservar su precio y avisar, no desaparecer del presupuesto.
+        "categoria": "Junta inexistente",
+        "opciones": [
+            {"repuesto_codigo": "NO-EXISTE-999", "descripcion": "Junta vieja",
+             "cantidad": 1, "precio_unitario": 500},
+        ],
+    }],
+}
+r = cliente.post("/api/presupuestos", json=body_rev)
+check("presupuesto para revalidar creado", r.status_code == 201, r.get_json())
+pid3 = r.get_json()["id"]
+detalle3 = cliente.get(f"/api/presupuestos/{pid3}").get_json()
+total_inicial = detalle3["total"]
+unitario_servicio_congelado = [
+    i for i in cliente.get(f"/api/presupuestos/{pid3}/items").get_json() if i["servicio_id"]
+][0]["precio_unitario"]
+
+# Las notas se cargan directo por SQL: el POST no las acepta (solo el PUT) y lo
+# que importa acá es que revalidar no las pise.
+_sql("UPDATE presupuestos SET notas = ? WHERE id = ?", ("no perder esto", pid3))
+cliente.post(f"/api/presupuestos/{pid3}/aprobar", json={"aprobado": True})
+
+r = cliente.get(f"/api/presupuestos/{pid3}/revalidacion")
+base = r.get_json()
+check("GET /revalidacion responde 200", r.status_code == 200, base)
+check("recién creado no detecta cambios", base["hay_cambios"] is False, base)
+check("el resumen informa la fecha del catálogo", base["catalogo"]["importado_en"] is not None)
+check("revalidación de presupuesto inexistente da 404",
+      cliente.get("/api/presupuestos/999999/revalidacion").status_code == 404)
+
+# El proveedor sube el precio de la que está cotizada: 1000 → 1500.
+_sql("UPDATE crac_repuestos SET precio = 1500 WHERE codigo = ?", (codigos[0],))
+res = cliente.get(f"/api/presupuestos/{pid3}/revalidacion").get_json()
+grupo_cojinetes = [g for g in res["repuestos"]["grupos"] if g["categoria"] == "Cojinetes biela"][0]
+check("detecta el aumento", res["hay_cambios_repuestos"] is True)
+check("diferencia exacta del grupo", grupo_cojinetes["diferencia"] == 500, grupo_cojinetes)
+check("sigue cotizando la misma opción", grupo_cojinetes["cambio_de_opcion"] is False)
+check("el aviso muestra el precio viejo y el nuevo",
+      any("→" in a for a in grupo_cojinetes["avisos"]), grupo_cojinetes["avisos"])
+check("el total nuevo sube lo mismo que los repuestos",
+      round(res["total_nuevo"] - res["total_antes"], 2) == 500, res)
+
+grupo_fuera = [g for g in res["repuestos"]["grupos"] if g["categoria"] == "Junta inexistente"][0]
+check("el código fuera de catálogo conserva su precio",
+      grupo_fuera["elegida_ahora"]["precio_unitario"] == 500, grupo_fuera)
+check("y avisa que ya no está",
+      any("catálogo" in a for a in grupo_fuera["avisos"]), grupo_fuera["avisos"])
+check("el fuera de catálogo no cuenta como diferencia", grupo_fuera["diferencia"] == 0)
+
+# Ahora la otra opción del grupo pasa a ser la más cara: tiene que cambiar sola.
+_sql("UPDATE crac_repuestos SET precio = 5000 WHERE codigo = ?", (codigos[1],))
+res = cliente.get(f"/api/presupuestos/{pid3}/revalidacion").get_json()
+grupo_cojinetes = [g for g in res["repuestos"]["grupos"] if g["categoria"] == "Cojinetes biela"][0]
+check("cambia la opción cotizada", grupo_cojinetes["cambio_de_opcion"] is True, grupo_cojinetes)
+check("ahora cotiza la que pasó a ser más cara",
+      grupo_cojinetes["elegida_ahora"]["repuesto_codigo"] == codigos[1], grupo_cojinetes)
+check("con el subtotal nuevo", grupo_cojinetes["subtotal_ahora"] == 5000)
+
+# La mano de obra cambia, pero este botón no la toca.
+_sql(f"UPDATE servicios SET {col_lista} = ? WHERE id = ?",
+     (precio_servicio_original * 2, servicio_rev["id"]))
+res = cliente.get(f"/api/presupuestos/{pid3}/revalidacion").get_json()
+check("informa el cambio de mano de obra", res["hay_cambios_mano_obra"] is True, res["mano_obra"])
+check("una línea de mano de obra cambiada", len(res["mano_obra"]["lineas"]) == 1, res["mano_obra"])
+check("la mano de obra NO entra en el total nuevo",
+      round(res["total_nuevo"], 2) == round(res["total_antes"] + res["repuestos"]["diferencia"], 2), res)
+
+pdfs_antes = len(db.get_pdfs_presupuesto(pid3))
+r = cliente.post(f"/api/presupuestos/{pid3}/revalidar")
+aplicado = r.get_json()
+check("POST /revalidar responde 200", r.status_code == 200, aplicado)
+check("aplicó cambios", aplicado["sin_cambios"] is False)
+
+detalle3 = cliente.get(f"/api/presupuestos/{pid3}").get_json()
+items3 = cliente.get(f"/api/presupuestos/{pid3}/items").get_json()
+grupos3b = cliente.get(f"/api/presupuestos/{pid3}/grupos").get_json()
+elegida_final = [o for o in
+                 [g for g in grupos3b if g["categoria"] == "Cojinetes biela"][0]["opciones"]
+                 if o["elegida"]][0]
+check("quedó cotizada la más cara de hoy", elegida_final["repuesto_codigo"] == codigos[1], elegida_final)
+check("el precio guardado es el de hoy", elegida_final["precio_unitario"] == 5000)
+check("el total guardado coincide con el previsualizado",
+      round(detalle3["total"], 2) == round(aplicado["resumen"]["total_nuevo"], 2), detalle3["total"])
+check("el total subió respecto del original", detalle3["total"] > total_inicial)
+check("la fecha pasa a hoy", detalle3["fecha"] == date.today().isoformat(), detalle3["fecha"])
+check("las notas sobreviven", detalle3["notas"] == "no perder esto", detalle3["notas"])
+check("el ajuste % sobrevive", detalle3["ajuste_pct"] == 10, detalle3["ajuste_pct"])
+check("sigue aprobado", detalle3["aprobado_en"] is not None)
+check("la mano de obra NO se tocó",
+      [i for i in items3 if i["servicio_id"]][0]["precio_unitario"] == unitario_servicio_congelado)
+check("el repuesto fuera de catálogo sigue en el presupuesto",
+      any(i["repuesto_codigo"] == "NO-EXISTE-999" for i in items3), items3)
+check("se generó una sola versión nueva de PDF",
+      len(db.get_pdfs_presupuesto(pid3)) == pdfs_antes + 1)
+
+# Idempotencia: sin cambios en el catálogo, tocar el botón de nuevo no hace nada.
+pdfs_despues = len(db.get_pdfs_presupuesto(pid3))
+r = cliente.post(f"/api/presupuestos/{pid3}/revalidar")
+check("segunda revalidación no encuentra cambios", r.get_json()["sin_cambios"] is True, r.get_json())
+check("y no acumula versiones de PDF", len(db.get_pdfs_presupuesto(pid3)) == pdfs_despues)
+
+# Se restaura el catálogo y la lista de mano de obra.
+for codigo, precio in precios_catalogo_originales.items():
+    _sql("UPDATE crac_repuestos SET precio = ? WHERE codigo = ?", (precio, codigo))
+_sql(f"UPDATE servicios SET {col_lista} = ? WHERE id = ?",
+     (precio_servicio_original, servicio_rev["id"]))
+check("el catálogo quedó como estaba", _precio_catalogo(codigos[0]) == precios_catalogo_originales[codigos[0]])
+
+print("\n=== 12. Duplicar presupuesto ===")
+# El wizard duplicado arma el mismo payload de creación con lo que devuelven
+# /items y /grupos del original, pero a precios de hoy.
+items_orig = cliente.get(f"/api/presupuestos/{pid3}/items").get_json()
+grupos_orig = cliente.get(f"/api/presupuestos/{pid3}/grupos").get_json()
+body_dup = {
+    "cliente_nombre": "otro cliente",
+    "motor_id": detalle3["motor_id"],
+    "ajuste_pct": detalle3["ajuste_pct"],
+    "items": [
+        {"servicio_id": i["servicio_id"], "cantidad": i["cantidad"]}
+        for i in items_orig if i["servicio_id"]
+    ],
+    "grupos_repuestos": [{
+        "categoria": g["categoria"],
+        "opciones": [{
+            "repuesto_codigo": o["repuesto_codigo"],
+            "descripcion": o["descripcion"],
+            "cantidad": o["cantidad"],
+            # precio de HOY cuando el código sigue en el catálogo
+            "precio_unitario": o["precio_actual"] if o["stock_actual"] is not None else o["precio_unitario"],
+        } for o in g["opciones"]],
+    } for g in grupos_orig],
+}
+r = cliente.post("/api/presupuestos", json=body_dup)
+check("la copia se crea", r.status_code == 201, r.get_json())
+pid_dup = r.get_json()["id"]
+check("la copia es un presupuesto distinto", pid_dup != pid3)
+detalle_dup = cliente.get(f"/api/presupuestos/{pid_dup}").get_json()
+check("la copia mantiene el motor", detalle_dup["motor_id"] == detalle3["motor_id"])
+check("la copia mantiene el ajuste %", detalle_dup["ajuste_pct"] == detalle3["ajuste_pct"])
+check("la copia va al cliente nuevo", detalle_dup["cliente"] == "Otro Cliente", detalle_dup["cliente"])
+check("la copia tiene fecha de hoy", detalle_dup["fecha"] == date.today().isoformat())
+grupos_dup = cliente.get(f"/api/presupuestos/{pid_dup}/grupos").get_json()
+check("la copia trae los mismos grupos", len(grupos_dup) == len(grupos_orig), grupos_dup)
+opciones_dup = [g for g in grupos_dup if g["categoria"] == "Cojinetes biela"][0]["opciones"]
+check("la copia cotiza a precios de hoy",
+      all(o["precio_unitario"] == _precio_catalogo(o["repuesto_codigo"]) for o in opciones_dup),
+      opciones_dup)
+check("el original queda intacto",
+      cliente.get(f"/api/presupuestos/{pid3}").get_json()["total"] == detalle3["total"])
+check("la copia genera su propio PDF", len(db.get_pdfs_presupuesto(pid_dup)) == 1)
+
+print("\n=== 13. Borrar datos de prueba ===")
 motores_antes = len(facra.get_motores())
 servicios_antes = len(facra.get_servicios_para_lista(motor.get("lista_num")))
 catalogo_antes = crac.get_info_catalogo()["total"]

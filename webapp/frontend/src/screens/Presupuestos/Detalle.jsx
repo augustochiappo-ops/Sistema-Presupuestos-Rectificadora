@@ -13,8 +13,12 @@ import { ErrorBanner } from '../../components/ErrorBanner'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { StatusBadge } from '../../components/StatusBadge'
 import { ModalRepuestosAgregados } from './Wizard/ModalRepuestosAgregados'
+import { ModalRevalidacion } from './ModalRevalidacion'
 import { formatPrecioARS, formatFechaAR } from '../../utils/format'
-import { gruposParaPayload, totalRepuestos, agruparLineas, opcionElegida, subtotalDe } from '../../utils/grupos'
+import {
+  gruposParaPayload, totalRepuestos, agruparLineas, opcionElegida, subtotalDe,
+  lineaDeOpcion, elegidaAManoInicial,
+} from '../../utils/grupos'
 import { useRepuestosAgrupados } from '../../hooks/useRepuestosAgrupados'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
@@ -87,34 +91,6 @@ function construirPayload(lista, notas, ajustePct, lineasGrupos = [], elegidaAMa
   }
 }
 
-// Una opción congelada del backend, en la forma de línea que usan el hook de
-// agrupado y el pop-up de repuestos (los mismos que el wizard).
-function lineaDeOpcion(grupo, o) {
-  return {
-    key: o.repuesto_codigo || `op-${grupo.grupo_num}-${o.descripcion}`,
-    repuesto_codigo: o.repuesto_codigo,
-    descripcion: o.descripcion,
-    categoria: grupo.categoria,
-    cat_prefijo: null,
-    marca: o.marca,
-    medida: o.medida,
-    grupo: grupo.categoria,
-    cantidad: o.cantidad,
-    precio_unitario: o.precio_unitario,
-    precioTexto: o.precio_unitario ? formatPrecioARS(o.precio_unitario) : '',
-    stock: o.stock_al_cotizar,
-    esManual: !o.repuesto_codigo,
-  }
-}
-
-function elegidaAManoInicial(grupos) {
-  return Object.fromEntries(
-    grupos
-      .filter((g) => g.opciones.some((o) => o.elegida_a_mano))
-      .map((g) => [g.categoria, g.opciones.find((o) => o.elegida_a_mano).repuesto_codigo]),
-  )
-}
-
 function Campo({ label, valor }) {
   return (
     <div>
@@ -151,6 +127,11 @@ export default function DetallePresupuesto() {
   const [confirmarSalir, setConfirmarSalir] = React.useState(false)
   const [confirmarEliminar, setConfirmarEliminar] = React.useState(false)
   const [eliminando, setEliminando] = React.useState(false)
+  // Revalidación: el resumen de qué cambiaría a precios de hoy. Se pide al
+  // backend y se muestra en un pop-up; nada se aplica hasta confirmarlo.
+  const [revalidacion, setRevalidacion] = React.useState(null)
+  const [revalidando, setRevalidando] = React.useState(false)
+  const [aplicandoRevalidacion, setAplicandoRevalidacion] = React.useState(false)
   const [sugeridos, setSugeridos] = React.useState([])
   const [aviso, setAviso] = React.useState('')
   const [ajusteTexto, setAjusteTexto] = React.useState('')
@@ -355,6 +336,47 @@ export default function DetallePresupuesto() {
     }
   }
 
+  // "Actualizar a precios de hoy": primero se pide el resumen de qué cambiaría
+  // (sin tocar nada) y se muestra en el pop-up. Recién si el dueño confirma, el
+  // backend recotiza los repuestos y emite una versión nueva del PDF.
+  const pedirRevalidacion = async () => {
+    setRevalidando(true)
+    setError('')
+    setAviso('')
+    try {
+      const resumen = await api.get(`/presupuestos/${id}/revalidacion`)
+      if (!resumen.hay_cambios) {
+        setAviso('Los precios no cambiaron desde que se emitió este presupuesto.')
+        return
+      }
+      setRevalidacion(resumen)
+    } catch (err) {
+      setError(err.message || 'No se pudo consultar los precios de hoy')
+    } finally {
+      setRevalidando(false)
+    }
+  }
+
+  const aplicarRevalidacion = async () => {
+    setAplicandoRevalidacion(true)
+    setError('')
+    try {
+      const res = await api.post(`/presupuestos/${id}/revalidar`)
+      setRevalidacion(null)
+      if (res.sin_cambios) {
+        setAviso('Los precios de los repuestos no cambiaron: no hizo falta actualizar nada.')
+        return
+      }
+      cargar()
+      const version = res.pdfs?.[0]?.version
+      setAviso(`Actualizado a precios de hoy.${version ? ` Se generó la versión ${version} del PDF.` : ''}`)
+    } catch (err) {
+      setError(err.message || 'No se pudo actualizar el presupuesto')
+    } finally {
+      setAplicandoRevalidacion(false)
+    }
+  }
+
   const reconstruirPdfSilencioso = async () => {
     const nuevaLista = await api.post(`/presupuestos/${id}/pdf`)
     setPdfs(nuevaLista)
@@ -471,7 +493,18 @@ export default function DetallePresupuesto() {
                 <Button variant="secondary" iconLeft={<Icon n="cart" s={16} />} onClick={() => navigate(`/presupuestos/${id}/pedido`)}>
                   Pedido de repuestos
                 </Button>
+                <Button
+                  variant="secondary"
+                  iconLeft={<Icon n="rotate-cw" s={16} />}
+                  disabled={revalidando}
+                  onClick={pedirRevalidacion}
+                >
+                  {revalidando ? 'Consultando…' : 'Actualizar a precios de hoy'}
+                </Button>
                 <Button variant="secondary" iconLeft={<Icon n="share" s={16} />} disabled={!ultimoPdf} onClick={compartirPdf}>Compartir PDF</Button>
+                <Button variant="secondary" iconLeft={<Icon n="copy" s={16} />} onClick={() => navigate(`/presupuestos/nuevo?duplicar=${id}`)}>
+                  Duplicar
+                </Button>
                 <Button variant="primary" iconLeft={<Icon n="pencil" s={16} />} onClick={entrarEdicion}>Editar</Button>
                 <Button variant="danger" iconLeft={<Icon n="trash" s={16} />} onClick={() => setConfirmarEliminar(true)}>Eliminar</Button>
               </>
@@ -560,7 +593,16 @@ export default function DetallePresupuesto() {
                   borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
                 }}>
                   <Icon n="rotate-cw" s={15} />
-                  La lista de repuestos cambió desde la emisión de este presupuesto — revisá los avisos antes de reconfirmar.
+                  <span style={{ flex: 1 }}>
+                    La lista de repuestos cambió desde la emisión de este presupuesto — revisá los avisos antes de reconfirmar.
+                  </span>
+                  {/* El atajo va acá a propósito: es el momento exacto en que el
+                      dueño se entera de que el presupuesto quedó viejo. */}
+                  {!editMode && (
+                    <Button variant="secondary" size="sm" disabled={revalidando} onClick={pedirRevalidacion}>
+                      {revalidando ? 'Consultando…' : 'Actualizar a precios de hoy'}
+                    </Button>
+                  )}
                 </div>
               )}
 
@@ -781,6 +823,14 @@ export default function DetallePresupuesto() {
         onCambiarPrecio={cambiarPrecioGrupo}
         onQuitar={quitarDeGrupo}
         onClose={() => setModalRepuestos(false)}
+      />
+
+      <ModalRevalidacion
+        open={!!revalidacion}
+        resumen={revalidacion}
+        aplicando={aplicandoRevalidacion}
+        onConfirmar={aplicarRevalidacion}
+        onClose={() => setRevalidacion(null)}
       />
 
       <div>

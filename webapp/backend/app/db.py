@@ -1010,6 +1010,22 @@ def aprobar_presupuesto(presupuesto_id: int, aprobado: bool) -> str | None:
     return valor
 
 
+def actualizar_fecha_presupuesto(presupuesto_id: int) -> str:
+    """
+    Pone la fecha del presupuesto en hoy. Se usa al recotizarlo contra el catálogo
+    vigente: los precios pasan a ser los de hoy, así que la validez de una semana
+    vuelve a contar desde hoy y el estado que muestra la app coincide con la fecha
+    que imprime el PDF (que siempre sale con la del día).
+    """
+    valor = date.today().isoformat()
+    with get_connection() as conn:
+        conn.execute(
+            "UPDATE presupuestos SET fecha = ? WHERE id = ?",
+            (valor, presupuesto_id),
+        )
+    return valor
+
+
 def borrar_datos_prueba() -> dict:
     """
     Vacía presupuestos y clientes para arrancar limpio, dejando intacto todo lo

@@ -15,6 +15,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { mkdirSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url))
 const RAIZ = path.dirname(AQUI)
@@ -27,8 +28,20 @@ const { chromium } = await import(
 const BASE = process.env.BASE_URL || 'http://localhost:5173'
 const CHROMIUM = process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium'
 const SHOT = path.join(AQUI, 'capturas')
+// Mismo DATA_DIR con el que se levantó el backend: hace falta para simular a
+// mano una actualización del catálogo del proveedor (subir un precio) y poder
+// verificar el botón "Actualizar a precios de hoy".
+const DATA_DIR = process.env.DATA_DIR || '/tmp/rect-ui'
+const DB = path.join(DATA_DIR, 'presupuestos.db')
 mkdirSync(SHOT, { recursive: true })
 const fallos = []
+
+// Corre python contra la base del backend, con la conexión ya abierta en `c`.
+function py(codigo) {
+  return execFileSync('python3', ['-c',
+    `import sqlite3\nc=sqlite3.connect(${JSON.stringify(DB)})\n${codigo}\nc.commit()`,
+  ], { encoding: 'utf8' }).trim()
+}
 
 function check(nombre, ok, detalle = '') {
   if (ok) console.log(`  OK   ${nombre}`)
@@ -68,7 +81,16 @@ await page.locator('table tbody tr').first().click()
 await esperar(1200)
 check('paso 3 es Servicios', (await page.locator('text=/Paso 3 de 4/').count()) > 0)
 
-// Saltar servicios
+// Un ítem de mano de obra: hace falta después para verificar el aviso de "la
+// lista de la Cámara cambió" al revalidar. El catálogo de servicios no es una
+// tabla (son filas sueltas), así que se usa el "+" de cantidad de la primera.
+await page.locator('.servicios-picker-grid button[title="Elegir cantidad"]').first().click()
+await esperar(400)
+await page.locator('body > div').last().locator('button', { hasText: /^4$/ }).click()
+await esperar(700)
+check('el servicio elegido aparece en la previsualización',
+  (await page.locator('text=/Todavía no elegiste servicios/').count()) === 0)
+
 const btnRepuestos = page.locator('button', { hasText: /Siguiente.*Repuestos/i }).first()
 await btnRepuestos.click()
 await esperar(1200)
@@ -193,6 +215,121 @@ await page.screenshot({ path: `${SHOT}/08-pedido.png`, fullPage: true })
 await page.context().grantPermissions(['clipboard-read', 'clipboard-write']).catch(() => {})
 const btnCopiar = page.locator('button', { hasText: /Copiar códigos/ })
 check('hay botón de copiar códigos', (await btnCopiar.count()) > 0)
+
+console.log('\n=== Actualizar a precios de hoy ===')
+const pid = page.url().match(/presupuestos\/(\d+)/)[1]
+await page.goto(`${BASE}/presupuestos/${pid}`, { waitUntil: 'networkidle' })
+await esperar(1200)
+
+check('sin cambios en el catálogo no hay banner de avisos',
+  (await page.locator('text=/La lista de repuestos cambió/').count()) === 0)
+await page.locator('button', { hasText: /Actualizar a precios de hoy/ }).first().click()
+await esperar(1500)
+check('avisa que los precios no cambiaron',
+  (await page.locator('text=/Los precios no cambiaron/').count()) > 0)
+
+// El proveedor actualiza su lista: sube un 50% lo de este presupuesto. Y la
+// Cámara actualiza la mano de obra: se duplica el precio del servicio cotizado.
+py(`pid = ${pid}
+c.execute("UPDATE crac_repuestos SET precio = precio * 1.5 WHERE codigo IN (SELECT repuesto_codigo FROM presupuesto_item_opciones WHERE presupuesto_id = ?)", (pid,))
+lista = c.execute("SELECT m.lista_num FROM presupuestos p JOIN motores m ON m.id = p.motor_id WHERE p.id = ?", (pid,)).fetchone()[0]
+for (sid,) in c.execute("SELECT servicio_id FROM presupuesto_items WHERE presupuesto_id = ? AND servicio_id IS NOT NULL", (pid,)).fetchall():
+    c.execute(f"UPDATE servicios SET l{lista} = l{lista} * 2 WHERE id = ?", (sid,))`)
+
+await page.reload({ waitUntil: 'networkidle' })
+await esperar(1500)
+const totalAntes = await page.locator('text=/^\\$/').first().textContent().catch(() => '')
+check('el detalle avisa que la lista cambió',
+  (await page.locator('text=/La lista de repuestos cambió/').count()) > 0)
+
+await page.locator('button', { hasText: /Actualizar a precios de hoy/ }).first().click()
+await esperar(1800)
+check('se abre el resumen de la revalidación',
+  (await page.locator('text=/Repuestos — se van a actualizar/').count()) > 0)
+check('el resumen avisa del cambio de mano de obra',
+  (await page.locator('text=/Mano de obra — solo aviso/').count()) > 0)
+check('el resumen muestra el total viejo y el nuevo',
+  (await page.locator('text=/Total del presupuesto/').count()) > 0)
+await page.screenshot({ path: `${SHOT}/09-revalidacion.png`, fullPage: false })
+
+await page.locator('button', { hasText: /Actualizar y generar PDF/ }).click()
+await esperar(2500)
+check('confirma y avisa que generó el PDF nuevo',
+  (await page.locator('text=/Actualizado a precios de hoy/').count()) > 0)
+check('la tarjeta de PDF pasa a Versión 2',
+  (await page.locator('text=/Versión 2/').count()) > 0)
+const totalDespues = await page.locator('text=/^\\$/').first().textContent().catch(() => '')
+check('el total del presupuesto cambió', totalDespues !== totalAntes, `${totalAntes} → ${totalDespues}`)
+check('ya no queda el banner de avisos',
+  (await page.locator('text=/La lista de repuestos cambió/').count()) === 0)
+await page.screenshot({ path: `${SHOT}/10-revalidado.png`, fullPage: true })
+
+// Segunda vez seguida: los repuestos ya están al día, pero la mano de obra
+// sigue distinta (este botón no la toca a propósito). Tiene que abrir el
+// resumen mostrando solo ese aviso y SIN botón de aplicar, porque no hay nada
+// que aplicar.
+await page.locator('button', { hasText: /Actualizar a precios de hoy/ }).first().click()
+await esperar(1800)
+check('la segunda vez dice que los repuestos ya están al día',
+  (await page.locator('text=/Los precios de los repuestos no cambiaron/').count()) > 0)
+check('pero sigue avisando por la mano de obra',
+  (await page.locator('text=/Mano de obra — solo aviso/').count()) > 0)
+check('sin nada que aplicar, no ofrece generar PDF',
+  (await page.locator('button', { hasText: /Actualizar y generar PDF/ }).count()) === 0)
+await page.locator('button', { hasText: /^Cerrar$/ }).click()
+await esperar(800)
+check('y no generó una Versión 3', (await page.locator('text=/Versión 3/').count()) === 0)
+
+console.log('\n=== Duplicar presupuesto ===')
+const filasAntes = await (async () => {
+  await page.goto(`${BASE}/presupuestos`, { waitUntil: 'networkidle' })
+  await esperar(1000)
+  return page.locator('table tbody tr').count()
+})()
+
+// Desde el listado, con el icono de la fila.
+await page.locator('button[title="Duplicar presupuesto"]').first().click()
+await page.waitForURL(/duplicar=/, { timeout: 15000 })
+await esperar(2000)
+check('duplicar desde el listado abre el wizard',
+  (await page.locator('text=/Copia del presupuesto/').count()) > 0)
+check('la copia arranca en el paso Cliente', (await page.locator('text=/Paso 1 de 4/').count()) > 0)
+await page.screenshot({ path: `${SHOT}/11-duplicar.png`, fullPage: false })
+
+await page.fill('input[placeholder*="Buscar cliente"]', 'Cliente Copia UI')
+await esperar(600)
+const btnMecanico2 = page.locator('button', { hasText: /^Mecánico$/ })
+if (await btnMecanico2.count()) { await btnMecanico2.click(); await esperar(400) }
+await page.locator('button', { hasText: /Siguiente|Continuar/i }).first().click()
+await esperar(1800)
+check('saltea el selector de motor y va a Servicios',
+  (await page.locator('text=/Paso 3 de 4/').count()) > 0)
+const cantidadesCopiadas = await page.locator('.servicios-picker-grid table tbody tr').count()
+check('el paso Servicios carga el catálogo del motor copiado', cantidadesCopiadas > 0)
+
+await page.locator('button', { hasText: /Siguiente.*Repuestos/i }).first().click()
+await esperar(1800)
+check('los repuestos vienen copiados',
+  (await page.locator('button', { hasText: /Ver repuestos \(\d+\)/ }).count()) > 0)
+await page.screenshot({ path: `${SHOT}/12-duplicar-repuestos.png`, fullPage: false })
+
+await page.locator('button', { hasText: /Confirmar presupuesto/ }).click()
+await page.waitForURL(/presupuestos$/, { timeout: 20000 })
+await esperar(1500)
+const filasDespues = await page.locator('table tbody tr').count()
+check('la copia queda guardada como presupuesto nuevo', filasDespues === filasAntes + 1,
+  `${filasAntes} → ${filasDespues}`)
+check('el original sigue en la lista', filasDespues > 1)
+
+// Y desde el detalle, con el botón del header.
+await page.locator('table tbody tr').first().click()
+await page.waitForURL(/presupuestos\/\d+$/, { timeout: 15000 })
+await esperar(1200)
+await page.locator('button', { hasText: /^Duplicar$/ }).click()
+await page.waitForURL(/duplicar=/, { timeout: 15000 })
+await esperar(1500)
+check('duplicar desde el detalle también abre el wizard cargado',
+  (await page.locator('text=/Copia del presupuesto/').count()) > 0)
 
 console.log('\n=== Ficha de repuestos del motor ===')
 await page.goto(`${BASE}/motores`, { waitUntil: 'networkidle' })

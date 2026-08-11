@@ -1,20 +1,25 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { api } from '../../../api/client'
 import { PageHeader } from '../../../components/PageHeader'
 import { Button } from '../../../components/Button'
 import { Icon } from '../../../components/Icon'
 import { ErrorBanner } from '../../../components/ErrorBanner'
+import { formatPrecioARS } from '../../../utils/format'
 import { MotorSelector } from '../../../components/MotorSelector'
 import { PasoCliente } from './PasoCliente'
 import { PasoServicios } from './PasoServicios'
 import { PasoRepuestos } from './PasoRepuestos'
-import { gruposParaPayload, itemsSueltosParaPayload } from '../../../utils/grupos'
+import {
+  gruposParaPayload, itemsSueltosParaPayload, lineaDeOpcion, elegidaAManoInicial,
+} from '../../../utils/grupos'
 
 const PASOS = ['Cliente', 'Motor', 'Servicios', 'Repuestos']
 
 export default function WizardPresupuesto() {
   const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const duplicarDe = params.get('duplicar')
   const [paso, setPaso] = React.useState(0)
   const [cliente, setCliente] = React.useState({ nombre: '', tipo: null, contacto: null })
   const [motor, setMotor] = React.useState(null)
@@ -43,6 +48,84 @@ export default function WizardPresupuesto() {
   const setElegidaGrupo = React.useCallback((grupo, codigo) => {
     setElegidaAMano((prev) => ({ ...prev, [grupo]: prev[grupo] === codigo ? null : codigo }))
   }, [])
+
+  /*
+   * Duplicar: el wizard arranca cargado con el contenido de otro presupuesto y
+   * lo único que falta es el cliente. Todo se copia a PRECIOS DE HOY, porque es
+   * un presupuesto nuevo: los repuestos toman el precio vigente del catálogo
+   * (lineaDeOpcion con preciosDeHoy) y la mano de obra la recalcula el backend
+   * contra la lista de FACRA al crear, aplicándole este mismo ajuste %.
+   *
+   * No se copian las notas: son de ese trabajo puntual. Se cargan después desde
+   * el detalle si hacen falta.
+   */
+  React.useEffect(() => {
+    if (!duplicarDe) return
+    let vigente = true
+    const cargar = async () => {
+      try {
+        const original = await api.get(`/presupuestos/${duplicarDe}`)
+        if (!vigente || !original.motor_id) return
+        const [motorOriginal, itemsOriginal, gruposOriginal] = await Promise.all([
+          api.get(`/motores/${original.motor_id}`),
+          api.get(`/presupuestos/${duplicarDe}/items`),
+          api.get(`/presupuestos/${duplicarDe}/grupos`).catch(() => []),
+        ])
+        if (!vigente) return
+
+        setMotor(motorOriginal)
+        setAjustePct(original.ajuste_pct || 0)
+        setServiciosSel({
+          cantidades: Object.fromEntries(
+            itemsOriginal
+              .filter((it) => it.tipo !== 'repuesto' && it.servicio_id)
+              .map((it) => [it.servicio_id, it.cantidad || 1]),
+          ),
+          customItems: itemsOriginal
+            .filter((it) => it.tipo !== 'repuesto' && !it.servicio_id)
+            .map((it, i) => ({
+              id: `dup-${i}`,
+              descripcion_custom: it.descripcion_custom,
+              // El wizard trata precio_aplicado como el UNITARIO del ítem manual.
+              precio_aplicado: it.precio_unitario ?? it.precio_aplicado,
+              cantidad: it.cantidad || 1,
+            })),
+          grupos: {},
+        })
+
+        const lineasGrupos = gruposOriginal.flatMap((g) => g.opciones.map((o) => lineaDeOpcion(g, o, true)))
+        // Los repuestos sin grupo son los cargados a mano, fuera de catálogo:
+        // no tienen precio vigente contra el cual compararse, así que se copian
+        // con el que les puso el usuario.
+        const sueltos = itemsOriginal
+          .filter((it) => it.tipo === 'repuesto' && it.grupo_num == null)
+          .map((it, i) => ({
+            key: it.repuesto_codigo || `dup-suelto-${i}`,
+            repuesto_codigo: it.repuesto_codigo,
+            descripcion: it.descripcion_custom,
+            categoria: null,
+            cat_prefijo: null,
+            marca: null,
+            medida: null,
+            grupo: null,
+            cantidad: it.cantidad || 1,
+            precio_unitario: it.precio_unitario,
+            precioTexto: it.precio_unitario ? formatPrecioARS(it.precio_unitario) : '',
+            stock: it.stock_al_cotizar,
+            esManual: !it.repuesto_codigo,
+          }))
+        setRepuestos([...lineasGrupos, ...sueltos])
+        setCantidadPorGrupo(Object.fromEntries(
+          gruposOriginal.map((g) => [g.categoria, g.opciones[0]?.cantidad || 1]),
+        ))
+        setElegidaAMano(elegidaAManoInicial(gruposOriginal))
+      } catch {
+        if (vigente) setError('No se pudo cargar el presupuesto que querés duplicar')
+      }
+    }
+    cargar()
+    return () => { vigente = false }
+  }, [duplicarDe])
 
   const finalizar = async () => {
     setGuardando(true)
@@ -110,8 +193,26 @@ export default function WizardPresupuesto() {
 
       <ErrorBanner message={error} onClose={() => setError('')} />
 
+      {duplicarDe && (
+        <div style={{
+          padding: '10px 14px', background: 'var(--status-aviso-bg)', color: 'var(--status-aviso-fg)',
+          borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
+        }}>
+          Copia del presupuesto #{String(duplicarDe).padStart(4, '0')}
+          {motor ? ` — ${motor.motor}` : ''}, con los precios de hoy. Elegí el cliente y revisá lo que haga falta.
+        </div>
+      )}
+
       {paso === 0 && (
-        <PasoCliente valorInicial={cliente.nombre} onSiguiente={(info) => { setCliente(info); setPaso(1) }} />
+        <PasoCliente
+          valorInicial={cliente.nombre}
+          onSiguiente={(info) => {
+            setCliente(info)
+            // Al duplicar el motor ya viene resuelto: se salta el selector. El
+            // paso sigue accesible con "Volver" por si lo quieren cambiar.
+            setPaso(duplicarDe && motor ? 2 : 1)
+          }}
+        />
       )}
 
       {paso === 1 && (

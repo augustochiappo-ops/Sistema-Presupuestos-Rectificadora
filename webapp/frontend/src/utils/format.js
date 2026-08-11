@@ -34,6 +34,13 @@ export function formatFechaAR(fechaIso) {
   return `${d}/${m}/${y}`
 }
 
+// Fecha con hora, como la guarda app_meta para la importación del catálogo.
+export function formatFechaHoraAR(iso) {
+  if (!iso) return '—'
+  const [fecha, hora] = iso.split('T')
+  return `${formatFechaAR(fecha)}${hora ? ` a las ${hora.slice(0, 5)}` : ''}`
+}
+
 // Un presupuesto es "vigente" 7 días desde su fecha de emisión (misma regla que el PDF).
 export function estadoPresupuesto(fechaIso) {
   if (!fechaIso) return 'pending'
