@@ -8,6 +8,7 @@ import { CategoriasPanel } from './CategoriasPanel'
 import { Button } from './Button'
 import { Icon } from './Icon'
 import { formatPrecioARS } from '../utils/format'
+import { agruparPorFamilia } from '../utils/grupos'
 
 // Cantidades típicas de un motor: una unidad, o un juego por cilindro/válvula.
 const CANTIDADES = [1, 4, 6, 8, 12, 16]
@@ -137,6 +138,11 @@ export function RepuestoPicker({
   // agregados aparte (el wizard) lo pasan. Sin esto, RepuestoPicker se
   // comporta como antes (usado también en la edición del detalle).
   onVerAgregados, cantidadAgregados = 0,
+  // Sacar un repuesto de la ficha del motor sin salir del presupuesto: recibe
+  // los códigos a borrar (uno, o toda una familia de medidas). Opcional — sin
+  // esto no aparece ningún tacho, que es como se comporta en la edición del
+  // detalle, donde la ficha del motor no se toca.
+  onQuitarDeFicha,
   tituloSugeridos = 'Repuestos de este motor',
   ayudaFilas = 'Click en la fila para agregar uno, o el + para elegir la cantidad',
 }) {
@@ -160,7 +166,13 @@ export function RepuestoPicker({
       if (!porCategoria.has(nombre)) porCategoria.set(nombre, [])
       porCategoria.get(nombre).push(s)
     })
-    return [...porCategoria.entries()].map(([nombre, items]) => ({ nombre, items }))
+    return [...porCategoria.entries()].map(([nombre, items]) => ({
+      nombre,
+      items,
+      // Dentro de la categoría, las medidas de un mismo repuesto van juntas:
+      // entran juntas al elegir una, así que también se sacan juntas.
+      familias: agruparPorFamilia(items.map((s) => ({ ...s, key: s.codigo, repuesto_codigo: s.codigo }))),
+    }))
   }, [sugeridos])
 
   // Arrancan cerrados: la lista de categorías se lee de un vistazo y se abre la
@@ -222,6 +234,7 @@ export function RepuestoPicker({
     cat_prefijo: row.cat_prefijo,
     marca: row.marca,
     medida: row.medida,
+    base_codigo: row.base_codigo,
   }, cantidad, origen)
 
   const agregarSugerido = (s, cantidad, origen = 'click') => onAgregar({
@@ -233,6 +246,7 @@ export function RepuestoPicker({
     cat_prefijo: s.cat_prefijo,
     marca: s.marca,
     medida: s.medida,
+    base_codigo: s.base_codigo,
   }, cantidad, origen)
 
   const columnas = [
@@ -317,7 +331,22 @@ export function RepuestoPicker({
 
                 {abierto && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8, padding: '2px 0 12px 26px' }}>
-                    {g.items.map((s) => {
+                    {g.familias.flatMap((familia) => [
+                      familia.esFamilia && onQuitarDeFicha ? (
+                        <div key={`fam-${familia.base}`} style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 2 }}>
+                          <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--text-faint)' }}>
+                            {familia.base}{familia.marca ? ` · ${familia.marca}` : ''} · {familia.opciones.length} medidas
+                          </span>
+                          <button
+                            onClick={() => onQuitarDeFicha(familia.codigos)}
+                            title={`Sacar las ${familia.opciones.length} medidas de ${familia.base} de este motor`}
+                            style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex', padding: 0 }}
+                          >
+                            <Icon n="trash" s={14} />
+                          </button>
+                        </div>
+                      ) : null,
+                      ...familia.opciones.map((s) => {
                       const cantidad = cantidadPorCodigo.get(s.codigo)
                       return (
                         <div key={s.codigo} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -345,9 +374,21 @@ export function RepuestoPicker({
                             cantidadActual={cantidad}
                             onElegir={(n) => agregarSugerido(s, n, 'exacto')}
                           />
+                          {onQuitarDeFicha && (
+                            <button
+                              onClick={() => onQuitarDeFicha([s.codigo])}
+                              title={familia.esFamilia
+                                ? `Sacar solo la medida ${s.medida || ''} de este motor`.replace('  ', ' ')
+                                : 'Sacar este repuesto de la ficha del motor'}
+                              style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex', padding: 0 }}
+                            >
+                              <Icon n="trash" s={15} />
+                            </button>
+                          )}
                         </div>
                       )
-                    })}
+                    }),
+                    ])}
                   </div>
                 )}
               </div>

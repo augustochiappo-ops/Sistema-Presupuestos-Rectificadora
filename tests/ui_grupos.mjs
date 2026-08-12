@@ -492,6 +492,179 @@ check('avisa cuántos presupuestos hay que borrar primero',
 check('y no se fue de la ficha', /clientes\/\d+/.test(page.url()))
 await page.screenshot({ path: `${SHOT}/16-cliente-bloqueado.png`, fullPage: false })
 
+console.log('\n=== Medidas: familia, notas de precio y papelera del motor ===')
+// Bloque nuevo (2026-08-12). Arranca de cero con la ficha del motor: el resto de
+// la suite la dejó cargada y acá se cuentan líneas.
+py(`for t in ("motor_repuesto_opciones", "motor_repuesto_grupos", "motor_repuestos_papelera"):
+    c.execute("DELETE FROM " + t)`)
+
+const filasCatalogo = () => page.locator('.motor-selector-grid table tbody tr')
+// Filas de opción del pop-up (los renglones de familia no tienen input de cantidad).
+const filasModal = () => page.locator('table tbody tr td input[type="number"]')
+
+async function irAlPasoRepuestos(nombreCliente) {
+  await page.goto(`${BASE}/presupuestos/nuevo`, { waitUntil: 'networkidle' })
+  await page.fill('input[placeholder*="Buscar cliente"]', nombreCliente)
+  await esperar(600)
+  const nuevo = page.locator('button', { hasText: /^Mecánico$/ })
+  if (await nuevo.count()) { await nuevo.click(); await esperar(400) }
+  await page.locator('button', { hasText: /Siguiente|Continuar/i }).first().click()
+  await esperar(700)
+  await page.fill('input[placeholder*="Buscar" i]', 'CITROEN')
+  await esperar(1000)
+  await page.locator('table tbody tr').first().click()
+  await esperar(1200)
+  await page.locator('button', { hasText: /Siguiente.*Repuestos/i }).first().click()
+  await esperar(1500)
+}
+async function buscarCodigo(codigo) {
+  const campo = page.locator('input[placeholder="Código…"]')
+  await campo.fill('')
+  await campo.fill(codigo)
+  await esperar(1400)
+}
+async function abrirVerRepuestos() {
+  await page.locator('button', { hasText: /Ver repuestos/ }).click()
+  await esperar(700)
+}
+async function cerrarModal() {
+  const cerrar = page.locator('h3:has-text("Repuestos del presupuesto")').locator('xpath=../..').locator('button').last()
+  if (await cerrar.count()) await cerrar.click()
+  await esperar(500)
+}
+
+await irAlPasoRepuestos('Cliente Medidas UI')
+await buscarCodigo('CAAC02740')
+// La medida STD es la última por orden de código (…060, 60/, S60, STD). No sirve
+// filtrar por el texto "STD": la aplicación de S60 dice "STD/060".
+await filasCatalogo().last().click()
+await esperar(2000)
+await abrirVerRepuestos()
+check('agregar una medida trae la familia entera', (await filasModal().count()) === 7,
+  `filas=${await filasModal().count()}`)
+check('el renglón de familia muestra el código base',
+  (await page.locator('text=/CAAC02740 · .* · 7 medidas/').count()) > 0)
+check('con todos los precios iguales no se marcan extremos',
+  (await page.getByText('El más caro del grupo', { exact: true }).count()) === 0)
+await cerrarModal()
+
+// Otra marca de la misma categoría: ahí sí hay más caro y más barato.
+await buscarCodigo('')
+await page.locator('button', { hasText: /^Cojinetes biela$/ }).first().click()
+await esperar(1600)
+await filasCatalogo().filter({ hasNotText: 'CAAC02740' }).first().click()
+await esperar(2000)
+await abrirVerRepuestos()
+check('el chip "El más caro" queda en la fila que cotiza',
+  (await page.getByText('El más caro', { exact: true }).count()) === 1)
+check('la nota no repite ese chip',
+  (await page.getByText('El más caro del grupo', { exact: true }).count()) === 0)
+check('la nota "El más barato" aparece una sola vez',
+  (await page.getByText(/^El más barato/).count()) === 1)
+check('y dice cuánto menos sale',
+  /El más barato — \$/.test(await page.getByText(/^El más barato/).first().innerText()))
+await page.screenshot({ path: `${SHOT}/17-notas-cotiza.png`, fullPage: false })
+await page.locator('button', { hasText: /^Usar este$/ }).first().click()
+await esperar(700)
+check('al elegir a mano se marca cuál era el más caro',
+  (await page.getByText('El más caro del grupo', { exact: true }).count()) === 1)
+await page.locator('button', { hasText: /^Usar este$/ }).first().click()
+await esperar(700)
+// Sacar la opción de la otra marca: queda solo la familia
+const tachoSuelto = page.locator('table tbody tr').filter({ hasNotText: 'CAAC02740' })
+  .locator('button[title="Quitar"]').first()
+if (await tachoSuelto.count()) { await tachoSuelto.click(); await esperar(600) }
+
+check('hay un tacho para toda la familia',
+  (await page.locator('button[title*="Quitar las 7 medidas"]').count()) === 1)
+await page.locator('button[title*="Quitar las 7 medidas"]').click()
+await esperar(700)
+check('el tacho de la familia se lleva las 7',
+  (await page.locator('text=/Todavía no agregaste ningún repuesto/').count()) === 1)
+await cerrarModal()
+
+// El bug de 2026-08-12: después de borrarlas, volver a cargar una medida tiene
+// que traer otra vez a sus hermanas (antes entraba sola).
+await buscarCodigo('CAAC02740')
+await filasCatalogo().last().click()
+await esperar(2000)
+await abrirVerRepuestos()
+check('volver a cargarla trae de nuevo las 7 medidas', (await filasModal().count()) === 7,
+  `filas=${await filasModal().count()}`)
+await cerrarModal()
+// Y bajar la cantidad a cero saca la línea, en vez de dejarla cargada en cero.
+await filasCatalogo().last().locator('button', { hasText: '−' }).click()
+await esperar(800)
+await abrirVerRepuestos()
+check('bajar a cero saca la línea', (await filasModal().count()) === 6, `filas=${await filasModal().count()}`)
+check('no quedan líneas en cero',
+  (await page.locator('table tbody tr td input[type="number"][value="0"]').count()) === 0)
+await cerrarModal()
+await filasCatalogo().last().click()
+await esperar(1500)
+check('"Confirmar presupuesto" queda habilitado',
+  await page.locator('button', { hasText: /Confirmar presupuesto/ }).isEnabled())
+await page.locator('button', { hasText: /Confirmar presupuesto/ }).click()
+await page.waitForURL(/presupuestos$/, { timeout: 20000 })
+await esperar(1200)
+check('la ficha del motor guardó las 7 opciones',
+  py('print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones").fetchone()[0])') === '7')
+
+// Sacar del registro del motor desde un presupuesto nuevo
+await irAlPasoRepuestos('Cliente Medidas UI')
+check('el paso arranca con los repuestos del motor',
+  (await page.locator('text=/Repuestos de este motor/').count()) === 1)
+await page.locator('button[title*="Sacar las 7 medidas"]').click()
+await esperar(1500)
+check('avisa dónde recuperarlo', (await page.locator('text=/Repuestos eliminados/').count()) > 0)
+check('se vació la ficha del motor',
+  py('print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones").fetchone()[0])') === '0')
+check('y las 7 quedaron en la papelera',
+  py('print(c.execute("SELECT COUNT(*) FROM motor_repuestos_papelera").fetchone()[0])') === '7')
+await abrirVerRepuestos()
+check('también salieron del presupuesto en curso',
+  (await page.locator('text=/Todavía no agregaste ningún repuesto/').count()) === 1)
+await cerrarModal()
+
+// Papelera en la pantalla del motor
+await page.goto(`${BASE}/motores`, { waitUntil: 'networkidle' })
+await page.fill('input[placeholder*="Buscar" i]', 'CITROEN')
+await esperar(1000)
+await page.locator('table tbody tr').first().click()
+await esperar(1500)
+check('el motor muestra "Repuestos eliminados (7)"',
+  (await page.locator('button', { hasText: /Repuestos eliminados \(7\)/ }).count()) === 1)
+await page.locator('button', { hasText: /Repuestos eliminados \(7\)/ }).click()
+await esperar(800)
+check('la papelera lista los 7 códigos',
+  (await page.locator('button', { hasText: /^Restaurar$/ }).count()) === 7)
+await page.screenshot({ path: `${SHOT}/18-papelera-motor.png`, fullPage: false })
+await page.locator('button', { hasText: /^Restaurar$/ }).first().click()
+await esperar(1200)
+check('restaurar uno lo devuelve a la ficha',
+  py(`print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones").fetchone()[0],
+            c.execute("SELECT COUNT(*) FROM motor_repuestos_papelera").fetchone()[0])`) === '1 6')
+await page.locator('button', { hasText: /Restaurar todo/ }).click()
+await esperar(1500)
+check('"Restaurar todo" devuelve el resto',
+  py(`print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones").fetchone()[0],
+            c.execute("SELECT COUNT(*) FROM motor_repuestos_papelera").fetchone()[0])`) === '7 0')
+check('el botón desaparece con la papelera vacía',
+  (await page.locator('button', { hasText: /Repuestos eliminados/ }).count()) === 0)
+
+// La categoría entera sí pregunta antes
+await page.locator('button', { hasText: /^Editar$/ }).first().click()
+await esperar(600)
+await page.locator('button[title*="Sacar toda la categoría"]').click()
+await esperar(600)
+check('sacar la categoría entera pide confirmación',
+  (await page.locator('text=/¿Sacar 7 opciones de la ficha\\?/').count()) === 1)
+await page.locator('button', { hasText: /Cancelar/ }).click()
+await esperar(500)
+check('cancelar no borra nada',
+  py('print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones").fetchone()[0])') === '7')
+await page.screenshot({ path: `${SHOT}/19-confirmacion-categoria.png`, fullPage: false })
+
 console.log('\n' + '='.repeat(50))
 if (fallos.length) { console.log(`FALLARON ${fallos.length}: ${JSON.stringify(fallos, null, 1)}`) }
 else console.log('TODO OK')

@@ -6,7 +6,7 @@ salvo donde se indica explícitamente (soporte de ítems custom en guardar_presu
 """
 import os
 import sqlite3
-from datetime import date
+from datetime import date, datetime
 
 from . import config
 from .helpers import formato_nombre_titulo
@@ -164,6 +164,24 @@ def init_db():
                 repuesto_codigo TEXT NOT NULL,
                 cantidad        REAL NOT NULL DEFAULT 1,
                 PRIMARY KEY (grupo_id, repuesto_codigo)
+            );
+
+            -- Papelera de la ficha: todo lo que sale de motor_repuesto_opciones
+            -- cae acá en vez de desaparecer. Borrar un repuesto del motor es la
+            -- operación más fácil de hacer sin querer (el tacho de una familia se
+            -- lleva cuatro medidas de un click), y sin este registro no habría
+            -- forma de saber qué había antes: la ficha no guarda historial.
+            -- Se llena sola desde guardar_ficha_motor, que es por donde pasan
+            -- todos los cambios de ficha. Volver a agregar un código lo saca de
+            -- acá: si está en la ficha, no está eliminado.
+            CREATE TABLE IF NOT EXISTS motor_repuestos_papelera (
+                motor_id        INTEGER NOT NULL REFERENCES motores(id) ON DELETE CASCADE,
+                repuesto_codigo TEXT NOT NULL,
+                categoria       TEXT NOT NULL,   -- la que tenía en la ficha, para poder restaurarlo a su grupo
+                cat_prefijo     TEXT,
+                cantidad        REAL NOT NULL DEFAULT 1,
+                eliminado_en    TEXT NOT NULL,
+                PRIMARY KEY (motor_id, repuesto_codigo)
             );
 
             -- Pares clave/valor de la instalación. Hoy guarda cuándo se importó por
@@ -852,7 +870,7 @@ def get_ficha_motor(motor_id: int) -> list[dict]:
             cur = conn.execute(
                 """
                 SELECT mro.repuesto_codigo, mro.cantidad,
-                       cr.aplicacion, cr.precio, cr.stock, cr.medida,
+                       cr.aplicacion, cr.precio, cr.stock, cr.medida, cr.base_codigo,
                        COALESCE(pm.nombre, cr.marca_prefijo) AS marca
                 FROM motor_repuesto_opciones mro
                 LEFT JOIN crac_repuestos cr ON cr.id = (
@@ -865,7 +883,7 @@ def get_ficha_motor(motor_id: int) -> list[dict]:
                 (grupo_id,),
             )
             opciones = []
-            for codigo, cantidad, aplicacion, precio, stock, medida, marca in cur.fetchall():
+            for codigo, cantidad, aplicacion, precio, stock, medida, base_codigo, marca in cur.fetchall():
                 # precio/stock en None = el código ya no está en el catálogo.
                 # Se conserva igual en la ficha: sigue siendo una pieza que
                 # sirve para el motor, solo que hoy el proveedor no la lista.
@@ -876,6 +894,10 @@ def get_ficha_motor(motor_id: int) -> list[dict]:
                     "precio_actual": precio,
                     "stock_actual": stock,
                     "medida": medida,
+                    # Familia de medidas: mismo repuesto y misma marca, distinta
+                    # medida (STD/025/050…). La pantalla la usa para poder sacar
+                    # las cuatro juntas sin tocar el resto de la categoría.
+                    "base_codigo": base_codigo,
                     "marca": marca,
                     "en_catalogo": precio is not None,
                     "subtotal": round((precio or 0) * (cantidad or 0), 2),
@@ -903,8 +925,27 @@ def guardar_ficha_motor(motor_id: int, grupos: list[dict]) -> None:
     Reemplaza la ficha completa del motor.
     grupos: [{categoria, cat_prefijo, opciones: [{codigo, cantidad}]}]
     Los grupos sin opciones se descartan (un grupo vacío no significa nada).
+
+    Todo cambio de ficha pasa por acá (la pantalla del motor, el paso Repuestos
+    del presupuesto, copiar de otro motor, y la fusión al confirmar), así que es
+    el único lugar donde hace falta mantener la papelera: lo que estaba y ya no
+    está se guarda como eliminado, y lo que vuelve a entrar se saca de la
+    papelera.
     """
     with get_connection() as conn:
+        antes = {
+            codigo: (categoria, cat_prefijo, cantidad)
+            for codigo, categoria, cat_prefijo, cantidad in conn.execute(
+                """
+                SELECT mro.repuesto_codigo, mrg.categoria, mrg.cat_prefijo, mro.cantidad
+                FROM motor_repuesto_opciones mro
+                JOIN motor_repuesto_grupos mrg ON mrg.id = mro.grupo_id
+                WHERE mrg.motor_id = ?
+                """,
+                (motor_id,),
+            )
+        }
+
         viejos = conn.execute(
             "SELECT id FROM motor_repuesto_grupos WHERE motor_id = ?", (motor_id,)
         ).fetchall()
@@ -935,6 +976,46 @@ def guardar_ficha_motor(motor_id: int, grupos: list[dict]) -> None:
                     """,
                     (grupo_id, op["codigo"].strip(), max(cantidad, 0) or 1),
                 )
+
+        despues = {
+            codigo
+            for (codigo,) in conn.execute(
+                """
+                SELECT mro.repuesto_codigo
+                FROM motor_repuesto_opciones mro
+                JOIN motor_repuesto_grupos mrg ON mrg.id = mro.grupo_id
+                WHERE mrg.motor_id = ?
+                """,
+                (motor_id,),
+            )
+        }
+
+        ahora = datetime.now().isoformat(timespec="seconds")
+        for codigo, (categoria, cat_prefijo, cantidad) in antes.items():
+            if codigo in despues:
+                continue
+            conn.execute(
+                """
+                INSERT INTO motor_repuestos_papelera
+                    (motor_id, repuesto_codigo, categoria, cat_prefijo, cantidad, eliminado_en)
+                VALUES (?, ?, ?, ?, ?, ?)
+                ON CONFLICT(motor_id, repuesto_codigo) DO UPDATE SET
+                    categoria = excluded.categoria,
+                    cat_prefijo = excluded.cat_prefijo,
+                    cantidad = excluded.cantidad,
+                    eliminado_en = excluded.eliminado_en
+                """,
+                (motor_id, codigo, categoria, cat_prefijo, cantidad, ahora),
+            )
+
+        # Lo que volvió a la ficha ya no está eliminado, sin importar cómo volvió
+        # (restaurado a mano, agregado de nuevo desde el catálogo, o traído de
+        # otro motor). Si no, quedaría listado en los dos lados a la vez.
+        for codigo in despues:
+            conn.execute(
+                "DELETE FROM motor_repuestos_papelera WHERE motor_id = ? AND repuesto_codigo = ?",
+                (motor_id, codigo),
+            )
 
 
 def fusionar_ficha_motor(motor_id: int, grupos: list[dict]) -> None:
@@ -988,6 +1069,97 @@ def copiar_ficha_motor(origen_id: int, destino_id: int) -> int:
     return len(get_ficha_motor(destino_id))
 
 
+# ─── Papelera de la ficha del motor ───────────────────────────────────────────
+
+def get_papelera_motor(motor_id: int) -> list[dict]:
+    """
+    Repuestos que se sacaron de la ficha de este motor, del último borrado al
+    primero. Se resuelven contra el catálogo de hoy igual que la ficha, para que
+    se reconozcan por descripción y marca y no solo por el código.
+    """
+    with get_connection() as conn:
+        cur = conn.execute(
+            """
+            SELECT p.repuesto_codigo, p.categoria, p.cat_prefijo, p.cantidad, p.eliminado_en,
+                   cr.aplicacion, cr.precio, cr.stock, cr.medida, cr.base_codigo,
+                   COALESCE(pm.nombre, cr.marca_prefijo) AS marca
+            FROM motor_repuestos_papelera p
+            LEFT JOIN crac_repuestos cr ON cr.id = (
+                SELECT id FROM crac_repuestos WHERE codigo = p.repuesto_codigo LIMIT 1
+            )
+            LEFT JOIN crac_prefijos pm ON pm.tipo = 'marca' AND pm.prefijo = cr.marca_prefijo
+            WHERE p.motor_id = ?
+            ORDER BY p.eliminado_en DESC, p.categoria COLLATE NOCASE, p.repuesto_codigo
+            """,
+            (motor_id,),
+        )
+        return [
+            {
+                "codigo": codigo,
+                "categoria": categoria,
+                "cat_prefijo": cat_prefijo,
+                "cantidad": cantidad,
+                "eliminado_en": eliminado_en,
+                "descripcion": aplicacion,
+                "precio_actual": precio,
+                "stock_actual": stock,
+                "medida": medida,
+                "base_codigo": base_codigo,
+                "marca": marca,
+                "en_catalogo": precio is not None,
+            }
+            for (codigo, categoria, cat_prefijo, cantidad, eliminado_en,
+                 aplicacion, precio, stock, medida, base_codigo, marca) in cur.fetchall()
+        ]
+
+
+def restaurar_de_papelera(motor_id: int, codigos: list[str]) -> int:
+    """
+    Devuelve a la ficha los códigos indicados, cada uno a la categoría de la que
+    salió y con la cantidad que tenía. Retorna cuántos se restauraron.
+    La baja de la papelera la hace guardar_ficha_motor (vía fusionar), que es
+    quien mantiene las dos listas coherentes.
+    """
+    pedidos = {c.strip() for c in codigos or [] if (c or "").strip()}
+    if not pedidos:
+        return 0
+
+    guardados = [p for p in get_papelera_motor(motor_id) if p["codigo"] in pedidos]
+    if not guardados:
+        return 0
+
+    por_categoria: dict[str, dict] = {}
+    for p in guardados:
+        grupo = por_categoria.setdefault(
+            p["categoria"],
+            {"categoria": p["categoria"], "cat_prefijo": p["cat_prefijo"], "opciones": []},
+        )
+        grupo["opciones"].append({"codigo": p["codigo"], "cantidad": p["cantidad"]})
+
+    fusionar_ficha_motor(motor_id, list(por_categoria.values()))
+    return len(guardados)
+
+
+def borrar_de_papelera(motor_id: int, codigos: list[str] | None = None) -> int:
+    """
+    Saca definitivamente de la papelera: los códigos indicados, o todo lo que
+    haya si no se pasa ninguno. No toca la ficha.
+    """
+    with get_connection() as conn:
+        if codigos is None:
+            cur = conn.execute("DELETE FROM motor_repuestos_papelera WHERE motor_id = ?", (motor_id,))
+            return cur.rowcount
+        limpios = [c.strip() for c in codigos if (c or "").strip()]
+        if not limpios:
+            return 0
+        marcas = ",".join("?" * len(limpios))
+        cur = conn.execute(
+            f"DELETE FROM motor_repuestos_papelera WHERE motor_id = ? AND repuesto_codigo IN ({marcas})",
+            [motor_id, *limpios],
+        )
+        return cur.rowcount
+
+
 # ─── Grupos dentro de un presupuesto ──────────────────────────────────────────
 
 def get_grupos_presupuesto(presupuesto_id: int) -> list[dict]:
@@ -1005,7 +1177,12 @@ def get_grupos_presupuesto(presupuesto_id: int) -> list[dict]:
                    (SELECT cr.precio FROM crac_repuestos cr
                      WHERE cr.codigo = o.repuesto_codigo LIMIT 1) AS precio_actual,
                    (SELECT cr.stock FROM crac_repuestos cr
-                     WHERE cr.codigo = o.repuesto_codigo LIMIT 1) AS stock_actual
+                     WHERE cr.codigo = o.repuesto_codigo LIMIT 1) AS stock_actual,
+                   -- La familia de medidas no se congela (es dato del catálogo,
+                   -- no del presupuesto): se resuelve contra el catálogo de hoy,
+                   -- igual que precio_actual y stock_actual.
+                   (SELECT cr.base_codigo FROM crac_repuestos cr
+                     WHERE cr.codigo = o.repuesto_codigo LIMIT 1) AS base_codigo
             FROM presupuesto_item_opciones o
             WHERE o.presupuesto_id = ?
             ORDER BY o.grupo_num, o.elegida DESC, o.subtotal DESC
@@ -1014,7 +1191,7 @@ def get_grupos_presupuesto(presupuesto_id: int) -> list[dict]:
         )
         cols = ["grupo_num", "repuesto_codigo", "descripcion", "categoria", "marca",
                 "medida", "cantidad", "precio_unitario", "subtotal", "stock_al_cotizar",
-                "elegida", "elegida_a_mano", "precio_actual", "stock_actual"]
+                "elegida", "elegida_a_mano", "precio_actual", "stock_actual", "base_codigo"]
         filas = [dict(zip(cols, row)) for row in cur.fetchall()]
 
     grupos: dict[int, dict] = {}

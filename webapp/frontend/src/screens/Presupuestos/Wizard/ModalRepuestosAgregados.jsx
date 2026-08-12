@@ -5,7 +5,7 @@ import { Icon } from '../../../components/Icon'
 import { formatPrecioARS } from '../../../utils/format'
 import {
   agruparLineas, opcionElegida, ahorroDelGrupo, subtotalDe,
-  codigosConCantidadSospechosa,
+  codigosConCantidadSospechosa, masBarataDelGrupo, agruparPorFamilia,
 } from '../../../utils/grupos'
 
 const botonCantidad = {
@@ -35,7 +35,7 @@ const encabezado = {
  */
 export function ModalRepuestosAgregados({
   open, items, elegidaAMano = {}, onElegirAMano,
-  onCambiarCantidad, onCambiarPrecio, onQuitar, onClose,
+  onCambiarCantidad, onCambiarPrecio, onQuitar, onQuitarVarias, onClose,
 }) {
   const { grupos, sueltas } = React.useMemo(() => agruparLineas(items), [items])
 
@@ -102,6 +102,7 @@ export function ModalRepuestosAgregados({
               onCambiarCantidad={onCambiarCantidad}
               onCambiarPrecio={onCambiarPrecio}
               onQuitar={onQuitar}
+              onQuitarVarias={onQuitarVarias}
             />
           ))}
 
@@ -112,6 +113,7 @@ export function ModalRepuestosAgregados({
               onCambiarCantidad={onCambiarCantidad}
               onCambiarPrecio={onCambiarPrecio}
               onQuitar={onQuitar}
+              onQuitarVarias={onQuitarVarias}
             />
           )}
         </div>
@@ -120,18 +122,36 @@ export function ModalRepuestosAgregados({
   )
 }
 
-function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, onCambiarPrecio, onQuitar }) {
+function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, onCambiarPrecio, onQuitar, onQuitarVarias }) {
   const elegida = sueltas ? null : opcionElegida(grupo.opciones, codigoAMano)
   const ahorro = sueltas ? 0 : ahorroDelGrupo(grupo.opciones, elegida)
   const sospechosas = React.useMemo(() => codigosConCantidadSospechosa(grupo.opciones), [grupo.opciones])
   const elegidaSinStock = elegida && elegida.stock === 0
   const hayAlternativaConStock = grupo.opciones.some((o) => o.stock === 1 && o !== elegida)
 
-  // La elegida arriba, después de mayor a menor subtotal.
-  const ordenadas = React.useMemo(() => {
+  // Los dos extremos del grupo, para marcarlos en la columna "Cotiza": son la
+  // decisión que el taller toma acá (con cuál cotizar, cuál conviene pedir).
+  // La más cara se calcula sin mirar la elección a mano: si el usuario pisó al
+  // más caro, el chip de la elegida ya dice "Elegido a mano" y la nota tiene
+  // que seguir señalando cuál era el más caro de verdad.
+  const masCara = sueltas ? null : opcionElegida(grupo.opciones, null)
+  // Si ninguna de las baratas tiene stock igual se marca cuál es la más barata
+  // (el chip "Sin stock" ya está en su fila): la pregunta que contesta la nota
+  // es "cuál me conviene pedir", no "cuál hay hoy".
+  const masBarata = sueltas
+    ? null
+    : (masBarataDelGrupo(grupo.opciones) || masBarataDelGrupo(grupo.opciones, false))
+  // Con todos los precios iguales no hay extremos que marcar: sería ruido.
+  const hayExtremos = !sueltas && masCara && masBarata && subtotalDe(masCara) > subtotalDe(masBarata)
+  const diferencia = hayExtremos && elegida ? subtotalDe(elegida) - subtotalDe(masBarata) : 0
+
+  // La elegida arriba, después de mayor a menor subtotal. Las medidas de un
+  // mismo repuesto (STD, 025, 050…) quedan juntas: la familia se ubica donde
+  // aparece su primera opción, así la que se cotiza sigue arriba de todo.
+  const familias = React.useMemo(() => {
     const resto = grupo.opciones.filter((o) => o !== elegida)
     resto.sort((a, b) => subtotalDe(b) - subtotalDe(a))
-    return elegida ? [elegida, ...resto] : resto
+    return agruparPorFamilia(elegida ? [elegida, ...resto] : resto)
   }, [grupo.opciones, elegida])
 
   return (
@@ -186,29 +206,65 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
             </tr>
           </thead>
           <tbody>
-            {ordenadas.map((it) => {
-              const esElegida = it === elegida
-              const sospechosa = sospechosas.has(it.repuesto_codigo || it.key)
-              return (
+            {familias.flatMap((familia) => [
+              // Encabezado de la familia: las medidas de un mismo repuesto se
+              // agregan juntas al elegir una, así que también se sacan juntas.
+              familia.esFamilia ? (
+                <tr key={`fam-${familia.base}`}>
+                  <td colSpan={7} style={{ ...celda, padding: '8px 12px', background: 'var(--surface-sunken)' }}>
+                    <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                      <strong style={{ color: 'var(--text-strong)' }}>{familia.base}</strong>
+                      {familia.marca ? ` · ${familia.marca}` : ''}
+                      {` · ${familia.opciones.length} medidas`}
+                    </span>
+                  </td>
+                  <td style={{ ...celda, padding: '8px 12px', background: 'var(--surface-sunken)', textAlign: 'center' }}>
+                    <button
+                      onClick={() => onQuitarVarias?.(familia.keys)}
+                      title={`Quitar las ${familia.opciones.length} medidas de ${familia.base}`}
+                      style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}
+                    >
+                      <Icon n="trash" s={16} />
+                    </button>
+                  </td>
+                </tr>
+              ) : null,
+              ...familia.opciones.map((it) => {
+                const esElegida = it === elegida
+                const sospechosa = sospechosas.has(it.repuesto_codigo || it.key)
+                return (
                 <tr key={it.key} style={esElegida ? { background: 'var(--status-active-bg)' } : undefined}>
                   <td style={celda}>
-                    {sueltas ? null : esElegida ? (
-                      <StatusBadge status="active">
-                        {codigoAMano === it.repuesto_codigo ? 'Elegido a mano' : 'El más caro'}
-                      </StatusBadge>
-                    ) : (
-                      <button
-                        onClick={() => onElegirAMano?.(grupo.categoria, it.repuesto_codigo)}
-                        title="Cotizar con este en vez del más caro"
-                        style={{
-                          border: '1px solid var(--border-default)', background: 'var(--surface-card)',
-                          borderRadius: 'var(--radius-pill)', padding: '4px 10px', cursor: 'pointer',
-                          fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)',
-                        }}
-                      >
-                        Usar este
-                      </button>
-                    )}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4 }}>
+                      {sueltas ? null : esElegida ? (
+                        <StatusBadge status="active">
+                          {codigoAMano === it.repuesto_codigo ? 'Elegido a mano' : 'El más caro'}
+                        </StatusBadge>
+                      ) : (
+                        <button
+                          onClick={() => onElegirAMano?.(grupo.categoria, it.repuesto_codigo)}
+                          title="Cotizar con este en vez del más caro"
+                          style={{
+                            border: '1px solid var(--border-default)', background: 'var(--surface-card)',
+                            borderRadius: 'var(--radius-pill)', padding: '4px 10px', cursor: 'pointer',
+                            fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)',
+                          }}
+                        >
+                          Usar este
+                        </button>
+                      )}
+                      {/* Si la fila ya lleva el chip "El más caro", la nota diría
+                          lo mismo dos veces. Solo aparece cuando aporta algo:
+                          en las filas que no cotizan, o cuando se eligió a mano. */}
+                      {hayExtremos && it === masCara && !(esElegida && codigoAMano !== it.repuesto_codigo) && (
+                        <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>El más caro del grupo</span>
+                      )}
+                      {hayExtremos && it === masBarata && (
+                        <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>
+                          El más barato{diferencia > 0 ? ` — ${formatPrecioARS(diferencia)} menos` : ''}
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td style={celda}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -263,15 +319,16 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
                   <td style={{ ...celda, textAlign: 'center' }}>
                     <button
                       onClick={() => onQuitar(it.key)}
-                      title="Quitar"
+                      title={familia.esFamilia ? `Quitar solo la medida ${it.medida || ''}`.trim() : 'Quitar'}
                       style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}
                     >
                       <Icon n="trash" s={16} />
                     </button>
                   </td>
                 </tr>
-              )
-            })}
+                )
+              }),
+            ])}
           </tbody>
         </table>
       </div>

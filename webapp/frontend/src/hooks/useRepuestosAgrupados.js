@@ -50,13 +50,28 @@ export function useRepuestosAgrupados({
     setLineas((actual) => actual.filter((r) => r.key !== key))
   }, [setLineas])
 
+  const quitarVarias = React.useCallback((keys) => {
+    const fuera = new Set(keys)
+    setLineas((actual) => actual.filter((r) => !fuera.has(r.key)))
+  }, [setLineas])
+
   const agregar = React.useCallback((rep, cantidadPedida, origen = 'click') => {
     const grupo = rep.categoria || null
     const existente = porCodigo.get(rep.codigo)
 
     if (existente) {
+      // Bajar la cantidad hasta cero es sacar el repuesto, no dejarlo en cero:
+      // una línea en cero se ve igual que una borrada (no muestra el ×N) pero
+      // sigue cargada, así que al volver a agregar el código el sistema lo
+      // encontraba "ya puesto" y no volvía a traer sus otras medidas. Además
+      // una línea en cero es inválida y apagaba "Confirmar presupuesto" sin
+      // explicar por qué.
+      if (!(cantidadPedida > 0)) {
+        quitar(existente.key)
+        return
+      }
       cambiarCantidad(existente.key, cantidadPedida)
-      if (origen === 'exacto' && grupo && cantidadPedida > 0) setCantidadGrupo(grupo, cantidadPedida)
+      if (origen === 'exacto' && grupo) setCantidadGrupo(grupo, cantidadPedida)
       return
     }
 
@@ -88,14 +103,15 @@ export function useRepuestosAgrupados({
               cat_prefijo: h.cat_prefijo,
               marca: h.marca,
               medida: h.medida,
+              base_codigo: h.base_codigo,
             }, cantidad))
           return faltantes.length ? [...actual, ...faltantes] : actual
         })
       }).catch(() => { /* si falla, queda solo la medida elegida */ })
     }
-  }, [porCodigo, cambiarCantidad, cantidadRecordada, cantidadPorGrupo, setCantidadGrupo, setLineas])
+  }, [porCodigo, cambiarCantidad, quitar, cantidadRecordada, cantidadPorGrupo, setCantidadGrupo, setLineas])
 
-  return { cantidadPorCodigo, agregar, cambiarCantidad, cambiarPrecio, quitar }
+  return { cantidadPorCodigo, agregar, cambiarCantidad, cambiarPrecio, quitar, quitarVarias }
 }
 
 export function lineaDeCatalogo(rep, cantidad) {
@@ -108,6 +124,9 @@ export function lineaDeCatalogo(rep, cantidad) {
     cat_prefijo: rep.cat_prefijo || null,
     marca: rep.marca || null,
     medida: rep.medida || null,
+    // Mismo repuesto y marca en otra medida: las cuatro comparten base_codigo.
+    // Es lo que permite sacarlas juntas sin tocar el resto de la categoría.
+    base_codigo: rep.base_codigo || null,
     grupo: rep.categoria || null,
     cantidad,
     precio_unitario: unitario,

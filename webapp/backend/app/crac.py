@@ -312,7 +312,7 @@ def get_repuestos(
         SELECT r.codigo, r.aplicacion, r.precio, r.stock,
                COALESCE(pc.nombre, r.cat_prefijo)   AS categoria,
                COALESCE(pm.nombre, r.marca_prefijo) AS marca,
-               r.cat_prefijo, r.medida
+               r.cat_prefijo, r.medida, r.base_codigo
         {where}
         ORDER BY r.codigo
         LIMIT ?
@@ -320,7 +320,7 @@ def get_repuestos(
     with get_connection() as conn:
         cur = conn.execute(query, params + [limite])
         cols = ["codigo", "aplicacion", "precio", "stock", "categoria", "marca",
-                "cat_prefijo", "medida"]
+                "cat_prefijo", "medida", "base_codigo"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
@@ -335,7 +335,7 @@ def get_repuesto_por_codigo(codigo: str) -> dict | None:
             SELECT r.codigo, r.aplicacion, r.precio, r.stock,
                    COALESCE(pc.nombre, r.cat_prefijo)   AS categoria,
                    COALESCE(pm.nombre, r.marca_prefijo) AS marca,
-                   r.cat_prefijo, r.medida
+                   r.cat_prefijo, r.medida, r.base_codigo
             FROM crac_repuestos r
             LEFT JOIN crac_prefijos pc ON pc.tipo = 'categoria' AND pc.prefijo = r.cat_prefijo
             LEFT JOIN crac_prefijos pm ON pm.tipo = 'marca'     AND pm.prefijo = r.marca_prefijo
@@ -347,7 +347,7 @@ def get_repuesto_por_codigo(codigo: str) -> dict | None:
         if not row:
             return None
         cols = ["codigo", "aplicacion", "precio", "stock", "categoria", "marca",
-                "cat_prefijo", "medida"]
+                "cat_prefijo", "medida", "base_codigo"]
         return dict(zip(cols, row))
 
 
@@ -373,7 +373,7 @@ def get_medidas_hermanas(codigo: str) -> list[dict]:
             SELECT r.codigo, r.aplicacion, r.precio, r.stock,
                    COALESCE(pc.nombre, r.cat_prefijo)   AS categoria,
                    COALESCE(pm.nombre, r.marca_prefijo) AS marca,
-                   r.cat_prefijo, r.medida
+                   r.cat_prefijo, r.medida, r.base_codigo
             FROM crac_repuestos r
             LEFT JOIN crac_prefijos pc ON pc.tipo = 'categoria' AND pc.prefijo = r.cat_prefijo
             LEFT JOIN crac_prefijos pm ON pm.tipo = 'marca'     AND pm.prefijo = r.marca_prefijo
@@ -383,7 +383,7 @@ def get_medidas_hermanas(codigo: str) -> list[dict]:
             (base[0],),
         )
         cols = ["codigo", "aplicacion", "precio", "stock", "categoria", "marca",
-                "cat_prefijo", "medida"]
+                "cat_prefijo", "medida", "base_codigo"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 

@@ -150,6 +150,66 @@ db.copiar_ficha_motor(motor["id"], otro_motor["id"])
 ficha_copiada = db.get_ficha_motor(otro_motor["id"])
 check("copiar ficha a otro motor", len(ficha_copiada) == 1 and len(ficha_copiada[0]["opciones"]) == 3)
 
+print("\n=== 4b. Papelera de la ficha del motor ===")
+# Todo lo que sale de la ficha queda recuperable: el tacho de una familia se
+# lleva varias medidas de un click y hay que poder deshacerlo.
+familia = crac.get_medidas_hermanas("CAAC02740  STD")
+check("la familia trae base_codigo", all(f["base_codigo"] == "CAAC02740" for f in familia), familia[:1])
+motor_pap = motores[2]
+db.borrar_de_papelera(motor_pap["id"])
+db.guardar_ficha_motor(motor_pap["id"], [{
+    "categoria": familia[0]["categoria"],
+    "cat_prefijo": familia[0]["cat_prefijo"],
+    "opciones": [{"codigo": f["codigo"], "cantidad": 4} for f in familia],
+}])
+ficha_pap = db.get_ficha_motor(motor_pap["id"])
+check("la ficha devuelve base_codigo por opción",
+      all(o["base_codigo"] == "CAAC02740" for o in ficha_pap[0]["opciones"]))
+check("papelera vacía mientras no se borre nada", db.get_papelera_motor(motor_pap["id"]) == [])
+
+# Sacar toda la familia menos una
+db.guardar_ficha_motor(motor_pap["id"], [{
+    "categoria": familia[0]["categoria"],
+    "cat_prefijo": familia[0]["cat_prefijo"],
+    "opciones": [{"codigo": familia[0]["codigo"], "cantidad": 4}],
+}])
+papelera = db.get_papelera_motor(motor_pap["id"])
+check("lo borrado va a la papelera", len(papelera) == len(familia) - 1, len(papelera))
+check("la papelera guarda categoría y cantidad",
+      all(p["categoria"] == familia[0]["categoria"] and p["cantidad"] == 4 for p in papelera))
+check("la papelera se resuelve contra el catálogo",
+      all(p["descripcion"] and p["marca"] and p["eliminado_en"] for p in papelera))
+
+volver = papelera[0]["codigo"]
+check("restaurar devuelve 1", db.restaurar_de_papelera(motor_pap["id"], [volver]) == 1)
+codigos_ficha = {o["codigo"] for g in db.get_ficha_motor(motor_pap["id"]) for o in g["opciones"]}
+check("el restaurado volvió a la ficha", volver in codigos_ficha)
+check("y salió de la papelera", volver not in {p["codigo"] for p in db.get_papelera_motor(motor_pap["id"])})
+check("restaurar respeta la cantidad que tenía",
+      next(o for g in db.get_ficha_motor(motor_pap["id"]) for o in g["opciones"] if o["codigo"] == volver)["cantidad"] == 4)
+
+# Volver a agregarlo a mano también lo saca de la papelera (no puede estar en los dos lados)
+otro = db.get_papelera_motor(motor_pap["id"])[0]["codigo"]
+db.fusionar_ficha_motor(motor_pap["id"], [{
+    "categoria": familia[0]["categoria"], "cat_prefijo": None,
+    "opciones": [{"codigo": otro, "cantidad": 8}],
+}])
+check("agregarlo de nuevo lo saca de la papelera",
+      otro not in {p["codigo"] for p in db.get_papelera_motor(motor_pap["id"])})
+
+# Copiar una ficha ajena no genera borrados falsos
+antes_pap = len(db.get_papelera_motor(motor_pap["id"]))
+db.copiar_ficha_motor(motor["id"], motor_pap["id"])
+check("copiar ficha no manda nada a la papelera",
+      len(db.get_papelera_motor(motor_pap["id"])) == antes_pap, antes_pap)
+
+check("borrar de la papelera saca solo lo pedido",
+      db.borrar_de_papelera(motor_pap["id"], [db.get_papelera_motor(motor_pap["id"])[0]["codigo"]]) == 1)
+db.borrar_de_papelera(motor_pap["id"])
+check("vaciar la papelera la deja vacía", db.get_papelera_motor(motor_pap["id"]) == [])
+db.guardar_ficha_motor(motor_pap["id"], [])
+db.borrar_de_papelera(motor_pap["id"])
+
 print("\n=== 5. Pedido de repuestos ===")
 from app import create_app  # noqa: E402
 app = create_app()
@@ -194,6 +254,28 @@ r = cliente.put(f"/api/motores/{motor['id']}/ficha-repuestos", json={"grupos": [
     {"categoria": "Aros", "opciones": [{"codigo": codigos[0], "cantidad": 4}]}
 ]})
 check("PUT ficha reemplaza", r.status_code == 200 and len(r.get_json()) == 1 and r.get_json()[0]["categoria"] == "Aros")
+
+# El PUT anterior dejó la ficha con un solo código (el que pasó a "Aros"): los
+# otros dos del grupo original tienen que estar en la papelera, recuperables por
+# HTTP. El que siguió en la ficha NO está en la papelera: si está cargado, no
+# está eliminado.
+r = cliente.get(f"/api/motores/{motor['id']}/repuestos-eliminados")
+eliminados = r.get_json()
+check("GET repuestos-eliminados lista lo que salió de la ficha",
+      r.status_code == 200 and len(eliminados) == 2, eliminados)
+check("el código que siguió en la ficha no aparece como eliminado",
+      codigos[0] not in {e["codigo"] for e in eliminados})
+r = cliente.post(f"/api/motores/{motor['id']}/repuestos-eliminados/restaurar",
+                 json={"codigos": [eliminados[0]["codigo"]]})
+check("POST restaurar devuelve ficha y papelera",
+      r.status_code == 200 and r.get_json()["restaurados"] == 1 and len(r.get_json()["papelera"]) == 1,
+      r.get_json())
+r = cliente.post(f"/api/motores/{motor['id']}/repuestos-eliminados/restaurar", json={"codigos": []})
+check("restaurar sin códigos da 400", r.status_code == 400)
+r = cliente.delete(f"/api/motores/{motor['id']}/repuestos-eliminados")
+check("DELETE vacía la papelera", r.status_code == 200 and r.get_json()["papelera"] == [])
+r = cliente.get("/api/motores/999999/repuestos-eliminados")
+check("papelera de motor inexistente da 404", r.status_code == 404)
 
 print("\n=== 8. Presupuesto completo por HTTP (crear con grupos) ===")
 servicios = facra.get_servicios_para_lista(motor.get("lista_num"))

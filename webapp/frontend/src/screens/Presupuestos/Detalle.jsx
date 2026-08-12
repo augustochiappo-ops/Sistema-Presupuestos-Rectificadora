@@ -272,6 +272,7 @@ export default function DetallePresupuesto() {
   const {
     cantidadPorCodigo, agregar: agregarDeCatalogo,
     cambiarCantidad: cambiarCantidadGrupo, cambiarPrecio: cambiarPrecioGrupo, quitar: quitarDeGrupo,
+    quitarVarias: quitarVariasDeGrupo,
   } = useRepuestosAgrupados({
     lineas: editGrupos,
     setLineas: setEditGrupos,
@@ -822,6 +823,7 @@ export default function DetallePresupuesto() {
         onCambiarCantidad={cambiarCantidadGrupo}
         onCambiarPrecio={cambiarPrecioGrupo}
         onQuitar={quitarDeGrupo}
+        onQuitarVarias={quitarVariasDeGrupo}
         onClose={() => setModalRepuestos(false)}
       />
 

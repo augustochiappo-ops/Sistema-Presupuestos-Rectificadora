@@ -7,7 +7,8 @@ import { StatusBadge } from '../../components/StatusBadge'
 import { MotorSelector } from '../../components/MotorSelector'
 import { RepuestoPicker } from '../../components/RepuestoPicker'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
-import { formatPrecioARS } from '../../utils/format'
+import { formatPrecioARS, formatFechaHoraAR } from '../../utils/format'
+import { agruparPorFamilia } from '../../utils/grupos'
 
 const tituloSeccion = {
   fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
@@ -31,6 +32,8 @@ export function FichaRepuestos({ motor }) {
   const [modalCopiar, setModalCopiar] = React.useState(false)
   const [aQuitar, setAQuitar] = React.useState(null)
   const [aviso, setAviso] = React.useState('')
+  const [papelera, setPapelera] = React.useState([])
+  const [modalPapelera, setModalPapelera] = React.useState(false)
 
   const cargar = React.useCallback(() => {
     setCargando(true)
@@ -38,6 +41,7 @@ export function FichaRepuestos({ motor }) {
       .then(setFicha)
       .catch(() => {})
       .finally(() => setCargando(false))
+    api.get(`/motores/${motor.id}/repuestos-eliminados`).then(setPapelera).catch(() => {})
   }, [motor.id])
 
   React.useEffect(() => { cargar() }, [cargar])
@@ -50,6 +54,35 @@ export function FichaRepuestos({ motor }) {
     }))
     const nueva = await api.put(`/motores/${motor.id}/ficha-repuestos`, { grupos: payload })
     setFicha(nueva)
+    // Todo lo que sale de la ficha va a la papelera del motor, así que hay que
+    // volver a leerla después de cada guardado (agregar también la actualiza:
+    // un código que vuelve a la ficha deja de estar eliminado).
+    api.get(`/motores/${motor.id}/repuestos-eliminados`).then(setPapelera).catch(() => {})
+  }
+
+  const restaurar = async (codigos) => {
+    try {
+      const r = await api.post(`/motores/${motor.id}/repuestos-eliminados/restaurar`, { codigos })
+      setFicha(r.ficha)
+      setPapelera(r.papelera)
+      setAviso(codigos.length === 1
+        ? 'Repuesto restaurado a la ficha del motor.'
+        : `${r.restaurados} repuestos restaurados a la ficha del motor.`)
+      if (!r.papelera.length) setModalPapelera(false)
+    } catch (err) {
+      setAviso(err.message || 'No se pudo restaurar')
+    }
+  }
+
+  const vaciarPapelera = async () => {
+    try {
+      const r = await api.del(`/motores/${motor.id}/repuestos-eliminados`)
+      setPapelera(r.papelera)
+      setModalPapelera(false)
+      setAviso('Se vació la lista de repuestos eliminados de este motor.')
+    } catch (err) {
+      setAviso(err.message || 'No se pudo vaciar la lista')
+    }
   }
 
   const cantidadPorCodigo = React.useMemo(() => {
@@ -106,12 +139,14 @@ export function FichaRepuestos({ motor }) {
     await guardar(copia)
   }
 
-  const quitarOpcion = async ({ categoria, codigo }) => {
+  /* Saca una opción o toda una familia de medidas (STD, 025, 050…) de la ficha.
+     Sin cartel de confirmación: lo borrado queda en la papelera del motor. */
+  const quitarOpciones = async (categoria, codigos) => {
+    const fuera = new Set(codigos)
     const copia = ficha
-      .map((g) => ({ ...g, opciones: g.opciones.filter((o) => !(g.categoria === categoria && o.codigo === codigo)) }))
+      .map((g) => ({ ...g, opciones: g.opciones.filter((o) => !(g.categoria === categoria && fuera.has(o.codigo))) }))
       .filter((g) => g.opciones.length)
     await guardar(copia)
-    setAQuitar(null)
   }
 
   const quitarGrupo = async (categoria) => {
@@ -137,7 +172,12 @@ export function FichaRepuestos({ motor }) {
         <div style={tituloSeccion}>
           Ficha de repuestos · {ficha.length} grupo{ficha.length === 1 ? '' : 's'} · {totalOpciones} opcion{totalOpciones === 1 ? '' : 'es'}
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {papelera.length > 0 && (
+            <Button variant="secondary" size="sm" iconLeft={<Icon n="trash" s={14} />} onClick={() => setModalPapelera(true)}>
+              Repuestos eliminados ({papelera.length})
+            </Button>
+          )}
           <Button variant="secondary" size="sm" iconLeft={<Icon n="copy" s={14} />} onClick={() => setModalCopiar(true)}>
             Copiar desde otro motor
           </Button>
@@ -190,8 +230,8 @@ export function FichaRepuestos({ motor }) {
               )}
               {editando && (
                 <button
-                  onClick={() => quitarGrupo(g.categoria)}
-                  title="Borrar todo el grupo"
+                  onClick={() => setAQuitar({ categoria: g.categoria, cantidad: g.opciones.length })}
+                  title={`Sacar toda la categoría "${g.categoria}" (${g.opciones.length} opciones)`}
                   style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}
                 >
                   <Icon n="trash" s={15} />
@@ -199,7 +239,28 @@ export function FichaRepuestos({ motor }) {
               )}
             </div>
 
-            {g.opciones.map((o) => (
+            {agruparPorFamilia(g.opciones.map((o) => ({ ...o, key: o.codigo }))).flatMap((familia) => [
+              // Las medidas de un mismo repuesto entran juntas a la ficha; con
+              // este renglón también salen juntas, sin arrastrar a las otras
+              // marcas de la categoría.
+              familia.esFamilia && editando ? (
+                <div key={`fam-${familia.base}`} style={{
+                  display: 'flex', alignItems: 'center', gap: 8, padding: '6px 14px',
+                  borderTop: '1px solid var(--border-subtle)',
+                }}>
+                  <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--text-faint)' }}>
+                    {familia.base}{familia.marca ? ` · ${familia.marca}` : ''} · {familia.opciones.length} medidas
+                  </span>
+                  <button
+                    onClick={() => quitarOpciones(g.categoria, familia.codigos)}
+                    title={`Sacar las ${familia.opciones.length} medidas de ${familia.base}`}
+                    style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex', padding: 0 }}
+                  >
+                    <Icon n="trash" s={14} />
+                  </button>
+                </div>
+              ) : null,
+              ...familia.opciones.map((o) => (
               <div key={o.codigo} style={{
                 display: 'flex', alignItems: 'center', gap: 10, padding: '8px 14px',
                 borderTop: '1px solid var(--border-subtle)',
@@ -245,15 +306,16 @@ export function FichaRepuestos({ motor }) {
 
                 {editando && (
                   <button
-                    onClick={() => setAQuitar({ categoria: g.categoria, codigo: o.codigo, descripcion: o.descripcion })}
-                    title="Sacar de la ficha"
+                    onClick={() => quitarOpciones(g.categoria, [o.codigo])}
+                    title={familia.esFamilia ? `Sacar solo la medida ${o.medida || ''}`.trim() : 'Sacar de la ficha'}
                     style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}
                   >
                     <Icon n="x" s={16} />
                   </button>
                 )}
               </div>
-            ))}
+              )),
+            ])}
           </div>
         )
       })}
@@ -270,6 +332,51 @@ export function FichaRepuestos({ motor }) {
         </div>
       )}
 
+      <Modal
+        open={modalPapelera}
+        title="Repuestos eliminados de este motor"
+        onClose={() => setModalPapelera(false)}
+        maxWidth={860}
+      >
+        <div style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginBottom: 12 }}>
+          Lo que se sacó de la ficha, del último borrado al primero. Si borraste algo por error, "Restaurar" lo devuelve
+          a su categoría con la cantidad que tenía. Esto no afecta a los presupuestos ya emitidos, que guardan su propia copia.
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: '52vh', overflow: 'auto' }}>
+          {papelera.map((p) => (
+            <div key={p.codigo} style={{
+              display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px',
+              border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', flexWrap: 'wrap',
+            }}>
+              <span style={{ width: 150, flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
+                {p.codigo}
+              </span>
+              <span style={{ flex: 1, minWidth: 140, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>
+                {p.descripcion || '—'}
+                <span style={{ color: 'var(--text-faint)' }}>
+                  {' · '}{p.categoria}{p.marca ? ` · ${p.marca}` : ''}{p.medida ? ` · ${p.medida}` : ''}
+                </span>
+              </span>
+              {!p.en_catalogo && <StatusBadge status="expired">Fuera de lista</StatusBadge>}
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
+                ×{p.cantidad} · {formatFechaHoraAR(p.eliminado_en)}
+              </span>
+              <Button variant="secondary" size="sm" onClick={() => restaurar([p.codigo])}>Restaurar</Button>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, marginTop: 14, flexWrap: 'wrap' }}>
+          <Button variant="ghost" size="sm" onClick={vaciarPapelera}>Vaciar la lista</Button>
+          {papelera.length > 1 && (
+            <Button variant="secondary" size="sm" onClick={() => restaurar(papelera.map((p) => p.codigo))}>
+              Restaurar todo
+            </Button>
+          )}
+        </div>
+      </Modal>
+
       <Modal open={modalCopiar} title="Copiar ficha desde otro motor" onClose={() => setModalCopiar(false)} maxWidth={1000}>
         <div style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)', marginBottom: 12 }}>
           Elegí el motor del que querés traer los repuestos. Se suman a lo que este motor ya tenga, sin pisar nada.
@@ -277,14 +384,21 @@ export function FichaRepuestos({ motor }) {
         <MotorSelector onSelect={copiarDesde} />
       </Modal>
 
+      {/* Solo la categoría entera pregunta antes: son todas las marcas y todas
+          las medidas de una necesidad del motor, y es lo único que no se puede
+          volver a armar con un par de clicks. Una opción o una familia de
+          medidas se sacan directo — están en la papelera si hizo falta. */}
       <ConfirmDialog
         open={!!aQuitar}
-        title="¿Sacar este repuesto de la ficha?"
-        message={aQuitar ? `${aQuitar.descripcion || aQuitar.codigo} deja de estar asociado a ${motor.motor}. No afecta a los presupuestos ya hechos.` : ''}
-        confirmLabel="Sacar"
+        title={`¿Sacar ${aQuitar?.cantidad || 0} opciones de la ficha?`}
+        message={aQuitar
+          ? `Se va toda la categoría "${aQuitar.categoria}" de ${motor.motor}, con sus ${aQuitar.cantidad} opciones. `
+            + 'Queda en "Repuestos eliminados" por si hace falta recuperarla, y no afecta a los presupuestos ya hechos.'
+          : ''}
+        confirmLabel="Sacar la categoría"
         danger
         onCancel={() => setAQuitar(null)}
-        onConfirm={() => quitarOpcion(aQuitar)}
+        onConfirm={() => { quitarGrupo(aQuitar.categoria); setAQuitar(null) }}
       />
     </div>
   )

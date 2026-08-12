@@ -80,6 +80,51 @@ def copiar_ficha_repuestos(motor_id, origen_id):
     return jsonify(db.get_ficha_motor(motor_id))
 
 
+@bp.get("/<int:motor_id>/repuestos-eliminados")
+@login_required
+def repuestos_eliminados(motor_id):
+    """
+    Papelera de la ficha: lo que se sacó de este motor, del último borrado al
+    primero. Existe para poder deshacer un borrado hecho sin querer — el tacho
+    de una familia se lleva las cuatro medidas de un click.
+    """
+    if not db.get_motor(motor_id):
+        return jsonify({"error": "Motor no encontrado"}), 404
+    return jsonify(db.get_papelera_motor(motor_id))
+
+
+@bp.post("/<int:motor_id>/repuestos-eliminados/restaurar")
+@login_required
+def restaurar_repuestos_eliminados(motor_id):
+    """Devuelve a la ficha los códigos indicados, cada uno a su categoría y con
+    la cantidad que tenía."""
+    if not db.get_motor(motor_id):
+        return jsonify({"error": "Motor no encontrado"}), 404
+    data = request.get_json(silent=True) or {}
+    codigos = data.get("codigos")
+    if not isinstance(codigos, list) or not codigos:
+        return jsonify({"error": "Falta la lista de códigos a restaurar"}), 400
+    restaurados = db.restaurar_de_papelera(motor_id, codigos)
+    return jsonify({
+        "restaurados": restaurados,
+        "ficha": db.get_ficha_motor(motor_id),
+        "papelera": db.get_papelera_motor(motor_id),
+    })
+
+
+@bp.delete("/<int:motor_id>/repuestos-eliminados")
+@login_required
+def vaciar_repuestos_eliminados(motor_id):
+    """Saca de la papelera definitivamente: los códigos que lleguen en
+    ?codigos=A,B, o toda la papelera del motor si no se pasa ninguno."""
+    if not db.get_motor(motor_id):
+        return jsonify({"error": "Motor no encontrado"}), 404
+    crudo = (request.args.get("codigos") or "").strip()
+    codigos = [c for c in crudo.split(",") if c.strip()] if crudo else None
+    borrados = db.borrar_de_papelera(motor_id, codigos)
+    return jsonify({"borrados": borrados, "papelera": db.get_papelera_motor(motor_id)})
+
+
 @bp.get("/<int:motor_id>/presupuestos")
 @login_required
 def presupuestos_del_motor(motor_id):

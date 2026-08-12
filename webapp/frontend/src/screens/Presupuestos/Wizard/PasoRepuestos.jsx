@@ -40,6 +40,7 @@ export function PasoRepuestos({
   const [manualPrecio, setManualPrecio] = React.useState('')
   const [manualCantidad, setManualCantidad] = React.useState('1')
   const [modalAbierto, setModalAbierto] = React.useState(false)
+  const [aviso, setAviso] = React.useState('')
   const fichaCargadaPara = React.useRef(null)
 
   // La ficha del motor es la asociación explícita motor→repuestos. Si el motor
@@ -75,7 +76,7 @@ export function PasoRepuestos({
     return m
   }, [ficha])
 
-  const { cantidadPorCodigo, agregar, cambiarCantidad, cambiarPrecio, quitar } = useRepuestosAgrupados({
+  const { cantidadPorCodigo, agregar, cambiarCantidad, cambiarPrecio, quitar, quitarVarias } = useRepuestosAgrupados({
     lineas: value,
     setLineas: onChange,
     cantidadPorGrupo,
@@ -91,11 +92,43 @@ export function PasoRepuestos({
       cat_prefijo: g.cat_prefijo,
       marca: o.marca,
       medida: o.medida,
+      base_codigo: o.base_codigo,
       precio_actual: o.precio_actual,
       stock_actual: o.stock_actual,
     }))),
     [ficha],
   )
+
+  /*
+   * Sacar un repuesto del registro del motor sin salir del presupuesto: es acá
+   * donde uno se da cuenta de que en el presupuesto anterior cargó algo que no
+   * iba. Borra de la ficha (que es lo que va a cargarse solo la próxima vez) y
+   * también de este presupuesto, que es la intención al tocar el tacho. Los
+   * presupuestos ya emitidos no se tocan nunca: guardan su propia copia.
+   * Lo borrado queda en la papelera del motor, así que se puede deshacer.
+   */
+  const quitarDeFicha = async (codigos) => {
+    const fuera = new Set(codigos)
+    const nueva = ficha
+      .map((g) => ({ ...g, opciones: g.opciones.filter((o) => !fuera.has(o.codigo)) }))
+      .filter((g) => g.opciones.length)
+    try {
+      const guardada = await api.put(`/motores/${motor.id}/ficha-repuestos`, {
+        grupos: nueva.map((g) => ({
+          categoria: g.categoria,
+          cat_prefijo: g.cat_prefijo,
+          opciones: g.opciones.map((o) => ({ codigo: o.codigo, cantidad: o.cantidad })),
+        })),
+      })
+      setFicha(guardada)
+      onChange((actual) => actual.filter((r) => !fuera.has(r.repuesto_codigo)))
+      setAviso(codigos.length === 1
+        ? 'Se sacó de los repuestos de este motor. Si fue sin querer, lo recuperás desde "Repuestos eliminados", en la pantalla del motor.'
+        : `Se sacaron ${codigos.length} medidas de los repuestos de este motor. Si fue sin querer, las recuperás desde "Repuestos eliminados", en la pantalla del motor.`)
+    } catch (err) {
+      setAviso(err.message || 'No se pudo sacar el repuesto del motor')
+    }
+  }
 
   const agregarManual = () => {
     const desc = manualDesc.trim()
@@ -160,10 +193,24 @@ export function PasoRepuestos({
         </div>
       )}
 
+      {aviso && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
+          padding: '10px 14px', background: 'var(--surface-sunken)', borderRadius: 'var(--radius-md)',
+          fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-body)',
+        }}>
+          {aviso}
+          <button onClick={() => setAviso('')} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
+            <Icon n="x" s={14} />
+          </button>
+        </div>
+      )}
+
       <RepuestoPicker
         sugeridos={sugeridos}
         cantidadPorCodigo={cantidadPorCodigo}
         onAgregar={agregar}
+        onQuitarDeFicha={quitarDeFicha}
         reorderKey="repuestos-presupuesto"
         onVerAgregados={() => setModalAbierto(true)}
         cantidadAgregados={value.length}
@@ -194,6 +241,7 @@ export function PasoRepuestos({
         onCambiarCantidad={cambiarCantidad}
         onCambiarPrecio={cambiarPrecio}
         onQuitar={quitar}
+        onQuitarVarias={quitarVarias}
         onClose={() => setModalAbierto(false)}
       />
     </div>
@@ -210,5 +258,6 @@ function lineaDeFicha(grupo, opcion) {
     cat_prefijo: grupo.cat_prefijo,
     marca: opcion.marca,
     medida: opcion.medida,
+    base_codigo: opcion.base_codigo,
   }, opcion.cantidad)
 }

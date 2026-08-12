@@ -40,6 +40,7 @@ export function lineaDeOpcion(grupo, o, preciosDeHoy = false) {
     cat_prefijo: null,
     marca: o.marca,
     medida: o.medida,
+    base_codigo: o.base_codigo || null,
     grupo: grupo.categoria,
     cantidad: o.cantidad,
     precio_unitario: precio,
@@ -101,12 +102,63 @@ export function opcionElegida(opciones, codigoAMano) {
   return candidatas.reduce((mejor, o) => (subtotalDe(o) > subtotalDe(mejor) ? o : mejor), candidatas[0])
 }
 
+/**
+ * La opción más barata del grupo que se puede conseguir: la de menor subtotal
+ * entre las que tienen precio y stock. Es contra esta que se mide el ahorro, y
+ * es la que la pantalla marca como "El más barato" — que sea la más barata del
+ * catálogo no sirve de nada si el proveedor no la tiene.
+ */
+export function masBarataDelGrupo(opciones, soloConStock = true) {
+  const candidatas = opciones.filter((o) => subtotalDe(o) > 0 && (!soloConStock || o.stock !== 0))
+  if (!candidatas.length) return null
+  return candidatas.reduce((min, o) => (subtotalDe(o) < subtotalDe(min) ? o : min), candidatas[0])
+}
+
 /** Lo que quedaría de margen si se consigue la más barata con stock. */
 export function ahorroDelGrupo(opciones, elegida) {
-  const conStock = opciones.filter((o) => o.stock !== 0 && subtotalDe(o) > 0)
-  if (!conStock.length || !elegida) return 0
-  const masBarata = conStock.reduce((min, o) => (subtotalDe(o) < subtotalDe(min) ? o : min), conStock[0])
+  const masBarata = masBarataDelGrupo(opciones)
+  if (!masBarata || !elegida) return 0
   return Math.max(0, subtotalDe(elegida) - subtotalDe(masBarata))
+}
+
+/**
+ * Familia de medidas: el mismo repuesto de la misma marca en sus distintas
+ * medidas (STD, 025, 050…). El proveedor las identifica con un `base_codigo`
+ * común, y el sistema las agrega juntas cuando se elige una — así que también
+ * tienen que poder sacarse juntas, sin arrastrar al resto de la categoría, que
+ * son otras marcas.
+ *
+ * Respeta el orden en que vienen las opciones (el de la pantalla que llama), y
+ * cada familia queda donde apareció su primera opción. Lo que no tiene medida
+ * queda como familia de uno: se dibuja como una fila suelta.
+ */
+export function agruparPorFamilia(opciones) {
+  const familias = []
+  const porBase = new Map()
+
+  opciones.forEach((o) => {
+    const base = o.base_codigo || null
+    if (!base) {
+      familias.push({ base: null, opciones: [o] })
+      return
+    }
+    let familia = porBase.get(base)
+    if (!familia) {
+      familia = { base, opciones: [] }
+      porBase.set(base, familia)
+      familias.push(familia)
+    }
+    familia.opciones.push(o)
+  })
+
+  return familias.map((f) => ({
+    ...f,
+    esFamilia: f.opciones.length > 1,
+    marca: f.opciones[0].marca || null,
+    descripcion: f.opciones[0].descripcion || null,
+    keys: f.opciones.map((o) => o.key),
+    codigos: f.opciones.map((o) => o.repuesto_codigo).filter(Boolean),
+  }))
 }
 
 /**
