@@ -11,6 +11,7 @@ import { Modal } from '../../components/Modal'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { formatPrecioARS, formatFechaAR, estadoPresupuesto } from '../../utils/format'
+import { useUndo } from '../../context/UndoContext'
 
 const accionFila = {
   border: 'none', background: 'transparent', cursor: 'pointer',
@@ -104,10 +105,14 @@ export default function HistorialPresupuestos() {
   const [presupuestos, setPresupuestos] = React.useState([])
   const [cargando, setCargando] = React.useState(true)
   const [aEliminar, setAEliminar] = React.useState(null)
-  const [eliminando, setEliminando] = React.useState(false)
   const [error, setError] = React.useState('')
   const [modalBusqueda, setModalBusqueda] = React.useState(false)
   const navigate = useNavigate()
+  const { borrarConDeshacer, estaPendiente } = useUndo()
+
+  // Lo que está esperando el "Deshacer" ya no se muestra, acá y en cualquier
+  // recarga de la lista mientras el cartel siga arriba.
+  const visibles = presupuestos.filter((p) => !estaPendiente(`presupuesto:${p.id}`))
 
   React.useEffect(() => {
     setCargando(true)
@@ -121,18 +126,19 @@ export default function HistorialPresupuestos() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtros.repuesto, filtros.motor, filtros.cliente, filtros.desde, filtros.hasta])
 
-  const confirmarEliminar = async () => {
-    setEliminando(true)
+  /* Un presupuesto borrado no se puede recuperar (se van también sus PDFs), así
+     que el borrado no sale en el momento: la fila desaparece de la lista y el
+     DELETE se manda recién cuando se apaga el cartel de "Deshacer". */
+  const confirmarEliminar = () => {
+    const p = aEliminar
+    setAEliminar(null)
     setError('')
-    try {
-      await api.del(`/presupuestos/${aEliminar.id}`)
-      setPresupuestos((prev) => prev.filter((p) => p.id !== aEliminar.id))
-      setAEliminar(null)
-    } catch (err) {
-      setError(err.message || 'No se pudo eliminar el presupuesto')
-    } finally {
-      setEliminando(false)
-    }
+    borrarConDeshacer({
+      mensaje: `Se eliminó el presupuesto #${String(p.id).padStart(4, '0')} de ${p.cliente}.`,
+      clave: `presupuesto:${p.id}`,
+      ejecutar: () => api.del(`/presupuestos/${p.id}`),
+      onError: (err) => setError(err.message || 'No se pudo eliminar el presupuesto'),
+    })
   }
 
   const aplicarBusqueda = (nuevos) => {
@@ -159,7 +165,7 @@ export default function HistorialPresupuestos() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       <PageHeader
         title="Presupuestos"
-        subtitle={`${presupuestos.length} presupuesto${presupuestos.length === 1 ? '' : 's'}`}
+        subtitle={`${visibles.length} presupuesto${visibles.length === 1 ? '' : 's'}`}
         actions={
           <>
             <Button variant="secondary" iconLeft={<Icon n="search" s={16} />} onClick={() => setModalBusqueda(true)}>
@@ -230,7 +236,7 @@ export default function HistorialPresupuestos() {
           },
         ]}
         reorderKey="presupuestos"
-        rows={presupuestos}
+        rows={visibles}
         onRowClick={(p) => navigate(`/presupuestos/${p.id}`)}
         emptyMessage={cargando ? 'Cargando…' : (filtrando ? 'Ningún presupuesto coincide con la búsqueda.' : 'Todavía no hay presupuestos.')}
       />
@@ -245,8 +251,8 @@ export default function HistorialPresupuestos() {
       <ConfirmDialog
         open={!!aEliminar}
         title="¿Eliminar presupuesto?"
-        message={aEliminar ? `Se va a eliminar el presupuesto #${String(aEliminar.id).padStart(4, '0')} de ${aEliminar.cliente} junto con sus PDFs. Esta acción no se puede deshacer.` : ''}
-        confirmLabel={eliminando ? 'Eliminando…' : 'Eliminar'}
+        message={aEliminar ? `Se va a eliminar el presupuesto #${String(aEliminar.id).padStart(4, '0')} de ${aEliminar.cliente} junto con sus PDFs. Vas a tener unos segundos para deshacerlo.` : ''}
+        confirmLabel="Eliminar"
         danger
         onCancel={() => setAEliminar(null)}
         onConfirm={confirmarEliminar}

@@ -475,6 +475,23 @@ await page.locator('button', { hasText: /^Eliminar$/ }).click()
 await esperar(1200)
 check('el cliente desaparece de la lista',
   (await page.locator('table tbody tr', { hasText: 'Cliente Borrable UI' }).count()) === 0)
+check('sale el cartel de deshacer',
+  (await page.locator('[data-testid="cartel-deshacer"]').count()) === 1)
+check('y todavía no se borró en la base',
+  py("print(c.execute(\"SELECT COUNT(*) FROM clientes WHERE nombre='Cliente Borrable UI'\").fetchone()[0])") === '1')
+await page.screenshot({ path: `${SHOT}/20-cartel-deshacer.png`, fullPage: false })
+await page.locator('[data-testid="cartel-deshacer"] button', { hasText: /Deshacer/ }).click()
+await esperar(1000)
+check('"Deshacer" devuelve el cliente a la lista',
+  (await page.locator('table tbody tr', { hasText: 'Cliente Borrable UI' }).count()) === 1)
+// Y ahora sí, borrarlo de verdad: el cartel se apaga solo y el DELETE sale.
+await page.locator('table tbody tr', { hasText: 'Cliente Borrable UI' })
+  .locator('button[title^="Eliminar"]').click()
+await esperar(500)
+await page.locator('button', { hasText: /^Eliminar$/ }).click()
+await esperar(10000)
+check('cuando se apaga el cartel el borrado sale de verdad',
+  py("print(c.execute(\"SELECT COUNT(*) FROM clientes WHERE nombre='Cliente Borrable UI'\").fetchone()[0])") === '0')
 
 // Desde la ficha del cliente: el botón existe y el bloqueo se explica.
 await filaConPresu.first().click()
@@ -527,6 +544,22 @@ async function abrirVerRepuestos() {
   await page.locator('button', { hasText: /Ver repuestos/ }).click()
   await esperar(700)
 }
+/* Las filas de una misma familia (mismas medidas de un repuesto) tienen que
+   quedar pegadas: si entre dos de ellas aparece otra fila, la familia se partió
+   y en pantalla se lee como si ese código fuera una medida más. */
+async function familiaSinPartir() {
+  const valores = await page.locator('table tbody tr[data-familia]')
+    .evaluateAll((filas) => filas.map((f) => f.getAttribute('data-familia')))
+  const ultima = new Map()
+  let ok = true
+  valores.forEach((v, i) => {
+    if (!v) return
+    if (ultima.has(v) && i - ultima.get(v) > 1) ok = false
+    ultima.set(v, i)
+  })
+  return ok
+}
+
 async function cerrarModal() {
   const cerrar = page.locator('h3:has-text("Repuestos del presupuesto")').locator('xpath=../..').locator('button').last()
   if (await cerrar.count()) await cerrar.click()
@@ -543,9 +576,12 @@ await abrirVerRepuestos()
 check('agregar una medida trae la familia entera', (await filasModal().count()) === 7,
   `filas=${await filasModal().count()}`)
 check('el renglón de familia muestra el código base',
-  (await page.locator('text=/CAAC02740 · .* · 7 medidas/').count()) > 0)
-check('con todos los precios iguales no se marcan extremos',
-  (await page.getByText('El más caro del grupo', { exact: true }).count()) === 0)
+  (await page.locator('tr[data-familia="CAAC02740"] >> text=/7 medidas del mismo repuesto/').count()) > 0)
+check('las 7 medidas quedan marcadas como una familia',
+  (await page.locator('tr[data-familia="CAAC02740"]').count()) === 8,
+  '7 filas + el renglón de la familia')
+check('con todos los precios iguales no hay más que el chip de la que cotiza',
+  (await page.getByText('El más caro', { exact: true }).count()) === 1)
 await cerrarModal()
 
 // Otra marca de la misma categoría: ahí sí hay más caro y más barato.
@@ -557,17 +593,22 @@ await esperar(2000)
 await abrirVerRepuestos()
 check('el chip "El más caro" queda en la fila que cotiza',
   (await page.getByText('El más caro', { exact: true }).count()) === 1)
-check('la nota no repite ese chip',
-  (await page.getByText('El más caro del grupo', { exact: true }).count()) === 0)
 check('la nota "El más barato" aparece una sola vez',
-  (await page.getByText(/^El más barato/).count()) === 1)
-check('y dice cuánto menos sale',
-  /El más barato — \$/.test(await page.getByText(/^El más barato/).first().innerText()))
+  (await page.getByText('El más barato', { exact: true }).count()) === 1)
+check('la nota del más barato no dice nada más',
+  (await page.getByText(/El más barato —/).count()) === 0)
 await page.screenshot({ path: `${SHOT}/17-notas-cotiza.png`, fullPage: false })
 await page.locator('button', { hasText: /^Usar este$/ }).first().click()
 await esperar(700)
-check('al elegir a mano se marca cuál era el más caro',
-  (await page.getByText('El más caro del grupo', { exact: true }).count()) === 1)
+check('al elegir a mano aparece el chip "Elegido a mano"',
+  (await page.getByText('Elegido a mano', { exact: true }).count()) === 1)
+check('y la nota sigue marcando cuál era el más caro',
+  (await page.getByText('El más caro', { exact: true }).count()) === 1)
+// El bug de los aros (2026-08-12): con la elección a mano cambiando el orden,
+// un código sin familia se colaba entre las medidas de otro y parecía una
+// medida más. Las filas de una familia tienen que quedar SIEMPRE pegadas.
+check('la familia no se parte al elegir otra opción a mano',
+  await familiaSinPartir())
 await page.locator('button', { hasText: /^Usar este$/ }).first().click()
 await esperar(700)
 // Sacar la opción de la otra marca: queda solo la familia
@@ -664,6 +705,52 @@ await esperar(500)
 check('cancelar no borra nada',
   py('print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones").fetchone()[0])') === '7')
 await page.screenshot({ path: `${SHOT}/19-confirmacion-categoria.png`, fullPage: false })
+
+console.log('\n=== Cerrar grupos y deshacer en el pop-up de repuestos ===')
+await irAlPasoRepuestos('Cliente Deshacer UI')
+await esperar(2000)
+// Un repuesto fuera de catálogo con otra categoría: así hay dos grupos y
+// aparece el "Colapsar todo" del encabezado.
+await page.fill('input[placeholder="Descripción"]', 'Repuesto de prueba UI')
+await page.fill('input[placeholder="Categoría (ej. Aros)"]', 'Prueba UI')
+await page.fill('input[placeholder="Precio unit."]', '1000')
+await page.locator('button', { hasText: /^Agregar$/ }).click()
+await esperar(800)
+await abrirVerRepuestos()
+check('el pop-up abre con los dos grupos desplegados',
+  (await filasModal().count()) === 8, `filas=${await filasModal().count()}`)
+check('la familia entra entera y sin partirse', await familiaSinPartir())
+await page.screenshot({ path: `${SHOT}/21-grupos-pop-up.png`, fullPage: false })
+
+await page.locator('button[title="Cerrar el grupo"]', { hasText: 'Cojinetes biela' }).click()
+await esperar(500)
+check('la flechita cierra ese grupo', (await filasModal().count()) === 1)
+check('y el otro grupo sigue abierto',
+  (await page.locator('button[title="Cerrar el grupo"]').count()) === 1
+  && (await page.locator('button[title="Abrir el grupo"]').count()) === 1)
+await page.locator('button', { hasText: /^Colapsar todo$/ }).click()
+await esperar(500)
+check('"Colapsar todo" cierra los dos', (await filasModal().count()) === 0)
+await page.locator('button', { hasText: /^Expandir todo$/ }).click()
+await esperar(500)
+check('"Expandir todo" los abre de nuevo', (await filasModal().count()) === 8)
+
+await page.locator('button[title^="Quitar solo la medida"]').first().click()
+await esperar(600)
+check('quitar una medida saca la fila', (await filasModal().count()) === 7)
+check('y deja el cartel de deshacer',
+  (await page.locator('[data-testid="cartel-deshacer"]').count()) === 1)
+await page.locator('[data-testid="cartel-deshacer"] button', { hasText: /Deshacer/ }).click()
+await esperar(600)
+check('"Deshacer" devuelve la medida', (await filasModal().count()) === 8)
+
+await page.locator('button[title*="Quitar las 7 medidas"]').click()
+await esperar(600)
+check('el tacho de la familia se lleva las 7 de una', (await filasModal().count()) === 1)
+await page.locator('[data-testid="cartel-deshacer"] button', { hasText: /Deshacer/ }).click()
+await esperar(600)
+check('"Deshacer" devuelve la familia entera', (await filasModal().count()) === 8)
+await cerrarModal()
 
 console.log('\n' + '='.repeat(50))
 if (fallos.length) { console.log(`FALLARON ${fallos.length}: ${JSON.stringify(fallos, null, 1)}`) }

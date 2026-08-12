@@ -162,6 +162,40 @@ export function agruparPorFamilia(opciones) {
 }
 
 /**
+ * Las familias de un grupo, listas para dibujar: primero la familia de la
+ * opción que se cotiza (y dentro de ella, esa opción arriba), y después el
+ * resto de mayor a menor precio.
+ *
+ * Por qué existe: ordenar las opciones sueltas por subtotal y recién después
+ * agrupar por familia rompía la agrupación. Un código sin familia (una marca
+ * que el proveedor trae en una sola medida) caía, según su precio, justo
+ * después de las medidas de otro código, y en pantalla se leía como una medida
+ * más de esa familia — el bug que reportó el dueño con los aros: "hay un código
+ * que se mete en otros grupos según lo que elijo a mano". La familia es la
+ * unidad que se ordena; sus medidas nunca se separan.
+ */
+export function familiasOrdenadas(opciones, elegida = null) {
+  const familias = agruparPorFamilia(opciones).map((f) => ({
+    ...f,
+    opciones: [...f.opciones].sort((a, b) => subtotalDe(b) - subtotalDe(a)),
+  }))
+  const precioDe = (f) => Math.max(...f.opciones.map(subtotalDe))
+  familias.sort((a, b) => precioDe(b) - precioDe(a))
+
+  if (!elegida) return familias
+
+  const i = familias.findIndex((f) => f.opciones.includes(elegida))
+  if (i < 0) return familias
+  const [suya] = familias.splice(i, 1)
+  // Dentro de su familia, la que cotiza va arriba; las otras medidas, detrás.
+  familias.unshift({
+    ...suya,
+    opciones: [elegida, ...suya.opciones.filter((o) => o !== elegida)],
+  })
+  return familias
+}
+
+/**
  * Marca las opciones cuyo subtotal quedó muy por debajo del resto del grupo.
  * Es el error típico de los envases: la marca que viene por blíster de 4 en un
  * motor de 16 válvulas necesita cantidad 4, y si quedó en 1 su subtotal se ve

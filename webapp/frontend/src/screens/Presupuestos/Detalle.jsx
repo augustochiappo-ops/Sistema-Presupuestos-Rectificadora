@@ -20,6 +20,7 @@ import {
   lineaDeOpcion, elegidaAManoInicial,
 } from '../../utils/grupos'
 import { useRepuestosAgrupados } from '../../hooks/useRepuestosAgrupados'
+import { useUndo } from '../../context/UndoContext'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
 const TIPO_OPUESTO = { mecanico: 'dueno', dueno: 'mecanico' }
@@ -126,7 +127,6 @@ export default function DetallePresupuesto() {
   const [reconstruyendo, setReconstruyendo] = React.useState(false)
   const [confirmarSalir, setConfirmarSalir] = React.useState(false)
   const [confirmarEliminar, setConfirmarEliminar] = React.useState(false)
-  const [eliminando, setEliminando] = React.useState(false)
   // Revalidación: el resumen de qué cambiaría a precios de hoy. Se pide al
   // backend y se muestra en un pop-up; nada se aplica hasta confirmarlo.
   const [revalidacion, setRevalidacion] = React.useState(null)
@@ -146,6 +146,7 @@ export default function DetallePresupuesto() {
   // compararla contra lo que se manda al guardar dice si hubo cambios de
   // verdad, para no reconstruir el PDF en un guardado que no cambió nada.
   const payloadOriginalRef = React.useRef('')
+  const { avisarBorrado, borrarConDeshacer } = useUndo()
 
   const cargar = React.useCallback(() => {
     api.get(`/presupuestos/${id}`).then(setDetalle)
@@ -247,7 +248,15 @@ export default function DetallePresupuesto() {
   // (precio_aplicado) se recalcula server-side como cantidad × unitario.
   const actualizarPrecio = (idx, valor) => actualizarCampo(idx, 'precio_unitario', valor)
   const actualizarDescCustom = (idx, valor) => actualizarCampo(idx, 'descripcion_custom', valor)
-  const quitarItem = (idx) => setEditItems((prev) => prev.filter((_, i) => i !== idx))
+  const quitarItem = (idx) => {
+    const antes = editItems
+    const it = editItems[idx]
+    setEditItems((prev) => prev.filter((_, i) => i !== idx))
+    avisarBorrado({
+      mensaje: `Se quitó ${it?.descripcion_custom || it?.desc_facra || 'el ítem'} del presupuesto.`,
+      onDeshacer: () => setEditItems(antes),
+    })
+  }
   const agregarItemCustom = () => {
     setEditItems((prev) => [...prev, { id: `nuevo-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null, descripcion_custom: '', cantidad: 1, precio_unitario: '' }])
   }
@@ -280,6 +289,27 @@ export default function DetallePresupuesto() {
     setCantidadGrupo,
   })
 
+  // Sacar un repuesto (o una familia de medidas) del presupuesto que se está
+  // editando: se puede deshacer devolviendo la lista tal cual estaba.
+  const quitarRepuestoConDeshacer = (key) => {
+    const antes = editGrupos
+    const linea = editGrupos.find((r) => r.key === key)
+    quitarDeGrupo(key)
+    avisarBorrado({
+      mensaje: `Se quitó ${linea?.descripcion || 'el repuesto'} del presupuesto.`,
+      onDeshacer: () => setEditGrupos(antes),
+    })
+  }
+
+  const quitarVariasConDeshacer = (keys) => {
+    const antes = editGrupos
+    quitarVariasDeGrupo(keys)
+    avisarBorrado({
+      mensaje: `Se quitaron ${keys.length} medidas del presupuesto.`,
+      onDeshacer: () => setEditGrupos(antes),
+    })
+  }
+
   const guardar = async () => {
     setGuardando(true)
     setError('')
@@ -309,17 +339,17 @@ export default function DetallePresupuesto() {
     }
   }
 
-  const eliminar = async () => {
-    setEliminando(true)
-    setError('')
-    try {
-      await api.del(`/presupuestos/${id}`)
-      navigate('/presupuestos')
-    } catch (err) {
-      setError(err.message || 'No se pudo eliminar el presupuesto')
-      setEliminando(false)
-      setConfirmarEliminar(false)
-    }
+  /* Igual que en el historial: la pantalla vuelve al listado (que ya esconde lo
+     que está por borrarse) y el DELETE sale recién cuando se apaga el cartel de
+     "Deshacer", porque un presupuesto borrado no se puede recuperar. */
+  const eliminar = () => {
+    setConfirmarEliminar(false)
+    borrarConDeshacer({
+      mensaje: `Se eliminó el presupuesto #${String(detalle.id).padStart(4, '0')}.`,
+      clave: `presupuesto:${detalle.id}`,
+      ejecutar: () => api.del(`/presupuestos/${id}`),
+    })
+    navigate('/presupuestos')
   }
 
   const cambiarAprobado = async () => {
@@ -822,8 +852,8 @@ export default function DetallePresupuesto() {
         onElegirAMano={elegirAMano}
         onCambiarCantidad={cambiarCantidadGrupo}
         onCambiarPrecio={cambiarPrecioGrupo}
-        onQuitar={quitarDeGrupo}
-        onQuitarVarias={quitarVariasDeGrupo}
+        onQuitar={quitarRepuestoConDeshacer}
+        onQuitarVarias={quitarVariasConDeshacer}
         onClose={() => setModalRepuestos(false)}
       />
 
@@ -904,8 +934,8 @@ export default function DetallePresupuesto() {
       <ConfirmDialog
         open={confirmarEliminar}
         title="¿Eliminar presupuesto?"
-        message={`Se va a eliminar el presupuesto #${String(detalle.id).padStart(4, '0')} junto con sus PDFs. Esta acción no se puede deshacer.`}
-        confirmLabel={eliminando ? 'Eliminando…' : 'Eliminar'}
+        message={`Se va a eliminar el presupuesto #${String(detalle.id).padStart(4, '0')} junto con sus PDFs. Vas a tener unos segundos para deshacerlo.`}
+        confirmLabel="Eliminar"
         danger
         onCancel={() => setConfirmarEliminar(false)}
         onConfirm={eliminar}

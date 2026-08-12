@@ -7,6 +7,7 @@ import { StatusBadge } from './StatusBadge'
 import { CategoriasPanel } from './CategoriasPanel'
 import { Button } from './Button'
 import { Icon } from './Icon'
+import { CodigoRepuesto } from './CodigoRepuesto'
 import { formatPrecioARS } from '../utils/format'
 import { agruparPorFamilia } from '../utils/grupos'
 
@@ -331,26 +332,41 @@ export function RepuestoPicker({
 
                 {abierto && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8, padding: '2px 0 12px 26px' }}>
-                    {g.familias.flatMap((familia) => [
-                      familia.esFamilia && onQuitarDeFicha ? (
-                        <div key={`fam-${familia.base}`} style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 2 }}>
+                    {g.familias.map((familia) => (
+                      // Las medidas de un mismo repuesto van dentro de la línea
+                      // roja: son la misma pieza en STD, 025, 050… Lo que queda
+                      // fuera de la línea es otro repuesto, aunque esté al lado.
+                      <div
+                        key={familia.esFamilia ? `fam-${familia.base}` : familia.opciones[0].codigo}
+                        data-familia={familia.esFamilia ? familia.base : ''}
+                        style={familia.esFamilia
+                          ? { display: 'flex', flexDirection: 'column', gap: 8, borderLeft: '3px solid var(--familia-linea)', paddingLeft: 12 }
+                          : { display: 'flex', flexDirection: 'column', gap: 8 }}
+                      >
+                      {familia.esFamilia ? (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 2 }}>
+                          <CodigoRepuesto size={11}>{familia.base}</CodigoRepuesto>
                           <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--text-faint)' }}>
-                            {familia.base}{familia.marca ? ` · ${familia.marca}` : ''} · {familia.opciones.length} medidas
+                            {familia.marca ? `${familia.marca} · ` : ''}{familia.opciones.length} medidas del mismo repuesto
                           </span>
-                          <button
-                            onClick={() => onQuitarDeFicha(familia.codigos)}
-                            title={`Sacar las ${familia.opciones.length} medidas de ${familia.base} de este motor`}
-                            style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex', padding: 0 }}
-                          >
-                            <Icon n="trash" s={14} />
-                          </button>
+                          {onQuitarDeFicha && (
+                            <button
+                              onClick={() => onQuitarDeFicha(familia.codigos)}
+                              title={`Sacar las ${familia.opciones.length} medidas de ${familia.base} de este motor`}
+                              style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex', padding: 0 }}
+                            >
+                              <Icon n="trash" s={14} />
+                            </button>
+                          )}
                         </div>
-                      ) : null,
-                      ...familia.opciones.map((s) => {
+                      ) : null}
+                      {familia.opciones.map((s) => {
                       const cantidad = cantidadPorCodigo.get(s.codigo)
                       return (
                         <div key={s.codigo} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-muted)', width: 110, flexShrink: 0, overflowWrap: 'anywhere' }}>{s.codigo}</span>
+                          <span style={{ width: 150, flexShrink: 0 }}>
+                            <CodigoRepuesto size={12}>{s.codigo}</CodigoRepuesto>
+                          </span>
                           <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 'var(--weight-bold)', color: 'var(--text-strong)', minWidth: 0 }}>
                             {s.descripcion}
                             {s.marca && (
@@ -387,8 +403,9 @@ export function RepuestoPicker({
                           )}
                         </div>
                       )
-                    }),
-                    ])}
+                    })}
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>

@@ -31,6 +31,12 @@
   --status-aviso-bg:#f6efdf;
   --status-aviso-fg:#8a6520;
 
+  /* Familia de medidas: la línea vertical que marca, de un vistazo, qué códigos
+     son el mismo repuesto en distintas medidas (STD, 025, 050…). Es el único
+     acento de color fuerte de la UI, a propósito: sin él las medidas hermanas
+     se leen como repuestos distintos. */
+  --familia-linea:#c0392b;
+
   /* Tipo de cliente (mecánico / dueño del vehículo), misma fórmula desaturada */
   --tag-mecanico-bg:#e7eef7;
   --tag-mecanico-fg:#3c5a85;

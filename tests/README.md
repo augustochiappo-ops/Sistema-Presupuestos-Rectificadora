@@ -17,7 +17,7 @@ línea por verificación y salen con código 1 si falla alguna.
 
 ## 1. Backend — `backend_grupos.py`
 
-121 verificaciones sobre la lógica, la base y el PDF.
+141 verificaciones sobre la lógica, la base y el PDF.
 
 ```bash
 # Una sola vez: entorno con las dependencias del backend + pypdf (para leer el PDF)
@@ -51,7 +51,7 @@ Qué cubre, por bloque:
 
 ## 2. UI — `ui_grupos.mjs`
 
-76 verificaciones con navegador real, más capturas de pantalla en
+120 verificaciones con navegador real, más capturas de pantalla en
 `tests/capturas/`.
 
 ```bash
@@ -94,7 +94,12 @@ contador "N de M copiados", el portapapeles queda con un solo código, copiar
 todos y reiniciar marcas) · **repuestos del motor separados por grupos** (arrancan
 cerrados, la flechita despliega uno solo, expandir/colapsar todo) · **eliminar
 cliente** (tacho habilitado solo sin presupuestos, confirmación, desaparece de la
-lista, y el aviso con la cantidad al intentarlo desde la ficha).
+lista, y el aviso con la cantidad al intentarlo desde la ficha) · **cartel de
+"Deshacer"** (al borrar un cliente la fila se va pero la base todavía lo tiene,
+"Deshacer" lo devuelve, y cuando el cartel se apaga el borrado sale de verdad) ·
+**grupos del pop-up "Ver repuestos"** (flechita por grupo, colapsar/expandir
+todo, familias que no se parten al cambiar la opción cotizada, y deshacer al
+quitar una medida o una familia entera).
 
 Las dos suites **arrancan limpiando el estado que ellas mismas generan**
 (presupuestos, clientes y fichas de motor), así que se pueden correr dos veces
@@ -110,7 +115,17 @@ verificación en sí pase.
 
 - **`text=` de Playwright matchea substrings.** Buscar `text=El más caro` también
   matchea el encabezado "Se cotiza el más caro de cada grupo". Para los chips hay
-  que usar `getByText('...', { exact: true })`.
+  que usar `getByText('...', { exact: true })`. Ojo: desde el 2026-08-12 la nota
+  de la columna "Cotiza" dice exactamente lo mismo que el chip ("El más caro"),
+  así que ese conteo da 1 tanto cuando cotiza el más caro como cuando se eligió
+  otro a mano — lo que cambia es cuál fila lo lleva.
+- **Las filas de una familia se identifican por `data-familia`** (el atributo que
+  también dibuja la línea roja). El helper `familiaSinPartir()` verifica que las
+  filas de una misma familia queden pegadas: es la regresión del bug de los aros.
+- **El cartel de "Deshacer"** se busca por `[data-testid="cartel-deshacer"]`. Los
+  borrados que no se pueden revertir (presupuesto, cliente, vaciar la papelera,
+  borrar datos de prueba) no salen hasta que el cartel se apaga, unos 8 segundos
+  después: si un check mira la base enseguida, todavía va a estar el dato.
 - **El paso Cliente del wizard** solo pide clasificar (Mecánico / Dueño) cuando el
   cliente es nuevo. Si ya existe de una corrida anterior, ese botón no aparece —
   la suite lo contempla.

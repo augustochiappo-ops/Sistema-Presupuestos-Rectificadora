@@ -8,6 +8,7 @@ import { ContadorServicio } from '../../../components/ContadorServicio'
 import { SelectorCantidadServicio } from '../../../components/SelectorCantidadServicio'
 import { DataTable } from '../../../components/DataTable'
 import { formatPrecioARS } from '../../../utils/format'
+import { useUndo } from '../../../context/UndoContext'
 
 const tituloSeccion = {
   fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
@@ -40,6 +41,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   const [nuevoCustomDesc, setNuevoCustomDesc] = React.useState('')
   const [nuevoCustomPrecio, setNuevoCustomPrecio] = React.useState('')
   const [ajusteTexto, setAjusteTexto] = React.useState(ajustePct ? String(ajustePct) : '')
+  const { avisarBorrado } = useUndo()
 
   const cantidades = value.cantidades
   const customItems = value.customItems
@@ -118,7 +120,15 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
     customItems: customItems.map((c) => (c.id === id ? { ...c, cantidad: Math.max(0, cantidad) } : c)),
   })
 
-  const quitarCustom = (id) => onChange({ ...value, customItems: customItems.filter((c) => c.id !== id) })
+  const quitarCustom = (id) => {
+    const antes = value
+    const it = customItems.find((c) => c.id === id)
+    onChange({ ...value, customItems: customItems.filter((c) => c.id !== id) })
+    avisarBorrado({
+      mensaje: `Se quitó ${it?.descripcion_custom || 'el ítem'} del presupuesto.`,
+      onDeshacer: () => onChange(antes),
+    })
+  }
 
   const filtrados = servicios.filter((s) => {
     if (!busqueda) return true

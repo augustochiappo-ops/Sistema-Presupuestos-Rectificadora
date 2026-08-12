@@ -11,6 +11,7 @@ import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { formatFechaAR } from '../../utils/format'
 import { puntajeCoincidenciaCliente } from '../../utils/fuzzyMatch'
+import { useUndo } from '../../context/UndoContext'
 
 const FILTROS_TIPO = [
   { key: 'todos', label: 'Todos' },
@@ -24,17 +25,21 @@ export default function ClientesScreen() {
   const [busqueda, setBusqueda] = React.useState('')
   const [filtroTipo, setFiltroTipo] = React.useState('todos')
   const [aEliminar, setAEliminar] = React.useState(null)
-  const [eliminando, setEliminando] = React.useState(false)
   const [error, setError] = React.useState('')
   const navigate = useNavigate()
+  const { borrarConDeshacer, estaPendiente } = useUndo()
 
   React.useEffect(() => {
     api.get('/clientes').then(setClientes).finally(() => setCargando(false))
   }, [])
 
+  // Lo que está esperando el "Deshacer" no se muestra (tampoco si la lista se
+  // vuelve a pedir al servidor mientras el cartel sigue arriba).
+  const visibles = clientes.filter((c) => !estaPendiente(`cliente:${c.id}`))
+
   const porTipo = React.useMemo(
-    () => (filtroTipo === 'todos' ? clientes : clientes.filter((c) => c.tipo === filtroTipo)),
-    [clientes, filtroTipo],
+    () => (filtroTipo === 'todos' ? visibles : visibles.filter((c) => c.tipo === filtroTipo)),
+    [visibles, filtroTipo],
   )
 
   // Busca tanto en el nombre como en la descripción interna (notas) del
@@ -50,25 +55,25 @@ export default function ClientesScreen() {
       .map((x) => x.c)
   }, [porTipo, busqueda])
 
-  const eliminar = async () => {
+  /* El cliente no se puede recuperar una vez borrado, así que el DELETE sale
+     recién cuando se apaga el cartel de "Deshacer": hasta entonces la fila
+     simplemente no se muestra. */
+  const eliminar = () => {
     if (!aEliminar) return
-    setEliminando(true)
+    const c = aEliminar
+    setAEliminar(null)
     setError('')
-    try {
-      await api.del(`/clientes/${aEliminar.id}`)
-      setClientes((actual) => actual.filter((c) => c.id !== aEliminar.id))
-      setAEliminar(null)
-    } catch (err) {
-      setError(err.message || 'No se pudo eliminar el cliente')
-      setAEliminar(null)
-    } finally {
-      setEliminando(false)
-    }
+    borrarConDeshacer({
+      mensaje: `Se eliminó a ${c.nombre}.`,
+      clave: `cliente:${c.id}`,
+      ejecutar: () => api.del(`/clientes/${c.id}`),
+      onError: (err) => setError(err.message || 'No se pudo eliminar el cliente'),
+    })
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-      <PageHeader title="Clientes" subtitle={`${clientes.length} cliente${clientes.length === 1 ? '' : 's'}`} />
+      <PageHeader title="Clientes" subtitle={`${visibles.length} cliente${visibles.length === 1 ? '' : 's'}`} />
 
       <ErrorBanner message={error} onClose={() => setError('')} />
 
@@ -134,8 +139,8 @@ export default function ClientesScreen() {
       <ConfirmDialog
         open={Boolean(aEliminar)}
         title="¿Eliminar cliente?"
-        message={`Se va a eliminar a ${aEliminar?.nombre || ''} de la lista. Esta acción no se puede deshacer.`}
-        confirmLabel={eliminando ? 'Eliminando…' : 'Eliminar'}
+        message={`Se va a eliminar a ${aEliminar?.nombre || ''} de la lista. Vas a tener unos segundos para deshacerlo.`}
+        confirmLabel="Eliminar"
         danger
         onCancel={() => setAEliminar(null)}
         onConfirm={eliminar}

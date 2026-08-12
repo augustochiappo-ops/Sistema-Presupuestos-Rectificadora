@@ -5,12 +5,15 @@ import './styles/styles.css'
 import './styles/app.css'
 import App from './App.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
+import { UndoProvider } from './context/UndoContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <UndoProvider>
+          <App />
+        </UndoProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>,

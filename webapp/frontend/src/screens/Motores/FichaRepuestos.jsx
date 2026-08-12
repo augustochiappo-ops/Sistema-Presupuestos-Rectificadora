@@ -9,6 +9,7 @@ import { RepuestoPicker } from '../../components/RepuestoPicker'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { formatPrecioARS, formatFechaHoraAR } from '../../utils/format'
 import { agruparPorFamilia } from '../../utils/grupos'
+import { useUndo } from '../../context/UndoContext'
 
 const tituloSeccion = {
   fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
@@ -34,6 +35,7 @@ export function FichaRepuestos({ motor }) {
   const [aviso, setAviso] = React.useState('')
   const [papelera, setPapelera] = React.useState([])
   const [modalPapelera, setModalPapelera] = React.useState(false)
+  const { avisarBorrado, borrarConDeshacer } = useUndo()
 
   const cargar = React.useCallback(() => {
     setCargando(true)
@@ -74,15 +76,20 @@ export function FichaRepuestos({ motor }) {
     }
   }
 
-  const vaciarPapelera = async () => {
-    try {
-      const r = await api.del(`/motores/${motor.id}/repuestos-eliminados`)
-      setPapelera(r.papelera)
-      setModalPapelera(false)
-      setAviso('Se vació la lista de repuestos eliminados de este motor.')
-    } catch (err) {
-      setAviso(err.message || 'No se pudo vaciar la lista')
-    }
+  /* Vaciar la papelera no se puede deshacer del lado del servidor, así que el
+     DELETE sale recién cuando se apaga el cartel: hasta entonces la lista se ve
+     vacía y "Deshacer" la devuelve entera. */
+  const vaciarPapelera = () => {
+    const antes = papelera
+    setPapelera([])
+    setModalPapelera(false)
+    borrarConDeshacer({
+      mensaje: `Se vació la lista de ${antes.length} repuesto${antes.length === 1 ? '' : 's'} eliminado${antes.length === 1 ? '' : 's'}.`,
+      clave: `papelera:${motor.id}`,
+      ejecutar: () => api.del(`/motores/${motor.id}/repuestos-eliminados`),
+      onDeshacer: () => setPapelera(antes),
+      onError: (err) => { setPapelera(antes); setAviso(err.message || 'No se pudo vaciar la lista') },
+    })
   }
 
   const cantidadPorCodigo = React.useMemo(() => {
@@ -140,17 +147,39 @@ export function FichaRepuestos({ motor }) {
   }
 
   /* Saca una opción o toda una familia de medidas (STD, 025, 050…) de la ficha.
-     Sin cartel de confirmación: lo borrado queda en la papelera del motor. */
+     Sin cartel de confirmación: sale el cartel de "Deshacer", y además lo
+     borrado queda en la papelera del motor. Deshacer guarda la ficha como
+     estaba, que es también lo que saca esos códigos de la papelera. */
+  const quitarConDeshacer = async (nueva, mensaje) => {
+    const antes = ficha
+    await guardar(nueva)
+    avisarBorrado({
+      mensaje,
+      onDeshacer: async () => {
+        try {
+          await guardar(antes)
+        } catch (err) {
+          setAviso(err.message || 'No se pudo deshacer')
+        }
+      },
+    })
+  }
+
   const quitarOpciones = async (categoria, codigos) => {
     const fuera = new Set(codigos)
     const copia = ficha
       .map((g) => ({ ...g, opciones: g.opciones.filter((o) => !(g.categoria === categoria && fuera.has(o.codigo))) }))
       .filter((g) => g.opciones.length)
-    await guardar(copia)
+    await quitarConDeshacer(copia, codigos.length === 1
+      ? 'Se sacó el repuesto de la ficha del motor.'
+      : `Se sacaron ${codigos.length} medidas de la ficha del motor.`)
   }
 
   const quitarGrupo = async (categoria) => {
-    await guardar(ficha.filter((g) => g.categoria !== categoria))
+    await quitarConDeshacer(
+      ficha.filter((g) => g.categoria !== categoria),
+      `Se sacó la categoría "${categoria}" de la ficha del motor.`,
+    )
   }
 
   const copiarDesde = async (origen) => {

@@ -5,6 +5,7 @@ import { Button } from '../../components/Button'
 import { Icon } from '../../components/Icon'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
 import BackupPanel from './BackupPanel'
+import { useUndo } from '../../context/UndoContext'
 
 function Eyebrow({ children }) {
   return (
@@ -108,19 +109,27 @@ function BorrarDatosPrueba() {
   const [borrando, setBorrando] = React.useState(false)
   const [resultado, setResultado] = React.useState(null)
   const [error, setError] = React.useState('')
+  const { borrarConDeshacer } = useUndo()
 
-  const borrar = async () => {
-    setBorrando(true)
+  /* El borrado no sale en el momento: queda unos segundos con el cartel de
+     "Deshacer" abajo a la izquierda, como cualquier otro borrado del sistema.
+     Es el más destructivo de todos, así que es donde más sirve. */
+  const borrar = () => {
+    setConfirmando(false)
     setError('')
-    try {
-      const r = await api.post('/mantenimiento/borrar-datos-prueba', { confirmar: 'BORRAR' })
-      setResultado(r)
-      setConfirmando(false)
-    } catch (err) {
-      setError(err.message || 'No se pudieron borrar los datos')
-    } finally {
-      setBorrando(false)
-    }
+    setResultado(null)
+    borrarConDeshacer({
+      mensaje: 'Se van a borrar todos los presupuestos y clientes.',
+      ejecutar: async () => {
+        setBorrando(true)
+        try {
+          setResultado(await api.post('/mantenimiento/borrar-datos-prueba', { confirmar: 'BORRAR' }))
+        } finally {
+          setBorrando(false)
+        }
+      },
+      onError: (err) => setError(err.message || 'No se pudieron borrar los datos'),
+    })
   }
 
   return (
@@ -136,7 +145,7 @@ function BorrarDatosPrueba() {
       <p style={{ margin: '0 0 16px', fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-muted)' }}>
         Borra <strong>todos los presupuestos y clientes</strong>, con sus PDFs. Se mantienen los motores, la mano de
         obra, la lista del proveedor, los favoritos y las fichas de repuestos de los motores.
-        Generá antes una copia de seguridad acá arriba: esto no se puede deshacer.
+        Generá antes una copia de seguridad acá arriba: una vez que se apaga el cartel de "Deshacer", no hay vuelta atrás.
       </p>
 
       <Button variant="danger" disabled={borrando} onClick={() => setConfirmando(true)}>
@@ -159,7 +168,7 @@ function BorrarDatosPrueba() {
       <ConfirmDialog
         open={confirmando}
         title="¿Borrar todos los presupuestos y clientes?"
-        message="Se borran todos los presupuestos con sus PDFs y todos los clientes. Los motores, la mano de obra, la lista del proveedor y las fichas de repuestos quedan intactos. Esta acción no se puede deshacer."
+        message="Se borran todos los presupuestos con sus PDFs y todos los clientes. Los motores, la mano de obra, la lista del proveedor y las fichas de repuestos quedan intactos. Vas a tener unos segundos para deshacerlo."
         confirmLabel={borrando ? 'Borrando…' : 'Sí, borrar todo'}
         danger
         onCancel={() => setConfirmando(false)}

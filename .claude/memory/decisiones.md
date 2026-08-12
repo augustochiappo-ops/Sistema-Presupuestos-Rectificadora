@@ -224,3 +224,30 @@
 **Se recuperó** desde los grupos congelados del presupuesto #34 (la ficha nace de `fusionar_ficha_motor` al confirmar, así que el presupuesto es una copia fiel: mismos códigos, mismas cantidades, mismas opciones cotizando). Eso funcionó **de casualidad**: si la ficha se hubiera editado a mano después de ese presupuesto, o si el presupuesto se hubiera borrado, no había de dónde sacarla.
 **Lo que sí estuvo bien:** las suites de `tests/` exigen `DATA_DIR` y abortan sin él, precisamente para no correr contra la base real. El agujero estaba en los scripts ad-hoc de verificación post-deploy, que no tenían esa protección. La verificación contra producción sirve y hay que seguir haciéndola — pero de solo lectura donde se pueda, y sobre un objetivo vacío verificado cuando haya que escribir.
 **Fecha:** 2026-08-12
+
+## "Deshacer" en la esquina inferior izquierda, para todo borrado
+**Decisión:** cualquier borrado del sistema muestra un cartel abajo a la izquierda con el botón **Deshacer**, que dura 8 segundos. Hay **dos mecanismos** detrás del mismo cartel (`context/UndoContext.jsx`):
+- `avisarBorrado({ mensaje, onDeshacer })` — el borrado ya se hizo y **se puede revertir**: líneas del presupuesto que se está armando o editando, ítems manuales de mano de obra, y lo que sale de la ficha de un motor (deshacer vuelve a guardar la ficha como estaba, que además saca esos códigos de la papelera).
+- `borrarConDeshacer({ mensaje, clave, ejecutar })` — el borrado **no se puede revertir** (un presupuesto con sus PDFs, un cliente, vaciar la papelera del motor, "Borrar datos de prueba"). Entonces **no se ejecuta todavía**: la pantalla esconde lo borrado mirando `estaPendiente(clave)` y el `DELETE` sale recién cuando el cartel se apaga. "Deshacer" lo cancela sin haber tocado el servidor.
+**Por qué diferir en vez de restaurar:** un presupuesto borrado se lleva sus PDFs y su numeración; un cliente no se puede recrear (la API no tiene alta de clientes, nacen al presupuestar). Restaurar de verdad exigiría un borrado lógico en la base — mucho más caro que esperar unos segundos antes de mandar el `DELETE`.
+**El modo de falla es el seguro:** si la app se cierra dentro de esos segundos, el borrado nunca sale. Se pierde el borrado, nunca el dato.
+**Filtrado por clave y no por estado local:** las listas (historial de presupuestos, clientes) esconden lo pendiente con `estaPendiente`, así que aunque la pantalla se vuelva a pedir al servidor durante esos segundos, lo borrado no reaparece; y si el `DELETE` falla, la fila vuelve sola.
+**Lo que quedó con confirmación previa además del cartel:** el presupuesto, el cliente y "Borrar datos de prueba" siguen preguntando antes (son irreversibles y masivos); los borrados de repuestos no preguntan nada — el cartel reemplazó al cartel de confirmación, que era el trámite que más molestaba.
+**Fecha:** 2026-08-12
+
+## La familia de medidas es la unidad que se ordena (bug de los aros)
+**Decisión:** en el pop-up "Ver repuestos" las opciones se agrupan **primero** por familia y recién después se ordenan las familias entre sí por precio (`familiasOrdenadas` en `utils/grupos.js`). Antes se ordenaban las opciones sueltas por subtotal y se agrupaba después.
+**Por qué:** con el orden viejo, un código **sin familia** (una marca que el proveedor trae en una sola medida) caía, según su precio, justo debajo de las medidas de otro código y quedaba dibujado dentro de ese bloque: parecía una medida más de esa familia. Y como el orden depende de cuál opción cotiza, el código "saltaba" de bloque cada vez que se tocaba "Usar este" — que fue exactamente como lo reportó el dueño: *"hay un código que no se clasifica bien dentro de un grupo… se va poniendo en otros grupos"*. Caso real: en "Aros" del FIAT Fire conviven `A AK459050` (2 medidas), `A AK476050` (2 medidas) y `A AK450050RSTD`, que no tiene familia.
+**Refuerzo visual:** las filas de una familia llevan una **línea roja vertical** a la izquierda (token `--familia-linea`), tanto en el pop-up como en "Repuestos de este motor". Lo pidió el dueño dibujándolo a mano sobre una captura. Lo que queda fuera de la línea es otro repuesto, aunque esté pegado.
+**Para la suite:** cada fila lleva `data-familia`; `familiaSinPartir()` en `tests/ui_grupos.mjs` verifica que las filas de una misma familia queden siempre contiguas.
+**Fecha:** 2026-08-12
+
+## Las notas de la columna "Cotiza" dicen solo "El más caro" y "El más barato"
+**Decisión:** reemplaza a la decisión del 2026-08-12 más arriba ("La nota de 'más caro / más barato' no repite lo que ya dice el chip"): la nota dice **"El más caro"** y **"El más barato"**, sin "del grupo" y sin el "— $X menos".
+**Por qué:** pedido explícito del dueño. El ahorro en pesos ya está dos veces en la misma pantalla (encabezado del grupo y del pop-up), y en una columna angosta la frase larga se partía en tres renglones. Sigue en pie el resto de la decisión anterior: con precios iguales no aparece ninguna nota, y la de "más caro" se omite en la fila que ya lleva el chip.
+**Fecha:** 2026-08-12
+
+## Los códigos del proveedor van en monoespaciada
+**Decisión:** componente `CodigoRepuesto` — el código (`A AK459050 STD`) se muestra en monoespaciada, con fondo suave y borde, en su **propia columna** dentro del pop-up y como chip en la ficha del motor.
+**Por qué:** el dueño pidió que el código fuera más legible. En la tipografía de la app el 0 y la O son casi iguales, y el código estaba como línea gris chica debajo de la descripción, donde se leía como un dato secundario cuando en realidad es lo que se copia y se tipea en el sistema del proveedor. En monoespaciada las medidas de una familia quedan además alineadas una debajo de la otra, así que se comparan de un vistazo.
+**Fecha:** 2026-08-12

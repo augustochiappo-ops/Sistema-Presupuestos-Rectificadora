@@ -10,11 +10,13 @@ import { Icon } from '../../components/Icon'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { formatPrecioARS, formatFechaAR } from '../../utils/format'
+import { useUndo } from '../../context/UndoContext'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
 
 export default function ClienteDetalle() {
   const { id } = useParams()
+  const { borrarConDeshacer } = useUndo()
   const navigate = useNavigate()
   const [cliente, setCliente] = React.useState(null)
   const [presupuestos, setPresupuestos] = React.useState([])
@@ -26,7 +28,6 @@ export default function ClienteDetalle() {
   const [guardando, setGuardando] = React.useState(false)
   const [error, setError] = React.useState('')
   const [confirmarEliminar, setConfirmarEliminar] = React.useState(false)
-  const [eliminando, setEliminando] = React.useState(false)
 
   const cargar = React.useCallback(() => {
     setCargando(true)
@@ -64,21 +65,33 @@ export default function ClienteDetalle() {
     }
   }
 
-  // El borrado se bloquea del lado del servidor si el cliente aparece en algún
-  // presupuesto (propio o como contraparte). El 409 trae el texto con la
-  // cantidad exacta, y los presupuestos ya están listados abajo en esta misma
+  // El borrado se bloquea si el cliente aparece en algún presupuesto (propio o
+  // como contraparte). Los presupuestos ya están listados abajo en esta misma
   // pantalla, así que el aviso alcanza para saber qué hay que borrar antes.
   const eliminar = async () => {
-    setEliminando(true)
-    setError('')
+    setConfirmarEliminar(false)
+    // El borrado es diferido (quedan unos segundos para deshacerlo), así que el
+    // bloqueo del servidor —un cliente que figura en algún presupuesto no se
+    // puede borrar— se chequea ANTES de salir de la pantalla: si no, el aviso
+    // llegaría con la ficha ya cerrada. Es la misma cuenta que hace el backend
+    // (presupuestos propios + aquellos donde figura como contraparte).
     try {
-      await api.del(`/clientes/${id}`)
-      navigate('/clientes')
+      const ps = await api.get(`/clientes/${id}/presupuestos`)
+      if (ps.length) {
+        setError(`Este cliente tiene ${ps.length} presupuesto${ps.length === 1 ? '' : 's'}. `
+          + 'Borralos primero y después vas a poder borrar el cliente.')
+        return
+      }
     } catch (err) {
       setError(err.message || 'No se pudo eliminar el cliente')
-      setEliminando(false)
-      setConfirmarEliminar(false)
+      return
     }
+    borrarConDeshacer({
+      mensaje: `Se eliminó a ${cliente?.nombre || 'el cliente'}.`,
+      clave: `cliente:${id}`,
+      ejecutar: () => api.del(`/clientes/${id}`),
+    })
+    navigate('/clientes')
   }
 
   return (
@@ -194,8 +207,8 @@ export default function ClienteDetalle() {
       <ConfirmDialog
         open={confirmarEliminar}
         title="¿Eliminar cliente?"
-        message={`Se va a eliminar a ${cliente?.nombre || 'este cliente'} de la lista. Esta acción no se puede deshacer.`}
-        confirmLabel={eliminando ? 'Eliminando…' : 'Eliminar'}
+        message={`Se va a eliminar a ${cliente?.nombre || 'este cliente'} de la lista. Vas a tener unos segundos para deshacerlo.`}
+        confirmLabel="Eliminar"
         danger
         onCancel={() => setConfirmarEliminar(false)}
         onConfirm={eliminar}

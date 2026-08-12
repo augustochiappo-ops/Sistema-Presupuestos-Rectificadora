@@ -9,6 +9,7 @@ import { ModalRepuestosAgregados } from './ModalRepuestosAgregados'
 import { formatPrecioARS, parsePrecioARS } from '../../../utils/format'
 import { totalRepuestos } from '../../../utils/grupos'
 import { useRepuestosAgrupados, lineaDeCatalogo } from '../../../hooks/useRepuestosAgrupados'
+import { useUndo } from '../../../context/UndoContext'
 
 const tituloSeccion = {
   fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
@@ -42,6 +43,7 @@ export function PasoRepuestos({
   const [modalAbierto, setModalAbierto] = React.useState(false)
   const [aviso, setAviso] = React.useState('')
   const fichaCargadaPara = React.useRef(null)
+  const { avisarBorrado } = useUndo()
 
   // La ficha del motor es la asociación explícita motor→repuestos. Si el motor
   // ya tiene ficha y todavía no se cargó nada, el paso arranca con todo puesto
@@ -84,6 +86,27 @@ export function PasoRepuestos({
     cantidadRecordada,
   })
 
+  /* Sacar del presupuesto (no de la ficha del motor) con cartel de deshacer:
+     la lista completa de antes vuelve tal cual, con cantidades y precios. */
+  const quitarConDeshacer = (key) => {
+    const antes = value
+    const linea = value.find((r) => r.key === key)
+    quitar(key)
+    avisarBorrado({
+      mensaje: `Se quitó ${linea?.descripcion || 'el repuesto'} del presupuesto.`,
+      onDeshacer: () => onChange(antes),
+    })
+  }
+
+  const quitarVariasConDeshacer = (keys) => {
+    const antes = value
+    quitarVarias(keys)
+    avisarBorrado({
+      mensaje: `Se quitaron ${keys.length} medidas del presupuesto.`,
+      onDeshacer: () => onChange(antes),
+    })
+  }
+
   const sugeridos = React.useMemo(
     () => ficha.flatMap((g) => g.opciones.map((o) => ({
       codigo: o.codigo,
@@ -99,6 +122,14 @@ export function PasoRepuestos({
     [ficha],
   )
 
+  const guardarFicha = (grupos) => api.put(`/motores/${motor.id}/ficha-repuestos`, {
+    grupos: grupos.map((g) => ({
+      categoria: g.categoria,
+      cat_prefijo: g.cat_prefijo,
+      opciones: g.opciones.map((o) => ({ codigo: o.codigo, cantidad: o.cantidad })),
+    })),
+  })
+
   /*
    * Sacar un repuesto del registro del motor sin salir del presupuesto: es acá
    * donde uno se da cuenta de que en el presupuesto anterior cargó algo que no
@@ -109,22 +140,36 @@ export function PasoRepuestos({
    */
   const quitarDeFicha = async (codigos) => {
     const fuera = new Set(codigos)
+    const fichaAntes = ficha
+    const lineasAntes = value
     const nueva = ficha
       .map((g) => ({ ...g, opciones: g.opciones.filter((o) => !fuera.has(o.codigo)) }))
       .filter((g) => g.opciones.length)
     try {
-      const guardada = await api.put(`/motores/${motor.id}/ficha-repuestos`, {
-        grupos: nueva.map((g) => ({
-          categoria: g.categoria,
-          cat_prefijo: g.cat_prefijo,
-          opciones: g.opciones.map((o) => ({ codigo: o.codigo, cantidad: o.cantidad })),
-        })),
-      })
+      const guardada = await guardarFicha(nueva)
       setFicha(guardada)
       onChange((actual) => actual.filter((r) => !fuera.has(r.repuesto_codigo)))
       setAviso(codigos.length === 1
         ? 'Se sacó de los repuestos de este motor. Si fue sin querer, lo recuperás desde "Repuestos eliminados", en la pantalla del motor.'
         : `Se sacaron ${codigos.length} medidas de los repuestos de este motor. Si fue sin querer, las recuperás desde "Repuestos eliminados", en la pantalla del motor.`)
+      // Deshacer devuelve la ficha exactamente como estaba (guardarla de vuelta
+      // también saca esos códigos de la papelera del motor) y repone las líneas
+      // que se habían ido del presupuesto.
+      avisarBorrado({
+        mensaje: codigos.length === 1
+          ? 'Se sacó el repuesto de este motor.'
+          : `Se sacaron ${codigos.length} medidas de este motor.`,
+        onDeshacer: async () => {
+          try {
+            const vuelta = await guardarFicha(fichaAntes)
+            setFicha(vuelta)
+            onChange(lineasAntes)
+            setAviso('')
+          } catch (err) {
+            setAviso(err.message || 'No se pudo deshacer')
+          }
+        },
+      })
     } catch (err) {
       setAviso(err.message || 'No se pudo sacar el repuesto del motor')
     }
@@ -240,8 +285,8 @@ export function PasoRepuestos({
         onElegirAMano={onElegirAMano}
         onCambiarCantidad={cambiarCantidad}
         onCambiarPrecio={cambiarPrecio}
-        onQuitar={quitar}
-        onQuitarVarias={quitarVarias}
+        onQuitar={quitarConDeshacer}
+        onQuitarVarias={quitarVariasConDeshacer}
         onClose={() => setModalAbierto(false)}
       />
     </div>

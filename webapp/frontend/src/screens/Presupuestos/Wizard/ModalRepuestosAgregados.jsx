@@ -2,10 +2,11 @@ import React from 'react'
 import { TextField } from '../../../components/TextField'
 import { StatusBadge } from '../../../components/StatusBadge'
 import { Icon } from '../../../components/Icon'
+import { CodigoRepuesto } from '../../../components/CodigoRepuesto'
 import { formatPrecioARS } from '../../../utils/format'
 import {
   agruparLineas, opcionElegida, ahorroDelGrupo, subtotalDe,
-  codigosConCantidadSospechosa, masBarataDelGrupo, agruparPorFamilia,
+  codigosConCantidadSospechosa, masBarataDelGrupo, familiasOrdenadas,
 } from '../../../utils/grupos'
 
 const botonCantidad = {
@@ -25,6 +26,11 @@ const encabezado = {
   textAlign: 'left', borderBottom: '1px solid var(--border-default)',
 }
 
+/* La línea vertical que une las medidas de un mismo repuesto: se dibuja como
+   borde izquierdo de la primera celda de cada fila de la familia, así queda
+   continua de la primera medida a la última. */
+const lineaFamilia = { borderLeft: '3px solid var(--familia-linea)' }
+
 /*
  * Pop-up "Ver repuestos". Muestra los repuestos agrupados por categoría: dentro
  * de cada grupo, la opción con la que se cotiza (la de mayor subtotal) va
@@ -38,8 +44,18 @@ export function ModalRepuestosAgregados({
   onCambiarCantidad, onCambiarPrecio, onQuitar, onQuitarVarias, onClose,
 }) {
   const { grupos, sueltas } = React.useMemo(() => agruparLineas(items), [items])
+  // null = nadie tocó las flechitas todavía: arrancan todos abiertos (es la
+  // pantalla donde se revisa lo cargado). Cerrarlos sirve cuando hay muchas
+  // categorías y se quiere mirar una sola.
+  const [cerrados, setCerrados] = React.useState([])
 
   if (!open) return null
+
+  const nombres = [...grupos.map((g) => g.categoria), ...(sueltas.length ? ['__sueltas__'] : [])]
+  const alternar = (nombre) => setCerrados(
+    cerrados.includes(nombre) ? cerrados.filter((n) => n !== nombre) : [...cerrados, nombre],
+  )
+  const todosCerrados = nombres.length > 0 && cerrados.length >= nombres.length
 
   const totalGeneral = grupos.reduce((acc, g) => {
     const elegida = opcionElegida(g.opciones, elegidaAMano[g.categoria])
@@ -64,11 +80,11 @@ export function ModalRepuestosAgregados({
         style={{
           background: 'var(--surface-card)', borderRadius: 'var(--radius-xl)',
           border: '1px solid var(--border-default)', boxShadow: 'var(--shadow-lg)',
-          width: '100%', maxWidth: 1140, maxHeight: '86vh', overflow: 'auto',
+          width: '100%', maxWidth: 1280, maxHeight: '86vh', overflow: 'auto',
         }}
       >
         <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
           padding: '16px 20px', borderBottom: '1px solid var(--border-default)',
           position: 'sticky', top: 0, background: 'var(--surface-card)', zIndex: 1,
         }}>
@@ -81,9 +97,22 @@ export function ModalRepuestosAgregados({
               {ahorroTotal > 0 && ` · Ahorro potencial ${formatPrecioARS(ahorroTotal)}`}
             </div>
           </div>
-          <button onClick={onClose} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
-            <Icon n="x" s={20} />
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            {nombres.length > 1 && (
+              <button
+                onClick={() => setCerrados(todosCerrados ? [] : nombres)}
+                style={{
+                  border: 'none', background: 'transparent', cursor: 'pointer', padding: 0,
+                  fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--text-muted)',
+                }}
+              >
+                {todosCerrados ? 'Expandir todo' : 'Colapsar todo'}
+              </button>
+            )}
+            <button onClick={onClose} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
+              <Icon n="x" s={20} />
+            </button>
+          </div>
         </div>
 
         <div style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 22 }}>
@@ -97,6 +126,8 @@ export function ModalRepuestosAgregados({
             <Grupo
               key={g.categoria}
               grupo={g}
+              abierto={!cerrados.includes(g.categoria)}
+              onAlternar={() => alternar(g.categoria)}
               codigoAMano={elegidaAMano[g.categoria]}
               onElegirAMano={onElegirAMano}
               onCambiarCantidad={onCambiarCantidad}
@@ -110,6 +141,8 @@ export function ModalRepuestosAgregados({
             <Grupo
               grupo={{ categoria: 'Sin categoría', opciones: sueltas }}
               sueltas
+              abierto={!cerrados.includes('__sueltas__')}
+              onAlternar={() => alternar('__sueltas__')}
               onCambiarCantidad={onCambiarCantidad}
               onCambiarPrecio={onCambiarPrecio}
               onQuitar={onQuitar}
@@ -122,7 +155,10 @@ export function ModalRepuestosAgregados({
   )
 }
 
-function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, onCambiarPrecio, onQuitar, onQuitarVarias }) {
+function Grupo({
+  grupo, codigoAMano, onElegirAMano, sueltas, abierto = true, onAlternar,
+  onCambiarCantidad, onCambiarPrecio, onQuitar, onQuitarVarias,
+}) {
   const elegida = sueltas ? null : opcionElegida(grupo.opciones, codigoAMano)
   const ahorro = sueltas ? 0 : ahorroDelGrupo(grupo.opciones, elegida)
   const sospechosas = React.useMemo(() => codigosConCantidadSospechosa(grupo.opciones), [grupo.opciones])
@@ -143,16 +179,15 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
     : (masBarataDelGrupo(grupo.opciones) || masBarataDelGrupo(grupo.opciones, false))
   // Con todos los precios iguales no hay extremos que marcar: sería ruido.
   const hayExtremos = !sueltas && masCara && masBarata && subtotalDe(masCara) > subtotalDe(masBarata)
-  const diferencia = hayExtremos && elegida ? subtotalDe(elegida) - subtotalDe(masBarata) : 0
 
-  // La elegida arriba, después de mayor a menor subtotal. Las medidas de un
-  // mismo repuesto (STD, 025, 050…) quedan juntas: la familia se ubica donde
-  // aparece su primera opción, así la que se cotiza sigue arriba de todo.
-  const familias = React.useMemo(() => {
-    const resto = grupo.opciones.filter((o) => o !== elegida)
-    resto.sort((a, b) => subtotalDe(b) - subtotalDe(a))
-    return agruparPorFamilia(elegida ? [elegida, ...resto] : resto)
-  }, [grupo.opciones, elegida])
+  // Las medidas de un mismo repuesto (STD, 025, 050…) van SIEMPRE juntas y con
+  // una línea al costado: son la misma pieza. Ordenar las opciones sueltas por
+  // precio y agrupar después metía el código sin familia entre las medidas de
+  // otro, y parecía una medida más de esa familia (bug reportado por el dueño).
+  const familias = React.useMemo(
+    () => familiasOrdenadas(grupo.opciones, elegida),
+    [grupo.opciones, elegida],
+  )
 
   return (
     <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
@@ -160,14 +195,26 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
         padding: '12px 16px', background: 'var(--surface-sunken)', flexWrap: 'wrap',
       }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
+        <button
+          onClick={onAlternar}
+          aria-expanded={abierto}
+          title={abierto ? 'Cerrar el grupo' : 'Abrir el grupo'}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap',
+            border: 'none', background: 'transparent', cursor: 'pointer', padding: 0, textAlign: 'left',
+          }}
+        >
+          <Icon n={abierto ? 'chevron-down' : 'chevron-right'} s={16} />
           <span style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700, color: 'var(--text-strong)' }}>
             {grupo.categoria}
           </span>
           <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
-            {grupo.opciones.length} {sueltas ? 'repuesto' : 'opción'}{grupo.opciones.length === 1 ? '' : sueltas ? 's' : 'es'}
+            {grupo.opciones.length}{' '}
+            {sueltas
+              ? `repuesto${grupo.opciones.length === 1 ? '' : 's'}`
+              : `${grupo.opciones.length === 1 ? 'opción' : 'opciones'}`}
           </span>
-        </div>
+        </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           {ahorro > 0 && (
             <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>
@@ -182,7 +229,7 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
         </div>
       </div>
 
-      {elegidaSinStock && hayAlternativaConStock && (
+      {abierto && elegidaSinStock && hayAlternativaConStock && (
         <div style={{
           padding: '8px 16px', background: 'var(--status-expired-bg)', color: 'var(--status-expired-fg)',
           fontFamily: 'var(--font-body)', fontSize: 12,
@@ -191,17 +238,19 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
         </div>
       )}
 
+      {abierto && (
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 900 }}>
           <thead>
             <tr>
-              <th style={{ ...encabezado, width: 130 }}>{sueltas ? '' : 'Cotiza'}</th>
+              <th style={{ ...encabezado, width: 120 }}>{sueltas ? '' : 'Cotiza'}</th>
+              <th style={{ ...encabezado, width: 150 }}>Código</th>
               <th style={encabezado}>Descripción</th>
-              <th style={{ ...encabezado, width: 120 }}>Marca</th>
-              <th style={{ ...encabezado, width: 80 }}>Medida</th>
-              <th style={{ ...encabezado, width: 140, textAlign: 'right' }}>P. unitario</th>
-              <th style={{ ...encabezado, width: 150, textAlign: 'center' }}>Cantidad</th>
-              <th style={{ ...encabezado, width: 130, textAlign: 'right' }}>Subtotal</th>
+              <th style={{ ...encabezado, width: 100 }}>Marca</th>
+              <th style={{ ...encabezado, width: 70 }}>Medida</th>
+              <th style={{ ...encabezado, width: 130, textAlign: 'right' }}>P. unitario</th>
+              <th style={{ ...encabezado, width: 140, textAlign: 'center' }}>Cantidad</th>
+              <th style={{ ...encabezado, width: 120, textAlign: 'right' }}>Subtotal</th>
               <th style={{ ...encabezado, width: 40 }} />
             </tr>
           </thead>
@@ -210,12 +259,14 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
               // Encabezado de la familia: las medidas de un mismo repuesto se
               // agregan juntas al elegir una, así que también se sacan juntas.
               familia.esFamilia ? (
-                <tr key={`fam-${familia.base}`}>
-                  <td colSpan={7} style={{ ...celda, padding: '8px 12px', background: 'var(--surface-sunken)' }}>
-                    <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                      <strong style={{ color: 'var(--text-strong)' }}>{familia.base}</strong>
-                      {familia.marca ? ` · ${familia.marca}` : ''}
-                      {` · ${familia.opciones.length} medidas`}
+                <tr key={`fam-${familia.base}`} data-familia={familia.base}>
+                  <td colSpan={8} style={{ ...celda, ...lineaFamilia, padding: '8px 12px', background: 'var(--surface-sunken)' }}>
+                    <span style={{ fontSize: 12, color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                      <CodigoRepuesto>{familia.base}</CodigoRepuesto>
+                      <span>
+                        {familia.marca ? `${familia.marca} · ` : ''}
+                        {`${familia.opciones.length} medidas del mismo repuesto`}
+                      </span>
                     </span>
                   </td>
                   <td style={{ ...celda, padding: '8px 12px', background: 'var(--surface-sunken)', textAlign: 'center' }}>
@@ -232,9 +283,17 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
               ...familia.opciones.map((it) => {
                 const esElegida = it === elegida
                 const sospechosa = sospechosas.has(it.repuesto_codigo || it.key)
+                const primeraCelda = familia.esFamilia ? { ...celda, ...lineaFamilia } : celda
                 return (
-                <tr key={it.key} style={esElegida ? { background: 'var(--status-active-bg)' } : undefined}>
-                  <td style={celda}>
+                // data-familia: qué códigos son la misma pieza en otra medida.
+                // Es lo que dibuja la línea roja, y lo que mira la suite de UI
+                // para verificar que una familia nunca queda partida.
+                <tr
+                  key={it.key}
+                  data-familia={familia.esFamilia ? familia.base : ''}
+                  style={esElegida ? { background: 'var(--status-active-bg)' } : undefined}
+                >
+                  <td style={primeraCelda}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4 }}>
                       {sueltas ? null : esElegida ? (
                         <StatusBadge status="active">
@@ -257,21 +316,21 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
                           lo mismo dos veces. Solo aparece cuando aporta algo:
                           en las filas que no cotizan, o cuando se eligió a mano. */}
                       {hayExtremos && it === masCara && !(esElegida && codigoAMano !== it.repuesto_codigo) && (
-                        <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>El más caro del grupo</span>
+                        <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>El más caro</span>
                       )}
                       {hayExtremos && it === masBarata && (
-                        <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>
-                          El más barato{diferencia > 0 ? ` — ${formatPrecioARS(diferencia)} menos` : ''}
-                        </span>
+                        <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>El más barato</span>
                       )}
                     </div>
                   </td>
                   <td style={celda}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                    <CodigoRepuesto>{it.repuesto_codigo || 'Sin código'}</CodigoRepuesto>
+                  </td>
+                  <td style={celda}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 3, alignItems: 'flex-start' }}>
                       <span style={{ fontWeight: 'var(--weight-bold)', color: 'var(--text-strong)' }}>{it.descripcion}</span>
-                      <span style={{ fontSize: 12, color: 'var(--text-faint)' }}>{it.repuesto_codigo || 'Sin código'}</span>
                       {it.stock === 0 && (
-                        <StatusBadge status="expired">Sin stock — sujeto a disponibilidad</StatusBadge>
+                        <StatusBadge status="expired" title="Sin stock — sujeto a disponibilidad">Sin stock</StatusBadge>
                       )}
                       {sospechosa && (
                         <StatusBadge
@@ -291,7 +350,7 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
                       value={it.precioTexto ?? ''}
                       onChange={(e) => onCambiarPrecio(it.key, e.target.value)}
                       style={{
-                        width: 120, textAlign: 'right',
+                        width: 110, textAlign: 'right',
                         borderColor: it.precio_unitario === null ? 'var(--status-expired-fg)' : undefined,
                       }}
                     />
@@ -332,6 +391,7 @@ function Grupo({ grupo, codigoAMano, onElegirAMano, sueltas, onCambiarCantidad, 
           </tbody>
         </table>
       </div>
+      )}
     </div>
   )
 }
