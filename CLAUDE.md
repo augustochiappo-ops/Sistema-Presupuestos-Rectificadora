@@ -9,7 +9,12 @@ Los archivos de memoria están en `.claude/memory/`. **Leerlos al inicio de cada
 - [`.claude/memory/estado.md`](.claude/memory/estado.md) — qué está hecho, qué falta, próximo paso
 - [`.claude/memory/decisiones.md`](.claude/memory/decisiones.md) — decisiones técnicas tomadas y su contexto
 
-**Al cerrar cada sesión:** actualizar `estado.md` con lo que se completó y el próximo paso.
+### Cierre de sesión (seguir estos cuatro pasos)
+
+1. **Actualizar la memoria**: `estado.md` con lo que se completó, lo que se verificó y el próximo paso; `decisiones.md` si en la sesión se tomó alguna decisión técnica o de diseño que convenga poder releer más adelante.
+2. **El cierre se commitea y pushea directo a `master`, nunca en una rama nueva.** Es la misma regla que rige todo el trabajo de este repo (ver "Flujo de trabajo", punto 2), pero acá va dicha aparte porque el cierre es donde más tienta abrir una rama "solo para dejar el registro" — y después hay que acordarse de mergearla. `master` es donde vive el código de producción: el cierre se escribe ahí y listo, sin merges pendientes.
+3. **Mergear lo que haya quedado suelto.** Antes de cerrar, mirar `git ls-remote --heads origin` y `git branch -a`: si hay alguna rama con trabajo que no está en `master` (de otra sesión, o creada por el entorno de la tarea), **mergearla a `master` en este mismo cierre** y borrarla. Si sus commits ya son ancestros de `master`, no hay nada que mergear: se borra nomás (`git branch -d` avisa solo si no estaba contenida). Claude **no puede borrar ramas remotas** (el token de la sesión devuelve 403), así que ésas se le avisan al usuario para que las borre desde GitHub.
+4. **Dejar todo prolijo**: árbol de trabajo limpio, `master` sincronizado con `origin/master`, y —si el cierre tocó código de la app y no solo documentos— correr también el deploy.
 
 ---
 
