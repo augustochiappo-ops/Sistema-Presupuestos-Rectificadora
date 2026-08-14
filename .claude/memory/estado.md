@@ -519,6 +519,7 @@ Pendientes, en orden de lo que más conviene atacar:
 3. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
 4. ~~**Unificar la grafía "Chiappo" / "Chicappo"**~~ → **resuelto el 2026-08-11**: el dueño confirmó que la correcta es **Chiappo**, y el PDF ya la usa (verificado contra producción).
 5. **Opción "no cotizar" por repuesto** — que una opción esté en la lista para pedir pero nunca compita por ser la más cara. El dueño la evaluó el 2026-08-10 y la dejó para más adelante.
+6. **Casilla invertida en el paso Repuestos** — en vez de "este repuesto también es de este motor" (la casilla que se está diseñando el 2026-08-14, que marca pertenencia a la ficha), listar todo lo de la ficha con una casilla de "entra en este presupuesto". Se evaluó el 2026-08-14 al diseñar el paso Repuestos y **el dueño la dejó explícitamente para más adelante**: se descartó por ahora porque dos casillas por fila (una para el motor y otra para el presupuesto) se pisan entre sí, y porque la cantidad ya dice "entra en el presupuesto".
 
 Como puede haber más de una sesión de Claude tocando este repo en paralelo (celular + escritorio), conviene chequear ramas remotas pendientes al empezar cada sesión.
 
