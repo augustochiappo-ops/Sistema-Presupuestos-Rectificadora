@@ -53,6 +53,12 @@ Es el archivo que CRAC entrega, actualizado **todos los días** (aunque el conte
 - **Precio en `0` con stock `"no"`** — es el caso esperado y frecuente (~12.249 filas): sin stock, sin precio cargado. No es anómalo.
 - **Códigos que no son piezas** — el archivo incluye algunas líneas que no son repuestos con código CRAC estándar, por ejemplo `"ALQUILER"` (una línea de servicio/alquiler de equipo). Ver sección 3.4 para cómo detectarlas.
 
+### La descripción es la misma para el mismo repuesto en todas las marcas
+
+Dato del negocio, confirmado por el dueño (2026-08-14) y **clave para poder sugerir reemplazos**: el proveedor usa **la misma descripción (`aplicacion`) para la misma pieza, sin importar la marca**. Un cojinete de biela de un motor dado va a tener la descripción idéntica en la marca A, en la B y en la C; lo que cambia es el prefijo de marca del código, el precio y el stock.
+
+Consecuencia práctica: **descripción + medida identifican a la pieza**, y las filas que comparten esas dos cosas son intercambiables entre sí. Es lo que permite, cuando una marca se queda sin stock, ofrecer las otras marcas que sirven — buscando por descripción exacta, no por código. No confundir con `base_codigo`, que agrupa las **medidas de un mismo código** (misma marca, STD/025/050…): son dos ejes distintos, marca y medida.
+
 ---
 
 ## 3. El sistema de prefijos CRAC
