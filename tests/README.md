@@ -17,7 +17,7 @@ línea por verificación y salen con código 1 si falla alguna.
 
 ## 1. Backend — `backend_grupos.py`
 
-141 verificaciones sobre la lógica, la base y el PDF.
+170 verificaciones sobre la lógica, la base y el PDF.
 
 ```bash
 # Una sola vez: entorno con las dependencias del backend + pypdf (para leer el PDF)
@@ -40,6 +40,10 @@ Qué cubre, por bloque:
 | Elección | Gana el de mayor **subtotal** con el caso real (juego de 8 a $1.000 vs. 4 blísters de 2 a $400 → $1.600), precio 0 nunca gana, elección manual pisa al más caro |
 | Presupuesto | Una sola línea cotizada por grupo, total = subtotal de la elegida, `grupo_num`, las alternativas guardadas con su marca |
 | Ficha del motor | Se crea sola al confirmar, resuelve precios de hoy, respeta la cantidad cargada, se copia a otro motor |
+| Marcar sin cotizar | `POST .../ficha-repuestos/marcar` mete el código en la ficha **sin cantidad** y no le pisa la cantidad a uno que ya venía cotizado; desmarcar lo saca y lo deja en la papelera; 400 sin códigos y 404 de motor inexistente |
+| Cantidad recordada | Es la que **más se repite** en los presupuestos del motor (uno con ×1 y dos con ×2 → 2), la ficha informa `usado_en` y `cotizadas`, y la cantidad escrita a mano (`cantidad_manual`) no la pisa el recálculo |
+| Repuestos ya utilizados | `GET .../presupuestos-repuestos` lista los presupuestos del motor con repuestos, del más nuevo al más viejo, con cuántos llevó cada uno |
+| Alternativas sin stock | `crac.get_alternativas` busca por **descripción + medida** (el proveedor repite la descripción entre marcas), nunca devuelve el mismo código ni sus medidas hermanas, y solo sugiere lo que hoy tiene stock |
 | Pedido | Precios de hoy, agrupado por marca, total cotizado coincide, fecha del catálogo, más barato ≤ cotizado |
 | HTTP | 401 sin sesión, 404 de motor inexistente, 400 al copiar la ficha del mismo motor, PUT que reemplaza la ficha |
 | Totales | El total nunca suma las alternativas |
@@ -51,7 +55,7 @@ Qué cubre, por bloque:
 
 ## 2. UI — `ui_grupos.mjs`
 
-120 verificaciones con navegador real, más capturas de pantalla en
+148 verificaciones con navegador real, más capturas de pantalla en
 `tests/capturas/`.
 
 ```bash
@@ -78,7 +82,8 @@ La suite espera el usuario `admin` con contraseña `test123`, que es lo que
 configuran las variables de arriba.
 
 Qué cubre: login · agrupado automático al tildar dentro de una categoría ·
-cantidad heredada por el grupo · las 7 medidas hermanas entrando solas · chips
+cantidad heredada por el grupo · las 6 medidas hermanas quedando marcadas en el
+motor (sin entrar al presupuesto) · chips
 "El más caro", "¿cantidad correcta?" y "Elegido a mano" · confirmación del
 presupuesto · detalle con "Opciones guardadas" · marcar aprobado · pantalla de
 pedido (agrupado por marca, fecha del catálogo, cotizado vs. diferencia, copiar
@@ -99,7 +104,13 @@ lista, y el aviso con la cantidad al intentarlo desde la ficha) · **cartel de
 "Deshacer" lo devuelve, y cuando el cartel se apaga el borrado sale de verdad) ·
 **grupos del pop-up "Ver repuestos"** (flechita por grupo, colapsar/expandir
 todo, familias que no se parten al cambiar la opción cotizada, y deshacer al
-quitar una medida o una familia entera).
+quitar una medida o una familia entera) · **el círculo del motor** (marcar a mano
+no cotiza y se guarda en el momento sin cantidad, poner cantidad lo llena solo,
+sacar la cantidad de algo que ya era del motor lo deja marcado, destildar lo saca
+y lo manda a la papelera) · **"Repuestos ya utilizados"** (lista los presupuestos
+anteriores del motor, arrancan todos destildados, el botón se habilita al tildar
+y lo elegido entra al presupuesto) · **el paso Repuestos arranca en cero** aunque
+el motor tenga ficha cargada.
 
 Las dos suites **arrancan limpiando el estado que ellas mismas generan**
 (presupuestos, clientes y fichas de motor), así que se pueden correr dos veces

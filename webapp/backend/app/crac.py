@@ -387,6 +387,69 @@ def get_medidas_hermanas(codigo: str) -> list[dict]:
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
+def get_alternativas(codigo: str, solo_con_stock: bool = True) -> list[dict]:
+    """
+    Otras marcas que sirven para la misma pieza. Se usa para sugerir un
+    reemplazo cuando el repuesto cotizado se quedó sin stock.
+
+    **Cómo se encuentran**: el proveedor usa LA MISMA DESCRIPCIÓN para la misma
+    pieza en todas las marcas — lo que cambia es el prefijo de marca del código,
+    el precio y el stock (ver `CRAC/CRAC.md`, sección 2). Así que la pieza queda
+    identificada por descripción + medida, y todo lo que comparta esas dos cosas
+    es intercambiable. No confundir con `base_codigo`, que agrupa las medidas de
+    un mismo código (misma marca): son dos ejes distintos.
+
+    Nunca devuelve el código consultado ni sus propias medidas hermanas, y por
+    defecto solo lo que el proveedor tiene hoy — una alternativa sin stock no
+    resuelve nada. Orden: primero las más baratas con precio.
+    """
+    codigo = (codigo or "").strip()
+    if not codigo:
+        return []
+
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT aplicacion, medida, base_codigo FROM crac_repuestos WHERE codigo = ? LIMIT 1",
+            (codigo,),
+        ).fetchone()
+        if not row or not (row[0] or "").strip():
+            return []
+        aplicacion, medida, base_codigo = row
+
+        condiciones = ["r.aplicacion = ?", "r.codigo <> ?"]
+        params: list = [aplicacion, codigo]
+        # La medida tiene que coincidir: una 050 no reemplaza a una STD.
+        if medida:
+            condiciones.append("r.medida = ?")
+            params.append(medida)
+        else:
+            condiciones.append("r.medida IS NULL")
+        if base_codigo:
+            condiciones.append("(r.base_codigo IS NULL OR r.base_codigo <> ?)")
+            params.append(base_codigo)
+        if solo_con_stock:
+            condiciones.append("r.stock = 1")
+
+        cur = conn.execute(
+            f"""
+            SELECT r.codigo, r.aplicacion, r.precio, r.stock,
+                   COALESCE(pc.nombre, r.cat_prefijo)   AS categoria,
+                   COALESCE(pm.nombre, r.marca_prefijo) AS marca,
+                   r.cat_prefijo, r.medida, r.base_codigo
+            FROM crac_repuestos r
+            LEFT JOIN crac_prefijos pc ON pc.tipo = 'categoria' AND pc.prefijo = r.cat_prefijo
+            LEFT JOIN crac_prefijos pm ON pm.tipo = 'marca'     AND pm.prefijo = r.marca_prefijo
+            WHERE {' AND '.join(condiciones)}
+            ORDER BY (r.precio IS NULL OR r.precio = 0), r.precio
+            LIMIT 20
+            """,
+            params,
+        )
+        cols = ["codigo", "aplicacion", "precio", "stock", "categoria", "marca",
+                "cat_prefijo", "medida", "base_codigo"]
+        return [dict(zip(cols, row)) for row in cur.fetchall()]
+
+
 def get_info_catalogo() -> dict:
     """Cuándo se importó por última vez el catálogo del proveedor, y cuántos hay."""
     with get_connection() as conn:

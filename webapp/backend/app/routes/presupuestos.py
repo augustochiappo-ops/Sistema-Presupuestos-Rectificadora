@@ -330,6 +330,34 @@ def _grupos_para_ficha(opciones):
     return [g for g in por_grupo.values() if g["categoria"] and g["opciones"]]
 
 
+def _aplicar_ficha(motor_id, opciones, data):
+    """
+    Deja el motor cargado después de guardar un presupuesto. Dos entradas:
+
+    - lo que se cotizó (`opciones`), que entra con su cantidad;
+    - lo que se marcó a mano sin cotizar (`ficha_tildes`): las otras marcas que
+      sirven para el motor y las medidas hermanas de lo que sí entró. Esas van
+      SIN cantidad — están anotadas, no compradas.
+
+    Después recalcula la cantidad que el motor recuerda de cada repuesto (la que
+    más se repite en sus presupuestos), salvo las escritas a mano por el taller.
+    """
+    grupos = _grupos_para_ficha(opciones)
+    for tilde in data.get("ficha_tildes") or []:
+        categoria = (tilde.get("categoria") or "").strip()
+        codigos = [c.strip() for c in (tilde.get("codigos") or []) if (c or "").strip()]
+        if not categoria or not codigos:
+            continue
+        grupos.append({
+            "categoria": categoria,
+            "cat_prefijo": tilde.get("cat_prefijo"),
+            "opciones": [{"codigo": c, "cantidad": None} for c in codigos],
+        })
+    if grupos:
+        db.fusionar_ficha_motor(motor_id, grupos)
+    db.recalcular_cantidades_ficha(motor_id)
+
+
 def _resolver_items_edicion(items_payload):
     """
     A diferencia de la creación, al editar un presupuesto ya existente el precio
@@ -878,9 +906,10 @@ def crear():
         opciones=opciones,
     )
 
-    # El motor queda cargado con lo que se acaba de presupuestar: la próxima vez
-    # el paso Repuestos arranca solo, con precios de hoy.
-    db.fusionar_ficha_motor(motor_id, _grupos_para_ficha(opciones))
+    # El motor queda cargado con lo que se acaba de presupuestar y con lo que se
+    # marcó al pasar. El presupuesto NO arranca solo la próxima vez: la ficha es
+    # la lista de dónde elegir, no la selección hecha.
+    _aplicar_ficha(motor_id, opciones, data)
 
     detalle = db.get_presupuesto_detalle(presupuesto_id)
     nombre_archivo = f"presupuesto_{presupuesto_id:04d}.pdf"
@@ -924,7 +953,7 @@ def actualizar(presupuesto_id):
 
     db.actualizar_presupuesto(presupuesto_id, items_resueltos, notas, ajuste_pct, opciones=opciones)
     if existente.get("motor_id"):
-        db.fusionar_ficha_motor(existente["motor_id"], _grupos_para_ficha(opciones))
+        _aplicar_ficha(existente["motor_id"], opciones, data)
     return jsonify(db.get_presupuesto_detalle(presupuesto_id))
 
 

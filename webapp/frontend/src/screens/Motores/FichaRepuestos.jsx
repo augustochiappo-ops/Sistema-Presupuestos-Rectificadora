@@ -7,7 +7,7 @@ import { StatusBadge } from '../../components/StatusBadge'
 import { MotorSelector } from '../../components/MotorSelector'
 import { RepuestoPicker } from '../../components/RepuestoPicker'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
-import { formatPrecioARS, formatFechaHoraAR } from '../../utils/format'
+import { formatPrecioARS, formatFechaHoraAR, formatFechaAR } from '../../utils/format'
 import { agruparPorFamilia } from '../../utils/grupos'
 import { useUndo } from '../../context/UndoContext'
 
@@ -52,7 +52,9 @@ export function FichaRepuestos({ motor }) {
     const payload = grupos.map((g) => ({
       categoria: g.categoria,
       cat_prefijo: g.cat_prefijo,
-      opciones: g.opciones.map((o) => ({ codigo: o.codigo, cantidad: o.cantidad })),
+      opciones: g.opciones.map((o) => ({
+        codigo: o.codigo, cantidad: o.cantidad, cantidad_manual: o.cantidad_manual,
+      })),
     }))
     const nueva = await api.put(`/motores/${motor.id}/ficha-repuestos`, { grupos: payload })
     setFicha(nueva)
@@ -137,11 +139,19 @@ export function FichaRepuestos({ motor }) {
     await guardar(copia.filter((g) => g.opciones.length))
   }
 
+  /* Escribir la cantidad a mano la FIJA: el recálculo automático (la cantidad
+     que más se repite en los presupuestos del motor) no la vuelve a tocar.
+     Queda marcada en pantalla para que se entienda por qué ese número no se
+     mueve solo. */
   const cambiarCantidad = async (categoria, codigo, cantidad) => {
     if (!(cantidad > 0)) return
     const copia = ficha.map((g) => ({
       ...g,
-      opciones: g.opciones.map((o) => (g.categoria === categoria && o.codigo === codigo ? { ...o, cantidad } : o)),
+      opciones: g.opciones.map((o) => (
+        g.categoria === categoria && o.codigo === codigo
+          ? { ...o, cantidad, cantidad_manual: true }
+          : o
+      )),
     }))
     await guardar(copia)
   }
@@ -300,6 +310,13 @@ export function FichaRepuestos({ motor }) {
                 </span>
                 <span style={{ flex: 1, minWidth: 0, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>
                   {o.descripcion || '—'}
+                  {/* Lo que el taller compra de verdad, separado de lo que quedó
+                      anotado por las dudas. Es también el orden de la lista. */}
+                  <span style={{ display: 'block', fontSize: 11, color: 'var(--text-faint)' }}>
+                    {(o.usado_en || 0) > 0
+                      ? `Usado en ${o.usado_en} presupuesto${o.usado_en === 1 ? '' : 's'}${o.ultima_vez ? ` · última vez ${formatFechaAR(o.ultima_vez)}` : ''}`
+                      : 'Anotado, nunca cotizado'}
+                  </span>
                 </span>
                 <span style={{ width: 110, flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>
                   {o.marca || '—'}
@@ -311,12 +328,19 @@ export function FichaRepuestos({ motor }) {
                 {o.en_catalogo && o.stock_actual === 0 && <StatusBadge status="expired">Sin stock</StatusBadge>}
                 {o.codigo === g.elegida_codigo && <StatusBadge status="active">El más caro</StatusBadge>}
 
+                {o.cantidad_manual && (
+                  <StatusBadge status="pending" title="La escribiste vos: el sistema no la vuelve a calcular">
+                    Cantidad puesta a mano
+                  </StatusBadge>
+                )}
+
                 {editando ? (
                   <input
                     type="number" min="1" step="1"
-                    value={o.cantidad}
+                    value={o.cantidad ?? ''}
+                    placeholder="—"
                     onChange={(e) => cambiarCantidad(g.categoria, o.codigo, parseFloat(e.target.value))}
-                    title="Cuántos envases de esta marca hacen falta"
+                    title="Cuántos envases de esta marca hacen falta. Si la escribís a mano queda fija."
                     style={{
                       width: 60, height: 30, textAlign: 'center', borderRadius: 8,
                       border: '1px solid var(--border-default)', background: 'var(--surface-card)',
@@ -324,8 +348,11 @@ export function FichaRepuestos({ motor }) {
                     }}
                   />
                 ) : (
-                  <span style={{ width: 60, textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
-                    ×{o.cantidad}
+                  <span
+                    style={{ width: 60, textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}
+                    title={o.cantidad ? undefined : 'Marcado como repuesto de este motor, todavía sin cotizar'}
+                  >
+                    {o.cantidad ? `×${o.cantidad}` : '—'}
                   </span>
                 )}
 

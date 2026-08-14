@@ -20,6 +20,7 @@ import {
   lineaDeOpcion, elegidaAManoInicial,
 } from '../../utils/grupos'
 import { useRepuestosAgrupados } from '../../hooks/useRepuestosAgrupados'
+import { useFichaTildes } from '../../hooks/useFichaTildes'
 import { useUndo } from '../../context/UndoContext'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
@@ -132,7 +133,10 @@ export default function DetallePresupuesto() {
   const [revalidacion, setRevalidacion] = React.useState(null)
   const [revalidando, setRevalidando] = React.useState(false)
   const [aplicandoRevalidacion, setAplicandoRevalidacion] = React.useState(false)
-  const [sugeridos, setSugeridos] = React.useState([])
+  // La ficha del motor, para poder marcar/desmarcar desde acá igual que en el
+  // wizard: editar un presupuesto viejo también es un momento donde uno se da
+  // cuenta de que una pieza es (o no es) de este motor.
+  const [ficha, setFicha] = React.useState([])
   const [aviso, setAviso] = React.useState('')
   const [ajusteTexto, setAjusteTexto] = React.useState('')
   const [ajustePct, setAjustePct] = React.useState(0)
@@ -196,16 +200,7 @@ export default function DetallePresupuesto() {
     setEditMode(true)
     if (detalle?.motor_id) {
       api.get(`/motores/${detalle.motor_id}/ficha-repuestos`)
-        .then((ficha) => setSugeridos(ficha.flatMap((g) => g.opciones.map((o) => ({
-          codigo: o.codigo,
-          descripcion: o.descripcion || o.codigo,
-          categoria: g.categoria,
-          cat_prefijo: g.cat_prefijo,
-          marca: o.marca,
-          medida: o.medida,
-          precio_actual: o.precio_actual,
-          stock_actual: o.stock_actual,
-        })))))
+        .then(setFicha)
         .catch(() => {})
       api.get(`/motores/${detalle.motor_id}/servicios`)
         .then((servicios) => setPreciosListaPorServicio(new Map(servicios.map((s) => [s.id, s.precio]))))
@@ -276,6 +271,31 @@ export default function DetallePresupuesto() {
     setElegidaAMano((prev) => ({ ...prev, [grupo]: prev[grupo] === codigo ? null : codigo }))
   }, [])
 
+  const tildes = useFichaTildes({ motorId: detalle?.motor_id, ficha, onFicha: setFicha })
+
+  const sugeridos = React.useMemo(
+    () => ficha.flatMap((g) => g.opciones.map((o) => ({
+      codigo: o.codigo,
+      descripcion: o.descripcion || o.codigo,
+      categoria: g.categoria,
+      cat_prefijo: g.cat_prefijo,
+      marca: o.marca,
+      medida: o.medida,
+      base_codigo: o.base_codigo,
+      precio_actual: o.precio_actual,
+      stock_actual: o.stock_actual,
+      usado_en: o.usado_en,
+      ultima_vez: o.ultima_vez,
+    }))),
+    [ficha],
+  )
+
+  const cantidadRecordada = React.useMemo(() => {
+    const m = new Map()
+    ficha.forEach((g) => g.opciones.forEach((o) => m.set(o.codigo, o.cantidad)))
+    return m
+  }, [ficha])
+
   // Mismo agrupado automático que en el wizard: lo que se agrega dentro de una
   // categoría entra al grupo de esa categoría, con las medidas hermanas.
   const {
@@ -287,7 +307,36 @@ export default function DetallePresupuesto() {
     setLineas: setEditGrupos,
     cantidadPorGrupo,
     setCantidadGrupo,
+    cantidadRecordada,
+    onHermanas: tildes.marcarAuto,
+    onQuitarCodigo: tildes.soltarAuto,
   })
+
+  /* Poner cantidad marca la pieza como repuesto de este motor, igual que en el
+     wizard. Sacarla del presupuesto NO la saca del motor (salvo que el tilde lo
+     hubiera puesto esa misma cantidad, que es lo que resuelve soltarAuto). */
+  const agregarConTilde = React.useCallback((rep, cantidad, origen = 'click') => {
+    if (cantidad > 0) tildes.marcarAuto(rep)
+    agregarDeCatalogo(rep, cantidad, origen)
+  }, [agregarDeCatalogo, tildes])
+
+  const estadoDeCodigo = React.useCallback((codigo) => {
+    if (cantidadPorCodigo.get(codigo)) return 'presupuesto'
+    return tildes.estaTildado(codigo) ? 'motor' : 'fuera'
+  }, [cantidadPorCodigo, tildes])
+
+  const alternarFicha = async (rep) => {
+    const estaba = tildes.estaTildado(rep.codigo)
+    try {
+      await tildes.alternarManual(rep)
+      if (!estaba) return
+      const linea = editGrupos.find((r) => r.repuesto_codigo === rep.codigo)
+      if (linea) quitarDeGrupo(linea.key)
+      setAviso('Se sacó de los repuestos de este motor. El presupuesto emitido no cambia; si fue sin querer, lo recuperás desde "Repuestos eliminados", en la pantalla del motor.')
+    } catch (err) {
+      setAviso(err.message || 'No se pudo guardar en el motor')
+    }
+  }
 
   // Sacar un repuesto (o una familia de medidas) del presupuesto que se está
   // editando: se puede deshacer devolviendo la lista tal cual estaba.
@@ -319,7 +368,12 @@ export default function DetallePresupuesto() {
       // hubo cambios de verdad: no tiene sentido generar una versión de PDF
       // nueva (y consumir un número de versión) por un guardado que no cambió nada.
       const huboCambios = JSON.stringify(payload) !== payloadOriginalRef.current
-      await api.put(`/presupuestos/${id}`, payload)
+      // Lo marcado sin cotizar viaja aparte y no cuenta como cambio del
+      // presupuesto: toca la ficha del motor, no el documento.
+      await api.put(`/presupuestos/${id}`, {
+        ...payload,
+        ficha_tildes: tildes.tildesParaPayload(editGrupos),
+      })
       if (huboCambios) {
         // El PDF se reconstruye solo, en silencio (sin abrir pestaña): así
         // "Compartir PDF" y "Abrir" siempre reflejan la última edición, sin
@@ -836,11 +890,14 @@ export default function DetallePresupuesto() {
         <RepuestoPicker
           sugeridos={sugeridos}
           cantidadPorCodigo={cantidadPorCodigo}
-          onAgregar={agregarDeCatalogo}
+          onAgregar={agregarConTilde}
+          estadoDe={estadoDeCodigo}
+          onToggleFicha={alternarFicha}
+          motorId={detalle?.motor_id}
           reorderKey="repuestos-presupuesto"
           onVerAgregados={() => setModalRepuestos(true)}
           cantidadAgregados={editGrupos.length}
-          ayudaFilas="Lo que agregues dentro de una categoría forma un grupo: se cotiza el más caro y quedan guardadas todas las opciones"
+          ayudaFilas="Poné una cantidad para cotizarlo, o tocá el círculo para dejarlo guardado como repuesto de este motor sin cotizarlo"
         />
         </div>
       )}

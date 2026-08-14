@@ -277,6 +277,114 @@ check("DELETE vacía la papelera", r.status_code == 200 and r.get_json()["papele
 r = cliente.get("/api/motores/999999/repuestos-eliminados")
 check("papelera de motor inexistente da 404", r.status_code == 404)
 
+print("\n=== 7b. Marcar sin cotizar, cantidad recordada y alternativas ===")
+# Los dos ejes del paso Repuestos: la cantidad dice "va en este presupuesto",
+# el círculo dice "sirve para este motor". Marcar entra a la ficha SIN cantidad.
+motor_marca = motores[3]
+db.borrar_de_papelera(motor_marca["id"])
+db.guardar_ficha_motor(motor_marca["id"], [])
+r = cliente.post(f"/api/motores/{motor_marca['id']}/ficha-repuestos/marcar",
+                 json={"codigos": [codigos[0]], "categoria": "Cojinetes biela", "marcado": True})
+ficha_marca = r.get_json()
+check("POST marcar agrega a la ficha", r.status_code == 200 and len(ficha_marca) == 1, ficha_marca)
+check("lo marcado entra sin cantidad", ficha_marca[0]["opciones"][0]["cantidad"] is None,
+      ficha_marca[0]["opciones"][0])
+check("y sin uso previo", ficha_marca[0]["opciones"][0]["usado_en"] == 0)
+r = cliente.post(f"/api/motores/{motor_marca['id']}/ficha-repuestos/marcar", json={"codigos": []})
+check("marcar sin códigos da 400", r.status_code == 400)
+r = cliente.post(f"/api/motores/{motor_marca['id']}/ficha-repuestos/marcar",
+                 json={"codigos": [codigos[0]], "marcado": False})
+check("desmarcar lo saca de la ficha", r.status_code == 200 and r.get_json() == [], r.get_json())
+check("y queda en la papelera del motor",
+      len(db.get_papelera_motor(motor_marca["id"])) == 1)
+r = cliente.post("/api/motores/999999/ficha-repuestos/marcar",
+                 json={"codigos": [codigos[0]], "categoria": "X"})
+check("marcar en un motor inexistente da 404", r.status_code == 404)
+
+# Marcar no le pisa la cantidad a un código que ya venía cotizado.
+db.guardar_ficha_motor(motor_marca["id"], [
+    {"categoria": "Cojinetes biela", "opciones": [{"codigo": codigos[0], "cantidad": 4}]},
+])
+cliente.post(f"/api/motores/{motor_marca['id']}/ficha-repuestos/marcar",
+             json={"codigos": [codigos[0], codigos[1]], "categoria": "Cojinetes biela", "marcado": True})
+ficha_mixta = db.get_ficha_motor(motor_marca["id"])
+por_codigo = {o["codigo"]: o for o in ficha_mixta[0]["opciones"]}
+check("marcar no borra la cantidad que ya tenía", por_codigo[codigos[0]]["cantidad"] == 4)
+check("el código nuevo queda sin cantidad", por_codigo[codigos[1]]["cantidad"] is None)
+
+# La cantidad que el motor recuerda es la que MÁS SE REPITE en sus presupuestos:
+# uno con ×1 y dos con ×2 → 2. (No la última ni la más grande.)
+motor_moda = motores[4]
+db.guardar_ficha_motor(motor_moda["id"], [])
+for cantidad in (1, 2, 2):
+    items_m, opciones_m, _ = rp._resolver_grupos([{
+        "categoria": cojinetes[0]["categoria"],
+        "opciones": [{"repuesto_codigo": codigos[0], "cantidad": cantidad}],
+    }])
+    pid_m = db.guardar_presupuesto(f"Cliente Moda {cantidad}", motor_moda["id"], items_m, opciones=opciones_m)
+    db.fusionar_ficha_motor(motor_moda["id"], rp._grupos_para_ficha(opciones_m))
+db.recalcular_cantidades_ficha(motor_moda["id"])
+uso = db.get_uso_repuestos_motor(motor_moda["id"])
+check("el uso cuenta los 3 presupuestos", uso[codigos[0]]["usado_en"] == 3, uso.get(codigos[0]))
+check("la cantidad recordada es la que más se repite", uso[codigos[0]]["cantidad"] == 2, uso.get(codigos[0]))
+ficha_moda = db.get_ficha_motor(motor_moda["id"])
+check("la ficha quedó con la cantidad más repetida",
+      ficha_moda[0]["opciones"][0]["cantidad"] == 2, ficha_moda[0]["opciones"][0])
+check("la ficha informa en cuántos presupuestos se usó",
+      ficha_moda[0]["opciones"][0]["usado_en"] == 3)
+check("y cuenta las cotizadas alguna vez", ficha_moda[0]["cotizadas"] == 1)
+
+# La cantidad escrita a mano le gana al recálculo automático.
+db.guardar_ficha_motor(motor_moda["id"], [{
+    "categoria": ficha_moda[0]["categoria"],
+    "opciones": [{"codigo": codigos[0], "cantidad": 9, "cantidad_manual": True}],
+}])
+db.recalcular_cantidades_ficha(motor_moda["id"])
+ficha_manual = db.get_ficha_motor(motor_moda["id"])
+check("la cantidad puesta a mano no la pisa el recálculo",
+      ficha_manual[0]["opciones"][0]["cantidad"] == 9, ficha_manual[0]["opciones"][0])
+check("y queda marcada como puesta a mano", ficha_manual[0]["opciones"][0]["cantidad_manual"] is True)
+
+# Presupuestos anteriores del motor: la lista de "Repuestos ya utilizados".
+r = cliente.get(f"/api/motores/{motor_moda['id']}/presupuestos-repuestos")
+anteriores = r.get_json()
+check("GET presupuestos-repuestos lista los del motor",
+      r.status_code == 200 and len(anteriores) == 3, anteriores)
+check("cada uno dice cuántos repuestos llevó", all(a["repuestos"] == 1 for a in anteriores), anteriores)
+check("vienen del más nuevo al más viejo",
+      [a["id"] for a in anteriores] == sorted((a["id"] for a in anteriores), reverse=True))
+r = cliente.get("/api/motores/999999/presupuestos-repuestos")
+check("presupuestos-repuestos de motor inexistente da 404", r.status_code == 404)
+
+# Alternativas por descripción: el proveedor repite la descripción en todas las
+# marcas de la misma pieza, así que descripción + medida encuentran el reemplazo.
+con_alternativas = None
+for candidato in crac.get_repuestos(categoria="CA", limite=60):
+    if crac.get_alternativas(candidato["codigo"]):
+        con_alternativas = candidato
+        break
+check("hay piezas con alternativas de otras marcas en el catálogo real",
+      con_alternativas is not None)
+if con_alternativas:
+    alternativas = crac.get_alternativas(con_alternativas["codigo"])
+    original = crac.get_repuesto_por_codigo(con_alternativas["codigo"])
+    check("todas comparten la descripción exacta",
+          all(a["aplicacion"] == original["aplicacion"] for a in alternativas))
+    check("todas comparten la medida",
+          all((a["medida"] or None) == (original["medida"] or None) for a in alternativas))
+    check("ninguna es el mismo código", all(a["codigo"] != original["codigo"] for a in alternativas))
+    check("ninguna es una medida hermana del mismo código",
+          all(not original["base_codigo"] or a["base_codigo"] != original["base_codigo"]
+              for a in alternativas))
+    check("solo se sugiere lo que hoy tiene stock", all(a["stock"] == 1 for a in alternativas))
+    r = cliente.get(f"/api/repuestos/alternativas?codigo={con_alternativas['codigo']}"
+                    f"&motor_id={motor_moda['id']}")
+    check("GET /repuestos/alternativas responde", r.status_code == 200 and len(r.get_json()) > 0)
+    check("marca cuáles ya están en la ficha del motor",
+          all("en_ficha" in a for a in r.get_json()))
+r = cliente.get("/api/repuestos/alternativas")
+check("alternativas sin código devuelve vacío", r.status_code == 200 and r.get_json() == [])
+
 print("\n=== 8. Presupuesto completo por HTTP (crear con grupos) ===")
 servicios = facra.get_servicios_para_lista(motor.get("lista_num"))
 body = {

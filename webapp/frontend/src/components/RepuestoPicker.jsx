@@ -8,7 +8,9 @@ import { CategoriasPanel } from './CategoriasPanel'
 import { Button } from './Button'
 import { Icon } from './Icon'
 import { CodigoRepuesto } from './CodigoRepuesto'
-import { formatPrecioARS } from '../utils/format'
+import { MarcaFicha } from './MarcaFicha'
+import { AlternativasSinStock } from './AlternativasSinStock'
+import { formatPrecioARS, formatFechaAR } from '../utils/format'
 import { agruparPorFamilia } from '../utils/grupos'
 
 // Cantidades típicas de un motor: una unidad, o un juego por cilindro/válvula.
@@ -146,6 +148,12 @@ export function RepuestoPicker({
   onQuitarDeFicha,
   tituloSugeridos = 'Repuestos de este motor',
   ayudaFilas = 'Click en la fila para agregar uno, o el + para elegir la cantidad',
+  // Pertenencia al motor (el círculo). Opcional: la edición del detalle de un
+  // presupuesto viejo también las pasa, pero cualquier pantalla que no maneje
+  // ficha puede omitirlas y el picker se comporta como antes.
+  estadoDe, onToggleFicha, motorId,
+  // Botón extra en la barra de filtros ("Repuestos ya utilizados").
+  accionExtra,
 }) {
   const [marcas, setMarcas] = React.useState([])
   const [categoriaSel, setCategoriaSel] = React.useState('')
@@ -175,6 +183,11 @@ export function RepuestoPicker({
       familias: agruparPorFamilia(items.map((s) => ({ ...s, key: s.codigo, repuesto_codigo: s.codigo }))),
     }))
   }, [sugeridos])
+
+  const cotizadasAlgunaVez = React.useMemo(
+    () => sugeridos.filter((s) => (s.usado_en || 0) > 0).length,
+    [sugeridos],
+  )
 
   // Arrancan cerrados: la lista de categorías se lee de un vistazo y se abre la
   // que interesa. Con un solo grupo la flechita sería un click sin ganancia, así
@@ -251,6 +264,27 @@ export function RepuestoPicker({
   }, cantidad, origen)
 
   const columnas = [
+    // El círculo: contorno = está en el motor, sólido = además en el
+    // presupuesto. Es la columna más a la izquierda porque es lo primero que se
+    // mira al buscar ("¿esto ya lo tenía cargado para este motor?").
+    // `wrap` va en true no por el texto (no tiene) sino para que la celda no
+    // recorte: con overflow hidden, el círculo dejaba asomando el "…" del
+    // ellipsis, que se leía como una manchita al lado.
+    ...(estadoDe ? [{
+      key: '_ficha', header: '', align: 'center', width: 54, wrap: true,
+      render: (_, row) => (
+        <MarcaFicha
+          estado={estadoDe(row.codigo)}
+          descripcion={row.aplicacion}
+          onToggle={() => onToggleFicha?.({
+            codigo: row.codigo,
+            descripcion: row.aplicacion,
+            categoria: row.categoria,
+            cat_prefijo: row.cat_prefijo,
+          })}
+        />
+      ),
+    }] : []),
     {
       key: '_agregar', header: '', align: 'center', width: 150,
       render: (_, row) => {
@@ -293,6 +327,11 @@ export function RepuestoPicker({
         <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <div style={tituloSeccion}>{tituloSugeridos}</div>
+            {/* Lo anotado por las dudas vs. lo que el taller compra de verdad. */}
+            <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
+              {sugeridos.length} en el motor
+              {cotizadasAlgunaVez > 0 && ` · ${cotizadasAlgunaVez} cotizada${cotizadasAlgunaVez === 1 ? '' : 's'} alguna vez`}
+            </span>
             {gruposSugeridos.length > 1 && (
               <button
                 onClick={() => setAbiertos(
@@ -364,6 +403,18 @@ export function RepuestoPicker({
                       const cantidad = cantidadPorCodigo.get(s.codigo)
                       return (
                         <div key={s.codigo} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                          {estadoDe && (
+                            <MarcaFicha
+                              estado={estadoDe(s.codigo)}
+                              descripcion={s.descripcion}
+                              onToggle={() => onToggleFicha?.({
+                                codigo: s.codigo,
+                                descripcion: s.descripcion,
+                                categoria: s.categoria,
+                                cat_prefijo: s.cat_prefijo,
+                              })}
+                            />
+                          )}
                           <span style={{ width: 150, flexShrink: 0 }}>
                             <CodigoRepuesto size={12}>{s.codigo}</CodigoRepuesto>
                           </span>
@@ -372,9 +423,29 @@ export function RepuestoPicker({
                             {s.marca && (
                               <span style={{ fontWeight: 'var(--weight-regular)', color: 'var(--text-faint)' }}> · {s.marca}</span>
                             )}
+                            {/* Qué se compra de verdad para este motor y qué quedó
+                                anotado por las dudas. Es también el orden de la lista. */}
+                            {(s.usado_en || 0) > 0 && (
+                              <span style={{ display: 'block', fontWeight: 'var(--weight-regular)', fontSize: 11, color: 'var(--text-faint)' }}>
+                                Usado en {s.usado_en} presupuesto{s.usado_en === 1 ? '' : 's'}
+                                {s.ultima_vez && ` · última vez ${formatFechaAR(s.ultima_vez)}`}
+                              </span>
+                            )}
                           </span>
                           {s.medida && <StatusBadge status="pending">{s.medida}</StatusBadge>}
-                          {s.stock_actual === 0 && <StatusBadge status="expired">Sin stock</StatusBadge>}
+                          {s.stock_actual === 0 && (
+                            <AlternativasSinStock codigo={s.codigo} motorId={motorId} onElegir={(alt) => agregarSugerido({
+                              codigo: alt.codigo,
+                              descripcion: alt.aplicacion,
+                              precio_actual: alt.precio,
+                              stock_actual: alt.stock,
+                              categoria: alt.categoria,
+                              cat_prefijo: alt.cat_prefijo,
+                              marca: alt.marca,
+                              medida: alt.medida,
+                              base_codigo: alt.base_codigo,
+                            }, 1)} />
+                          )}
                           <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 110, textAlign: 'right' }}>
                             {s.precio_actual ? formatPrecioARS(s.precio_actual) : '—'}
                           </span>
@@ -428,6 +499,7 @@ export function RepuestoPicker({
               Ver repuestos{cantidadAgregados > 0 ? ` (${cantidadAgregados})` : ''}
             </Button>
           )}
+          {accionExtra}
         </div>
 
         <div className="motor-selector-grid">

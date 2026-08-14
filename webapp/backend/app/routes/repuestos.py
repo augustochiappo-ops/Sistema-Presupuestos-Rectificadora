@@ -3,7 +3,7 @@ import tempfile
 
 from flask import Blueprint, jsonify, request
 
-from .. import crac
+from .. import crac, db
 from ..auth import login_required
 
 bp = Blueprint("repuestos", __name__, url_prefix="/api/repuestos")
@@ -43,6 +43,41 @@ def medidas():
     if not codigo:
         return jsonify([])
     return jsonify(crac.get_medidas_hermanas(codigo))
+
+
+@bp.get("/alternativas")
+@login_required
+def alternativas():
+    """
+    Marcas que podrían reemplazar a un repuesto que se quedó sin stock. Se
+    encuentran por descripción + medida, que es lo que identifica a la pieza en
+    el catálogo del proveedor (usa la misma descripción para todas las marcas).
+
+    Con `motor_id`, las que ya están cargadas en la ficha de ese motor salen
+    primero y marcadas: son las que el taller ya validó alguna vez, así que
+    valen más que una marca cualquiera del catálogo.
+
+    Solo sugiere. No cambia nada del presupuesto.
+    """
+    codigo = (request.args.get("codigo") or "").strip()
+    if not codigo:
+        return jsonify([])
+
+    sugerencias = crac.get_alternativas(codigo)
+
+    en_ficha: set[str] = set()
+    motor_id = request.args.get("motor_id")
+    if motor_id:
+        try:
+            for grupo in db.get_ficha_motor(int(motor_id)):
+                en_ficha.update(o["codigo"] for o in grupo["opciones"])
+        except (TypeError, ValueError):
+            pass
+
+    for s in sugerencias:
+        s["en_ficha"] = s["codigo"] in en_ficha
+    sugerencias.sort(key=lambda s: (not s["en_ficha"], not s["precio"], s["precio"] or 0))
+    return jsonify(sugerencias)
 
 
 @bp.get("/catalogo-info")

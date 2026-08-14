@@ -17,10 +17,16 @@ import { formatPrecioARS } from '../utils/format'
  *    propósito: pasa a ser la del grupo. origen 'click' = usa la que ya tenga
  *    el grupo, o la que recuerde la ficha del motor para ese código.
  *  - Si el código tiene medida (STD/025/050…), las hermanas que el proveedor
- *    tenga de verdad se agregan solas al mismo grupo con la misma cantidad.
+ *    tenga de verdad NO entran al presupuesto: se marcan como repuestos del
+ *    motor (`onHermanas`), sin cantidad. Hasta que no se mide el motor no se
+ *    sabe qué medida va, así que quedan anotadas para elegirlas después — pero
+ *    lo que se cotiza es solo la que el usuario eligió.
  */
 export function useRepuestosAgrupados({
   lineas, setLineas, cantidadPorGrupo, setCantidadGrupo, cantidadRecordada,
+  // Opcionales: avisan de los dos efectos que el hook no puede resolver solo,
+  // porque viven en la ficha del motor y no en el presupuesto.
+  onHermanas, onQuitarCodigo,
 }) {
   const porCodigo = React.useMemo(() => {
     const m = new Map()
@@ -46,14 +52,21 @@ export function useRepuestosAgrupados({
     )))
   }, [setLineas])
 
+  // El aviso de "este código salió del presupuesto" va fuera del updater: en
+  // modo estricto React puede llamarlo dos veces, y esto no es idempotente.
   const quitar = React.useCallback((key) => {
+    const linea = lineas.find((r) => r.key === key)
+    if (linea?.repuesto_codigo) onQuitarCodigo?.(linea.repuesto_codigo)
     setLineas((actual) => actual.filter((r) => r.key !== key))
-  }, [setLineas])
+  }, [lineas, setLineas, onQuitarCodigo])
 
   const quitarVarias = React.useCallback((keys) => {
     const fuera = new Set(keys)
+    lineas.forEach((r) => {
+      if (fuera.has(r.key) && r.repuesto_codigo) onQuitarCodigo?.(r.repuesto_codigo)
+    })
     setLineas((actual) => actual.filter((r) => !fuera.has(r.key)))
-  }, [setLineas])
+  }, [lineas, setLineas, onQuitarCodigo])
 
   const agregar = React.useCallback((rep, cantidadPedida, origen = 'click') => {
     const grupo = rep.categoria || null
@@ -86,30 +99,24 @@ export function useRepuestosAgrupados({
 
     setLineas((actual) => [...actual, lineaDeCatalogo(rep, cantidad)])
 
-    if (rep.medida) {
+    // Las otras medidas de la misma pieza (STD, 025, 050…) quedan MARCADAS en el
+    // motor, sin cantidad y sin entrar al presupuesto: son la misma pieza, y
+    // cuál va se sabe recién cuando se mide el motor. Antes entraban todas
+    // cotizadas, que era justo lo que el dueño no quería.
+    if (rep.medida && onHermanas) {
       api.get(`/repuestos/medidas?codigo=${encodeURIComponent(rep.codigo)}`).then((hermanas) => {
-        const otras = hermanas.filter((h) => h.codigo !== rep.codigo)
-        if (!otras.length) return
-        setLineas((actual) => {
-          const yaEstan = new Set(actual.map((r) => r.repuesto_codigo))
-          const faltantes = otras
-            .filter((h) => !yaEstan.has(h.codigo))
-            .map((h) => lineaDeCatalogo({
-              codigo: h.codigo,
-              descripcion: h.aplicacion,
-              precio: h.precio,
-              stock: h.stock,
-              categoria: h.categoria,
-              cat_prefijo: h.cat_prefijo,
-              marca: h.marca,
-              medida: h.medida,
-              base_codigo: h.base_codigo,
-            }, cantidad))
-          return faltantes.length ? [...actual, ...faltantes] : actual
-        })
+        const otras = hermanas
+          .filter((h) => h.codigo !== rep.codigo)
+          .map((h) => ({
+            codigo: h.codigo,
+            categoria: h.categoria,
+            cat_prefijo: h.cat_prefijo,
+          }))
+        if (otras.length) onHermanas(otras)
       }).catch(() => { /* si falla, queda solo la medida elegida */ })
     }
-  }, [porCodigo, cambiarCantidad, quitar, cantidadRecordada, cantidadPorGrupo, setCantidadGrupo, setLineas])
+  }, [porCodigo, cambiarCantidad, quitar, cantidadRecordada, cantidadPorGrupo,
+      setCantidadGrupo, setLineas, onHermanas])
 
   return { cantidadPorCodigo, agregar, cambiarCantidad, cambiarPrecio, quitar, quitarVarias }
 }

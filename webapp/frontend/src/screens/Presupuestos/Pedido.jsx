@@ -5,6 +5,7 @@ import { PageHeader } from '../../components/PageHeader'
 import { Button } from '../../components/Button'
 import { Icon } from '../../components/Icon'
 import { StatusBadge } from '../../components/StatusBadge'
+import { AlternativasSinStock } from '../../components/AlternativasSinStock'
 import { ModalCodigosPedido } from './ModalCodigosPedido'
 import { formatPrecioARS, formatFechaHoraAR } from '../../utils/format'
 
@@ -150,6 +151,7 @@ export default function PedidoRepuestos() {
           key={g.grupo_num}
           grupo={g}
           elegida={elegidas[g.grupo_num]}
+          motorId={datos.presupuesto?.motor_id}
           onElegir={(codigo) => setElegidas((prev) => ({ ...prev, [g.grupo_num]: codigo }))}
         />
       ))}
@@ -179,7 +181,14 @@ function Cifra({ label, valor, destacado }) {
   )
 }
 
-function GrupoPedido({ grupo, elegida, onElegir }) {
+function GrupoPedido({ grupo, elegida, onElegir, motorId }) {
+  // Si no hay stock en ninguna marca de lo que se cotizó, el aviso ofrece las
+  // otras marcas del catálogo que sirven para esta misma pieza. Solo sugiere:
+  // no cambia nada del pedido ni del presupuesto — la decisión es del taller.
+  const codigoParaAlternativas = grupo.sin_stock_total
+    ? (elegida || grupo.marcas.flatMap((m) => m.medidas).find((o) => o.repuesto_codigo)?.repuesto_codigo)
+    : null
+
   return (
     <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', overflow: 'hidden' }}>
       <div style={{
@@ -190,7 +199,17 @@ function GrupoPedido({ grupo, elegida, onElegir }) {
           <span style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 700, color: 'var(--text-strong)' }}>
             {grupo.categoria}
           </span>
-          {grupo.sin_stock_total && <StatusBadge status="expired">Sin stock en ninguna marca</StatusBadge>}
+          {grupo.sin_stock_total && (
+            codigoParaAlternativas
+              ? (
+                <AlternativasSinStock
+                  codigo={codigoParaAlternativas}
+                  motorId={motorId}
+                  texto="Sin stock en ninguna marca"
+                />
+              )
+              : <StatusBadge status="expired">Sin stock en ninguna marca</StatusBadge>
+          )}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)' }}>
           <span style={{ color: 'var(--text-muted)' }}>

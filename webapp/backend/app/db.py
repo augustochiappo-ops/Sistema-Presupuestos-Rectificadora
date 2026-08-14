@@ -159,10 +159,19 @@ def init_db():
                 UNIQUE (motor_id, categoria)
             );
 
+            -- cantidad = 0 significa "marcado, sin cantidad": la pieza sirve para
+            -- el motor pero todavía no se cotizó nunca, así que el sistema no
+            -- inventa un número que el taller no eligió. Hacia afuera (API y
+            -- pantallas) ese 0 viaja como `cantidad: null`. Se usa 0 y no NULL
+            -- porque la columna nació NOT NULL y en SQLite aflojar eso obliga a
+            -- reconstruir la tabla — no vale el riesgo sobre fichas reales.
+            -- cantidad_manual = 1 cuando el taller escribió la cantidad a mano:
+            -- ahí manda la suya y el recálculo automático no la vuelve a tocar.
             CREATE TABLE IF NOT EXISTS motor_repuesto_opciones (
                 grupo_id        INTEGER NOT NULL REFERENCES motor_repuesto_grupos(id) ON DELETE CASCADE,
                 repuesto_codigo TEXT NOT NULL,
                 cantidad        REAL NOT NULL DEFAULT 1,
+                cantidad_manual INTEGER NOT NULL DEFAULT 0,
                 PRIMARY KEY (grupo_id, repuesto_codigo)
             );
 
@@ -257,6 +266,12 @@ def init_db():
             # Liga la línea cotizada con su grupo de opciones. NULL = repuesto
             # suelto o servicio, o sea el comportamiento de siempre.
             conn.execute("ALTER TABLE presupuesto_items ADD COLUMN grupo_num INTEGER")
+
+        cols_ficha = {r[1] for r in conn.execute("PRAGMA table_info(motor_repuesto_opciones)")}
+        if "cantidad_manual" not in cols_ficha:
+            conn.execute(
+                "ALTER TABLE motor_repuesto_opciones ADD COLUMN cantidad_manual INTEGER NOT NULL DEFAULT 0"
+            )
 
         cols_crac = {r[1] for r in conn.execute("PRAGMA table_info(crac_repuestos)")}
         hay_catalogo = None
@@ -848,12 +863,107 @@ def get_motor(motor_id: int) -> dict | None:
 # opción es la cantidad (cuántos envases hacen falta, que cambia según cómo
 # venga envasada esa marca).
 
+def get_uso_repuestos_motor(motor_id: int) -> dict[str, dict]:
+    """
+    Cuántos presupuestos de este motor llevaron cada repuesto, cuándo fue la
+    última vez, y con qué cantidad. Sale de las opciones congeladas de los
+    presupuestos — el registro de lo que el taller usó de verdad, no de lo que
+    quedó anotado en la ficha.
+
+    Por código: {usado_en, ultima_vez, cantidad}. La `cantidad` es **la que más
+    se repite** entre los presupuestos (uno con ×1 y dos con ×2 → 2); si empatan,
+    gana la del presupuesto más reciente. Es la que el motor recuerda para la
+    próxima vez.
+    """
+    with get_connection() as conn:
+        filas = conn.execute(
+            """
+            SELECT o.repuesto_codigo, o.cantidad, p.fecha, p.id
+            FROM presupuesto_item_opciones o
+            JOIN presupuestos p ON p.id = o.presupuesto_id
+            WHERE p.motor_id = ?
+              AND o.repuesto_codigo IS NOT NULL
+              AND o.cantidad > 0
+            ORDER BY p.fecha, p.id
+            """,
+            (motor_id,),
+        ).fetchall()
+
+    uso: dict[str, dict] = {}
+    vistos: set[tuple[str, int]] = set()
+    for orden, (codigo, cantidad, fecha, presupuesto_id) in enumerate(filas):
+        # Un mismo código podría aparecer en dos grupos del mismo presupuesto;
+        # para "usado en N presupuestos" cuenta una sola vez.
+        if (codigo, presupuesto_id) in vistos:
+            continue
+        vistos.add((codigo, presupuesto_id))
+        info = uso.setdefault(codigo, {"usado_en": 0, "ultima_vez": None, "_cantidades": {}})
+        info["usado_en"] += 1
+        if fecha:
+            info["ultima_vez"] = fecha
+        # Las filas vienen de la más vieja a la más nueva, así que `orden` guarda
+        # cuál fue la última vez que se usó cada cantidad: eso desempata solo.
+        conteo = info["_cantidades"].setdefault(cantidad, {"veces": 0, "ultimo": orden})
+        conteo["veces"] += 1
+        conteo["ultimo"] = orden
+
+    for info in uso.values():
+        cantidades = info.pop("_cantidades")
+        info["cantidad"] = max(
+            cantidades.items(), key=lambda kv: (kv[1]["veces"], kv[1]["ultimo"])
+        )[0]
+    return uso
+
+
+def _orden_por_uso(opciones: list[dict]) -> list[dict]:
+    """
+    Ordena las opciones de un grupo de la más usada a la menos, **moviendo la
+    familia de medidas entera**: las medidas de un mismo repuesto (STD/025/050…)
+    nunca se separan, porque en pantalla van dentro de la misma línea vertical.
+    Lo que nunca se usó queda al final, ordenado por marca.
+    """
+    familias: dict[str, list[dict]] = {}
+    orden: list[str] = []
+    for o in opciones:
+        base = o.get("base_codigo") or o["codigo"]
+        if base not in familias:
+            familias[base] = []
+            orden.append(base)
+        familias[base].append(o)
+
+    def dias(iso: str | None) -> int:
+        if not iso:
+            return 0
+        try:
+            return date.fromisoformat(iso[:10]).toordinal()
+        except ValueError:
+            return 0
+
+    def clave(base: str):
+        grupo = familias[base]
+        return (
+            -max(o.get("usado_en") or 0 for o in grupo),
+            -max(dias(o.get("ultima_vez")) for o in grupo),
+            (grupo[0].get("marca") or "").lower(),
+        )
+
+    salida = []
+    for base in sorted(orden, key=clave):
+        salida.extend(sorted(familias[base], key=lambda o: (o.get("medida") or "")))
+    return salida
+
+
 def get_ficha_motor(motor_id: int) -> list[dict]:
     """
     Grupos de repuestos del motor con sus opciones resueltas contra el catálogo
     de hoy. Cada grupo trae `elegida_codigo`: la opción de mayor subtotal, que
     es con la que se cotizaría hoy.
+
+    `cantidad` en null = marcado sin cantidad (la pieza sirve para el motor pero
+    todavía no se cotizó nunca). Adentro se guarda como 0 — ver el comentario del
+    esquema en init_db.
     """
+    uso = get_uso_repuestos_motor(motor_id)
     with get_connection() as conn:
         grupos = conn.execute(
             """
@@ -869,7 +979,7 @@ def get_ficha_motor(motor_id: int) -> list[dict]:
         for grupo_id, categoria, cat_prefijo in grupos:
             cur = conn.execute(
                 """
-                SELECT mro.repuesto_codigo, mro.cantidad,
+                SELECT mro.repuesto_codigo, mro.cantidad, mro.cantidad_manual,
                        cr.aplicacion, cr.precio, cr.stock, cr.medida, cr.base_codigo,
                        COALESCE(pm.nombre, cr.marca_prefijo) AS marca
                 FROM motor_repuesto_opciones mro
@@ -883,13 +993,17 @@ def get_ficha_motor(motor_id: int) -> list[dict]:
                 (grupo_id,),
             )
             opciones = []
-            for codigo, cantidad, aplicacion, precio, stock, medida, base_codigo, marca in cur.fetchall():
+            for (codigo, cantidad, cantidad_manual, aplicacion, precio, stock,
+                 medida, base_codigo, marca) in cur.fetchall():
                 # precio/stock en None = el código ya no está en el catálogo.
                 # Se conserva igual en la ficha: sigue siendo una pieza que
                 # sirve para el motor, solo que hoy el proveedor no la lista.
+                del_uso = uso.get(codigo, {})
                 opciones.append({
                     "codigo": codigo,
-                    "cantidad": cantidad,
+                    # 0 adentro = marcado sin cantidad; afuera viaja como null.
+                    "cantidad": cantidad if cantidad else None,
+                    "cantidad_manual": bool(cantidad_manual),
                     "descripcion": aplicacion,
                     "precio_actual": precio,
                     "stock_actual": stock,
@@ -901,12 +1015,20 @@ def get_ficha_motor(motor_id: int) -> list[dict]:
                     "marca": marca,
                     "en_catalogo": precio is not None,
                     "subtotal": round((precio or 0) * (cantidad or 0), 2),
+                    # Historial de uso real en este motor: es lo que decide el
+                    # orden de la lista y lo que la pantalla muestra debajo de
+                    # cada opción ("Usado en 3 presupuestos · última vez …").
+                    "usado_en": del_uso.get("usado_en", 0),
+                    "ultima_vez": del_uso.get("ultima_vez"),
                 })
+            opciones = _orden_por_uso(opciones)
             resultado.append({
                 "categoria": categoria,
                 "cat_prefijo": cat_prefijo,
                 "opciones": opciones,
                 "elegida_codigo": _codigo_mas_caro(opciones),
+                # Lo anotado por las dudas vs. lo que realmente se compra.
+                "cotizadas": sum(1 for o in opciones if o["usado_en"] > 0),
             })
         return resultado
 
@@ -964,17 +1086,24 @@ def guardar_ficha_motor(motor_id: int, grupos: list[dict]) -> None:
             )
             grupo_id = cur.lastrowid
             for op in opciones:
+                # cantidad None (o ausente) = marcado sin cantidad → 0 adentro.
+                # Es la diferencia entre "esta pieza sirve para el motor" y
+                # "de esta pieza van 4": el sistema no inventa el número.
                 try:
-                    cantidad = float(op.get("cantidad") or 1)
+                    cantidad = float(op["cantidad"]) if op.get("cantidad") is not None else 0
                 except (TypeError, ValueError):
-                    cantidad = 1
+                    cantidad = 0
                 conn.execute(
                     """
-                    INSERT INTO motor_repuesto_opciones (grupo_id, repuesto_codigo, cantidad)
-                    VALUES (?, ?, ?)
-                    ON CONFLICT(grupo_id, repuesto_codigo) DO UPDATE SET cantidad = excluded.cantidad
+                    INSERT INTO motor_repuesto_opciones
+                        (grupo_id, repuesto_codigo, cantidad, cantidad_manual)
+                    VALUES (?, ?, ?, ?)
+                    ON CONFLICT(grupo_id, repuesto_codigo) DO UPDATE SET
+                        cantidad = excluded.cantidad,
+                        cantidad_manual = excluded.cantidad_manual
                     """,
-                    (grupo_id, op["codigo"].strip(), max(cantidad, 0) or 1),
+                    (grupo_id, op["codigo"].strip(), max(cantidad, 0),
+                     1 if op.get("cantidad_manual") else 0),
                 )
 
         despues = {
@@ -1044,10 +1173,95 @@ def fusionar_ficha_motor(motor_id: int, grupos: list[dict]) -> None:
             codigo = (op.get("codigo") or "").strip()
             if not codigo:
                 continue
-            por_codigo[codigo] = {"codigo": codigo, "cantidad": op.get("cantidad") or 1}
+            previa = por_codigo.get(codigo) or {}
+            entrante = op.get("cantidad")
+            if previa.get("cantidad_manual"):
+                # La cantidad escrita a mano por el taller le gana al cálculo.
+                cantidad = previa.get("cantidad")
+            elif entrante is None:
+                # Marcar una pieza que ya estaba no le borra la cantidad que tenía.
+                cantidad = previa.get("cantidad")
+            else:
+                cantidad = entrante
+            por_codigo[codigo] = {
+                "codigo": codigo,
+                "cantidad": cantidad,
+                "cantidad_manual": bool(previa.get("cantidad_manual")),
+            }
         actuales[categoria]["opciones"] = list(por_codigo.values())
 
     guardar_ficha_motor(motor_id, list(actuales.values()))
+
+
+def recalcular_cantidades_ficha(motor_id: int) -> int:
+    """
+    Pone en la ficha la cantidad que el motor recuerda de cada repuesto: la que
+    más se repite en sus presupuestos (ver get_uso_repuestos_motor). No toca las
+    que el taller escribió a mano ni las que nunca se cotizaron. Corre después
+    de guardar o editar un presupuesto. Retorna cuántas cambió.
+    """
+    uso = get_uso_repuestos_motor(motor_id)
+    if not uso:
+        return 0
+    cambiadas = 0
+    with get_connection() as conn:
+        filas = conn.execute(
+            """
+            SELECT mro.grupo_id, mro.repuesto_codigo, mro.cantidad
+            FROM motor_repuesto_opciones mro
+            JOIN motor_repuesto_grupos mrg ON mrg.id = mro.grupo_id
+            WHERE mrg.motor_id = ? AND mro.cantidad_manual = 0
+            """,
+            (motor_id,),
+        ).fetchall()
+        for grupo_id, codigo, cantidad in filas:
+            recordada = uso.get(codigo, {}).get("cantidad")
+            if recordada is None or recordada == cantidad:
+                continue
+            conn.execute(
+                """
+                UPDATE motor_repuesto_opciones SET cantidad = ?
+                WHERE grupo_id = ? AND repuesto_codigo = ?
+                """,
+                (recordada, grupo_id, codigo),
+            )
+            cambiadas += 1
+    return cambiadas
+
+
+def get_presupuestos_con_repuestos(motor_id: int) -> list[dict]:
+    """
+    Presupuestos de este motor que llevaron repuestos, del más nuevo al más
+    viejo. Es la lista que abre el botón "Repuestos ya utilizados": de ahí se
+    entra a uno y se eligen repuestos sueltos para el presupuesto en curso.
+    """
+    with get_connection() as conn:
+        cur = conn.execute(
+            """
+            SELECT p.id, p.fecha, p.total, p.aprobado_en,
+                   COALESCE(c.nombre, '—') AS cliente,
+                   COUNT(DISTINCT o.repuesto_codigo) AS repuestos
+            FROM presupuestos p
+            LEFT JOIN clientes c ON c.id = p.cliente_id
+            JOIN presupuesto_item_opciones o ON o.presupuesto_id = p.id
+            WHERE p.motor_id = ?
+            GROUP BY p.id
+            HAVING repuestos > 0
+            ORDER BY p.fecha DESC, p.id DESC
+            """,
+            (motor_id,),
+        )
+        return [
+            {
+                "id": pid,
+                "fecha": fecha,
+                "total": total,
+                "aprobado_en": aprobado_en,
+                "cliente": cliente,
+                "repuestos": repuestos,
+            }
+            for pid, fecha, total, aprobado_en, cliente, repuestos in cur.fetchall()
+        ]
 
 
 def copiar_ficha_motor(origen_id: int, destino_id: int) -> int:

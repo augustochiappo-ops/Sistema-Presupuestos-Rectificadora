@@ -251,3 +251,42 @@
 **Decisión:** componente `CodigoRepuesto` — el código (`A AK459050 STD`) se muestra en monoespaciada, con fondo suave y borde, en su **propia columna** dentro del pop-up y como chip en la ficha del motor.
 **Por qué:** el dueño pidió que el código fuera más legible. En la tipografía de la app el 0 y la O son casi iguales, y el código estaba como línea gris chica debajo de la descripción, donde se leía como un dato secundario cuando en realidad es lo que se copia y se tipea en el sistema del proveedor. En monoespaciada las medidas de una familia quedan además alineadas una debajo de la otra, así que se comparan de un vistazo.
 **Fecha:** 2026-08-12
+
+## Los dos ejes del paso Repuestos: cantidad ≠ pertenencia al motor
+**Decisión:** el paso Repuestos separa dos cosas que antes iban pegadas. La **cantidad** dice "esta pieza va en ESTE presupuesto"; el **círculo** dice "esta pieza sirve para ESTE MOTOR" (la ficha, permanente). La única dependencia va en un sentido: poner cantidad marca el círculo solo; marcar no pone cantidad. Como consecuencia directa, **el paso arranca vacío**: la ficha del motor dejó de precargarse como selección y pasó a ser la lista de dónde elegir.
+**Por qué:** lo pidió el dueño con un caso concreto: para un mismo motor sirven el cojinete de la marca A y el de la marca B, pero en este presupuesto va solo el de la marca A. Antes, la única forma de dejar anotada la marca B era cargarla al presupuesto (y entonces competía por ser la más cara). Con el círculo, la marca B queda guardada en el motor sin cotizarse.
+**El tilde guarda de dónde salió**, que es lo que decide si sobrevive al sacar la cantidad: `previa` (ya estaba en la ficha) y `manual` (lo tildó el usuario) **no se destildan solas**; `auto` (lo puso una cantidad o una medida hermana) **se va con la cantidad**. Sin ese dato no se puede cumplir la regla que pidió el dueño: "si lo agregué y lo saco, que se vaya del motor; pero si ya figuraba de antes, que quede".
+**Cuándo se escribe en el motor:** lo que el usuario toca a mano se guarda **al instante** (es un acto sobre el motor, igual que el tacho de la ficha); lo que se tildó solo viaja con el presupuesto y lo guarda el backend **al confirmarlo**. Así, abandonar un presupuesto a medio armar no le deja al motor lo que se estuvo probando, pero un tilde deliberado nunca se pierde.
+**Fecha:** 2026-08-14
+
+## El círculo (contorno / lleno) en vez de chips de texto
+**Decisión:** el estado de cada repuesto se muestra con un círculo verde: **contorno** = está en el motor, **lleno** = además está en el presupuesto, **gris vacío** = ninguno de los dos. Es también el control: clickearlo marca o desmarca.
+**Por qué:** la primera propuesta eran chips de texto ("En el motor" / "En el presupuesto"). El dueño los vio largos y propuso el círculo, que ocupa ~20px en vez de ~130 en una tabla que ya tiene siete columnas. Tiene razón: el par vacío/lleno se lee sin leer.
+**Lo que se agregó igual, porque el color solo no alcanza** (pantalla al sol, daltonismo, impresión): el estado va en el `title` y en `aria-checked`, y el `×N` sigue al lado. La suite lo lee por `data-estado`.
+**Cuidado con la celda:** la columna necesita `wrap: true`. Con `overflow: hidden` la celda dibujaba el `…` del ellipsis al lado del círculo, que se veía como una manchita.
+**Fecha:** 2026-08-14
+
+## La cantidad que el motor recuerda es la que más se repite
+**Decisión:** la cantidad de cada repuesto en la ficha es **la moda** de sus presupuestos (uno con ×1 y dos con ×2 → 2); si empatan, gana la del presupuesto más reciente. Se recalcula al guardar o editar un presupuesto (`db.recalcular_cantidades_ficha`). Lo que se marcó sin cotizar se guarda **sin cantidad**.
+**Por qué:** lo definió el dueño con ese ejemplo. La cantidad no es un dato del catálogo sino del envase de esa marca, y la única evidencia real de cuántos envases hacen falta es lo que se cotizó en la práctica. Un promedio o "la última" se dejan mover por un presupuesto raro; la más repetida no.
+**Excepción:** si el taller escribe la cantidad a mano en la ficha, **manda la suya** y el recálculo no la vuelve a tocar (`cantidad_manual`), con un cartelito "Cantidad puesta a mano" para que se entienda por qué ese número no se mueve.
+**Detalle de implementación:** "sin cantidad" se guarda como **0** y viaja por la API como `null`. La columna nació `NOT NULL DEFAULT 1` y aflojar eso en SQLite obliga a reconstruir la tabla — no vale el riesgo sobre fichas reales del dueño.
+**Fecha:** 2026-08-14
+
+## Las medidas hermanas se marcan en el motor, no entran al presupuesto
+**Decisión:** al cargar una medida (050), las otras medidas de esa misma pieza (STD, 025, 075…) quedan **marcadas en el motor, sin cantidad**, en vez de entrar cotizadas al presupuesto como hasta ahora.
+**Por qué:** pedido del dueño. Hasta que no se mide el motor no se sabe qué medida va, así que tenerlas anotadas sirve; pero cotizarlas todas infla el grupo con opciones que nadie eligió. Lo que se cotiza es lo que el taller eligió.
+**Consecuencia asumida:** el Pedido muestra menos medidas para elegir, porque solo lista lo congelado en el presupuesto. Se evaluó completarlas leyendo la ficha del motor y **el dueño lo descartó por ahora**: prefiere que el sistema avise y sugiera, no que complete solo.
+**Fecha:** 2026-08-14
+
+## Sin stock: avisar y sugerir, nunca reemplazar solo
+**Decisión:** cuando un repuesto no tiene stock, la pantalla ofrece "Marcas que sirven" — otras marcas que cubren la misma pieza. Solo sugiere: no cambia ni una línea por su cuenta. Las que ya están en la ficha del motor salen primero y marcadas.
+**Por qué:** el dueño fue explícito ("que dé el aviso y una sugerencia, pero que no se haga automáticamente"). Cambiar una marca por otra tiene consecuencias de precio y de calidad que decide el taller.
+**Cómo se encuentran:** el proveedor usa **la misma descripción para la misma pieza en todas las marcas**, así que descripción + medida identifican al repuesto y todo lo que las comparta es intercambiable. Es un dato del negocio que aportó el dueño y quedó documentado en `CRAC/CRAC.md`. No confundir con `base_codigo`, que agrupa las medidas de un mismo código (misma marca): son dos ejes distintos, marca y medida.
+**Fecha:** 2026-08-14
+
+## "Repuestos ya utilizados" en vez de precargar la ficha
+**Decisión:** botón en el paso Repuestos que abre los presupuestos anteriores **de ese motor** (fecha · cliente · cuántos repuestos · total · estado); al entrar a uno se ven sus repuestos con la cantidad que llevaron y se eligen los que se quieran traer. Arranca **todo destildado**, con "Seleccionar todos" a mano, y trae los **precios de hoy** avisando lo que cambió.
+**Por qué:** arrancar en cero costaba la velocidad del "segundo presupuesto de un click". El dueño pidió este atajo en vez de un "Cargar todo": la ficha acumula alternativas que nunca se cotizaron todas juntas, mientras que un presupuesto anterior **es** una combinación que ya se armó de verdad. Destildado por defecto porque es el mismo principio que todo el cambio: nada entra sin que el taller lo elija.
+**Se superpone a propósito con "Duplicar presupuesto"**, que copia todo (mano de obra incluida) y arranca un presupuesto nuevo. Éste es para picotear repuestos sueltos de varios anteriores sin salir del que se está armando.
+**Fecha:** 2026-08-14

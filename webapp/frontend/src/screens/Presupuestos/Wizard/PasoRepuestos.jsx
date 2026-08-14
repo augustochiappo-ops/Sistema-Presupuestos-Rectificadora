@@ -6,9 +6,10 @@ import { TextField } from '../../../components/TextField'
 import { Button } from '../../../components/Button'
 import { Icon } from '../../../components/Icon'
 import { ModalRepuestosAgregados } from './ModalRepuestosAgregados'
+import { ModalRepuestosUsados } from './ModalRepuestosUsados'
 import { formatPrecioARS, parsePrecioARS } from '../../../utils/format'
 import { totalRepuestos } from '../../../utils/grupos'
-import { useRepuestosAgrupados, lineaDeCatalogo } from '../../../hooks/useRepuestosAgrupados'
+import { useRepuestosAgrupados } from '../../../hooks/useRepuestosAgrupados'
 import { useUndo } from '../../../context/UndoContext'
 
 const tituloSeccion = {
@@ -22,10 +23,17 @@ const tituloSeccion = {
  *   { key, repuesto_codigo, descripcion, categoria, cat_prefijo, marca, medida,
  *     grupo, cantidad, precio_unitario, precioTexto, stock, esManual }
  *
- * `grupo` es lo nuevo: el nombre de la categoría del proveedor. Todas las
- * líneas con el mismo `grupo` son piezas intercambiables para la misma
- * necesidad del motor, y solo se cotiza la de mayor subtotal. Las líneas sin
- * grupo (repuesto fuera de catálogo sin categoría) se comportan como antes.
+ * `grupo` es el nombre de la categoría del proveedor. Todas las líneas con el
+ * mismo `grupo` son piezas intercambiables para la misma necesidad del motor, y
+ * solo se cotiza la de mayor subtotal. Las líneas sin grupo (repuesto fuera de
+ * catálogo sin categoría) se comportan como antes.
+ *
+ * **El paso arranca VACÍO, a propósito.** Antes se cargaba sola la ficha entera
+ * del motor y el presupuesto nacía con todo puesto; ahora la ficha es la lista
+ * de dónde elegir, no la selección hecha. Los dos ejes son independientes:
+ *   cantidad → esta pieza va en ESTE presupuesto
+ *   círculo  → esta pieza sirve para ESTE MOTOR (ficha, permanente)
+ * con una sola dependencia: poner cantidad marca el círculo solo.
  *
  * key = código de catálogo o 'manual-<ts>' (la API de repuestos no expone id).
  * stock: 1/0 congelado al agregar (null en manuales) — solo para el aviso en pantalla.
@@ -33,45 +41,21 @@ const tituloSeccion = {
 export function PasoRepuestos({
   motor, value, onChange, totalServicios, hayServicios, onConfirmar, guardando,
   cantidadPorGrupo, onCantidadGrupo, elegidaAMano, onElegirAMano,
+  ficha, onFicha, tildes,
 }) {
-  const [ficha, setFicha] = React.useState([])
   const [manualCodigo, setManualCodigo] = React.useState('')
   const [manualDesc, setManualDesc] = React.useState('')
   const [manualCategoria, setManualCategoria] = React.useState('')
   const [manualPrecio, setManualPrecio] = React.useState('')
   const [manualCantidad, setManualCantidad] = React.useState('1')
   const [modalAbierto, setModalAbierto] = React.useState(false)
+  const [modalUsados, setModalUsados] = React.useState(false)
   const [aviso, setAviso] = React.useState('')
-  const fichaCargadaPara = React.useRef(null)
   const { avisarBorrado } = useUndo()
 
-  // La ficha del motor es la asociación explícita motor→repuestos. Si el motor
-  // ya tiene ficha y todavía no se cargó nada, el paso arranca con todo puesto
-  // y con los precios de hoy: el segundo presupuesto del mismo motor es de un
-  // click. La ref evita recargarla al ir y volver entre pasos.
-  React.useEffect(() => {
-    if (fichaCargadaPara.current === motor.id) return
-    fichaCargadaPara.current = motor.id
-    api.get(`/motores/${motor.id}/ficha-repuestos`).then((grupos) => {
-      setFicha(grupos)
-      if (!grupos.length) return
-      onChange((actual) => {
-        if (actual.length) return actual
-        const lineas = []
-        grupos.forEach((g) => {
-          g.opciones.forEach((o) => {
-            if (!o.en_catalogo) return
-            lineas.push(lineaDeFicha(g, o))
-          })
-          if (g.opciones.length) onCantidadGrupo(g.categoria, g.opciones[0].cantidad)
-        })
-        return lineas
-      })
-    }).catch(() => {})
-  }, [motor.id, onChange, onCantidadGrupo])
-
-  // Cantidad que el motor recuerda para cada código de su ficha: la cuenta
-  // "16 retenes ÷ blíster de 4 = 4" se hace una sola vez en la vida.
+  // Cantidad que el motor recuerda para cada código de su ficha: la que más se
+  // repite en sus presupuestos. En null (marcado sin cotizar nunca) el hook cae
+  // en la cantidad del grupo, y si tampoco hay, en 1.
   const cantidadRecordada = React.useMemo(() => {
     const m = new Map()
     ficha.forEach((g) => g.opciones.forEach((o) => m.set(o.codigo, o.cantidad)))
@@ -84,17 +68,47 @@ export function PasoRepuestos({
     cantidadPorGrupo,
     setCantidadGrupo: onCantidadGrupo,
     cantidadRecordada,
+    // Las otras medidas de la pieza quedan marcadas en el motor, sin entrar al
+    // presupuesto: cuál va se sabe recién cuando se mide el motor.
+    onHermanas: tildes.marcarAuto,
+    // Sacar la cantidad destilda SOLO si el tilde lo había puesto esa cantidad.
+    onQuitarCodigo: tildes.soltarAuto,
   })
+
+  /* Poner cantidad implica que la pieza es de este motor: el círculo se llena
+     solo. Es el único sentido de la dependencia — marcar no pone cantidad. */
+  const agregarRepuesto = React.useCallback((rep, cantidad, origen = 'click') => {
+    if (cantidad > 0) tildes.marcarAuto(rep)
+    agregar(rep, cantidad, origen)
+  }, [agregar, tildes])
+
+  const estadoDe = React.useCallback((codigo) => {
+    if (cantidadPorCodigo.get(codigo)) return 'presupuesto'
+    return tildes.estaTildado(codigo) ? 'motor' : 'fuera'
+  }, [cantidadPorCodigo, tildes])
 
   /* Sacar del presupuesto (no de la ficha del motor) con cartel de deshacer:
      la lista completa de antes vuelve tal cual, con cantidades y precios. */
   const quitarConDeshacer = (key) => {
     const antes = value
     const linea = value.find((r) => r.key === key)
+    const eraAuto = linea?.repuesto_codigo && tildes.tildes.get(linea.repuesto_codigo) === 'auto'
     quitar(key)
     avisarBorrado({
-      mensaje: `Se quitó ${linea?.descripcion || 'el repuesto'} del presupuesto.`,
-      onDeshacer: () => onChange(antes),
+      mensaje: eraAuto
+        ? `Se quitó ${linea?.descripcion || 'el repuesto'} del presupuesto y de los repuestos de este motor.`
+        : `Se quitó ${linea?.descripcion || 'el repuesto'} del presupuesto.`,
+      onDeshacer: () => {
+        onChange(antes)
+        // La línea usa `repuesto_codigo`; el tilde trabaja con `codigo`.
+        if (linea?.repuesto_codigo) {
+          tildes.marcarAuto({
+            codigo: linea.repuesto_codigo,
+            categoria: linea.categoria,
+            cat_prefijo: linea.cat_prefijo,
+          })
+        }
+      },
     })
   }
 
@@ -118,6 +132,8 @@ export function PasoRepuestos({
       base_codigo: o.base_codigo,
       precio_actual: o.precio_actual,
       stock_actual: o.stock_actual,
+      usado_en: o.usado_en,
+      ultima_vez: o.ultima_vez,
     }))),
     [ficha],
   )
@@ -126,17 +142,52 @@ export function PasoRepuestos({
     grupos: grupos.map((g) => ({
       categoria: g.categoria,
       cat_prefijo: g.cat_prefijo,
-      opciones: g.opciones.map((o) => ({ codigo: o.codigo, cantidad: o.cantidad })),
+      opciones: g.opciones.map((o) => ({
+        codigo: o.codigo, cantidad: o.cantidad, cantidad_manual: o.cantidad_manual,
+      })),
     })),
   })
 
   /*
-   * Sacar un repuesto del registro del motor sin salir del presupuesto: es acá
-   * donde uno se da cuenta de que en el presupuesto anterior cargó algo que no
-   * iba. Borra de la ficha (que es lo que va a cargarse solo la próxima vez) y
-   * también de este presupuesto, que es la intención al tocar el tacho. Los
-   * presupuestos ya emitidos no se tocan nunca: guardan su propia copia.
-   * Lo borrado queda en la papelera del motor, así que se puede deshacer.
+   * Click en el círculo. Marcar guarda la pieza en el motor en el momento (es un
+   * acto sobre el motor, no sobre el presupuesto). Desmarcar la saca del motor
+   * y también de este presupuesto, que es la intención al apagarlo. Los
+   * presupuestos ya emitidos no se tocan nunca: guardan su propia copia. Lo que
+   * sale queda en la papelera del motor, así que se puede recuperar.
+   */
+  const alternarFicha = async (rep) => {
+    const estaba = tildes.estaTildado(rep.codigo)
+    const lineasAntes = value
+    try {
+      await tildes.alternarManual(rep)
+      if (!estaba) {
+        setAviso(`${rep.descripcion || rep.codigo} quedó guardado como repuesto de este motor. Ponele una cantidad si además va en este presupuesto.`)
+        return
+      }
+      const linea = value.find((r) => r.repuesto_codigo === rep.codigo)
+      if (linea) quitar(linea.key)
+      setAviso('Se sacó de los repuestos de este motor. Si fue sin querer, lo recuperás desde "Repuestos eliminados", en la pantalla del motor.')
+      avisarBorrado({
+        mensaje: 'Se sacó el repuesto de este motor.',
+        onDeshacer: async () => {
+          try {
+            await tildes.alternarManual(rep)
+            onChange(lineasAntes)
+            setAviso('')
+          } catch (err) {
+            setAviso(err.message || 'No se pudo deshacer')
+          }
+        },
+      })
+    } catch (err) {
+      setAviso(err.message || 'No se pudo guardar en el motor')
+    }
+  }
+
+  /*
+   * Sacar un repuesto (o una familia de medidas entera) del registro del motor
+   * desde el bloque de la ficha. Es el mismo efecto que apagar el círculo, pero
+   * de varios códigos a la vez.
    */
   const quitarDeFicha = async (codigos) => {
     const fuera = new Set(codigos)
@@ -147,7 +198,8 @@ export function PasoRepuestos({
       .filter((g) => g.opciones.length)
     try {
       const guardada = await guardarFicha(nueva)
-      setFicha(guardada)
+      // El círculo se apaga solo: los tildes se recalculan desde la ficha.
+      onFicha(guardada)
       onChange((actual) => actual.filter((r) => !fuera.has(r.repuesto_codigo)))
       setAviso(codigos.length === 1
         ? 'Se sacó de los repuestos de este motor. Si fue sin querer, lo recuperás desde "Repuestos eliminados", en la pantalla del motor.'
@@ -162,7 +214,7 @@ export function PasoRepuestos({
         onDeshacer: async () => {
           try {
             const vuelta = await guardarFicha(fichaAntes)
-            setFicha(vuelta)
+            onFicha(vuelta)
             onChange(lineasAntes)
             setAviso('')
           } catch (err) {
@@ -173,6 +225,24 @@ export function PasoRepuestos({
     } catch (err) {
       setAviso(err.message || 'No se pudo sacar el repuesto del motor')
     }
+  }
+
+  /* Lo que se elige en "Repuestos ya utilizados" entra como cualquier otra
+     carga: con su cantidad de aquel presupuesto y a precios de hoy. */
+  const agregarUsados = (filas) => {
+    filas.forEach((f) => agregarRepuesto({
+      codigo: f.codigo,
+      descripcion: f.descripcion,
+      precio: f.precioHoy,
+      stock: f.stockHoy,
+      categoria: f.categoria,
+      cat_prefijo: null,
+      marca: f.marca,
+      medida: f.medida,
+      base_codigo: f.base_codigo,
+    }, f.cantidad || 1, 'exacto'))
+    setModalUsados(false)
+    setAviso(`Se agregaron ${filas.length} repuesto${filas.length === 1 ? '' : 's'} al presupuesto, con los precios de hoy.`)
   }
 
   const agregarManual = () => {
@@ -254,12 +324,20 @@ export function PasoRepuestos({
       <RepuestoPicker
         sugeridos={sugeridos}
         cantidadPorCodigo={cantidadPorCodigo}
-        onAgregar={agregar}
+        onAgregar={agregarRepuesto}
         onQuitarDeFicha={quitarDeFicha}
+        estadoDe={estadoDe}
+        onToggleFicha={alternarFicha}
+        motorId={motor.id}
         reorderKey="repuestos-presupuesto"
         onVerAgregados={() => setModalAbierto(true)}
         cantidadAgregados={value.length}
-        ayudaFilas="Lo que agregues dentro de una categoría forma un grupo: se cotiza el más caro y quedan guardadas todas las opciones"
+        accionExtra={(
+          <Button variant="secondary" iconLeft={<Icon n="history" s={16} />} onClick={() => setModalUsados(true)}>
+            Repuestos ya utilizados
+          </Button>
+        )}
+        ayudaFilas="Poné una cantidad para cotizarlo, o tocá el círculo para dejarlo guardado como repuesto de este motor sin cotizarlo"
       />
 
       <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -274,7 +352,8 @@ export function PasoRepuestos({
         </div>
         <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
           La categoría es lo que va a leer el cliente en el PDF (ej. "Aros"). Si ponés una que ya tiene grupo, se suma
-          a ese grupo y compite por precio; si la dejás vacía, va como línea aparte.
+          a ese grupo y compite por precio; si la dejás vacía, va como línea aparte. Los repuestos fuera de catálogo
+          quedan solo en este presupuesto: no se guardan en el motor.
         </div>
       </div>
 
@@ -289,20 +368,13 @@ export function PasoRepuestos({
         onQuitarVarias={quitarVariasConDeshacer}
         onClose={() => setModalAbierto(false)}
       />
+
+      <ModalRepuestosUsados
+        open={modalUsados}
+        motorId={motor.id}
+        onClose={() => setModalUsados(false)}
+        onAgregar={agregarUsados}
+      />
     </div>
   )
-}
-
-function lineaDeFicha(grupo, opcion) {
-  return lineaDeCatalogo({
-    codigo: opcion.codigo,
-    descripcion: opcion.descripcion,
-    precio: opcion.precio_actual,
-    stock: opcion.stock_actual,
-    categoria: grupo.categoria,
-    cat_prefijo: grupo.cat_prefijo,
-    marca: opcion.marca,
-    medida: opcion.medida,
-    base_codigo: opcion.base_codigo,
-  }, opcion.cantidad)
 }

@@ -13,6 +13,7 @@ import { PasoRepuestos } from './PasoRepuestos'
 import {
   gruposParaPayload, itemsSueltosParaPayload, lineaDeOpcion, elegidaAManoInicial,
 } from '../../../utils/grupos'
+import { useFichaTildes } from '../../../hooks/useFichaTildes'
 
 const PASOS = ['Cliente', 'Motor', 'Servicios', 'Repuestos']
 
@@ -40,6 +41,22 @@ export default function WizardPresupuesto() {
   const [elegidaAMano, setElegidaAMano] = React.useState({})
   const [error, setError] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
+  /*
+   * La ficha del motor (qué repuestos sirven para este motor) y los tildes viven
+   * acá y no en el paso Repuestos, porque el paso se desmonta al ir y volver
+   * entre pasos y con él se perdería lo marcado que todavía no se guardó.
+   */
+  const [ficha, setFicha] = React.useState([])
+  const tildes = useFichaTildes({ motorId: motor?.id, ficha, onFicha: setFicha })
+
+  React.useEffect(() => {
+    if (!motor?.id) { setFicha([]); return undefined }
+    let vigente = true
+    api.get(`/motores/${motor.id}/ficha-repuestos`)
+      .then((grupos) => { if (vigente) setFicha(grupos) })
+      .catch(() => {})
+    return () => { vigente = false }
+  }, [motor?.id])
 
   const setCantidadGrupo = React.useCallback((grupo, cantidad) => {
     setCantidadPorGrupo((prev) => (prev[grupo] === cantidad ? prev : { ...prev, [grupo]: cantidad }))
@@ -159,6 +176,9 @@ export default function WizardPresupuesto() {
         motor_id: motor.id,
         items,
         grupos_repuestos: gruposParaPayload(repuestos, elegidaAMano),
+        // Lo que se marcó como "sirve para este motor" sin cotizarlo: otras
+        // marcas y las medidas hermanas. Entran a la ficha sin cantidad.
+        ficha_tildes: tildes.tildesParaPayload(repuestos),
         ajuste_pct: ajustePct || 0,
       })
       if (pdfTab) pdfTab.location.href = `/api/presupuestos/${presupuesto.id}/pdf/1`
@@ -256,6 +276,9 @@ export default function WizardPresupuesto() {
           onCantidadGrupo={setCantidadGrupo}
           elegidaAMano={elegidaAMano}
           onElegirAMano={setElegidaGrupo}
+          ficha={ficha}
+          onFicha={setFicha}
+          tildes={tildes}
         />
       )}
     </div>

@@ -134,8 +134,12 @@ const nMedidas = await filasMedidas.count()
 check('el catálogo lista la familia CAAC02740', nMedidas >= 7, `filas=${nMedidas}`)
 await filasMedidas.nth(0).click()
 await esperar(2500)
+// Desde el 2026-08-14 las hermanas NO entran al presupuesto: quedan marcadas
+// como repuestos del motor (círculo en contorno) y se cotiza solo la elegida.
 const badgesCantidad = await page.locator('.motor-selector-grid table tbody tr').locator('text=/^×\\d+$/').count()
-check('las 7 medidas hermanas se agregaron solas', badgesCantidad >= 7, `con ×N=${badgesCantidad}`)
+check('al presupuesto entra solo la medida elegida', badgesCantidad === 1, `con ×N=${badgesCantidad}`)
+const marcadasEnMotor = await page.locator('.motor-selector-grid table tbody tr button[data-estado="motor"]').count()
+check('las 6 medidas hermanas quedan marcadas en el motor', marcadasEnMotor === 6, `marcadas=${marcadasEnMotor}`)
 await page.screenshot({ path: `${SHOT}/01b-medidas-automaticas.png`, fullPage: false })
 await page.fill('input[placeholder="Código…"]', '')
 await esperar(1400)
@@ -567,13 +571,34 @@ async function cerrarModal() {
 }
 
 await irAlPasoRepuestos('Cliente Medidas UI')
+check('el paso Repuestos arranca vacío',
+  (await page.locator('button', { hasText: /^Ver repuestos$/ }).count()) === 1,
+  'sin el (N) al lado')
 await buscarCodigo('CAAC02740')
 // La medida STD es la última por orden de código (…060, 60/, S60, STD). No sirve
 // filtrar por el texto "STD": la aplicación de S60 dice "STD/060".
 await filasCatalogo().last().click()
 await esperar(2000)
 await abrirVerRepuestos()
-check('agregar una medida trae la familia entera', (await filasModal().count()) === 7,
+// Cambio de criterio (2026-08-14): las medidas hermanas NO entran al
+// presupuesto. Entra la que se eligió; las otras quedan marcadas en el motor.
+check('solo entra al presupuesto la medida elegida', (await filasModal().count()) === 1,
+  `filas=${await filasModal().count()}`)
+await cerrarModal()
+check('la medida elegida queda con el círculo lleno',
+  (await page.locator('button[data-estado="presupuesto"]').count()) === 1)
+check('las otras 6 medidas quedan marcadas en el motor, sin cotizar',
+  (await page.locator('button[data-estado="motor"]').count()) === 6,
+  `marcadas=${await page.locator('button[data-estado="motor"]').count()}`)
+await page.screenshot({ path: `${SHOT}/22-circulos-medidas.png`, fullPage: false })
+
+// Con las 7 cargadas a mano se sigue viendo la familia como una unidad.
+for (let i = 0; i < 6; i += 1) {
+  await filasCatalogo().nth(i).click()
+  await esperar(500)
+}
+await abrirVerRepuestos()
+check('cargadas a mano, las 7 medidas entran al presupuesto', (await filasModal().count()) === 7,
   `filas=${await filasModal().count()}`)
 check('el renglón de familia muestra el código base',
   (await page.locator('tr[data-familia="CAAC02740"] >> text=/7 medidas del mismo repuesto/').count()) > 0)
@@ -625,22 +650,27 @@ check('el tacho de la familia se lleva las 7',
 await cerrarModal()
 
 // El bug de 2026-08-12: después de borrarlas, volver a cargar una medida tiene
-// que traer otra vez a sus hermanas (antes entraba sola).
+// que volver a marcar a sus hermanas en el motor (antes entraba sola).
 await buscarCodigo('CAAC02740')
 await filasCatalogo().last().click()
 await esperar(2000)
+check('volver a cargarla vuelve a marcar las 6 hermanas',
+  (await page.locator('button[data-estado="motor"]').count()) === 6,
+  `marcadas=${await page.locator('button[data-estado="motor"]').count()}`)
 await abrirVerRepuestos()
-check('volver a cargarla trae de nuevo las 7 medidas', (await filasModal().count()) === 7,
+check('y al presupuesto entra una sola', (await filasModal().count()) === 1,
   `filas=${await filasModal().count()}`)
 await cerrarModal()
 // Y bajar la cantidad a cero saca la línea, en vez de dejarla cargada en cero.
 await filasCatalogo().last().locator('button', { hasText: '−' }).click()
 await esperar(800)
-await abrirVerRepuestos()
-check('bajar a cero saca la línea', (await filasModal().count()) === 6, `filas=${await filasModal().count()}`)
+check('bajar a cero saca la línea del presupuesto',
+  (await page.locator('button', { hasText: /^Ver repuestos$/ }).count()) === 1)
+// El tilde de esa medida lo había puesto la propia cantidad, así que se va con
+// ella; los de las hermanas los puso la carga y también, porque nunca se
+// guardaron. Lo que estaba en la ficha de antes no se toca (se prueba abajo).
 check('no quedan líneas en cero',
   (await page.locator('table tbody tr td input[type="number"][value="0"]').count()) === 0)
-await cerrarModal()
 await filasCatalogo().last().click()
 await esperar(1500)
 check('"Confirmar presupuesto" queda habilitado',
@@ -653,8 +683,23 @@ check('la ficha del motor guardó las 7 opciones',
 
 // Sacar del registro del motor desde un presupuesto nuevo
 await irAlPasoRepuestos('Cliente Medidas UI')
-check('el paso arranca con los repuestos del motor',
+check('el segundo presupuesto del motor lista sus repuestos',
   (await page.locator('text=/Repuestos de este motor/').count()) === 1)
+// Lo que más se pidió de todo este cambio: la ficha es de dónde elegir, no la
+// selección hecha. El presupuesto nuevo arranca en cero aunque el motor tenga
+// 7 repuestos cargados.
+check('pero el presupuesto arranca en cero igual',
+  (await page.locator('button', { hasText: /^Ver repuestos$/ }).count()) === 1)
+/* La regla de la cantidad recordada, verificada en los dos sentidos: lo que
+   tiene cantidad en la ficha es exactamente lo que alguna vez se cotizó en un
+   presupuesto de este motor; lo que solo quedó marcado no tiene cantidad. */
+const USADO = 'SELECT o.repuesto_codigo FROM presupuesto_item_opciones o JOIN presupuestos p ON p.id = o.presupuesto_id WHERE p.motor_id = g.motor_id AND o.cantidad > 0'
+const coherencia = py(`print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones mro JOIN motor_repuesto_grupos g ON g.id = mro.grupo_id WHERE mro.cantidad > 0 AND mro.repuesto_codigo NOT IN (${USADO})").fetchone()[0], c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones mro JOIN motor_repuesto_grupos g ON g.id = mro.grupo_id WHERE mro.cantidad = 0 AND mro.repuesto_codigo IN (${USADO})").fetchone()[0])`)
+check('la cantidad la tienen solo los repuestos que se cotizaron alguna vez',
+  coherencia === '0 0', `con cantidad sin uso / usados sin cantidad = ${coherencia}`)
+const sinCantidad = py('print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones WHERE cantidad = 0").fetchone()[0])')
+check('las medidas hermanas quedaron marcadas sin cantidad',
+  Number(sinCantidad) >= 4, `sin cantidad = ${sinCantidad}`)
 await page.locator('button[title*="Sacar las 7 medidas"]').click()
 await esperar(1500)
 check('avisa dónde recuperarlo', (await page.locator('text=/Repuestos eliminados/').count()) > 0)
@@ -709,6 +754,18 @@ await page.screenshot({ path: `${SHOT}/19-confirmacion-categoria.png`, fullPage:
 console.log('\n=== Cerrar grupos y deshacer en el pop-up de repuestos ===')
 await irAlPasoRepuestos('Cliente Deshacer UI')
 await esperar(2000)
+// La familia se carga a mano: desde el 2026-08-14 el paso arranca vacío y las
+// medidas hermanas se marcan en el motor en vez de entrar al presupuesto.
+await buscarCodigo('CAAC02740')
+// El filtro por código trae más que la familia (…060, 60/, S60, STD): las 7
+// medidas son las 6 primeras más la última. `60/` y `S60` son otros productos.
+for (let i = 0; i < 6; i += 1) {
+  await filasCatalogo().nth(i).click()
+  await esperar(450)
+}
+await filasCatalogo().last().click()
+await esperar(450)
+await buscarCodigo('')
 // Un repuesto fuera de catálogo con otra categoría: así hay dos grupos y
 // aparece el "Colapsar todo" del encabezado.
 await page.fill('input[placeholder="Descripción"]', 'Repuesto de prueba UI')
@@ -744,13 +801,109 @@ await page.locator('[data-testid="cartel-deshacer"] button', { hasText: /Deshace
 await esperar(600)
 check('"Deshacer" devuelve la medida', (await filasModal().count()) === 8)
 
-await page.locator('button[title*="Quitar las 7 medidas"]').click()
+// El título tiene que ser exacto: el bloque "Repuestos de este motor" tiene su
+// propio tacho de familia ("Sacar las 7 medidas … de este motor"), que es otra
+// cosa — ese saca del motor, éste solo del presupuesto.
+const tachoFamilia = page.locator('button[title="Quitar las 7 medidas de CAAC02740"]')
+check('el pop-up tiene el tacho de la familia', (await tachoFamilia.count()) === 1)
+await tachoFamilia.click()
 await esperar(600)
 check('el tacho de la familia se lleva las 7 de una', (await filasModal().count()) === 1)
 await page.locator('[data-testid="cartel-deshacer"] button', { hasText: /Deshacer/ }).click()
 await esperar(600)
 check('"Deshacer" devuelve la familia entera', (await filasModal().count()) === 8)
 await cerrarModal()
+
+console.log('\n=== Círculo del motor y "Repuestos ya utilizados" ===')
+/*
+ * El bloque del cambio del 2026-08-14: los dos ejes separados (cantidad = va en
+ * este presupuesto; círculo = sirve para este motor) y el atajo para traer
+ * repuestos de un presupuesto anterior.
+ */
+await irAlPasoRepuestos('Cliente Circulo UI')
+
+// 1. Marcar a mano NO cotiza, y se guarda en el motor en el momento.
+// El código sale de la base y no de la pantalla: este motor ya tiene ficha de
+// los bloques anteriores, y hay que agarrar uno que todavía NO sea del motor.
+// (Leer el código de la celda no sirve: la columna corta y mete espacios.)
+const codigoLibre = py("print(c.execute(\"SELECT codigo FROM crac_repuestos WHERE codigo LIKE 'CAAC02740%' AND codigo NOT IN (SELECT repuesto_codigo FROM motor_repuesto_opciones) LIMIT 1\").fetchone()[0])")
+await buscarCodigo(codigoLibre)
+const filaLibre = filasCatalogo().first()
+const opcionesAntes = Number(py('print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones").fetchone()[0])'))
+await filaLibre.locator('button[data-estado="fuera"]').click()
+await esperar(1800)
+check('marcar a mano no agrega nada al presupuesto',
+  (await page.locator('button', { hasText: /^Ver repuestos$/ }).count()) === 1)
+check('el círculo queda en contorno (en el motor, sin cotizar)',
+  (await filaLibre.locator('button[data-estado="motor"]').count()) === 1,
+  `codigo=${codigoLibre}`)
+check('y se guarda en el motor en el momento, sin confirmar el presupuesto',
+  Number(py('print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones").fetchone()[0])')) === opcionesAntes + 1)
+check('se guarda sin cantidad',
+  py(`print(c.execute("SELECT cantidad FROM motor_repuesto_opciones WHERE repuesto_codigo = ?", ("${codigoLibre}",)).fetchone()[0])`) === '0.0')
+await page.screenshot({ path: `${SHOT}/23-circulo-en-el-motor.png`, fullPage: false })
+
+// 2. Poner cantidad llena el círculo solo.
+await filaLibre.click()
+await esperar(1000)
+check('poner cantidad llena el círculo solo',
+  (await filaLibre.locator('button[data-estado="presupuesto"]').count()) === 1)
+
+// 3. Sacar la cantidad de algo que YA estaba en el motor no lo saca del motor.
+const codigoPrevio = py('print(c.execute("SELECT repuesto_codigo FROM motor_repuesto_opciones WHERE cantidad > 0 LIMIT 1").fetchone()[0])')
+await buscarCodigo(codigoPrevio)
+await filasCatalogo().first().click()
+await esperar(900)
+check('un repuesto que ya era del motor se puede cotizar',
+  (await filasCatalogo().first().locator('button[data-estado="presupuesto"]').count()) === 1)
+// Hasta sacarlo del todo: el motor recuerda la cantidad, así que puede haber
+// entrado con más de uno y un solo "−" no lo saca.
+for (let i = 0; i < 20; i += 1) {
+  if (!(await filasCatalogo().first().locator('text=/^×\\d+$/').count())) break
+  await filasCatalogo().first().locator('button', { hasText: '−' }).click()
+  await esperar(500)
+}
+check('sacarle la cantidad lo deja marcado en el motor (venía de antes)',
+  (await filasCatalogo().first().locator('button[data-estado="motor"]').count()) === 1)
+check('y sigue en la ficha del motor en la base',
+  py(`print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones WHERE repuesto_codigo = ?", ("${codigoPrevio}",)).fetchone()[0])`) === '1')
+
+// 4. Destildar a mano sí lo saca del motor (y va a la papelera).
+await filasCatalogo().first().locator('button[data-estado="motor"]').click()
+await esperar(1500)
+check('destildar a mano lo saca del motor',
+  py(`print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones WHERE repuesto_codigo = ?", ("${codigoPrevio}",)).fetchone()[0])`) === '0')
+check('avisa dónde recuperarlo',
+  (await page.locator('text=/Repuestos eliminados/').count()) > 0)
+check('y queda en la papelera del motor',
+  py(`print(c.execute("SELECT COUNT(*) FROM motor_repuestos_papelera WHERE repuesto_codigo = ?", ("${codigoPrevio}",)).fetchone()[0])`) === '1')
+
+// 5. "Repuestos ya utilizados": lista los presupuestos del motor y trae lo elegido.
+await page.locator('button', { hasText: /Repuestos ya utilizados/ }).click()
+await esperar(1500)
+check('abre la lista de presupuestos anteriores del motor',
+  (await page.locator('text=/Repuestos ya utilizados en este motor/').count()) === 1)
+const filasPresupuestos = page.locator('button', { hasText: /^#\d{4}/ })
+check('hay al menos un presupuesto anterior con repuestos',
+  (await filasPresupuestos.count()) >= 1, `filas=${await filasPresupuestos.count()}`)
+await page.screenshot({ path: `${SHOT}/24-repuestos-ya-utilizados.png`, fullPage: false })
+await filasPresupuestos.first().click()
+await esperar(1500)
+const casillasUsados = page.locator('input[type="checkbox"]')
+check('el detalle lista los repuestos de ese presupuesto',
+  (await casillasUsados.count()) >= 1, `casillas=${await casillasUsados.count()}`)
+check('arrancan todos destildados',
+  (await page.locator('input[type="checkbox"]:checked').count()) === 0)
+check('el botón de agregar arranca apagado',
+  !(await page.locator('button', { hasText: /Agregar los seleccionados/ }).isEnabled()))
+await casillasUsados.first().click()
+await esperar(400)
+check('al tildar uno se habilita el botón',
+  await page.locator('button', { hasText: /Agregar los seleccionados \(1\)/ }).isEnabled())
+await page.locator('button', { hasText: /Agregar los seleccionados/ }).click()
+await esperar(1200)
+check('lo elegido entra al presupuesto',
+  (await page.locator('text=/Se agregaron 1 repuesto al presupuesto/').count()) === 1)
 
 console.log('\n' + '='.repeat(50))
 if (fallos.length) { console.log(`FALLARON ${fallos.length}: ${JSON.stringify(fallos, null, 1)}`) }
