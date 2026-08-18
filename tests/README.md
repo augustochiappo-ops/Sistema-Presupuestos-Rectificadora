@@ -1,8 +1,9 @@
 # Verificaciones
 
-Dos suites que cubren el bloque de **grupos de repuestos** (cotizar el más caro,
-ficha del motor, pedido, medidas automáticas). Se escribieron el 2026-08-10 junto
-con la feature y sirven para no romperla al tocar repuestos más adelante.
+Dos suites que cubren el bloque de **grupos de repuestos** (qué cotiza cada
+categoría, opcionales, ficha del motor, pedido, medidas automáticas). Se
+escribieron el 2026-08-10 junto con la feature y sirven para no romperla al
+tocar repuestos más adelante.
 
 No son tests unitarios ni usan pytest: son scripts que corren de punta a punta
 contra los **datos reales del repo** y contra la app de verdad. Imprimen una
@@ -17,7 +18,7 @@ línea por verificación y salen con código 1 si falla alguna.
 
 ## 1. Backend — `backend_grupos.py`
 
-170 verificaciones sobre la lógica, la base y el PDF.
+220 verificaciones sobre la lógica, la base y el PDF.
 
 ```bash
 # Una sola vez: entorno con las dependencias del backend + pypdf (para leer el PDF)
@@ -37,8 +38,11 @@ Qué cubre, por bloque:
 | Bloque | Qué verifica |
 |---|---|
 | Medidas | Familia `CAAC02740` completa (7 medidas), `ACAM 3066` sin hermanas (es número de parte, no medida), `S60`/`60/` excluidos, fecha de importación del catálogo |
-| Elección | Gana el de mayor **subtotal** con el caso real (juego de 8 a $1.000 vs. 4 blísters de 2 a $400 → $1.600), precio 0 nunca gana, elección manual pisa al más caro |
-| Presupuesto | Una sola línea cotizada por grupo, total = subtotal de la elegida, `grupo_num`, las alternativas guardadas con su marca |
+| Qué cotiza | **Todo lo cargado cotiza** (desde el 2026-08-18): una línea por repuesto, dos repuestos de la misma categoría suman los dos (válvulas de admisión + escape), y lo marcado como **opcional** queda guardado pero no suma |
+| Presupuesto | Una línea por repuesto cargado, total = suma de las que cotizan, `grupo_num`, las opciones guardadas con su marca |
+| Opcionales | Se guardan como línea (`opcional = 1`), no entran en el total, salen en la caja propia del PDF con precio y subtotal, y se pueden marcar tanto en la creación como en la edición |
+| Buscadores | Sin acentos ni mayúsculas y por palabras sueltas en cualquier orden ("fiat 2.8" encuentra "FIAT DUCATO 2.8TD", "ramon pena" encuentra "Ramón Peña"): catálogo del proveedor, motores e historial |
+| Presupuestos viejos | Un presupuesto emitido antes del cambio conserva **exactamente** su total: sus alternativas se leen como opcionales |
 | Ficha del motor | Se crea sola al confirmar, resuelve precios de hoy, respeta la cantidad cargada, se copia a otro motor |
 | Marcar sin cotizar | `POST .../ficha-repuestos/marcar` mete el código en la ficha **sin cantidad** y no le pisa la cantidad a uno que ya venía cotizado; desmarcar lo saca y lo deja en la papelera; 400 sin códigos y 404 de motor inexistente |
 | Cantidad recordada | Es la que **más se repite** en los presupuestos del motor (uno con ×1 y dos con ×2 → 2), la ficha informa `usado_en` y `cotizadas`, y la cantidad escrita a mano (`cantidad_manual`) no la pisa el recálculo |
@@ -48,14 +52,14 @@ Qué cubre, por bloque:
 | HTTP | 401 sin sesión, 404 de motor inexistente, 400 al copiar la ficha del mismo motor, PUT que reemplaza la ficha |
 | Totales | El total nunca suma las alternativas |
 | PDF | Sin columna "Cant." en repuestos, sin códigos del proveedor, sin nombrar al proveedor, con la categoría, y el encabezado exacto ("Rectificaciones Chiappo" / "Rectificación de motores") |
-| Revalidar | Recién creado no detecta cambios; sube un precio y la diferencia es exacta; otra opción pasa a ser la más cara y cambia sola; el código fuera de catálogo conserva su precio y avisa; la mano de obra se informa pero NO se toca; al aplicar cambia el total, la fecha pasa a hoy, sobreviven notas/ajuste %/aprobado, y se genera **una** versión nueva de PDF; la segunda vez no acumula versiones |
+| Revalidar | Recién creado no detecta cambios; sube un precio y la diferencia es exacta; con dos líneas cotizando la diferencia del grupo suma las dos; una baja cuenta como cambio pero **no** como suba (`hay_subas`, que es lo que decide el cartel rojo); el código fuera de catálogo conserva su precio y avisa; la mano de obra se informa pero NO se toca; al aplicar cambia el total, la fecha pasa a hoy, sobreviven notas/ajuste %/aprobado, y se genera **una** versión nueva de PDF; la segunda vez no acumula versiones |
 | Duplicar | La copia se crea con otro cliente, mismo motor y mismo ajuste %, a precios de hoy, con su propio PDF, sin tocar el original |
 | Borrar cliente | Con presupuestos da 409 (y dice cuántos) y el cliente sobrevive; sin presupuestos da 204 y desaparece; la contraparte de un presupuesto ajeno también queda bloqueada; id inexistente da 404 |
 | Borrado | Vacía presupuestos y clientes, deja intactos motores, mano de obra, catálogo, favoritos y fichas |
 
 ## 2. UI — `ui_grupos.mjs`
 
-148 verificaciones con navegador real, más capturas de pantalla en
+191 verificaciones con navegador real, más capturas de pantalla en
 `tests/capturas/`.
 
 ```bash
@@ -83,14 +87,20 @@ configuran las variables de arriba.
 
 Qué cubre: login · agrupado automático al tildar dentro de una categoría ·
 cantidad heredada por el grupo · las 6 medidas hermanas quedando marcadas en el
-motor (sin entrar al presupuesto) · chips
-"El más caro", "¿cantidad correcta?" y "Elegido a mano" · confirmación del
-presupuesto · detalle con "Opciones guardadas" · marcar aprobado · pantalla de
+motor (sin entrar al presupuesto) · **precio unitario y subtotal editables**
+(escribir uno recalcula el otro) · **caja de opcionales** en el paso Servicios y
+en la Revisión, con la flechita del renglón y con arrastre de verdad · casilla
+"Opcional" en el pop-up de repuestos · aviso "¿cantidad correcta?" ·
+**buscadores sin acentos y por palabras sueltas** (mano de obra y catálogo) ·
+confirmación del presupuesto · detalle con "Repuestos por categoría" y el chip
+"Cotiza" · marcar aprobado · pantalla de
 pedido (agrupado por marca, fecha del catálogo, cotizado vs. diferencia, copiar
 códigos) · **"Actualizar a precios de hoy"** (sin cambios avisa y no hace nada;
 con cambios abre el resumen con las dos secciones, aplica, deja el PDF en Versión
 2 y limpia el banner de avisos; la segunda vez no acumula versiones y, si solo
-cambió la mano de obra, no ofrece aplicar) · **duplicar** desde el listado y
+cambió la mano de obra, no ofrece aplicar; **si los precios BAJAN no aparece el
+cartel rojo** y el resumen aclara que ninguno subió; al terminar el bloque el
+catálogo y la lista de la Cámara quedan como estaban) · **duplicar** desde el listado y
 desde el detalle (wizard cargado, saltea el motor, repuestos copiados, el
 original queda intacto) · ficha de repuestos del motor y copiarla desde otro
 motor · fecha de última carga y borrado de datos de prueba en Actualizar Excel ·

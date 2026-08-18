@@ -252,7 +252,9 @@ export function FichaRepuestos({ motor }) {
       )}
 
       {ficha.map((g) => {
-        const masCara = g.opciones.find((o) => o.codigo === g.elegida_codigo)
+        // La ficha no predice con cuál se va a cotizar: es la lista de lo que
+        // sirve para este motor. Qué entra en un presupuesto se elige al
+        // armarlo (antes acá salía "El más caro" / "Hoy cotizaría $X").
         return (
           <div key={g.categoria} style={{ border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: 'var(--surface-sunken)', flexWrap: 'wrap' }}>
@@ -262,11 +264,6 @@ export function FichaRepuestos({ motor }) {
               <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
                 {g.opciones.length} opcion{g.opciones.length === 1 ? '' : 'es'}
               </span>
-              {masCara && (
-                <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>
-                  Hoy cotizaría <strong>{formatPrecioARS(masCara.subtotal)}</strong>
-                </span>
-              )}
               {editando && (
                 <button
                   onClick={() => setAQuitar({ categoria: g.categoria, cantidad: g.opciones.length })}
@@ -303,7 +300,6 @@ export function FichaRepuestos({ motor }) {
               <div key={o.codigo} style={{
                 display: 'flex', alignItems: 'center', gap: 10, padding: '8px 14px',
                 borderTop: '1px solid var(--border-subtle)',
-                background: o.codigo === g.elegida_codigo ? 'var(--status-active-bg)' : undefined,
               }}>
                 <span style={{ width: 150, flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', overflowWrap: 'anywhere' }}>
                   {o.codigo}
@@ -326,7 +322,6 @@ export function FichaRepuestos({ motor }) {
                 </span>
                 {!o.en_catalogo && <StatusBadge status="expired">Fuera de lista</StatusBadge>}
                 {o.en_catalogo && o.stock_actual === 0 && <StatusBadge status="expired">Sin stock</StatusBadge>}
-                {o.codigo === g.elegida_codigo && <StatusBadge status="active">El más caro</StatusBadge>}
 
                 {o.cantidad_manual && (
                   <StatusBadge status="pending" title="La escribiste vos: el sistema no la vuelve a calcular">

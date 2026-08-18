@@ -304,3 +304,40 @@
 **Qué muestra la de repuestos:** solo **lo que se cotiza** — una línea por categoría, la opción elegida —, con "+N alternativas guardadas" al lado. Mostrar todas las opciones repetiría el pop-up "Ver repuestos" y haría que la suma de la pantalla no coincida con el total.
 **Cómo se mantiene fiel:** la pantalla no tiene lógica propia de precios. Usa `lineasServicios` (mano de obra) y `agruparLineas` + `opcionElegida` (repuestos), que es la misma regla que aplica el backend en `_resolver_grupos`. Si esa regla cambia, la revisión cambia con ella.
 **Fecha:** 2026-08-18
+
+## Se cotiza todo lo cargado: no hay más "el más caro"
+**Decisión:** desaparece la regla que elegía sola con qué opción se cotizaba cada categoría (la de mayor subtotal, pisable a mano). Ahora **cada repuesto que se carga cotiza**, y por eso una misma categoría puede llevar dos piezas que suman las dos: válvulas de admisión y válvulas de escape son las dos "Válvulas". Se fueron con la regla el chip "El más caro", la nota "El más barato", el botón "Usar este", el "Ahorro potencial" y el "Hoy cotizaría $X" de la ficha del motor.
+**Por qué:** pedido del dueño ("que el usuario que utiliza el sistema ponga directamente qué repuesto va a usar"). La regla nació como tolerancia —si el día de la compra faltaba la barata, el presupuesto ya cubría la cara— pero obligaba a cargar alternativas que después había que explicar, y hacía imposible cotizar dos piezas distintas de la misma categoría.
+**Cómo conviven con lo emitido:** en `presupuesto_item_opciones`, `elegida = 1` pasó a significar "esta línea suma al total". Los presupuestos anteriores tenían exactamente una elegida por grupo, así que **su total no cambia ni un peso**; sus alternativas se leen hoy como opcionales (guardadas, sin cobrar), que es lo que eran.
+**Qué queda del grupo:** la categoría del proveedor sigue agrupando —es lo único que lee el cliente en el PDF y lo que ordena el pedido— pero ya no decide nada.
+**Fecha:** 2026-08-18
+
+## "Opcionales": lo que puede llegar a hacer falta y no se cobra
+**Decisión:** una línea de presupuesto (mano de obra o repuesto) se puede marcar como **opcional**: queda guardada, sale en el PDF en su propia caja y con precio, pero **no suma al total**. Se marca arrastrando la línea a la caja "Opcionales" —en el paso Servicios y en la Revisión— o con la flechita del renglón; en el pop-up "Ver repuestos" es una casilla, en la columna que antes decía "Cotiza".
+**Por qué la palabra:** el dueño la venía llamando "extraordinarios" y pidió una mejor. Se le propusieron cuatro y eligió **"Opcionales"**: es la que el cliente entiende sin explicación ("esto se cobra solo si hace falta"), mientras que "extraordinario" suena a recargo. El caso que lo motivó: poner una bomba de aceite por las dudas de que la del motor no sirva, sin inflar el presupuesto.
+**En el PDF llevan precio por renglón** (las otras dos cajas no lo llevan: el cliente solo ve el total). Lo eligió el dueño y es lo coherente: como no están en el total, el precio es lo único que le dice cuánto le costaría si hace falta. Va además un subtotal "Si se hacen todos" y la aclaración de que no están incluidos.
+**Por qué la flechita además del arrastre:** arrastrar no funciona en el celular, y el dueño usa el sistema desde el teléfono. Los dos caminos terminan en la misma función.
+**Modelo de datos:** una columna nueva, `presupuesto_items.opcional` (migración aditiva, default 0 → nada de lo emitido cambia). El total se calcula en `db.total_de_items`, que es el único lugar que decide qué suma.
+**Fecha:** 2026-08-18
+
+## El precio unitario y el subtotal son la misma casilla vista de los dos lados
+**Decisión:** las dos son editables y **manda la última que se escribe**: escribir el unitario recalcula el subtotal (unitario × cantidad), escribir el subtotal recalcula el unitario (subtotal ÷ cantidad). Cambiar la cantidad, en cambio, siempre deja fijo el unitario.
+**Por qué:** lo pidió el dueño así ("el que se edita va a ser el que manda en la ecuación, el otro va a funcionar como esclavo"). En el mostrador se negocia de las dos formas: "te lo dejo en 20.000 la unidad" y "te lo dejo en 80.000 todo".
+**Qué se guarda:** siempre el **unitario**; el subtotal es una cuenta. Así el ajuste %, el PDF y el backend siguen leyendo un solo número por línea.
+**Casos raros:** con cantidad 0 no se puede repartir el subtotal, así que el valor queda inválido (recuadro rojo) en vez de inventar un número; el redondeo es a dos decimales, con lo cual reescribir el subtotal puede dejar una diferencia de centavos contra lo tipeado si la cantidad no divide justo.
+**Dónde:** paso Servicios, pop-up "Ver repuestos" y edición del detalle, todos contra `utils/precios.js`.
+**Fecha:** 2026-08-18
+
+## Los buscadores ignoran acentos y no miran el orden de las palabras
+**Decisión:** todos los buscadores del sistema normalizan (minúsculas, sin acentos) y buscan **palabra por palabra, en cualquier orden y como fragmento**: "valvulas" encuentra "VÁLVULAS" y "fiat 2.8" encuentra "FIAT DUCATO 2.8TD". Una palabra que no aparece descarta el resultado.
+**Por qué:** el dueño escribía "valvulas" y no encontraba nada, y tenía que adivinar el orden exacto de la descripción del proveedor.
+**Implementación:** la misma regla en los dos lados — `utils/texto.js` (pantalla) y `app/texto.py` (base) — porque parte de los buscadores filtran en el navegador y parte en SQL. En tablas chicas (motores, clientes, presupuestos) se usa una función `norm()` registrada en la conexión SQLite; en el catálogo del proveedor, que tiene 64.000 filas y se consulta en cada tecla, se guarda una **columna normalizada** (`crac_repuestos.busqueda`) que se llena al importar y que la migración completa sola sobre lo ya cargado.
+**Detalle que importa:** el punto se conserva (separa decimales de cilindrada) y la coma se convierte en punto, así "2,8" y "2.8" buscan lo mismo. Todo lo demás (barras, guiones, paréntesis) separa palabras — por eso buscar el código "CAAC02740  60/" también trae "060" y "S60": es el precio de la tolerancia, y se prefirió eso a que el buscador vuelva a ser exigente.
+**Fecha:** 2026-08-18
+
+## El cartel de precios solo aparece cuando los precios SUBEN
+**Decisión:** el banner rojo del detalle ("hay repuestos más caros que cuando se emitió") aparece únicamente si algún precio **subió**. Si todos bajaron, no hay cartel ni aviso por línea. El botón "Actualizar a precios de hoy" del encabezado sigue estando siempre, y el resumen aclara "ningún repuesto subió de precio" cuando corresponde.
+**Por qué:** pedido del dueño. Un precio que bajó no rompe nada: el presupuesto emitido sigue cubriendo el trabajo y hasta deja más margen. Avisarlo en rojo hacía ruido por algo que no había que corregir.
+**Qué NO cambió:** los avisos de "ya no tiene stock" y "ya no está en la lista" siguen apareciendo, suba o baje el precio — no son un problema de precio sino de disponibilidad.
+**Implementación:** el backend devuelve `hay_subas` en el resumen de revalidación y el detalle lo decide por línea comparando `precio_actual > precio_unitario`.
+**Fecha:** 2026-08-18

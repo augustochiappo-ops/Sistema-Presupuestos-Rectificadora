@@ -28,10 +28,12 @@ function distanciaEdicion(a, b) {
   return d[filas - 1][cols - 1]
 }
 
-// Devuelve qué tan "lejos" está tokenBusqueda de tokenNombre (0 = prefijo
-// exacto), o null si no se considera una coincidencia.
+// Devuelve qué tan "lejos" está tokenBusqueda de tokenNombre (0 = lo contiene),
+// o null si no se considera una coincidencia. Alcanza con que el fragmento esté
+// en cualquier parte de la palabra ("colo" encuentra "Pascolo"): la posición no
+// cuenta, igual que en el resto de los buscadores del sistema (utils/texto.js).
 function distanciaToken(tokenBusqueda, tokenNombre) {
-  if (tokenNombre.startsWith(tokenBusqueda)) return 0
+  if (tokenNombre.includes(tokenBusqueda)) return 0
   const distancia = distanciaEdicion(tokenBusqueda, tokenNombre)
   const umbral = Math.max(1, Math.floor(Math.max(tokenBusqueda.length, tokenNombre.length) / 3))
   return distancia <= umbral ? distancia : null

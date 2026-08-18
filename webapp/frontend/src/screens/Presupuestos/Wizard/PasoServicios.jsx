@@ -9,8 +9,13 @@ import { SelectorCantidadServicio } from '../../../components/SelectorCantidadSe
 import { DataTable } from '../../../components/DataTable'
 import { formatPrecioARS, parsePrecioARS } from '../../../utils/format'
 import {
-  lineasServicios, totalLineas, hayPreciosInvalidos, precioEfectivo, estaPisado,
+  lineasServicios, totalLineas, totalLineasOpcionales, hayPreciosInvalidos,
+  precioEfectivo, estaPisado, esOpcional,
 } from '../../../utils/servicios'
+import { unitarioDesdeSubtotal, textoSubtotal } from '../../../utils/precios'
+import { CajaOpcionales, BotonOpcional } from '../../../components/CajaOpcionales'
+import { useArrastreOpcionales } from '../../../hooks/useArrastreOpcionales'
+import { coincideBusqueda } from '../../../utils/texto'
 import { useUndo } from '../../../context/UndoContext'
 
 const tituloSeccion = {
@@ -35,7 +40,10 @@ const chipEditado = {
 // 4/8/16, 'b' para 6/12). Solo se usa para decidir qué par muestran los
 // recuadros adaptativos (ver parAdaptativo más abajo); tipear a mano no tagea.
 // precios: { [servicioId]: { valor, texto } } — el unitario pisado a mano desde
-// la tabla de la derecha. Ver utils/servicios.js.
+// la tabla de la derecha. Ver utils/servicios.js. Se pisa escribiendo el
+// unitario o el subtotal: el que se escribe manda y el otro se recalcula.
+// opcionales: claves de las líneas que pasaron a la caja de OPCIONALES — siguen
+// en el presupuesto y salen en el PDF, pero no suman al total.
 export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctChange, onSiguiente }) {
   const [servicios, setServicios] = React.useState([])
   const [favoritos, setFavoritos] = React.useState(new Set())
@@ -183,11 +191,50 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
     })
   }
 
-  const filtrados = servicios.filter((s) => {
-    if (!busqueda) return true
-    const q = busqueda.toLowerCase()
-    return String(s.item_num).includes(q) || (s.descripcion || '').toLowerCase().includes(q)
-  })
+  /*
+   * Subtotal editable. Es la misma casilla del unitario vista al revés: se
+   * reparte lo tipeado entre la cantidad y lo que queda es el unitario, que es
+   * el que se guarda. Con cantidad 0 no se puede repartir, así que el valor
+   * queda inválido (recuadro rojo) en vez de inventar un número.
+   */
+  const cambiarSubtotal = (fila, texto) => {
+    const { valor } = unitarioDesdeSubtotal(texto, fila.cantidad)
+    if (fila.esManual) {
+      onChange({
+        ...value,
+        customItems: customItems.map((c) => (
+          c.id === fila.id ? { ...c, precio_aplicado: valor, precioTexto: valor === null ? texto : formatPrecioARS(valor) } : c
+        )),
+      })
+      return
+    }
+    if (!texto.trim()) {
+      restaurarPrecio(fila)
+      return
+    }
+    onChange({
+      ...value,
+      precios: {
+        ...precios,
+        [fila.servicioId]: { valor, texto: valor === null ? texto : formatPrecioARS(valor) },
+      },
+    })
+  }
+
+  /* Pasar una línea a la caja de opcionales, o traerla de vuelta. Lo hacen el
+     arrastre y la flechita del renglón: los dos terminan acá. */
+  const moverOpcional = React.useCallback((clave, opcional) => {
+    onChange((actual) => {
+      const previas = (actual.opcionales || []).filter((c) => String(c) !== String(clave))
+      return { ...actual, opcionales: opcional ? [...previas, clave] : previas }
+    })
+  }, [onChange])
+
+  const { zonaActiva, propsFila, propsZona, propsCampoEditable } = useArrastreOpcionales(moverOpcional)
+
+  const filtrados = servicios.filter(
+    (s) => coincideBusqueda([String(s.item_num), s.descripcion], busqueda),
+  )
   const favoritosVisibles = filtrados.filter((s) => favoritos.has(s.id))
   const restoVisibles = filtrados.filter((s) => !favoritos.has(s.id))
 
@@ -213,7 +260,10 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   // también donde se edita el precio unitario, así que es la misma lista que
   // alimenta el total y el paso de Revisión.
   const filasPreview = lineasServicios(servicios, value, ajustePct)
+  const filasCotizan = filasPreview.filter((f) => !f.opcional)
+  const filasOpcionales = filasPreview.filter((f) => f.opcional)
   const total = totalLineas(filasPreview)
+  const totalOpcionales = totalLineasOpcionales(filasPreview)
   const preciosInvalidos = hayPreciosInvalidos(filasPreview)
 
   // wrap:true en subtotal: aunque el ancho de columna no alcance para un monto
@@ -227,15 +277,16 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
       key: 'precioUnitario',
       header: 'P. unitario',
       align: 'right',
-      width: 186,
+      width: 168,
       render: (_, fila) => (
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, justifyContent: 'flex-end' }}>
           <TextField
             value={fila.precioTexto ?? ''}
             onChange={(e) => cambiarPrecio(fila, e.target.value)}
+            {...propsCampoEditable}
             title="Precio unitario — se puede editar"
             style={{
-              width: 112, textAlign: 'right',
+              width: 122, textAlign: 'right',
               borderColor: fila.precioUnitario === null || fila.precioUnitario === undefined
                 ? 'var(--status-expired-fg)' : undefined,
             }}
@@ -255,7 +306,39 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
         </span>
       ),
     },
-    { key: 'subtotal', header: 'Subtotal', align: 'right', width: 130, wrap: true, strong: true, render: formatPrecioARS },
+    {
+      key: 'subtotal',
+      header: 'Subtotal',
+      align: 'right',
+      width: 178,
+      // El subtotal también se edita: escribirlo recalcula el unitario. Manda
+      // el último que se tocó (ver utils/precios.js).
+      render: (_, fila) => (
+        <TextField
+          value={textoSubtotal(fila.precioUnitario, fila.cantidad)}
+          onChange={(e) => cambiarSubtotal(fila, e.target.value)}
+          {...propsCampoEditable}
+          title="Subtotal — se puede editar; el precio unitario se recalcula solo"
+          style={{
+            width: 132, textAlign: 'right', fontWeight: 600,
+            borderColor: fila.subtotal === null || fila.subtotal === undefined
+              ? 'var(--status-expired-fg)' : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: 'opcional',
+      header: '',
+      align: 'center',
+      width: 44,
+      render: (_, fila) => (
+        <BotonOpcional
+          opcional={fila.opcional}
+          onClick={() => moverOpcional(String(fila.id), !fila.opcional)}
+        />
+      ),
+    },
   ]
 
   const Fila = ({ s }) => {
@@ -287,6 +370,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
         {/* El precio de la izquierda es el mismo que cotiza el presupuesto: si
             se pisó a mano en la tabla de la derecha, se ve el pisado. */}
         <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 6 }}>
+          {esOpcional(s.id, value) && <span style={chipEditado}>opcional</span>}
           {pisado && <span style={chipEditado}>editado</span>}
           <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', fontWeight: 600 }}>
             {formatPrecioARS(precio)}
@@ -327,6 +411,12 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
             <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total servicios</span>
             <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(total)}</span>
           </div>
+          {totalOpcionales > 0 && (
+            <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
+              Opcionales <strong style={{ color: '#fff' }}>{formatPrecioARS(totalOpcionales)}</strong>
+              <span style={{ opacity: .8 }}> (fuera del total)</span>
+            </span>
+          )}
         </div>
         {/* Se puede seguir sin servicios: un presupuesto puede ser de solo repuestos.
             La validación de "al menos un ítem" está en el paso de confirmación. */}
@@ -334,7 +424,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
           variant="secondary"
           iconRight={<Icon n="chevron-right" s={16} />}
           disabled={preciosInvalidos}
-          onClick={() => onSiguiente(total)}
+          onClick={() => onSiguiente(total, totalOpcionales)}
           style={{ background: '#fff', border: 'none', color: 'var(--text-strong)' }}
         >
           Siguiente: Repuestos
@@ -369,19 +459,45 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
-          <div style={tituloSeccion}>Presupuesto</div>
-          <DataTable
-            columns={columnasPreview}
-            rows={filasPreview}
-            emptyMessage="Todavía no elegiste servicios. Tocá un ítem de la lista para agregarlo acá."
-          />
-          {filasPreview.length > 0 && (
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
-              El precio unitario se puede editar acá mismo. Un precio editado no recibe el ajuste %;
-              el ↺ lo devuelve al de la lista.
-            </div>
-          )}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14, minWidth: 0 }}>
+          {/* Caja del presupuesto: lo que se cobra. Sus filas se pueden
+              arrastrar a la caja de abajo. */}
+          <div
+            {...propsZona(false)}
+            style={{
+              display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0,
+              padding: zonaActiva === false ? 6 : 0,
+              border: zonaActiva === false ? '2px dashed var(--text-strong)' : 'none',
+              borderRadius: 'var(--radius-xl)',
+            }}
+          >
+            <div style={tituloSeccion}>Presupuesto</div>
+            <DataTable
+              columns={columnasPreview}
+              rows={filasCotizan}
+              getRowProps={(fila) => propsFila(String(fila.id))}
+              emptyMessage="Todavía no elegiste servicios. Tocá un ítem de la lista para agregarlo acá."
+            />
+            {filasCotizan.length > 0 && (
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
+                El precio unitario y el subtotal se pueden editar acá mismo: el que escribís manda y el otro
+                se recalcula solo. Un precio editado no recibe el ajuste %; el ↺ lo devuelve al de la lista.
+              </div>
+            )}
+          </div>
+
+          <CajaOpcionales
+            total={totalOpcionales}
+            cantidad={filasOpcionales.length}
+            activa={zonaActiva === true}
+            dropProps={propsZona(true)}
+          >
+            <DataTable
+              columns={columnasPreview}
+              rows={filasOpcionales}
+              getRowProps={(fila) => propsFila(String(fila.id))}
+            />
+          </CajaOpcionales>
         </div>
       </div>
 

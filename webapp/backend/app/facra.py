@@ -5,6 +5,7 @@ Portado de la app de escritorio (src/data/facra.py) sin cambios de lógica.
 """
 import re
 import pandas as pd
+from . import texto
 from .db import get_connection
 
 BRAND_ALIASES = {
@@ -196,10 +197,15 @@ def get_motores(marca: str | None = None, busqueda: str | None = None) -> list[d
         query += " AND marca = ?"
         params.append(marca)
 
-    if busqueda:
-        term = f"%{busqueda}%"
-        query += " AND (motor LIKE ? OR marca LIKE ? OR indice LIKE ?)"
-        params.extend([term, term, term])
+    # Por palabras sueltas, en cualquier orden y sin acentos: "fiat 2.8"
+    # encuentra "FIAT DUCATO 2.8TD", y "citroen" encuentra "CITROËN".
+    # norm() es la función que registra db.get_connection (ver app/texto.py).
+    cond, params_busqueda = texto.condicion_like(
+        ["norm(motor)", "norm(marca)", "norm(indice)"], busqueda
+    )
+    if cond:
+        query += f" AND ({cond})"
+        params.extend(params_busqueda)
 
     query += " ORDER BY usado_antes DESC, marca, motor"
 

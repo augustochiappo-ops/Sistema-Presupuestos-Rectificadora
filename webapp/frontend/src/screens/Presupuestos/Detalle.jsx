@@ -16,9 +16,12 @@ import { ModalRepuestosAgregados } from './Wizard/ModalRepuestosAgregados'
 import { ModalRevalidacion } from './ModalRevalidacion'
 import { formatPrecioARS, formatFechaAR } from '../../utils/format'
 import {
-  gruposParaPayload, totalRepuestos, agruparLineas, opcionElegida, subtotalDe,
-  lineaDeOpcion, elegidaAManoInicial,
+  gruposParaPayload, totalRepuestos, totalRepuestosOpcionales, agruparLineas,
+  subtotalDe, subtotalDelGrupo, lineaDeOpcion,
 } from '../../utils/grupos'
+import { textoSubtotal, unitarioDesdeSubtotal } from '../../utils/precios'
+import { CajaOpcionales, BotonOpcional } from '../../components/CajaOpcionales'
+import { useArrastreOpcionales } from '../../hooks/useArrastreOpcionales'
 import { useRepuestosAgrupados } from '../../hooks/useRepuestosAgrupados'
 import { useFichaTildes } from '../../hooks/useFichaTildes'
 import { useUndo } from '../../context/UndoContext'
@@ -26,9 +29,17 @@ import { useUndo } from '../../context/UndoContext'
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
 const TIPO_OPUESTO = { mecanico: 'dueno', dueno: 'mecanico' }
 
-// Avisos de cambios post-emisión: cada línea de repuesto guarda el precio y el
-// stock congelados al cotizar; el backend manda además precio_actual/stock_actual
-// del catálogo vigente. Si difieren, se avisa acá (nunca en el PDF).
+/*
+ * Avisos de cambios post-emisión: cada línea de repuesto guarda el precio y el
+ * stock congelados al cotizar; el backend manda además precio_actual/stock_actual
+ * del catálogo vigente. Si difieren, se avisa acá (nunca en el PDF).
+ *
+ * El precio solo avisa cuando SUBIÓ (pedido del dueño, 2026-08-18). Si el
+ * repuesto está más barato que cuando se cotizó, el presupuesto emitido sigue
+ * cubriendo el trabajo: no hay nada que corregir y el cartel rojo solo asusta.
+ * Para bajarlo igual está el botón "Actualizar a precios de hoy", que no
+ * depende de este aviso.
+ */
 function warningsRepuesto(it) {
   const w = []
   if (!it.repuesto_codigo) return w
@@ -37,8 +48,8 @@ function warningsRepuesto(it) {
     w.push('Ya no está en la lista del catálogo')
     return w
   }
-  if (it.precio_actual && it.precio_unitario !== null && it.precio_actual !== it.precio_unitario) {
-    w.push(`Precio de lista cambió: ${formatPrecioARS(it.precio_unitario)} → ${formatPrecioARS(it.precio_actual)}`)
+  if (it.precio_actual && it.precio_unitario !== null && it.precio_actual > it.precio_unitario) {
+    w.push(`El precio de lista subió: ${formatPrecioARS(it.precio_unitario)} → ${formatPrecioARS(it.precio_actual)}`)
   }
   if (it.stock_al_cotizar === 1 && it.stock_actual === 0) {
     w.push('Ya no tiene stock')
@@ -56,7 +67,7 @@ function fmtCantidad(cantidad) {
 // el payload real al guardar como para la "foto" inicial al entrar en modo
 // edición, así comparar ambas dice si hubo cambios de verdad (y por lo tanto
 // si hay que reconstruir el PDF).
-function construirPayload(lista, notas, ajustePct, lineasGrupos = [], elegidaAMano = {}) {
+function construirPayload(lista, notas, ajustePct, lineasGrupos = []) {
   // cantidad/precio_unitario se normalizan a Number: los inputs numéricos del
   // formulario los guardan como string en cuanto el usuario toca el campo,
   // aunque el valor final sea igual — sin esto, comparar el payload contra la
@@ -70,6 +81,7 @@ function construirPayload(lista, notas, ajustePct, lineasGrupos = [], elegidaAMa
       descripcion_custom: it.descripcion_custom,
       cantidad: Number(it.cantidad),
       precio_unitario: Number(it.precio_unitario),
+      opcional: Boolean(it.opcional),
     }))
   const repuestos = lista
     .filter((it) => it.tipo === 'repuesto')
@@ -82,12 +94,14 @@ function construirPayload(lista, notas, ajustePct, lineasGrupos = [], elegidaAMa
       cantidad: Number(it.cantidad),
       precio_unitario: Number(it.precio_unitario),
       stock_al_cotizar: it.stock_al_cotizar,
+      opcional: Boolean(it.opcional),
     }))
   return {
     items: [...servicios, ...repuestos],
-    // Los grupos van aparte: el backend elige el más caro de cada uno y guarda
-    // todas las opciones. Los repuestos de arriba son los sueltos (sin grupo).
-    grupos_repuestos: gruposParaPayload(lineasGrupos, elegidaAMano),
+    // Los grupos van aparte: el backend guarda una línea por opción, y las
+    // marcadas como opcionales quedan fuera del total. Los repuestos de arriba
+    // son los sueltos (sin grupo).
+    grupos_repuestos: gruposParaPayload(lineasGrupos),
     notas,
     ajuste_pct: ajustePct || 0,
   }
@@ -120,7 +134,6 @@ export default function DetallePresupuesto() {
   // alternativas) es lo que hay que mandar de vuelta al guardar.
   const [editGrupos, setEditGrupos] = React.useState([])
   const [cantidadPorGrupo, setCantidadPorGrupo] = React.useState({})
-  const [elegidaAMano, setElegidaAMano] = React.useState({})
   const [modalRepuestos, setModalRepuestos] = React.useState(false)
   const [aprobando, setAprobando] = React.useState(false)
   const [editNotas, setEditNotas] = React.useState('')
@@ -168,21 +181,21 @@ export default function DetallePresupuesto() {
     const lineasGrupos = grupos.flatMap((g) => g.opciones.map((o) => lineaDeOpcion(g, o)))
     setEditGrupos(lineasGrupos)
     setCantidadPorGrupo(Object.fromEntries(grupos.map((g) => [g.categoria, g.opciones[0]?.cantidad || 1])))
-    setElegidaAMano(Object.fromEntries(
-      grupos
-        .filter((g) => g.opciones.some((o) => o.elegida_a_mano))
-        .map((g) => [g.categoria, g.opciones.find((o) => o.elegida_a_mano).repuesto_codigo]),
-    ))
 
     const itemsIniciales = items
       .filter((it) => it.grupo_num == null)
       .map((it) => (
         it.tipo === 'repuesto'
-          ? { ...it }
+          ? { ...it, opcional: Boolean(it.opcional) }
           // Presupuestos armados antes de soportar cantidad en servicios no
           // tienen precio_unitario guardado: se asume cantidad 1 y que
           // precio_aplicado YA era el unitario.
-          : { ...it, cantidad: it.cantidad || 1, precio_unitario: it.precio_unitario ?? it.precio_aplicado }
+          : {
+            ...it,
+            cantidad: it.cantidad || 1,
+            precio_unitario: it.precio_unitario ?? it.precio_aplicado,
+            opcional: Boolean(it.opcional),
+          }
       ))
     setEditItems(itemsIniciales)
     const notasIniciales = detalle?.notas || ''
@@ -195,7 +208,7 @@ export default function DetallePresupuesto() {
     setAjustePct(ajusteInicial)
     setAjusteTexto(ajusteInicial ? String(ajusteInicial) : '')
     payloadOriginalRef.current = JSON.stringify(
-      construirPayload(itemsIniciales, notasIniciales, ajusteInicial, lineasGrupos, elegidaAManoInicial(grupos)),
+      construirPayload(itemsIniciales, notasIniciales, ajusteInicial, lineasGrupos),
     )
     setEditMode(true)
     if (detalle?.motor_id) {
@@ -243,6 +256,28 @@ export default function DetallePresupuesto() {
   // (precio_aplicado) se recalcula server-side como cantidad × unitario.
   const actualizarPrecio = (idx, valor) => actualizarCampo(idx, 'precio_unitario', valor)
   const actualizarDescCustom = (idx, valor) => actualizarCampo(idx, 'descripcion_custom', valor)
+  /* Subtotal editable de un ítem de la lista de edición: se reparte por la
+     cantidad y pisa el unitario, que es lo que se guarda (ver utils/precios). */
+  const actualizarSubtotal = (idx, texto) => {
+    setEditItems((prev) => prev.map((it, i) => {
+      if (i !== idx) return it
+      const { valor } = unitarioDesdeSubtotal(texto, it.cantidad)
+      return { ...it, precio_unitario: valor === null ? '' : valor }
+    }))
+  }
+
+  /* Mover un ítem a la caja de opcionales, o traerlo de vuelta. Lo usan el
+     arrastre y la flechita del renglón. */
+  const moverItemOpcional = React.useCallback((clave, opcional) => {
+    if (clave.startsWith('repuesto:')) {
+      const key = clave.slice('repuesto:'.length)
+      setEditGrupos((prev) => prev.map((r) => (r.key === key ? { ...r, opcional } : r)))
+      return
+    }
+    const id = clave.slice('item:'.length)
+    setEditItems((prev) => prev.map((it) => (String(it.id) === id ? { ...it, opcional } : it)))
+  }, [])
+
   const quitarItem = (idx) => {
     const antes = editItems
     const it = editItems[idx]
@@ -253,13 +288,13 @@ export default function DetallePresupuesto() {
     })
   }
   const agregarItemCustom = () => {
-    setEditItems((prev) => [...prev, { id: `nuevo-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null, descripcion_custom: '', cantidad: 1, precio_unitario: '' }])
+    setEditItems((prev) => [...prev, { id: `nuevo-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null, descripcion_custom: '', cantidad: 1, precio_unitario: '', opcional: false }])
   }
   const agregarItemRepuesto = () => {
     setEditItems((prev) => [...prev, {
       id: `nuevo-rep-${Date.now()}`, servicio_id: null, item_num: null, desc_facra: null,
       tipo: 'repuesto', repuesto_codigo: '', descripcion_custom: '', categoria: '',
-      cantidad: 1, precio_unitario: '', stock_al_cotizar: null,
+      cantidad: 1, precio_unitario: '', stock_al_cotizar: null, opcional: false,
     }])
   }
 
@@ -267,9 +302,7 @@ export default function DetallePresupuesto() {
     setCantidadPorGrupo((prev) => (prev[grupo] === cantidad ? prev : { ...prev, [grupo]: cantidad }))
   }, [])
 
-  const elegirAMano = React.useCallback((grupo, codigo) => {
-    setElegidaAMano((prev) => ({ ...prev, [grupo]: prev[grupo] === codigo ? null : codigo }))
-  }, [])
+  const { zonaActiva, propsFila, propsZona, propsCampoEditable } = useArrastreOpcionales(moverItemOpcional)
 
   const tildes = useFichaTildes({ motorId: detalle?.motor_id, ficha, onFicha: setFicha })
 
@@ -300,8 +333,9 @@ export default function DetallePresupuesto() {
   // categoría entra al grupo de esa categoría, con las medidas hermanas.
   const {
     cantidadPorCodigo, agregar: agregarDeCatalogo,
-    cambiarCantidad: cambiarCantidadGrupo, cambiarPrecio: cambiarPrecioGrupo, quitar: quitarDeGrupo,
-    quitarVarias: quitarVariasDeGrupo,
+    cambiarCantidad: cambiarCantidadGrupo, cambiarPrecio: cambiarPrecioGrupo,
+    cambiarSubtotal: cambiarSubtotalGrupo, toggleOpcional: toggleOpcionalGrupo,
+    quitar: quitarDeGrupo, quitarVarias: quitarVariasDeGrupo,
   } = useRepuestosAgrupados({
     lineas: editGrupos,
     setLineas: setEditGrupos,
@@ -363,7 +397,7 @@ export default function DetallePresupuesto() {
     setGuardando(true)
     setError('')
     try {
-      const payload = construirPayload(editItems, editNotas, ajustePct, editGrupos, elegidaAMano)
+      const payload = construirPayload(editItems, editNotas, ajustePct, editGrupos)
       // Si el payload es idéntico al que había al entrar en modo edición, no
       // hubo cambios de verdad: no tiene sentido generar una versión de PDF
       // nueva (y consumir un número de versión) por un guardado que no cambió nada.
@@ -538,17 +572,79 @@ export default function DetallePresupuesto() {
   const ultimoPdf = pdfs[0]
   const anteriores = pdfs.slice(1)
 
-  // En edición el total suma los ítems sueltos más, de cada grupo, solo la
-  // opción con la que se cotiza (las alternativas no se cobran).
-  const totalEditado = editItems.reduce((acc, it) => acc + (Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0), 0)
-    + totalRepuestos(editGrupos, elegidaAMano)
+  // En edición el total suma todo lo cargado, menos lo marcado como opcional.
+  const totalEditado = editItems
+    .filter((it) => !it.opcional)
+    .reduce((acc, it) => acc + (Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0), 0)
+    + totalRepuestos(editGrupos)
+  const totalOpcionalesEditado = editItems
+    .filter((it) => it.opcional)
+    .reduce((acc, it) => acc + (Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0), 0)
+    + totalRepuestosOpcionales(editGrupos)
   const gruposEditados = agruparLineas(editGrupos).grupos
+  const itemsOpcionalesEdicion = editItems.map((it, idx) => ({ it, idx })).filter(({ it }) => it.opcional)
+  const gruposOpcionales = editGrupos.filter((l) => l.opcional)
   const colorAjuste = ajustePct > 0 ? 'var(--status-active-fg)' : ajustePct < 0 ? 'var(--status-expired-fg)' : 'var(--border-default)'
 
-  const serviciosItems = items.filter((it) => it.tipo !== 'repuesto')
-  const repuestoItems = items.filter((it) => it.tipo === 'repuesto')
+  // Lo opcional se muestra aparte, en su propia caja: está en el presupuesto y
+  // en el PDF, pero no entra en el total.
+  const serviciosItems = items.filter((it) => it.tipo !== 'repuesto' && !it.opcional)
+  const repuestoItems = items.filter((it) => it.tipo === 'repuesto' && !it.opcional)
+  const itemsOpcionales = items.filter((it) => it.opcional)
+  const totalOpcionales = itemsOpcionales.reduce((acc, it) => acc + (it.precio_aplicado || 0), 0)
   const warningsPorItem = new Map(repuestoItems.map((it) => [it.id, warningsRepuesto(it)]))
   const hayWarnings = [...warningsPorItem.values()].some((w) => w.length > 0)
+
+  /*
+   * Una línea de mano de obra en modo edición. El precio unitario y el subtotal
+   * se editan los dos: el que se escribe manda y el otro se recalcula. La
+   * flechita (y arrastrar la fila) la manda a la caja de opcionales.
+   *
+   * Es una función que devuelve JSX, NO un componente declarado acá adentro: un
+   * componente definido dentro del render cambia de identidad en cada pasada y
+   * React lo remonta, lo que hace perder el foco del recuadro a cada tecla.
+   */
+  const filaServicioEdicion = (it, idx) => (
+    <div
+      key={it.id}
+      {...propsFila(`item:${it.id}`)}
+      style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'grab' }}
+    >
+      <ContadorServicio cantidad={Number(it.cantidad) || 0} onChange={(n) => actualizarCampo(idx, 'cantidad', n)} />
+      {it.desc_facra ? (
+        <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{it.desc_facra}</span>
+      ) : (
+        <TextField
+          placeholder="Descripción"
+          value={it.descripcion_custom || ''}
+          onChange={(e) => actualizarDescCustom(idx, e.target.value)}
+          style={{ flex: 1 }}
+        />
+      )}
+      <TextField
+        type="number" step="0.01" placeholder="Precio unit."
+        value={it.precio_unitario}
+        onChange={(e) => actualizarPrecio(idx, e.target.value)}
+        {...propsCampoEditable}
+        title="Precio unitario — se puede editar"
+        style={{ width: 130 }}
+      />
+      <TextField
+        value={textoSubtotal(Number(it.precio_unitario) || 0, it.cantidad)}
+        onChange={(e) => actualizarSubtotal(idx, e.target.value)}
+        {...propsCampoEditable}
+        title="Subtotal — se puede editar; el precio unitario se recalcula solo"
+        style={{ width: 130, textAlign: 'right', fontWeight: 600 }}
+      />
+      <BotonOpcional
+        opcional={Boolean(it.opcional)}
+        onClick={() => moverItemOpcional(`item:${it.id}`, !it.opcional)}
+      />
+      <button onClick={() => quitarItem(idx)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
+        <Icon n="x" s={16} />
+      </button>
+    </div>
+  )
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -679,7 +775,8 @@ export default function DetallePresupuesto() {
                 }}>
                   <Icon n="rotate-cw" s={15} />
                   <span style={{ flex: 1 }}>
-                    La lista de repuestos cambió desde la emisión de este presupuesto — revisá los avisos antes de reconfirmar.
+                    Hay repuestos más caros (o sin stock) que cuando se emitió este presupuesto — revisá los avisos
+                    antes de reconfirmar. Si un precio bajó no aparece acá: el presupuesto sigue cubriendo el trabajo.
                   </span>
                   {/* El atajo va acá a propósito: es el momento exacto en que el
                       dueño se entera de que el presupuesto quedó viejo. */}
@@ -725,14 +822,40 @@ export default function DetallePresupuesto() {
             </div>
           )}
 
+          {itemsOpcionales.length > 0 && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+                Opcionales · {formatPrecioARS(totalOpcionales)} fuera del total
+              </div>
+              <DataTable
+                columns={[
+                  {
+                    key: 'que', header: 'Qué es', width: 170, strong: true, wrap: true,
+                    render: (_, row) => (row.tipo === 'repuesto' ? (row.categoria || 'Repuesto') : 'Mano de obra'),
+                  },
+                  { key: 'detalle', header: 'Detalle', wrap: true, render: (_, row) => row.desc_facra || row.descripcion_custom },
+                  { key: 'cantidad', header: 'Cant.', align: 'center', width: 70, render: fmtCantidad },
+                  { key: 'precio_unitario', header: 'P. unitario', align: 'right', width: 130, render: formatPrecioARS },
+                  { key: 'precio_aplicado', header: 'Subtotal', align: 'right', width: 130, render: formatPrecioARS },
+                ]}
+                reorderKey="detalle-opcionales"
+                rows={itemsOpcionales}
+              />
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
+                No suman al total. En el PDF salen en su propia caja, con el precio de cada uno y la aclaración
+                de que no están incluidos.
+              </div>
+            </div>
+          )}
+
           {grupos.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
-                Opciones guardadas
+                Repuestos por categoría
               </div>
               <div style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
-                Todas las marcas y medidas que sirven para cada repuesto de este presupuesto. Se cotizó la más cara;
-                el resto queda para decidir qué pedir.
+                Lo que se cargó en cada categoría, con marca y medida. Todo lo que dice "Cotiza" está en el total;
+                lo opcional queda guardado para tenerlo en cuenta.
               </div>
               {grupos.map((g) => (
                 <div key={g.grupo_num} style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
@@ -751,7 +874,9 @@ export default function DetallePresupuesto() {
                       <span style={{ flex: 1, minWidth: 0, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{o.descripcion}</span>
                       <span style={{ width: 110, flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>{o.marca || '—'}</span>
                       <span style={{ width: 60, flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>{o.medida || '—'}</span>
-                      {o.elegida && <StatusBadge status="active">{o.elegida_a_mano ? 'Elegido a mano' : 'Cotizado'}</StatusBadge>}
+                      {o.elegida
+                        ? <StatusBadge status="active">Cotiza</StatusBadge>
+                        : <StatusBadge status="aviso">Opcional</StatusBadge>}
                       {o.stock_actual === 0 && <StatusBadge status="expired">Sin stock hoy</StatusBadge>}
                       <span style={{ width: 60, textAlign: 'center', flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>×{fmtCantidad(o.cantidad)}</span>
                       <span style={{ width: 130, textAlign: 'right', flexShrink: 0, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600 }}>
@@ -770,40 +895,21 @@ export default function DetallePresupuesto() {
             todo (entre la tarjeta Cliente/Motor/Fecha/Total(+Ajuste) y
             "Usados antes en este motor" del buscador de abajo), separados
             adentro por el título "Repuestos". */}
-        <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div
+          {...propsZona(false)}
+          style={{
+            border: zonaActiva === false ? '2px dashed var(--text-strong)' : '1px solid var(--border-default)',
+            borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16,
+            display: 'flex', flexDirection: 'column', gap: 10,
+          }}
+        >
           <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
             Detalle de mano de obra
           </div>
           {editItems
             .map((it, idx) => ({ it, idx }))
-            .filter(({ it }) => it.tipo !== 'repuesto')
-            .map(({ it, idx }) => (
-              <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <ContadorServicio cantidad={Number(it.cantidad) || 0} onChange={(n) => actualizarCampo(idx, 'cantidad', n)} />
-                {it.desc_facra ? (
-                  <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{it.desc_facra}</span>
-                ) : (
-                  <TextField
-                    placeholder="Descripción"
-                    value={it.descripcion_custom || ''}
-                    onChange={(e) => actualizarDescCustom(idx, e.target.value)}
-                    style={{ flex: 1 }}
-                  />
-                )}
-                <TextField
-                  type="number" step="0.01" placeholder="Precio unit."
-                  value={it.precio_unitario}
-                  onChange={(e) => actualizarPrecio(idx, e.target.value)}
-                  style={{ width: 130 }}
-                />
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 120, textAlign: 'right' }}>
-                  {formatPrecioARS((Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0))}
-                </span>
-                <button onClick={() => quitarItem(idx)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
-                  <Icon n="x" s={16} />
-                </button>
-              </div>
-            ))}
+            .filter(({ it }) => it.tipo !== 'repuesto' && !it.opcional)
+            .map(({ it, idx }) => filaServicioEdicion(it, idx))}
           <Button variant="ghost" size="sm" iconLeft={<Icon n="plus" s={14} />} onClick={agregarItemCustom} style={{ alignSelf: 'flex-start' }}>
             Agregar ítem
           </Button>
@@ -819,20 +925,21 @@ export default function DetallePresupuesto() {
                 </Button>
               </div>
               {gruposEditados.map((g) => {
-                const elegida = opcionElegida(g.opciones, elegidaAMano[g.categoria])
+                const opcionales = g.opciones.filter((o) => o.opcional).length
                 return (
                   <div key={g.categoria} style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                     <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-strong)', width: 170 }}>
                       {g.categoria}
                     </span>
-                    <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)', width: 90 }}>
-                      {g.opciones.length} opcion{g.opciones.length === 1 ? '' : 'es'}
+                    <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)', width: 130 }}>
+                      {g.opciones.length} repuesto{g.opciones.length === 1 ? '' : 's'}
+                      {opcionales > 0 && ` · ${opcionales} opcional${opcionales === 1 ? '' : 'es'}`}
                     </span>
                     <span style={{ flex: 1, minWidth: 0, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
-                      Cotiza: {elegida ? `${elegida.descripcion}${elegida.marca ? ` · ${elegida.marca}` : ''}` : '—'}
+                      {g.opciones.filter((o) => !o.opcional).map((o) => o.descripcion).join(' · ') || '—'}
                     </span>
                     <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, width: 120, textAlign: 'right' }}>
-                      {elegida ? formatPrecioARS(subtotalDe(elegida)) : '—'}
+                      {formatPrecioARS(subtotalDelGrupo(g.opciones))}
                     </span>
                   </div>
                 )
@@ -845,9 +952,9 @@ export default function DetallePresupuesto() {
           </div>
           {editItems
             .map((it, idx) => ({ it, idx }))
-            .filter(({ it }) => it.tipo === 'repuesto')
+            .filter(({ it }) => it.tipo === 'repuesto' && !it.opcional)
             .map(({ it, idx }) => (
-              <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+              <div key={it.id} {...propsFila(`item:${it.id}`)} style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', cursor: 'grab' }}>
                 <TextField
                   type="number" min="0" step="1" placeholder="Cant."
                   value={it.cantidad}
@@ -875,7 +982,18 @@ export default function DetallePresupuesto() {
                   type="number" step="0.01" placeholder="P. unitario"
                   value={it.precio_unitario}
                   onChange={(e) => actualizarCampo(idx, 'precio_unitario', e.target.value)}
+                  title="Precio unitario — se puede editar"
                   style={{ width: 130 }}
+                />
+                <TextField
+                  value={textoSubtotal(Number(it.precio_unitario) || 0, it.cantidad)}
+                  onChange={(e) => actualizarSubtotal(idx, e.target.value)}
+                  title="Subtotal — se puede editar; el precio unitario se recalcula solo"
+                  style={{ width: 130, textAlign: 'right', fontWeight: 600 }}
+                />
+                <BotonOpcional
+                  opcional={Boolean(it.opcional)}
+                  onClick={() => moverItemOpcional(`item:${it.id}`, !it.opcional)}
                 />
                 <button onClick={() => quitarItem(idx)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
                   <Icon n="x" s={16} />
@@ -886,6 +1004,68 @@ export default function DetallePresupuesto() {
             Agregar repuesto a mano
           </Button>
         </div>
+
+        {/* Caja de opcionales: lo que queda fuera del total. Se arrastra acá
+            desde el bloque de arriba (o con la flechita del renglón), y lo que
+            cae adentro deja de sumar pero sigue guardado y sale en el PDF. */}
+        <CajaOpcionales
+          total={totalOpcionalesEditado}
+          cantidad={itemsOpcionalesEdicion.length + gruposOpcionales.length}
+          activa={zonaActiva === true}
+          dropProps={propsZona(true)}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {itemsOpcionalesEdicion.map(({ it, idx }) => (
+              it.tipo === 'repuesto' ? (
+                <div key={it.id} {...propsFila(`item:${it.id}`)} style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', cursor: 'grab' }}>
+                  <TextField
+                    type="number" min="0" step="1" placeholder="Cant."
+                    value={it.cantidad}
+                    onChange={(e) => actualizarCampo(idx, 'cantidad', e.target.value)}
+                    style={{ width: 80 }}
+                  />
+                  <span style={{ flex: 1, minWidth: 160, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>
+                    {it.descripcion_custom || it.repuesto_codigo}
+                  </span>
+                  <TextField
+                    type="number" step="0.01" placeholder="P. unitario"
+                    value={it.precio_unitario}
+                    onChange={(e) => actualizarCampo(idx, 'precio_unitario', e.target.value)}
+                    style={{ width: 130 }}
+                  />
+                  <TextField
+                    value={textoSubtotal(Number(it.precio_unitario) || 0, it.cantidad)}
+                    onChange={(e) => actualizarSubtotal(idx, e.target.value)}
+                    style={{ width: 130, textAlign: 'right', fontWeight: 600 }}
+                  />
+                  <BotonOpcional opcional onClick={() => moverItemOpcional(`item:${it.id}`, false)} />
+                  <button onClick={() => quitarItem(idx)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
+                    <Icon n="x" s={16} />
+                  </button>
+                </div>
+              ) : filaServicioEdicion(it, idx)
+            ))}
+
+            {/* Los repuestos de catálogo marcados como opcionales se editan en
+                el pop-up "Ver repuestos"; acá se listan para poder devolverlos
+                al presupuesto de un toque. */}
+            {gruposOpcionales.map((linea) => (
+              <div key={linea.key} {...propsFila(`repuesto:${linea.key}`)} style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', cursor: 'grab' }}>
+                <span style={{ width: 60, textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
+                  ×{fmtCantidad(linea.cantidad)}
+                </span>
+                <span style={{ flex: 1, minWidth: 160, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>
+                  {linea.descripcion}
+                  {linea.categoria && <span style={{ color: 'var(--text-faint)' }}> · {linea.categoria}</span>}
+                </span>
+                <span style={{ width: 130, textAlign: 'right', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600 }}>
+                  {formatPrecioARS(subtotalDe(linea))}
+                </span>
+                <BotonOpcional opcional onClick={() => moverItemOpcional(`repuesto:${linea.key}`, false)} />
+              </div>
+            ))}
+          </div>
+        </CajaOpcionales>
 
         <RepuestoPicker
           sugeridos={sugeridos}
@@ -905,10 +1085,10 @@ export default function DetallePresupuesto() {
       <ModalRepuestosAgregados
         open={modalRepuestos}
         items={editGrupos}
-        elegidaAMano={elegidaAMano}
-        onElegirAMano={elegirAMano}
         onCambiarCantidad={cambiarCantidadGrupo}
         onCambiarPrecio={cambiarPrecioGrupo}
+        onCambiarSubtotal={cambiarSubtotalGrupo}
+        onToggleOpcional={toggleOpcionalGrupo}
         onQuitar={quitarRepuestoConDeshacer}
         onQuitarVarias={quitarVariasConDeshacer}
         onClose={() => setModalRepuestos(false)}

@@ -4,9 +4,10 @@ import { StatusBadge } from '../../../components/StatusBadge'
 import { Icon } from '../../../components/Icon'
 import { CodigoRepuesto } from '../../../components/CodigoRepuesto'
 import { formatPrecioARS } from '../../../utils/format'
+import { textoSubtotal } from '../../../utils/precios'
 import {
-  agruparLineas, opcionElegida, ahorroDelGrupo, subtotalDe,
-  codigosConCantidadSospechosa, masBarataDelGrupo, familiasOrdenadas,
+  agruparLineas, subtotalDe, subtotalDelGrupo, opcionesQueCotizan,
+  codigosConCantidadSospechosa, familiasOrdenadas,
 } from '../../../utils/grupos'
 
 const botonCantidad = {
@@ -32,16 +33,22 @@ const encabezado = {
 const lineaFamilia = { borderLeft: '3px solid var(--familia-linea)' }
 
 /*
- * Pop-up "Ver repuestos". Muestra los repuestos agrupados por categoría: dentro
- * de cada grupo, la opción con la que se cotiza (la de mayor subtotal) va
- * marcada y arriba, y debajo el resto, que quedan guardadas para el pedido.
+ * Pop-up "Ver repuestos". Muestra los repuestos agrupados por categoría del
+ * proveedor. **Todo lo que está acá se cotiza**: el sistema ya no elige por
+ * precio, el taller carga la pieza que va a usar — y por eso una categoría
+ * puede llevar dos piezas que suman las dos (válvulas de admisión y de escape).
  *
- * Cantidad y precio se editan por opción: es donde se corrige el caso de los
- * envases distintos (una marca viene por blíster de 8 y otra por blíster de 4).
+ * La columna que antes decía "Cotiza" es ahora la casilla **Opcional**: marca
+ * la pieza que se pone "por las dudas" (la bomba de aceite por si la del motor
+ * no sirve). Sigue guardada y sale en el PDF, en su propia caja y con precio,
+ * pero no suma al total.
+ *
+ * Cantidad, precio unitario y subtotal se editan por línea; entre el unitario y
+ * el subtotal manda el último que se escribe (ver utils/precios.js).
  */
 export function ModalRepuestosAgregados({
-  open, items, elegidaAMano = {}, onElegirAMano,
-  onCambiarCantidad, onCambiarPrecio, onQuitar, onQuitarVarias, onClose,
+  open, items, onCambiarCantidad, onCambiarPrecio, onCambiarSubtotal, onToggleOpcional,
+  onQuitar, onQuitarVarias, onClose,
 }) {
   const { grupos, sueltas } = React.useMemo(() => agruparLineas(items), [items])
   // null = nadie tocó las flechitas todavía: arrancan todos abiertos (es la
@@ -57,15 +64,8 @@ export function ModalRepuestosAgregados({
   )
   const todosCerrados = nombres.length > 0 && cerrados.length >= nombres.length
 
-  const totalGeneral = grupos.reduce((acc, g) => {
-    const elegida = opcionElegida(g.opciones, elegidaAMano[g.categoria])
-    return acc + (elegida ? subtotalDe(elegida) : 0)
-  }, 0) + sueltas.reduce((acc, l) => acc + subtotalDe(l), 0)
-
-  const ahorroTotal = grupos.reduce((acc, g) => {
-    const elegida = opcionElegida(g.opciones, elegidaAMano[g.categoria])
-    return acc + ahorroDelGrupo(g.opciones, elegida)
-  }, 0)
+  const totalGeneral = items.reduce((acc, l) => acc + (l.opcional ? 0 : subtotalDe(l)), 0)
+  const totalOpcionales = items.reduce((acc, l) => acc + (l.opcional ? subtotalDe(l) : 0), 0)
 
   return (
     <div
@@ -93,8 +93,8 @@ export function ModalRepuestosAgregados({
               Repuestos del presupuesto
             </h3>
             <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)', marginTop: 2 }}>
-              Se cotiza el más caro de cada grupo · Total {formatPrecioARS(totalGeneral)}
-              {ahorroTotal > 0 && ` · Ahorro potencial ${formatPrecioARS(ahorroTotal)}`}
+              Total {formatPrecioARS(totalGeneral)}
+              {totalOpcionales > 0 && ` · Opcionales ${formatPrecioARS(totalOpcionales)} (fuera del total)`}
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -128,10 +128,10 @@ export function ModalRepuestosAgregados({
               grupo={g}
               abierto={!cerrados.includes(g.categoria)}
               onAlternar={() => alternar(g.categoria)}
-              codigoAMano={elegidaAMano[g.categoria]}
-              onElegirAMano={onElegirAMano}
               onCambiarCantidad={onCambiarCantidad}
               onCambiarPrecio={onCambiarPrecio}
+              onCambiarSubtotal={onCambiarSubtotal}
+              onToggleOpcional={onToggleOpcional}
               onQuitar={onQuitar}
               onQuitarVarias={onQuitarVarias}
             />
@@ -140,11 +140,12 @@ export function ModalRepuestosAgregados({
           {sueltas.length > 0 && (
             <Grupo
               grupo={{ categoria: 'Sin categoría', opciones: sueltas }}
-              sueltas
               abierto={!cerrados.includes('__sueltas__')}
               onAlternar={() => alternar('__sueltas__')}
               onCambiarCantidad={onCambiarCantidad}
               onCambiarPrecio={onCambiarPrecio}
+              onCambiarSubtotal={onCambiarSubtotal}
+              onToggleOpcional={onToggleOpcional}
               onQuitar={onQuitar}
               onQuitarVarias={onQuitarVarias}
             />
@@ -156,38 +157,18 @@ export function ModalRepuestosAgregados({
 }
 
 function Grupo({
-  grupo, codigoAMano, onElegirAMano, sueltas, abierto = true, onAlternar,
-  onCambiarCantidad, onCambiarPrecio, onQuitar, onQuitarVarias,
+  grupo, abierto = true, onAlternar,
+  onCambiarCantidad, onCambiarPrecio, onCambiarSubtotal, onToggleOpcional, onQuitar, onQuitarVarias,
 }) {
-  const elegida = sueltas ? null : opcionElegida(grupo.opciones, codigoAMano)
-  const ahorro = sueltas ? 0 : ahorroDelGrupo(grupo.opciones, elegida)
   const sospechosas = React.useMemo(() => codigosConCantidadSospechosa(grupo.opciones), [grupo.opciones])
-  const elegidaSinStock = elegida && elegida.stock === 0
-  const hayAlternativaConStock = grupo.opciones.some((o) => o.stock === 1 && o !== elegida)
-
-  // Los dos extremos del grupo, para marcarlos en la columna "Cotiza": son la
-  // decisión que el taller toma acá (con cuál cotizar, cuál conviene pedir).
-  // La más cara se calcula sin mirar la elección a mano: si el usuario pisó al
-  // más caro, el chip de la elegida ya dice "Elegido a mano" y la nota tiene
-  // que seguir señalando cuál era el más caro de verdad.
-  const masCara = sueltas ? null : opcionElegida(grupo.opciones, null)
-  // Si ninguna de las baratas tiene stock igual se marca cuál es la más barata
-  // (el chip "Sin stock" ya está en su fila): la pregunta que contesta la nota
-  // es "cuál me conviene pedir", no "cuál hay hoy".
-  const masBarata = sueltas
-    ? null
-    : (masBarataDelGrupo(grupo.opciones) || masBarataDelGrupo(grupo.opciones, false))
-  // Con todos los precios iguales no hay extremos que marcar: sería ruido.
-  const hayExtremos = !sueltas && masCara && masBarata && subtotalDe(masCara) > subtotalDe(masBarata)
+  const cotizan = opcionesQueCotizan(grupo.opciones)
+  const sinStockQueCotiza = cotizan.some((o) => o.stock === 0)
 
   // Las medidas de un mismo repuesto (STD, 025, 050…) van SIEMPRE juntas y con
   // una línea al costado: son la misma pieza. Ordenar las opciones sueltas por
   // precio y agrupar después metía el código sin familia entre las medidas de
   // otro, y parecía una medida más de esa familia (bug reportado por el dueño).
-  const familias = React.useMemo(
-    () => familiasOrdenadas(grupo.opciones, elegida),
-    [grupo.opciones, elegida],
-  )
+  const familias = React.useMemo(() => familiasOrdenadas(grupo.opciones), [grupo.opciones])
 
   return (
     <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
@@ -210,47 +191,39 @@ function Grupo({
           </span>
           <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
             {grupo.opciones.length}{' '}
-            {sueltas
-              ? `repuesto${grupo.opciones.length === 1 ? '' : 's'}`
-              : `${grupo.opciones.length === 1 ? 'opción' : 'opciones'}`}
+            {grupo.opciones.length === 1 ? 'repuesto' : 'repuestos'}
+            {cotizan.length !== grupo.opciones.length && ` · ${grupo.opciones.length - cotizan.length} opcional${grupo.opciones.length - cotizan.length === 1 ? '' : 'es'}`}
           </span>
         </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-          {ahorro > 0 && (
-            <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>
-              Ahorro potencial <strong>{formatPrecioARS(ahorro)}</strong>
-            </span>
-          )}
-          {elegida && (
-            <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-strong)' }}>
-              Cotiza {formatPrecioARS(subtotalDe(elegida))}
-            </span>
-          )}
-        </div>
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-strong)' }}>
+          Cotiza {formatPrecioARS(subtotalDelGrupo(grupo.opciones))}
+        </span>
       </div>
 
-      {abierto && elegidaSinStock && hayAlternativaConStock && (
+      {abierto && sinStockQueCotiza && (
         <div style={{
           padding: '8px 16px', background: 'var(--status-expired-bg)', color: 'var(--status-expired-fg)',
           fontFamily: 'var(--font-body)', fontSize: 12,
         }}>
-          El repuesto que se está cotizando no tiene stock, pero otra opción del grupo sí.
+          Hay un repuesto cotizado sin stock — sujeto a disponibilidad.
         </div>
       )}
 
       {abierto && (
       <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 900 }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 980 }}>
           <thead>
             <tr>
-              <th style={{ ...encabezado, width: 120 }}>{sueltas ? '' : 'Cotiza'}</th>
+              <th style={{ ...encabezado, width: 110 }} title="Queda en el presupuesto y sale en el PDF, pero no suma al total">
+                Opcional
+              </th>
               <th style={{ ...encabezado, width: 150 }}>Código</th>
               <th style={encabezado}>Descripción</th>
               <th style={{ ...encabezado, width: 100 }}>Marca</th>
               <th style={{ ...encabezado, width: 70 }}>Medida</th>
               <th style={{ ...encabezado, width: 130, textAlign: 'right' }}>P. unitario</th>
               <th style={{ ...encabezado, width: 140, textAlign: 'center' }}>Cantidad</th>
-              <th style={{ ...encabezado, width: 120, textAlign: 'right' }}>Subtotal</th>
+              <th style={{ ...encabezado, width: 140, textAlign: 'right' }}>Subtotal</th>
               <th style={{ ...encabezado, width: 40 }} />
             </tr>
           </thead>
@@ -281,7 +254,6 @@ function Grupo({
                 </tr>
               ) : null,
               ...familia.opciones.map((it) => {
-                const esElegida = it === elegida
                 const sospechosa = sospechosas.has(it.repuesto_codigo || it.key)
                 const primeraCelda = familia.esFamilia ? { ...celda, ...lineaFamilia } : celda
                 return (
@@ -291,37 +263,20 @@ function Grupo({
                 <tr
                   key={it.key}
                   data-familia={familia.esFamilia ? familia.base : ''}
-                  style={esElegida ? { background: 'var(--status-active-bg)' } : undefined}
+                  data-opcional={it.opcional ? '1' : '0'}
+                  style={it.opcional ? { background: 'var(--surface-sunken)' } : undefined}
                 >
                   <td style={primeraCelda}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4 }}>
-                      {sueltas ? null : esElegida ? (
-                        <StatusBadge status="active">
-                          {codigoAMano === it.repuesto_codigo ? 'Elegido a mano' : 'El más caro'}
-                        </StatusBadge>
-                      ) : (
-                        <button
-                          onClick={() => onElegirAMano?.(grupo.categoria, it.repuesto_codigo)}
-                          title="Cotizar con este en vez del más caro"
-                          style={{
-                            border: '1px solid var(--border-default)', background: 'var(--surface-card)',
-                            borderRadius: 'var(--radius-pill)', padding: '4px 10px', cursor: 'pointer',
-                            fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)',
-                          }}
-                        >
-                          Usar este
-                        </button>
-                      )}
-                      {/* Si la fila ya lleva el chip "El más caro", la nota diría
-                          lo mismo dos veces. Solo aparece cuando aporta algo:
-                          en las filas que no cotizan, o cuando se eligió a mano. */}
-                      {hayExtremos && it === masCara && !(esElegida && codigoAMano !== it.repuesto_codigo) && (
-                        <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>El más caro</span>
-                      )}
-                      {hayExtremos && it === masBarata && (
-                        <span style={{ fontSize: 11, color: 'var(--text-faint)' }}>El más barato</span>
-                      )}
-                    </div>
+                    <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+                      <input
+                        type="checkbox"
+                        checked={Boolean(it.opcional)}
+                        onChange={() => onToggleOpcional?.(it.key)}
+                        title="Opcional: queda guardado y sale en el PDF aparte, pero no suma al total"
+                        style={{ width: 16, height: 16, cursor: 'pointer' }}
+                      />
+                      {it.opcional && <StatusBadge status="aviso">Opcional</StatusBadge>}
+                    </label>
                   </td>
                   <td style={celda}>
                     <CodigoRepuesto>{it.repuesto_codigo || 'Sin código'}</CodigoRepuesto>
@@ -349,6 +304,7 @@ function Grupo({
                     <TextField
                       value={it.precioTexto ?? ''}
                       onChange={(e) => onCambiarPrecio(it.key, e.target.value)}
+                      title="Precio unitario — se puede editar"
                       style={{
                         width: 110, textAlign: 'right',
                         borderColor: it.precio_unitario === null ? 'var(--status-expired-fg)' : undefined,
@@ -372,8 +328,18 @@ function Grupo({
                       <button style={botonCantidad} onClick={() => onCambiarCantidad(it.key, (it.cantidad || 0) + 1)}>+</button>
                     </span>
                   </td>
-                  <td style={{ ...celda, textAlign: 'right', fontWeight: 600, color: esElegida ? 'var(--text-strong)' : 'var(--text-muted)' }}>
-                    {formatPrecioARS(subtotalDe(it))}
+                  {/* El subtotal también se edita: lo que se escribe acá se
+                      reparte por la cantidad y pisa el precio unitario. */}
+                  <td style={{ ...celda, textAlign: 'right' }}>
+                    <TextField
+                      value={textoSubtotal(it.precio_unitario, it.cantidad)}
+                      onChange={(e) => onCambiarSubtotal(it.key, e.target.value)}
+                      title="Subtotal — se puede editar; el precio unitario se recalcula solo"
+                      style={{
+                        width: 120, textAlign: 'right', fontWeight: 600,
+                        borderColor: it.precio_unitario === null ? 'var(--status-expired-fg)' : undefined,
+                      }}
+                    />
                   </td>
                   <td style={{ ...celda, textAlign: 'center' }}>
                     <button

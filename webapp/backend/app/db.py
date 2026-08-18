@@ -8,7 +8,7 @@ import os
 import sqlite3
 from datetime import date, datetime
 
-from . import config
+from . import config, texto
 from .helpers import formato_nombre_titulo
 
 
@@ -17,6 +17,12 @@ def get_connection() -> sqlite3.Connection:
     os.makedirs(os.path.dirname(config.DB_PATH), exist_ok=True)
     conn = sqlite3.connect(config.DB_PATH)
     conn.row_factory = sqlite3.Row
+    # norm(): la misma normalización de búsqueda que usa el frontend (sin
+    # acentos, sin mayúsculas). Permite escribir "norm(c.nombre) LIKE ?" en
+    # tablas chicas —clientes, motores, presupuestos— sin tener que guardar una
+    # columna normalizada aparte. El catálogo del proveedor SÍ la guarda
+    # (crac_repuestos.busqueda): son 64.000 filas y se consulta en cada tecla.
+    conn.create_function("norm", 1, texto.normalizar, deterministic=True)
     return conn
 
 
@@ -87,7 +93,11 @@ def init_db():
                 cantidad          REAL NOT NULL DEFAULT 1,
                 precio_unitario   REAL,     -- unitario congelado al cotizar (NULL en servicios)
                 stock_al_cotizar  INTEGER,  -- 1/0 al cotizar; NULL en servicios y manuales
-                categoria         TEXT      -- categoría congelada al cotizar; es lo único que sale en el PDF
+                categoria         TEXT,     -- categoría congelada al cotizar; es lo único que sale en el PDF
+                -- 1 = línea OPCIONAL: está en el presupuesto y sale en el PDF en
+                -- su propia caja ("por si hace falta"), pero NO suma al total.
+                -- Sirve tanto para mano de obra como para repuestos.
+                opcional          INTEGER NOT NULL DEFAULT 0
             );
 
             CREATE TABLE IF NOT EXISTS presupuesto_pdfs (
@@ -116,17 +126,25 @@ def init_db():
             );
 
             -- Opciones de un grupo de repuestos dentro de un presupuesto.
-            -- Un grupo es una necesidad del motor (ej. "Cojinetes biela") que se
-            -- puede cubrir con varias piezas intercambiables: distintas marcas y
-            -- distintas medidas. Se cotiza la de mayor subtotal (la tolerancia del
-            -- taller: si la barata no está el día de la compra, el presupuesto ya
-            -- cubre la cara) y las demás quedan guardadas para el pedido.
+            -- Un grupo es una categoría del proveedor (ej. "Cojinetes biela"):
+            -- junta lo que se cargó de esa categoría, y su nombre es lo único
+            -- que lee el cliente en el PDF.
             --
-            -- La opción elegida vive TAMBIÉN como fila de presupuesto_items (acá
-            -- con elegida=1). Es a propósito: así los totales, el PDF y las
-            -- búsquedas siguen viendo exactamente lo que veían antes, sin
-            -- filtros nuevos. Las dos filas se escriben desde la misma estructura
-            -- calculada en _resolver_grupo, así que no pueden divergir.
+            -- Desde el 2026-08-18 **todo lo que se carga cotiza**: el sistema ya
+            -- no elige por precio, el taller carga lo que va a usar (por eso una
+            -- misma categoría puede llevar dos piezas que suman las dos, como
+            -- las válvulas de admisión y las de escape).
+            --   elegida = 1 → suma al total.
+            --   elegida = 0 → opcional: queda guardada y sale en la caja de
+            --     opcionales del PDF, pero no se cobra. Es también como quedaron
+            --     las "alternativas para el pedido" de los presupuestos
+            --     anteriores a ese cambio, que por eso siguen dando el mismo
+            --     total que el día que se emitieron.
+            --
+            -- Cada opción vive TAMBIÉN como fila de presupuesto_items. Es a
+            -- propósito: así los totales, el PDF y las búsquedas siguen viendo
+            -- una sola tabla. Las dos filas se escriben desde la misma
+            -- estructura calculada en _resolver_grupos, así que no divergen.
             CREATE TABLE IF NOT EXISTS presupuesto_item_opciones (
                 id               INTEGER PRIMARY KEY AUTOINCREMENT,
                 presupuesto_id   INTEGER NOT NULL REFERENCES presupuestos(id) ON DELETE CASCADE,
@@ -141,7 +159,10 @@ def init_db():
                 subtotal         REAL,       -- cantidad × unitario, congelado al cotizar
                 stock_al_cotizar INTEGER,
                 elegida          INTEGER NOT NULL DEFAULT 0,  -- 1 = es la que se cotizó
-                elegida_a_mano   INTEGER NOT NULL DEFAULT 0   -- 1 = el usuario pisó al más caro
+                -- Quedó de cuando el sistema elegía solo con cuál cotizar y se
+                -- podía pisar esa elección a mano. Hoy siempre es 0: no hay nada
+                -- que pisar, cotiza todo lo que se carga.
+                elegida_a_mano   INTEGER NOT NULL DEFAULT 0
             );
             CREATE INDEX IF NOT EXISTS idx_pio_presupuesto ON presupuesto_item_opciones(presupuesto_id);
 
@@ -223,7 +244,11 @@ def init_db():
                 -- códigos con el mismo base_codigo son la misma pieza en distintas
                 -- medidas, que es como se agregan solas al armar un grupo.
                 medida        TEXT,
-                base_codigo   TEXT
+                base_codigo   TEXT,
+                -- Descripción normalizada (sin acentos ni mayúsculas) para
+                -- buscar por palabras sueltas y en cualquier orden. Se llena al
+                -- importar; ver crac.normalizar_busqueda.
+                busqueda      TEXT
             );
             CREATE INDEX IF NOT EXISTS idx_crac_repuestos_codigo ON crac_repuestos(codigo);
             CREATE INDEX IF NOT EXISTS idx_crac_repuestos_cat    ON crac_repuestos(cat_prefijo);
@@ -266,6 +291,12 @@ def init_db():
             # Liga la línea cotizada con su grupo de opciones. NULL = repuesto
             # suelto o servicio, o sea el comportamiento de siempre.
             conn.execute("ALTER TABLE presupuesto_items ADD COLUMN grupo_num INTEGER")
+        if "opcional" not in cols_items:
+            # Migración aditiva con default 0: todo lo ya emitido sigue sumando
+            # exactamente lo mismo que antes.
+            conn.execute(
+                "ALTER TABLE presupuesto_items ADD COLUMN opcional INTEGER NOT NULL DEFAULT 0"
+            )
 
         cols_ficha = {r[1] for r in conn.execute("PRAGMA table_info(motor_repuesto_opciones)")}
         if "cantidad_manual" not in cols_ficha:
@@ -279,7 +310,24 @@ def init_db():
             conn.execute("ALTER TABLE crac_repuestos ADD COLUMN medida TEXT")
             conn.execute("ALTER TABLE crac_repuestos ADD COLUMN base_codigo TEXT")
             hay_catalogo = conn.execute("SELECT 1 FROM crac_repuestos LIMIT 1").fetchone()
+        if "busqueda" not in cols_crac:
+            conn.execute("ALTER TABLE crac_repuestos ADD COLUMN busqueda TEXT")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_crac_repuestos_base ON crac_repuestos(base_codigo)")
+
+        # Catálogo cargado antes de que existiera la columna normalizada: se
+        # llena acá para no obligar a reimportar el CSV. Es un UPDATE sobre
+        # ~64.000 filas, pero corre UNA sola vez (después ya no hay NULLs).
+        falta_busqueda = conn.execute(
+            "SELECT 1 FROM crac_repuestos WHERE busqueda IS NULL LIMIT 1"
+        ).fetchone()
+        if falta_busqueda:
+            filas = conn.execute(
+                "SELECT id, aplicacion FROM crac_repuestos WHERE busqueda IS NULL"
+            ).fetchall()
+            conn.executemany(
+                "UPDATE crac_repuestos SET busqueda = ? WHERE id = ?",
+                [(texto.normalizar(f[1]), f[0]) for f in filas],
+            )
 
         pdfs_sin_migrar = conn.execute(
             """
@@ -347,10 +395,20 @@ def _resolver_cliente(conn: sqlite3.Connection, nombre: str, tipo: str | None) -
     return cur.lastrowid
 
 
+def total_de_items(items: list[dict]) -> float:
+    """
+    Total del presupuesto: la suma de los subtotales, SIN las líneas opcionales.
+    Una línea opcional ("por si hace falta": la bomba de aceite que capaz no se
+    cambia) queda guardada, sale en el PDF en su propia caja y con su precio,
+    pero no se cobra hasta que se decida hacerla — por eso no entra acá.
+    """
+    return sum((i.get("precio_aplicado") or 0.0) for i in items if not i.get("opcional"))
+
+
 _COLS_ITEM = (
     "presupuesto_id, servicio_id, descripcion_custom, precio_aplicado, "
     "tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar, "
-    "categoria, grupo_num"
+    "categoria, grupo_num, opcional"
 )
 
 
@@ -358,7 +416,7 @@ def _insertar_item(conn: sqlite3.Connection, presupuesto_id: int, item: dict) ->
     """Inserta una línea de presupuesto. Usado tanto al crear como al editar,
     para que las dos rutas no se desincronicen cuando se agrega una columna."""
     conn.execute(
-        f"INSERT INTO presupuesto_items ({_COLS_ITEM}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        f"INSERT INTO presupuesto_items ({_COLS_ITEM}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         (
             presupuesto_id,
             item.get("servicio_id"),
@@ -371,6 +429,7 @@ def _insertar_item(conn: sqlite3.Connection, presupuesto_id: int, item: dict) ->
             item.get("stock_al_cotizar"),
             item.get("categoria"),
             item.get("grupo_num"),
+            1 if item.get("opcional") else 0,
         ),
     )
 
@@ -419,9 +478,9 @@ def guardar_presupuesto(
     items: list of {servicio_id, descripcion_custom, precio_aplicado,
                     tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
                     categoria, grupo_num}
-    opciones: alternativas de cada grupo de repuestos (ver presupuesto_item_opciones).
-    Solo la opción elegida de cada grupo viene además en `items`, así que el
-    total nunca suma las alternativas.
+    opciones: las opciones de cada grupo de repuestos (ver presupuesto_item_opciones).
+    Cada opción viene además como línea en `items`; las opcionales van con
+    opcional=1 y no suman al total (ver total_de_items).
     (servicio_id es None para ítems custom; los campos de repuesto son opcionales
     y solo vienen en ítems con tipo='repuesto')
     ajuste_pct: % de aumento/descuento sobre mano de obra usado al cotizar (ya
@@ -434,7 +493,7 @@ def guardar_presupuesto(
     tipo inverso al del cliente principal.
     Retorna el id del presupuesto creado.
     """
-    total = sum((i.get("precio_aplicado") or 0.0) for i in items)
+    total = total_de_items(items)
 
     with get_connection() as conn:
         cliente_id = _resolver_cliente(conn, cliente_nombre, cliente_tipo)
@@ -511,18 +570,26 @@ def buscar_presupuestos(
     where: list[str] = []
     params: list = []
 
+    # Los tres buscadores de texto van por palabras sueltas y sin acentos (ver
+    # texto.condicion_like): "valvula admision" encuentra "VÁLVULA DE ADMISIÓN".
     if repuesto:
         query += " JOIN presupuesto_items pi ON pi.presupuesto_id = p.id AND pi.tipo = 'repuesto'"
-        term = f"%{repuesto}%"
-        where.append("(pi.descripcion_custom LIKE ? OR pi.categoria LIKE ? OR pi.repuesto_codigo LIKE ?)")
-        params.extend([term, term, term])
+        cond, ps = texto.condicion_like(
+            ["norm(pi.descripcion_custom)", "norm(pi.categoria)", "norm(pi.repuesto_codigo)"], repuesto
+        )
+        if cond:
+            where.append(f"({cond})")
+            params.extend(ps)
     if motor:
-        where.append("m.motor LIKE ?")
-        params.append(f"%{motor}%")
+        cond, ps = texto.condicion_like(["norm(m.motor)"], motor)
+        if cond:
+            where.append(f"({cond})")
+            params.extend(ps)
     if cliente:
-        term = f"%{cliente}%"
-        where.append("(c.nombre LIKE ? OR c.notas LIKE ?)")
-        params.extend([term, term])
+        cond, ps = texto.condicion_like(["norm(c.nombre)", "norm(c.notas)"], cliente)
+        if cond:
+            where.append(f"({cond})")
+            params.extend(ps)
     if desde:
         where.append("p.fecha >= ?")
         params.append(desde)
@@ -701,6 +768,7 @@ def get_presupuesto_items_full(presupuesto_id: int) -> list[dict]:
                    pi.precio_aplicado,
                    pi.tipo, pi.repuesto_codigo, pi.cantidad,
                    pi.precio_unitario, pi.stock_al_cotizar, pi.categoria, pi.grupo_num,
+                   pi.opcional,
                    (SELECT cr.precio FROM crac_repuestos cr
                      WHERE cr.codigo = pi.repuesto_codigo LIMIT 1) AS precio_actual,
                    (SELECT cr.stock FROM crac_repuestos cr
@@ -718,7 +786,7 @@ def get_presupuesto_items_full(presupuesto_id: int) -> list[dict]:
                 "descripcion_custom", "precio_aplicado",
                 "tipo", "repuesto_codigo", "cantidad",
                 "precio_unitario", "stock_al_cotizar", "categoria", "grupo_num",
-                "precio_actual", "stock_actual"]
+                "opcional", "precio_actual", "stock_actual"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
@@ -736,7 +804,7 @@ def actualizar_presupuesto(
     opciones: alternativas de los grupos de repuestos (reemplazan a las anteriores).
     Elimina los ítems anteriores y los reinserta. Retorna el nuevo total.
     """
-    total = sum((i.get("precio_aplicado") or 0.0) for i in items_data)
+    total = total_de_items(items_data)
     with get_connection() as conn:
         conn.execute(
             "DELETE FROM presupuesto_items WHERE presupuesto_id = ?",
@@ -956,8 +1024,8 @@ def _orden_por_uso(opciones: list[dict]) -> list[dict]:
 def get_ficha_motor(motor_id: int) -> list[dict]:
     """
     Grupos de repuestos del motor con sus opciones resueltas contra el catálogo
-    de hoy. Cada grupo trae `elegida_codigo`: la opción de mayor subtotal, que
-    es con la que se cotizaría hoy.
+    de hoy. La ficha no decide nada: es la lista de qué piezas sirven para este
+    motor, y cuál entra en un presupuesto lo elige el taller al armarlo.
 
     `cantidad` en null = marcado sin cantidad (la pieza sirve para el motor pero
     todavía no se cotizó nunca). Adentro se guarda como 0 — ver el comentario del
@@ -1026,20 +1094,10 @@ def get_ficha_motor(motor_id: int) -> list[dict]:
                 "categoria": categoria,
                 "cat_prefijo": cat_prefijo,
                 "opciones": opciones,
-                "elegida_codigo": _codigo_mas_caro(opciones),
                 # Lo anotado por las dudas vs. lo que realmente se compra.
                 "cotizadas": sum(1 for o in opciones if o["usado_en"] > 0),
             })
         return resultado
-
-
-def _codigo_mas_caro(opciones: list[dict]) -> str | None:
-    """Código de la opción de mayor subtotal — la que se cotiza. Empate: la
-    primera. Devuelve None si no hay ninguna opción con precio."""
-    con_precio = [o for o in opciones if (o.get("subtotal") or 0) > 0]
-    if not con_precio:
-        return opciones[0]["codigo"] if opciones else None
-    return max(con_precio, key=lambda o: o["subtotal"])["codigo"]
 
 
 def guardar_ficha_motor(motor_id: int, grupos: list[dict]) -> None:

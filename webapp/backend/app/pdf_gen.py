@@ -72,6 +72,7 @@ def generar_pdf(
     total: float,
     output_path: str,
     repuestos: list[dict] | None = None,
+    opcionales: list[dict] | None = None,
 ) -> str:
     """
     Genera el PDF del presupuesto y lo guarda en output_path.
@@ -84,6 +85,12 @@ def generar_pdf(
     categoría del repuesto (ej. "Aros") — el código y la descripción del proveedor
     no salen en el PDF. `precio_unitario` puede ser None (filas agrupadas con
     precios distintos). El total ya los incluye.
+    opcionales: list of {descripcion, cantidad, precio_aplicado} — trabajos y
+    repuestos que pueden llegar a hacer falta y NO están incluidos en el total
+    (ej. una bomba de aceite, por si la del motor no sirve). Van en una caja
+    aparte al final, esta sí CON el precio de cada renglón y su propio subtotal:
+    como no entran en el total, el precio es lo único que le dice al cliente
+    cuánto le costaría si hace falta.
     Retorna output_path.
     """
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -218,8 +225,43 @@ def generar_pdf(
         ("BOX", (0, 0), (-1, -1), 0.5, AZUL_MEDIO),
     ]))
     story.append(total_table)
-    story.append(Spacer(1, 0.8 * cm))
+    story.append(Spacer(1, 0.5 * cm))
 
+    # Opcionales: va DESPUÉS del total y con precio por renglón, justamente para
+    # que se lea como lo que es — algo que todavía no está cobrado.
+    if opcionales:
+        col_p = 3.4 * cm
+        op_data = [[
+            _hd("Opcionales — puede llegar a hacer falta"),
+            _hd("Precio", TA_RIGHT),
+        ]]
+        subtotal_opcionales = 0.0
+        for op in opcionales:
+            desc = str(op.get("descripcion") or "")
+            cantidad = op.get("cantidad")
+            if cantidad is not None and float(cantidad) != 1:
+                desc = f"{desc} ×{_fmt_cantidad(cantidad)}"
+            precio = op.get("precio_aplicado") or 0
+            subtotal_opcionales += precio
+            op_data.append([
+                Paragraph(desc, E["celda_desc"]),
+                Paragraph(_fmt_precio(precio), E["celda_precio"]),
+            ])
+        op_data.append([
+            Paragraph("<b>Si se hacen todos</b>", E["celda_desc"]),
+            Paragraph(f"<b>{_fmt_precio(subtotal_opcionales)}</b>", E["celda_precio"]),
+        ])
+
+        tabla_opcionales = Table(op_data, colWidths=[page_w - col_p, col_p], repeatRows=1)
+        tabla_opcionales.setStyle(estilo_tabla_items)
+        story.append(tabla_opcionales)
+        story.append(Spacer(1, 0.2 * cm))
+        story.append(Paragraph(
+            "Estos trabajos y repuestos no están incluidos en el total: se agregan solo si hacen falta.",
+            E["pie"],
+        ))
+
+    story.append(Spacer(1, 0.6 * cm))
     story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#cccccc"), spaceAfter=0.3 * cm))
     story.append(Paragraph(
         "Este presupuesto tiene una validez de 7 días a partir de la fecha de emisión.",

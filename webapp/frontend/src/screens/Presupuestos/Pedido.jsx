@@ -25,17 +25,31 @@ export default function PedidoRepuestos() {
   const navigate = useNavigate()
   const [datos, setDatos] = React.useState(null)
   const [error, setError] = React.useState('')
-  const [elegidas, setElegidas] = React.useState({})   // grupo_num → código a pedir
+  // grupo_num → códigos a pedir de ese grupo. Es una lista y no un código
+  // suelto porque un grupo puede llevar dos piezas distintas que se piden las
+  // dos (válvulas de admisión y de escape van las dos en "Válvulas").
+  const [elegidas, setElegidas] = React.useState({})
   const [modalCodigos, setModalCodigos] = React.useState(false)
 
   React.useEffect(() => {
     api.get(`/presupuestos/${id}/pedido`)
       .then((d) => {
         setDatos(d)
-        // Arranca preseleccionado lo más barato con stock de cada grupo: es lo
-        // que uno pediría por defecto. Se cambia con un click.
+        /*
+         * Arranca preseleccionado lo que hay que comprar:
+         *  - si el grupo cotiza una sola pieza, la más barata con stock (que
+         *    es lo que uno pediría en vez de la cotizada: el backend la manda
+         *    solo en ese caso);
+         *  - si cotiza más de una, todas las cotizadas — son piezas distintas,
+         *    no alternativas, así que se piden todas.
+         */
         const inicial = {}
-        d.grupos.forEach((g) => { if (g.mas_barata_codigo) inicial[g.grupo_num] = g.mas_barata_codigo })
+        d.grupos.forEach((g) => {
+          const cotizadas = g.marcas.flatMap((m) => m.medidas).filter((o) => o.elegida)
+          inicial[g.grupo_num] = g.mas_barata_codigo
+            ? [g.mas_barata_codigo]
+            : cotizadas.map((o) => o.repuesto_codigo).filter(Boolean)
+        })
         setElegidas(inicial)
       })
       .catch((err) => setError(err.message || 'No se pudo cargar el pedido'))
@@ -45,21 +59,22 @@ export default function PedidoRepuestos() {
   // códigos y el total (antes cada uno la resolvía por su lado).
   const lineasAPedir = React.useMemo(() => {
     if (!datos) return []
-    return datos.grupos.map((g) => {
-      const codigo = elegidas[g.grupo_num]
-      const opcion = g.marcas.flatMap((m) => m.medidas).find((o) => o.repuesto_codigo === codigo)
-      if (!opcion) return null
-      return {
-        grupo_num: g.grupo_num,
-        categoria: g.categoria,
-        codigo: opcion.repuesto_codigo,
-        marca: opcion.marca,
-        medida: opcion.medida,
-        cantidad: opcion.cantidad,
-        subtotal_hoy: opcion.subtotal_hoy,
-        hay_stock: opcion.hay_stock,
-      }
-    }).filter(Boolean)
+    return datos.grupos.flatMap((g) => {
+      const codigos = elegidas[g.grupo_num] || []
+      return g.marcas
+        .flatMap((m) => m.medidas)
+        .filter((op) => codigos.includes(op.repuesto_codigo))
+        .map((opcion) => ({
+          grupo_num: g.grupo_num,
+          categoria: g.categoria,
+          codigo: opcion.repuesto_codigo,
+          marca: opcion.marca,
+          medida: opcion.medida,
+          cantidad: opcion.cantidad,
+          subtotal_hoy: opcion.subtotal_hoy,
+          hay_stock: opcion.hay_stock,
+        }))
+    })
   }, [datos, elegidas])
 
   const totalAPedir = React.useMemo(
@@ -109,8 +124,8 @@ export default function PedidoRepuestos() {
         </div>
       )}
 
-      {/* Números de la operación. El margen real sale de comparar lo que se
-          cotizó (siempre el más caro) contra lo que se va a pagar de verdad. */}
+      {/* Números de la operación: lo que se le cotizó al cliente contra lo que
+          se va a pagar de verdad comprando lo que está marcado acá. */}
       <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', padding: '18px 22px', background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)' }}>
         <Cifra label="Cotizado al cliente" valor={formatPrecioARS(datos.total_cotizado)} />
         <Cifra label="Comprando lo elegido" valor={formatPrecioARS(totalAPedir)} />
@@ -150,9 +165,17 @@ export default function PedidoRepuestos() {
         <GrupoPedido
           key={g.grupo_num}
           grupo={g}
-          elegida={elegidas[g.grupo_num]}
+          elegidas={elegidas[g.grupo_num] || []}
           motorId={datos.presupuesto?.motor_id}
-          onElegir={(codigo) => setElegidas((prev) => ({ ...prev, [g.grupo_num]: codigo }))}
+          onElegir={(codigo) => setElegidas((prev) => {
+            const actuales = prev[g.grupo_num] || []
+            return {
+              ...prev,
+              [g.grupo_num]: actuales.includes(codigo)
+                ? actuales.filter((c) => c !== codigo)
+                : [...actuales, codigo],
+            }
+          })}
         />
       ))}
 
@@ -181,12 +204,12 @@ function Cifra({ label, valor, destacado }) {
   )
 }
 
-function GrupoPedido({ grupo, elegida, onElegir, motorId }) {
+function GrupoPedido({ grupo, elegidas, onElegir, motorId }) {
   // Si no hay stock en ninguna marca de lo que se cotizó, el aviso ofrece las
   // otras marcas del catálogo que sirven para esta misma pieza. Solo sugiere:
   // no cambia nada del pedido ni del presupuesto — la decisión es del taller.
   const codigoParaAlternativas = grupo.sin_stock_total
-    ? (elegida || grupo.marcas.flatMap((m) => m.medidas).find((o) => o.repuesto_codigo)?.repuesto_codigo)
+    ? (elegidas[0] || grupo.marcas.flatMap((m) => m.medidas).find((o) => o.repuesto_codigo)?.repuesto_codigo)
     : null
 
   return (
@@ -232,14 +255,14 @@ function GrupoPedido({ grupo, elegida, onElegir, motorId }) {
             }}>
               {marca.marca}
               {!marca.hay_stock && <StatusBadge status="expired">Sin stock</StatusBadge>}
-              {marca.tiene_elegida && <StatusBadge status="pending">Es la que se cotizó</StatusBadge>}
+              {marca.tiene_elegida && <StatusBadge status="pending">Está en el presupuesto</StatusBadge>}
               <span style={{ marginLeft: 'auto', fontWeight: 400, color: 'var(--text-faint)', fontSize: 12 }}>
                 desde {marca.desde ? formatPrecioARS(marca.desde) : '—'}
               </span>
             </div>
 
             {marca.medidas.map((op) => {
-              const seleccionada = elegida === op.repuesto_codigo
+              const seleccionada = elegidas.includes(op.repuesto_codigo)
               return (
                 <button
                   key={op.repuesto_codigo || op.descripcion}

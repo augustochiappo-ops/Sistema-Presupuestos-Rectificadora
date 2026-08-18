@@ -28,6 +28,7 @@ from werkzeug.security import generate_password_hash  # noqa: E402
 os.environ["APP_PASSWORD_HASH"] = generate_password_hash("test123")
 
 from app import db, crac, facra  # noqa: E402
+from app.helpers import formato_precio_ars  # noqa: E402
 from app.routes import presupuestos as rp  # noqa: E402
 
 NOMENCLADOR = os.path.join(RAIZ, "Excel", "Facra", "nomenclador_1779985703.xls")
@@ -74,31 +75,48 @@ check("S60 y 60/ excluidos", "S60" not in familia and "60/" not in familia, fami
 check("ACAM 3066 (nro de parte) sin hermanas", crac.get_medidas_hermanas("ACAM 3066") == [])
 check("catálogo con fecha de importación", crac.get_info_catalogo()["importado_en"] is not None)
 
-print("\n=== 2. Elección de la opción más cara (por subtotal) ===")
-# El caso exacto del dueño: juego de 8 a $1.000 (cant 1) vs blíster de 2 a $400 (cant 4).
+print("\n=== 2. Todo lo cargado cotiza; lo opcional no ===")
+# Desde el 2026-08-18 el sistema no elige por precio: el taller carga la pieza
+# que va a usar, y por eso una misma categoría puede llevar dos que suman las
+# dos (válvulas de admisión y de escape). Lo único que no suma es lo opcional.
 grupo = {
     "categoria": "Cojinetes biela",
     "opciones": [
         {"descripcion": "Marca A juego de 8", "cantidad": 1, "precio_unitario": 1000},
         {"descripcion": "Marca B blister de 2", "cantidad": 4, "precio_unitario": 400},
-        {"descripcion": "Marca C sin precio", "cantidad": 1, "precio_unitario": 0},
+        {"descripcion": "Bomba por las dudas", "cantidad": 1, "precio_unitario": 5000,
+         "opcional": True},
     ],
 }
 items, opciones, descartados = rp._resolver_grupos([grupo])
-check("un solo ítem cotizado por grupo", len(items) == 1, items)
-check("gana el de mayor subtotal ($1.600)", items[0]["precio_aplicado"] == 1600, items[0])
+check("una línea por repuesto cargado", len(items) == 3, items)
+check("el subtotal es cantidad × unitario",
+      sorted(i["precio_aplicado"] for i in items) == [1000.0, 1600.0, 5000.0],
+      [i["precio_aplicado"] for i in items])
 check("las 3 opciones quedan guardadas", len(opciones) == 3)
-check("precio 0 no gana", not [o for o in opciones if o["elegida"] and o["precio_unitario"] == 0])
+check("cotizan las dos que no son opcionales",
+      sum(1 for o in opciones if o["elegida"]) == 2, opciones)
+check("la opcional queda guardada sin cotizar",
+      [o for o in opciones if not o["elegida"]][0]["descripcion"] == "Bomba por las dudas")
+check("el total suma las dos que cotizan y no la opcional",
+      db.total_de_items(items) == 2600, db.total_de_items(items))
 check("sin descartados", descartados == [], descartados)
 check("categoría del grupo en todas las opciones",
       all(o["categoria"] == "Cojinetes biela" for o in opciones))
+check("ya no queda ninguna elección a mano",
+      all(o["elegida_a_mano"] is False for o in opciones))
 
-# Elección manual pisa al más caro.
-grupo_manual = dict(grupo, elegida_a_mano=None)
-codigo_b = None
-items2, opciones2, _ = rp._resolver_grupos([grupo_manual])
-elegida_auto = [o for o in opciones2 if o["elegida"]][0]
-check("sin override gana la de $1.600", elegida_auto["subtotal"] == 1600)
+# Dos repuestos distintos de la misma categoría: el caso de las válvulas.
+items_v, opciones_v, _ = rp._resolver_grupos([{
+    "categoria": "Válvulas",
+    "opciones": [
+        {"descripcion": "Válvulas de admisión", "cantidad": 8, "precio_unitario": 1000},
+        {"descripcion": "Válvulas de escape", "cantidad": 8, "precio_unitario": 1200},
+    ],
+}])
+check("las dos válvulas cotizan", len(items_v) == 2 and all(o["elegida"] for o in opciones_v))
+check("el total suma las dos", db.total_de_items(items_v) == 17600, db.total_de_items(items_v))
+check("las dos van al mismo grupo", {i["grupo_num"] for i in items_v} == {1})
 
 print("\n=== 3. Ciclo completo de un presupuesto con grupos ===")
 motores = facra.get_motores()
@@ -124,16 +142,15 @@ db.fusionar_ficha_motor(motor["id"], rp._grupos_para_ficha(opciones_g))
 detalle = db.get_presupuesto_detalle(pid)
 items_guardados = db.get_presupuesto_items_full(pid)
 repuestos_guardados = [i for i in items_guardados if i["tipo"] == "repuesto"]
-check("solo la elegida como línea del presupuesto", len(repuestos_guardados) == 1, repuestos_guardados)
-check("total = subtotal de la elegida", round(detalle["total"], 2) == round(repuestos_guardados[0]["precio_aplicado"], 2))
-check("la línea tiene grupo_num", repuestos_guardados[0]["grupo_num"] == 1)
+check("una línea por repuesto cargado", len(repuestos_guardados) == 3, repuestos_guardados)
+check("total = suma de las tres líneas",
+      round(detalle["total"], 2) == round(sum(r["precio_aplicado"] for r in repuestos_guardados), 2))
+check("las líneas tienen grupo_num", all(r["grupo_num"] == 1 for r in repuestos_guardados))
+check("ninguna quedó marcada como opcional", all(not r["opcional"] for r in repuestos_guardados))
 
 grupos_db = db.get_grupos_presupuesto(pid)
 check("el grupo guardó sus 3 opciones", len(grupos_db) == 1 and len(grupos_db[0]["opciones"]) == 3)
-check("exactamente una elegida", sum(1 for o in grupos_db[0]["opciones"] if o["elegida"]) == 1)
-subtotales = [o["subtotal"] for o in grupos_db[0]["opciones"]]
-elegida_db = [o for o in grupos_db[0]["opciones"] if o["elegida"]][0]
-check("la elegida es la de mayor subtotal", elegida_db["subtotal"] == max(subtotales), subtotales)
+check("las tres cotizan", sum(1 for o in grupos_db[0]["opciones"] if o["elegida"]) == 3)
 check("las opciones guardan marca", all(o["marca"] for o in grupos_db[0]["opciones"]))
 
 print("\n=== 4. Ficha del motor ===")
@@ -141,7 +158,7 @@ ficha = db.get_ficha_motor(motor["id"])
 check("la ficha se creó sola al presupuestar", len(ficha) == 1, ficha)
 check("la ficha tiene las 3 opciones", len(ficha[0]["opciones"]) == 3)
 check("la ficha resuelve precio de hoy", all(o["precio_actual"] is not None for o in ficha[0]["opciones"]))
-check("la ficha marca la más cara", ficha[0]["elegida_codigo"] is not None)
+check("la ficha ya no elige con cuál se cotizaría", "elegida_codigo" not in ficha[0], ficha[0].keys())
 check("la ficha respeta la cantidad cargada",
       sorted(o["cantidad"] for o in ficha[0]["opciones"]) == [1, 1, 2])
 
@@ -406,9 +423,9 @@ grupos2 = cliente.get(f"/api/presupuestos/{pid2}/grupos").get_json()
 check("el presupuesto nuevo tiene su grupo", len(grupos2) == 1 and len(grupos2[0]["opciones"]) == 2)
 items2 = cliente.get(f"/api/presupuestos/{pid2}/items").get_json()
 reps2 = [i for i in items2 if i["tipo"] == "repuesto"]
-check("una sola línea de repuesto cotizada", len(reps2) == 1)
-total_calculado = sum(i["precio_aplicado"] for i in items2)
-check("total = suma de líneas (alternativas no suman)",
+check("una línea por repuesto cargado", len(reps2) == 2, reps2)
+total_calculado = sum(i["precio_aplicado"] for i in items2 if not i["opcional"])
+check("total = suma de líneas (lo opcional no suma)",
       round(cliente.get(f"/api/presupuestos/{pid2}").get_json()["total"], 2) == round(total_calculado, 2))
 
 print("\n=== 8b. Precio de mano de obra pisado a mano ===")
@@ -473,23 +490,43 @@ payload_edicion = {
     "notas": "editado",
     "grupos_repuestos": [{
         "categoria": "Cojinetes biela",
-        "elegida_a_mano": codigos[1],
         "opciones": [
             {"repuesto_codigo": codigos[0], "cantidad": 1, "precio_unitario": 1000},
-            {"repuesto_codigo": codigos[1], "cantidad": 2, "precio_unitario": 100},
+            # Al editar se puede mandar una línea a opcionales: queda guardada
+            # pero deja de sumar.
+            {"repuesto_codigo": codigos[1], "cantidad": 2, "precio_unitario": 100,
+             "opcional": True},
         ],
     }],
 }
 r = cliente.put(f"/api/presupuestos/{pid2}", json=payload_edicion)
 check("PUT con grupos responde 200", r.status_code == 200, r.get_json())
 grupos3 = cliente.get(f"/api/presupuestos/{pid2}/grupos").get_json()
-elegida3 = [o for o in grupos3[0]["opciones"] if o["elegida"]][0]
-check("la elección manual pisa al más caro", elegida3["repuesto_codigo"] == codigos[1], elegida3)
-check("queda marcada como elegida a mano", elegida3["elegida_a_mano"] == 1)
+cotizadas3 = [o for o in grupos3[0]["opciones"] if o["elegida"]]
+check("cotiza la que no es opcional", [o["repuesto_codigo"] for o in cotizadas3] == [codigos[0]], cotizadas3)
+opcional3 = [o for o in grupos3[0]["opciones"] if not o["elegida"]][0]
+check("la opcional se guarda igual", opcional3["repuesto_codigo"] == codigos[1], opcional3)
+check("la opcional guarda su subtotal", opcional3["subtotal"] == 200, opcional3)
+items_ed = cliente.get(f"/api/presupuestos/{pid2}/items").get_json()
+check("la línea opcional viaja marcada",
+      [i["opcional"] for i in items_ed if i["repuesto_codigo"] == codigos[1]] == [1], items_ed)
+total_ed = cliente.get(f"/api/presupuestos/{pid2}").get_json()["total"]
+check("el total no suma la opcional",
+      round(total_ed, 2) == round(sum(i["precio_aplicado"] for i in items_ed if not i["opcional"]), 2),
+      total_ed)
 
 print("\n=== 10. PDF ===")
 from pypdf import PdfReader  # noqa: E402
 from app import config  # noqa: E402
+
+
+def _texto_pdf(presupuesto_id, version=None):
+    pdfs_p = db.get_pdfs_presupuesto(presupuesto_id)
+    elegido = pdfs_p[0] if version is None else [p for p in pdfs_p if p["version"] == version][0]
+    ruta = os.path.join(config.PDFS_DIR, elegido["pdf_path"])
+    return "".join(pg.extract_text() for pg in PdfReader(ruta).pages)
+
+
 pdfs = db.get_pdfs_presupuesto(pid2)
 ruta_pdf = os.path.join(config.PDFS_DIR, pdfs[0]["pdf_path"])
 texto = "".join(p.extract_text() for p in PdfReader(ruta_pdf).pages)
@@ -507,6 +544,43 @@ check("el PDF dice Rectificaciones Chiappo", "Rectificaciones Chiappo" in texto_
 check("el PDF no dice Chicappo", "Chicappo" not in texto_plano)
 check("el PDF dice Rectificación de motores", "Rectificación de motores" in texto_plano, texto_plano[:200])
 check("el PDF no dice Taller de", "Taller de" not in texto_plano)
+
+# Un presupuesto con opcionales: mano de obra y repuesto marcados "por las
+# dudas". La caja de opcionales es la única del PDF que lleva precio por
+# renglón, justamente porque no está incluida en el total.
+body_op = {
+    "cliente_nombre": "cliente opcionales",
+    "motor_id": motor["id"],
+    "items": [
+        {"servicio_id": servicios[0]["id"], "cantidad": 1},
+        {"servicio_id": servicios[1]["id"], "cantidad": 1, "opcional": True},
+    ],
+    "grupos_repuestos": [{
+        "categoria": "Cojinetes biela",
+        "opciones": [
+            {"repuesto_codigo": codigos[0], "cantidad": 1},
+            {"repuesto_codigo": codigos[1], "cantidad": 1, "opcional": True},
+        ],
+    }],
+}
+r = cliente.post("/api/presupuestos", json=body_op)
+check("presupuesto con opcionales creado", r.status_code == 201, r.get_json())
+pid_op = r.get_json()["id"]
+items_op = cliente.get(f"/api/presupuestos/{pid_op}/items").get_json()
+detalle_op = cliente.get(f"/api/presupuestos/{pid_op}").get_json()
+check("los opcionales se guardan como líneas", sum(1 for i in items_op if i["opcional"]) == 2, items_op)
+check("el total no los suma",
+      round(detalle_op["total"], 2) == round(sum(i["precio_aplicado"] for i in items_op if not i["opcional"]), 2),
+      detalle_op["total"])
+texto_op = " ".join(_texto_pdf(pid_op).split())
+check("el PDF tiene la caja de opcionales", "Opcionales — puede llegar a hacer falta" in texto_op, texto_op[:400])
+check("los opcionales aclaran que no están incluidos",
+      "no están incluidos en el total" in texto_op, texto_op[-400:])
+check("la caja de opcionales lleva su subtotal", "Si se hacen todos" in texto_op)
+check("el servicio opcional sale en la caja de opcionales",
+      servicios[1]["descripcion"][:18] in texto_op.split("puede llegar a hacer falta")[1], texto_op[-600:])
+check("el total del PDF es el que no incluye los opcionales",
+      formato_precio_ars(detalle_op["total"]) in texto_op, formato_precio_ars(detalle_op["total"]))
 
 print("\n=== 11. Actualizar a precios de hoy (revalidar) ===")
 
@@ -582,28 +656,42 @@ _sql("UPDATE crac_repuestos SET precio = 1500 WHERE codigo = ?", (codigos[0],))
 res = cliente.get(f"/api/presupuestos/{pid3}/revalidacion").get_json()
 grupo_cojinetes = [g for g in res["repuestos"]["grupos"] if g["categoria"] == "Cojinetes biela"][0]
 check("detecta el aumento", res["hay_cambios_repuestos"] is True)
+check("avisa que hubo subas", res["hay_subas"] is True, res)
 check("diferencia exacta del grupo", grupo_cojinetes["diferencia"] == 500, grupo_cojinetes)
-check("sigue cotizando la misma opción", grupo_cojinetes["cambio_de_opcion"] is False)
+check("el grupo informa sus dos líneas", len(grupo_cojinetes["lineas"]) == 2, grupo_cojinetes)
+linea_subio = [l for l in grupo_cojinetes["lineas"] if l["repuesto_codigo"] == codigos[0]][0]
 check("el aviso muestra el precio viejo y el nuevo",
-      any("→" in a for a in grupo_cojinetes["avisos"]), grupo_cojinetes["avisos"])
+      any("→" in a for a in linea_subio["avisos"]), linea_subio["avisos"])
+check("la línea que no cambió no avisa nada",
+      not [l for l in grupo_cojinetes["lineas"] if l["repuesto_codigo"] == codigos[1]][0]["avisos"])
 check("el total nuevo sube lo mismo que los repuestos",
       round(res["total_nuevo"] - res["total_antes"], 2) == 500, res)
 
 grupo_fuera = [g for g in res["repuestos"]["grupos"] if g["categoria"] == "Junta inexistente"][0]
-check("el código fuera de catálogo conserva su precio",
-      grupo_fuera["elegida_ahora"]["precio_unitario"] == 500, grupo_fuera)
+linea_fuera = grupo_fuera["lineas"][0]
+check("el código fuera de catálogo conserva su precio", linea_fuera["precio_ahora"] == 500, grupo_fuera)
 check("y avisa que ya no está",
-      any("catálogo" in a for a in grupo_fuera["avisos"]), grupo_fuera["avisos"])
+      any("catálogo" in a for a in linea_fuera["avisos"]), linea_fuera["avisos"])
 check("el fuera de catálogo no cuenta como diferencia", grupo_fuera["diferencia"] == 0)
 
-# Ahora la otra opción del grupo pasa a ser la más cara: tiene que cambiar sola.
+# La otra línea del grupo también sube: las dos cotizan, así que la diferencia
+# del grupo suma las dos (antes solo contaba "la más cara").
 _sql("UPDATE crac_repuestos SET precio = 5000 WHERE codigo = ?", (codigos[1],))
 res = cliente.get(f"/api/presupuestos/{pid3}/revalidacion").get_json()
 grupo_cojinetes = [g for g in res["repuestos"]["grupos"] if g["categoria"] == "Cojinetes biela"][0]
-check("cambia la opción cotizada", grupo_cojinetes["cambio_de_opcion"] is True, grupo_cojinetes)
-check("ahora cotiza la que pasó a ser más cara",
-      grupo_cojinetes["elegida_ahora"]["repuesto_codigo"] == codigos[1], grupo_cojinetes)
-check("con el subtotal nuevo", grupo_cojinetes["subtotal_ahora"] == 5000)
+check("la diferencia del grupo suma las dos líneas", grupo_cojinetes["diferencia"] == 4700, grupo_cojinetes)
+check("el subtotal de hoy es la suma de las dos", grupo_cojinetes["subtotal_ahora"] == 6500)
+
+# Precios que solo BAJAN: se detecta el cambio, pero no hay subas — es lo que
+# decide si la pantalla muestra el cartel rojo. Para eso el otro código vuelve
+# al precio con el que se cotizó (1000), así ninguna línea queda arriba.
+_sql("UPDATE crac_repuestos SET precio = 1000 WHERE codigo = ?", (codigos[0],))
+_sql("UPDATE crac_repuestos SET precio = 100 WHERE codigo = ?", (codigos[1],))
+res_baja = cliente.get(f"/api/presupuestos/{pid3}/revalidacion").get_json()
+check("una baja sigue contando como cambio", res_baja["hay_cambios_repuestos"] is True)
+check("pero no cuenta como suba", res_baja["hay_subas"] is False, res_baja)
+_sql("UPDATE crac_repuestos SET precio = 1500 WHERE codigo = ?", (codigos[0],))
+_sql("UPDATE crac_repuestos SET precio = 5000 WHERE codigo = ?", (codigos[1],))
 
 # La mano de obra cambia, pero este botón no la toca.
 _sql(f"UPDATE servicios SET {col_lista} = ? WHERE id = ?",
@@ -623,11 +711,11 @@ check("aplicó cambios", aplicado["sin_cambios"] is False)
 detalle3 = cliente.get(f"/api/presupuestos/{pid3}").get_json()
 items3 = cliente.get(f"/api/presupuestos/{pid3}/items").get_json()
 grupos3b = cliente.get(f"/api/presupuestos/{pid3}/grupos").get_json()
-elegida_final = [o for o in
-                 [g for g in grupos3b if g["categoria"] == "Cojinetes biela"][0]["opciones"]
-                 if o["elegida"]][0]
-check("quedó cotizada la más cara de hoy", elegida_final["repuesto_codigo"] == codigos[1], elegida_final)
-check("el precio guardado es el de hoy", elegida_final["precio_unitario"] == 5000)
+opciones_final = [g for g in grupos3b if g["categoria"] == "Cojinetes biela"][0]["opciones"]
+check("las dos siguen cotizando", sum(1 for o in opciones_final if o["elegida"]) == 2, opciones_final)
+precios_final = {o["repuesto_codigo"]: o["precio_unitario"] for o in opciones_final}
+check("los precios guardados son los de hoy",
+      precios_final[codigos[0]] == 1500 and precios_final[codigos[1]] == 5000, precios_final)
 check("el total guardado coincide con el previsualizado",
       round(detalle3["total"], 2) == round(aplicado["resumen"]["total_nuevo"], 2), detalle3["total"])
 check("el total subió respecto del original", detalle3["total"] > total_inicial)
@@ -729,6 +817,91 @@ r = cliente.delete(f"/api/clientes/{id_contacto}")
 check("la contraparte tampoco se puede borrar", r.status_code == 409, r.get_json())
 
 check("borrar un cliente inexistente da 404", cliente.delete("/api/clientes/999999").status_code == 404)
+
+print("\n=== 13b. Buscadores sin acentos y por palabras sueltas ===")
+from app import texto as txt  # noqa: E402
+
+check("normalizar saca acentos y mayúsculas",
+      txt.normalizar("VÁLVULAS DE ADMISIÓN") == "valvulas de admision", txt.normalizar("VÁLVULAS DE ADMISIÓN"))
+check("la coma decimal se lee como punto", txt.normalizar("2,8 TD") == "2.8 td")
+check("coincide sin importar el orden", txt.coincide(["FIAT DUCATO 2.8TD"], "2.8 fiat"))
+check("una palabra que falta no coincide", not txt.coincide(["FIAT DUCATO 2.8TD"], "fiat renault"))
+check("coincide con acento escrito o no",
+      txt.coincide(["Sacar/colocar asientos de válvulas"], "valvulas")
+      and txt.coincide(["Sacar/colocar asientos de valvulas"], "válvulas"))
+
+# Motores: "fiat 2.8" tiene que encontrar "FIAT DUCATO 2.8 ..." aunque las
+# palabras no estén juntas ni en ese orden.
+por_motor = [m["motor"] for m in facra.get_motores(busqueda="fiat 2.8")]
+check("el buscador de motores encuentra palabras sueltas", len(por_motor) >= 1, por_motor[:3])
+check("y no depende del orden",
+      [m["motor"] for m in facra.get_motores(busqueda="2.8 fiat")] == por_motor)
+check("una palabra de más deja de coincidir",
+      facra.get_motores(busqueda="fiat 2.8 renault mercedes") == [])
+check("el buscador de motores ignora mayúsculas",
+      len(facra.get_motores(busqueda="citroen")) == len(facra.get_motores(busqueda="CITROËN")),
+      len(facra.get_motores(busqueda="CITROËN")))
+
+# Catálogo del proveedor: es la búsqueda que más se usa, y va contra la columna
+# normalizada que se llena al importar.
+rep_orden = crac.get_repuestos(descripcion="fiat 2.8", limite=50)
+check("el buscador de repuestos encuentra palabras sueltas", len(rep_orden) >= 1,
+      [r["aplicacion"] for r in rep_orden[:2]])
+check("todos los resultados tienen las dos palabras",
+      all(txt.coincide([r["aplicacion"]], "fiat 2.8") for r in rep_orden))
+check("el orden de las palabras no cambia el resultado",
+      [r["codigo"] for r in crac.get_repuestos(descripcion="2.8 fiat", limite=50)]
+      == [r["codigo"] for r in rep_orden])
+check("el contador coincide con la búsqueda",
+      crac.get_repuestos_count(descripcion="fiat 2.8") == crac.get_repuestos_count(descripcion="2.8 fiat"))
+check("buscar en minúsculas encuentra lo mismo",
+      len(crac.get_repuestos(descripcion="ducato", limite=50))
+      == len(crac.get_repuestos(descripcion="DUCATO", limite=50)))
+check("el catálogo quedó con la columna de búsqueda llena",
+      _sql("SELECT COUNT(*) FROM crac_repuestos WHERE busqueda IS NULL")[0][0] == 0)
+
+# Historial de presupuestos: cliente con acento y ñ.
+r = cliente.post("/api/presupuestos", json={
+    "cliente_nombre": "Ramón Peña",
+    "motor_id": motor["id"],
+    "items": [{"descripcion_custom": "Trabajo suelto", "precio_aplicado": 1000, "cantidad": 1}],
+})
+check("presupuesto con cliente acentuado creado", r.status_code == 201, r.get_json())
+check("el historial encuentra al cliente sin acentos",
+      any(p["cliente"] == "Ramón Peña" for p in db.buscar_presupuestos(cliente="ramon pena")),
+      db.buscar_presupuestos(cliente="ramon pena"))
+check("y también escribiéndolo con acentos",
+      any(p["cliente"] == "Ramón Peña" for p in db.buscar_presupuestos(cliente="Peña Ramón")))
+check("el historial busca repuestos por palabras sueltas",
+      len(db.buscar_presupuestos(repuesto="biela cojinetes")) >= 1)
+
+print("\n=== 13c. Un presupuesto viejo conserva su total ===")
+# Antes de este cambio, un grupo guardaba varias opciones y solo la más cara
+# entraba como línea del presupuesto. Esos presupuestos siguen existiendo: la
+# regla nueva no los puede encarecer.
+items_viejo = [{
+    "servicio_id": None, "descripcion_custom": "Cojinete caro", "precio_aplicado": 1600.0,
+    "tipo": "repuesto", "repuesto_codigo": codigos[0], "cantidad": 1,
+    "precio_unitario": 1600.0, "stock_al_cotizar": 1, "categoria": "Cojinetes biela",
+    "grupo_num": 1,
+}]
+opciones_viejo = [
+    {"grupo_num": 1, "repuesto_codigo": codigos[0], "descripcion": "Cojinete caro",
+     "categoria": "Cojinetes biela", "cantidad": 1, "precio_unitario": 1600.0,
+     "subtotal": 1600.0, "stock_al_cotizar": 1, "elegida": True, "elegida_a_mano": False},
+    {"grupo_num": 1, "repuesto_codigo": codigos[1], "descripcion": "Alternativa barata",
+     "categoria": "Cojinetes biela", "cantidad": 1, "precio_unitario": 900.0,
+     "subtotal": 900.0, "stock_al_cotizar": 1, "elegida": False, "elegida_a_mano": False},
+]
+pid_viejo = db.guardar_presupuesto("Cliente Viejo", motor["id"], items_viejo, opciones=opciones_viejo)
+check("el total del presupuesto viejo es solo la línea cotizada",
+      db.get_presupuesto_detalle(pid_viejo)["total"] == 1600.0,
+      db.get_presupuesto_detalle(pid_viejo)["total"])
+rev_viejo = cliente.get(f"/api/presupuestos/{pid_viejo}/revalidacion").get_json()
+grupo_viejo = rev_viejo["repuestos"]["grupos"][0]
+check("la alternativa vieja no entra en el subtotal", grupo_viejo["subtotal_antes"] == 1600.0, grupo_viejo)
+check("y se lee como opcional",
+      [l["opcional"] for l in grupo_viejo["lineas"]] == [False, True], grupo_viejo["lineas"])
 
 print("\n=== 14. Borrar datos de prueba ===")
 motores_antes = len(facra.get_motores())

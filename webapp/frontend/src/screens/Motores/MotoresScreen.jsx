@@ -11,6 +11,7 @@ import { StatusBadge } from '../../components/StatusBadge'
 import { MotorSelector } from '../../components/MotorSelector'
 import { FichaRepuestos } from './FichaRepuestos'
 import { formatPrecioARS, formatFechaAR, estadoPresupuesto } from '../../utils/format'
+import { coincideBusqueda } from '../../utils/texto'
 
 export default function MotoresScreen() {
   const navigate = useNavigate()
@@ -40,11 +41,9 @@ export default function MotoresScreen() {
   }
 
   if (motorSel) {
-    const filtrados = servicios.filter((s) => {
-      const q = busquedaServicios.toLowerCase()
-      if (!q) return true
-      return String(s.item_num).includes(q) || (s.descripcion || '').toLowerCase().includes(q)
-    })
+    const filtrados = servicios.filter(
+      (s) => coincideBusqueda([String(s.item_num), s.descripcion], busquedaServicios),
+    )
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
         <PageHeader

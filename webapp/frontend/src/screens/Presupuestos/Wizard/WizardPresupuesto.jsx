@@ -12,7 +12,7 @@ import { PasoServicios } from './PasoServicios'
 import { PasoRepuestos } from './PasoRepuestos'
 import { PasoRevision } from './PasoRevision'
 import {
-  gruposParaPayload, itemsSueltosParaPayload, lineaDeOpcion, elegidaAManoInicial,
+  gruposParaPayload, itemsSueltosParaPayload, lineaDeOpcion,
 } from '../../../utils/grupos'
 import { itemsServiciosParaPayload } from '../../../utils/servicios'
 import { useFichaTildes } from '../../../hooks/useFichaTildes'
@@ -30,8 +30,11 @@ export default function WizardPresupuesto() {
   // ir atrás y adelante en el wizard no pierda lo ya elegido.
   // precios: { [servicioId]: { valor, texto } } — unitarios pisados a mano en
   // el paso Servicios (ver utils/servicios.js).
-  const [serviciosSel, setServiciosSel] = React.useState({ cantidades: {}, customItems: [], grupos: {}, precios: {} })
+  // opcionales: claves de las líneas de mano de obra que quedaron fuera del
+  // total (caja de Opcionales).
+  const [serviciosSel, setServiciosSel] = React.useState({ cantidades: {}, customItems: [], grupos: {}, precios: {}, opcionales: [] })
   const [totalServicios, setTotalServicios] = React.useState(0)
+  const [totalServiciosOpcionales, setTotalServiciosOpcionales] = React.useState(0)
   // Aumento/descuento en % sobre los precios de lista de mano de obra (positivo
   // = aumento, negativo = descuento). Vive acá (no en el paso) para no perderse
   // al ir y volver entre pasos, igual que serviciosSel.
@@ -41,8 +44,6 @@ export default function WizardPresupuesto() {
   // de la misma categoría la hereda. Cada opción puede después ajustar la suya
   // (una marca viene por blíster de 8 y otra por blíster de 4).
   const [cantidadPorGrupo, setCantidadPorGrupo] = React.useState({})
-  // Grupo → código elegido a mano, cuando el usuario pisa al más caro.
-  const [elegidaAMano, setElegidaAMano] = React.useState({})
   const [error, setError] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
   /*
@@ -66,8 +67,17 @@ export default function WizardPresupuesto() {
     setCantidadPorGrupo((prev) => (prev[grupo] === cantidad ? prev : { ...prev, [grupo]: cantidad }))
   }, [])
 
-  const setElegidaGrupo = React.useCallback((grupo, codigo) => {
-    setElegidaAMano((prev) => ({ ...prev, [grupo]: prev[grupo] === codigo ? null : codigo }))
+  /* Mover una línea a la caja de Opcionales, o traerla de vuelta. Las dos
+     entradas (el paso Servicios y el paso de Revisión) terminan acá. */
+  const moverServicioOpcional = React.useCallback((clave, opcional) => {
+    setServiciosSel((actual) => {
+      const previas = (actual.opcionales || []).filter((c) => String(c) !== String(clave))
+      return { ...actual, opcionales: opcional ? [...previas, clave] : previas }
+    })
+  }, [])
+
+  const moverRepuestoOpcional = React.useCallback((key, opcional) => {
+    setRepuestos((actual) => actual.map((r) => (r.key === key ? { ...r, opcional } : r)))
   }, [])
 
   /*
@@ -96,25 +106,34 @@ export default function WizardPresupuesto() {
 
         setMotor(motorOriginal)
         setAjustePct(original.ajuste_pct || 0)
+        const manuales = itemsOriginal
+          .filter((it) => it.tipo !== 'repuesto' && !it.servicio_id)
+          .map((it, i) => ({
+            id: `dup-${i}`,
+            descripcion_custom: it.descripcion_custom,
+            // El wizard trata precio_aplicado como el UNITARIO del ítem manual.
+            precio_aplicado: it.precio_unitario ?? it.precio_aplicado,
+            cantidad: it.cantidad || 1,
+            opcional: Boolean(it.opcional),
+          }))
         setServiciosSel({
           cantidades: Object.fromEntries(
             itemsOriginal
               .filter((it) => it.tipo !== 'repuesto' && it.servicio_id)
               .map((it) => [it.servicio_id, it.cantidad || 1]),
           ),
-          customItems: itemsOriginal
-            .filter((it) => it.tipo !== 'repuesto' && !it.servicio_id)
-            .map((it, i) => ({
-              id: `dup-${i}`,
-              descripcion_custom: it.descripcion_custom,
-              // El wizard trata precio_aplicado como el UNITARIO del ítem manual.
-              precio_aplicado: it.precio_unitario ?? it.precio_aplicado,
-              cantidad: it.cantidad || 1,
-            })),
+          customItems: manuales.map(({ opcional: _opcional, ...c }) => c),
           grupos: {},
           // La copia se arma a precios de hoy: la mano de obra la recalcula el
           // backend contra la lista, así que no se arrastran precios pisados.
           precios: {},
+          // Lo que era opcional en el original sigue siéndolo en la copia.
+          opcionales: [
+            ...itemsOriginal
+              .filter((it) => it.tipo !== 'repuesto' && it.servicio_id && it.opcional)
+              .map((it) => String(it.servicio_id)),
+            ...manuales.filter((c) => c.opcional).map((c) => c.id),
+          ],
         })
 
         const lineasGrupos = gruposOriginal.flatMap((g) => g.opciones.map((o) => lineaDeOpcion(g, o, true)))
@@ -136,13 +155,13 @@ export default function WizardPresupuesto() {
             precio_unitario: it.precio_unitario,
             precioTexto: it.precio_unitario ? formatPrecioARS(it.precio_unitario) : '',
             stock: it.stock_al_cotizar,
+            opcional: Boolean(it.opcional),
             esManual: !it.repuesto_codigo,
           }))
         setRepuestos([...lineasGrupos, ...sueltos])
         setCantidadPorGrupo(Object.fromEntries(
           gruposOriginal.map((g) => [g.categoria, g.opciones[0]?.cantidad || 1]),
         ))
-        setElegidaAMano(elegidaAManoInicial(gruposOriginal))
       } catch {
         if (vigente) setError('No se pudo cargar el presupuesto que querés duplicar')
       }
@@ -162,8 +181,7 @@ export default function WizardPresupuesto() {
       const items = [
         ...itemsServiciosParaPayload(serviciosSel),
         // Los repuestos sueltos (fuera de catálogo, sin categoría) siguen yendo
-        // como ítems normales; los agrupados van aparte en grupos_repuestos,
-        // donde el backend elige el más caro y guarda todas las opciones.
+        // como ítems normales; los agrupados van aparte en grupos_repuestos.
         ...itemsSueltosParaPayload(repuestos),
       ]
       const presupuesto = await api.post('/presupuestos', {
@@ -172,7 +190,7 @@ export default function WizardPresupuesto() {
         contacto_nombre: cliente.contacto,
         motor_id: motor.id,
         items,
-        grupos_repuestos: gruposParaPayload(repuestos, elegidaAMano),
+        grupos_repuestos: gruposParaPayload(repuestos),
         // Lo que se marcó como "sirve para este motor" sin cotizarlo: otras
         // marcas y las medidas hermanas. Entran a la ficha sin cantidad.
         ficha_tildes: tildes.tildesParaPayload(repuestos),
@@ -193,8 +211,12 @@ export default function WizardPresupuesto() {
     setPaso((p) => p - 1)
   }
 
-  const cantidadItemsServicios = Object.values(serviciosSel.cantidades).filter((c) => c > 0).length
-    + serviciosSel.customItems.filter((c) => (c.cantidad || 0) > 0).length
+  // Solo lo que cotiza cuenta para "el presupuesto tiene algo": un presupuesto
+  // de puros opcionales no tiene total que cobrar.
+  const esOpcionalClave = (clave) => (serviciosSel.opcionales || []).some((c) => String(c) === String(clave))
+  const cantidadItemsServicios = Object.entries(serviciosSel.cantidades)
+    .filter(([id, c]) => c > 0 && !esOpcionalClave(id)).length
+    + serviciosSel.customItems.filter((c) => (c.cantidad || 0) > 0 && !esOpcionalClave(c.id)).length
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -238,11 +260,11 @@ export default function WizardPresupuesto() {
             // Cambió el motor: la selección de servicios (y sus precios de lista)
             // ya no aplica. Los repuestos tampoco: ahora salen de la ficha del
             // motor, así que arrancan de cero con la ficha del motor nuevo.
-            setServiciosSel({ cantidades: {}, customItems: [], grupos: {}, precios: {} })
+            setServiciosSel({ cantidades: {}, customItems: [], grupos: {}, precios: {}, opcionales: [] })
             setTotalServicios(0)
+            setTotalServiciosOpcionales(0)
             setRepuestos([])
             setCantidadPorGrupo({})
-            setElegidaAMano({})
           }
           setMotor(m)
           setPaso(2)
@@ -256,7 +278,11 @@ export default function WizardPresupuesto() {
           onChange={setServiciosSel}
           ajustePct={ajustePct}
           onAjustePctChange={setAjustePct}
-          onSiguiente={(total) => { setTotalServicios(total); setPaso(3) }}
+          onSiguiente={(total, totalOpcionales) => {
+            setTotalServicios(total)
+            setTotalServiciosOpcionales(totalOpcionales || 0)
+            setPaso(3)
+          }}
         />
       )}
 
@@ -266,12 +292,11 @@ export default function WizardPresupuesto() {
           value={repuestos}
           onChange={setRepuestos}
           totalServicios={totalServicios}
+          totalServiciosOpcionales={totalServiciosOpcionales}
           hayServicios={cantidadItemsServicios > 0}
           onRevisar={() => setPaso(4)}
           cantidadPorGrupo={cantidadPorGrupo}
           onCantidadGrupo={setCantidadGrupo}
-          elegidaAMano={elegidaAMano}
-          onElegirAMano={setElegidaGrupo}
           ficha={ficha}
           onFicha={setFicha}
           tildes={tildes}
@@ -285,7 +310,8 @@ export default function WizardPresupuesto() {
           serviciosSel={serviciosSel}
           ajustePct={ajustePct}
           repuestos={repuestos}
-          elegidaAMano={elegidaAMano}
+          onMoverServicio={moverServicioOpcional}
+          onMoverRepuesto={moverRepuestoOpcional}
           onConfirmar={finalizar}
           guardando={guardando}
         />

@@ -1,16 +1,20 @@
 /*
- * Grupos de opciones de repuesto.
+ * Grupos de repuestos.
  *
- * Un grupo es una necesidad del motor (ej. "Cojinetes biela") que se puede
- * cubrir con varias piezas intercambiables: distintas marcas y distintas
- * medidas. Se cotiza la de mayor SUBTOTAL — la tolerancia del taller: si el día
- * de la compra la barata no está, el presupuesto ya cubre la cara. Es por
- * subtotal y no por precio de lista porque cada marca viene en un envase
- * distinto: un juego de 8 a $1.000 sale menos que 4 blísters de 2 a $400.
+ * Un grupo es una categoría del proveedor (ej. "Cojinetes biela"). Se arman
+ * solos: todo lo que se carga dentro de una categoría entra al mismo grupo, y
+ * el nombre de la categoría es lo único que lee el cliente en el PDF.
  *
- * Los grupos se arman solos: todo lo que se tilda dentro de una categoría del
- * proveedor entra al mismo grupo. La clave del grupo es el nombre de la
- * categoría (que además es lo único que lee el cliente en el PDF).
+ * **Todo lo que se carga se cotiza** (2026-08-18). Antes el sistema elegía solo
+ * con cuál cotizar —la opción de mayor subtotal, como tolerancia por si el día
+ * de la compra faltaba la barata— y las demás quedaban de alternativa. El dueño
+ * lo pidió al revés: él carga la pieza que va a usar. Por eso una misma
+ * categoría puede llevar dos piezas que suman las dos (válvulas de admisión y
+ * de escape son las dos "Válvulas").
+ *
+ * `opcional` es la única línea que no suma: el repuesto "por las dudas" (una
+ * bomba de aceite por si la del motor no sirve). Queda guardado, sale en la
+ * caja de opcionales del PDF con su precio, y se cobra recién si hace falta.
  */
 
 import { formatPrecioARS } from './format'
@@ -27,6 +31,12 @@ export const SIN_GRUPO = null
  * presupuesto nuevo. Un código que ya no está en el catálogo conserva el precio
  * cotizado (misma regla que la revalidación del backend: stock es NOT NULL en
  * el catálogo, así que stock_actual nulo solo puede ser "la fila ya no existe").
+ *
+ * `opcional` sale de `elegida`: una opción que no cotiza es opcional. Vale para
+ * las dos épocas — hoy porque el backend guarda elegida=0 justo en las
+ * opcionales, y en los presupuestos viejos porque las alternativas que el
+ * sistema no eligió tampoco se cobraban. Así un presupuesto emitido antes de
+ * este cambio conserva exactamente el total que tenía.
  */
 export function lineaDeOpcion(grupo, o, preciosDeHoy = false) {
   const enCatalogo = o.stock_actual !== null && o.stock_actual !== undefined
@@ -46,17 +56,9 @@ export function lineaDeOpcion(grupo, o, preciosDeHoy = false) {
     precio_unitario: precio,
     precioTexto: precio ? formatPrecioARS(precio) : '',
     stock,
+    opcional: !o.elegida,
     esManual: !o.repuesto_codigo,
   }
-}
-
-/** Elección manual por categoría: { [categoria]: repuesto_codigo }. */
-export function elegidaAManoInicial(grupos) {
-  return Object.fromEntries(
-    grupos
-      .filter((g) => g.opciones.some((o) => o.elegida_a_mano))
-      .map((g) => [g.categoria, g.opciones.find((o) => o.elegida_a_mano).repuesto_codigo]),
-  )
 }
 
 export function subtotalDe(linea) {
@@ -86,39 +88,14 @@ export function agruparLineas(lineas) {
   return { grupos, sueltas }
 }
 
-/**
- * La opción con la que se cotiza el grupo: la de mayor subtotal, salvo que el
- * usuario haya pisado la elección a mano. Una opción sin precio nunca gana
- * (el catálogo tiene miles con precio 0), pero queda igual para el pedido.
- */
-export function opcionElegida(opciones, codigoAMano) {
-  if (!opciones.length) return null
-  if (codigoAMano) {
-    const aMano = opciones.find((o) => o.repuesto_codigo === codigoAMano)
-    if (aMano) return aMano
-  }
-  const conPrecio = opciones.filter((o) => subtotalDe(o) > 0)
-  const candidatas = conPrecio.length ? conPrecio : opciones
-  return candidatas.reduce((mejor, o) => (subtotalDe(o) > subtotalDe(mejor) ? o : mejor), candidatas[0])
+/** Las líneas de un grupo que efectivamente se cotizan (las que no son opcionales). */
+export function opcionesQueCotizan(opciones) {
+  return opciones.filter((o) => !o.opcional)
 }
 
-/**
- * La opción más barata del grupo que se puede conseguir: la de menor subtotal
- * entre las que tienen precio y stock. Es contra esta que se mide el ahorro, y
- * es la que la pantalla marca como "El más barato" — que sea la más barata del
- * catálogo no sirve de nada si el proveedor no la tiene.
- */
-export function masBarataDelGrupo(opciones, soloConStock = true) {
-  const candidatas = opciones.filter((o) => subtotalDe(o) > 0 && (!soloConStock || o.stock !== 0))
-  if (!candidatas.length) return null
-  return candidatas.reduce((min, o) => (subtotalDe(o) < subtotalDe(min) ? o : min), candidatas[0])
-}
-
-/** Lo que quedaría de margen si se consigue la más barata con stock. */
-export function ahorroDelGrupo(opciones, elegida) {
-  const masBarata = masBarataDelGrupo(opciones)
-  if (!masBarata || !elegida) return 0
-  return Math.max(0, subtotalDe(elegida) - subtotalDe(masBarata))
+/** Subtotal de un grupo: la suma de todo lo que cotiza. */
+export function subtotalDelGrupo(opciones) {
+  return opcionesQueCotizan(opciones).reduce((acc, o) => acc + subtotalDe(o), 0)
 }
 
 /**
@@ -162,9 +139,7 @@ export function agruparPorFamilia(opciones) {
 }
 
 /**
- * Las familias de un grupo, listas para dibujar: primero la familia de la
- * opción que se cotiza (y dentro de ella, esa opción arriba), y después el
- * resto de mayor a menor precio.
+ * Las familias de un grupo, listas para dibujar, de mayor a menor precio.
  *
  * Por qué existe: ordenar las opciones sueltas por subtotal y recién después
  * agrupar por familia rompía la agrupación. Un código sin familia (una marca
@@ -174,26 +149,16 @@ export function agruparPorFamilia(opciones) {
  * que se mete en otros grupos según lo que elijo a mano". La familia es la
  * unidad que se ordena; sus medidas nunca se separan.
  */
-export function familiasOrdenadas(opciones, elegida = null) {
+export function familiasOrdenadas(opciones) {
   const familias = agruparPorFamilia(opciones).map((f) => ({
     ...f,
     opciones: [...f.opciones].sort((a, b) => subtotalDe(b) - subtotalDe(a)),
   }))
   const precioDe = (f) => Math.max(...f.opciones.map(subtotalDe))
   familias.sort((a, b) => precioDe(b) - precioDe(a))
-
-  if (!elegida) return familias
-
-  const i = familias.findIndex((f) => f.opciones.includes(elegida))
-  if (i < 0) return familias
-  const [suya] = familias.splice(i, 1)
-  // Dentro de su familia, la que cotiza va arriba; las otras medidas, detrás.
-  familias.unshift({
-    ...suya,
-    opciones: [elegida, ...suya.opciones.filter((o) => o !== elegida)],
-  })
   return familias
 }
+
 
 /**
  * Marca las opciones cuyo subtotal quedó muy por debajo del resto del grupo.
@@ -217,23 +182,22 @@ export function codigosConCantidadSospechosa(opciones) {
   )
 }
 
-/** Total del presupuesto: solo la elegida de cada grupo, más las líneas sueltas. */
-export function totalRepuestos(lineas, elegidaAManoPorGrupo = {}) {
-  const { grupos, sueltas } = agruparLineas(lineas)
-  const deGrupos = grupos.reduce((acc, g) => {
-    const elegida = opcionElegida(g.opciones, elegidaAManoPorGrupo[g.categoria])
-    return acc + (elegida ? subtotalDe(elegida) : 0)
-  }, 0)
-  return deGrupos + sueltas.reduce((acc, l) => acc + subtotalDe(l), 0)
+/** Total de repuestos del presupuesto: todo lo cargado, menos lo opcional. */
+export function totalRepuestos(lineas) {
+  return lineas.reduce((acc, l) => acc + (l.opcional ? 0 : subtotalDe(l)), 0)
+}
+
+/** Lo que suman los repuestos marcados como opcionales (va aparte del total). */
+export function totalRepuestosOpcionales(lineas) {
+  return lineas.reduce((acc, l) => acc + (l.opcional ? subtotalDe(l) : 0), 0)
 }
 
 /** Payload de grupos para el backend (crear y editar usan el mismo formato). */
-export function gruposParaPayload(lineas, elegidaAManoPorGrupo = {}) {
+export function gruposParaPayload(lineas) {
   const { grupos } = agruparLineas(lineas)
   return grupos.map((g) => ({
     categoria: g.categoria,
     cat_prefijo: g.cat_prefijo,
-    elegida_a_mano: elegidaAManoPorGrupo[g.categoria] || null,
     opciones: g.opciones.map((o) => ({
       repuesto_codigo: o.repuesto_codigo,
       descripcion: o.descripcion,
@@ -243,6 +207,7 @@ export function gruposParaPayload(lineas, elegidaAManoPorGrupo = {}) {
       cantidad: Number(o.cantidad),
       precio_unitario: Number(o.precio_unitario),
       stock_al_cotizar: o.stock,
+      opcional: Boolean(o.opcional),
     })),
   }))
 }
@@ -258,5 +223,6 @@ export function itemsSueltosParaPayload(lineas) {
     cantidad: Number(r.cantidad),
     precio_unitario: Number(r.precio_unitario),
     stock_al_cotizar: r.stock,
+    opcional: Boolean(r.opcional),
   }))
 }

@@ -13,6 +13,7 @@ import csv
 import re
 from datetime import datetime
 
+from . import texto
 from .db import get_connection
 
 
@@ -187,11 +188,11 @@ def importar_precio_stock(path: str) -> tuple[int, str]:
                         """
                         INSERT INTO crac_repuestos
                             (codigo, aplicacion, precio, stock, cat_prefijo, marca_prefijo,
-                             resto, medida, base_codigo)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                             resto, medida, base_codigo, busqueda)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """,
                         (codigo, aplicacion.strip(), precio, stock, cat_pref, marca_pref,
-                         resto, medida, base_codigo),
+                         resto, medida, base_codigo, texto.normalizar(aplicacion)),
                     )
                     count += 1
 
@@ -290,12 +291,20 @@ def _where_filtros(categoria, marca, descripcion, codigo):
     if marca:
         query += " AND r.marca_prefijo = ?"
         params.append(marca)
-    if descripcion:
-        query += " AND r.aplicacion LIKE ?"
-        params.append(f"%{descripcion}%")
-    if codigo:
+    # Descripción y código se buscan por palabras sueltas, en cualquier orden y
+    # sin acentos ni mayúsculas: "fiat 2.8" encuentra "FIAT DUCATO 2.8TD".
+    # La descripción va contra la columna normalizada (r.busqueda), que se llena
+    # al importar el catálogo — con 64.000 filas, normalizar en cada consulta
+    # costaría una llamada a Python por fila y por tecla.
+    cond_desc, params_desc = texto.condicion_like(["r.busqueda"], descripcion)
+    if cond_desc:
+        query += f" AND ({cond_desc})"
+        params.extend(params_desc)
+    # El código es ASCII y ya viene en mayúsculas del proveedor, así que alcanza
+    # con el LIKE de SQLite (que no distingue mayúsculas en ASCII).
+    for token in texto.palabras(codigo):
         query += " AND r.codigo LIKE ?"
-        params.append(f"%{codigo}%")
+        params.append(f"%{token}%")
     return query, params
 
 

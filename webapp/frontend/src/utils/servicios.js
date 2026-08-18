@@ -5,6 +5,9 @@
  *   cantidades  { [servicioId]: cantidad }   — servicios de la lista de la Cámara
  *   customItems [ { id, descripcion_custom, precio_aplicado, precioTexto, cantidad } ]
  *   precios     { [servicioId]: { valor, texto } } — precio pisado a mano
+ *   opcionales  Set/array de ids (servicioId o id del ítem manual) marcados
+ *               como OPCIONALES: siguen en el presupuesto y salen en el PDF en
+ *               su propia caja, pero no suman al total
  *
  * `precios` existe porque el precio de lista es un punto de partida, no una
  * verdad: el taller puede cambiar el unitario de un renglón mientras arma el
@@ -43,6 +46,15 @@ export function estaPisado(servicioId, seleccion) {
  * la Cámara con cantidad, después los ítems manuales. `subtotal` es null cuando
  * el unitario no es válido, para que el total no mienta.
  */
+/** ¿Esta línea está marcada como opcional? La clave es la misma que usa la
+ *  lista de líneas: el servicio_id para la lista de la Cámara, el id del ítem
+ *  para los manuales. */
+export function esOpcional(clave, seleccion) {
+  // Comparado como texto: la clave de un servicio de la Cámara es un número y
+  // la de un ítem manual una cadena, y el arrastre solo puede mover texto.
+  return (seleccion.opcionales || []).some((c) => String(c) === String(clave))
+}
+
 export function lineasServicios(servicios, seleccion, ajustePct) {
   const cantidades = seleccion.cantidades || {}
   const customItems = seleccion.customItems || []
@@ -65,6 +77,7 @@ export function lineasServicios(servicios, seleccion, ajustePct) {
         // precio de lista ya formateado.
         precioTexto: pisado ? pisado.texto : formatPrecioARS(precioUnitario),
         pisado: Boolean(pisado),
+        opcional: esOpcional(s.id, seleccion),
         esManual: false,
       }
     })
@@ -84,14 +97,21 @@ export function lineasServicios(servicios, seleccion, ajustePct) {
       precioTexto: c.precioTexto ?? formatPrecioARS(c.precio_aplicado),
       // Un ítem manual no tiene precio de lista: su precio SIEMPRE es a mano.
       pisado: false,
+      opcional: esOpcional(c.id, seleccion),
       esManual: true,
     }))
 
   return [...deLista, ...manuales]
 }
 
+/** Total de mano de obra: lo que se cobra, o sea sin las líneas opcionales. */
 export function totalLineas(lineas) {
-  return lineas.reduce((acc, l) => acc + (l.subtotal || 0), 0)
+  return lineas.reduce((acc, l) => acc + (l.opcional ? 0 : l.subtotal || 0), 0)
+}
+
+/** Lo que suman las líneas opcionales, que va informado aparte del total. */
+export function totalLineasOpcionales(lineas) {
+  return lineas.reduce((acc, l) => acc + (l.opcional ? l.subtotal || 0 : 0), 0)
 }
 
 /** Hay algún unitario que no se entiende: no se puede avanzar ni confirmar. */
@@ -119,6 +139,7 @@ export function itemsServiciosParaPayload(seleccion) {
       if (pisado && pisado.valor !== null && pisado.valor !== undefined) {
         item.precio_unitario = pisado.valor
       }
+      if (esOpcional(Number(id), seleccion)) item.opcional = true
       return item
     })
 
@@ -129,6 +150,7 @@ export function itemsServiciosParaPayload(seleccion) {
       descripcion_custom: c.descripcion_custom,
       precio_aplicado: c.precio_aplicado,
       cantidad: c.cantidad,
+      opcional: esOpcional(c.id, seleccion),
     }))
 
   return [...deLista, ...manuales]

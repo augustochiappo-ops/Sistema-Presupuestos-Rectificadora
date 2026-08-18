@@ -32,9 +32,9 @@ function Diferencia({ valor, style }) {
   )
 }
 
-function describirOpcion(op) {
-  if (!op) return '—'
-  return [op.marca, op.medida].filter(Boolean).join(' ') || op.repuesto_codigo || '—'
+function describirLinea(l) {
+  return [l.descripcion, [l.marca, l.medida].filter(Boolean).join(' ')]
+    .filter(Boolean).join(' · ') || l.repuesto_codigo || '—'
 }
 
 /*
@@ -49,26 +49,31 @@ export function ModalRevalidacion({ open, resumen, aplicando, onConfirmar, onClo
   if (!open || !resumen) return null
 
   const { repuestos, mano_obra: manoObra } = resumen
+  // Una fila por repuesto que cambió de precio o de stock. Desde que se cotiza
+  // todo lo cargado, cada línea vale por sí sola: no hay una "opción elegida"
+  // por categoría que pueda cambiar sola.
   const lineasRepuestos = [
-    ...repuestos.grupos.map((g) => ({
-      key: `g-${g.grupo_num}`,
-      descripcion: g.categoria,
-      subtotal_antes: g.subtotal_antes,
-      subtotal_ahora: g.subtotal_ahora,
-      diferencia: g.diferencia,
-      avisos: g.avisos,
-      cambio: g.cambio_de_opcion
-        ? `Ahora cotiza ${describirOpcion(g.elegida_ahora)} en vez de ${describirOpcion(g.elegida_antes)}`
-        : null,
-    })),
+    ...repuestos.grupos.flatMap((g) => (g.lineas || [])
+      .filter((l) => l.cambio)
+      .map((l) => ({
+        key: `g-${g.grupo_num}-${l.repuesto_codigo || l.descripcion}`,
+        categoria: g.categoria,
+        descripcion: describirLinea(l),
+        opcional: l.opcional,
+        subtotal_antes: l.subtotal_antes,
+        subtotal_ahora: l.subtotal_ahora,
+        diferencia: l.diferencia,
+        avisos: l.avisos,
+      }))),
     ...repuestos.sueltos.map((s) => ({
       key: `s-${s.repuesto_codigo || s.descripcion}`,
+      categoria: null,
       descripcion: s.descripcion,
+      opcional: false,
       subtotal_antes: s.subtotal_antes,
       subtotal_ahora: s.subtotal_ahora,
       diferencia: s.diferencia,
       avisos: s.avisos,
-      cambio: null,
     })),
   ]
 
@@ -77,6 +82,18 @@ export function ModalRevalidacion({ open, resumen, aplicando, onConfirmar, onClo
       {resumen.hay_cambios_repuestos ? (
         <div style={{ marginBottom: 24 }}>
           <div style={titulo}>Repuestos — se van a actualizar</div>
+          {/* Sin subas no hay nada urgente: el presupuesto emitido cubre el
+              trabajo. Se puede actualizar igual, para bajarlo a propósito. */}
+          {!resumen.hay_subas && (
+            <div style={{
+              padding: '10px 14px', marginBottom: 10, borderRadius: 'var(--radius-md)',
+              background: 'var(--surface-stripe)', fontFamily: 'var(--font-body)',
+              fontSize: 'var(--text-sm)', color: 'var(--text-muted)',
+            }}>
+              Ningún repuesto subió de precio. Actualizar es opcional: sirve si querés bajarle el precio
+              al cliente, no porque el presupuesto haya quedado corto.
+            </div>
+          )}
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 620 }}>
               <thead>
@@ -92,8 +109,10 @@ export function ModalRevalidacion({ open, resumen, aplicando, onConfirmar, onClo
                   <tr key={l.key}>
                     <td style={celda}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'flex-start' }}>
-                        <span style={{ fontWeight: 'var(--weight-bold)', color: 'var(--text-strong)' }}>{l.descripcion}</span>
-                        {l.cambio && <StatusBadge status="aviso">{l.cambio}</StatusBadge>}
+                        <span style={{ fontWeight: 'var(--weight-bold)', color: 'var(--text-strong)' }}>
+                          {l.categoria ? `${l.categoria} — ` : ''}{l.descripcion}
+                        </span>
+                        {l.opcional && <StatusBadge status="aviso">Opcional — fuera del total</StatusBadge>}
                         {(l.avisos || []).map((a) => (
                           <span key={a} style={{ fontSize: 12, color: 'var(--text-muted)' }}>{a}</span>
                         ))}

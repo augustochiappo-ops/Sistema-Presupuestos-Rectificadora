@@ -62,21 +62,46 @@ def _agrupar_repuestos(items_repuesto):
     return resultado
 
 
+def _linea_servicio_pdf(it):
+    return {
+        "item_num": it["item_num"],
+        "descripcion": it["desc_facra"] or it["descripcion_custom"],
+        "precio_aplicado": it["precio_aplicado"],
+        "cantidad": it["cantidad"],
+    }
+
+
 def _items_para_pdf(presupuesto_id):
-    """Separa servicios y repuestos: el PDF los imprime en secciones distintas."""
+    """
+    Separa lo que va en cada caja del PDF: servicios, repuestos y OPCIONALES.
+
+    Las tres son secciones distintas del documento. Las dos primeras muestran
+    solo qué se hace y qué se pone (el precio queda en el total); la de
+    opcionales sí lleva precio por renglón y su propio subtotal, porque son
+    trabajos y repuestos que NO están incluidos en el total y el cliente
+    necesita saber cuánto le costaría cada uno si hace falta.
+    """
     items_full = db.get_presupuesto_items_full(presupuesto_id)
-    servicios = [
-        {
-            "item_num": it["item_num"],
-            "descripcion": it["desc_facra"] or it["descripcion_custom"],
-            "precio_aplicado": it["precio_aplicado"],
-            "cantidad": it["cantidad"],
-        }
-        for it in items_full
-        if it["tipo"] != "repuesto"
+    del_presupuesto = [it for it in items_full if not it["opcional"]]
+    servicios = [_linea_servicio_pdf(it) for it in del_presupuesto if it["tipo"] != "repuesto"]
+    repuestos = _agrupar_repuestos([it for it in del_presupuesto if it["tipo"] == "repuesto"])
+
+    # En la caja de opcionales conviven mano de obra y repuestos: para el cliente
+    # es una sola lista de "esto puede llegar a hacer falta". Los repuestos se
+    # agrupan por categoría igual que arriba (el cliente no ve códigos).
+    opcionales_full = [it for it in items_full if it["opcional"]]
+    opcionales = [
+        {"descripcion": it["desc_facra"] or it["descripcion_custom"],
+         "cantidad": it["cantidad"], "precio_aplicado": it["precio_aplicado"]}
+        for it in opcionales_full if it["tipo"] != "repuesto"
     ]
-    repuestos = _agrupar_repuestos([it for it in items_full if it["tipo"] == "repuesto"])
-    return servicios, repuestos
+    # Los repuestos van sin cantidad, igual que en su caja de arriba: ese número
+    # es la cantidad de ENVASES de esa marca (un juego de 8, un blíster de 2) y
+    # no significa nada para el cliente.
+    for grupo in _agrupar_repuestos([it for it in opcionales_full if it["tipo"] == "repuesto"]):
+        opcionales.append({**grupo, "cantidad": None})
+
+    return servicios, repuestos, opcionales
 
 
 def _resolver_repuesto(it, congelar_stock=True):
@@ -138,6 +163,8 @@ def _resolver_repuesto(it, congelar_stock=True):
         "precio_unitario": precio_unitario,
         "stock_al_cotizar": stock_al_cotizar,
         "categoria": categoria,
+        # "por si hace falta": queda en el presupuesto y en el PDF, pero no suma.
+        "opcional": bool(it.get("opcional")),
     }
 
 
@@ -227,6 +254,7 @@ def _resolver_items(items_payload, lista_num, ajuste_pct=0):
                 "precio_aplicado": round(precio_unitario * cantidad, 2),
                 "cantidad": cantidad,
                 "precio_unitario": precio_unitario,
+                "opcional": bool(it.get("opcional")),
             })
         else:
             desc = (it.get("descripcion_custom") or "").strip()
@@ -245,6 +273,7 @@ def _resolver_items(items_payload, lista_num, ajuste_pct=0):
                 "precio_aplicado": round(precio_unitario * cantidad, 2),
                 "cantidad": cantidad,
                 "precio_unitario": precio_unitario,
+                "opcional": bool(it.get("opcional")),
             })
     return resueltos, descartados
 
@@ -253,19 +282,27 @@ def _resolver_grupos(grupos_payload, congelar_stock=True):
     """
     Resuelve los grupos de opciones de repuesto.
 
-    Un grupo es una necesidad del motor (ej. "Cojinetes biela") cubierta por
-    varias piezas intercambiables. Se cotiza **la de mayor subtotal** — la
-    tolerancia del taller: si el día de la compra la barata no está, el
-    presupuesto ya cubre la cara. Medido por subtotal y no por precio de lista
-    porque las marcas vienen en envases distintos: un juego de 8 a $1.000 sale
-    menos que 4 blísters de 2 a $400 ($1.600), aunque el precio de lista del
-    primero sea más alto.
+    Un grupo es una categoría del proveedor (ej. "Cojinetes biela"): junta lo
+    que se cargó de esa categoría y su nombre es lo único que lee el cliente en
+    el PDF.
+
+    **Todo lo que se carga se cotiza** (cambio del 2026-08-18, pedido del
+    dueño). Antes el sistema elegía solo con cuál cotizar —la opción de mayor
+    subtotal— y las demás quedaban de alternativa para el pedido; ahora el
+    taller carga directamente la pieza que va a usar. De ahí que una misma
+    categoría pueda llevar dos piezas que suman las dos: válvulas de admisión y
+    válvulas de escape son las dos "Válvulas".
+
+    Una opción marcada como `opcional` entra igual al presupuesto —queda
+    guardada y sale en la caja de opcionales del PDF, con su precio— pero no
+    suma al total: es el repuesto "por las dudas" (la bomba de aceite por si la
+    del motor no sirve).
 
     Devuelve (items, opciones, descartados):
-      - items: una línea por grupo (la elegida), para presupuesto_items. Así los
-        totales, el PDF y las búsquedas siguen viendo exactamente lo de antes.
-      - opciones: todas las alternativas, para presupuesto_item_opciones.
-      - descartados: grupos que no se pudieron resolver, para avisar.
+      - items: una línea por opción resuelta, para presupuesto_items.
+      - opciones: las mismas, para presupuesto_item_opciones, con elegida=1 en
+        las que cotizan y elegida=0 en las opcionales.
+      - descartados: opciones que no se pudieron resolver, para avisar.
     """
     items, opciones, descartados = [], [], []
 
@@ -290,16 +327,13 @@ def _resolver_grupos(grupos_payload, congelar_stock=True):
             continue
 
         # La categoría del grupo manda sobre la de cada opción: es lo único que
-        # lee el cliente en el PDF, y todas las opciones del grupo son la misma
-        # pieza. Si el grupo no la trae, se usa la de la primera opción resuelta.
+        # lee el cliente en el PDF. Si el grupo no la trae, se usa la de la
+        # primera opción resuelta.
         categoria = (grupo.get("categoria") or "").strip() or resueltas[0].get("categoria")
         for r in resueltas:
             r["categoria"] = categoria
 
-        elegida = _elegir_opcion(resueltas, grupo.get("elegida_a_mano"))
-
         for r in resueltas:
-            es_elegida = r is elegida
             opciones.append({
                 "grupo_num": indice,
                 "repuesto_codigo": r["repuesto_codigo"],
@@ -311,31 +345,12 @@ def _resolver_grupos(grupos_payload, congelar_stock=True):
                 "precio_unitario": r["precio_unitario"],
                 "subtotal": r["precio_aplicado"],
                 "stock_al_cotizar": r["stock_al_cotizar"],
-                "elegida": es_elegida,
-                "elegida_a_mano": es_elegida and bool(grupo.get("elegida_a_mano")),
+                "elegida": not r["opcional"],
+                "elegida_a_mano": False,
             })
-
-        items.append({k: v for k, v in elegida.items() if k not in ("marca", "medida")})
+            items.append({k: v for k, v in r.items() if k not in ("marca", "medida")})
 
     return items, opciones, descartados
-
-
-def _elegir_opcion(resueltas, codigo_a_mano=None):
-    """
-    La opción con la que se cotiza el grupo. Normalmente la de mayor subtotal;
-    si el usuario pisó la elección a mano y ese código está en el grupo, gana ese.
-    Una opción sin precio (el catálogo tiene ~12.000 con precio 0) nunca puede
-    ganar por precio, pero queda igual guardada para el pedido.
-    """
-    if codigo_a_mano:
-        for r in resueltas:
-            if r["repuesto_codigo"] == codigo_a_mano:
-                return r
-
-    con_precio = [r for r in resueltas if (r["precio_aplicado"] or 0) > 0]
-    candidatas = con_precio or resueltas
-    # max() con clave devuelve el primero ante empate, que es lo que queremos.
-    return max(candidatas, key=lambda r: r["precio_aplicado"] or 0)
 
 
 def _grupos_para_ficha(opciones):
@@ -413,11 +428,13 @@ def _resolver_items_edicion(items_payload):
             continue
         precio_aplicado = round(precio_unitario * cantidad, 2)
 
+        opcional = bool(it.get("opcional"))
         servicio_id = it.get("servicio_id")
         if servicio_id:
             resueltos.append({
                 "servicio_id": servicio_id, "descripcion_custom": None,
-                "precio_aplicado": precio_aplicado, "cantidad": cantidad, "precio_unitario": precio_unitario,
+                "precio_aplicado": precio_aplicado, "cantidad": cantidad,
+                "precio_unitario": precio_unitario, "opcional": opcional,
             })
         else:
             desc = (it.get("descripcion_custom") or "").strip()
@@ -425,7 +442,8 @@ def _resolver_items_edicion(items_payload):
                 continue
             resueltos.append({
                 "servicio_id": None, "descripcion_custom": desc,
-                "precio_aplicado": precio_aplicado, "cantidad": cantidad, "precio_unitario": precio_unitario,
+                "precio_aplicado": precio_aplicado, "cantidad": cantidad,
+                "precio_unitario": precio_unitario, "opcional": opcional,
             })
     return resueltos
 
@@ -494,27 +512,34 @@ def _revalidacion(presupuesto_id, detalle):
     una decisión del taller (se hace a mano desde Editar, con el ajuste %), no
     algo que dependa del proveedor. Se informa aparte, como aviso.
 
-    Dentro de cada grupo vuelve a ganar la de mayor subtotal — con la misma
-    _elegir_opcion que usan la creación y la edición, no una copia de la regla —
-    así que si otra marca pasó a ser la más cara, el resumen lo muestra.
+    Cada línea conserva su lugar: desde que se cotiza todo lo que se carga, no
+    hay ninguna elección que rehacer acá — solo precios y stock que cambiaron.
+    Las líneas opcionales también se actualizan (su precio sale en el PDF), pero
+    no entran en ningún subtotal.
+
+    `hay_subas` dice si algún repuesto salió MÁS CARO que cuando se cotizó. Es
+    lo único que justifica avisarle al dueño con un cartel: si los precios
+    bajaron, el presupuesto emitido sigue siendo válido (le sobra margen) y no
+    hay nada urgente que hacer.
     """
     grupos_resumen, grupos_payload = [], []
     subtotal_rep_antes = subtotal_rep_ahora = 0.0
     hay_cambios_repuestos = False
+    hay_subas = False
 
     # Ordenado por grupo_num: _resolver_grupos reasigna el número por posición,
     # así que mantener el orden mantiene los números que ya tenía el presupuesto.
     for grupo in sorted(db.get_grupos_presupuesto(presupuesto_id), key=lambda g: g["grupo_num"]):
-        elegida_a_mano = next(
-            (o["repuesto_codigo"] for o in grupo["opciones"] if o["elegida_a_mano"]), None
-        )
-        anterior = next((o for o in grupo["opciones"] if o["elegida"]), None)
+        opciones_payload, lineas_resumen = [], []
+        subtotal_grupo_antes = subtotal_grupo_ahora = 0.0
 
-        opciones_payload, avisos_por_codigo = [], {}
         for o in grupo["opciones"]:
             precio, stock, cambio, avisos = _linea_revalidada(o)
             hay_cambios_repuestos = hay_cambios_repuestos or cambio
-            avisos_por_codigo[o["repuesto_codigo"]] = avisos
+            precio_antes = o["precio_unitario"] or 0
+            if precio > precio_antes:
+                hay_subas = True
+            cotiza = bool(o["elegida"])
             opciones_payload.append({
                 "repuesto_codigo": o["repuesto_codigo"],
                 "descripcion": o["descripcion"],
@@ -524,50 +549,47 @@ def _revalidacion(presupuesto_id, detalle):
                 "cantidad": o["cantidad"],
                 "precio_unitario": precio,
                 "stock_al_cotizar": stock,
+                "opcional": not cotiza,
+            })
+
+            subtotal_antes = o["subtotal"] or 0
+            subtotal_ahora = round(precio * (o["cantidad"] or 0), 2)
+            if cotiza:
+                subtotal_grupo_antes += subtotal_antes
+                subtotal_grupo_ahora += subtotal_ahora
+            lineas_resumen.append({
+                "repuesto_codigo": o["repuesto_codigo"],
+                "descripcion": o["descripcion"],
+                "marca": o["marca"],
+                "medida": o["medida"],
+                "cantidad": o["cantidad"],
+                "opcional": not cotiza,
+                "precio_antes": o["precio_unitario"],
+                "precio_ahora": precio,
+                "subtotal_antes": subtotal_antes,
+                "subtotal_ahora": subtotal_ahora,
+                "diferencia": round(subtotal_ahora - subtotal_antes, 2),
+                "cambio": cambio,
+                "avisos": avisos,
             })
 
         if not opciones_payload:
             continue
 
-        resueltas = [
-            {**op, "precio_aplicado": round((op["precio_unitario"] or 0) * (op["cantidad"] or 0), 2)}
-            for op in opciones_payload
-        ]
-        elegida = _elegir_opcion(resueltas, elegida_a_mano)
-
-        subtotal_antes = (anterior or {}).get("subtotal") or 0
-        subtotal_ahora = elegida["precio_aplicado"]
-        subtotal_rep_antes += subtotal_antes
-        subtotal_rep_ahora += subtotal_ahora
-
-        cambio_de_opcion = bool(
-            anterior and anterior["repuesto_codigo"] != elegida["repuesto_codigo"]
-        )
-        hay_cambios_repuestos = hay_cambios_repuestos or cambio_de_opcion
+        subtotal_rep_antes += subtotal_grupo_antes
+        subtotal_rep_ahora += subtotal_grupo_ahora
 
         grupos_payload.append({
             "categoria": grupo["categoria"],
-            "elegida_a_mano": elegida_a_mano,
             "opciones": opciones_payload,
         })
         grupos_resumen.append({
             "grupo_num": grupo["grupo_num"],
             "categoria": grupo["categoria"],
-            "subtotal_antes": subtotal_antes,
-            "subtotal_ahora": subtotal_ahora,
-            "diferencia": round(subtotal_ahora - subtotal_antes, 2),
-            "cambio_de_opcion": cambio_de_opcion,
-            "elegida_a_mano": bool(elegida_a_mano),
-            "elegida_antes": _resumen_opcion(
-                (anterior or {}).get("repuesto_codigo"), (anterior or {}).get("descripcion"),
-                (anterior or {}).get("marca"), (anterior or {}).get("medida"),
-                (anterior or {}).get("cantidad"), (anterior or {}).get("precio_unitario"),
-            ) if anterior else None,
-            "elegida_ahora": _resumen_opcion(
-                elegida["repuesto_codigo"], elegida["descripcion"], elegida["marca"],
-                elegida["medida"], elegida["cantidad"], elegida["precio_unitario"],
-            ),
-            "avisos": avisos_por_codigo.get(elegida["repuesto_codigo"], []),
+            "subtotal_antes": round(subtotal_grupo_antes, 2),
+            "subtotal_ahora": round(subtotal_grupo_ahora, 2),
+            "diferencia": round(subtotal_grupo_ahora - subtotal_grupo_antes, 2),
+            "lineas": lineas_resumen,
         })
 
     # Ítems sueltos (repuestos fuera de grupo) y servicios.
@@ -586,6 +608,8 @@ def _revalidacion(presupuesto_id, detalle):
                 continue  # ya rearmado arriba, como parte de su grupo
             precio, stock, cambio, avisos = _linea_revalidada(it)
             hay_cambios_repuestos = hay_cambios_repuestos or cambio
+            if precio > (it["precio_unitario"] or 0):
+                hay_subas = True
             items_payload.append({
                 "tipo": "repuesto",
                 "repuesto_codigo": it["repuesto_codigo"],
@@ -594,11 +618,15 @@ def _revalidacion(presupuesto_id, detalle):
                 "cantidad": it["cantidad"],
                 "precio_unitario": precio,
                 "stock_al_cotizar": stock,
+                "opcional": bool(it["opcional"]),
             })
             subtotal_antes = it["precio_aplicado"] or 0
             subtotal_ahora = round(precio * (it["cantidad"] or 0), 2)
-            subtotal_rep_antes += subtotal_antes
-            subtotal_rep_ahora += subtotal_ahora
+            # Una línea opcional no está en el total, así que tampoco entra en
+            # la comparación de subtotales.
+            if not it["opcional"]:
+                subtotal_rep_antes += subtotal_antes
+                subtotal_rep_ahora += subtotal_ahora
             if cambio:
                 sueltos_resumen.append({
                     "repuesto_codigo": it["repuesto_codigo"],
@@ -621,7 +649,10 @@ def _revalidacion(presupuesto_id, detalle):
             "descripcion_custom": it["descripcion_custom"],
             "cantidad": it["cantidad"],
             "precio_unitario": unitario,
+            "opcional": bool(it["opcional"]),
         })
+        if it["opcional"]:
+            continue  # no suma ni se compara contra la lista: no está en el total
         total_servicios += it["precio_aplicado"] or 0
 
         if not it["servicio_id"]:
@@ -648,6 +679,9 @@ def _revalidacion(presupuesto_id, detalle):
     resumen = {
         "hay_cambios": bool(hay_cambios_repuestos or mano_obra_lineas),
         "hay_cambios_repuestos": bool(hay_cambios_repuestos),
+        # Solo las subas justifican avisar: si todo bajó, el presupuesto emitido
+        # sigue cubriendo el trabajo y no hay nada urgente que corregir.
+        "hay_subas": bool(hay_subas),
         "hay_cambios_mano_obra": bool(mano_obra_lineas),
         "repuestos": {
             "grupos": grupos_resumen,
@@ -682,12 +716,13 @@ def _regenerar_pdf(presupuesto_id):
     siguiente_version = (versiones[0]["version"] + 1) if versiones else 1
     nombre_archivo = f"presupuesto_{presupuesto_id:04d}_v{siguiente_version}.pdf"
 
-    items_servicios, items_repuestos = _items_para_pdf(presupuesto_id)
+    items_servicios, items_repuestos, items_opcionales = _items_para_pdf(presupuesto_id)
     pdf_gen.generar_pdf(
         presupuesto_id, detalle["cliente"], detalle["motor"],
         items_servicios, detalle["total"],
         os.path.join(config.PDFS_DIR, nombre_archivo),
         repuestos=items_repuestos,
+        opcionales=items_opcionales,
     )
     db.guardar_pdf_historial(presupuesto_id, nombre_archivo)
     return db.get_pdfs_presupuesto(presupuesto_id)
@@ -834,10 +869,20 @@ def pedido(presupuesto_id):
                 "hay_stock": bool(op["stock_actual"]),
             })
 
-        elegida = next((o for o in opciones if o["elegida"]), None)
-        cotizado = (elegida or {}).get("subtotal") or 0
+        # Desde que se cotiza todo lo cargado, un grupo puede tener más de una
+        # línea cotizada (válvulas de admisión + válvulas de escape): el
+        # cotizado del grupo es la suma de todas.
+        cotizadas = [o for o in opciones if o["elegida"]]
+        cotizado = sum(o["subtotal"] or 0 for o in cotizadas)
         con_stock = [o for o in opciones if o["hay_stock"] and (o["subtotal_hoy"] or 0) > 0]
-        mas_barata = min(con_stock, key=lambda o: o["subtotal_hoy"]) if con_stock else None
+        # La comparación "cuál me conviene pedir" solo tiene sentido cuando el
+        # grupo cotiza UNA pieza y las demás son equivalentes (presupuestos
+        # viejos, o las que quedaron marcadas como opcionales). Con dos piezas
+        # distintas cotizadas no hay nada que comparar: se necesitan las dos.
+        mas_barata = (
+            min(con_stock, key=lambda o: o["subtotal_hoy"])
+            if con_stock and len(cotizadas) <= 1 else None
+        )
 
         total_cotizado += cotizado
         total_mas_barato += (mas_barata or {}).get("subtotal_hoy") or cotizado
@@ -847,6 +892,7 @@ def pedido(presupuesto_id):
             "categoria": grupo["categoria"],
             "cotizado": cotizado,
             "sin_stock_total": not con_stock,
+            "cotizadas": len(cotizadas),
             "mas_barata_codigo": (mas_barata or {}).get("repuesto_codigo"),
             "ahorro": round(cotizado - mas_barata["subtotal_hoy"], 2) if mas_barata else 0,
             "marcas": _agrupar_por_marca(opciones),
@@ -937,12 +983,13 @@ def crear():
 
     detalle = db.get_presupuesto_detalle(presupuesto_id)
     nombre_archivo = f"presupuesto_{presupuesto_id:04d}.pdf"
-    items_servicios, items_repuestos = _items_para_pdf(presupuesto_id)
+    items_servicios, items_repuestos, items_opcionales = _items_para_pdf(presupuesto_id)
     pdf_gen.generar_pdf(
         presupuesto_id, detalle["cliente"], detalle["motor"],
         items_servicios, detalle["total"],
         os.path.join(config.PDFS_DIR, nombre_archivo),
         repuestos=items_repuestos,
+        opcionales=items_opcionales,
     )
     # Se guarda solo el nombre del archivo (no la ruta completa) para que la DB
     # sea portable entre entornos — la ruta completa se reconstruye siempre

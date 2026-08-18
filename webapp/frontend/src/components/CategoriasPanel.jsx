@@ -3,6 +3,7 @@ import { api } from '../api/client'
 import { SearchInput } from './SearchInput'
 import { Icon } from './Icon'
 import { useCategorias } from '../hooks/useCategorias'
+import { coincideBusqueda } from '../utils/texto'
 
 const tituloPanel = {
   fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.14em',
@@ -39,9 +40,7 @@ export function CategoriasPanel({ value, onChange }) {
     })
   }
 
-  const filtradas = categorias.filter((c) =>
-    !busqueda || c.nombre.toLowerCase().includes(busqueda.toLowerCase())
-  )
+  const filtradas = categorias.filter((c) => coincideBusqueda([c.nombre], busqueda))
   const favoritas = filtradas.filter((c) => favoritos.has(c.prefijo))
   const resto = filtradas.filter((c) => !favoritos.has(c.prefijo))
 

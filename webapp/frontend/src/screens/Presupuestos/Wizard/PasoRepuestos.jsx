@@ -8,7 +8,7 @@ import { Icon } from '../../../components/Icon'
 import { ModalRepuestosAgregados } from './ModalRepuestosAgregados'
 import { ModalRepuestosUsados } from './ModalRepuestosUsados'
 import { formatPrecioARS, parsePrecioARS } from '../../../utils/format'
-import { totalRepuestos } from '../../../utils/grupos'
+import { totalRepuestos, totalRepuestosOpcionales } from '../../../utils/grupos'
 import { useRepuestosAgrupados } from '../../../hooks/useRepuestosAgrupados'
 import { useUndo } from '../../../context/UndoContext'
 
@@ -23,10 +23,11 @@ const tituloSeccion = {
  *   { key, repuesto_codigo, descripcion, categoria, cat_prefijo, marca, medida,
  *     grupo, cantidad, precio_unitario, precioTexto, stock, esManual }
  *
- * `grupo` es el nombre de la categoría del proveedor. Todas las líneas con el
- * mismo `grupo` son piezas intercambiables para la misma necesidad del motor, y
- * solo se cotiza la de mayor subtotal. Las líneas sin grupo (repuesto fuera de
- * catálogo sin categoría) se comportan como antes.
+ * `grupo` es el nombre de la categoría del proveedor: junta lo que se cargó de
+ * esa categoría y es lo único que lee el cliente en el PDF. **Todo lo cargado
+ * se cotiza** — pueden ser dos piezas distintas de la misma categoría (válvulas
+ * de admisión y de escape). Lo único que no suma es lo marcado como `opcional`
+ * desde el pop-up "Ver repuestos": queda guardado y sale en el PDF aparte.
  *
  * **El paso arranca VACÍO, a propósito.** Antes se cargaba sola la ficha entera
  * del motor y el presupuesto nacía con todo puesto; ahora la ficha es la lista
@@ -39,8 +40,8 @@ const tituloSeccion = {
  * stock: 1/0 congelado al agregar (null en manuales) — solo para el aviso en pantalla.
  */
 export function PasoRepuestos({
-  motor, value, onChange, totalServicios, hayServicios, onRevisar,
-  cantidadPorGrupo, onCantidadGrupo, elegidaAMano, onElegirAMano,
+  motor, value, onChange, totalServicios, totalServiciosOpcionales = 0,
+  hayServicios, onRevisar, cantidadPorGrupo, onCantidadGrupo,
   ficha, onFicha, tildes,
 }) {
   const [manualCodigo, setManualCodigo] = React.useState('')
@@ -62,7 +63,10 @@ export function PasoRepuestos({
     return m
   }, [ficha])
 
-  const { cantidadPorCodigo, agregar, cambiarCantidad, cambiarPrecio, quitar, quitarVarias } = useRepuestosAgrupados({
+  const {
+    cantidadPorCodigo, agregar, cambiarCantidad, cambiarPrecio, cambiarSubtotal,
+    toggleOpcional, quitar, quitarVarias,
+  } = useRepuestosAgrupados({
     lineas: value,
     setLineas: onChange,
     cantidadPorGrupo,
@@ -266,6 +270,7 @@ export function PasoRepuestos({
       precio_unitario: precio,
       precioTexto: formatPrecioARS(precio),
       stock: null,
+      opcional: false,
       esManual: true,
     }])
     setManualCodigo('')
@@ -275,7 +280,8 @@ export function PasoRepuestos({
     setManualCantidad('1')
   }
 
-  const total = totalRepuestos(value, elegidaAMano)
+  const total = totalRepuestos(value)
+  const totalOpcionales = totalRepuestosOpcionales(value) + totalServiciosOpcionales
   const totalGeneral = totalServicios + total
   const hayInvalidos = value.some((r) => r.precio_unitario === null || !(r.cantidad > 0))
   const hayItems = hayServicios || value.length > 0
@@ -299,6 +305,12 @@ export function PasoRepuestos({
             <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total</span>
             <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(totalGeneral)}</span>
           </span>
+          {totalOpcionales > 0 && (
+            <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
+              Opcionales <strong style={{ color: '#fff' }}>{formatPrecioARS(totalOpcionales)}</strong>
+              <span style={{ opacity: .8 }}> (fuera del total)</span>
+            </span>
+          )}
         </div>
         <Button
           variant="success"
@@ -359,18 +371,18 @@ export function PasoRepuestos({
         </div>
         <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
           La categoría es lo que va a leer el cliente en el PDF (ej. "Aros"). Si ponés una que ya tiene grupo, se suma
-          a ese grupo y compite por precio; si la dejás vacía, va como línea aparte. Los repuestos fuera de catálogo
-          quedan solo en este presupuesto: no se guardan en el motor.
+          a ese grupo; si la dejás vacía, va como línea aparte. Los repuestos fuera de catálogo quedan solo en este
+          presupuesto: no se guardan en el motor.
         </div>
       </div>
 
       <ModalRepuestosAgregados
         open={modalAbierto}
         items={value}
-        elegidaAMano={elegidaAMano}
-        onElegirAMano={onElegirAMano}
         onCambiarCantidad={cambiarCantidad}
         onCambiarPrecio={cambiarPrecio}
+        onCambiarSubtotal={cambiarSubtotal}
+        onToggleOpcional={toggleOpcional}
         onQuitar={quitarConDeshacer}
         onQuitarVarias={quitarVariasConDeshacer}
         onClose={() => setModalAbierto(false)}

@@ -37,7 +37,12 @@ function aplicarOrden(columns, orden) {
   return [...ordenadas, ...columns.filter((c) => !yaPuestas.has(c.key))]
 }
 
-export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 'No hay datos para mostrar.', style, striped = false, reorderKey, getRowBackground, ...rest }) {
+/*
+ * getRowProps(row): props extra para el <tr> de cada fila. Se usa para hacer
+ * arrastrables las filas (los opcionales del presupuesto se mueven arrastrando
+ * de una caja a la otra); la tabla no sabe nada de eso, solo las reparte.
+ */
+export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 'No hay datos para mostrar.', style, striped = false, reorderKey, getRowBackground, getRowProps, ...rest }) {
   const [hover, setHover] = React.useState(-1)
   const [orden, setOrden] = React.useState(() => leerOrden(reorderKey))
   const [arrastrando, setArrastrando] = React.useState(null)
@@ -120,9 +125,15 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, ri) => (
+            {rows.map((row, ri) => {
+              // El style que venga en getRowProps se MEZCLA con el de la fila
+              // (no lo pisa): así una fila arrastrable puede cambiar el cursor
+              // sin perder el fondo de hover.
+              const { style: styleFila, ...propsFila } = getRowProps?.(row) || {}
+              return (
               <tr
                 key={row.id ?? ri}
+                {...propsFila}
                 onMouseEnter={() => setHover(ri)}
                 onMouseLeave={() => setHover(-1)}
                 onClick={() => onRowClick && onRowClick(row, ri)}
@@ -132,6 +143,7 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
                     : (getRowBackground?.(row) || (striped && ri % 2 === 1 ? 'var(--surface-stripe)' : 'transparent')),
                   cursor: onRowClick ? 'pointer' : 'default',
                   transition: 'background .12s ease',
+                  ...styleFila,
                 }}
               >
                 {cols.map((c, ci) => (
@@ -147,7 +159,8 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
                   }}>{c.render ? c.render(row[c.key], row) : row[c.key]}</td>
                 ))}
               </tr>
-            ))}
+              )
+            })}
           </tbody>
         </table>
       </div>

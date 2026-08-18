@@ -1,6 +1,7 @@
 import React from 'react'
 import { api } from '../api/client'
 import { formatPrecioARS } from '../utils/format'
+import { unitarioDesdeSubtotal } from '../utils/precios'
 
 /*
  * Agrupado automático de repuestos, compartido por el wizard y la edición de un
@@ -9,7 +10,9 @@ import { formatPrecioARS } from '../utils/format'
  *
  * Reglas:
  *  - Un grupo por categoría. Volver más tarde a la misma categoría reengancha
- *    el grupo que ya existe en vez de crear uno segundo.
+ *    el grupo que ya existe en vez de crear uno segundo. Todo lo que entra al
+ *    grupo se cotiza (pueden ser dos piezas distintas, ej. válvulas de admisión
+ *    y de escape); lo único que no suma es lo marcado como `opcional`.
  *  - La cantidad se hereda del grupo: si el primero se cargó ×4, lo que se
  *    agregue después arranca en 4. Después cada opción se ajusta por separado
  *    (una marca viene por blíster de 8 y otra por blíster de 4).
@@ -49,6 +52,31 @@ export function useRepuestosAgrupados({
     const precio = parsePrecio(texto)
     setLineas((actual) => actual.map((r) => (
       r.key === key ? { ...r, precioTexto: texto, precio_unitario: precio } : r
+    )))
+  }, [setLineas])
+
+  /*
+   * Escribir el SUBTOTAL de una línea: se reparte por la cantidad y lo que
+   * queda pisa el precio unitario, que es lo que se guarda. Es la misma casilla
+   * del unitario vista al revés — manda el último que se escribe.
+   */
+  const cambiarSubtotal = React.useCallback((key, texto) => {
+    setLineas((actual) => actual.map((r) => {
+      if (r.key !== key) return r
+      const { valor } = unitarioDesdeSubtotal(texto, r.cantidad)
+      return {
+        ...r,
+        precio_unitario: valor,
+        precioTexto: valor === null ? texto : formatPrecioARS(valor),
+      }
+    }))
+  }, [setLineas])
+
+  /* Opcional: la línea queda en el presupuesto y sale en el PDF en su caja
+     aparte, pero deja de sumar al total. */
+  const toggleOpcional = React.useCallback((key) => {
+    setLineas((actual) => actual.map((r) => (
+      r.key === key ? { ...r, opcional: !r.opcional } : r
     )))
   }, [setLineas])
 
@@ -118,7 +146,10 @@ export function useRepuestosAgrupados({
   }, [porCodigo, cambiarCantidad, quitar, cantidadRecordada, cantidadPorGrupo,
       setCantidadGrupo, setLineas, onHermanas])
 
-  return { cantidadPorCodigo, agregar, cambiarCantidad, cambiarPrecio, quitar, quitarVarias }
+  return {
+    cantidadPorCodigo, agregar, cambiarCantidad, cambiarPrecio, cambiarSubtotal,
+    toggleOpcional, quitar, quitarVarias,
+  }
 }
 
 export function lineaDeCatalogo(rep, cantidad) {
@@ -139,6 +170,9 @@ export function lineaDeCatalogo(rep, cantidad) {
     precio_unitario: unitario,
     precioTexto: unitario ? formatPrecioARS(unitario) : '',
     stock: rep.stock ?? null,
+    // Todo lo que se carga arranca cotizando; se marca opcional a mano desde el
+    // pop-up "Ver repuestos".
+    opcional: false,
     esManual: false,
   }
 }
