@@ -290,3 +290,17 @@
 **Por qué:** arrancar en cero costaba la velocidad del "segundo presupuesto de un click". El dueño pidió este atajo en vez de un "Cargar todo": la ficha acumula alternativas que nunca se cotizaron todas juntas, mientras que un presupuesto anterior **es** una combinación que ya se armó de verdad. Destildado por defecto porque es el mismo principio que todo el cambio: nada entra sin que el taller lo elija.
 **Se superpone a propósito con "Duplicar presupuesto"**, que copia todo (mano de obra incluida) y arranca un presupuesto nuevo. Éste es para picotear repuestos sueltos de varios anteriores sin salir del que se está armando.
 **Fecha:** 2026-08-14
+
+## El ajuste % no pisa un precio de mano de obra editado a mano
+**Decisión:** el precio unitario de un servicio de la Cámara se puede editar en el paso Servicios (tabla de la derecha). Un precio así editado **no recibe el ajuste % de mano de obra**, ni en el momento ni si después se cambia el porcentaje; el ↺ (o vaciar el recuadro) lo devuelve al de la lista y ahí sí vuelve a ajustarse. Sacar el servicio del presupuesto (cantidad 0) borra también su precio editado.
+**Por qué:** es la regla que el backend ya aplicaba a los ítems manuales — "esos ya tienen un precio que el usuario eligió a mano, ajustarlos de nuevo por un % global sería doble ajuste" (`_resolver_items`). Un precio tipeado es exactamente eso: un número elegido a mano. Aplicarle el % encima haría que el renglón muestre algo distinto de lo que se escribió.
+**Consecuencias asumidas:** (1) "Actualizar a precios de hoy" **informa** el renglón editado como diferencia contra la lista de la Cámara — es lo mismo que ya pasaba con un precio editado desde el detalle, y la revalidación nunca toca la mano de obra, solo la muestra; (2) **duplicar un presupuesto no arrastra los precios editados**, porque la copia se arma a precios de hoy por diseño.
+**Implementación:** el override viaja como `precio_unitario` en el ítem con `servicio_id`; sin ese campo el backend calcula el precio contra la lista como siempre. El cálculo (pantalla, total y payload) vive en un solo lugar, `utils/servicios.js`.
+**Fecha:** 2026-08-18
+
+## Confirmar un presupuesto pasa por una pantalla de revisión
+**Decisión:** el wizard tiene un paso más. El botón verde del paso Repuestos dice ahora "Revisar presupuesto" y lleva al paso 5, que muestra cómo quedó todo (mano de obra + repuestos cotizados + totales) **sin guardar nada**; recién "Confirmar y generar PDF" crea el presupuesto y abre el PDF.
+**Por qué:** lo pidió el dueño. Antes, un solo click guardaba, generaba el PDF y lo abría: si algo estaba mal había que editar un presupuesto ya emitido (que además genera una versión nueva de PDF). Revisar antes es más barato que corregir después.
+**Qué muestra la de repuestos:** solo **lo que se cotiza** — una línea por categoría, la opción elegida —, con "+N alternativas guardadas" al lado. Mostrar todas las opciones repetiría el pop-up "Ver repuestos" y haría que la suma de la pantalla no coincida con el total.
+**Cómo se mantiene fiel:** la pantalla no tiene lógica propia de precios. Usa `lineasServicios` (mano de obra) y `agruparLineas` + `opcionElegida` (repuestos), que es la misma regla que aplica el backend en `_resolver_grupos`. Si esa regla cambia, la revisión cambia con ella.
+**Fecha:** 2026-08-18
