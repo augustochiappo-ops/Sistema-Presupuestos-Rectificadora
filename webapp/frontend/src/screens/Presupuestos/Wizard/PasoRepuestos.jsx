@@ -39,7 +39,7 @@ const tituloSeccion = {
  * stock: 1/0 congelado al agregar (null en manuales) — solo para el aviso en pantalla.
  */
 export function PasoRepuestos({
-  motor, value, onChange, totalServicios, hayServicios, onConfirmar, guardando,
+  motor, value, onChange, totalServicios, hayServicios, onRevisar,
   cantidadPorGrupo, onCantidadGrupo, elegidaAMano, onElegirAMano,
   ficha, onFicha, tildes,
 }) {
@@ -283,8 +283,10 @@ export function PasoRepuestos({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
-      {/* Total y "Confirmar presupuesto" arriba de todo, igual que en el paso
-          de Servicios: no hace falta bajar hasta el final para ver el total o confirmar. */}
+      {/* Total y "Revisar presupuesto" arriba de todo, igual que en el paso
+          de Servicios: no hace falta bajar hasta el final para ver el total o
+          seguir. El presupuesto todavía no se emite acá: el botón lleva al paso
+          de Revisión, que es donde se confirma. */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)', flexWrap: 'wrap', gap: 12 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 18, flexWrap: 'wrap' }}>
           <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
@@ -298,13 +300,18 @@ export function PasoRepuestos({
             <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(totalGeneral)}</span>
           </span>
         </div>
-        <Button variant="success" disabled={!hayItems || hayInvalidos || guardando} onClick={onConfirmar}>
-          {guardando ? 'Generando presupuesto…' : 'Confirmar presupuesto'}
+        <Button
+          variant="success"
+          disabled={!hayItems || hayInvalidos}
+          iconRight={<Icon n="chevron-right" s={16} />}
+          onClick={onRevisar}
+        >
+          Revisar presupuesto
         </Button>
       </div>
       {!hayItems && (
         <div style={{ textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-faint)' }}>
-          Agregá al menos un servicio o un repuesto para confirmar.
+          Agregá al menos un servicio o un repuesto para poder seguir.
         </div>
       )}
 

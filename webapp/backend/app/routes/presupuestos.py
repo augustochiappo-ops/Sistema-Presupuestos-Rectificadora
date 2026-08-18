@@ -149,6 +149,21 @@ def _descripcion_descartado(it):
     )
 
 
+def _unitario_pisado(it):
+    """
+    Precio unitario que el usuario pisó a mano para un servicio de la lista.
+    None si no vino, si no es un número o si es negativo — en cualquiera de esos
+    casos manda la lista de FACRA.
+    """
+    if it.get("precio_unitario") is None:
+        return None
+    try:
+        precio = float(it["precio_unitario"])
+    except (TypeError, ValueError):
+        return None
+    return round(precio, 2) if precio >= 0 else None
+
+
 def _resolver_items(items_payload, lista_num, ajuste_pct=0):
     """
     Recalcula el precio server-side para ítems de FACRA (no confía en el precio
@@ -166,6 +181,13 @@ def _resolver_items(items_payload, lista_num, ajuste_pct=0):
     tienen un precio que el usuario eligió a mano, adjustarlos de nuevo por un
     % global sería doble ajuste. El precio ajustado queda grabado como si fuera
     el precio de lista (no se persiste el % por separado).
+
+    Un servicio de FACRA puede venir con `precio_unitario`: es el precio pisado
+    a mano en el paso Servicios del wizard. En ese caso ESE es el unitario y no
+    se le aplica el ajuste %, por la misma razón que a los ítems custom — ya es
+    un número elegido a mano. Sin `precio_unitario` (el caso normal) el precio
+    sale de la lista, como siempre: el cliente no puede alterar un precio sin
+    decirlo explícitamente.
 
     Retorna (resueltos, descartados): descartados lleva una descripción por cada
     ítem inválido, para avisar en vez de perderlo en silencio.
@@ -196,7 +218,9 @@ def _resolver_items(items_payload, lista_num, ajuste_pct=0):
             if servicio_id not in precios_lista:
                 descartados.append(_descripcion_descartado(it))
                 continue
-            precio_unitario = round(precios_lista[servicio_id] * factor_ajuste, 2)
+            precio_unitario = _unitario_pisado(it)
+            if precio_unitario is None:
+                precio_unitario = round(precios_lista[servicio_id] * factor_ajuste, 2)
             resueltos.append({
                 "servicio_id": servicio_id,
                 "descripcion_custom": None,

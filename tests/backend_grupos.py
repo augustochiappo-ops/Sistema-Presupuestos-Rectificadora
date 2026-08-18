@@ -411,6 +411,61 @@ total_calculado = sum(i["precio_aplicado"] for i in items2)
 check("total = suma de líneas (alternativas no suman)",
       round(cliente.get(f"/api/presupuestos/{pid2}").get_json()["total"], 2) == round(total_calculado, 2))
 
+print("\n=== 8b. Precio de mano de obra pisado a mano ===")
+# El wizard permite editar el precio unitario de un servicio de la Cámara en el
+# paso Servicios. Ese precio manda sobre la lista y NO recibe el ajuste %, igual
+# que un ítem manual (si no, sería doble ajuste sobre un número ya elegido).
+servicio_pisado = servicios[0]
+precio_lista = servicio_pisado["precio"]
+
+
+def _crear_con_servicio(item, ajuste=0, nombre="pisado test"):
+    r = cliente.post("/api/presupuestos", json={
+        "cliente_nombre": nombre,
+        "motor_id": motor["id"],
+        "items": [item],
+        "ajuste_pct": ajuste,
+    })
+    if r.status_code != 201:
+        return None, None, r
+    pid = r.get_json()["id"]
+    items = cliente.get(f"/api/presupuestos/{pid}/items").get_json()
+    return pid, items[0], r
+
+
+pid_lista, item_lista, _ = _crear_con_servicio(
+    {"servicio_id": servicio_pisado["id"], "cantidad": 2}, ajuste=10)
+check("sin precio pisado el unitario sale de la lista con el ajuste",
+      item_lista["precio_unitario"] == round(precio_lista * 1.1, 2),
+      (item_lista["precio_unitario"], precio_lista))
+
+pid_pis, item_pis, _ = _crear_con_servicio(
+    {"servicio_id": servicio_pisado["id"], "cantidad": 2, "precio_unitario": 1234.56}, ajuste=10)
+check("el precio pisado gana sobre la lista", item_pis["precio_unitario"] == 1234.56, item_pis)
+check("el precio pisado no recibe el ajuste %", item_pis["precio_unitario"] != round(1234.56 * 1.1, 2))
+check("el subtotal es cantidad x unitario pisado", item_pis["precio_aplicado"] == 2469.12, item_pis)
+check("el total del presupuesto usa el precio pisado",
+      cliente.get(f"/api/presupuestos/{pid_pis}").get_json()["total"] == 2469.12)
+
+_, item_cero, _ = _crear_con_servicio(
+    {"servicio_id": servicio_pisado["id"], "cantidad": 1, "precio_unitario": 0})
+check("un precio pisado en 0 se respeta", item_cero["precio_unitario"] == 0, item_cero)
+
+_, item_neg, _ = _crear_con_servicio(
+    {"servicio_id": servicio_pisado["id"], "cantidad": 1, "precio_unitario": -50})
+check("un precio pisado negativo se ignora y manda la lista",
+      item_neg["precio_unitario"] == precio_lista, item_neg)
+
+_, item_basura, _ = _crear_con_servicio(
+    {"servicio_id": servicio_pisado["id"], "cantidad": 1, "precio_unitario": "carísimo"})
+check("un precio pisado que no es número se ignora y manda la lista",
+      item_basura["precio_unitario"] == precio_lista, item_basura)
+
+_, _, r_inexistente = _crear_con_servicio(
+    {"servicio_id": 999999, "cantidad": 1, "precio_unitario": 999})
+check("un servicio inexistente sigue siendo rechazado aunque traiga precio",
+      r_inexistente.status_code == 400, r_inexistente.get_json())
+
 print("\n=== 9. Editar preservando grupos ===")
 payload_edicion = {
     "items": [{"servicio_id": servicios[0]["id"], "cantidad": 4,

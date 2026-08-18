@@ -7,7 +7,10 @@ import { Icon } from '../../../components/Icon'
 import { ContadorServicio } from '../../../components/ContadorServicio'
 import { SelectorCantidadServicio } from '../../../components/SelectorCantidadServicio'
 import { DataTable } from '../../../components/DataTable'
-import { formatPrecioARS } from '../../../utils/format'
+import { formatPrecioARS, parsePrecioARS } from '../../../utils/format'
+import {
+  lineasServicios, totalLineas, hayPreciosInvalidos, precioEfectivo, estaPisado,
+} from '../../../utils/servicios'
 import { useUndo } from '../../../context/UndoContext'
 
 const tituloSeccion = {
@@ -15,18 +18,15 @@ const tituloSeccion = {
   letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-faint)',
 }
 
-// wrap:true en precio unitario y subtotal: aunque el ancho de columna no
-// alcance para un monto grande, el valor pasa a una segunda línea en vez de
-// recortarse con "…" — nunca se pierde el dato.
-const COLUMNAS_PREVIEW = [
-  { key: 'descripcion', header: 'Descripción', wrap: true },
-  { key: 'cantidad', header: 'Cant.', align: 'right', width: 72 },
-  { key: 'precioUnitario', header: 'P. unitario', align: 'right', width: 130, wrap: true, render: formatPrecioARS },
-  { key: 'subtotal', header: 'Subtotal', align: 'right', width: 130, wrap: true, strong: true, render: formatPrecioARS },
-]
+const chipEditado = {
+  fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
+  color: 'var(--text-muted)', background: 'var(--surface-sunken)',
+  borderRadius: 'var(--radius-pill)', padding: '1px 8px', whiteSpace: 'nowrap',
+}
 
-// Componente controlado: la selección (value = {cantidades, customItems, grupos})
-// vive en el wizard, así volver atrás desde el paso de repuestos no la pierde.
+// Componente controlado: la selección (value = {cantidades, customItems, grupos,
+// precios}) vive en el wizard, así volver atrás desde el paso de repuestos no la
+// pierde.
 // cantidades: { [servicioId]: cantidad } — un servicio sin entrada (o en 0) no
 // está incluido en el presupuesto; cantidad > 1 multiplica el precio de lista
 // (ej. "Reunir cilindros" ×4 en un motor de 4 cilindros).
@@ -34,6 +34,8 @@ const COLUMNAS_PREVIEW = [
 // pertenece la última elección hecha desde el botón "+" de ese ítem ('a' para
 // 4/8/16, 'b' para 6/12). Solo se usa para decidir qué par muestran los
 // recuadros adaptativos (ver parAdaptativo más abajo); tipear a mano no tagea.
+// precios: { [servicioId]: { valor, texto } } — el unitario pisado a mano desde
+// la tabla de la derecha. Ver utils/servicios.js.
 export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctChange, onSiguiente }) {
   const [servicios, setServicios] = React.useState([])
   const [favoritos, setFavoritos] = React.useState(new Set())
@@ -46,6 +48,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   const cantidades = value.cantidades
   const customItems = value.customItems
   const grupos = value.grupos
+  const precios = value.precios || {}
 
   React.useEffect(() => {
     api.get(`/motores/${motor.id}/servicios`).then(setServicios)
@@ -63,13 +66,21 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
 
   // Tipeo a mano en el recuadro: fija la cantidad tal cual y limpia el tag de
   // grupo (un valor tipeado a mano no participa del cálculo del par adaptativo).
+  // Sacar el servicio del presupuesto (cantidad 0) también borra su precio
+  // pisado: un precio que ya no se ve en ningún lado no puede volver solo si el
+  // servicio se agrega de nuevo más tarde.
   const cambiarCantidad = (id, cantidad) => {
     const nuevas = { ...cantidades }
-    if (cantidad > 0) nuevas[id] = cantidad
-    else delete nuevas[id]
+    const nuevosPrecios = { ...precios }
+    if (cantidad > 0) {
+      nuevas[id] = cantidad
+    } else {
+      delete nuevas[id]
+      delete nuevosPrecios[id]
+    }
     const nuevosGrupos = { ...grupos }
     delete nuevosGrupos[id]
-    onChange({ ...value, cantidades: nuevas, grupos: nuevosGrupos })
+    onChange({ ...value, cantidades: nuevas, grupos: nuevosGrupos, precios: nuevosPrecios })
   }
 
   // Botón "+" o recuadro adaptativo: fija la cantidad y tagea el ítem con su
@@ -105,11 +116,17 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
 
   const agregarCustom = () => {
     const desc = nuevoCustomDesc.trim()
-    const precio = parseFloat(nuevoCustomPrecio.replace(',', '.'))
-    if (!desc || Number.isNaN(precio)) return
+    const precio = parsePrecioARS(nuevoCustomPrecio)
+    if (!desc || precio === null) return
     onChange({
       ...value,
-      customItems: [...customItems, { id: `custom-${Date.now()}`, descripcion_custom: desc, precio_aplicado: precio, cantidad: 1 }],
+      customItems: [...customItems, {
+        id: `custom-${Date.now()}`,
+        descripcion_custom: desc,
+        precio_aplicado: precio,
+        precioTexto: formatPrecioARS(precio),
+        cantidad: 1,
+      }],
     })
     setNuevoCustomDesc('')
     setNuevoCustomPrecio('')
@@ -130,6 +147,42 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
     })
   }
 
+  /** Vuelve al precio de la lista de la Cámara (con el ajuste %). */
+  const restaurarPrecio = (fila) => {
+    const nuevos = { ...precios }
+    delete nuevos[fila.servicioId]
+    onChange({ ...value, precios: nuevos })
+  }
+
+  /*
+   * Pisar el precio unitario desde la tabla de la derecha. Se guarda el texto
+   * tal cual se tipea (para no pelearle al cursor mientras se escribe) y el
+   * valor parseado aparte; un texto que no se entiende deja el valor en null,
+   * pinta el recuadro en rojo y apaga "Siguiente".
+   *
+   * Vaciar el recuadro de un servicio de la Cámara devuelve el precio de lista:
+   * es la misma salida que el botón ↺, escribiendo.
+   */
+  const cambiarPrecio = (fila, texto) => {
+    if (fila.esManual) {
+      onChange({
+        ...value,
+        customItems: customItems.map((c) => (
+          c.id === fila.id ? { ...c, precio_aplicado: parsePrecioARS(texto), precioTexto: texto } : c
+        )),
+      })
+      return
+    }
+    if (!texto.trim()) {
+      restaurarPrecio(fila)
+      return
+    }
+    onChange({
+      ...value,
+      precios: { ...precios, [fila.servicioId]: { valor: parsePrecioARS(texto), texto } },
+    })
+  }
+
   const filtrados = servicios.filter((s) => {
     if (!busqueda) return true
     const q = busqueda.toLowerCase()
@@ -140,12 +193,8 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
 
   // Aumento/descuento en % sobre la mano de obra (positivo = aumento, negativo
   // = descuento). Solo afecta los precios de lista de servicios FACRA — los
-  // ítems manuales ya tienen un precio elegido a mano, no se ajustan de nuevo.
-  // El redondeo por unidad tiene que ser igual al que hace el backend
-  // (_resolver_items) para que el total que se ve acá coincida con el final.
-  const factorAjuste = 1 + (ajustePct || 0) / 100
-  const precioConAjuste = (precio) => Math.round((precio || 0) * factorAjuste * 100) / 100
-
+  // ítems manuales y los renglones con el precio pisado a mano ya tienen un
+  // precio elegido a mano, no se ajustan de nuevo.
   const aplicarAjusteTexto = (texto) => {
     setAjusteTexto(texto)
     const normalizado = texto.replace(',', '.').trim()
@@ -159,35 +208,65 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
 
   const colorAjuste = ajustePct > 0 ? 'var(--status-active-fg)' : ajustePct < 0 ? 'var(--status-expired-fg)' : 'var(--border-default)'
 
-  const totalFacra = servicios.reduce((acc, s) => acc + (cantidades[s.id] || 0) * precioConAjuste(s.precio), 0)
-  const totalCustom = customItems.reduce((acc, c) => acc + c.precio_aplicado * (c.cantidad || 0), 0)
-  const total = totalFacra + totalCustom
-
   // Previsualización del lado derecho: todo lo que ya está incluido en el
-  // presupuesto (catálogo + ítems manuales), con su subtotal ya calculado.
-  const filasPreview = [
-    ...servicios
-      .filter((s) => (cantidades[s.id] || 0) > 0)
-      .map((s) => {
-        const cantidad = cantidades[s.id]
-        const precioUnitario = precioConAjuste(s.precio)
-        return { id: s.id, descripcion: s.descripcion, cantidad, precioUnitario, subtotal: precioUnitario * cantidad }
-      }),
-    ...customItems
-      .filter((c) => (c.cantidad || 0) > 0)
-      .map((c) => ({
-        id: c.id, descripcion: c.descripcion_custom, cantidad: c.cantidad,
-        precioUnitario: c.precio_aplicado, subtotal: c.precio_aplicado * c.cantidad,
-      })),
+  // presupuesto (catálogo + ítems manuales), con su subtotal ya calculado. Es
+  // también donde se edita el precio unitario, así que es la misma lista que
+  // alimenta el total y el paso de Revisión.
+  const filasPreview = lineasServicios(servicios, value, ajustePct)
+  const total = totalLineas(filasPreview)
+  const preciosInvalidos = hayPreciosInvalidos(filasPreview)
+
+  // wrap:true en subtotal: aunque el ancho de columna no alcance para un monto
+  // grande, el valor pasa a una segunda línea en vez de recortarse con "…".
+  // Sin useMemo a propósito: las celdas editables capturan value/onChange, y
+  // memorizarlas las dejaría escribiendo sobre una selección vieja.
+  const columnasPreview = [
+    { key: 'descripcion', header: 'Descripción', wrap: true },
+    { key: 'cantidad', header: 'Cant.', align: 'right', width: 76 },
+    {
+      key: 'precioUnitario',
+      header: 'P. unitario',
+      align: 'right',
+      width: 186,
+      render: (_, fila) => (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, justifyContent: 'flex-end' }}>
+          <TextField
+            value={fila.precioTexto ?? ''}
+            onChange={(e) => cambiarPrecio(fila, e.target.value)}
+            title="Precio unitario — se puede editar"
+            style={{
+              width: 112, textAlign: 'right',
+              borderColor: fila.precioUnitario === null || fila.precioUnitario === undefined
+                ? 'var(--status-expired-fg)' : undefined,
+            }}
+          />
+          {/* El ↺ solo tiene sentido con un precio de lista atrás: un ítem
+              manual no tiene a dónde volver. */}
+          {fila.pisado && (
+            <button
+              type="button"
+              onClick={() => restaurarPrecio(fila)}
+              title="Volver al precio de la lista"
+              style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex', padding: 2 }}
+            >
+              <Icon n="rotate-cw" s={14} />
+            </button>
+          )}
+        </span>
+      ),
+    },
+    { key: 'subtotal', header: 'Subtotal', align: 'right', width: 130, wrap: true, strong: true, render: formatPrecioARS },
   ]
 
   const Fila = ({ s }) => {
     const cantidad = cantidades[s.id] || 0
+    const precio = precioEfectivo(s, value, ajustePct)
+    const pisado = estaPisado(s.id, value)
     return (
       <div
         onClick={() => sumarUno(s.id)}
         style={{
-          display: 'grid', gridTemplateColumns: '32px auto 1fr 110px', alignItems: 'center', gap: 10,
+          display: 'grid', gridTemplateColumns: '32px auto 1fr 150px', alignItems: 'center', gap: 10,
           padding: '10px 16px', borderRadius: 'var(--radius-md)', cursor: 'pointer',
           background: cantidad > 0 ? 'var(--status-active-bg)' : 'transparent',
         }}
@@ -205,7 +284,14 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
           onElegir={(n) => elegirCantidad(s.id, n)}
         />
         <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)' }}>{s.descripcion}</span>
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', textAlign: 'right', fontWeight: 600 }}>{formatPrecioARS(precioConAjuste(s.precio))}</span>
+        {/* El precio de la izquierda es el mismo que cotiza el presupuesto: si
+            se pisó a mano en la tabla de la derecha, se ve el pisado. */}
+        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 6 }}>
+          {pisado && <span style={chipEditado}>editado</span>}
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)', fontWeight: 600 }}>
+            {formatPrecioARS(precio)}
+          </span>
+        </span>
       </div>
     )
   }
@@ -247,6 +333,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
         <Button
           variant="secondary"
           iconRight={<Icon n="chevron-right" s={16} />}
+          disabled={preciosInvalidos}
           onClick={() => onSiguiente(total)}
           style={{ background: '#fff', border: 'none', color: 'var(--text-strong)' }}
         >
@@ -254,13 +341,19 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
         </Button>
       </div>
 
+      {preciosInvalidos && (
+        <div style={{ textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--status-expired-fg)' }}>
+          Hay un precio que no se entiende como número. Corregilo para poder seguir.
+        </div>
+      )}
+
       {/* Izquierda: catálogo completo de mano de obra para ir eligiendo.
           Derecha: previsualización de cómo va quedando el presupuesto. */}
       <div className="servicios-picker-grid">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
           <SearchInput icon={<Icon n="search" s={16} />} placeholder="Buscar por número o descripción…" value={busqueda} onChange={(e) => setBusqueda(e.target.value)} />
 
-          <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', maxHeight: 520, overflow: 'auto', padding: '8px 0' }}>
+          <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', maxHeight: 780, overflow: 'auto', padding: '8px 0' }}>
             {favoritosVisibles.map((s) => <Fila key={s.id} s={s} />)}
             {favoritosVisibles.length > 0 && restoVisibles.length > 0 && (
               <div style={{ textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--text-faint)', padding: '10px 0' }}>
@@ -279,10 +372,16 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
           <div style={tituloSeccion}>Presupuesto</div>
           <DataTable
-            columns={COLUMNAS_PREVIEW}
+            columns={columnasPreview}
             rows={filasPreview}
             emptyMessage="Todavía no elegiste servicios. Tocá un ítem de la lista para agregarlo acá."
           />
+          {filasPreview.length > 0 && (
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
+              El precio unitario se puede editar acá mismo. Un precio editado no recibe el ajuste %;
+              el ↺ lo devuelve al de la lista.
+            </div>
+          )}
         </div>
       </div>
 
@@ -295,7 +394,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
               {c.descripcion_custom}
               <span style={{ color: 'var(--text-faint)' }}> ({formatPrecioARS(c.precio_aplicado)} c/u)</span>
             </span>
-            <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600 }}>{formatPrecioARS(c.precio_aplicado * (c.cantidad || 0))}</span>
+            <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600 }}>{formatPrecioARS((c.precio_aplicado || 0) * (c.cantidad || 0))}</span>
             <button onClick={() => quitarCustom(c.id)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex' }}>
               <Icon n="x" s={16} />
             </button>

@@ -54,6 +54,29 @@ page.on('pageerror', (e) => { console.log('  !! error de JS en la página:', e.m
 
 async function esperar(ms) { await page.waitForTimeout(ms) }
 
+/*
+ * Desde el 2026-08-18 el wizard tiene un paso 5: "Revisar presupuesto" lleva a
+ * la pantalla de revisión (mano de obra + repuestos, todavía sin guardar nada) y
+ * recién "Confirmar y generar PDF" emite el presupuesto.
+ */
+async function irARevision() {
+  await page.locator('button', { hasText: /Revisar presupuesto/ }).click()
+  await esperar(1600)
+}
+
+async function confirmarEnRevision() {
+  await page.locator('button', { hasText: /Confirmar y generar PDF/ }).click()
+  await page.waitForURL(/presupuestos$/, { timeout: 20000 })
+}
+
+// Los montos de la barra oscura, en orden: los dos parciales y el total.
+async function montosDeLaBarra() {
+  const textos = await page.locator('text=/^\\$\\s?[\\d.,]+$/').allTextContents()
+  // El formato ARS mete un espacio duro después del $; se normaliza para poder
+  // comparar contra un literal.
+  return textos.map((t) => t.replace(/\u00a0/g, ' ').trim())
+}
+
 // Estado limpio antes de empezar: la suite crea presupuestos, clientes y fichas
 // de motor. Si quedaran de una corrida anterior, el wizard arrancaría
 // precargado desde la ficha y las verificaciones de cantidades dejarían de
@@ -87,7 +110,7 @@ await page.fill('input[placeholder*="Buscar" i]', 'CITROEN')
 await esperar(900)
 await page.locator('table tbody tr').first().click()
 await esperar(1200)
-check('paso 3 es Servicios', (await page.locator('text=/Paso 3 de 4/').count()) > 0)
+check('paso 3 es Servicios', (await page.locator('text=/Paso 3 de 5/').count()) > 0)
 
 // Un ítem de mano de obra: hace falta después para verificar el aviso de "la
 // lista de la Cámara cambió" al revalidar. El catálogo de servicios no es una
@@ -99,10 +122,34 @@ await esperar(700)
 check('el servicio elegido aparece en la previsualización',
   (await page.locator('text=/Todavía no elegiste servicios/').count()) === 0)
 
+/* Precio unitario editable en la tabla de la derecha. Se pisa el precio, se
+   verifica que el total lo tome (cantidad 4 × 1.000 = 4.000) y que el renglón
+   de la izquierda quede marcado como editado; después el ↺ lo devuelve a la
+   lista, que es como sigue el resto de la suite (el bloque de revalidar mide
+   la mano de obra contra el precio de la Cámara). */
+const precioEditable = page.locator('.servicios-picker-grid table tbody tr input').first()
+check('el precio unitario de la previsualización es editable',
+  (await precioEditable.count()) === 1)
+await precioEditable.fill('1000')
+await esperar(900)
+const montosConPrecioPisado = await montosDeLaBarra()
+check('el total toma el precio pisado (4 × $1.000)',
+  montosConPrecioPisado[0] === '$ 4.000,00', JSON.stringify(montosConPrecioPisado))
+check('el renglón de la izquierda queda marcado como editado',
+  (await page.getByText('editado', { exact: true }).count()) === 1)
+await page.screenshot({ path: `${SHOT}/00-servicios-precio-editado.png`, fullPage: false })
+await page.locator('button[title="Volver al precio de la lista"]').click()
+await esperar(900)
+const montosRestaurados = await montosDeLaBarra()
+check('el ↺ devuelve el precio de la lista',
+  montosRestaurados[0] !== '$ 4.000,00', JSON.stringify(montosRestaurados))
+check('y se va la marca de editado',
+  (await page.getByText('editado', { exact: true }).count()) === 0)
+
 const btnRepuestos = page.locator('button', { hasText: /Siguiente.*Repuestos/i }).first()
 await btnRepuestos.click()
 await esperar(1200)
-check('paso 4 es Repuestos', (await page.locator('text=/Paso 4 de 4/').count()) > 0)
+check('paso 4 es Repuestos', (await page.locator('text=/Paso 4 de 5/').count()) > 0)
 
 // Elegir la categoría "Cojinetes biela" en el rail
 await page.locator('button', { hasText: /^Cojinetes biela$/ }).first().click()
@@ -192,8 +239,23 @@ await esperar(600)
 const totalTexto = await page.locator('text=Total').first().textContent().catch(() => '')
 console.log('  (total en pantalla:', totalTexto, ')')
 
-await page.locator('button', { hasText: /Confirmar presupuesto/ }).click()
-await page.waitForURL(/presupuestos$/, { timeout: 20000 })
+const montosEnRepuestos = await montosDeLaBarra()
+await irARevision()
+check('paso 5 es Revisión', (await page.locator('text=/Paso 5 de 5/').count()) > 0)
+check('la revisión muestra la mano de obra',
+  (await page.locator('text=/^Mano de obra$/').count()) > 0)
+check('la revisión muestra los repuestos',
+  (await page.locator('text=/^Repuestos$/').count()) > 0)
+const filasRevision = await page.locator('table tbody tr').count()
+check('las dos tablas de la revisión traen renglones', filasRevision >= 2, `filas=${filasRevision}`)
+check('avisa cuántas alternativas quedaron guardadas',
+  (await page.locator('text=/alternativas guardadas/').count()) >= 1)
+const montosEnRevision = await montosDeLaBarra()
+check('el total de la revisión es el mismo que traía el paso Repuestos',
+  montosEnRevision[2] === montosEnRepuestos[2],
+  `${JSON.stringify(montosEnRepuestos)} vs ${JSON.stringify(montosEnRevision)}`)
+await page.screenshot({ path: `${SHOT}/05b-revision.png`, fullPage: true })
+await confirmarEnRevision()
 check('el presupuesto se confirma y vuelve al historial', page.url().endsWith('/presupuestos'))
 await esperar(1200)
 await page.screenshot({ path: `${SHOT}/06-historial.png`, fullPage: false })
@@ -335,7 +397,7 @@ await page.waitForURL(/duplicar=/, { timeout: 15000 })
 await esperar(2000)
 check('duplicar desde el listado abre el wizard',
   (await page.locator('text=/Copia del presupuesto/').count()) > 0)
-check('la copia arranca en el paso Cliente', (await page.locator('text=/Paso 1 de 4/').count()) > 0)
+check('la copia arranca en el paso Cliente', (await page.locator('text=/Paso 1 de 5/').count()) > 0)
 await page.screenshot({ path: `${SHOT}/11-duplicar.png`, fullPage: false })
 
 await page.fill('input[placeholder*="Buscar cliente"]', 'Cliente Copia UI')
@@ -345,7 +407,7 @@ if (await btnMecanico2.count()) { await btnMecanico2.click(); await esperar(400)
 await page.locator('button', { hasText: /Siguiente|Continuar/i }).first().click()
 await esperar(1800)
 check('saltea el selector de motor y va a Servicios',
-  (await page.locator('text=/Paso 3 de 4/').count()) > 0)
+  (await page.locator('text=/Paso 3 de 5/').count()) > 0)
 const cantidadesCopiadas = await page.locator('.servicios-picker-grid table tbody tr').count()
 check('el paso Servicios carga el catálogo del motor copiado', cantidadesCopiadas > 0)
 
@@ -355,8 +417,8 @@ check('los repuestos vienen copiados',
   (await page.locator('button', { hasText: /Ver repuestos \(\d+\)/ }).count()) > 0)
 await page.screenshot({ path: `${SHOT}/12-duplicar-repuestos.png`, fullPage: false })
 
-await page.locator('button', { hasText: /Confirmar presupuesto/ }).click()
-await page.waitForURL(/presupuestos$/, { timeout: 20000 })
+await irARevision()
+await confirmarEnRevision()
 await esperar(1500)
 const filasDespues = await page.locator('table tbody tr').count()
 check('la copia queda guardada como presupuesto nuevo', filasDespues === filasAntes + 1,
@@ -673,10 +735,10 @@ check('no quedan líneas en cero',
   (await page.locator('table tbody tr td input[type="number"][value="0"]').count()) === 0)
 await filasCatalogo().last().click()
 await esperar(1500)
-check('"Confirmar presupuesto" queda habilitado',
-  await page.locator('button', { hasText: /Confirmar presupuesto/ }).isEnabled())
-await page.locator('button', { hasText: /Confirmar presupuesto/ }).click()
-await page.waitForURL(/presupuestos$/, { timeout: 20000 })
+check('"Revisar presupuesto" queda habilitado',
+  await page.locator('button', { hasText: /Revisar presupuesto/ }).isEnabled())
+await irARevision()
+await confirmarEnRevision()
 await esperar(1200)
 check('la ficha del motor guardó las 7 opciones',
   py('print(c.execute("SELECT COUNT(*) FROM motor_repuesto_opciones").fetchone()[0])') === '7')

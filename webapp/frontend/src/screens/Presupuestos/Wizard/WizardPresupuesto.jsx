@@ -10,12 +10,14 @@ import { MotorSelector } from '../../../components/MotorSelector'
 import { PasoCliente } from './PasoCliente'
 import { PasoServicios } from './PasoServicios'
 import { PasoRepuestos } from './PasoRepuestos'
+import { PasoRevision } from './PasoRevision'
 import {
   gruposParaPayload, itemsSueltosParaPayload, lineaDeOpcion, elegidaAManoInicial,
 } from '../../../utils/grupos'
+import { itemsServiciosParaPayload } from '../../../utils/servicios'
 import { useFichaTildes } from '../../../hooks/useFichaTildes'
 
-const PASOS = ['Cliente', 'Motor', 'Servicios', 'Repuestos']
+const PASOS = ['Cliente', 'Motor', 'Servicios', 'Repuestos', 'Revisión']
 
 export default function WizardPresupuesto() {
   const navigate = useNavigate()
@@ -26,7 +28,9 @@ export default function WizardPresupuesto() {
   const [motor, setMotor] = React.useState(null)
   // La selección de servicios y repuestos vive acá (no en cada paso) para que
   // ir atrás y adelante en el wizard no pierda lo ya elegido.
-  const [serviciosSel, setServiciosSel] = React.useState({ cantidades: {}, customItems: [], grupos: {} })
+  // precios: { [servicioId]: { valor, texto } } — unitarios pisados a mano en
+  // el paso Servicios (ver utils/servicios.js).
+  const [serviciosSel, setServiciosSel] = React.useState({ cantidades: {}, customItems: [], grupos: {}, precios: {} })
   const [totalServicios, setTotalServicios] = React.useState(0)
   // Aumento/descuento en % sobre los precios de lista de mano de obra (positivo
   // = aumento, negativo = descuento). Vive acá (no en el paso) para no perderse
@@ -108,6 +112,9 @@ export default function WizardPresupuesto() {
               cantidad: it.cantidad || 1,
             })),
           grupos: {},
+          // La copia se arma a precios de hoy: la mano de obra la recalcula el
+          // backend contra la lista, así que no se arrastran precios pisados.
+          precios: {},
         })
 
         const lineasGrupos = gruposOriginal.flatMap((g) => g.opciones.map((o) => lineaDeOpcion(g, o, true)))
@@ -153,17 +160,7 @@ export default function WizardPresupuesto() {
     const pdfTab = window.open('', '_blank')
     try {
       const items = [
-        ...Object.entries(serviciosSel.cantidades)
-          .filter(([, cantidad]) => cantidad > 0)
-          .map(([id, cantidad]) => ({ servicio_id: Number(id), cantidad })),
-        ...serviciosSel.customItems
-          .filter((c) => (c.cantidad || 0) > 0)
-          .map((c) => ({
-            servicio_id: null,
-            descripcion_custom: c.descripcion_custom,
-            precio_aplicado: c.precio_aplicado,
-            cantidad: c.cantidad,
-          })),
+        ...itemsServiciosParaPayload(serviciosSel),
         // Los repuestos sueltos (fuera de catálogo, sin categoría) siguen yendo
         // como ítems normales; los agrupados van aparte en grupos_repuestos,
         // donde el backend elige el más caro y guarda todas las opciones.
@@ -241,7 +238,7 @@ export default function WizardPresupuesto() {
             // Cambió el motor: la selección de servicios (y sus precios de lista)
             // ya no aplica. Los repuestos tampoco: ahora salen de la ficha del
             // motor, así que arrancan de cero con la ficha del motor nuevo.
-            setServiciosSel({ cantidades: {}, customItems: [], grupos: {} })
+            setServiciosSel({ cantidades: {}, customItems: [], grupos: {}, precios: {} })
             setTotalServicios(0)
             setRepuestos([])
             setCantidadPorGrupo({})
@@ -270,8 +267,7 @@ export default function WizardPresupuesto() {
           onChange={setRepuestos}
           totalServicios={totalServicios}
           hayServicios={cantidadItemsServicios > 0}
-          onConfirmar={finalizar}
-          guardando={guardando}
+          onRevisar={() => setPaso(4)}
           cantidadPorGrupo={cantidadPorGrupo}
           onCantidadGrupo={setCantidadGrupo}
           elegidaAMano={elegidaAMano}
@@ -279,6 +275,19 @@ export default function WizardPresupuesto() {
           ficha={ficha}
           onFicha={setFicha}
           tildes={tildes}
+        />
+      )}
+
+      {paso === 4 && motor && (
+        <PasoRevision
+          cliente={cliente}
+          motor={motor}
+          serviciosSel={serviciosSel}
+          ajustePct={ajustePct}
+          repuestos={repuestos}
+          elegidaAMano={elegidaAMano}
+          onConfirmar={finalizar}
+          guardando={guardando}
         />
       )}
     </div>

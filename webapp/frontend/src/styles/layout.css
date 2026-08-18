@@ -18,7 +18,7 @@
 .repuestos-categorias-panel{max-height:560px;overflow:auto}
 
 /* Paso Servicios del wizard: catálogo de mano de obra a la izquierda, previsualización del presupuesto a la derecha */
-.servicios-picker-grid{display:grid;grid-template-columns:1fr 540px;gap:14px;align-items:start}
+.servicios-picker-grid{display:grid;grid-template-columns:1fr 600px;gap:14px;align-items:start}
 
 @media (max-width: 860px){
   .shell-outer{padding:0}
