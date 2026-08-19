@@ -18,7 +18,7 @@ línea por verificación y salen con código 1 si falla alguna.
 
 ## 1. Backend — `backend_grupos.py`
 
-220 verificaciones sobre la lógica, la base y el PDF.
+237 verificaciones sobre la lógica, la base y el PDF.
 
 ```bash
 # El entorno lo prepara tests/preparar.sh (o el hook de arranque, antes de que
@@ -60,7 +60,7 @@ Qué cubre, por bloque:
 
 ## 2. UI — `ui_grupos.mjs`
 
-195 verificaciones con navegador real, más capturas de pantalla en
+211 verificaciones con navegador real, más capturas de pantalla en
 `tests/capturas/`.
 
 ```bash

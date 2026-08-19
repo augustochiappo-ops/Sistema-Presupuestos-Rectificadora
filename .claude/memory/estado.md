@@ -744,25 +744,67 @@ del catálogo entra a la línea ya redondeado, que es como lo guarda el backend.
 El check que lo encontró quedó como regresión ("reponer el precio que muestra la
 pantalla devuelve el total exacto").
 
+## Cierre de la sesión del 2026-08-19 (las tres tandas)
+
+Fue una sesión larga con tres tandas y todo quedó en producción. Resumen para
+la próxima:
+
+**Qué se entregó.** (1) El repaso del 18 con sus tres fallas corregidas.
+(2) **Pesos enteros** en todo el sistema con redondeo hacia arriba, el subtotal
+que dejó de pelearle al cursor, el círculo que marca la familia de medidas
+entera, el buscador del catálogo al doble de alto y la Revisión editable
+(`941e068`). (3) El **entorno de dev automatizado** y el arreglo del precio de
+catálogo que entraba con centavos a la línea (`c2800fd`). Las dos tandas de
+código se deployaron y se verificaron por HTTP, de solo lectura.
+
+**Lo que hay que recordar de acá.** La sesión tardó una hora y ~30 minutos
+fueron desperdicio: la suite de UI corrió 4 veces cuando una alcanzaba, y
+ninguna de las tres perdidas falló por un problema de la app (contraseñas que no
+coincidían, un `pkill -f` que se mató a sí mismo, y un check recién escrito que
+estaba mal). Eso es lo que motivó `tests/preparar.sh`, el hook de arranque y las
+**cinco reglas de `CLAUDE.md`**. La regla de "una sola corrida al final" ya
+estaba escrita en `decisiones.md` desde la sesión anterior y se rompió igual: por
+eso ahora vive en `CLAUDE.md` como instrucción, y por eso el resto se resolvió
+con herramientas (un script que no deja levantar el entorno mal) en vez de con
+buenas intenciones.
+
+**Lo que hay que hacer al empezar la próxima sesión:** el hook ya deja el
+entorno preparado solo. Para levantar los servidores hace falta la contraseña:
+
+```bash
+export APP_PASSWORD="…"     # y el DEPLOY_SECRET si se va a deployar
+tests/preparar.sh
+```
+
+**Verificado al cerrar:** las dos suites en verde (backend 237, UI 211),
+`npm run build` y `oxlint` limpios, producción sirviendo el JS commiteado,
+árbol de trabajo limpio, `master` sincronizado con `origin/master`, una sola
+rama y ningún servidor de dev quedando corriendo.
+
 ## Próximo paso
 
-**`master` con el entorno de dev automatizado** (`tests/preparar.sh` + hook de
-arranque + una sola contraseña + las cuatro reglas operativas en `CLAUDE.md`,
-ver la sesión 2026-08-19 tercera más arriba). Eso es tooling y documentación: no
-toca la app, así que **no hay nada que deployar por ese cambio**. Producción
-quedó en `941e068`, que es el commit de los pesos enteros, deployado y verificado
-por HTTP.
+**Producción y `master` están sincronizados en `c2800fd`**, deployado y
+verificado por HTTP (el JS que sirve es byte a byte el commiteado). Ese commit
+trae el **entorno de dev automatizado** —`tests/preparar.sh`, el hook de
+arranque, una sola contraseña y las **cinco reglas operativas** de `CLAUDE.md`—
+y, además, **un arreglo de la app**: el precio del catálogo entra a la línea del
+presupuesto ya redondeado a pesos enteros, que es como lo guarda el backend. Sin
+eso, el total que se aprobaba en la Revisión podía quedar unos pesos por debajo
+del emitido. Por eso ese commit **sí** se deployó, aunque el grueso sea tooling.
 
-Antes de eso, **el repaso del 18 corregido** y sus tres fallas
-corregidas** (arrastre de una fila que quedaba trabado, la marca de opcional que
+Antes de eso, `941e068`: **pesos enteros en todo el sistema** con redondeo hacia
+arriba, el subtotal que dejó de pelearle al cursor, el círculo que marca la
+familia de medidas entera, el buscador del catálogo al doble de alto y el paso de
+Revisión editable (ver la sesión 2026-08-19 segunda más arriba; deployado y
+verificado).
+
+Antes de eso, el repaso de la sesión del 2026-08-18 con sus tres fallas
+corregidas (arrastre de una fila que quedaba trabado, la marca de opcional que
 sobrevivía a sacar el servicio, y las suites que se ensuciaban entre sí; ver la
-sección de la sesión 2026-08-19 más arriba). **Producción quedó parada en
-`9ad4d1a`**, que es el último commit con código de la app: lo que vino después
-(`b2c2c21` y el cierre) es solo memoria y documentación, así que no hay nada
-pendiente de deployar. Antes de eso, el cambio grande del
+sección de la sesión 2026-08-19 primera más arriba). Antes de eso, el cambio grande del
 armado de presupuestos: se cotiza todo lo cargado (se cayó la regla del "más caro"), caja de Opcionales en pantalla y en el PDF, subtotal editable y buscadores tolerantes a acentos y al orden de las palabras (`fc0c324`, 2026-08-18, deployado y verificado en producción por HTTP). Antes de eso, el precio de mano de obra editable, la lista de servicios más alta y el paso de Revisión previo a emitir (`fc35a9e`, 2026-08-18, deployado y verificado en producción por HTTP). Antes de eso, el paso Repuestos partido en dos ejes: el círculo del motor y la cantidad (`6b22255`, 2026-08-14, deployado y verificado en producción). Antes de eso, el bloque de líneas de familia + "Deshacer" global + el arreglo del bug de los aros (2026-08-12, deployado). Antes de eso, `722da1b` (borrar repuestos del motor con papelera, familias de medidas, notas de precio y el arreglo del bug de las supermedidas — 2026-08-12). Antes de eso, producción y `master` estaban sincronizados en `dfea837` (borrar clientes + códigos de a uno + repuestos por grupos + textos del PDF, deployado y verificado por API el 2026-08-11; el commit de cierre posterior es solo documentación y no cambia nada de lo que sirve producción). Rama única `master` — `main` fue eliminada y no hay que recrearla. El deploy lo puede correr Claude desde el entorno remoto pasando el `DEPLOY_SECRET` de la sesión (ver nota operativa arriba).
 
-**Producción YA NO está vacía — el dueño la está usando** (censo del 2026-08-12, después del deploy): **1 presupuesto** (#34, cliente Pascolo, FIAT 1100, $1.219.391,79), **1 cliente** (Pascolo) y **3 motores con ficha de repuestos cargada a mano**: #622 FIAT 1100 (19 opciones en Aros / Cojinete axial / Cojinetes bancada), #665 FIAT Ducato 2.3 (7) y #675 FIAT Fire 1400 (12). 491 motores y 64.250 repuestos. El catálogo del proveedor **sigue sin fecha de importación** (`app_meta.catalogo_importado_en` en `null`): se cargó antes de que existiera esa columna, así que la pantalla no muestra "última carga" hasta la próxima importación.
+**Producción YA NO está vacía — el dueño la está usando** (censo del 2026-08-12, después del deploy): **1 presupuesto** (#34, cliente Pascolo, FIAT 1100, guardado como $1.219.391,79 — desde el cambio a pesos enteros se **muestra** redondeado, la base no se tocó), **1 cliente** (Pascolo) y **3 motores con ficha de repuestos cargada a mano**: #622 FIAT 1100 (19 opciones en Aros / Cojinete axial / Cojinetes bancada), #665 FIAT Ducato 2.3 (7) y #675 FIAT Fire 1400 (12). 491 motores y 64.250 repuestos. El catálogo del proveedor **sigue sin fecha de importación** (`app_meta.catalogo_importado_en` en `null`): se cargó antes de que existiera esa columna, así que la pantalla no muestra "última carga" hasta la próxima importación.
 
 > **Ojo con esto al escribir cualquier script contra producción.** Hasta el 2026-08-11 la memoria decía "producción está limpia, 0 presupuestos y 0 clientes", y eso dejó de ser cierto en cuanto el dueño empezó a usar el sistema. Ver el incidente del 2026-08-12 más abajo.
 
