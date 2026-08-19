@@ -20,13 +20,15 @@
  * manda al backend.
  */
 
-import { formatPrecioARS } from './format'
+import { formatPrecioARS, parsePrecioARS, aPesos } from './format'
+import { unitarioDesdeSubtotal } from './precios'
 
 /** Precio de lista con el ajuste % aplicado. El redondeo por unidad tiene que
- *  ser igual al del backend (_resolver_items) para que los totales coincidan. */
+ *  ser igual al del backend (_resolver_items) para que los totales coincidan:
+ *  pesos enteros hacia arriba en los dos lados. */
 export function precioAjustado(precio, ajustePct) {
   const factor = 1 + (Number(ajustePct) || 0) / 100
-  return Math.round((precio || 0) * factor * 100) / 100
+  return aPesos((precio || 0) * factor)
 }
 
 /** Lo que vale hoy un servicio de la lista: el precio pisado a mano si lo hay,
@@ -119,6 +121,121 @@ export function hayPreciosInvalidos(lineas) {
   return lineas.some((l) => l.precioUnitario === null
     || l.precioUnitario === undefined
     || Number.isNaN(l.precioUnitario))
+}
+
+/*
+ * Editar una línea de mano de obra: cantidad, precio unitario y subtotal.
+ *
+ * Son transformaciones puras de la selección (`seleccion` → selección nueva)
+ * porque las usan DOS pantallas: el paso Servicios, donde se arma la lista, y
+ * el paso de Revisión, donde se repasa antes de emitir. La cuenta tiene que ser
+ * la misma en los dos lados, así que vive una sola vez acá.
+ *
+ * `fila` es una línea de lineasServicios: trae `esManual`, `servicioId`, `id` y
+ * la cantidad, que es todo lo que hace falta para saber dónde escribir.
+ */
+
+/**
+ * Cantidad de una línea. Bajarla a 0 saca el ítem del presupuesto: también se
+ * borran su precio pisado y su marca de opcional, para que nada que ya no se ve
+ * vuelva solo si el servicio se agrega de nuevo más tarde.
+ */
+export function conCantidadServicio(seleccion, fila, cantidad) {
+  const cant = Number(cantidad)
+  if (Number.isNaN(cant) || cant < 0) return seleccion
+  const sinOpcional = (clave) => (seleccion.opcionales || []).filter((c) => String(c) !== String(clave))
+
+  if (fila.esManual) {
+    if (cant > 0) {
+      return {
+        ...seleccion,
+        customItems: (seleccion.customItems || []).map((c) => (
+          c.id === fila.id ? { ...c, cantidad: cant } : c
+        )),
+      }
+    }
+    return {
+      ...seleccion,
+      customItems: (seleccion.customItems || []).filter((c) => c.id !== fila.id),
+      opcionales: sinOpcional(fila.id),
+    }
+  }
+
+  const cantidades = { ...(seleccion.cantidades || {}) }
+  const precios = { ...(seleccion.precios || {}) }
+  // Tipear la cantidad a mano no tagea familia: el par adaptativo del paso
+  // Servicios solo mira lo elegido desde el botón "+".
+  const grupos = { ...(seleccion.grupos || {}) }
+  delete grupos[fila.servicioId]
+
+  if (cant > 0) {
+    cantidades[fila.servicioId] = cant
+    return { ...seleccion, cantidades, grupos, precios, opcionales: seleccion.opcionales || [] }
+  }
+  delete cantidades[fila.servicioId]
+  delete precios[fila.servicioId]
+  return {
+    ...seleccion, cantidades, grupos, precios, opcionales: sinOpcional(fila.servicioId),
+  }
+}
+
+/**
+ * Precio unitario tipeado a mano. Se guarda el texto tal cual se escribe (para
+ * no pelearle al cursor) y el valor parseado aparte; un texto que no se
+ * entiende deja el valor en null y la pantalla lo marca en rojo.
+ *
+ * Vaciar el recuadro de un servicio de la Cámara devuelve el precio de lista:
+ * es la misma salida que el botón ↺, escribiendo.
+ */
+export function conPrecioServicio(seleccion, fila, texto) {
+  if (fila.esManual) {
+    return {
+      ...seleccion,
+      customItems: (seleccion.customItems || []).map((c) => (
+        c.id === fila.id ? { ...c, precio_aplicado: parsePrecioARS(texto), precioTexto: texto } : c
+      )),
+    }
+  }
+  if (!texto.trim()) return sinPrecioPisado(seleccion, fila)
+  return {
+    ...seleccion,
+    precios: { ...(seleccion.precios || {}), [fila.servicioId]: { valor: parsePrecioARS(texto), texto } },
+  }
+}
+
+/**
+ * Subtotal tipeado a mano: es la casilla del unitario vista al revés. Se
+ * reparte lo escrito entre la cantidad y lo que queda es el unitario, que es lo
+ * que se guarda. Con cantidad 0 no se puede repartir, así que el valor queda
+ * inválido (recuadro rojo) en vez de inventar un número.
+ */
+export function conSubtotalServicio(seleccion, fila, texto) {
+  const { valor } = unitarioDesdeSubtotal(texto, fila.cantidad)
+  if (fila.esManual) {
+    return {
+      ...seleccion,
+      customItems: (seleccion.customItems || []).map((c) => (
+        c.id === fila.id
+          ? { ...c, precio_aplicado: valor, precioTexto: valor === null ? texto : formatPrecioARS(valor) }
+          : c
+      )),
+    }
+  }
+  if (!texto.trim()) return sinPrecioPisado(seleccion, fila)
+  return {
+    ...seleccion,
+    precios: {
+      ...(seleccion.precios || {}),
+      [fila.servicioId]: { valor, texto: valor === null ? texto : formatPrecioARS(valor) },
+    },
+  }
+}
+
+/** Vuelve al precio de la lista de la Cámara (con el ajuste %). Es el botón ↺. */
+export function sinPrecioPisado(seleccion, fila) {
+  const precios = { ...(seleccion.precios || {}) }
+  delete precios[fila.servicioId]
+  return { ...seleccion, precios }
 }
 
 /**

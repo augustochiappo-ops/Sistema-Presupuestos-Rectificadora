@@ -1,7 +1,9 @@
 import React from 'react'
 import { api } from '../api/client'
 import { formatPrecioARS } from '../utils/format'
-import { unitarioDesdeSubtotal } from '../utils/precios'
+import {
+  conCantidadRepuesto, conPrecioRepuesto, conSubtotalRepuesto, conOpcionalRepuesto,
+} from '../utils/grupos'
 
 /*
  * Agrupado automático de repuestos, compartido por el wizard y la edición de un
@@ -43,41 +45,23 @@ export function useRepuestosAgrupados({
     return m
   }, [porCodigo])
 
+  // Las tres ediciones de una línea viven en utils/grupos.js: el paso de
+  // Revisión y la edición del detalle usan las mismas funciones, así la cuenta
+  // no puede discrepar entre pantallas.
   const cambiarCantidad = React.useCallback((key, cantidad) => {
-    if (Number.isNaN(cantidad) || cantidad < 0) return
-    setLineas((actual) => actual.map((r) => (r.key === key ? { ...r, cantidad } : r)))
+    setLineas((actual) => conCantidadRepuesto(actual, key, cantidad))
   }, [setLineas])
 
   const cambiarPrecio = React.useCallback((key, texto) => {
-    const precio = parsePrecio(texto)
-    setLineas((actual) => actual.map((r) => (
-      r.key === key ? { ...r, precioTexto: texto, precio_unitario: precio } : r
-    )))
+    setLineas((actual) => conPrecioRepuesto(actual, key, texto))
   }, [setLineas])
 
-  /*
-   * Escribir el SUBTOTAL de una línea: se reparte por la cantidad y lo que
-   * queda pisa el precio unitario, que es lo que se guarda. Es la misma casilla
-   * del unitario vista al revés — manda el último que se escribe.
-   */
   const cambiarSubtotal = React.useCallback((key, texto) => {
-    setLineas((actual) => actual.map((r) => {
-      if (r.key !== key) return r
-      const { valor } = unitarioDesdeSubtotal(texto, r.cantidad)
-      return {
-        ...r,
-        precio_unitario: valor,
-        precioTexto: valor === null ? texto : formatPrecioARS(valor),
-      }
-    }))
+    setLineas((actual) => conSubtotalRepuesto(actual, key, texto))
   }, [setLineas])
 
-  /* Opcional: la línea queda en el presupuesto y sale en el PDF en su caja
-     aparte, pero deja de sumar al total. */
   const toggleOpcional = React.useCallback((key) => {
-    setLineas((actual) => actual.map((r) => (
-      r.key === key ? { ...r, opcional: !r.opcional } : r
-    )))
+    setLineas((actual) => conOpcionalRepuesto(actual, key))
   }, [setLineas])
 
   // El aviso de "este código salió del presupuesto" va fuera del updater: en
@@ -175,14 +159,4 @@ export function lineaDeCatalogo(rep, cantidad) {
     opcional: false,
     esManual: false,
   }
-}
-
-// Copia local de parsePrecioARS para no crear una dependencia circular entre
-// utils/format y este hook; el formato es el mismo ($ 1.234,56).
-function parsePrecio(texto) {
-  if (typeof texto === 'number') return texto
-  if (!texto) return null
-  const limpio = String(texto).replace(/\$/g, '').trim().replace(/\./g, '').replace(',', '.')
-  const n = parseFloat(limpio)
-  return Number.isNaN(n) ? null : n
 }

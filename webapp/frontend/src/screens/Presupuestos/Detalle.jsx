@@ -5,6 +5,7 @@ import { PageHeader } from '../../components/PageHeader'
 import { DataTable } from '../../components/DataTable'
 import { Button } from '../../components/Button'
 import { TextField } from '../../components/TextField'
+import { CampoMonto } from '../../components/CampoMonto'
 import { CategoriaField } from '../../components/CategoriaField'
 import { RepuestoPicker } from '../../components/RepuestoPicker'
 import { ContadorServicio } from '../../components/ContadorServicio'
@@ -14,7 +15,7 @@ import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { StatusBadge } from '../../components/StatusBadge'
 import { ModalRepuestosAgregados } from './Wizard/ModalRepuestosAgregados'
 import { ModalRevalidacion } from './ModalRevalidacion'
-import { formatPrecioARS, formatFechaAR } from '../../utils/format'
+import { formatPrecioARS, formatFechaAR, aPesos } from '../../utils/format'
 import {
   gruposParaPayload, totalRepuestos, totalRepuestosOpcionales, agruparLineas,
   subtotalDe, subtotalDelGrupo, lineaDeOpcion,
@@ -238,7 +239,7 @@ export default function DetallePresupuesto() {
       if (it.tipo === 'repuesto' || !it.servicio_id) return it
       const base = preciosListaPorServicio.get(it.servicio_id)
       if (base === undefined || base === null) return it
-      return { ...it, precio_unitario: Math.round(base * factor * 100) / 100 }
+      return { ...it, precio_unitario: aPesos(base * factor) }
     }))
   }
 
@@ -359,14 +360,18 @@ export default function DetallePresupuesto() {
     return tildes.estaTildado(codigo) ? 'motor' : 'fuera'
   }, [cantidadPorCodigo, tildes])
 
+  /* El círculo toca la familia de medidas entera (STD, 025, 050…), igual que en
+     el wizard: `codigos` son todos los que terminó moviendo. */
   const alternarFicha = async (rep) => {
-    const estaba = tildes.estaTildado(rep.codigo)
     try {
-      await tildes.alternarManual(rep)
-      if (!estaba) return
-      const linea = editGrupos.find((r) => r.repuesto_codigo === rep.codigo)
-      if (linea) quitarDeGrupo(linea.key)
-      setAviso('Se sacó de los repuestos de este motor. El presupuesto emitido no cambia; si fue sin querer, lo recuperás desde "Repuestos eliminados", en la pantalla del motor.')
+      const { marcado, codigos } = await tildes.alternarManual(rep)
+      if (marcado) return
+      const fuera = new Set(codigos)
+      const keys = editGrupos.filter((r) => fuera.has(r.repuesto_codigo)).map((r) => r.key)
+      if (keys.length) quitarVariasDeGrupo(keys)
+      setAviso(codigos.length > 1
+        ? `Se sacaron las ${codigos.length} medidas de esta pieza de los repuestos de este motor. El presupuesto emitido no cambia; si fue sin querer, las recuperás desde "Repuestos eliminados", en la pantalla del motor.`
+        : 'Se sacó de los repuestos de este motor. El presupuesto emitido no cambia; si fue sin querer, lo recuperás desde "Repuestos eliminados", en la pantalla del motor.')
     } catch (err) {
       setAviso(err.message || 'No se pudo guardar en el motor')
     }
@@ -622,16 +627,16 @@ export default function DetallePresupuesto() {
         />
       )}
       <TextField
-        type="number" step="0.01" placeholder="Precio unit."
+        type="number" step="1" placeholder="Precio unit."
         value={it.precio_unitario}
         onChange={(e) => actualizarPrecio(idx, e.target.value)}
         {...propsCampoEditable}
         title="Precio unitario — se puede editar"
         style={{ width: 130 }}
       />
-      <TextField
-        value={textoSubtotal(Number(it.precio_unitario) || 0, it.cantidad)}
-        onChange={(e) => actualizarSubtotal(idx, e.target.value)}
+      <CampoMonto
+        valor={textoSubtotal(Number(it.precio_unitario) || 0, it.cantidad)}
+        onEscribir={(texto) => actualizarSubtotal(idx, texto)}
         {...propsCampoEditable}
         title="Subtotal — se puede editar; el precio unitario se recalcula solo"
         style={{ width: 130, textAlign: 'right', fontWeight: 600 }}
@@ -979,15 +984,15 @@ export default function DetallePresupuesto() {
                   style={{ width: 150 }}
                 />
                 <TextField
-                  type="number" step="0.01" placeholder="P. unitario"
+                  type="number" step="1" placeholder="P. unitario"
                   value={it.precio_unitario}
                   onChange={(e) => actualizarCampo(idx, 'precio_unitario', e.target.value)}
                   title="Precio unitario — se puede editar"
                   style={{ width: 130 }}
                 />
-                <TextField
-                  value={textoSubtotal(Number(it.precio_unitario) || 0, it.cantidad)}
-                  onChange={(e) => actualizarSubtotal(idx, e.target.value)}
+                <CampoMonto
+                  valor={textoSubtotal(Number(it.precio_unitario) || 0, it.cantidad)}
+                  onEscribir={(texto) => actualizarSubtotal(idx, texto)}
                   title="Subtotal — se puede editar; el precio unitario se recalcula solo"
                   style={{ width: 130, textAlign: 'right', fontWeight: 600 }}
                 />
@@ -1028,14 +1033,14 @@ export default function DetallePresupuesto() {
                     {it.descripcion_custom || it.repuesto_codigo}
                   </span>
                   <TextField
-                    type="number" step="0.01" placeholder="P. unitario"
+                    type="number" step="1" placeholder="P. unitario"
                     value={it.precio_unitario}
                     onChange={(e) => actualizarCampo(idx, 'precio_unitario', e.target.value)}
                     style={{ width: 130 }}
                   />
-                  <TextField
-                    value={textoSubtotal(Number(it.precio_unitario) || 0, it.cantidad)}
-                    onChange={(e) => actualizarSubtotal(idx, e.target.value)}
+                  <CampoMonto
+                    valor={textoSubtotal(Number(it.precio_unitario) || 0, it.cantidad)}
+                    onEscribir={(texto) => actualizarSubtotal(idx, texto)}
                     style={{ width: 130, textAlign: 'right', fontWeight: 600 }}
                   />
                   <BotonOpcional opcional onClick={() => moverItemOpcional(`item:${it.id}`, false)} />

@@ -624,6 +624,69 @@ En el README están además los detalles que cuestan de redescubrir (el `text=` 
 
 El checklist completo está en `CLAUDE.md`, sección **Memoria del proyecto → Cierre de sesión**. En dos líneas: el cierre (memoria + cualquier ajuste de documentación) se commitea y pushea **directo a `master`, nunca en una rama nueva** —`master` es donde vive el código de producción, así no queda nada para mergear después—, y antes de cerrar hay que **mergear a `master` lo que haya quedado suelto** en otra rama (o borrarla, si sus commits ya están contenidos). Si el cierre tocó código de la app y no solo documentos, también se corre el deploy.
 
+## Sesión 2026-08-19 (segunda): pesos enteros, subtotal que no pelea el cursor, círculo por familia y Revisión editable
+
+Cinco pedidos del dueño, todos sobre el armado de presupuestos.
+
+**1. Se fueron los centavos de todo el sistema.** Toda la plata —pantalla, base
+y PDF— es un entero de pesos y el redondeo es **siempre hacia arriba**. El
+redondeo vive en dos funciones gemelas que tienen que dar el mismo número:
+`aPesos` (`utils/format.js`) y `pesos` (`app/helpers.py`). El catálogo del
+proveedor **no** se toca al importarlo: se redondea recién cuando un precio
+entra a un presupuesto o se muestra. Los presupuestos ya emitidos **no se
+migran** (decisión del dueño): conservan sus centavos en la base y se ven
+redondeados.
+
+**2. El bug del subtotal.** El recuadro mostraba siempre el valor recalculado y
+formateado, así que React lo reescribía en cada tecla: el cursor saltaba al
+final y aparecían centavos. Ahora usa `CampoMonto`, que mientras está enfocado
+muestra un borrador con lo tipeado tal cual y recién al salir reformatea. El
+total se sigue actualizando en vivo. Está en las cuatro pantallas donde se
+edita un subtotal.
+
+**3. El círculo verde marca la familia entera.** Tocarlo en una medida marca
+todas las hermanas de la pieza en el motor, y apagarlo las saca a todas
+(simétrico, como pidió el dueño). Es lo que ya hacía poner una cantidad. Las
+hermanas se preguntan al catálogo, no a la ficha, porque lo que se quiere
+marcar es justo lo que todavía no está guardado.
+
+**4. El buscador del catálogo va al doble de alto** (560 → 1120 px).
+
+**5. La Revisión dejó de ser de solo lectura:** se editan cantidad, precio
+unitario y subtotal de todas las líneas (mano de obra, repuestos y opcionales).
+Para no duplicar la cuenta, la lógica de edición se sacó de las pantallas y
+quedó como funciones puras en `utils/servicios.js` y `utils/grupos.js`, que hoy
+comparten el paso Servicios, el pop-up "Ver repuestos" y la Revisión.
+
+**Dos cosas que aparecieron al verificar y se arreglaron de paso:**
+- **La revalidación iba a marcar TODOS los presupuestos como desactualizados.**
+  Lo cotizado quedaba redondeado y el catálogo tiene centavos, así que un código
+  cuyo precio no cambió en absoluto se leía como "cambió" (314.978,83 contra los
+  314.979 guardados). Ahora `_linea_revalidada` redondea los dos lados antes de
+  compararlos. Lo cubre una verificación nueva.
+- **Celdas que recortaban con "…".** En la tabla del paso Servicios el ↺ dejaba
+  asomando el ellipsis al lado del precio (se ve en la captura que mandó el
+  dueño) y lo mismo pasaba con el contador en la Revisión. Van con `wrap: true`,
+  que es lo que ya se había hecho por la misma razón en el círculo del catálogo.
+
+**Componentes nuevos:** `CampoMonto` (recuadro de un monto calculado) y
+`ContadorCantidad` (el − [n] + de repaso, que ahora comparten el pop-up de
+repuestos y la Revisión — antes estaba escrito a mano en el pop-up).
+
+**Verificaciones:** `tests/backend_grupos.py` en **237 checks** (se agregó el
+bloque 13d, "Pesos enteros, redondeo hacia arriba") y `tests/ui_grupos.mjs` en
+**211**, con los checks nuevos del subtotal que no se reformatea mientras se
+tipea, el círculo que marca las 7 medidas de una familia y las vuelve a sacar, y
+la Revisión editando cantidad, unitario y subtotal de las dos clases de línea.
+`npm run build` y `oxlint` limpios.
+
+**Efecto conocido en los presupuestos viejos:** como no se migran, los que se
+cotizaron con centavos pueden mostrar un total que difiere en uno o dos pesos de
+la suma de sus líneas redondeadas (cada línea se redondea hacia arriba por su
+cuenta y el total guardado también). Se corrige solo la primera vez que ese
+presupuesto se edita o se actualiza a precios de hoy. En producción hay **un**
+presupuesto en esa situación (#34, Pascolo).
+
 ## Próximo paso
 
 **`master` con el repaso de la sesión del 2026-08-18 ya hecho y sus tres fallas

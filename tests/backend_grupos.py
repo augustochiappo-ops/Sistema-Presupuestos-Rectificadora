@@ -28,7 +28,7 @@ from werkzeug.security import generate_password_hash  # noqa: E402
 os.environ["APP_PASSWORD_HASH"] = generate_password_hash("test123")
 
 from app import db, crac, facra  # noqa: E402
-from app.helpers import formato_precio_ars  # noqa: E402
+from app.helpers import formato_precio_ars, pesos  # noqa: E402
 from app.routes import presupuestos as rp  # noqa: E402
 
 NOMENCLADOR = os.path.join(RAIZ, "Excel", "Facra", "nomenclador_1779985703.xls")
@@ -456,17 +456,23 @@ def _crear_con_servicio(item, ajuste=0, nombre="pisado test"):
 
 pid_lista, item_lista, _ = _crear_con_servicio(
     {"servicio_id": servicio_pisado["id"], "cantidad": 2}, ajuste=10)
+# Desde el 2026-08-19 la plata va en pesos ENTEROS y el redondeo es hacia
+# arriba, tanto en el frontend (utils/format.js) como acá (helpers.pesos).
 check("sin precio pisado el unitario sale de la lista con el ajuste",
-      item_lista["precio_unitario"] == round(precio_lista * 1.1, 2),
+      item_lista["precio_unitario"] == pesos(precio_lista * 1.1),
       (item_lista["precio_unitario"], precio_lista))
 
 pid_pis, item_pis, _ = _crear_con_servicio(
     {"servicio_id": servicio_pisado["id"], "cantidad": 2, "precio_unitario": 1234.56}, ajuste=10)
-check("el precio pisado gana sobre la lista", item_pis["precio_unitario"] == 1234.56, item_pis)
-check("el precio pisado no recibe el ajuste %", item_pis["precio_unitario"] != round(1234.56 * 1.1, 2))
-check("el subtotal es cantidad x unitario pisado", item_pis["precio_aplicado"] == 2469.12, item_pis)
+check("el precio pisado gana sobre la lista, redondeado hacia arriba",
+      item_pis["precio_unitario"] == 1235, item_pis)
+check("el precio pisado no recibe el ajuste %", item_pis["precio_unitario"] != pesos(1234.56 * 1.1))
+check("el subtotal es cantidad x unitario pisado", item_pis["precio_aplicado"] == 2470, item_pis)
 check("el total del presupuesto usa el precio pisado",
-      cliente.get(f"/api/presupuestos/{pid_pis}").get_json()["total"] == 2469.12)
+      cliente.get(f"/api/presupuestos/{pid_pis}").get_json()["total"] == 2470)
+check("no queda ningún centavo en el ítem guardado",
+      float(item_pis["precio_unitario"]).is_integer()
+      and float(item_pis["precio_aplicado"]).is_integer(), item_pis)
 
 _, item_cero, _ = _crear_con_servicio(
     {"servicio_id": servicio_pisado["id"], "cantidad": 1, "precio_unitario": 0})
@@ -475,12 +481,12 @@ check("un precio pisado en 0 se respeta", item_cero["precio_unitario"] == 0, ite
 _, item_neg, _ = _crear_con_servicio(
     {"servicio_id": servicio_pisado["id"], "cantidad": 1, "precio_unitario": -50})
 check("un precio pisado negativo se ignora y manda la lista",
-      item_neg["precio_unitario"] == precio_lista, item_neg)
+      item_neg["precio_unitario"] == pesos(precio_lista), item_neg)
 
 _, item_basura, _ = _crear_con_servicio(
     {"servicio_id": servicio_pisado["id"], "cantidad": 1, "precio_unitario": "carísimo"})
 check("un precio pisado que no es número se ignora y manda la lista",
-      item_basura["precio_unitario"] == precio_lista, item_basura)
+      item_basura["precio_unitario"] == pesos(precio_lista), item_basura)
 
 _, _, r_inexistente = _crear_con_servicio(
     {"servicio_id": 999999, "cantidad": 1, "precio_unitario": 999})
@@ -784,7 +790,7 @@ grupos_dup = cliente.get(f"/api/presupuestos/{pid_dup}/grupos").get_json()
 check("la copia trae los mismos grupos", len(grupos_dup) == len(grupos_orig), grupos_dup)
 opciones_dup = [g for g in grupos_dup if g["categoria"] == "Cojinetes biela"][0]["opciones"]
 check("la copia cotiza a precios de hoy",
-      all(o["precio_unitario"] == _precio_catalogo(o["repuesto_codigo"]) for o in opciones_dup),
+      all(o["precio_unitario"] == pesos(_precio_catalogo(o["repuesto_codigo"])) for o in opciones_dup),
       opciones_dup)
 check("el original queda intacto",
       cliente.get(f"/api/presupuestos/{pid3}").get_json()["total"] == detalle3["total"])
@@ -906,6 +912,87 @@ grupo_viejo = rev_viejo["repuestos"]["grupos"][0]
 check("la alternativa vieja no entra en el subtotal", grupo_viejo["subtotal_antes"] == 1600.0, grupo_viejo)
 check("y se lee como opcional",
       [l["opcional"] for l in grupo_viejo["lineas"]] == [False, True], grupo_viejo["lineas"])
+
+print("\n=== 13d. Pesos enteros, redondeo hacia arriba ===")
+# Regla del dueño (2026-08-19): el sistema no maneja centavos y lo que sobra se
+# redondea SIEMPRE hacia arriba, para no cobrar de menos. El catálogo del
+# proveedor sí tiene decimales; lo que no puede tenerlos es nada de lo que entra
+# a un presupuesto ni de lo que se le muestra al cliente.
+check("el formato de plata no lleva centavos", formato_precio_ars(1234.01) == "$ 1.235",
+      formato_precio_ars(1234.01))
+check("y redondea hacia arriba, no al más cercano", formato_precio_ars(1234.10) == "$ 1.235",
+      formato_precio_ars(1234.10))
+check("un entero se muestra tal cual", formato_precio_ars(1234) == "$ 1.234", formato_precio_ars(1234))
+
+# Un repuesto del catálogo con precio decimal, cotizado junto con mano de obra.
+codigo_con_centavos = next(
+    (c for c in codigos if not float(crac.get_repuesto_por_codigo(c)["precio"] or 0).is_integer()),
+    codigos[0],
+)
+precio_crudo = crac.get_repuesto_por_codigo(codigo_con_centavos)["precio"]
+r_ent = cliente.post("/api/presupuestos", json={
+    "cliente_nombre": "pesos enteros",
+    "motor_id": motor["id"],
+    "items": [{"servicio_id": servicios[0]["id"], "cantidad": 3}] if servicios else [],
+    "grupos_repuestos": [{
+        "categoria": "Cojinetes biela",
+        "opciones": [{"repuesto_codigo": codigo_con_centavos, "cantidad": 3}],
+    }],
+    "ajuste_pct": 7,
+})
+check("presupuesto con precios decimales creado", r_ent.status_code == 201, r_ent.get_json())
+pid_ent = r_ent.get_json()["id"]
+items_ent = cliente.get(f"/api/presupuestos/{pid_ent}/items").get_json()
+detalle_ent = cliente.get(f"/api/presupuestos/{pid_ent}").get_json()
+check("ningún unitario guardado tiene centavos",
+      all(float(i["precio_unitario"]).is_integer() for i in items_ent), items_ent)
+check("ningún subtotal guardado tiene centavos",
+      all(float(i["precio_aplicado"]).is_integer() for i in items_ent), items_ent)
+check("el total tampoco", float(detalle_ent["total"]).is_integer(), detalle_ent["total"])
+item_rep_ent = next(i for i in items_ent if i["tipo"] == "repuesto")
+check("el precio del repuesto se redondeó hacia arriba",
+      item_rep_ent["precio_unitario"] == pesos(precio_crudo),
+      (item_rep_ent["precio_unitario"], precio_crudo))
+check("el subtotal es cantidad x unitario ya redondeado",
+      item_rep_ent["precio_aplicado"] == pesos(precio_crudo) * 3, item_rep_ent)
+# El ajuste % se redondea por unidad, igual que en el frontend (precioAjustado).
+item_mo_ent = next((i for i in items_ent if i["servicio_id"]), None)
+if item_mo_ent:
+    check("la mano de obra con ajuste % también queda entera",
+          item_mo_ent["precio_unitario"] == pesos(servicios[0]["precio"] * 1.07),
+          (item_mo_ent["precio_unitario"], servicios[0]["precio"]))
+check("el total es la suma de las líneas que cotizan",
+      detalle_ent["total"] == sum(i["precio_aplicado"] for i in items_ent if not i["opcional"]),
+      detalle_ent["total"])
+
+# Los presupuestos ya emitidos NO se migran: quedan con sus centavos en la base
+# y se muestran redondeados. La revalidación tiene que compararlos ya
+# redondeados, para no inventar una diferencia que sale solo del redondeo.
+items_con_centavos = [{
+    "servicio_id": None, "descripcion_custom": "Repuesto viejo con centavos",
+    "precio_aplicado": 1600.49, "tipo": "repuesto", "repuesto_codigo": None,
+    "cantidad": 1, "precio_unitario": 1600.49, "stock_al_cotizar": 1,
+    "categoria": "Cojinetes biela",
+}]
+pid_cent = db.guardar_presupuesto("Cliente Centavos", motor["id"], items_con_centavos)
+check("un presupuesto viejo conserva sus centavos en la base",
+      not float(db.get_presupuesto_detalle(pid_cent)["total"]).is_integer(),
+      db.get_presupuesto_detalle(pid_cent)["total"])
+# Un presupuesto recién creado sobre un código del catálogo con decimales no
+# puede "tener cambios": lo guardado (redondeado) y el catálogo (con centavos)
+# son el mismo precio. Sin redondear los dos lados antes de compararlos, TODOS
+# los presupuestos aparecerían desactualizados apenas se abren.
+rev_ent = cliente.get(f"/api/presupuestos/{pid_ent}/revalidacion").get_json()
+check("un presupuesto recién creado no detecta cambios de precio por el redondeo",
+      not rev_ent["hay_cambios_repuestos"], rev_ent["repuestos"])
+check("y su diferencia de repuestos es cero", rev_ent["repuestos"]["diferencia"] == 0,
+      rev_ent["repuestos"])
+
+rev_cent = cliente.get(f"/api/presupuestos/{pid_cent}/revalidacion").get_json()
+check("pero la revalidación lo compara ya redondeado",
+      float(rev_cent["total_antes"]).is_integer(), rev_cent["total_antes"])
+check("y no inventa una diferencia por el redondeo",
+      rev_cent["repuestos"]["diferencia"] == 0, rev_cent["repuestos"])
 
 print("\n=== 14. Borrar datos de prueba ===")
 motores_antes = len(facra.get_motores())

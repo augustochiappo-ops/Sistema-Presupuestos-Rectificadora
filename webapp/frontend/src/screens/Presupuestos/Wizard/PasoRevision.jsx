@@ -5,9 +5,13 @@ import { Icon } from '../../../components/Icon'
 import { DataTable } from '../../../components/DataTable'
 import { StatusBadge } from '../../../components/StatusBadge'
 import { CajaOpcionales, BotonOpcional } from '../../../components/CajaOpcionales'
+import { TextField } from '../../../components/TextField'
+import { CampoMonto } from '../../../components/CampoMonto'
+import { ContadorCantidad } from '../../../components/ContadorCantidad'
 import { useArrastreOpcionales } from '../../../hooks/useArrastreOpcionales'
 import { formatPrecioARS } from '../../../utils/format'
 import { lineasServicios, totalLineas, hayPreciosInvalidos } from '../../../utils/servicios'
+import { textoSubtotal } from '../../../utils/precios'
 import { subtotalDe } from '../../../utils/grupos'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
@@ -50,10 +54,18 @@ function Campo({ label, valor }) {
  * La tercera caja son los OPCIONALES: se arrastra ahí (o se toca la flechita)
  * cualquier servicio o repuesto que quede fuera del total. Sigue guardado y
  * sale en el PDF, en su propia caja y con precio, pero no se cobra.
+ *
+ * Desde el 2026-08-19 esta pantalla también EDITA: cantidad, precio unitario y
+ * subtotal de cualquier línea —mano de obra, repuestos y opcionales— con la
+ * misma lógica del paso Servicios (el que se escribe manda y el otro se
+ * recalcula; ver utils/precios.js). Las ediciones suben al wizard, que es donde
+ * vive el estado, así que volver atrás las conserva. Bajar una cantidad a 0
+ * saca la línea, igual que en los pasos anteriores.
  */
 export function PasoRevision({
   cliente, motor, serviciosSel, ajustePct, repuestos,
-  onMoverServicio, onMoverRepuesto, onConfirmar, guardando,
+  onMoverServicio, onMoverRepuesto, onEditarServicio, onEditarRepuesto,
+  onConfirmar, guardando,
 }) {
   const [servicios, setServicios] = React.useState([])
 
@@ -82,6 +94,8 @@ export function PasoRevision({
       : (l.descripcion || '—'),
     cantidad: l.cantidad,
     precioUnitario: l.precio_unitario,
+    precioTexto: l.precioTexto ?? (l.precio_unitario === null || l.precio_unitario === undefined
+      ? '' : formatPrecioARS(l.precio_unitario)),
     subtotal: subtotalDe(l),
     opcional: Boolean(l.opcional),
     lineaKey: l.key,
@@ -97,7 +111,7 @@ export function PasoRevision({
     onMoverServicio(clave.slice('servicio:'.length), opcional)
   }, [onMoverServicio, onMoverRepuesto])
 
-  const { zonaActiva, propsFila, propsZona } = useArrastreOpcionales(mover)
+  const { zonaActiva, propsFila, propsZona, propsCampoEditable } = useArrastreOpcionales(mover)
 
   const serviciosCotizan = filasServicios.filter((f) => !f.opcional)
   const repuestosCotizan = filasRepuestos.filter((f) => !f.opcional)
@@ -109,7 +123,12 @@ export function PasoRevision({
       detalle: f.descripcion,
       cantidad: f.cantidad,
       precioUnitario: f.precioUnitario,
+      precioTexto: f.precioTexto,
       subtotal: f.subtotal,
+      // `fila` es lo que necesitan las funciones de edición para saber dónde
+      // escribir; se conserva acá porque la caja de opcionales mezcla las dos
+      // clases de línea en una sola tabla.
+      fila: f,
     })),
     ...filasRepuestos.filter((f) => f.opcional).map((f) => ({
       id: `op-${f.id}`,
@@ -118,7 +137,9 @@ export function PasoRevision({
       detalle: f.repuesto,
       cantidad: f.cantidad,
       precioUnitario: f.precioUnitario,
+      precioTexto: f.precioTexto,
       subtotal: f.subtotal,
+      lineaKey: f.lineaKey,
     })),
   ]
 
@@ -127,9 +148,11 @@ export function PasoRevision({
   const totalOpcionales = opcionales.reduce((acc, f) => acc + (f.subtotal || 0), 0)
   const totalGeneral = totalServicios + totalRepuestosCotizados
   const hayItems = serviciosCotizan.length > 0 || repuestosCotizan.length > 0
-  // Red de seguridad: el paso Servicios ya no deja avanzar con un precio que no
-  // se entiende, pero si alguno se colara igual el backend descartaría el ítem.
+  // Desde que esta pantalla también edita, la validación tiene que mirar las dos
+  // clases de línea: un precio que no se entiende o una cantidad en cero harían
+  // que el backend descartara el ítem en silencio.
   const preciosInvalidos = hayPreciosInvalidos(filasServicios)
+    || repuestos.some((r) => r.precio_unitario === null || r.precio_unitario === undefined || !(r.cantidad > 0))
 
   const tipoContacto = cliente.tipo ? TIPO_OPUESTO[cliente.tipo] : null
 
@@ -141,6 +164,99 @@ export function PasoRevision({
     render: (_, fila) => (
       <BotonOpcional opcional={false} onClick={() => mover(fila.clave, true)} />
     ),
+  }
+
+  /*
+   * Las tres columnas editables. Se arman con una función porque las usan las
+   * tres tablas (mano de obra, repuestos y opcionales) y cada una escribe en un
+   * lado distinto: `editar` dice a quién avisarle.
+   *
+   * Sin useMemo a propósito, igual que en el paso Servicios: las celdas capturan
+   * las filas de este render y memorizarlas las dejaría escribiendo sobre una
+   * selección vieja.
+   */
+  const columnasEditables = (editar) => [
+    {
+      key: 'cantidad',
+      header: 'Cant.',
+      align: 'center',
+      width: 158,
+      // wrap:true no por el texto (no tiene) sino para que la celda no recorte:
+      // con overflow hidden el "+" del contador deja asomando el "…" del
+      // ellipsis, que se lee como un control más.
+      wrap: true,
+      render: (_, fila) => (
+        <span {...propsCampoEditable} style={{ display: 'inline-flex' }}>
+          <ContadorCantidad
+            cantidad={fila.cantidad}
+            onChange={(n) => editar.cantidad(fila, n)}
+          />
+        </span>
+      ),
+    },
+    {
+      key: 'precioUnitario',
+      header: 'P. unitario',
+      align: 'right',
+      width: 158,
+      wrap: true,
+      render: (_, fila) => (
+        <TextField
+          value={fila.precioTexto ?? ''}
+          onChange={(e) => editar.precio(fila, e.target.value)}
+          {...propsCampoEditable}
+          title="Precio unitario — se puede editar"
+          style={{
+            width: 120, textAlign: 'right',
+            borderColor: fila.precioUnitario === null || fila.precioUnitario === undefined
+              ? 'var(--status-expired-fg)' : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: 'subtotal',
+      header: 'Subtotal',
+      align: 'right',
+      width: 168,
+      wrap: true,
+      render: (_, fila) => (
+        <CampoMonto
+          valor={textoSubtotal(fila.precioUnitario, fila.cantidad)}
+          onEscribir={(texto) => editar.subtotal(fila, texto)}
+          {...propsCampoEditable}
+          title="Subtotal — se puede editar; el precio unitario se recalcula solo"
+          style={{
+            width: 130, textAlign: 'right', fontWeight: 600,
+            borderColor: fila.subtotal === null || fila.subtotal === undefined
+              ? 'var(--status-expired-fg)' : undefined,
+          }}
+        />
+      ),
+    },
+  ]
+
+  /* Una línea de mano de obra se ubica por la fila entera (servicio de la
+     Cámara o ítem manual); una de repuesto, por su key. De ahí que cada tabla
+     traiga su propio adaptador. */
+  const editarServicioFila = {
+    cantidad: (fila, n) => onEditarServicio.cantidad(fila.fila || fila, n),
+    precio: (fila, texto) => onEditarServicio.precio(fila.fila || fila, texto),
+    subtotal: (fila, texto) => onEditarServicio.subtotal(fila.fila || fila, texto),
+  }
+
+  const editarRepuestoFila = {
+    cantidad: (fila, n) => onEditarRepuesto.cantidad(fila.lineaKey, n),
+    precio: (fila, texto) => onEditarRepuesto.precio(fila.lineaKey, texto),
+    subtotal: (fila, texto) => onEditarRepuesto.subtotal(fila.lineaKey, texto),
+  }
+
+  /* La caja de opcionales mezcla las dos clases de línea: la de mano de obra
+     trae `fila` y la de repuesto trae `lineaKey`. */
+  const editarOpcional = {
+    cantidad: (fila, n) => (fila.lineaKey ? editarRepuestoFila : editarServicioFila).cantidad(fila, n),
+    precio: (fila, texto) => (fila.lineaKey ? editarRepuestoFila : editarServicioFila).precio(fila, texto),
+    subtotal: (fila, texto) => (fila.lineaKey ? editarRepuestoFila : editarServicioFila).subtotal(fila, texto),
   }
 
   return (
@@ -184,7 +300,7 @@ export function PasoRevision({
 
       {preciosInvalidos && (
         <div style={{ textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--status-expired-fg)' }}>
-          Hay un precio de mano de obra que no se entiende como número. Volvé al paso Servicios y corregilo.
+          Hay una línea con un precio que no se entiende como número o sin cantidad. Corregila para poder confirmar.
         </div>
       )}
 
@@ -226,12 +342,10 @@ export function PasoRevision({
                   </span>
                 ),
               },
-              { key: 'cantidad', header: 'Cant.', align: 'center', width: 70 },
-              { key: 'precioUnitario', header: 'P. unitario', align: 'right', width: 145, wrap: true, render: formatPrecioARS },
-              { key: 'subtotal', header: 'Subtotal', align: 'right', width: 155, wrap: true, strong: true, render: formatPrecioARS },
+              ...columnasEditables(editarServicioFila),
               columnaMover,
             ]}
-            rows={serviciosCotizan.map((f) => ({ ...f, clave: `servicio:${f.id}` }))}
+            rows={serviciosCotizan.map((f) => ({ ...f, clave: `servicio:${f.id}`, fila: f }))}
             getRowProps={(fila) => propsFila(fila.clave)}
             reorderKey="revision-servicios"
             emptyMessage="Este presupuesto no lleva mano de obra."
@@ -244,9 +358,7 @@ export function PasoRevision({
             columns={[
               { key: 'categoria', header: 'Categoría', width: 170, strong: true, wrap: true },
               { key: 'repuesto', header: 'Repuesto', wrap: true },
-              { key: 'cantidad', header: 'Cant.', align: 'center', width: 70 },
-              { key: 'precioUnitario', header: 'P. unitario', align: 'right', width: 145, wrap: true, render: formatPrecioARS },
-              { key: 'subtotal', header: 'Subtotal', align: 'right', width: 155, wrap: true, strong: true, render: formatPrecioARS },
+              ...columnasEditables(editarRepuestoFila),
               columnaMover,
             ]}
             rows={repuestosCotizan}
@@ -267,9 +379,7 @@ export function PasoRevision({
           columns={[
             { key: 'tipo', header: 'Qué es', width: 170, strong: true, wrap: true },
             { key: 'detalle', header: 'Detalle', wrap: true },
-            { key: 'cantidad', header: 'Cant.', align: 'center', width: 70 },
-            { key: 'precioUnitario', header: 'P. unitario', align: 'right', width: 145, wrap: true, render: formatPrecioARS },
-            { key: 'subtotal', header: 'Subtotal', align: 'right', width: 155, wrap: true, strong: true, render: formatPrecioARS },
+            ...columnasEditables(editarOpcional),
             {
               key: 'volver',
               header: '',
@@ -284,6 +394,10 @@ export function PasoRevision({
       </CajaOpcionales>
 
       <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)', lineHeight: 1.5 }}>
+        Cantidad, precio unitario y subtotal se editan acá mismo: entre el unitario y el subtotal manda el
+        que escribís y el otro se recalcula solo. Como los precios van en pesos enteros, un subtotal que no
+        se reparte justo entre la cantidad sube al peso siguiente. Bajar una cantidad a cero saca la línea.
+        <br />
         Esta pantalla es interna: el PDF que recibe el cliente lleva el detalle de qué se hace y qué se pone,
         con el precio solo en el total. Los opcionales sí van con su precio, en una caja aparte y aclarando
         que no están incluidos.

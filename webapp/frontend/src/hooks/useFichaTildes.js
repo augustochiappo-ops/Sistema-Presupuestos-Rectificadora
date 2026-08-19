@@ -92,39 +92,71 @@ export function useFichaTildes({ motorId, ficha, onFicha }) {
 
   /**
    * Click en el círculo. Marca o desmarca a mano y lo guarda en el motor en el
-   * momento. Devuelve true si quedó marcado.
+   * momento.
+   *
+   * Toca la FAMILIA DE MEDIDAS entera (2026-08-19, pedido del dueño): STD, 025,
+   * 050… de la misma pieza son la misma pieza, y cuál va se sabe recién cuando
+   * se mide el motor. Es lo que ya hacía poner una cantidad —que marca las
+   * hermanas por su cuenta, ver useRepuestosAgrupados— y ahora hace también el
+   * círculo, para adelante y para atrás: si prenderlo marca las cuatro medidas,
+   * apagarlo las saca a las cuatro. Para sacar una sola queda el tacho de la
+   * ficha.
+   *
+   * Las hermanas se preguntan al catálogo (`/repuestos/medidas`) y no a la
+   * ficha: justamente lo que se quiere marcar son las medidas que TODAVÍA no
+   * están guardadas en el motor. Una pieza sin medidas devuelve lista vacía y
+   * queda el comportamiento de siempre, un código solo.
+   *
+   * Devuelve { marcado, codigos }: si quedó marcado y sobre qué códigos se
+   * terminó actuando, que es lo que la pantalla necesita para avisar y para
+   * sacar del presupuesto lo que se apagó.
    */
   const alternarManual = React.useCallback(async (rep) => {
     const codigo = rep?.codigo
-    if (!codigo || !motorId) return false
+    if (!codigo || !motorId) return { marcado: false, codigos: [] }
     recordar(rep)
     const estaba = origenes.has(codigo)
     const info = datos.current.get(codigo) || {}
+    const categoria = info.categoria || rep.categoria
+    const catPrefijo = info.cat_prefijo ?? rep.cat_prefijo ?? null
+
+    const hermanas = await api.get(`/repuestos/medidas?codigo=${encodeURIComponent(codigo)}`)
+      .catch(() => [])
+    // Las hermanas comparten categoría, así que entran todas en la misma
+    // llamada. El código tocado va siempre, aunque la consulta falle.
+    const codigos = [...new Set([codigo, ...hermanas.map((h) => h.codigo)])]
+    codigos.forEach((c) => recordar({ codigo: c, categoria, cat_prefijo: catPrefijo }))
 
     // Optimista: el círculo responde ya, el guardado va detrás.
+    const origenesAntes = origenes
     setOrigenes((prev) => {
       const siguiente = new Map(prev)
-      if (estaba) siguiente.delete(codigo)
-      else siguiente.set(codigo, 'manual')
+      codigos.forEach((c) => {
+        if (estaba) siguiente.delete(c)
+        else siguiente.set(c, 'manual')
+      })
       return siguiente
     })
 
     setGuardando(true)
     try {
       const nueva = await api.post(`/motores/${motorId}/ficha-repuestos/marcar`, {
-        codigos: [codigo],
-        categoria: info.categoria || rep.categoria,
-        cat_prefijo: info.cat_prefijo ?? rep.cat_prefijo ?? null,
+        codigos,
+        categoria,
+        cat_prefijo: catPrefijo,
         marcado: !estaba,
       })
       onFicha?.(nueva)
-      return !estaba
+      return { marcado: !estaba, codigos }
     } catch (err) {
       // Volvió a como estaba: el motor manda, no la pantalla.
       setOrigenes((prev) => {
         const siguiente = new Map(prev)
-        if (estaba) siguiente.set(codigo, 'previa')
-        else siguiente.delete(codigo)
+        codigos.forEach((c) => {
+          const antes = origenesAntes.get(c)
+          if (antes) siguiente.set(c, antes)
+          else siguiente.delete(c)
+        })
         return siguiente
       })
       throw err

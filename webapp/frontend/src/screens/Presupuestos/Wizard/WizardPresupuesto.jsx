@@ -13,8 +13,12 @@ import { PasoRepuestos } from './PasoRepuestos'
 import { PasoRevision } from './PasoRevision'
 import {
   gruposParaPayload, itemsSueltosParaPayload, lineaDeOpcion,
+  conCantidadRepuesto, conPrecioRepuesto, conSubtotalRepuesto,
 } from '../../../utils/grupos'
-import { itemsServiciosParaPayload } from '../../../utils/servicios'
+import {
+  itemsServiciosParaPayload,
+  conCantidadServicio, conPrecioServicio, conSubtotalServicio,
+} from '../../../utils/servicios'
 import { useFichaTildes } from '../../../hooks/useFichaTildes'
 
 const PASOS = ['Cliente', 'Motor', 'Servicios', 'Repuestos', 'Revisión']
@@ -79,6 +83,34 @@ export default function WizardPresupuesto() {
   const moverRepuestoOpcional = React.useCallback((key, opcional) => {
     setRepuestos((actual) => actual.map((r) => (r.key === key ? { ...r, opcional } : r)))
   }, [])
+
+  /*
+   * Editar una línea desde el paso de Revisión. Son las mismas funciones que
+   * usan el paso Servicios y el pop-up "Ver repuestos" (utils/servicios.js y
+   * utils/grupos.js), así que corregir un precio en la última pantalla da
+   * exactamente lo mismo que haberlo corregido dos pasos antes.
+   *
+   * Viven en el wizard y no en el paso porque el estado es de acá: el paso de
+   * Revisión se desmonta al volver atrás y con él se perdería lo editado.
+   */
+  const editarServicio = React.useMemo(() => ({
+    cantidad: (fila, cantidad) => setServiciosSel((actual) => conCantidadServicio(actual, fila, cantidad)),
+    precio: (fila, texto) => setServiciosSel((actual) => conPrecioServicio(actual, fila, texto)),
+    subtotal: (fila, texto) => setServiciosSel((actual) => conSubtotalServicio(actual, fila, texto)),
+  }), [])
+
+  const editarRepuesto = React.useMemo(() => ({
+    cantidad: (key, cantidad) => setRepuestos((actual) => (
+      cantidad > 0
+        ? conCantidadRepuesto(actual, key, cantidad)
+        // Cantidad 0 es sacar la línea, no dejarla en cero: una línea en cero es
+        // inválida y apagaría "Confirmar" sin explicar por qué (misma regla que
+        // en el paso Repuestos).
+        : actual.filter((r) => r.key !== key)
+    )),
+    precio: (key, texto) => setRepuestos((actual) => conPrecioRepuesto(actual, key, texto)),
+    subtotal: (key, texto) => setRepuestos((actual) => conSubtotalRepuesto(actual, key, texto)),
+  }), [])
 
   /*
    * Duplicar: el wizard arranca cargado con el contenido de otro presupuesto y
@@ -312,6 +344,8 @@ export default function WizardPresupuesto() {
           repuestos={repuestos}
           onMoverServicio={moverServicioOpcional}
           onMoverRepuesto={moverRepuestoOpcional}
+          onEditarServicio={editarServicio}
+          onEditarRepuesto={editarRepuesto}
           onConfirmar={finalizar}
           guardando={guardando}
         />

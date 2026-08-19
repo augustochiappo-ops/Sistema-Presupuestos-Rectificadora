@@ -2,6 +2,7 @@ import React from 'react'
 import { api } from '../../../api/client'
 import { SearchInput } from '../../../components/SearchInput'
 import { TextField } from '../../../components/TextField'
+import { CampoMonto } from '../../../components/CampoMonto'
 import { Button } from '../../../components/Button'
 import { Icon } from '../../../components/Icon'
 import { ContadorServicio } from '../../../components/ContadorServicio'
@@ -11,8 +12,9 @@ import { formatPrecioARS, parsePrecioARS } from '../../../utils/format'
 import {
   lineasServicios, totalLineas, totalLineasOpcionales, hayPreciosInvalidos,
   precioEfectivo, estaPisado, esOpcional,
+  conCantidadServicio, conPrecioServicio, conSubtotalServicio, sinPrecioPisado,
 } from '../../../utils/servicios'
-import { unitarioDesdeSubtotal, textoSubtotal } from '../../../utils/precios'
+import { textoSubtotal } from '../../../utils/precios'
 import { CajaOpcionales, BotonOpcional } from '../../../components/CajaOpcionales'
 import { useArrastreOpcionales } from '../../../hooks/useArrastreOpcionales'
 import { coincideBusqueda } from '../../../utils/texto'
@@ -56,7 +58,6 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   const cantidades = value.cantidades
   const customItems = value.customItems
   const grupos = value.grupos
-  const precios = value.precios || {}
 
   React.useEffect(() => {
     api.get(`/motores/${motor.id}/servicios`).then(setServicios)
@@ -77,27 +78,9 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   // Sacar el servicio del presupuesto (cantidad 0) también borra su precio
   // pisado y su marca de opcional: nada que ya no se ve en ningún lado puede
   // volver solo si el servicio se agrega de nuevo más tarde.
-  const cambiarCantidad = (id, cantidad) => {
-    const nuevas = { ...cantidades }
-    const nuevosPrecios = { ...precios }
-    let nuevosOpcionales = value.opcionales || []
-    if (cantidad > 0) {
-      nuevas[id] = cantidad
-    } else {
-      delete nuevas[id]
-      delete nuevosPrecios[id]
-      nuevosOpcionales = nuevosOpcionales.filter((c) => String(c) !== String(id))
-    }
-    const nuevosGrupos = { ...grupos }
-    delete nuevosGrupos[id]
-    onChange({
-      ...value,
-      cantidades: nuevas,
-      grupos: nuevosGrupos,
-      precios: nuevosPrecios,
-      opcionales: nuevosOpcionales,
-    })
-  }
+  const cambiarCantidad = (id, cantidad) => onChange(
+    conCantidadServicio(value, { servicioId: id, esManual: false }, cantidad),
+  )
 
   // Botón "+" o recuadro adaptativo: fija la cantidad y tagea el ítem con su
   // familia (4/8/16 → 'a', 6/12 → 'b') para que el par adaptativo global se
@@ -168,11 +151,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   }
 
   /** Vuelve al precio de la lista de la Cámara (con el ajuste %). */
-  const restaurarPrecio = (fila) => {
-    const nuevos = { ...precios }
-    delete nuevos[fila.servicioId]
-    onChange({ ...value, precios: nuevos })
-  }
+  const restaurarPrecio = (fila) => onChange(sinPrecioPisado(value, fila))
 
   /*
    * Pisar el precio unitario desde la tabla de la derecha. Se guarda el texto
@@ -183,25 +162,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
    * Vaciar el recuadro de un servicio de la Cámara devuelve el precio de lista:
    * es la misma salida que el botón ↺, escribiendo.
    */
-  const cambiarPrecio = (fila, texto) => {
-    if (fila.esManual) {
-      onChange({
-        ...value,
-        customItems: customItems.map((c) => (
-          c.id === fila.id ? { ...c, precio_aplicado: parsePrecioARS(texto), precioTexto: texto } : c
-        )),
-      })
-      return
-    }
-    if (!texto.trim()) {
-      restaurarPrecio(fila)
-      return
-    }
-    onChange({
-      ...value,
-      precios: { ...precios, [fila.servicioId]: { valor: parsePrecioARS(texto), texto } },
-    })
-  }
+  const cambiarPrecio = (fila, texto) => onChange(conPrecioServicio(value, fila, texto))
 
   /*
    * Subtotal editable. Es la misma casilla del unitario vista al revés: se
@@ -209,29 +170,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
    * el que se guarda. Con cantidad 0 no se puede repartir, así que el valor
    * queda inválido (recuadro rojo) en vez de inventar un número.
    */
-  const cambiarSubtotal = (fila, texto) => {
-    const { valor } = unitarioDesdeSubtotal(texto, fila.cantidad)
-    if (fila.esManual) {
-      onChange({
-        ...value,
-        customItems: customItems.map((c) => (
-          c.id === fila.id ? { ...c, precio_aplicado: valor, precioTexto: valor === null ? texto : formatPrecioARS(valor) } : c
-        )),
-      })
-      return
-    }
-    if (!texto.trim()) {
-      restaurarPrecio(fila)
-      return
-    }
-    onChange({
-      ...value,
-      precios: {
-        ...precios,
-        [fila.servicioId]: { valor, texto: valor === null ? texto : formatPrecioARS(valor) },
-      },
-    })
-  }
+  const cambiarSubtotal = (fila, texto) => onChange(conSubtotalServicio(value, fila, texto))
 
   /* Pasar una línea a la caja de opcionales, o traerla de vuelta. Lo hacen el
      arrastre y la flechita del renglón: los dos terminan acá. */
@@ -289,7 +228,11 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
       key: 'precioUnitario',
       header: 'P. unitario',
       align: 'right',
-      width: 168,
+      width: 178,
+      // wrap:true no por el texto sino para que la celda no recorte: con
+      // overflow hidden el ↺ dejaba asomando el "…" del ellipsis al lado del
+      // precio (se ve en la captura que mandó el dueño el 2026-08-19).
+      wrap: true,
       render: (_, fila) => (
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, justifyContent: 'flex-end' }}>
           <TextField
@@ -323,12 +266,13 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
       header: 'Subtotal',
       align: 'right',
       width: 178,
+      wrap: true,
       // El subtotal también se edita: escribirlo recalcula el unitario. Manda
       // el último que se tocó (ver utils/precios.js).
       render: (_, fila) => (
-        <TextField
-          value={textoSubtotal(fila.precioUnitario, fila.cantidad)}
-          onChange={(e) => cambiarSubtotal(fila, e.target.value)}
+        <CampoMonto
+          valor={textoSubtotal(fila.precioUnitario, fila.cantidad)}
+          onEscribir={(texto) => cambiarSubtotal(fila, texto)}
           {...propsCampoEditable}
           title="Subtotal — se puede editar; el precio unitario se recalcula solo"
           style={{
@@ -493,7 +437,9 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
             {filasCotizan.length > 0 && (
               <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
                 El precio unitario y el subtotal se pueden editar acá mismo: el que escribís manda y el otro
-                se recalcula solo. Un precio editado no recibe el ajuste %; el ↺ lo devuelve al de la lista.
+                se recalcula solo. Los precios van en pesos enteros, así que un subtotal que no se reparte
+                justo entre la cantidad sube al peso siguiente. Un precio editado no recibe el ajuste %;
+                el ↺ lo devuelve al de la lista.
               </div>
             )}
           </div>

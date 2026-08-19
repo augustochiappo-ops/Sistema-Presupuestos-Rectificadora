@@ -9,7 +9,7 @@ import sqlite3
 from datetime import date, datetime
 
 from . import config, texto
-from .helpers import formato_nombre_titulo
+from .helpers import formato_nombre_titulo, pesos
 
 
 def get_connection() -> sqlite3.Connection:
@@ -1082,7 +1082,7 @@ def get_ficha_motor(motor_id: int) -> list[dict]:
                     "base_codigo": base_codigo,
                     "marca": marca,
                     "en_catalogo": precio is not None,
-                    "subtotal": round((precio or 0) * (cantidad or 0), 2),
+                    "subtotal": pesos((precio or 0) * (cantidad or 0)),
                     # Historial de uso real en este motor: es lo que decide el
                     # orden de la lista y lo que la pantalla muestra debajo de
                     # cada opción ("Usado en 3 presupuestos · última vez …").

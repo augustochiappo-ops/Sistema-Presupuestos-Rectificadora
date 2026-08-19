@@ -158,21 +158,33 @@ export function PasoRepuestos({
    * y también de este presupuesto, que es la intención al apagarlo. Los
    * presupuestos ya emitidos no se tocan nunca: guardan su propia copia. Lo que
    * sale queda en la papelera del motor, así que se puede recuperar.
+   *
+   * El círculo toca la familia de medidas entera (STD, 025, 050…): `codigos`
+   * son todos los que terminó moviendo, y son esos los que salen del
+   * presupuesto al apagarlo.
    */
   const alternarFicha = async (rep) => {
-    const estaba = tildes.estaTildado(rep.codigo)
     const lineasAntes = value
     try {
-      await tildes.alternarManual(rep)
-      if (!estaba) {
-        setAviso(`${rep.descripcion || rep.codigo} quedó guardado como repuesto de este motor. Ponele una cantidad si además va en este presupuesto.`)
+      const { marcado, codigos } = await tildes.alternarManual(rep)
+      const cuantas = codigos.length
+      if (marcado) {
+        const otras = cuantas - 1
+        setAviso(otras > 0
+          ? `${rep.descripcion || rep.codigo} y ${otras === 1 ? 'su otra medida quedaron guardadas' : `sus otras ${otras} medidas quedaron guardadas`} como repuestos de este motor. Ponele una cantidad a la que vaya en este presupuesto.`
+          : `${rep.descripcion || rep.codigo} quedó guardado como repuesto de este motor. Ponele una cantidad si además va en este presupuesto.`)
         return
       }
-      const linea = value.find((r) => r.repuesto_codigo === rep.codigo)
-      if (linea) quitar(linea.key)
-      setAviso('Se sacó de los repuestos de este motor. Si fue sin querer, lo recuperás desde "Repuestos eliminados", en la pantalla del motor.')
+      const fuera = new Set(codigos)
+      const keys = value.filter((r) => fuera.has(r.repuesto_codigo)).map((r) => r.key)
+      if (keys.length) quitarVarias(keys)
+      setAviso(cuantas > 1
+        ? `Se sacaron las ${cuantas} medidas de esta pieza de los repuestos de este motor. Si fue sin querer, las recuperás desde "Repuestos eliminados", en la pantalla del motor.`
+        : 'Se sacó de los repuestos de este motor. Si fue sin querer, lo recuperás desde "Repuestos eliminados", en la pantalla del motor.')
       avisarBorrado({
-        mensaje: 'Se sacó el repuesto de este motor.',
+        mensaje: cuantas > 1
+          ? `Se sacaron ${cuantas} medidas de este motor.`
+          : 'Se sacó el repuesto de este motor.',
         onDeshacer: async () => {
           try {
             await tildes.alternarManual(rep)

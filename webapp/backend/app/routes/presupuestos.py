@@ -4,7 +4,7 @@ from flask import Blueprint, jsonify, request, send_from_directory, abort
 
 from .. import db, facra, pdf_gen, config, crac
 from ..auth import login_required
-from ..helpers import formato_precio_ars
+from ..helpers import formato_precio_ars, pesos
 
 bp = Blueprint("presupuestos", __name__, url_prefix="/api/presupuestos")
 
@@ -147,7 +147,7 @@ def _resolver_repuesto(it, congelar_stock=True):
         # traiga descripción y unitario propios.
 
     try:
-        precio_unitario = float(precio_unitario)
+        precio_unitario = pesos(float(precio_unitario))
     except (TypeError, ValueError):
         return None
     if not desc:
@@ -156,7 +156,7 @@ def _resolver_repuesto(it, congelar_stock=True):
     return {
         "servicio_id": None,
         "descripcion_custom": desc,
-        "precio_aplicado": round(cantidad * precio_unitario, 2),
+        "precio_aplicado": pesos(cantidad * precio_unitario),
         "tipo": "repuesto",
         "repuesto_codigo": codigo,
         "cantidad": cantidad,
@@ -188,7 +188,7 @@ def _unitario_pisado(it):
         precio = float(it["precio_unitario"])
     except (TypeError, ValueError):
         return None
-    return round(precio, 2) if precio >= 0 else None
+    return pesos(precio) if precio >= 0 else None
 
 
 def _resolver_items(items_payload, lista_num, ajuste_pct=0):
@@ -247,11 +247,11 @@ def _resolver_items(items_payload, lista_num, ajuste_pct=0):
                 continue
             precio_unitario = _unitario_pisado(it)
             if precio_unitario is None:
-                precio_unitario = round(precios_lista[servicio_id] * factor_ajuste, 2)
+                precio_unitario = pesos(precios_lista[servicio_id] * factor_ajuste)
             resueltos.append({
                 "servicio_id": servicio_id,
                 "descripcion_custom": None,
-                "precio_aplicado": round(precio_unitario * cantidad, 2),
+                "precio_aplicado": pesos(precio_unitario * cantidad),
                 "cantidad": cantidad,
                 "precio_unitario": precio_unitario,
                 "opcional": bool(it.get("opcional")),
@@ -263,14 +263,14 @@ def _resolver_items(items_payload, lista_num, ajuste_pct=0):
                 continue
             try:
                 # El campo que carga el usuario a mano es el precio unitario.
-                precio_unitario = float(it.get("precio_aplicado"))
+                precio_unitario = pesos(float(it.get("precio_aplicado")))
             except (TypeError, ValueError):
                 descartados.append(desc)
                 continue
             resueltos.append({
                 "servicio_id": None,
                 "descripcion_custom": desc,
-                "precio_aplicado": round(precio_unitario * cantidad, 2),
+                "precio_aplicado": pesos(precio_unitario * cantidad),
                 "cantidad": cantidad,
                 "precio_unitario": precio_unitario,
                 "opcional": bool(it.get("opcional")),
@@ -426,7 +426,8 @@ def _resolver_items_edicion(items_payload):
             continue
         if cantidad <= 0:
             continue
-        precio_aplicado = round(precio_unitario * cantidad, 2)
+        precio_unitario = pesos(precio_unitario)
+        precio_aplicado = pesos(precio_unitario * cantidad)
 
         opcional = bool(it.get("opcional"))
         servicio_id = it.get("servicio_id")
@@ -462,11 +463,16 @@ def _linea_revalidada(fila):
     Devuelve (precio, stock, cambio, avisos).
     """
     en_catalogo = fila.get("stock_actual") is not None
-    precio_antes = fila.get("precio_unitario") or 0
+    # Los dos precios en pesos enteros antes de compararlos. El catálogo del
+    # proveedor sí tiene decimales, pero lo cotizado ya está redondeado: sin
+    # esto, un código cuyo precio no cambió en absoluto se leería como "cambió"
+    # (314.978,83 contra los 314.979 que quedaron guardados) y todos los
+    # presupuestos aparecerían desactualizados.
+    precio_antes = pesos(fila.get("precio_unitario") or 0)
     stock_antes = fila.get("stock_al_cotizar")
 
     if en_catalogo:
-        precio = fila.get("precio_actual") or 0
+        precio = pesos(fila.get("precio_actual") or 0)
         stock = fila.get("stock_actual")
     else:
         precio = precio_antes
@@ -496,7 +502,7 @@ def _resumen_opcion(codigo, descripcion, marca, medida, cantidad, precio):
         "medida": medida,
         "cantidad": cantidad,
         "precio_unitario": precio,
-        "subtotal": round((precio or 0) * (cantidad or 0), 2),
+        "subtotal": pesos((precio or 0) * (cantidad or 0)),
     }
 
 
@@ -552,8 +558,11 @@ def _revalidacion(presupuesto_id, detalle):
                 "opcional": not cotiza,
             })
 
-            subtotal_antes = o["subtotal"] or 0
-            subtotal_ahora = round(precio * (o["cantidad"] or 0), 2)
+            # Los presupuestos viejos están guardados con centavos: se los
+            # compara ya redondeados, para no mostrar una diferencia que sale
+            # solo del redondeo.
+            subtotal_antes = pesos(o["subtotal"] or 0)
+            subtotal_ahora = pesos(precio * (o["cantidad"] or 0))
             if cotiza:
                 subtotal_grupo_antes += subtotal_antes
                 subtotal_grupo_ahora += subtotal_ahora
@@ -568,7 +577,7 @@ def _revalidacion(presupuesto_id, detalle):
                 "precio_ahora": precio,
                 "subtotal_antes": subtotal_antes,
                 "subtotal_ahora": subtotal_ahora,
-                "diferencia": round(subtotal_ahora - subtotal_antes, 2),
+                "diferencia": subtotal_ahora - subtotal_antes,
                 "cambio": cambio,
                 "avisos": avisos,
             })
@@ -586,9 +595,9 @@ def _revalidacion(presupuesto_id, detalle):
         grupos_resumen.append({
             "grupo_num": grupo["grupo_num"],
             "categoria": grupo["categoria"],
-            "subtotal_antes": round(subtotal_grupo_antes, 2),
-            "subtotal_ahora": round(subtotal_grupo_ahora, 2),
-            "diferencia": round(subtotal_grupo_ahora - subtotal_grupo_antes, 2),
+            "subtotal_antes": subtotal_grupo_antes,
+            "subtotal_ahora": subtotal_grupo_ahora,
+            "diferencia": subtotal_grupo_ahora - subtotal_grupo_antes,
             "lineas": lineas_resumen,
         })
 
@@ -620,8 +629,8 @@ def _revalidacion(presupuesto_id, detalle):
                 "stock_al_cotizar": stock,
                 "opcional": bool(it["opcional"]),
             })
-            subtotal_antes = it["precio_aplicado"] or 0
-            subtotal_ahora = round(precio * (it["cantidad"] or 0), 2)
+            subtotal_antes = pesos(it["precio_aplicado"] or 0)
+            subtotal_ahora = pesos(precio * (it["cantidad"] or 0))
             # Una línea opcional no está en el total, así que tampoco entra en
             # la comparación de subtotales.
             if not it["opcional"]:
@@ -636,7 +645,7 @@ def _revalidacion(presupuesto_id, detalle):
                     "precio_ahora": precio,
                     "subtotal_antes": subtotal_antes,
                     "subtotal_ahora": subtotal_ahora,
-                    "diferencia": round(subtotal_ahora - subtotal_antes, 2),
+                    "diferencia": subtotal_ahora - subtotal_antes,
                     "avisos": avisos,
                 })
             continue
@@ -653,7 +662,7 @@ def _revalidacion(presupuesto_id, detalle):
         })
         if it["opcional"]:
             continue  # no suma ni se compara contra la lista: no está en el total
-        total_servicios += it["precio_aplicado"] or 0
+        total_servicios += pesos(it["precio_aplicado"] or 0)
 
         if not it["servicio_id"]:
             continue  # ítem manual: no hay lista contra la cual compararlo
@@ -661,20 +670,20 @@ def _revalidacion(presupuesto_id, detalle):
         if precio_lista is None:
             continue  # servicio sin precio en la lista de este motor
         cantidad = it["cantidad"] or 1
-        precio_hoy = round(precio_lista * factor_ajuste, 2)
-        subtotal_mo_antes += round((unitario or 0) * cantidad, 2)
-        subtotal_mo_ahora += round(precio_hoy * cantidad, 2)
+        precio_hoy = pesos(precio_lista * factor_ajuste)
+        subtotal_mo_antes += pesos((unitario or 0) * cantidad)
+        subtotal_mo_ahora += pesos(precio_hoy * cantidad)
         if precio_hoy != unitario:
             mano_obra_lineas.append({
                 "descripcion": it["desc_facra"],
                 "cantidad": cantidad,
                 "precio_antes": unitario,
                 "precio_ahora": precio_hoy,
-                "diferencia": round((precio_hoy - (unitario or 0)) * cantidad, 2),
+                "diferencia": pesos(precio_hoy * cantidad) - pesos((unitario or 0) * cantidad),
             })
 
-    total_antes = detalle.get("total") or 0
-    total_nuevo = round(total_servicios + subtotal_rep_ahora, 2)
+    total_antes = pesos(detalle.get("total") or 0)
+    total_nuevo = pesos(total_servicios + subtotal_rep_ahora)
 
     resumen = {
         "hay_cambios": bool(hay_cambios_repuestos or mano_obra_lineas),
@@ -686,19 +695,19 @@ def _revalidacion(presupuesto_id, detalle):
         "repuestos": {
             "grupos": grupos_resumen,
             "sueltos": sueltos_resumen,
-            "subtotal_antes": round(subtotal_rep_antes, 2),
-            "subtotal_ahora": round(subtotal_rep_ahora, 2),
-            "diferencia": round(subtotal_rep_ahora - subtotal_rep_antes, 2),
+            "subtotal_antes": subtotal_rep_antes,
+            "subtotal_ahora": subtotal_rep_ahora,
+            "diferencia": subtotal_rep_ahora - subtotal_rep_antes,
         },
         "mano_obra": {
             "lineas": mano_obra_lineas,
-            "subtotal_antes": round(subtotal_mo_antes, 2),
-            "subtotal_ahora": round(subtotal_mo_ahora, 2),
-            "diferencia": round(subtotal_mo_ahora - subtotal_mo_antes, 2),
+            "subtotal_antes": subtotal_mo_antes,
+            "subtotal_ahora": subtotal_mo_ahora,
+            "diferencia": subtotal_mo_ahora - subtotal_mo_antes,
         },
         "total_antes": total_antes,
         "total_nuevo": total_nuevo,
-        "diferencia": round(total_nuevo - total_antes, 2),
+        "diferencia": total_nuevo - total_antes,
         "catalogo": crac.get_info_catalogo(),
     }
     return resumen, {"items": items_payload, "grupos_repuestos": grupos_payload}
@@ -865,7 +874,7 @@ def pedido(presupuesto_id):
                 **op,
                 "en_catalogo": en_catalogo,
                 "precio_hoy": precio_hoy,
-                "subtotal_hoy": round((precio_hoy or 0) * cantidad, 2),
+                "subtotal_hoy": pesos((precio_hoy or 0) * cantidad),
                 "hay_stock": bool(op["stock_actual"]),
             })
 
@@ -894,15 +903,15 @@ def pedido(presupuesto_id):
             "sin_stock_total": not con_stock,
             "cotizadas": len(cotizadas),
             "mas_barata_codigo": (mas_barata or {}).get("repuesto_codigo"),
-            "ahorro": round(cotizado - mas_barata["subtotal_hoy"], 2) if mas_barata else 0,
+            "ahorro": pesos(cotizado) - mas_barata["subtotal_hoy"] if mas_barata else 0,
             "marcas": _agrupar_por_marca(opciones),
         })
 
     return jsonify({
         "presupuesto": detalle_p,
         "grupos": grupos_out,
-        "total_cotizado": round(total_cotizado, 2),
-        "total_mas_barato_con_stock": round(total_mas_barato, 2),
+        "total_cotizado": pesos(total_cotizado),
+        "total_mas_barato_con_stock": pesos(total_mas_barato),
         "catalogo": crac.get_info_catalogo(),
     })
 

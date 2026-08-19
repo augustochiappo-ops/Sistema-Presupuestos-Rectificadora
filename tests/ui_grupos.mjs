@@ -135,7 +135,7 @@ await precioEditable.fill('1000')
 await esperar(900)
 const montosConPrecioPisado = await montosDeLaBarra()
 check('el total toma el precio pisado (4 × $1.000)',
-  montosConPrecioPisado[0] === '$ 4.000,00', JSON.stringify(montosConPrecioPisado))
+  montosConPrecioPisado[0] === '$ 4.000', JSON.stringify(montosConPrecioPisado))
 check('el renglón de la izquierda queda marcado como editado',
   (await page.getByText('editado', { exact: true }).count()) === 1)
 await page.screenshot({ path: `${SHOT}/00-servicios-precio-editado.png`, fullPage: false })
@@ -143,7 +143,7 @@ await page.locator('button[title="Volver al precio de la lista"]').click()
 await esperar(900)
 const montosRestaurados = await montosDeLaBarra()
 check('el ↺ devuelve el precio de la lista',
-  montosRestaurados[0] !== '$ 4.000,00', JSON.stringify(montosRestaurados))
+  montosRestaurados[0] !== '$ 4.000', JSON.stringify(montosRestaurados))
 check('y se va la marca de editado',
   (await page.getByText('editado', { exact: true }).count()) === 0)
 
@@ -160,8 +160,40 @@ check('escribir el subtotal recalcula el precio unitario (8.000 ÷ 4)',
   (await filaPreview.locator('input').nth(0).inputValue()).includes('2.000'),
   await filaPreview.locator('input').nth(0).inputValue())
 const montosConSubtotal = await montosDeLaBarra()
-check('y el total toma ese subtotal', montosConSubtotal[0] === '$ 8.000,00',
+check('y el total toma ese subtotal', montosConSubtotal[0] === '$ 8.000',
   JSON.stringify(montosConSubtotal))
+
+/* El recuadro del subtotal no se reformatea MIENTRAS se escribe (bug del
+   2026-08-19: el campo se reescribía en cada tecla, el cursor saltaba al final
+   y aparecían centavos de la nada). Se teclea de a un dígito y el campo tiene
+   que mostrar exactamente lo tecleado; recién al salir se ve formateado. */
+const campoSubtotal = filaPreview.locator('input').nth(1)
+await campoSubtotal.click()
+await campoSubtotal.press('Control+a')
+await campoSubtotal.press('Delete')
+const loQueSeVe = []
+for (const d of '5040') {
+  await campoSubtotal.type(d, { delay: 40 })
+  loQueSeVe.push(await campoSubtotal.inputValue())
+}
+check('el subtotal muestra tal cual lo que se teclea, sin reformatear',
+  JSON.stringify(loQueSeVe) === JSON.stringify(['5', '50', '504', '5040']),
+  JSON.stringify(loQueSeVe))
+await campoSubtotal.blur()
+await esperar(700)
+check('y al salir del campo queda formateado, sin centavos',
+  (await campoSubtotal.inputValue()) === '$ 5.040',
+  await campoSubtotal.inputValue())
+check('el unitario se recalcula entero (5.040 ÷ 4)',
+  (await filaPreview.locator('input').nth(0).inputValue()) === '$ 1.260',
+  await filaPreview.locator('input').nth(0).inputValue())
+check('ningún monto de la barra lleva centavos',
+  (await montosDeLaBarra()).every((m) => !m.includes(',')),
+  JSON.stringify(await montosDeLaBarra()))
+// Se vuelve a dejar el subtotal en 8.000, que es contra lo que mide el resto.
+await campoSubtotal.fill('8000')
+await campoSubtotal.blur()
+await esperar(700)
 
 /* Caja de opcionales: lo que se manda ahí deja de sumar al total, pero sigue en
    el presupuesto. Se prueba con la flechita del renglón (el mismo camino que el
@@ -170,7 +202,7 @@ await page.locator('button[title*="Pasar a opcionales"]').first().click()
 await esperar(900)
 const montosConOpcional = await montosDeLaBarra()
 check('mandar la línea a opcionales la saca del total',
-  montosConOpcional[0] === '$ 0,00', JSON.stringify(montosConOpcional))
+  montosConOpcional[0] === '$ 0', JSON.stringify(montosConOpcional))
 check('la caja de opcionales muestra lo que quedó afuera',
   (await page.locator('text=/Si se hacen todos/').count()) === 1)
 check('la barra de arriba avisa que están fuera del total',
@@ -182,7 +214,7 @@ await page.screenshot({ path: `${SHOT}/00b-servicios-opcionales.png`, fullPage: 
 await page.locator('button[title*="Volver al presupuesto"]').first().click()
 await esperar(900)
 check('volver al presupuesto lo hace sumar de nuevo',
-  (await montosDeLaBarra())[0] === '$ 8.000,00')
+  (await montosDeLaBarra())[0] === '$ 8.000')
 check('y la caja de opcionales vuelve a estar vacía',
   (await page.locator('text=/Arrastrá acá los servicios o repuestos/').count()) === 1)
 
@@ -208,7 +240,7 @@ await page.locator('.servicios-picker-grid table tbody tr').first().locator('td'
 )
 await esperar(900)
 check('arrastrar la fila a la caja también la saca del total',
-  (await montosDeLaBarra())[0] === '$ 0,00', JSON.stringify(await montosDeLaBarra()))
+  (await montosDeLaBarra())[0] === '$ 0', JSON.stringify(await montosDeLaBarra()))
 await page.locator('button[title*="Volver al presupuesto"]').first().click()
 await esperar(900)
 
@@ -232,7 +264,7 @@ await cantidadPrimera.fill('4')
 await esperar(700)
 check('volver a agregarlo no lo trae marcado como opcional',
   (await page.getByText('opcional', { exact: true }).count()) === 0)
-check('y vuelve a sumar al total', (await montosDeLaBarra())[0] !== '$ 0,00',
+check('y vuelve a sumar al total', (await montosDeLaBarra())[0] !== '$ 0',
   JSON.stringify((await montosDeLaBarra()).slice(0, 3)))
 
 /* Buscador sin acentos y por palabras sueltas (2026-08-18). */
@@ -294,6 +326,33 @@ check('al presupuesto entra solo la medida elegida', badgesCantidad === 1, `con 
 const marcadasEnMotor = await page.locator('.motor-selector-grid table tbody tr button[data-estado="motor"]').count()
 check('las 6 medidas hermanas quedan marcadas en el motor', marcadasEnMotor === 6, `marcadas=${marcadasEnMotor}`)
 await page.screenshot({ path: `${SHOT}/01b-medidas-automaticas.png`, fullPage: false })
+
+/* El círculo marca la FAMILIA entera (2026-08-19, pedido del dueño): prenderlo
+   en una medida deja marcadas las 7 de la pieza, apagarlo las saca a las 7. Es
+   el mismo criterio que ya tenía poner una cantidad. Se prueba con otra familia
+   (CAAC60085, 7 medidas) para no pisar la que quedó cotizada arriba. */
+await page.fill('input[placeholder="Código…"]', 'CAAC60085')
+await esperar(1800)
+const familiaCirculo = page.locator('.motor-selector-grid table tbody tr')
+// La búsqueda por código trae más filas que la familia (el código es un
+// fragmento: CAAC60085 también matchea CAAC60085A). Lo que se cuenta son las
+// que quedan MARCADAS, que tienen que ser las 7 medidas de la pieza.
+const marcadasPrevias = await familiaCirculo.locator('button[data-estado="motor"]').count()
+await familiaCirculo.nth(0).locator('td:first-child button').click()
+await esperar(2500)
+const marcadasTrasPrender = await familiaCirculo.locator('button[data-estado="motor"]').count()
+check('tocar el círculo marca las 7 medidas de la pieza, no solo la tocada',
+  marcadasTrasPrender === marcadasPrevias + 7,
+  `antes=${marcadasPrevias} después=${marcadasTrasPrender}`)
+check('y ninguna entra al presupuesto por marcarla',
+  (await familiaCirculo.locator('text=/^×\\d+$/').count()) === 0)
+await page.screenshot({ path: `${SHOT}/01c-circulo-familia.png`, fullPage: false })
+await familiaCirculo.nth(0).locator('td:first-child button').click()
+await esperar(2500)
+check('y apagarlo las saca a todas',
+  (await familiaCirculo.locator('button[data-estado="motor"]').count()) === marcadasPrevias,
+  `quedaron=${await familiaCirculo.locator('button[data-estado="motor"]').count()}`)
+
 await page.fill('input[placeholder="Código…"]', '')
 await esperar(1400)
 
@@ -378,6 +437,9 @@ check('la revisión tiene la caja de opcionales',
 check('la caja de opcionales explica para qué es',
   (await page.locator('text=/Arrastrá acá los servicios o repuestos/').count()) === 1)
 const montosEnRevision = await montosDeLaBarra()
+const precioRepuestoOriginal = await page.locator('table').nth(1)
+  .locator('tbody tr').first().locator('input').nth(1)
+  .inputValue()
 check('el total de la revisión es el mismo que traía el paso Repuestos',
   montosEnRevision[2] === montosEnRepuestos[2],
   `${JSON.stringify(montosEnRepuestos)} vs ${JSON.stringify(montosEnRepuestos)}`)
@@ -409,6 +471,59 @@ while (await page.locator('button[title*="Volver al presupuesto"]').count()) {
 check('devolver todo deja el total como estaba',
   (await montosDeLaBarra())[2] === montosEnRevision[2],
   JSON.stringify(await montosDeLaBarra()))
+
+/* La revisión también EDITA (2026-08-19): cantidad, precio unitario y subtotal
+   de las dos clases de línea, con la misma cuenta del paso Servicios. Se
+   verifica sobre la fila de mano de obra y sobre una de repuesto, y al final se
+   deja todo como estaba para no correr el resto de la suite. */
+const filaRevisionMO = page.locator('table').nth(0).locator('tbody tr').first()
+check('la fila de mano de obra trae tres campos editables (cant., unitario, subtotal)',
+  (await filaRevisionMO.locator('input').count()) === 3,
+  `inputs=${await filaRevisionMO.locator('input').count()}`)
+const unitarioRevision = filaRevisionMO.locator('input').nth(1)
+const subtotalRevision = filaRevisionMO.locator('input').nth(2)
+const unitarioOriginal = await unitarioRevision.inputValue()
+await unitarioRevision.fill('1000')
+await esperar(900)
+check('editar el unitario en la revisión mueve el total',
+  (await montosDeLaBarra())[2] !== montosEnRevision[2],
+  JSON.stringify(await montosDeLaBarra()))
+await subtotalRevision.fill('9000')
+await subtotalRevision.blur()
+await esperar(900)
+check('editar el subtotal recalcula el unitario, entero',
+  (await unitarioRevision.inputValue()) === '$ 2.250',
+  await unitarioRevision.inputValue())
+check('y el subtotal editado se ve en la barra',
+  (await montosDeLaBarra())[0] === '$ 9.000', JSON.stringify(await montosDeLaBarra()))
+const cantidadRevision = filaRevisionMO.locator('input').nth(0)
+await cantidadRevision.fill('2')
+await esperar(900)
+check('bajar la cantidad en la revisión recalcula el subtotal (2 × 2.250)',
+  (await montosDeLaBarra())[0] === '$ 4.500', JSON.stringify(await montosDeLaBarra()))
+const filaRevisionRep = page.locator('table').nth(1).locator('tbody tr').first()
+check('la fila de repuesto también es editable',
+  (await filaRevisionRep.locator('input').count()) === 3)
+await filaRevisionRep.locator('input').nth(1).fill('2000')
+await esperar(900)
+check('editar el precio de un repuesto en la revisión mueve el total de repuestos',
+  (await montosDeLaBarra())[1] !== montosEnRevision[1],
+  JSON.stringify(await montosDeLaBarra()))
+check('ningún monto de la revisión lleva centavos',
+  (await montosDeLaBarra()).every((m) => !m.includes(',')),
+  JSON.stringify(await montosDeLaBarra()))
+await page.screenshot({ path: `${SHOT}/05d-revision-editable.png`, fullPage: true })
+// Deshacer: el resto de la suite mide contra el presupuesto original.
+await cantidadRevision.fill('4')
+await esperar(500)
+await unitarioRevision.fill(unitarioOriginal)
+await esperar(500)
+await filaRevisionRep.locator('input').nth(1).fill(precioRepuestoOriginal)
+await esperar(900)
+check('deshacer las ediciones devuelve el total original',
+  (await montosDeLaBarra())[2] === montosEnRevision[2],
+  `${JSON.stringify(await montosDeLaBarra())} vs ${JSON.stringify(montosEnRevision)}`)
+
 await confirmarEnRevision()
 check('el presupuesto se confirma y vuelve al historial', page.url().endsWith('/presupuestos'))
 await esperar(1200)

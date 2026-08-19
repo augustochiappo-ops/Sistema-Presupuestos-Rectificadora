@@ -1,5 +1,7 @@
 import React from 'react'
 import { TextField } from '../../../components/TextField'
+import { CampoMonto } from '../../../components/CampoMonto'
+import { ContadorCantidad } from '../../../components/ContadorCantidad'
 import { StatusBadge } from '../../../components/StatusBadge'
 import { Icon } from '../../../components/Icon'
 import { CodigoRepuesto } from '../../../components/CodigoRepuesto'
@@ -9,12 +11,6 @@ import {
   agruparLineas, subtotalDe, subtotalDelGrupo, opcionesQueCotizan,
   codigosConCantidadSospechosa, familiasOrdenadas,
 } from '../../../utils/grupos'
-
-const botonCantidad = {
-  width: 28, height: 28, borderRadius: 8, border: '1px solid var(--border-default)',
-  background: 'var(--surface-card)', cursor: 'pointer', fontSize: 15, lineHeight: 1,
-  color: 'var(--text-strong)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0,
-}
 
 const celda = {
   padding: '10px 12px', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
@@ -312,28 +308,17 @@ function Grupo({
                     />
                   </td>
                   <td style={{ ...celda, textAlign: 'center' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                      <button style={botonCantidad} onClick={() => onCambiarCantidad(it.key, Math.max(0, (it.cantidad || 0) - 1))}>−</button>
-                      <input
-                        type="number" min="0" step="1"
-                        value={it.cantidad}
-                        onChange={(e) => onCambiarCantidad(it.key, parseFloat(e.target.value))}
-                        style={{
-                          width: 56, height: 28, textAlign: 'center', borderRadius: 8,
-                          border: `1px solid ${it.cantidad > 0 ? 'var(--border-default)' : 'var(--status-expired-fg)'}`,
-                          background: 'var(--surface-card)', color: 'var(--text-strong)',
-                          fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
-                        }}
-                      />
-                      <button style={botonCantidad} onClick={() => onCambiarCantidad(it.key, (it.cantidad || 0) + 1)}>+</button>
-                    </span>
+                    <ContadorCantidad
+                      cantidad={it.cantidad}
+                      onChange={(n) => onCambiarCantidad(it.key, n)}
+                    />
                   </td>
                   {/* El subtotal también se edita: lo que se escribe acá se
                       reparte por la cantidad y pisa el precio unitario. */}
                   <td style={{ ...celda, textAlign: 'right' }}>
-                    <TextField
-                      value={textoSubtotal(it.precio_unitario, it.cantidad)}
-                      onChange={(e) => onCambiarSubtotal(it.key, e.target.value)}
+                    <CampoMonto
+                      valor={textoSubtotal(it.precio_unitario, it.cantidad)}
+                      onEscribir={(texto) => onCambiarSubtotal(it.key, texto)}
                       title="Subtotal — se puede editar; el precio unitario se recalcula solo"
                       style={{
                         width: 120, textAlign: 'right', fontWeight: 600,

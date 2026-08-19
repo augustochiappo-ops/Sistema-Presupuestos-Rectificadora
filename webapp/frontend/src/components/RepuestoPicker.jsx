@@ -513,7 +513,10 @@ export function RepuestoPicker({
                 {' · '}{ayudaFilas}
               </div>
             )}
-            <div style={{ maxHeight: 560, overflow: 'auto' }}>
+            {/* El doble de alto que antes (560 → 1120, pedido del dueño el
+                2026-08-19): se buscan repuestos de a muchos y con la ventana
+                baja había que scrollear dentro de la tabla todo el tiempo. */}
+            <div style={{ maxHeight: 1120, overflow: 'auto' }}>
               <DataTable
                 columns={columnas}
                 reorderKey={reorderKey}

@@ -1,23 +1,42 @@
+/*
+ * Plata en pesos ENTEROS (2026-08-19, pedido del dueño).
+ *
+ * El sistema no maneja centavos: el taller cobra en pesos redondos y los
+ * decimales que arrastra el catálogo del proveedor (,51 / ,83) solo ensuciaban
+ * pantalla y PDF. La regla es **redondeo siempre hacia arriba**: si hay que
+ * elegir, el taller no cobra de menos.
+ *
+ * El redondeo vive acá, en el formateo y el parseo, y no en la importación del
+ * catálogo: los datos crudos del proveedor se guardan como vienen. Así los
+ * presupuestos ya emitidos —guardados con centavos— se ven redondeados sin
+ * tocar nada de lo que quedó grabado.
+ */
 const ARS = new Intl.NumberFormat('es-AR', {
   style: 'currency',
   currency: 'ARS',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
 })
+
+/** Pesos enteros hacia arriba. Es la única función que redondea plata. */
+export function aPesos(valor) {
+  const n = Number(valor)
+  return Number.isNaN(n) ? null : Math.ceil(n)
+}
 
 export function formatPrecioARS(valor) {
   if (valor === null || valor === undefined || valor === '') return '—'
-  const n = Number(valor)
-  if (Number.isNaN(n)) return '—'
+  const n = aPesos(valor)
+  if (n === null) return '—'
   return ARS.format(n).replace('ARS', '$').replace(/\s+/, ' ')
 }
 
 export function parsePrecioARS(texto) {
-  if (typeof texto === 'number') return texto
+  if (typeof texto === 'number') return aPesos(texto)
   if (!texto) return null
   const limpio = String(texto).replace(/\$/g, '').trim().replace(/\./g, '').replace(',', '.')
   const n = parseFloat(limpio)
-  return Number.isNaN(n) ? null : n
+  return Number.isNaN(n) ? null : Math.ceil(n)
 }
 
 // Title Case por palabra para nombres de cliente: "juan garcia" o

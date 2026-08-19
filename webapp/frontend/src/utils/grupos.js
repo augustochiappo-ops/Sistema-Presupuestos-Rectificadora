@@ -17,7 +17,8 @@
  * caja de opcionales del PDF con su precio, y se cobra recién si hace falta.
  */
 
-import { formatPrecioARS } from './format'
+import { formatPrecioARS, parsePrecioARS, aPesos } from './format'
+import { unitarioDesdeSubtotal } from './precios'
 
 export const SIN_GRUPO = null
 
@@ -62,7 +63,7 @@ export function lineaDeOpcion(grupo, o, preciosDeHoy = false) {
 }
 
 export function subtotalDe(linea) {
-  return (Number(linea.precio_unitario) || 0) * (Number(linea.cantidad) || 0)
+  return aPesos((Number(linea.precio_unitario) || 0) * (Number(linea.cantidad) || 0))
 }
 
 /** Líneas de un presupuesto agrupadas por categoría, en orden de aparición. */
@@ -190,6 +191,52 @@ export function totalRepuestos(lineas) {
 /** Lo que suman los repuestos marcados como opcionales (va aparte del total). */
 export function totalRepuestosOpcionales(lineas) {
   return lineas.reduce((acc, l) => acc + (l.opcional ? subtotalDe(l) : 0), 0)
+}
+
+/*
+ * Editar una línea de repuesto: cantidad, precio unitario y subtotal.
+ *
+ * Transformaciones puras de la lista de líneas, por la misma razón que las de
+ * mano de obra (utils/servicios.js): las usan el pop-up "Ver repuestos" —vía
+ * useRepuestosAgrupados—, el paso de Revisión y la edición del detalle, y la
+ * cuenta tiene que ser idéntica en los tres lados.
+ */
+
+export function conCantidadRepuesto(lineas, key, cantidad) {
+  const cant = Number(cantidad)
+  if (Number.isNaN(cant) || cant < 0) return lineas
+  return lineas.map((r) => (r.key === key ? { ...r, cantidad: cant } : r))
+}
+
+/** El texto se guarda tal cual se tipea; el valor va parseado aparte. */
+export function conPrecioRepuesto(lineas, key, texto) {
+  return lineas.map((r) => (
+    r.key === key ? { ...r, precioTexto: texto, precio_unitario: parsePrecioARS(texto) } : r
+  ))
+}
+
+/**
+ * Escribir el SUBTOTAL de una línea: se reparte por la cantidad y lo que queda
+ * pisa el precio unitario, que es lo que se guarda. Es la misma casilla del
+ * unitario vista al revés — manda el último que se escribe.
+ */
+export function conSubtotalRepuesto(lineas, key, texto) {
+  return lineas.map((r) => {
+    if (r.key !== key) return r
+    const { valor } = unitarioDesdeSubtotal(texto, r.cantidad)
+    return {
+      ...r,
+      precio_unitario: valor,
+      precioTexto: valor === null ? texto : formatPrecioARS(valor),
+    }
+  })
+}
+
+/** Opcional: queda en el presupuesto y sale en el PDF, pero no suma al total. */
+export function conOpcionalRepuesto(lineas, key, opcional) {
+  return lineas.map((r) => (
+    r.key === key ? { ...r, opcional: opcional === undefined ? !r.opcional : Boolean(opcional) } : r
+  ))
 }
 
 /** Payload de grupos para el backend (crear y editar usan el mismo formato). */

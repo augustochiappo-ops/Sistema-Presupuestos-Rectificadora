@@ -17,7 +17,7 @@
  * recuadro en rojo y no deja avanzar.
  */
 
-import { formatPrecioARS, parsePrecioARS } from './format'
+import { formatPrecioARS, parsePrecioARS, aPesos } from './format'
 
 /** Lo tipeado en el recuadro del unitario. */
 export function desdeUnitario(texto) {
@@ -29,12 +29,17 @@ export function desdeUnitario(texto) {
  * Con cantidad 0 no se puede repartir (division por cero): se devuelve el
  * subtotal como valor inválido para que la pantalla lo marque en vez de
  * inventar un número.
+ *
+ * Desde que la plata va en pesos enteros, un subtotal que no es múltiplo exacto
+ * de la cantidad sube al múltiplo siguiente: 5.001 entre 4 da un unitario de
+ * 1.251 y el subtotal queda en 5.004. Es la regla del dueño (redondeo hacia
+ * arriba) aplicada al reparto; la pantalla lo aclara debajo de la tabla.
  */
 export function unitarioDesdeSubtotal(textoSubtotal, cantidad) {
   const subtotal = parsePrecioARS(textoSubtotal)
   const cant = Number(cantidad)
   if (subtotal === null || !(cant > 0)) return { valor: null, texto: textoSubtotal }
-  const unitario = Math.round((subtotal / cant) * 100) / 100
+  const unitario = aPesos(subtotal / cant)
   return { valor: unitario, texto: formatPrecioARS(unitario) }
 }
 
@@ -46,7 +51,7 @@ export function subtotalDeLinea(precioUnitario, cantidad) {
   if (precioUnitario === null || precioUnitario === undefined) return null
   const cant = Number(cantidad)
   if (Number.isNaN(cant)) return null
-  return Math.round(precioUnitario * cant * 100) / 100
+  return aPesos(precioUnitario * cant)
 }
 
 /** Texto que muestra el recuadro del subtotal mientras no se esté editando. */

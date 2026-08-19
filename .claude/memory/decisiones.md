@@ -365,3 +365,33 @@
 **Los números, para no volver a discutirlo a ciegas:** la de backend son **2 segundos** con 220 checks (no hay ninguna excusa para saltearla, nunca). La de UI son **~6-7 minutos** con 195 checks, de los cuales ~160 segundos son esperas fijas; maneja un Chromium de verdad, así que no puede ser instantánea.
 **Lo que sí se optimiza:** correr la de UI **una sola vez, al final**, después de tener todos los arreglos hechos —no una vez por arreglo— y **en segundo plano**, siguiendo la conversación con el dueño mientras corre en vez de quedarse esperándola. La sesión del 2026-08-19 tardó 50 minutos por hacer justo lo contrario: tres corridas completas de la de UI y un bloqueo esperando la última.
 **Fecha:** 2026-08-19
+
+## La plata va en pesos enteros, y lo que sobra se redondea hacia ARRIBA
+**Decisión:** el sistema no maneja centavos. Todo precio, subtotal y total —en pantalla, en la base y en el PDF— es un entero de pesos, y el redondeo es **siempre hacia arriba**, nunca al más cercano.
+**Por qué:** pedido del dueño (2026-08-19): "eliminá los centavos de todo el sistema y redondealos hacia arriba". El taller cobra en pesos redondos; los `,51` y `,83` que arrastra el catálogo del proveedor solo ensuciaban la pantalla y el PDF. Hacia arriba porque, si hay que elegir, el taller no cobra de menos.
+**Dónde vive el redondeo:** en dos funciones gemelas, `aPesos` (`utils/format.js`) y `pesos` (`app/helpers.py`). Tienen que dar el mismo número las dos: si una redondea distinto, el total que se ve al armar el presupuesto deja de coincidir con el que guarda el backend. Todo lo demás las usa.
+**Lo que NO se redondea:** el catálogo del proveedor se importa tal cual viene, con sus decimales. El redondeo pasa recién cuando un precio **entra a un presupuesto** o **se muestra**. Así el dato crudo del proveedor sigue siendo el del proveedor.
+**Los presupuestos ya emitidos no se migran:** los que se cotizaron con centavos los conservan en la base y se **muestran** redondeados. Lo eligió el dueño: no se tocan datos de trabajos ya entregados al cliente. La consecuencia hay que tenerla presente en la revalidación — lo cotizado (entero) y el catálogo (con centavos) se comparan **los dos redondeados**, porque si no un código cuyo precio no cambió en absoluto se lee como "cambió" y todos los presupuestos aparecen desactualizados.
+**Efecto conocido y aceptado:** como el unitario es entero, escribir un subtotal que no se reparte justo entre la cantidad lo empuja al múltiplo siguiente (5.001 ÷ 4 → unitario 1.251 → subtotal 5.004). Las dos pantallas donde se edita lo aclaran debajo de la tabla.
+**Fecha:** 2026-08-19
+
+## Un recuadro que muestra un valor CALCULADO no se reformatea mientras se escribe
+**Decisión:** el recuadro del subtotal usa `CampoMonto`, que mientras está enfocado muestra un **borrador local con lo tipeado letra por letra** y recién al salir vuelve a mostrar el valor derivado ya formateado. Cada tecla sigue avisando hacia arriba, así que el total se actualiza en vivo igual que antes.
+**Por qué:** el recuadro mostraba siempre `textoSubtotal(unitario, cantidad)`, o sea el valor recalculado y formateado. React lo reescribía en cada tecla: escribir "5" devolvía "$ 5", **el cursor saltaba al final** y aparecían centavos de la nada. Es exactamente lo que reportó el dueño ("me deja escribir un número y el cursor después se corre y agrega centavos"). El recuadro del precio unitario nunca tuvo el problema porque guarda el texto tal cual se tipea.
+**Regla que queda:** si un input muestra algo que se calcula a partir de otra cosa, no puede ser un campo controlado por el valor calculado. O se guarda el texto tipeado (como el unitario), o se usa el borrador local (como el subtotal, donde persistir el texto de una cuenta no tendría sentido).
+**Dónde:** paso Servicios, pop-up "Ver repuestos", paso de Revisión y edición del detalle.
+**Fecha:** 2026-08-19
+
+## El círculo verde marca (y desmarca) toda la familia de medidas
+**Decisión:** tocar el círculo de un repuesto con medida marca en el motor **todas sus medidas hermanas** (STD, 025, 050…), no solo la tocada. Y es simétrico: apagarlo las saca a todas.
+**Por qué:** pedido del dueño (2026-08-19), y es lo que ya hacía **poner una cantidad** desde el 2026-08-14 (`useRepuestosAgrupados` marca las hermanas por su cuenta). Los dos caminos llevan a lo mismo: STD y 050 son la misma pieza, y cuál va se sabe recién cuando se mide el motor, así que se anotan todas y después se elige.
+**Por qué simétrico al apagar:** si prender marca cuatro, apagar tiene que sacar esas cuatro; si no, quedan tres medidas prendidas que el usuario cree haber apagado. Para sacar **una sola** medida queda el tacho de la ficha, que es el control fino.
+**Implementación:** las hermanas se preguntan al catálogo (`GET /repuestos/medidas`), no a la ficha del motor — lo que se quiere marcar son justamente las que **todavía no están** guardadas. Van todas en una sola llamada a `ficha-repuestos/marcar`, que ya aceptaba varios códigos, porque comparten categoría. Una pieza sin medidas se comporta como antes.
+**Fecha:** 2026-08-19
+
+## En la Revisión se edita todo, y con la misma cuenta que en los pasos anteriores
+**Decisión:** el paso 5 (Revisión) dejó de ser de solo lectura: se editan **cantidad, precio unitario y subtotal** de todas las líneas —mano de obra, repuestos y opcionales—. Bajar una cantidad a cero saca la línea, igual que en los pasos anteriores.
+**Por qué:** pedido del dueño. Es la última pantalla antes de emitir; encontrar ahí un precio mal cargado y tener que volver dos pasos para corregirlo no tiene sentido.
+**Cómo se comparte la cuenta:** la lógica de edición se sacó de las pantallas y quedó como **funciones puras** en `utils/servicios.js` (`conCantidadServicio`, `conPrecioServicio`, `conSubtotalServicio`) y `utils/grupos.js` (`conCantidadRepuesto`, `conPrecioRepuesto`, `conSubtotalRepuesto`). Las usan el paso Servicios, el pop-up de repuestos —vía `useRepuestosAgrupados`— y la Revisión. Corregir un precio en la última pantalla da exactamente lo mismo que haberlo corregido dos pasos antes, porque es literalmente el mismo código.
+**Dónde vive el estado:** los setters están en el wizard, no en el paso: la Revisión se desmonta al volver atrás y con ella se perdería lo editado.
+**Fecha:** 2026-08-19
