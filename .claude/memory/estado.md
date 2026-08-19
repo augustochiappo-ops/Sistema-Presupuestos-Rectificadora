@@ -843,7 +843,8 @@ status 200 y producción sirviendo el JS commiteado byte a byte, árbol de traba
 limpio, `master` sincronizado con `origin/master`, una sola rama —la que había
 creado el harness de la tarea (`claude/parts-search-section-6349n7`) se borró
 apenas se vio que ya estaba contenida en `master`— y ningún servidor de dev
-quedando corriendo.
+quedando corriendo. **El dueño probó la pantalla en producción y confirmó que
+anda bien** antes de cerrar.
 
 ## Próximo paso
 
