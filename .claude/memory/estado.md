@@ -595,6 +595,21 @@ concreto que apareció para el "quedaba un servidor abierto".
 una después de la otra sobre el mismo `DATA_DIR` para probar que ya no se
 contaminan. `npm run build` y `oxlint` limpios.
 
+**Deployado y verificado en producción** (commit `9ad4d1a`): `POST /api/deploy`
+→ **200**, fast-forward `143bc22 → 9ad4d1a` y reload disparado. La verificación
+fue **de solo lectura** (regla del incidente del 622): el sitio responde 200 y el
+JS que sirve es **byte a byte idéntico** al build commiteado (`index-BqLOl_rC.js`,
+comparado con `cmp`), con el arreglo del arrastre adentro. No se creó ni se borró
+nada en la base real.
+
+**Al cierre, el dueño preguntó por qué las suites tardan tanto** (la sesión le
+llevó 50 minutos de espera). Quedó decidido —ver `decisiones.md`— que **se corren
+enteras siempre**, sin filtro por bloque ni recorte de esperas: lo que hay que
+cambiar es correr la de UI **una sola vez, al final y en segundo plano**, no una
+vez por arreglo ni bloqueando la conversación. Los tiempos reales, para no
+volver a discutirlo a ciegas: **backend 2 segundos** / 220 checks, **UI ~6-7
+minutos** / 195 checks (de los cuales ~160 s son esperas fijas).
+
 ## Cómo verificar que no se rompió nada (`tests/`)
 
 Desde el 2026-08-10 hay dos suites en `tests/`, escritas junto con los grupos de repuestos. **Correrlas antes de dar por terminado cualquier cambio que toque repuestos, presupuestos o el PDF.** Instrucciones completas en `tests/README.md`.
@@ -614,7 +629,10 @@ El checklist completo está en `CLAUDE.md`, sección **Memoria del proyecto → 
 **`master` con el repaso de la sesión del 2026-08-18 ya hecho y sus tres fallas
 corregidas** (arrastre de una fila que quedaba trabado, la marca de opcional que
 sobrevivía a sacar el servicio, y las suites que se ensuciaban entre sí; ver la
-sección de la sesión 2026-08-19 más arriba). Antes de eso, el cambio grande del
+sección de la sesión 2026-08-19 más arriba). **Producción quedó parada en
+`9ad4d1a`**, que es el último commit con código de la app: lo que vino después
+(`b2c2c21` y el cierre) es solo memoria y documentación, así que no hay nada
+pendiente de deployar. Antes de eso, el cambio grande del
 armado de presupuestos: se cotiza todo lo cargado (se cayó la regla del "más caro"), caja de Opcionales en pantalla y en el PDF, subtotal editable y buscadores tolerantes a acentos y al orden de las palabras (`fc0c324`, 2026-08-18, deployado y verificado en producción por HTTP). Antes de eso, el precio de mano de obra editable, la lista de servicios más alta y el paso de Revisión previo a emitir (`fc35a9e`, 2026-08-18, deployado y verificado en producción por HTTP). Antes de eso, el paso Repuestos partido en dos ejes: el círculo del motor y la cantidad (`6b22255`, 2026-08-14, deployado y verificado en producción). Antes de eso, el bloque de líneas de familia + "Deshacer" global + el arreglo del bug de los aros (2026-08-12, deployado). Antes de eso, `722da1b` (borrar repuestos del motor con papelera, familias de medidas, notas de precio y el arreglo del bug de las supermedidas — 2026-08-12). Antes de eso, producción y `master` estaban sincronizados en `dfea837` (borrar clientes + códigos de a uno + repuestos por grupos + textos del PDF, deployado y verificado por API el 2026-08-11; el commit de cierre posterior es solo documentación y no cambia nada de lo que sirve producción). Rama única `master` — `main` fue eliminada y no hay que recrearla. El deploy lo puede correr Claude desde el entorno remoto pasando el `DEPLOY_SECRET` de la sesión (ver nota operativa arriba).
 
 **Producción YA NO está vacía — el dueño la está usando** (censo del 2026-08-12, después del deploy): **1 presupuesto** (#34, cliente Pascolo, FIAT 1100, $1.219.391,79), **1 cliente** (Pascolo) y **3 motores con ficha de repuestos cargada a mano**: #622 FIAT 1100 (19 opciones en Aros / Cojinete axial / Cojinetes bancada), #665 FIAT Ducato 2.3 (7) y #675 FIAT Fire 1400 (12). 491 motores y 64.250 repuestos. El catálogo del proveedor **sigue sin fecha de importación** (`app_meta.catalogo_importado_en` en `null`): se cargó antes de que existiera esa columna, así que la pantalla no muestra "última carga" hasta la próxima importación.
