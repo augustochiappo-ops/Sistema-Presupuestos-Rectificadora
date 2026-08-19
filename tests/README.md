@@ -1,18 +1,22 @@
 # Verificaciones
 
-Dos suites que cubren el bloque de **grupos de repuestos** (qué cotiza cada
-categoría, opcionales, ficha del motor, pedido, medidas automáticas). Se
-escribieron el 2026-08-10 junto con la feature y sirven para no romperla al
-tocar repuestos más adelante.
+Cuatro suites. Dos cubren el bloque de **grupos de repuestos** (qué cotiza cada
+categoría, opcionales, ficha del motor, pedido, medidas automáticas), escritas el
+2026-08-10 junto con la feature; las otras dos cubren la **búsqueda por
+medidas** (los catálogos técnicos de camisas, guías y subconjuntos), escritas el
+2026-08-19 junto con esa pantalla. Sirven para no romperlas al tocar repuestos
+más adelante.
 
 No son tests unitarios ni usan pytest: son scripts que corren de punta a punta
 contra los **datos reales del repo** y contra la app de verdad. Imprimen una
 línea por verificación y salen con código 1 si falla alguna.
 
-> **Regla no negociable:** las dos suites **crean y borran datos**. La de backend
-> termina vaciando presupuestos y clientes. Corrélas siempre contra un `DATA_DIR`
-> descartable, **nunca** contra `webapp/backend/data/` si ahí vive la base que te
-> importa, y **nunca** contra producción.
+> **Regla no negociable:** las dos suites de grupos **crean y borran datos**. La
+> de backend termina vaciando presupuestos y clientes. Corrélas siempre contra un
+> `DATA_DIR` descartable, **nunca** contra `webapp/backend/data/` si ahí vive la
+> base que te importa, y **nunca** contra producción. Las dos de búsqueda por
+> medidas son de solo lectura, pero les pedimos `DATA_DIR` igual: es más barato
+> exigirlo siempre que acordarse de cuál sí y cuál no.
 
 ---
 
@@ -135,7 +139,52 @@ anteriores del motor, arrancan todos destildados, el botón se habilita al tilda
 y lo elegido entra al presupuesto) · **el paso Repuestos arranca en cero** aunque
 el motor tenga ficha cargada.
 
-Las dos suites **arrancan limpiando el estado que ellas mismas generan**
+## 3. Backend — `backend_medidas.py`
+
+35 verificaciones sobre la búsqueda por medidas (`app/tecnicos.py`): los
+catálogos técnicos que trae el repo y su cruce con el catálogo del proveedor.
+
+```bash
+source /tmp/rect-corrida/entorno.sh
+$VENV/bin/python tests/backend_medidas.py
+```
+
+| Bloque | Qué verifica |
+|---|---|
+| Catálogos | Las tres familias cargadas con sus totales exactos (280 camisas, 915 guías, 201 subconjuntos) |
+| Sin filtros | No devuelve el catálogo entero, y una familia inexistente no explota |
+| Valor ± tolerancia | Encuentra con el valor exacto y con ±0,5, deja de encontrar con ±0,1, usa ±0,5 si no se escribe tolerancia, y acepta la coma decimal |
+| Acumulación | Sumar un segundo filtro achica el resultado y no pierde la pieza buscada |
+| Precio y stock | Salen de `crac_repuestos` (no del catálogo técnico), el código del proveedor es el exacto (con su relleno de alineación) y una ficha sin equivalencia viene con `precio: null` en vez de con un precio inventado |
+| Subconjuntos | Un código Mahle tiene un código del proveedor **por sobremedida**: se elige el que tiene stock y precio, y se informa cuál |
+| Texto | Aplicación por palabras sueltas y en cualquier orden, sin acentos ni mayúsculas; código por fragmento |
+| Tope | Se devuelven 100 como mucho y se avisa con `capped` |
+| HTTP | 401 sin sesión; con sesión, familias y búsqueda |
+
+## 4. UI — `ui_medidas.mjs`
+
+24 verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
+
+```bash
+source /tmp/rect-corrida/entorno.sh
+node tests/ui_medidas.mjs
+```
+
+Qué cubre: la sección en el menú lateral · las tres pestañas con su total ·
+estado inicial sin resultados y con **ejemplos clicables** · buscar por medida y
+que **todas** las filas caigan dentro del rango pedido · achicar la tolerancia y
+ver menos filas · el tag del filtro activo · **ordenar** haciendo clic en
+cualquier parte del encabezado · guías por código con su precio y su stock ·
+**los filtros se guardan por familia** (cambiar de pestaña y volver no borra lo
+escrito) · subconjuntos mostrando de qué sobremedida es el precio · una camisa
+sin equivalencia diciendo "Consultar" en vez de un precio.
+
+Es de solo lectura, así que puede correr antes o después de `ui_grupos.mjs` sin
+pisarle nada.
+
+---
+
+Las dos suites de grupos **arrancan limpiando el estado que ellas mismas generan**
 (presupuestos, clientes, fichas de motor y la papelera de repuestos eliminados),
 así que se pueden correr dos veces seguidas sobre el mismo `DATA_DIR` —y una
 después de la otra— y dan el mismo resultado. Los datos importados (motores,

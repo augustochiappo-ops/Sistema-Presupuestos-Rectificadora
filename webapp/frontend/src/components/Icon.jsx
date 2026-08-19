@@ -3,7 +3,7 @@ import {
   AlertTriangle, ArrowUpRight, MoreHorizontal, Package, Tag, X, Star,
   Pencil, Save, ArrowLeft, ChevronDown, ChevronRight, Check, RotateCw,
   FileUp, LogOut, Eye, EyeOff, History, Menu, Trash2, Share2, ListChecks,
-  ShoppingCart, Copy, BadgeCheck, Layers, ArrowDown, ArrowUp,
+  ShoppingCart, Copy, BadgeCheck, Layers, ArrowDown, ArrowUp, Ruler,
 } from 'lucide-react'
 
 const MAP = {
@@ -16,7 +16,7 @@ const MAP = {
   'file-up': FileUp, 'log-out': LogOut, eye: Eye, 'eye-off': EyeOff, history: History, menu: Menu,
   trash: Trash2, share: Share2, 'list-checks': ListChecks,
   cart: ShoppingCart, copy: Copy, 'badge-check': BadgeCheck, layers: Layers,
-  'arrow-down': ArrowDown, 'arrow-up': ArrowUp,
+  'arrow-down': ArrowDown, 'arrow-up': ArrowUp, ruler: Ruler,
 }
 
 export function Icon({ n, s = 18, style, ...rest }) {

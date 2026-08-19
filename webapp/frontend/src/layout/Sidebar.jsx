@@ -10,6 +10,7 @@ const ITEMS = [
   { to: '/precios', label: 'Editar Precios', icon: 'dollar-sign' },
   { to: '/clientes', label: 'Clientes', icon: 'users' },
   { to: '/repuestos', label: 'Repuestos', icon: 'package' },
+  { to: '/busqueda-medidas', label: 'Búsqueda por medidas', icon: 'ruler' },
 ]
 
 function horaVencimiento(venceTs) {

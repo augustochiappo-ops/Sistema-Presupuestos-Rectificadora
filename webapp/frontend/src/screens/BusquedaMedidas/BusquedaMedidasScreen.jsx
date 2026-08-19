@@ -1,0 +1,384 @@
+import React from 'react'
+import { api } from '../../api/client'
+import { PageHeader } from '../../components/PageHeader'
+import { DataTable } from '../../components/DataTable'
+import { SearchInput } from '../../components/SearchInput'
+import { StatusBadge } from '../../components/StatusBadge'
+import { Icon } from '../../components/Icon'
+import { formatPrecioARS } from '../../utils/format'
+import { CampoMedida } from './CampoMedida'
+import { FAMILIAS, camposDe } from './familias'
+
+const ESPERA_MS = 280
+
+const TIPO_GUIA = { A: 'Admisión', E: 'Escape', AE: 'A/E' }
+
+function formatMm(valor) {
+  if (valor === null || valor === undefined || valor === '') return '—'
+  const n = Number(valor)
+  if (Number.isNaN(n)) return String(valor)
+  return n.toLocaleString('es-AR', { maximumFractionDigits: 2 })
+}
+
+/*
+ * La ficha viene con las medidas y los datos sueltos en dos objetos anidados
+ * (`medidas` y `extra`). Se aplanan acá y no en el backend porque el que los
+ * separa es el catálogo de origen: cada familia tiene los suyos, y la tabla
+ * quiere una fila plana.
+ */
+function aFila(ficha, i) {
+  return { id: `${ficha.codigo}-${i}`, ...ficha, ...(ficha.medidas || {}), ...(ficha.extra || {}) }
+}
+
+function celdaSobremedidas(fila) {
+  const lista = Array.isArray(fila.sobremedidas) ? fila.sobremedidas : []
+  if (!lista.length) return '—'
+  const matcheadas = new Set((fila.sobremedidas_match || []).map((s) => s.label))
+  return (
+    <span style={{ display: 'inline-flex', flexWrap: 'wrap', gap: '2px 8px' }}>
+      {lista.map((s, i) => {
+        const resaltada = matcheadas.has(s.label)
+        return (
+          <span
+            key={`${s.label}-${i}`}
+            title={s.label || undefined}
+            style={{
+              color: resaltada ? 'var(--text-strong)' : 'var(--text-muted)',
+              fontWeight: resaltada ? 'var(--weight-semibold)' : 'var(--weight-regular)',
+            }}
+          >
+            {formatMm(s.valor)}
+          </span>
+        )
+      })}
+    </span>
+  )
+}
+
+function celda(col, fila) {
+  const valor = fila[col.key]
+  switch (col.tipo) {
+    case 'mm':
+      return formatMm(valor)
+    case 'precio':
+      // Sin código del proveedor no hay precio que mostrar, y poner "—" haría
+      // pensar que la pieza no se consigue: lo que pasa es que no la tenemos
+      // cruzada con la lista.
+      return valor == null
+        ? <span style={{ color: 'var(--text-faint)' }}>Consultar</span>
+        : formatPrecioARS(valor)
+    case 'stock':
+      if (!fila.codigo_crac) return <span style={{ color: 'var(--text-faint)' }}>—</span>
+      return <StatusBadge status={valor ? 'active' : 'expired'}>{valor ? 'Sí' : 'No'}</StatusBadge>
+    case 'tipo':
+      return TIPO_GUIA[valor] || valor || '—'
+    case 'sobremedidas':
+      return celdaSobremedidas(fila)
+    default:
+      return valor === null || valor === undefined || valor === '' ? '—' : valor
+  }
+}
+
+function comparar(a, b, key) {
+  const va = a[key]
+  const vb = b[key]
+  const vacio = (v) => v === null || v === undefined || v === ''
+  // Lo que no tiene dato va siempre al final, ordene como ordene: una fila sin
+  // largo cargado no es "la más corta".
+  if (vacio(va) && vacio(vb)) return 0
+  if (vacio(va)) return 1
+  if (vacio(vb)) return -1
+  if (typeof va === 'number' && typeof vb === 'number') return va - vb
+  return String(va).localeCompare(String(vb), 'es-AR', { numeric: true })
+}
+
+export default function BusquedaMedidasScreen() {
+  const [familias, setFamilias] = React.useState([])
+  const [familiaId, setFamiliaId] = React.useState(FAMILIAS[0].id)
+  // Los filtros se guardan por familia: cambiar de pestaña para mirar otra cosa
+  // no puede borrar lo que se venía escribiendo.
+  const [filtrosPorFamilia, setFiltrosPorFamilia] = React.useState({})
+  const [resultado, setResultado] = React.useState({ total: 0, capped: false, resultados: [] })
+  const [cargando, setCargando] = React.useState(false)
+  const [orden, setOrden] = React.useState(null)
+
+  React.useEffect(() => {
+    api.get('/tecnicos/familias').then(setFamilias).catch(() => setFamilias([]))
+  }, [])
+
+  // Solo se muestran las familias que el backend dice tener cargadas, en el
+  // orden de FAMILIAS (el del catálogo, no el que devuelva la API).
+  const visibles = React.useMemo(() => {
+    const cargadas = new Map(familias.map((f) => [f.id, f]))
+    return FAMILIAS.filter((f) => cargadas.has(f.id)).map((f) => ({ ...f, total: cargadas.get(f.id).total }))
+  }, [familias])
+
+  const familia = visibles.find((f) => f.id === familiaId) || visibles[0] || FAMILIAS[0]
+  // Memoizado: sin esto el `|| {}` devuelve un objeto nuevo en cada render y
+  // arrastra a los tres useMemo de abajo, que dejan de memoizar nada.
+  const filtros = React.useMemo(
+    () => filtrosPorFamilia[familia.id] || {},
+    [filtrosPorFamilia, familia.id],
+  )
+
+  const setFiltro = (campo, valor) => {
+    setFiltrosPorFamilia((prev) => ({ ...prev, [familia.id]: { ...(prev[familia.id] || {}), [campo]: valor } }))
+  }
+  const limpiar = () => setFiltrosPorFamilia((prev) => ({ ...prev, [familia.id]: {} }))
+  const aplicarEjemplo = (ejemplo) => setFiltrosPorFamilia((prev) => ({ ...prev, [familia.id]: { ...ejemplo.filtros } }))
+
+  // Una tolerancia sola no es una búsqueda: sin su valor no filtra nada.
+  const query = React.useMemo(() => {
+    const params = new URLSearchParams({ familia: familia.id })
+    for (const campo of camposDe(familia)) {
+      const valor = (filtros[campo] ?? '').toString().trim()
+      if (!valor) continue
+      if (campo.startsWith('tol_') && !(filtros[campo.slice(4)] ?? '').toString().trim()) continue
+      params.set(campo, valor)
+    }
+    return params
+  }, [familia, filtros])
+
+  const hayFiltro = React.useMemo(
+    () => camposDe(familia).some((c) => !c.startsWith('tol_') && (filtros[c] ?? '').toString().trim()),
+    [familia, filtros],
+  )
+
+  React.useEffect(() => {
+    setOrden(null)
+  }, [familia.id])
+
+  // Contador de búsquedas: si una respuesta vieja llega después de una nueva
+  // (pasa al escribir rápido), se descarta en vez de pisar la tabla con
+  // resultados que ya no son los del filtro que está en pantalla.
+  const ultimaBusqueda = React.useRef(0)
+
+  React.useEffect(() => {
+    if (!hayFiltro) {
+      setResultado({ total: 0, capped: false, resultados: [] })
+      return undefined
+    }
+    const t = setTimeout(() => {
+      const mia = ++ultimaBusqueda.current
+      setCargando(true)
+      api.get(`/tecnicos/buscar?${query.toString()}`)
+        .then((datos) => { if (mia === ultimaBusqueda.current) setResultado(datos) })
+        .catch(() => { if (mia === ultimaBusqueda.current) setResultado({ total: 0, capped: false, resultados: [] }) })
+        .finally(() => { if (mia === ultimaBusqueda.current) setCargando(false) })
+    }, ESPERA_MS)
+    return () => clearTimeout(t)
+  }, [query, hayFiltro])
+
+  const filas = React.useMemo(() => {
+    const base = resultado.resultados.map(aFila)
+    if (!orden) return base
+    return [...base].sort((a, b) => comparar(a, b, orden.key) * orden.dir)
+  }, [resultado, orden])
+
+  const alternarOrden = (key) => {
+    setOrden((prev) => (prev && prev.key === key ? { key, dir: prev.dir * -1 } : { key, dir: 1 }))
+  }
+
+  const columnas = React.useMemo(
+    () => familia.columnas.map((col) => ({
+      ...col,
+      header: (
+        // El span ocupa el encabezado entero (`width: 100%`) para que se pueda
+        // hacer clic en cualquier parte de la celda y no solo justo encima de
+        // las letras, que es lo que pasaba antes.
+        <span
+          onClick={() => alternarOrden(col.key)}
+          style={{
+            cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4,
+            width: '100%', userSelect: 'none',
+            justifyContent: col.align === 'right' ? 'flex-end' : col.align === 'center' ? 'center' : 'flex-start',
+          }}
+          title="Ordenar por esta columna"
+        >
+          {col.header}
+          {orden?.key === col.key && <Icon n={orden.dir === 1 ? 'arrow-up' : 'arrow-down'} s={13} />}
+        </span>
+      ),
+      render: (_, fila) => celda(col, fila),
+    })),
+    [familia, orden],
+  )
+
+  const etiquetas = React.useMemo(() => {
+    const puestas = []
+    for (const m of familia.medidas || []) {
+      const valor = (filtros[m.campo] ?? '').toString().trim()
+      if (!valor) continue
+      const tol = (filtros[`tol_${m.campo}`] ?? '').toString().trim() || '0,5'
+      puestas.push(`${m.label}: ${valor} ± ${tol} mm`)
+    }
+    for (const t of familia.textos || []) {
+      const valor = (filtros[t.campo] ?? '').toString().trim()
+      if (valor) puestas.push(`${t.label}: “${valor}”`)
+    }
+    for (const o of familia.opciones || []) {
+      const valor = (filtros[o.campo] ?? '').toString().trim()
+      const elegida = (o.valores || []).find((v) => v.valor === valor)
+      if (valor && elegida) puestas.push(`${o.label}: ${elegida.label}`)
+    }
+    return puestas
+  }, [familia, filtros])
+
+  let mensajeVacio = 'Escribí una medida o un motor para buscar.'
+  if (hayFiltro) mensajeVacio = cargando ? 'Buscando…' : 'Ninguna pieza coincide con esas medidas.'
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+      <PageHeader
+        title="Búsqueda por medidas"
+        subtitle="Encontrá una pieza por sus medidas cuando no sabés el código. El precio y el stock son los de la última lista del proveedor."
+      />
+
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        {visibles.map((f) => {
+          const activa = f.id === familia.id
+          return (
+            <button
+              key={f.id}
+              onClick={() => setFamiliaId(f.id)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8, height: 40, padding: '0 18px',
+                borderRadius: 'var(--radius-pill)', cursor: 'pointer',
+                fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
+                fontWeight: 'var(--weight-semibold)',
+                background: activa ? 'var(--surface-inverse)' : 'var(--surface-card)',
+                color: activa ? 'var(--text-on-inverse)' : 'var(--text-body)',
+                border: `1px solid ${activa ? 'var(--surface-inverse)' : 'var(--border-default)'}`,
+                boxShadow: activa ? 'var(--shadow-pill)' : 'var(--shadow-xs)',
+              }}
+            >
+              {f.label}
+              <span style={{ fontSize: 'var(--text-xs)', opacity: 0.65 }}>{f.total}</span>
+            </button>
+          )
+        })}
+      </div>
+
+      <div
+        style={{
+          display: 'flex', flexDirection: 'column', gap: 16,
+          border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)',
+          background: 'var(--surface-card)', padding: 18,
+        }}
+      >
+        {/* Ancho fijo y que envuelvan: un casillero de medida estirado a media
+            pantalla para escribir "104,5" se ve raro y se lee peor. */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
+          {(familia.medidas || []).map((m) => (
+            <CampoMedida
+              key={m.campo}
+              ancho={250}
+              label={m.label}
+              valor={filtros[m.campo] ?? ''}
+              tolerancia={filtros[`tol_${m.campo}`] ?? ''}
+              onValor={(v) => setFiltro(m.campo, v)}
+              onTolerancia={(v) => setFiltro(`tol_${m.campo}`, v)}
+            />
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+          {(familia.textos || []).map((t) => (
+            <SearchInput
+              key={t.campo}
+              width={t.ancho}
+              icon={<Icon n={t.icono || 'search'} s={16} />}
+              placeholder={`${t.label}…`}
+              value={filtros[t.campo] ?? ''}
+              onChange={(e) => setFiltro(t.campo, e.target.value)}
+            />
+          ))}
+          {(familia.opciones || []).map((o) => (
+            <select
+              key={o.campo}
+              value={filtros[o.campo] ?? ''}
+              onChange={(e) => setFiltro(o.campo, e.target.value)}
+              aria-label={o.label}
+              style={{
+                height: 44, padding: '0 14px', borderRadius: 'var(--radius-pill)',
+                border: '1px solid var(--border-default)', background: 'var(--surface-card)',
+                fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-strong)',
+              }}
+            >
+              {(o.valores || []).map((v) => (
+                <option key={v.valor} value={v.valor}>{v.label}</option>
+              ))}
+            </select>
+          ))}
+          {hayFiltro && (
+            <button
+              onClick={limpiar}
+              style={{
+                border: 'none', background: 'transparent', cursor: 'pointer', padding: '0 4px',
+                fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)',
+              }}
+            >
+              Limpiar filtros
+            </button>
+          )}
+        </div>
+
+        {etiquetas.length > 0 && (
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {etiquetas.map((e) => (
+              <span
+                key={e}
+                style={{
+                  padding: '5px 12px', borderRadius: 'var(--radius-pill)',
+                  background: 'var(--surface-sunken)', color: 'var(--text-body)',
+                  fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)',
+                }}
+              >
+                {e}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {!hayFiltro && (
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
+            Probá con:
+          </span>
+          {(familia.ejemplos || []).map((ej) => (
+            <button
+              key={ej.label}
+              onClick={() => aplicarEjemplo(ej)}
+              style={{
+                height: 34, padding: '0 14px', borderRadius: 'var(--radius-pill)', cursor: 'pointer',
+                border: '1px dashed var(--border-strong)', background: 'transparent',
+                fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-body)',
+              }}
+            >
+              {ej.label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {hayFiltro && (
+        <div style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
+          {cargando
+            ? 'Buscando…'
+            : `${resultado.total} ${resultado.total === 1 ? 'pieza encontrada' : 'piezas encontradas'}`}
+          {resultado.capped && ' — se muestran las primeras 100, afiná los filtros para ver el resto'}
+        </div>
+      )}
+
+      <DataTable
+        columns={columnas}
+        rows={filas}
+        reorderKey={`medidas-${familia.id}`}
+        emptyMessage={mensajeVacio}
+        striped
+        style={{ minWidth: 0 }}
+      />
+    </div>
+  )
+}

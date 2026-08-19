@@ -781,6 +781,62 @@ tests/preparar.sh
 árbol de trabajo limpio, `master` sincronizado con `origin/master`, una sola
 rama y ningún servidor de dev quedando corriendo.
 
+## Sesión 2026-08-19 (cuarta) — Búsqueda por medidas
+
+**Lo que pidió el dueño:** una sección nueva en el menú lateral con el buscador
+de repuestos **por medidas** que ya tiene en su otro repo
+(`augustochiappo-ops/Chiappo-Repuestos-`, la página `/medidas` del sitio
+público). Explícitamente **sin integrarlo al presupuesto todavía**: por ahora
+es de consulta.
+
+**Lo que se trajo.** Los tres catálogos técnicos, 1.396 fichas en total:
+
+| Familia | Marcas | Fichas | Con código del proveedor |
+|---|---|---:|---:|
+| Camisas | Fadecya | 280 | 136 |
+| Guías de válvulas | RYC (680) + Indy (164) + Nubo (71) | 915 | 790 |
+| Subconjuntos | Mahle | 201 | 109 |
+
+**Lo que NO se trajo, y es la decisión que gobierna todo:** los precios. El
+otro repo tiene su propia lista (`api/_data/precios.js`, 3,7 MB) y sus 25
+archivos `CRAC_*.js` (5,8 MB). Acá no hacen falta: este sistema ya tiene los
+**64.250 repuestos del proveedor con precio y stock del día**, y se verificó
+antes de escribir una línea que **todo código que el otro repo sabe mapear
+existe en nuestra base** (136/136, 555/555, 164/164, 71/71 y 109/109). El
+precio y el stock salen de `crac_repuestos`; copiarlos habría dejado dos listas
+desincronizadas desde el primer día.
+
+**Cómo quedó armado:**
+
+- `scripts/convertir_tecnicos.js` — se corre **a mano** contra un clon del otro
+  repo y escribe `CRAC/tecnicos/{camisas,guias,subconjuntos}.json` (764 KB,
+  commiteados). Ahí también se resuelve el **código exacto del proveedor**: en
+  la lista los códigos vienen alineados con relleno (`"G IY1171   STD"`) y en
+  los catálogos técnicos con un solo espacio, así que sin resolverlo Indy y
+  Nubo no matcheaban **ni una** fila.
+- `webapp/backend/app/tecnicos.py` — carga los JSON en memoria y filtra en
+  Python (`valor ± tolerancia`, default ±0,5 mm; tope de 100 con aviso). **No
+  hay tabla en SQLite**: son 1.396 fichas que cambian unas pocas veces al año y
+  ya viven en git. Sin tabla no hay migración, ni paso de importación, ni riesgo
+  de que un deploy deje producción con el buscador vacío.
+- `webapp/backend/app/routes/tecnicos.py` — `GET /api/tecnicos/familias` y
+  `GET /api/tecnicos/buscar`.
+- `webapp/frontend/src/screens/BusquedaMedidas/` — la pantalla, con pestañas por
+  familia, los filtros de valor ± tolerancia, tags de filtros activos, ejemplos
+  clicables y columnas ordenables. **Cero CSS del otro repo**: allá es otro
+  design system (Oswald + rojo ember), acá se usan los tokens de este proyecto.
+- Menú lateral: **"Búsqueda por medidas"**, debajo de "Repuestos". Se eligió ese
+  nombre y no "Búsqueda de repuestos" para que no se confunda con la pantalla
+  "Repuestos", que es la búsqueda por código/descripción/categoría.
+
+**Dos suites nuevas:** `tests/backend_medidas.py` (35 verificaciones) y
+`tests/ui_medidas.mjs` (24). Las dos son de **solo lectura**, así que pueden
+correr antes o después de las de grupos sin pisarles nada.
+
+**Lo que queda para una segunda tanda** (el dueño lo dejó afuera a propósito):
+agregar un resultado al presupuesto, y que la lupa del wizard ofrezca "buscar
+por medidas" como segunda pestaña.
+
 ## Próximo paso
 
 **Producción y `master` están sincronizados en `c2800fd`**, deployado y

@@ -1,0 +1,7810 @@
+[
+ {
+  "codigo": "UC 1694",
+  "codigo_fab": "UC 1694",
+  "marca": "FADECYA",
+  "aplicacion": "KAWASAKI KMX125",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 53,
+   "diam_ext_cil": 61.1,
+   "alt_pest": 4.45,
+   "largo": 118.1
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 59,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1592",
+  "codigo_fab": "UC 1592",
+  "marca": "FADECYA",
+  "aplicacion": "YAMAHA RX 125",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 56,
+   "diam_ext_cil": 63,
+   "alt_pest": 3.95,
+   "largo": 121
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 61,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AE 1592",
+  "codigo_fab": "AE 1592",
+  "marca": "FADECYA",
+  "aplicacion": "YAMAHA RX 125",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 56,
+   "diam_ext_cil": 62,
+   "alt_pest": 3.95,
+   "largo": 121
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 60.24,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 4601",
+  "codigo_fab": "A 4601",
+  "marca": "FADECYA",
+  "aplicacion": "CG, ML, 125 CC",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 56.5,
+   "diam_ext_cil": 72,
+   "alt_pest": 4,
+   "largo": 96
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 64.15,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 2112",
+  "codigo_fab": "UC 2112",
+  "marca": "FADECYA",
+  "aplicacion": "CG, ML, 125 CC",
+  "descripcion": "HONDA CG 125 56,50 mm*",
+  "medidas": {
+   "diam_int": 56.5,
+   "diam_ext_cil": 72,
+   "alt_pest": 4,
+   "largo": 96
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 64.15,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2112",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1168",
+  "codigo_fab": "A 1168",
+  "marca": "FADECYA",
+  "aplicacion": "YAMAHA RDZ 135",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 58,
+   "diam_ext_cil": 63.59,
+   "alt_pest": 4.76,
+   "largo": 122
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 62,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0069",
+  "codigo_fab": "A 0069",
+  "marca": "FADECYA",
+  "aplicacion": "600E/R-750cc",
+  "descripcion": "FIAT 750 CC 62 mm",
+  "medidas": {
+   "diam_int": 62,
+   "diam_ext_cil": 68.35,
+   "alt_pest": 4,
+   "largo": 113
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 65.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 66,
+     "label": "-.030\""
+    },
+    {
+     "valor": 66.76,
+     "label": "STD"
+    },
+    {
+     "valor": 67.52,
+     "label": "+.030\""
+    },
+    {
+     "valor": 68.28,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  069 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1166",
+  "codigo_fab": "A 1166",
+  "marca": "FADECYA",
+  "aplicacion": "HONDA CBX 150",
+  "descripcion": "HONDA CBX 150 62,50 mm",
+  "medidas": {
+   "diam_int": 62.5,
+   "diam_ext_cil": 68.85,
+   "alt_pest": 4.76,
+   "largo": 97
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 67.26,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1166STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 0830",
+  "codigo_fab": "UC 0830",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 63,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": null,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1167",
+  "codigo_fab": "A 1167",
+  "marca": "FADECYA",
+  "aplicacion": "Strada 200",
+  "descripcion": "HONDA STRADA 200 63,50 mm",
+  "medidas": {
+   "diam_int": 63.5,
+   "diam_ext_cil": 69.85,
+   "alt_pest": 4.76,
+   "largo": 105
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 68.26,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1167STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AL 2123",
+  "codigo_fab": "AL 2123",
+  "marca": "BENDIX/PERKINS",
+  "aplicacion": "BENDIX PERKINS TUFLO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 63.5,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 100.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": null,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2111",
+  "codigo_fab": "A 2111",
+  "marca": "FADECYA",
+  "aplicacion": "YAMAHA DT 180",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 64.5,
+   "diam_ext_cil": 70.09,
+   "alt_pest": 4.76,
+   "largo": 125
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 68.5,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0615",
+  "codigo_fab": "A 0615",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 64.57,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 69.33,
+     "label": "STD"
+    },
+    {
+     "valor": 70.09,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0971",
+  "codigo_fab": "A 0971",
+  "marca": "FADECYA",
+  "aplicacion": "600S/133 903CC",
+  "descripcion": "FIAT 133 65 mm",
+  "medidas": {
+   "diam_int": 65,
+   "diam_ext_cil": 71.35,
+   "alt_pest": 4,
+   "largo": 116
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 68.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 69,
+     "label": "-.030\""
+    },
+    {
+     "valor": 69.76,
+     "label": "STD"
+    },
+    {
+     "valor": 70.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  971 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1161",
+  "codigo_fab": "A 1161",
+  "marca": "FADECYA",
+  "aplicacion": "YAMAHA DT 200",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 66,
+   "diam_ext_cil": 71.59,
+   "alt_pest": 4.76,
+   "largo": 126
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 70,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1747",
+  "codigo_fab": "UC 1747",
+  "marca": "FADECYA",
+  "aplicacion": "200",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 66,
+   "diam_ext_cil": 80.8,
+   "alt_pest": 5.6,
+   "largo": 134
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 74.16,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2092",
+  "codigo_fab": "A 2092",
+  "marca": "FADECYA",
+  "aplicacion": "27.5",
+  "descripcion": "VW GOL 1.0",
+  "medidas": {
+   "diam_int": 67,
+   "diam_ext_cil": 73.35,
+   "alt_pest": 4.76,
+   "largo": 128
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 71,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AE 3005",
+  "codigo_fab": "AE 3005",
+  "marca": "FADECYA",
+  "aplicacion": "GOL EA111 1,0L 8/16 Val",
+  "descripcion": "VW GOL 1.0 67,1mm EXT.72mm P.74mm",
+  "medidas": {
+   "diam_int": 67.1,
+   "diam_ext_cil": 74,
+   "alt_pest": 4.8,
+   "largo": 130
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 72,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAE 3005STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AE 1849",
+  "codigo_fab": "AE 1849",
+  "marca": "FADECYA",
+  "aplicacion": "HCS/ROCAM 1/1,1L, KA",
+  "descripcion": "FORD ROCAM 1.0 68,68 mm",
+  "medidas": {
+   "diam_int": 68.68,
+   "diam_ext_cil": 74,
+   "alt_pest": 3.8,
+   "largo": 128
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 72.1,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAE 1849STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AL 2093",
+  "codigo_fab": "AL 2093",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT CLIO II 1.2 16V D4D-D4F S/P 69mm",
+  "medidas": {
+   "diam_int": 69,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 120
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 72.24,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0517",
+  "codigo_fab": "A 0517",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 69.3,
+   "diam_ext_cil": 76.41,
+   "alt_pest": 4.76,
+   "largo": 134.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 74.82,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2176",
+  "codigo_fab": "A 2176",
+  "marca": "FIAT",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT PUNTO 1.3 16V JTD (Ex.72,84) 69,60m",
+  "medidas": {
+   "diam_int": 69.6,
+   "diam_ext_cil": 74.43,
+   "alt_pest": 4,
+   "largo": 140
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 72.84,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0027",
+  "codigo_fab": "A 0027",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 69.85,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 76.13,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AL 1148",
+  "codigo_fab": "AL 1148",
+  "marca": "BENDIX",
+  "aplicacion": "BENDIX TUFLO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 69.85,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 100.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 74.61,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AE 3003",
+  "codigo_fab": "AE 3003",
+  "marca": "FADECYA",
+  "aplicacion": "FIRE 1.0L 8/16v PALIO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 70,
+   "diam_ext_cil": 74.6,
+   "alt_pest": 4.8,
+   "largo": 114
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 73,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1528",
+  "codigo_fab": "A 1528",
+  "marca": "FADECYA",
+  "aplicacion": "FIRE 1.0L 8/16v PALIO",
+  "descripcion": "FIAT FIRE 1.0-1.3/KIA TOWNER 70 mm",
+  "medidas": {
+   "diam_int": 70,
+   "diam_ext_cil": 75.59,
+   "alt_pest": 4.76,
+   "largo": 122
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 74,
+     "label": "-.060\""
+    },
+    {
+     "valor": 74.76,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 2113",
+  "codigo_fab": "UC 2113",
+  "marca": "FADECYA",
+  "aplicacion": "CB 400",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 70.5,
+   "diam_ext_cil": 85,
+   "alt_pest": 4,
+   "largo": 95.6
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 78.6,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2090",
+  "codigo_fab": "A 2090",
+  "marca": "FIAT",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT FIRE 1.3 70,80 mm",
+  "medidas": {
+   "diam_int": 70.8,
+   "diam_ext_cil": 76,
+   "alt_pest": 4,
+   "largo": 127
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 74.04,
+     "label": "-.060\""
+    },
+    {
+     "valor": 74.8,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2079",
+  "codigo_fab": "A 2079",
+  "marca": "FADECYA",
+  "aplicacion": "CORSA 1.0 L",
+  "descripcion": "CHEVROLET CORSA 1.0 71 mm",
+  "medidas": {
+   "diam_int": 71.08,
+   "diam_ext_cil": 77.43,
+   "alt_pest": 4.76,
+   "largo": 133
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 75.08,
+     "label": "-.060\""
+    },
+    {
+     "valor": 75.84,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  2079STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1707",
+  "codigo_fab": "A 1707",
+  "marca": "FADECYA",
+  "aplicacion": "MAX,CUORE L40/55",
+  "descripcion": "DAIHATSU CUORE 71,6 mm",
+  "medidas": {
+   "diam_int": 71.6,
+   "diam_ext_cil": 77.95,
+   "alt_pest": 4.76,
+   "largo": 123
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 74.84,
+     "label": "-.060\""
+    },
+    {
+     "valor": 75.6,
+     "label": "-.030\""
+    },
+    {
+     "valor": 76.36,
+     "label": "STD"
+    },
+    {
+     "valor": 77.12,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1707STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 2107",
+  "codigo_fab": "UC 2107",
+  "marca": "FADECYA",
+  "aplicacion": "LTD 454",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 72,
+   "diam_ext_cil": 88.65,
+   "alt_pest": 6.45,
+   "largo": 105.4
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 81.05,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0651",
+  "codigo_fab": "A 0651",
+  "marca": "FIAT",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT FIRE 1.4 8V 72 mm",
+  "medidas": {
+   "diam_int": 72,
+   "diam_ext_cil": 77,
+   "alt_pest": 4,
+   "largo": 127
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 76,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1763",
+  "codigo_fab": "A 1763",
+  "marca": "FADECYA",
+  "aplicacion": "1500 SIAM PICKUP",
+  "descripcion": "MITSUBISHI 4G33 73mm/DI TELLA 1500 2.7/8",
+  "medidas": {
+   "diam_int": 73,
+   "diam_ext_cil": 79.35,
+   "alt_pest": 4.76,
+   "largo": 152.4
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 77.76,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1763STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1696",
+  "codigo_fab": "UC 1696",
+  "marca": "FADECYA",
+  "aplicacion": "XR 250",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 73,
+   "diam_ext_cil": 86.7,
+   "alt_pest": 4.05,
+   "largo": 113.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 81.09,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0608",
+  "codigo_fab": "A 0608",
+  "marca": "FADECYA",
+  "aplicacion": "C3 HDI M.Diesel 1,4L DV4TD",
+  "descripcion": "FORD ECOSPORT 1.4TDCi 73,70 mm",
+  "medidas": {
+   "diam_int": 73.7,
+   "diam_ext_cil": 78.53,
+   "alt_pest": 4.76,
+   "largo": 138
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 76.94,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1047",
+  "codigo_fab": "A 1047",
+  "marca": "FADECYA",
+  "aplicacion": "ESCORT, FIESTA",
+  "descripcion": "FORD FIESTA 1.3-Ka 1.3 74 mm",
+  "medidas": {
+   "diam_int": 73.96,
+   "diam_ext_cil": 80.31,
+   "alt_pest": 4.76,
+   "largo": 148.3
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 77.2,
+     "label": "-.060\""
+    },
+    {
+     "valor": 77.96,
+     "label": "-.030\""
+    },
+    {
+     "valor": 78.72,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1047STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 2108",
+  "codigo_fab": "UC 2108",
+  "marca": "FADECYA",
+  "aplicacion": "VULCAN 500",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 74,
+   "diam_ext_cil": 89.7,
+   "alt_pest": 6.6,
+   "largo": 103.3
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 82.55,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0041",
+  "codigo_fab": "A 0041",
+  "marca": "FADECYA",
+  "aplicacion": "170 DIESEL",
+  "descripcion": "M.BENZ 170 75 mm",
+  "medidas": {
+   "diam_int": 75,
+   "diam_ext_cil": 81.35,
+   "alt_pest": 4.76,
+   "largo": 190
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 79,
+     "label": "-.060\""
+    },
+    {
+     "valor": 79.76,
+     "label": "-.030\""
+    },
+    {
+     "valor": 80.52,
+     "label": "STD"
+    },
+    {
+     "valor": 81.28,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  041 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 2096",
+  "codigo_fab": "A 2096",
+  "marca": "FADECYA",
+  "aplicacion": "206/307 HDI Diesel 1,6L",
+  "descripcion": "PEUGEOT DV6TD 1.6 16V 75 mm",
+  "medidas": {
+   "diam_int": 75,
+   "diam_ext_cil": 79.83,
+   "alt_pest": 4.76,
+   "largo": 142
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 78.24,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1131",
+  "codigo_fab": "A 1131",
+  "marca": "FADECYA",
+  "aplicacion": "VITARA G16A 1,6L",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 75,
+   "diam_ext_cil": 80.59,
+   "alt_pest": 4.76,
+   "largo": 135
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 79,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AE 2096",
+  "codigo_fab": "AE 2096",
+  "marca": "PEUGEOT",
+  "aplicacion": "PEUGEOT",
+  "descripcion": "PEUGEOT DV6TD 1.6 16V (PEST.83) 75 mm",
+  "medidas": {
+   "diam_int": 75,
+   "diam_ext_cil": 83,
+   "alt_pest": 5,
+   "largo": 142
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 80.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AL 1945",
+  "codigo_fab": "AL 1945",
+  "marca": "BENDIX/SCANIA/VOLVO",
+  "aplicacion": "BENDIX SCANIA VOLVO",
+  "descripcion": "BENDIX (SCANIA COMPRESOR) S/P 75 mm",
+  "medidas": {
+   "diam_int": 75,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 104
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 78.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 79.76,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAL 1945STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1575",
+  "codigo_fab": "A 1575",
+  "marca": "FADECYA",
+  "aplicacion": "HD-E 1589cc",
+  "descripcion": "FIAT 147 1.3D 76 mm",
+  "medidas": {
+   "diam_int": 76,
+   "diam_ext_cil": 82.35,
+   "alt_pest": 4.76,
+   "largo": 136.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 79.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 80,
+     "label": "-.030\""
+    },
+    {
+     "valor": 80.76,
+     "label": "STD"
+    },
+    {
+     "valor": 81.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1575STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1728",
+  "codigo_fab": "A 1728",
+  "marca": "FADECYA",
+  "aplicacion": "CHARADE 1000",
+  "descripcion": "DAIHATSU CHARADE 76 mm",
+  "medidas": {
+   "diam_int": 76,
+   "diam_ext_cil": 82.35,
+   "alt_pest": 4.76,
+   "largo": 122
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 80,
+     "label": "-.060\""
+    },
+    {
+     "valor": 80.76,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1728STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0941",
+  "codigo_fab": "A 0941",
+  "marca": "FADECYA",
+  "aplicacion": "BA3",
+  "descripcion": "RENAULT K9K/FIAT 147 1050/LADA 1200 76mm",
+  "medidas": {
+   "diam_int": 76,
+   "diam_ext_cil": 81.59,
+   "alt_pest": 4.76,
+   "largo": 144
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 79.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 80,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1765",
+  "codigo_fab": "A 1765",
+  "marca": "FADECYA",
+  "aplicacion": "TRUCK-VAN 600",
+  "descripcion": "SUBARU 600 76 mm",
+  "medidas": {
+   "diam_int": 76,
+   "diam_ext_cil": 82.35,
+   "alt_pest": 4.76,
+   "largo": 103
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 80,
+     "label": "-.060\""
+    },
+    {
+     "valor": 80.76,
+     "label": "-.030\""
+    },
+    {
+     "valor": 81.27,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1765STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1396",
+  "codigo_fab": "UC 1396",
+  "marca": "FIAT",
+  "aplicacion": "FIAT",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 76,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 79.18,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0700",
+  "codigo_fab": "A 0700",
+  "marca": "DI TELLA",
+  "aplicacion": "DI TELLA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 76.2,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 81.72,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1563",
+  "codigo_fab": "A 1563",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 76.2,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": null,
+     "label": "+.090\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1776",
+  "codigo_fab": "A 1776",
+  "marca": "FADECYA",
+  "aplicacion": "SENDA, SAVEIRO diesel 1,6L",
+  "descripcion": "VW SENDA 1.6D 76,5 mm",
+  "medidas": {
+   "diam_int": 76.5,
+   "diam_ext_cil": 82.85,
+   "alt_pest": 4.76,
+   "largo": 147
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 79.74,
+     "label": "-.060\""
+    },
+    {
+     "valor": 80.5,
+     "label": "-.030\""
+    },
+    {
+     "valor": 81.26,
+     "label": "STD"
+    },
+    {
+     "valor": 82.02,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1776STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AE 1776",
+  "codigo_fab": "AE 1776",
+  "marca": "FADECYA",
+  "aplicacion": "SENDA, SAVEIRO diesel 1,6L",
+  "descripcion": "VW SENDA 1.6D (PEST.83,5) 76,5 mm",
+  "medidas": {
+   "diam_int": 76.5,
+   "diam_ext_cil": 81.5,
+   "alt_pest": 4.76,
+   "largo": 147
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 81.5,
+     "label": "-.060\""
+    },
+    {
+     "valor": 79.5,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAE 1776STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 0835",
+  "codigo_fab": "UC 0835",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 76.8,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1708",
+  "codigo_fab": "A 1708",
+  "marca": "FADECYA",
+  "aplicacion": "Mercedes Benz OM 321/352",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 77,
+   "diam_ext_cil": 83.35,
+   "alt_pest": 4.76,
+   "largo": 88
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 80.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 81,
+     "label": "-.030\""
+    },
+    {
+     "valor": 81.76,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0088",
+  "codigo_fab": "A 0088",
+  "marca": "FADECYA",
+  "aplicacion": "AUTO 1500-PICK UP",
+  "descripcion": "FIAT 1500 77 mm",
+  "medidas": {
+   "diam_int": 77,
+   "diam_ext_cil": 83.35,
+   "alt_pest": 4.76,
+   "largo": 133.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 81,
+     "label": "-.060\""
+    },
+    {
+     "valor": 81.76,
+     "label": "-.030\""
+    },
+    {
+     "valor": 82.52,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  088 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 0836",
+  "codigo_fab": "UC 0836",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 77,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1946",
+  "codigo_fab": "A 1946",
+  "marca": "CHEVROLET",
+  "aplicacion": "CHEVROLET",
+  "descripcion": "CHEVROLET CORSA 1.4 77,6 mm",
+  "medidas": {
+   "diam_int": 77.58,
+   "diam_ext_cil": 83.19,
+   "alt_pest": 4.76,
+   "largo": 136
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 80.84,
+     "label": "-.060\""
+    },
+    {
+     "valor": 81.6,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1946STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0086",
+  "codigo_fab": "A 0086",
+  "marca": "FADECYA",
+  "aplicacion": "1500",
+  "descripcion": "FIAT 1600 78 mm",
+  "medidas": {
+   "diam_int": 78,
+   "diam_ext_cil": 84.35,
+   "alt_pest": 4.76,
+   "largo": 145
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 81.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 82,
+     "label": "-.030\""
+    },
+    {
+     "valor": 82.76,
+     "label": "STD"
+    },
+    {
+     "valor": 83.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  086 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0139",
+  "codigo_fab": "A 0139",
+  "marca": "BORGWARD",
+  "aplicacion": "BORGWARD",
+  "descripcion": "RASTROJERO 42 HP 78 mm",
+  "medidas": {
+   "diam_int": 78,
+   "diam_ext_cil": 84.4,
+   "alt_pest": 4.76,
+   "largo": 170
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 82.76,
+     "label": "STD"
+    },
+    {
+     "valor": 83.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  139 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0937",
+  "codigo_fab": "A 0937",
+  "marca": "BORGWARD",
+  "aplicacion": "BORGWARD",
+  "descripcion": "RASTROJERO 52 HP 78 mm",
+  "medidas": {
+   "diam_int": 78,
+   "diam_ext_cil": 84.4,
+   "alt_pest": 4.76,
+   "largo": 174
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 81.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 82,
+     "label": "-.030\""
+    },
+    {
+     "valor": 82.76,
+     "label": "STD"
+    },
+    {
+     "valor": 83.52,
+     "label": "+.030\""
+    },
+    {
+     "valor": 84.28,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  937 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1950",
+  "codigo_fab": "A 1950",
+  "marca": "FADECYA",
+  "aplicacion": "CORSA 1,7D / 1,6 Nafta",
+  "descripcion": "ISUZU 4EE1/CHEVROLET CORSA 1.7D 79 mm",
+  "medidas": {
+   "diam_int": 78.98,
+   "diam_ext_cil": 85.33,
+   "alt_pest": 4.76,
+   "largo": 147.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 82.22,
+     "label": "-.060\""
+    },
+    {
+     "valor": 82.98,
+     "label": "-.030\""
+    },
+    {
+     "valor": 83.74,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1950STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0942",
+  "codigo_fab": "A 0942",
+  "marca": "FADECYA",
+  "aplicacion": "Motor 1.6 L",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 79,
+   "diam_ext_cil": 84.59,
+   "alt_pest": 4.76,
+   "largo": 145.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 83,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0837",
+  "codigo_fab": "UC 0837",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 79,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 160
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 84,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1204",
+  "codigo_fab": "A 1204",
+  "marca": "FADECYA",
+  "aplicacion": "GACEL NAF 1,6L, POLO DIES 1,9L",
+  "descripcion": "VW POLO 1.9D-GACEL 1.6/R.MEGA. 79,5 mm",
+  "medidas": {
+   "diam_int": 79.5,
+   "diam_ext_cil": 85.85,
+   "alt_pest": 4.76,
+   "largo": 155
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 82.74,
+     "label": "-.060\""
+    },
+    {
+     "valor": 83.5,
+     "label": "-.030\""
+    },
+    {
+     "valor": 84.26,
+     "label": "STD"
+    },
+    {
+     "valor": 85.02,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1204STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AE 1204",
+  "codigo_fab": "AE 1204",
+  "marca": "FADECYA",
+  "aplicacion": "GACEL NAF 1,6L, POLO DIES 1,9L",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 79.5,
+   "diam_ext_cil": 85.5,
+   "alt_pest": 4.76,
+   "largo": 154
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 82.5,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2094",
+  "codigo_fab": "A 2094",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT MEGANE 1.6 K4M-K7M C/P 79,5 mm",
+  "medidas": {
+   "diam_int": 79.5,
+   "diam_ext_cil": 84.33,
+   "alt_pest": 4.76,
+   "largo": 130
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 82.74,
+     "label": "-.060\""
+    },
+    {
+     "valor": 83.5,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0948",
+  "codigo_fab": "A 0948",
+  "marca": "FADECYA",
+  "aplicacion": "MONZA KADETT 1,6L",
+  "descripcion": "FIAT 125*80 mm SMT",
+  "medidas": {
+   "diam_int": 80,
+   "diam_ext_cil": 86.35,
+   "alt_pest": 4.76,
+   "largo": 145
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 83.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 84,
+     "label": "-.030\""
+    },
+    {
+     "valor": 84.76,
+     "label": "STD"
+    },
+    {
+     "valor": 85.52,
+     "label": "+.030\""
+    },
+    {
+     "valor": 86.28,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  948 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0096",
+  "codigo_fab": "A 0096",
+  "marca": "FADECYA",
+  "aplicacion": "128, Berlina 1100cc",
+  "descripcion": "FIAT 128 1100 CC*80 mm SMT",
+  "medidas": {
+   "diam_int": 80,
+   "diam_ext_cil": 86.35,
+   "alt_pest": 4,
+   "largo": 113
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 83.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 84,
+     "label": "-.030\""
+    },
+    {
+     "valor": 84.76,
+     "label": "STD"
+    },
+    {
+     "valor": 85.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  096 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1571",
+  "codigo_fab": "A 1571",
+  "marca": "FADECYA",
+  "aplicacion": "219-220 2195cc",
+  "descripcion": "M.BENZ 220*80 mm",
+  "medidas": {
+   "diam_int": 80,
+   "diam_ext_cil": 86.35,
+   "alt_pest": 4.76,
+   "largo": 142.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 85.52,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1874",
+  "codigo_fab": "A 1874",
+  "marca": "FADECYA",
+  "aplicacion": "205 Diesel, XUD7 1,7L",
+  "descripcion": "RENAULT 19 1.9D-EXPRESS 80 mm",
+  "medidas": {
+   "diam_int": 80,
+   "diam_ext_cil": 86.35,
+   "alt_pest": 4.76,
+   "largo": 156
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 83.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 84,
+     "label": "-.030\""
+    },
+    {
+     "valor": 84.76,
+     "label": "STD"
+    },
+    {
+     "valor": 85.52,
+     "label": "+.030\""
+    },
+    {
+     "valor": 86.28,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1874STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0087",
+  "codigo_fab": "A 0087",
+  "marca": "TOYOTA/VOLKSWAGEN",
+  "aplicacion": "TOYOTA/VOLKSWAGEN",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 80,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 85.52,
+     "label": "+.030\""
+    },
+    {
+     "valor": 86.28,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2169",
+  "codigo_fab": "A 2169",
+  "marca": "FADECYA",
+  "aplicacion": "CORSA II MERIVA 1,8L Nafta",
+  "descripcion": "CHEVROLET MERIVA 1.8 8V/PALIO 1.8 80,5mm",
+  "medidas": {
+   "diam_int": 80.5,
+   "diam_ext_cil": 85.33,
+   "alt_pest": 4,
+   "largo": 137
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 83.74,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1624",
+  "codigo_fab": "A 1624",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 80.5,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 85.26,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1781",
+  "codigo_fab": "A 1781",
+  "marca": "FIAT",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT TIPO 1.4 80,5 mm",
+  "medidas": {
+   "diam_int": 80.5,
+   "diam_ext_cil": 86,
+   "alt_pest": 4,
+   "largo": 125
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 83.74,
+     "label": "-.060\""
+    },
+    {
+     "valor": 84.5,
+     "label": "-.030\""
+    },
+    {
+     "valor": 85.26,
+     "label": "STD"
+    },
+    {
+     "valor": 86.02,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1781STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1905",
+  "codigo_fab": "A 1905",
+  "marca": "FADECYA",
+  "aplicacion": "ESCORT ZETEC 1.8 L",
+  "descripcion": "FORD ZETEC 1.8 80,60 mm",
+  "medidas": {
+   "diam_int": 80.6,
+   "diam_ext_cil": 86.95,
+   "alt_pest": 4.76,
+   "largo": 145
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 83.84,
+     "label": "-.060\""
+    },
+    {
+     "valor": 84.6,
+     "label": "-.030\""
+    },
+    {
+     "valor": 85.36,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1905STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1786",
+  "codigo_fab": "A 1786",
+  "marca": "FADECYA",
+  "aplicacion": "ESCORT,ORION, 1.6/1.8",
+  "descripcion": "VW AUDI 1.6-1.8 81 mm",
+  "medidas": {
+   "diam_int": 81,
+   "diam_ext_cil": 87.35,
+   "alt_pest": 4.76,
+   "largo": 156
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 84.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 85,
+     "label": "-.030\""
+    },
+    {
+     "valor": 85.76,
+     "label": "STD"
+    },
+    {
+     "valor": 86.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1786STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AE 3004",
+  "codigo_fab": "AE 3004",
+  "marca": "FADECYA",
+  "aplicacion": "GACEL,GOL,AMAROK 2L 'corta'",
+  "descripcion": "VW AMAROK 2.0 16V 81 mm",
+  "medidas": {
+   "diam_int": 81,
+   "diam_ext_cil": 86.6,
+   "alt_pest": 4.8,
+   "largo": 148
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 85,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAE 3004STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1736",
+  "codigo_fab": "A 1736",
+  "marca": "FADECYA",
+  "aplicacion": "SIERRA L 1600 cc",
+  "descripcion": "FORD SIERRA 1.6 81,3 mm",
+  "medidas": {
+   "diam_int": 81.3,
+   "diam_ext_cil": 87.65,
+   "alt_pest": 4.76,
+   "largo": 135
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 84.54,
+     "label": "-.060\""
+    },
+    {
+     "valor": 85.3,
+     "label": "-.030\""
+    },
+    {
+     "valor": 86.06,
+     "label": "STD"
+    },
+    {
+     "valor": 86.82,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1736STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0455",
+  "codigo_fab": "A 0455",
+  "marca": "FADECYA",
+  "aplicacion": "CHEVETTE 1.4",
+  "descripcion": "CHEVETTE 1.4-1.6 82 mm",
+  "medidas": {
+   "diam_int": 81.98,
+   "diam_ext_cil": 88.33,
+   "alt_pest": 4.76,
+   "largo": 136.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 86.76,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  455 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AE 3019",
+  "codigo_fab": "AE 3019",
+  "marca": "FADECYA",
+  "aplicacion": "CHEVETTE MARAJO 1.4 1,6",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 81.98,
+   "diam_ext_cil": 86.7,
+   "alt_pest": 4.8,
+   "largo": 136.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 85,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2091",
+  "codigo_fab": "A 2091",
+  "marca": "FADECYA",
+  "aplicacion": "ZETEC ROCAM 1,6L 8V NAFTA",
+  "descripcion": "FORD ROCAM 1.6 8V 82 mm",
+  "medidas": {
+   "diam_int": 82.07,
+   "diam_ext_cil": 87.66,
+   "alt_pest": 4.76,
+   "largo": 120
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 85.31,
+     "label": "-.060\""
+    },
+    {
+     "valor": 86.07,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1651",
+  "codigo_fab": "A 1651",
+  "marca": "FADECYA",
+  "aplicacion": "DW8 1,9 Diesel",
+  "descripcion": "PEUGEOT PARTER DW8 1.9D 82,2 mm",
+  "medidas": {
+   "diam_int": 82.2,
+   "diam_ext_cil": 88.55,
+   "alt_pest": 4.76,
+   "largo": 154
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 85.44,
+     "label": "-.060\""
+    },
+    {
+     "valor": 86.2,
+     "label": "-.030\""
+    },
+    {
+     "valor": 86.96,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1651STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1782",
+  "codigo_fab": "A 1782",
+  "marca": "FADECYA",
+  "aplicacion": "GALAXY, FIESTA DIESEL",
+  "descripcion": "FORD FIESTA 1.8D/VW AUDI 2.0 82,5 mm",
+  "medidas": {
+   "diam_int": 82.5,
+   "diam_ext_cil": 88.85,
+   "alt_pest": 4.76,
+   "largo": 148
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 85.74,
+     "label": "-.060\""
+    },
+    {
+     "valor": 86.5,
+     "label": "-.030\""
+    },
+    {
+     "valor": 87.26,
+     "label": "STD"
+    },
+    {
+     "valor": 88.02,
+     "label": "+.030\""
+    },
+    {
+     "valor": 87.77,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1782STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1787",
+  "codigo_fab": "A 1787",
+  "marca": "FADECYA",
+  "aplicacion": "DUNA DIESEL 1700cc",
+  "descripcion": "FIAT DUNA 1.7D 82,6 mm",
+  "medidas": {
+   "diam_int": 82.6,
+   "diam_ext_cil": 88.95,
+   "alt_pest": 4,
+   "largo": 143
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 85.84,
+     "label": "-.060\""
+    },
+    {
+     "valor": 86.6,
+     "label": "-.030\""
+    },
+    {
+     "valor": 87.36,
+     "label": "STD"
+    },
+    {
+     "valor": 88.12,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1787STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1876",
+  "codigo_fab": "A 1876",
+  "marca": "FADECYA",
+  "aplicacion": "DUCATTO,TIPO, 1.9 D",
+  "descripcion": "FIAT DUCATO 1.9D 82,6 mm",
+  "medidas": {
+   "diam_int": 82.6,
+   "diam_ext_cil": 88.95,
+   "alt_pest": 4,
+   "largo": 154
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 85.84,
+     "label": "-.060\""
+    },
+    {
+     "valor": 86.6,
+     "label": "-.030\""
+    },
+    {
+     "valor": 87.36,
+     "label": "STD"
+    },
+    {
+     "valor": 88.12,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1876STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1126",
+  "codigo_fab": "A 1126",
+  "marca": "FADECYA",
+  "aplicacion": "LAGUNA Nafta F3P 1,8L",
+  "descripcion": "RENAULT 19 1.8 F3P*82,7 mm",
+  "medidas": {
+   "diam_int": 82.7,
+   "diam_ext_cil": 88.29,
+   "alt_pest": 4.76,
+   "largo": 134
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 86.7,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1127",
+  "codigo_fab": "A 1127",
+  "marca": "FADECYA",
+  "aplicacion": "MEGANE Nafta F3R 2,0L",
+  "descripcion": "RENAULT LAGUNA 2.0 F3R-2.0i F4R 82,7 mm",
+  "medidas": {
+   "diam_int": 82.7,
+   "diam_ext_cil": 88.29,
+   "alt_pest": 4.76,
+   "largo": 149
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 86.7,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1454",
+  "codigo_fab": "UC 1454",
+  "marca": "FADECYA",
+  "aplicacion": "SD20,SD22,SD33",
+  "descripcion": "NISSAN SD20-SD22 83 mm",
+  "medidas": {
+   "diam_int": 83,
+   "diam_ext_cil": 92.97,
+   "alt_pest": 5.05,
+   "largo": 176
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 87.07,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1454",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1875",
+  "codigo_fab": "A 1875",
+  "marca": "FADECYA",
+  "aplicacion": "205-405 Dies.XDU9,1905cc",
+  "descripcion": "PEUGEOT 405 1.9D XUD9 83 mm",
+  "medidas": {
+   "diam_int": 83,
+   "diam_ext_cil": 89.35,
+   "alt_pest": 4.76,
+   "largo": 153.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 86.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 87,
+     "label": "-.030\""
+    },
+    {
+     "valor": 87.76,
+     "label": "STD"
+    },
+    {
+     "valor": 88.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1875STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AE 2105",
+  "codigo_fab": "AE 2105",
+  "marca": "FADECYA",
+  "aplicacion": "205-405 Dies.XDU9,1905cc",
+  "descripcion": "M.BENZ OM651LA 83 mm",
+  "medidas": {
+   "diam_int": 83,
+   "diam_ext_cil": 93,
+   "alt_pest": 4.76,
+   "largo": 153.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 87,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2050",
+  "codigo_fab": "A 2050",
+  "marca": "FADECYA",
+  "aplicacion": "1C",
+  "descripcion": "TOYOTA 1C 83 mm",
+  "medidas": {
+   "diam_int": 83,
+   "diam_ext_cil": 89.35,
+   "alt_pest": 4.76,
+   "largo": 148
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 87,
+     "label": "-.060\""
+    },
+    {
+     "valor": 87.76,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  2050STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AE 2050",
+  "codigo_fab": "AE 2050",
+  "marca": "FADECYA",
+  "aplicacion": "1C",
+  "descripcion": "TOYOTA 1C (PEST.90) 83 mm",
+  "medidas": {
+   "diam_int": 83,
+   "diam_ext_cil": 90,
+   "alt_pest": 4.76,
+   "largo": 148
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 87.76,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAE 2050STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1576",
+  "codigo_fab": "A 1576",
+  "marca": "DATSUN",
+  "aplicacion": "DATSUN",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 83,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 87.76,
+     "label": "STD"
+    },
+    {
+     "valor": 88.52,
+     "label": "+.030\""
+    },
+    {
+     "valor": 89.28,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1198",
+  "codigo_fab": "A 1198",
+  "marca": "FADECYA",
+  "aplicacion": "REGATTA 1600 100S",
+  "descripcion": "FIAT REGATTA 100 84 mm",
+  "medidas": {
+   "diam_int": 84,
+   "diam_ext_cil": 90.35,
+   "alt_pest": 4.76,
+   "largo": 134.8
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 87.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 88,
+     "label": "-.030\""
+    },
+    {
+     "valor": 88.76,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1198STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1335",
+  "codigo_fab": "A 1335",
+  "marca": "FADECYA",
+  "aplicacion": "TEMPRA 2L",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 84,
+   "diam_ext_cil": 90.35,
+   "alt_pest": 4.76,
+   "largo": 158
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 88,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 2078",
+  "codigo_fab": "UC 2078",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU",
+  "descripcion": "ISUZU AZB 84 mm",
+  "medidas": {
+   "diam_int": 84,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 87.2,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2078",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0057",
+  "codigo_fab": "A 0057",
+  "marca": "FADECYA",
+  "aplicacion": "CONTI.-JEEP-RAMBLER",
+  "descripcion": "IKA CONTINENTAL 4-6 CIL. 3.5/16\"",
+  "medidas": {
+   "diam_int": 84.14,
+   "diam_ext_cil": 90.49,
+   "alt_pest": 4.76,
+   "largo": 192.1
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 87.38,
+     "label": "-.060\""
+    },
+    {
+     "valor": 88.14,
+     "label": "-.030\""
+    },
+    {
+     "valor": 88.9,
+     "label": "STD"
+    },
+    {
+     "valor": 89.66,
+     "label": "+.030\""
+    },
+    {
+     "valor": 90.42,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  057 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1877",
+  "codigo_fab": "A 1877",
+  "marca": "FADECYA",
+  "aplicacion": "LD28 DIESEL, L28S",
+  "descripcion": "NISSAN LD28 84,5 mm",
+  "medidas": {
+   "diam_int": 84.5,
+   "diam_ext_cil": 90.85,
+   "alt_pest": 4.76,
+   "largo": 155
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 88.5,
+     "label": "-.060\""
+    },
+    {
+     "valor": 89.26,
+     "label": "-.030\""
+    },
+    {
+     "valor": 90.02,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1877STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AE 1951",
+  "codigo_fab": "AE 1951",
+  "marca": "FADECYA",
+  "aplicacion": "MONZA, KADETT 1,8L",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 84.78,
+   "diam_ext_cil": 90.6,
+   "alt_pest": 4.9,
+   "largo": 148
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 89,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0095",
+  "codigo_fab": "A 0095",
+  "marca": "FADECYA",
+  "aplicacion": "TORNADO",
+  "descripcion": "IKA TORNADO 4B-7B 3.344\"",
+  "medidas": {
+   "diam_int": 84.93,
+   "diam_ext_cil": 91.28,
+   "alt_pest": 4.76,
+   "largo": 192
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 88.17,
+     "label": "-.060\""
+    },
+    {
+     "valor": 88.93,
+     "label": "-.030\""
+    },
+    {
+     "valor": 89.69,
+     "label": "STD"
+    },
+    {
+     "valor": 90.45,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  095 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1152",
+  "codigo_fab": "A 1152",
+  "marca": "FADECYA",
+  "aplicacion": "LD 20",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 85,
+   "diam_ext_cil": 90.59,
+   "alt_pest": 4.76,
+   "largo": 149
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 89,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0368",
+  "codigo_fab": "A 0368",
+  "marca": "FADECYA",
+  "aplicacion": "307/406 Diesel HDI 2,0L",
+  "descripcion": "TOYOTA 2T-3T/PEUGEOT 406 2.0 DW10 85 mm",
+  "medidas": {
+   "diam_int": 85,
+   "diam_ext_cil": 91.35,
+   "alt_pest": 4.76,
+   "largo": 158
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 89,
+     "label": "-.060\""
+    },
+    {
+     "valor": 89.76,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  368 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1572",
+  "codigo_fab": "A 1572",
+  "marca": "MERCEDES-BENZ",
+  "aplicacion": "MERCEDES-BENZ",
+  "descripcion": "M.BENZ OM621*85 mm",
+  "medidas": {
+   "diam_int": 85,
+   "diam_ext_cil": 91.35,
+   "alt_pest": 4.76,
+   "largo": 155.6
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 92.04,
+     "label": "+.090\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1572STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 0250",
+  "codigo_fab": "UC 0250",
+  "marca": "FIAT",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT U25-411 C/PEST. 85 mm",
+  "medidas": {
+   "diam_int": 85,
+   "diam_ext_cil": 91.4,
+   "alt_pest": 4.76,
+   "largo": 178
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 90,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0839",
+  "codigo_fab": "UC 0839",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 85,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": null,
+     "label": "STD"
+    },
+    {
+     "valor": null,
+     "label": "+1.00MM"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1741",
+  "codigo_fab": "A 1741",
+  "marca": "FADECYA",
+  "aplicacion": "MONZA 2.0 FASE 1",
+  "descripcion": "CHEVROLET ASTRA 2.0 16V-VECTRA 2.0 86 mm",
+  "medidas": {
+   "diam_int": 86,
+   "diam_ext_cil": 92.35,
+   "alt_pest": 4.76,
+   "largo": 142.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 90,
+     "label": "-.060\""
+    },
+    {
+     "valor": 90.76,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1741STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0959",
+  "codigo_fab": "A 0959",
+  "marca": "FADECYA",
+  "aplicacion": "128 L IAVA 1280cc",
+  "descripcion": "FIAT 128 1300 CC 86 mm *",
+  "medidas": {
+   "diam_int": 86,
+   "diam_ext_cil": 92.35,
+   "alt_pest": 4,
+   "largo": 120
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 89.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 90,
+     "label": "-.030\""
+    },
+    {
+     "valor": 90.76,
+     "label": "STD"
+    },
+    {
+     "valor": 91.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  959 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0638",
+  "codigo_fab": "A 0638",
+  "marca": "FADECYA",
+  "aplicacion": "TRANSIT 2,2L TDCI Duratorq",
+  "descripcion": "FORD PUMA 2.2TDCi 16V (Ex.90) 86 mm",
+  "medidas": {
+   "diam_int": 86,
+   "diam_ext_cil": 91.59,
+   "alt_pest": 4.76,
+   "largo": 165
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 89.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 90,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UZ 1090",
+  "codigo_fab": "UZ 1090",
+  "marca": "FADECYA",
+  "aplicacion": "C190,C240",
+  "descripcion": "ISUZU C190-C240 86 mm",
+  "medidas": {
+   "diam_int": 86,
+   "diam_ext_cil": 94,
+   "alt_pest": 4.97,
+   "largo": 178.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 90.18,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUZ 1090",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1411",
+  "codigo_fab": "UC 1411",
+  "marca": "FADECYA",
+  "aplicacion": "BESTA Motor Diesel R2 2,2L",
+  "descripcion": "MAZDA R2-RF/KIA BESTA 2200 86 mm",
+  "medidas": {
+   "diam_int": 86,
+   "diam_ext_cil": 94,
+   "alt_pest": 4,
+   "largo": 166.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 90.06,
+     "label": "-.060\""
+    },
+    {
+     "valor": 89.06,
+     "label": "-.030\""
+    },
+    {
+     "valor": 90.58,
+     "label": "STD"
+    },
+    {
+     "valor": 89.56,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1411",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1964",
+  "codigo_fab": "A 1964",
+  "marca": "FADECYA",
+  "aplicacion": "3Y",
+  "descripcion": "TOYOTA 3Y 86 mm",
+  "medidas": {
+   "diam_int": 86,
+   "diam_ext_cil": 92.35,
+   "alt_pest": 4.76,
+   "largo": 139
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 90.76,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1964STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1907",
+  "codigo_fab": "UC 1907",
+  "marca": "KIA/MAZDA",
+  "aplicacion": "KIA/MAZDA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 86,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": null,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0938",
+  "codigo_fab": "A 0938",
+  "marca": "FADECYA",
+  "aplicacion": "AUTO 1500 cc",
+  "descripcion": "DODGE 1500 CC 3.391\"*",
+  "medidas": {
+   "diam_int": 86.13,
+   "diam_ext_cil": 92.48,
+   "alt_pest": 4.76,
+   "largo": 132.6
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 89.37,
+     "label": "-.060\""
+    },
+    {
+     "valor": 90.13,
+     "label": "-.030\""
+    },
+    {
+     "valor": 90.89,
+     "label": "STD"
+    },
+    {
+     "valor": 91.65,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  938 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0964",
+  "codigo_fab": "A 0964",
+  "marca": "FADECYA",
+  "aplicacion": "AUTO 1800 cc",
+  "descripcion": "DODGE 1800 CC 3.391\"",
+  "medidas": {
+   "diam_int": 86.13,
+   "diam_ext_cil": 92.48,
+   "alt_pest": 4.76,
+   "largo": 145.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 89.37,
+     "label": "-.060\""
+    },
+    {
+     "valor": 90.13,
+     "label": "-.030\""
+    },
+    {
+     "valor": 90.89,
+     "label": "STD"
+    },
+    {
+     "valor": 91.65,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  964 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1421",
+  "codigo_fab": "UC 1421",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 86.2,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0094",
+  "codigo_fab": "A 0094",
+  "marca": "FADECYA",
+  "aplicacion": "VALIANT II,III,IV,GT",
+  "descripcion": "VALIANT 3.400\"",
+  "medidas": {
+   "diam_int": 86.36,
+   "diam_ext_cil": 92.71,
+   "alt_pest": 4.76,
+   "largo": 177
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 89.6,
+     "label": "-.060\""
+    },
+    {
+     "valor": 90.36,
+     "label": "-.030\""
+    },
+    {
+     "valor": 91.12,
+     "label": "STD"
+    },
+    {
+     "valor": 91.88,
+     "label": "+.030\""
+    },
+    {
+     "valor": 92.64,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  094 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1503",
+  "codigo_fab": "A 1503",
+  "marca": "BORGWARD",
+  "aplicacion": "BORGWARD",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 86.36,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.66,
+     "label": "+.10\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1199",
+  "codigo_fab": "A 1199",
+  "marca": "FADECYA",
+  "aplicacion": "128 1300cc, EUROPA 1,5L",
+  "descripcion": "FIAT 128 1500 CC-TIPO 1.6 86,4 mm",
+  "medidas": {
+   "diam_int": 86.4,
+   "diam_ext_cil": 92.75,
+   "alt_pest": 4,
+   "largo": 125
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 89.64,
+     "label": "-.060\""
+    },
+    {
+     "valor": 90.4,
+     "label": "-.030\""
+    },
+    {
+     "valor": 91.16,
+     "label": "STD"
+    },
+    {
+     "valor": 91.92,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1199STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1250",
+  "codigo_fab": "A 1250",
+  "marca": "FADECYA",
+  "aplicacion": "PALIO SIENA Tipo 1.6 L",
+  "descripcion": "FIAT TIPO 1.6 86,4 mm",
+  "medidas": {
+   "diam_int": 86.4,
+   "diam_ext_cil": 92.75,
+   "alt_pest": 4,
+   "largo": 133
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 89.64,
+     "label": "-.060\""
+    },
+    {
+     "valor": 90.4,
+     "label": "-.030\""
+    },
+    {
+     "valor": 91.16,
+     "label": "STD"
+    },
+    {
+     "valor": 91.92,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1250STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1153",
+  "codigo_fab": "A 1153",
+  "marca": "FADECYA",
+  "aplicacion": "4G64",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 86.5,
+   "diam_ext_cil": 92.09,
+   "alt_pest": 4.76,
+   "largo": 165
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 90.5,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AE 2164",
+  "codigo_fab": "AE 2164",
+  "marca": "FADECYA",
+  "aplicacion": "OM 601.911",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 87,
+   "diam_ext_cil": 92.6,
+   "alt_pest": 4.76,
+   "largo": 148.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 90.06,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1774",
+  "codigo_fab": "A 1774",
+  "marca": "MERCEDES-BENZ",
+  "aplicacion": "MERCEDES-BENZ",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 87,
+   "diam_ext_cil": 93.35,
+   "alt_pest": 4.76,
+   "largo": 158.4
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 91.76,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1623",
+  "codigo_fab": "A 1623",
+  "marca": "NISSAN",
+  "aplicacion": "NISSAN",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 87.31,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.36,
+     "label": "+.090\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AE 1076",
+  "codigo_fab": "AE 1076",
+  "marca": "FADECYA",
+  "aplicacion": "C223 EARLY/NEW/T/T NEW",
+  "descripcion": "ISUZU C223 88 mm",
+  "medidas": {
+   "diam_int": 88,
+   "diam_ext_cil": 96,
+   "alt_pest": 4.76,
+   "largo": 163.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 92.3,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAE 1076STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1011",
+  "codigo_fab": "UC 1011",
+  "marca": "FADECYA",
+  "aplicacion": "DINA COASTER 2J/1H Diesel",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 88,
+   "diam_ext_cil": 97.78,
+   "alt_pest": 2.48,
+   "largo": 183.7
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.07,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2120",
+  "codigo_fab": "A 2120",
+  "marca": "MERCEDES-BENZ",
+  "aplicacion": "MERCEDES-BENZ",
+  "descripcion": "M.BENZ OM611 88 mm",
+  "medidas": {
+   "diam_int": 88,
+   "diam_ext_cil": 92.83,
+   "alt_pest": 4.76,
+   "largo": 150
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 91.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 92,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2195",
+  "codigo_fab": "A 2195",
+  "marca": "FIAT/PEUGEOT",
+  "aplicacion": "FIAT/PEUGEOT",
+  "descripcion": "FIAT DUCATO 2.3 16V/PEUG. BOXER 2.3 88mm",
+  "medidas": {
+   "diam_int": 88,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1579",
+  "codigo_fab": "A 1579",
+  "marca": "FADECYA",
+  "aplicacion": "CORONA HILUX 18R",
+  "descripcion": "TOYOTA 18R HI-LUX 2.0 88,5 mm",
+  "medidas": {
+   "diam_int": 88.5,
+   "diam_ext_cil": 94.85,
+   "alt_pest": 4.76,
+   "largo": 150
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 92.5,
+     "label": "-.060\""
+    },
+    {
+     "valor": 93.26,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1579STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0672",
+  "codigo_fab": "A 0672",
+  "marca": "FADECYA",
+  "aplicacion": "FALCON 144-170 1962/68",
+  "descripcion": "FORD FALCON 3.1/2\"",
+  "medidas": {
+   "diam_int": 88.9,
+   "diam_ext_cil": 95.25,
+   "alt_pest": 4.76,
+   "largo": 131.8
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.66,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  672 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1450",
+  "codigo_fab": "UC 1450",
+  "marca": "FADECYA",
+  "aplicacion": "Bongo Diesel S2 2,2L",
+  "descripcion": "MAZDA S2 E2200 88,90 mm",
+  "medidas": {
+   "diam_int": 88.9,
+   "diam_ext_cil": 100.94,
+   "alt_pest": 3.76,
+   "largo": 167.1
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.97,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1450",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0008",
+  "codigo_fab": "A 0008",
+  "marca": "CHEVROLET",
+  "aplicacion": "CHEVROLET",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 88.9,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.66,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 2115",
+  "codigo_fab": "UC 2115",
+  "marca": "FADECYA",
+  "aplicacion": "OM 602/1 SSANGYONG",
+  "descripcion": "SSANGYOUNG MUSSO 5 CIL./M.B. OM602 89 mm",
+  "medidas": {
+   "diam_int": 89,
+   "diam_ext_cil": 94.05,
+   "alt_pest": 4.7,
+   "largo": 156.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 91.5,
+     "label": "-.060\""
+    },
+    {
+     "valor": 92.26,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2115",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1350",
+  "codigo_fab": "UC 1350",
+  "marca": "FADECYA",
+  "aplicacion": "SD23, SD25",
+  "descripcion": "NISSAN SD23-SD25-YD25 89 mm",
+  "medidas": {
+   "diam_int": 89,
+   "diam_ext_cil": 98,
+   "alt_pest": 5,
+   "largo": 172
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 92.04,
+     "label": "-.060\""
+    },
+    {
+     "valor": 92.54,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1350",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0652",
+  "codigo_fab": "A 0652",
+  "marca": "FADECYA",
+  "aplicacion": "Master Diesel G9U 2,5L",
+  "descripcion": "RENAULT G9U 2.5TDCi 16 V 89 mm",
+  "medidas": {
+   "diam_int": 89,
+   "diam_ext_cil": 94.59,
+   "alt_pest": 4.76,
+   "largo": 167
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 92.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 93,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0939",
+  "codigo_fab": "A 0939",
+  "marca": "FADECYA",
+  "aplicacion": "LUV M. Nafta ISUZU 4ZD1 2,3L",
+  "descripcion": "ISUZU 4ZD1/CHEV. LUV 2.3N 89,3 mm",
+  "medidas": {
+   "diam_int": 89.3,
+   "diam_ext_cil": 95.65,
+   "alt_pest": 4.76,
+   "largo": 150
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.3,
+     "label": "-.060\""
+    },
+    {
+     "valor": 94.06,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0973",
+  "codigo_fab": "A 0973",
+  "marca": "FADECYA",
+  "aplicacion": "TAUNUS L 2000 cc",
+  "descripcion": "FORD TAUNUS 2.0*89,3 mm SMT",
+  "medidas": {
+   "diam_int": 89.3,
+   "diam_ext_cil": 95.65,
+   "alt_pest": 4.76,
+   "largo": 137
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 92.54,
+     "label": "-.060\""
+    },
+    {
+     "valor": 93.3,
+     "label": "-.030\""
+    },
+    {
+     "valor": 94.06,
+     "label": "STD"
+    },
+    {
+     "valor": 94.82,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  973 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0639",
+  "codigo_fab": "A 0639",
+  "marca": "FADECYA",
+  "aplicacion": "RANGER/TRANSIT 2,4/3,2L PUMA",
+  "descripcion": "FORD PUMA 2.4TDCi-3.2TD(Ex.93,90) 89,9mm",
+  "medidas": {
+   "diam_int": 89.9,
+   "diam_ext_cil": 95.49,
+   "alt_pest": 4,
+   "largo": 165
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.14,
+     "label": "-.060\""
+    },
+    {
+     "valor": 93.9,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1587",
+  "codigo_fab": "A 1587",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 89.9,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 95.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 2119",
+  "codigo_fab": "A 2119",
+  "marca": "FADECYA",
+  "aplicacion": "Knorr",
+  "descripcion": "KNORR 90 mm",
+  "medidas": {
+   "diam_int": 90,
+   "diam_ext_cil": 95.59,
+   "alt_pest": 4.76,
+   "largo": 90
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0424",
+  "codigo_fab": "A 0424",
+  "marca": "FADECYA",
+  "aplicacion": "OM 312 3500,90HP",
+  "descripcion": "M.BENZ OM312 90 mm",
+  "medidas": {
+   "diam_int": 90,
+   "diam_ext_cil": 96.35,
+   "alt_pest": 4.76,
+   "largo": 215
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 94,
+     "label": "-.030\""
+    },
+    {
+     "valor": 94.76,
+     "label": "STD"
+    },
+    {
+     "valor": 95.52,
+     "label": "+.030\""
+    },
+    {
+     "valor": 96.28,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  424 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1122",
+  "codigo_fab": "UC 1122",
+  "marca": "FADECYA",
+  "aplicacion": "HILUX (2200cc.) diesel",
+  "descripcion": "TOYOTA L 2.2D 90 mm",
+  "medidas": {
+   "diam_int": 90,
+   "diam_ext_cil": 100.7,
+   "alt_pest": 3.55,
+   "largo": 160.7
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.08,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1122   ",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UCO 1122",
+  "codigo_fab": "UCO 1122",
+  "marca": "FADECYA",
+  "aplicacion": "HILUX (2200cc.) diesel",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 90,
+   "diam_ext_cil": 100.7,
+   "alt_pest": 3.55,
+   "largo": 160.7
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.08,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1476",
+  "codigo_fab": "UC 1476",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 90,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 95.07,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0092",
+  "codigo_fab": "A 0092",
+  "marca": "FADECYA",
+  "aplicacion": "FALCON 187-FUTURA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 90.42,
+   "diam_ext_cil": 96.77,
+   "alt_pest": 4.76,
+   "largo": 132
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 95.18,
+     "label": "-.060\""
+    },
+    {
+     "valor": 95.94,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1888",
+  "codigo_fab": "A 1888",
+  "marca": "FADECYA",
+  "aplicacion": "ROVER-MB SPRINTER",
+  "descripcion": "MAXION HS2.5T (EXT. 94,47) 90,48 mm",
+  "medidas": {
+   "diam_int": 90.48,
+   "diam_ext_cil": 96.83,
+   "alt_pest": 4.76,
+   "largo": 188
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.72,
+     "label": "-.060\""
+    },
+    {
+     "valor": 94.48,
+     "label": "-.030\""
+    },
+    {
+     "valor": 95.24,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1888STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0090",
+  "codigo_fab": "A 0090",
+  "marca": "FADECYA",
+  "aplicacion": "OPEL K-180,CHEV.400,motor194",
+  "descripcion": "CHEVROLET 400*3.9/16\" SMT",
+  "medidas": {
+   "diam_int": 90.49,
+   "diam_ext_cil": 96.85,
+   "alt_pest": 4.76,
+   "largo": 151
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.49,
+     "label": "-.060\""
+    },
+    {
+     "valor": 95.25,
+     "label": "-.030\""
+    },
+    {
+     "valor": 96.01,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  090 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0037",
+  "codigo_fab": "A 0037",
+  "marca": "INTERNATIONAL",
+  "aplicacion": "INTERNATIONAL",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 90.49,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 95.25,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1368",
+  "codigo_fab": "UC 1368",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 90.49,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.2,
+     "label": "STD"
+    },
+    {
+     "valor": 94.71,
+     "label": "+.020\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1889",
+  "codigo_fab": "A 1889",
+  "marca": "FADECYA",
+  "aplicacion": "CHEVR.S10, motor MAXION",
+  "descripcion": "MAXION HS2.5T (EXT. 94,73) 90,73 mm",
+  "medidas": {
+   "diam_int": 90.74,
+   "diam_ext_cil": 97.09,
+   "alt_pest": 4.76,
+   "largo": 188
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.98,
+     "label": "-.060\""
+    },
+    {
+     "valor": 94.74,
+     "label": "-.030\""
+    },
+    {
+     "valor": 95.5,
+     "label": "STD"
+    },
+    {
+     "valor": 96.25,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1889STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AE 1889",
+  "codigo_fab": "AE 1889",
+  "marca": "FADECYA",
+  "aplicacion": "CHEVR.S10, FORD HSD",
+  "descripcion": "MAXION HS2.5T (EXT.94,15-P.97) 90,73 mm",
+  "medidas": {
+   "diam_int": 90.74,
+   "diam_ext_cil": 97,
+   "alt_pest": 4.4,
+   "largo": 186.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.15,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAE 1889STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1878",
+  "codigo_fab": "A 1878",
+  "marca": "FADECYA",
+  "aplicacion": "OM 616 - MB180 Diesel",
+  "descripcion": "M.BENZ OM616 90,9 mm",
+  "medidas": {
+   "diam_int": 90.9,
+   "diam_ext_cil": 97.25,
+   "alt_pest": 4.76,
+   "largo": 158.4
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.9,
+     "label": "-.060\""
+    },
+    {
+     "valor": 95.66,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1878STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1398",
+  "codigo_fab": "UC 1398",
+  "marca": "MERCEDES-BENZ",
+  "aplicacion": "MERCEDES-BENZ",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 90.9,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1449",
+  "codigo_fab": "UC 1449",
+  "marca": "FADECYA",
+  "aplicacion": "2H DYNA, LAND ROVER",
+  "descripcion": "TOYOTA 2H-2H NEW 91 mm",
+  "medidas": {
+   "diam_int": 91,
+   "diam_ext_cil": 100.76,
+   "alt_pest": 2.6,
+   "largo": 184
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 95.07,
+     "label": "-.060\""
+    },
+    {
+     "valor": 96.32,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1449",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1607",
+  "codigo_fab": "A 1607",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 91,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 95.76,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UP 1452",
+  "codigo_fab": "UP 1452",
+  "marca": "FADECYA",
+  "aplicacion": "4D55,4D55T,4D56,4D56T,L200",
+  "descripcion": "MITSUBISHI 4D55-4D56 CON PEST. 91,1 mm",
+  "medidas": {
+   "diam_int": 91.1,
+   "diam_ext_cil": 95.75,
+   "alt_pest": 4.76,
+   "largo": 165
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.16,
+     "label": "-.060\""
+    },
+    {
+     "valor": 94.66,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUP 1452",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1452",
+  "codigo_fab": "UC 1452",
+  "marca": "MITSUBISHI",
+  "aplicacion": "MITSUBISHI",
+  "descripcion": "MITSUBISHI 4D55-4D56 SIN PEST. 91,1 mm",
+  "medidas": {
+   "diam_int": 91.1,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 165
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.16,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1452",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1413",
+  "codigo_fab": "UC 1413",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 91.47,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 95,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0444",
+  "codigo_fab": "UC 0444",
+  "marca": "FADECYA",
+  "aplicacion": "6.305,4.203,3.152",
+  "descripcion": "PERKINS 4.203-6.305 EXT. 93,72 mm",
+  "medidas": {
+   "diam_int": 91.49,
+   "diam_ext_cil": 96.66,
+   "alt_pest": 3.76,
+   "largo": 215.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.72,
+     "label": "-.060\""
+    },
+    {
+     "valor": 93.97,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UD 0444",
+  "codigo_fab": "UD 0444",
+  "marca": "FADECYA",
+  "aplicacion": "6.305,4.203 Pestaña mayorada",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 91.49,
+   "diam_ext_cil": 97.17,
+   "alt_pest": 3.76,
+   "largo": 215.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.23,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UCO 0444",
+  "codigo_fab": "UCO 0444",
+  "marca": "FADECYA",
+  "aplicacion": "6.305,4.203,3.152",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 91.49,
+   "diam_ext_cil": 96.66,
+   "alt_pest": 3.77,
+   "largo": 215.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 93.68,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUCO0444   ",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 0968",
+  "codigo_fab": "UC 0968",
+  "marca": "FADECYA",
+  "aplicacion": "6.305,4.203,3.152",
+  "descripcion": "PERKINS 4.203-6.305 EXT. 94,47 mm",
+  "medidas": {
+   "diam_int": 91.49,
+   "diam_ext_cil": 97,
+   "alt_pest": 4.76,
+   "largo": 215.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.48,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0862",
+  "codigo_fab": "UC 0862",
+  "marca": "FADECYA",
+  "aplicacion": "6.305,4.203,3.152",
+  "descripcion": "PERKINS 4.203-6.305 EXT. 95,5 mm",
+  "medidas": {
+   "diam_int": 91.49,
+   "diam_ext_cil": 97.4,
+   "alt_pest": 4.76,
+   "largo": 215.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 95.47,
+     "label": "-.060\""
+    },
+    {
+     "valor": 96.99,
+     "label": "-.030\""
+    },
+    {
+     "valor": 98.01,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0750",
+  "codigo_fab": "UC 0750",
+  "marca": "FADECYA",
+  "aplicacion": "6305-4203-3152",
+  "descripcion": "PERKINS 4.203-6.305 EXT. 96,22 mm",
+  "medidas": {
+   "diam_int": 91.49,
+   "diam_ext_cil": 97.8,
+   "alt_pest": 4.76,
+   "largo": 215.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.22,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1252",
+  "codigo_fab": "UC 1252",
+  "marca": "FADECYA",
+  "aplicacion": "6305-4203,3.152",
+  "descripcion": "PERKINS 4.203-6.305 EXT. 97 mm",
+  "medidas": {
+   "diam_int": 91.49,
+   "diam_ext_cil": 98.55,
+   "alt_pest": 4.76,
+   "largo": 215.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.98,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1252   ",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1403",
+  "codigo_fab": "UC 1403",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 91.49,
+   "diam_ext_cil": 97.85,
+   "alt_pest": 2.7,
+   "largo": 214.7
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94.09,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1909",
+  "codigo_fab": "UC 1909",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 91.49,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 2074",
+  "codigo_fab": "UC 2074",
+  "marca": "FADECYA",
+  "aplicacion": "TOPIC 2.7L",
+  "descripcion": "MAZDA XB-KIA TOPIC 2700-AM825 92 mm",
+  "medidas": {
+   "diam_int": 92,
+   "diam_ext_cil": 101,
+   "alt_pest": 3.75,
+   "largo": 191.3
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.9,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2074",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 2075",
+  "codigo_fab": "UC 2075",
+  "marca": "FADECYA",
+  "aplicacion": "SF K2400",
+  "descripcion": "KIA K2400-K2700 92 mm",
+  "medidas": {
+   "diam_int": 92,
+   "diam_ext_cil": 101.02,
+   "alt_pest": 3.8,
+   "largo": 166
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.9,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2075",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1451",
+  "codigo_fab": "UC 1451",
+  "marca": "FADECYA",
+  "aplicacion": "2L - 2LT",
+  "descripcion": "TOYOTA 2L 92 mm",
+  "medidas": {
+   "diam_int": 92,
+   "diam_ext_cil": 100.45,
+   "alt_pest": 3.5,
+   "largo": 161
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.05,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1451",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AL 2145",
+  "codigo_fab": "AL 2145",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 92,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.08,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1472",
+  "codigo_fab": "UC 1472",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 92,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0204",
+  "codigo_fab": "A 0204",
+  "marca": "FORD",
+  "aplicacion": "FORD",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 92.08,
+   "diam_ext_cil": 98.43,
+   "alt_pest": 4.76,
+   "largo": 174.6
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.84,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UCO 1926",
+  "codigo_fab": "UCO 1926",
+  "marca": "FADECYA",
+  "aplicacion": "TD 25",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 92.9,
+   "diam_ext_cil": 101.85,
+   "alt_pest": 5.07,
+   "largo": 160
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 95.92,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1902",
+  "codigo_fab": "UC 1902",
+  "marca": "FADECYA",
+  "aplicacion": "SILVERADO motor SPRINT C/par",
+  "descripcion": "MWM 4.07-6.07 (EXT. 96,28) 93 mm",
+  "medidas": {
+   "diam_int": 93,
+   "diam_ext_cil": 102.45,
+   "alt_pest": 6.04,
+   "largo": 182.8
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.08,
+     "label": "-.060\""
+    },
+    {
+     "valor": 96.28,
+     "label": "-.030\""
+    },
+    {
+     "valor": 96.58,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1902STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UX 1902",
+  "codigo_fab": "UX 1902",
+  "marca": "FADECYA",
+  "aplicacion": "SPRINT/CHEVROLET 6D7T",
+  "descripcion": "MWM 4.07-6.07 S/PARALLAMAS 93 mm",
+  "medidas": {
+   "diam_int": 93,
+   "diam_ext_cil": 102.45,
+   "alt_pest": 6.1,
+   "largo": 181.4
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.08,
+     "label": "-.060\""
+    },
+    {
+     "valor": 96.28,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUX 1902STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1901",
+  "codigo_fab": "UC 1901",
+  "marca": "FADECYA",
+  "aplicacion": "IVECO DAILY",
+  "descripcion": "FIAT DUCATO 2.5D (EXT. 96) 93 mm",
+  "medidas": {
+   "diam_int": 93,
+   "diam_ext_cil": 98.9,
+   "alt_pest": 4.8,
+   "largo": 170.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1901",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 2133",
+  "codigo_fab": "A 2133",
+  "marca": "FADECYA",
+  "aplicacion": "RANGER 02/06 mot. MAXION 2,8L",
+  "descripcion": "MAXION HS2.8L 93 mm",
+  "medidas": {
+   "diam_int": 93,
+   "diam_ext_cil": 98.59,
+   "alt_pest": 4.76,
+   "largo": 188
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 97,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UZ 1501",
+  "codigo_fab": "UZ 1501",
+  "marca": "FADECYA",
+  "aplicacion": "4JA1, 2.5L",
+  "descripcion": "ISUZU 4JA1 (EXT.98) 93 mm",
+  "medidas": {
+   "diam_int": 93,
+   "diam_ext_cil": 101.88,
+   "alt_pest": 3.95,
+   "largo": 156.3
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.5,
+     "label": "-.060\""
+    },
+    {
+     "valor": 98.02,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUZ 1501",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UZ 1385",
+  "codigo_fab": "UZ 1385",
+  "marca": "FADECYA",
+  "aplicacion": "4JB1, 2.8L- Opc. 4JA1",
+  "descripcion": "ISUZU 4JB1-4JB1T 93 mm EXT. 98,02mm",
+  "medidas": {
+   "diam_int": 93,
+   "diam_ext_cil": 101.88,
+   "alt_pest": 3.95,
+   "largo": 181
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.5,
+     "label": "-.060\""
+    },
+    {
+     "valor": 98.02,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUZ 1385",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 2085",
+  "codigo_fab": "UC 2085",
+  "marca": "FADECYA",
+  "aplicacion": "RFA/VN HI-BESTA 2,7L Diesel",
+  "descripcion": "KIA BESTA 2700 92 mm",
+  "medidas": {
+   "diam_int": 93,
+   "diam_ext_cil": 102.25,
+   "alt_pest": 2.5,
+   "largo": 168
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.83,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2085",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AL 2139",
+  "codigo_fab": "AL 2139",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 93,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 97.08,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 2137",
+  "codigo_fab": "UC 2137",
+  "marca": "FIAT",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT DUCATO 2.5TD (EXT.97,52) 93 mm",
+  "medidas": {
+   "diam_int": 93,
+   "diam_ext_cil": 100.95,
+   "alt_pest": 5,
+   "largo": 167
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 97.52,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2137",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0097",
+  "codigo_fab": "A 0097",
+  "marca": "FORD",
+  "aplicacion": "FORD",
+  "descripcion": "FORD FALCON 188-221 3.680\"",
+  "medidas": {
+   "diam_int": 93.47,
+   "diam_ext_cil": 99.82,
+   "alt_pest": 4.76,
+   "largo": 139
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.71,
+     "label": "-.060\""
+    },
+    {
+     "valor": 97.47,
+     "label": "-.030\""
+    },
+    {
+     "valor": 98.23,
+     "label": "STD"
+    },
+    {
+     "valor": 98.99,
+     "label": "+.030\""
+    },
+    {
+     "valor": 99.75,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  097 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UP 1903",
+  "codigo_fab": "UP 1903",
+  "marca": "FORD",
+  "aplicacion": "FORD",
+  "descripcion": "FORD TRANSIT 2.5D (EXT.96,94)C/P 93,67mm",
+  "medidas": {
+   "diam_int": 93.67,
+   "diam_ext_cil": 98.53,
+   "alt_pest": 4.76,
+   "largo": 171.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 96.18,
+     "label": "-.030\""
+    },
+    {
+     "valor": 96.94,
+     "label": "STD"
+    },
+    {
+     "valor": 97.7,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUP 1903",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1738",
+  "codigo_fab": "A 1738",
+  "marca": "FADECYA",
+  "aplicacion": "Mercedes Benz OM 314/352",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 94,
+   "diam_ext_cil": 100.35,
+   "alt_pest": 4.76,
+   "largo": 82
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 98.76,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1642",
+  "codigo_fab": "A 1642",
+  "marca": "FADECYA",
+  "aplicacion": "XD-2 (2300cc), XD-3",
+  "descripcion": "INDENOR XD2-XD3 94 mm",
+  "medidas": {
+   "diam_int": 94,
+   "diam_ext_cil": 100.35,
+   "alt_pest": 4.76,
+   "largo": 169.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 97.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 98,
+     "label": "-.030\""
+    },
+    {
+     "valor": 98.76,
+     "label": "STD"
+    },
+    {
+     "valor": 99.52,
+     "label": "+.030\""
+    },
+    {
+     "valor": 100.28,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  1642STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1333",
+  "codigo_fab": "A 1333",
+  "marca": "FADECYA",
+  "aplicacion": "S4S S6S diesel",
+  "descripcion": "MITSUBISHI S4S-S6S 94 mm",
+  "medidas": {
+   "diam_int": 94,
+   "diam_ext_cil": 99.59,
+   "alt_pest": 4.76,
+   "largo": 186
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 98,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AL 2147",
+  "codigo_fab": "AL 2147",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 94,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 94,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1347",
+  "codigo_fab": "UC 1347",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 94,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 97.09,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1740",
+  "codigo_fab": "UC 1740",
+  "marca": "FADECYA",
+  "aplicacion": "IVECO DUCATTO 2.8L TURBO",
+  "descripcion": "FIAT DUCATO 2.8TD 94,4 mm",
+  "medidas": {
+   "diam_int": 94.4,
+   "diam_ext_cil": 100.95,
+   "alt_pest": 5,
+   "largo": 167
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 97.52,
+     "label": "-.060\""
+    },
+    {
+     "valor": 97.77,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1740",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UH 1740",
+  "codigo_fab": "UH 1740",
+  "marca": "FADECYA",
+  "aplicacion": "IVECO DUCATTO 2.8L TURBO",
+  "descripcion": "FIAT DUCATO 2.8TD 94,4 mm (PEST.101,46)",
+  "medidas": {
+   "diam_int": 94.4,
+   "diam_ext_cil": 101.46,
+   "alt_pest": 5,
+   "largo": 167
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 98.03,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 3011",
+  "codigo_fab": "UC 3011",
+  "marca": "FADECYA",
+  "aplicacion": "BESTA GS 2.7L Diesel J2K",
+  "descripcion": "KIA PREGIO 2700-J2 (EXT.97,55) 94,5 mm",
+  "medidas": {
+   "diam_int": 94.5,
+   "diam_ext_cil": 104.6,
+   "alt_pest": 3.9,
+   "largo": 167.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 97.55,
+     "label": "-.060\""
+    },
+    {
+     "valor": 98.05,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 3011",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1458",
+  "codigo_fab": "UC 1458",
+  "marca": "FADECYA",
+  "aplicacion": "B DIESEL 2977cc DELTA",
+  "descripcion": "TOYOTA B-1B EXT.99 95 mm",
+  "medidas": {
+   "diam_int": 95,
+   "diam_ext_cil": 107.7,
+   "alt_pest": 2.5,
+   "largo": 190.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 99.07,
+     "label": "-.060\""
+    },
+    {
+     "valor": 99.57,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1458",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1459",
+  "codigo_fab": "UC 1459",
+  "marca": "FADECYA",
+  "aplicacion": "B DIESEL 2977cc DELTA",
+  "descripcion": "TOYOTA B-1B EXT.102 95 mm",
+  "medidas": {
+   "diam_int": 95,
+   "diam_ext_cil": 107.7,
+   "alt_pest": 2.53,
+   "largo": 190.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 102.06,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1459",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0423",
+  "codigo_fab": "A 0423",
+  "marca": "FADECYA",
+  "aplicacion": "OM321/324 1112",
+  "descripcion": "M.BENZ OM321 95 mm",
+  "medidas": {
+   "diam_int": 95,
+   "diam_ext_cil": 101.35,
+   "alt_pest": 4.76,
+   "largo": 215
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 99,
+     "label": "-.060\""
+    },
+    {
+     "valor": 99.76,
+     "label": "-.030\""
+    },
+    {
+     "valor": 100.52,
+     "label": "STD"
+    },
+    {
+     "valor": 101.28,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  423 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1357",
+  "codigo_fab": "UC 1357",
+  "marca": "FADECYA",
+  "aplicacion": "11-B 11-B NEW diesel",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 95,
+   "diam_ext_cil": 104.9,
+   "alt_pest": 5,
+   "largo": 190.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 100.56,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1328",
+  "codigo_fab": "UC 1328",
+  "marca": "DAIHATSU",
+  "aplicacion": "DAIHATSU",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 95,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": null,
+     "label": "+.090\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0064",
+  "codigo_fab": "A 0064",
+  "marca": "FADECYA",
+  "aplicacion": "F 100 (Ind.Arg.)",
+  "descripcion": "FORD F100*V8 3.3/4\" SMT",
+  "medidas": {
+   "diam_int": 95.25,
+   "diam_ext_cil": 101.6,
+   "alt_pest": 4.76,
+   "largo": 158
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 98.49,
+     "label": "-.060\""
+    },
+    {
+     "valor": 99.25,
+     "label": "-.030\""
+    },
+    {
+     "valor": 100.01,
+     "label": "STD"
+    },
+    {
+     "valor": 100.77,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  064 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UZ 2044",
+  "codigo_fab": "UZ 2044",
+  "marca": "FADECYA",
+  "aplicacion": "4JX1 - 4JJ1 TC",
+  "descripcion": "ISUZU 4JG2T (EXT.100,26) 95,4 mm",
+  "medidas": {
+   "diam_int": 95.4,
+   "diam_ext_cil": 102.3,
+   "alt_pest": 4,
+   "largo": 178.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 98.74,
+     "label": "-.060\""
+    },
+    {
+     "valor": 100.26,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUZ 2044",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UZ 2043",
+  "codigo_fab": "UZ 2043",
+  "marca": "FADECYA",
+  "aplicacion": "4JG2/T/NEW 4JH1TC/NEW",
+  "descripcion": "ISUZU 4JG2T (EXT.98,20) 95,4 mm",
+  "medidas": {
+   "diam_int": 95.4,
+   "diam_ext_cil": 103.3,
+   "alt_pest": 4,
+   "largo": 181.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 98.2,
+     "label": "-.060\""
+    },
+    {
+     "valor": 100.2,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUZ 2043",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0974",
+  "codigo_fab": "A 0974",
+  "marca": "FADECYA",
+  "aplicacion": "TAUNUS GXL, SIERRA 2.3",
+  "descripcion": "FORD TAUNUS 2.3 96 mm",
+  "medidas": {
+   "diam_int": 96,
+   "diam_ext_cil": 102.35,
+   "alt_pest": 4.76,
+   "largo": 137
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 99.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 100,
+     "label": "-.030\""
+    },
+    {
+     "valor": 100.76,
+     "label": "STD"
+    },
+    {
+     "valor": 101.52,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  974 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 2138",
+  "codigo_fab": "A 2138",
+  "marca": "FADECYA",
+  "aplicacion": "RANGER 02/09 mot. MAXION 3,0L",
+  "descripcion": "MAXION NGD3.0/TOYOTA 1KD 96 mm",
+  "medidas": {
+   "diam_int": 96,
+   "diam_ext_cil": 101.59,
+   "alt_pest": 4.76,
+   "largo": 185
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 100,
+     "label": "-.060\""
+    },
+    {
+     "valor": 100.76,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  2138STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 2049",
+  "codigo_fab": "UC 2049",
+  "marca": "FADECYA",
+  "aplicacion": "TD 27",
+  "descripcion": "NISSAN TD27 96 mm",
+  "medidas": {
+   "diam_int": 96,
+   "diam_ext_cil": 104.95,
+   "alt_pest": 5,
+   "largo": 159.3
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 99.05,
+     "label": "-.060\""
+    },
+    {
+     "valor": 99.55,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2049",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AE 2045",
+  "codigo_fab": "AE 2045",
+  "marca": "FADECYA",
+  "aplicacion": "BD 30",
+  "descripcion": "NISSAN BD30-BD30T 3.0 96 mm",
+  "medidas": {
+   "diam_int": 96,
+   "diam_ext_cil": 105,
+   "alt_pest": 5,
+   "largo": 172
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 99.76,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAE 2045STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 2130",
+  "codigo_fab": "UC 2130",
+  "marca": "FADECYA",
+  "aplicacion": "3L",
+  "descripcion": "TOYOTA 3L 2.8 C/PARALLAMAS 96 mm",
+  "medidas": {
+   "diam_int": 96,
+   "diam_ext_cil": 107.6,
+   "alt_pest": 2.65,
+   "largo": 190
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 100.05,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2130",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 2052",
+  "codigo_fab": "A 2052",
+  "marca": "FADECYA",
+  "aplicacion": "3L Sin Parallama",
+  "descripcion": "TOYOTA 3L SIN PARALLAMAS (100,76) 96 mm",
+  "medidas": {
+   "diam_int": 96,
+   "diam_ext_cil": 102.35,
+   "alt_pest": 4.76,
+   "largo": 190
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 100.76,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  2052STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AL 2130",
+  "codigo_fab": "AL 2130",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 96,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 100.05,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1030",
+  "codigo_fab": "UC 1030",
+  "marca": "FADECYA",
+  "aplicacion": "XR 600",
+  "descripcion": "HONDA XR 600 97 mm",
+  "medidas": {
+   "diam_int": 97,
+   "diam_ext_cil": 111.15,
+   "alt_pest": 3.7,
+   "largo": 141
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 103.2,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1030",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0078",
+  "codigo_fab": "A 0078",
+  "marca": "FADECYA",
+  "aplicacion": "OM 352/314, 1114-1517",
+  "descripcion": "M.BENZ OM352-352A 97 mm",
+  "medidas": {
+   "diam_int": 97,
+   "diam_ext_cil": 103.35,
+   "alt_pest": 4.76,
+   "largo": 222.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 100.24,
+     "label": "-.060\""
+    },
+    {
+     "valor": 101,
+     "label": "-.030\""
+    },
+    {
+     "valor": 101.76,
+     "label": "STD"
+    },
+    {
+     "valor": 102.52,
+     "label": "+.030\""
+    },
+    {
+     "valor": 103.28,
+     "label": "+.060\""
+    },
+    {
+     "valor": 104.05,
+     "label": "+.002\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  078 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "AL 0078",
+  "codigo_fab": "AL 0078",
+  "marca": "MERCEDES-BENZ",
+  "aplicacion": "MERCEDES-BENZ",
+  "descripcion": "M.BENZ OM352-OM352A S/PEST. 97 mm",
+  "medidas": {
+   "diam_int": 97,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 225
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 101.08,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAL 078 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1418",
+  "codigo_fab": "UC 1418",
+  "marca": "MERCEDES-BENZ",
+  "aplicacion": "MERCEDES-BENZ",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 97,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1278",
+  "codigo_fab": "UC 1278",
+  "marca": "FADECYA",
+  "aplicacion": "Sin descripción",
+  "descripcion": "M.BENZ OM364-364A-366-366A EXT.100,50 mm",
+  "medidas": {
+   "diam_int": 97.5,
+   "diam_ext_cil": 103.4,
+   "alt_pest": 5.15,
+   "largo": 222.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 99.74,
+     "label": "-.030\""
+    },
+    {
+     "valor": 100.5,
+     "label": "STD"
+    },
+    {
+     "valor": 100.55,
+     "label": "+0.05MM"
+    },
+    {
+     "valor": 100.6,
+     "label": "+0.10MM"
+    },
+    {
+     "valor": 100.7,
+     "label": "+0.20MM"
+    },
+    {
+     "valor": 100.75,
+     "label": "+0.25MM"
+    },
+    {
+     "valor": 101,
+     "label": "+0.50MM"
+    },
+    {
+     "valor": 101.25,
+     "label": "+0.75MM"
+    },
+    {
+     "valor": 101.5,
+     "label": "+1.00MM"
+    },
+    {
+     "valor": 101.75,
+     "label": "+1.25MM"
+    },
+    {
+     "valor": 102,
+     "label": "+1.50MM"
+    },
+    {
+     "valor": 102.5,
+     "label": "+2.00MM"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1278",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 0755",
+  "codigo_fab": "UC 0755",
+  "marca": "FADECYA",
+  "aplicacion": "BESTA PREGIO 3,0L Diesel JT",
+  "descripcion": "KIA JT 3.0/YANMAR 4TNE98 98 mm",
+  "medidas": {
+   "diam_int": 98,
+   "diam_ext_cil": 106.9,
+   "alt_pest": 2.6,
+   "largo": 166
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 101.49,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UCO 0100",
+  "codigo_fab": "UCO 0100",
+  "marca": "FADECYA",
+  "aplicacion": "200, 300D, CIMARRON",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 98.42,
+   "diam_ext_cil": 111.94,
+   "alt_pest": 4.85,
+   "largo": 215.1
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 104.73,
+     "label": "-.060\""
+    },
+    {
+     "valor": 105.49,
+     "label": "-.030\""
+    },
+    {
+     "valor": 104.78,
+     "label": "STD"
+    },
+    {
+     "valor": 104.86,
+     "label": "+.030\""
+    },
+    {
+     "valor": 104.98,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUCO0100   ",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0055",
+  "codigo_fab": "A 0055",
+  "marca": "FADECYA",
+  "aplicacion": "SUPER,CHEVY,230/250",
+  "descripcion": "CHEVROLET 230-250 3.7/8\"",
+  "medidas": {
+   "diam_int": 98.42,
+   "diam_ext_cil": 104.77,
+   "alt_pest": 4.76,
+   "largo": 151
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 101.66,
+     "label": "-.060\""
+    },
+    {
+     "valor": 102.42,
+     "label": "-.030\""
+    },
+    {
+     "valor": 103.18,
+     "label": "STD"
+    },
+    {
+     "valor": 103.94,
+     "label": "+.030\""
+    },
+    {
+     "valor": 104.7,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEA  055 STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0564",
+  "codigo_fab": "A 0564",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 98.43,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 102.43,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0407",
+  "codigo_fab": "UC 0407",
+  "marca": "FADECYA",
+  "aplicacion": "6354 c/pest., Fase I a IV",
+  "descripcion": "PERKINS 6.354 C/PEST. (Ex.103,24) 3.7/8\"",
+  "medidas": {
+   "diam_int": 98.48,
+   "diam_ext_cil": 106.4,
+   "alt_pest": 3.81,
+   "largo": 227.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 105.78,
+     "label": "-.060\""
+    },
+    {
+     "valor": 103.24,
+     "label": "-.030\""
+    },
+    {
+     "valor": 104,
+     "label": "STD"
+    },
+    {
+     "valor": 104.76,
+     "label": "+.030\""
+    },
+    {
+     "valor": 103.29,
+     "label": "+.060\""
+    },
+    {
+     "valor": 103.37,
+     "label": "+.002\""
+    },
+    {
+     "valor": 103.5,
+     "label": "+.005\""
+    },
+    {
+     "valor": 103.75,
+     "label": "+.010\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0445",
+  "codigo_fab": "UC 0445",
+  "marca": "DODGE/FORD/PERKINS",
+  "aplicacion": "DODGE/FORD/PERKINS",
+  "descripcion": "PERKINS 6.354 S/PEST. (Ex.103,29) 3.7/8\"",
+  "medidas": {
+   "diam_int": 98.48,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 228.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 103.29,
+     "label": "STD"
+    },
+    {
+     "valor": 103.34,
+     "label": "+.002\""
+    },
+    {
+     "valor": 103.42,
+     "label": "+.005\""
+    },
+    {
+     "valor": 103.54,
+     "label": "+.010\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1390",
+  "codigo_fab": "UC 1390",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS",
+  "descripcion": "PERKINS 4.236 C/PARALLAMAS 3.7/8\"",
+  "medidas": {
+   "diam_int": 98.48,
+   "diam_ext_cil": 107.4,
+   "alt_pest": 3.81,
+   "largo": 227.4
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 104.26,
+     "label": "STD"
+    },
+    {
+     "valor": 104.51,
+     "label": "+.010\""
+    },
+    {
+     "valor": 104.77,
+     "label": "+.020\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1390",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UH 1390",
+  "codigo_fab": "UH 1390",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS",
+  "descripcion": "PERKINS 4.236-6.354 (EXT.105,03) 3.7/8\"",
+  "medidas": {
+   "diam_int": 98.48,
+   "diam_ext_cil": 107.4,
+   "alt_pest": 4.31,
+   "largo": 226.9
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 105.03,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0944",
+  "codigo_fab": "A 0944",
+  "marca": "FADECYA",
+  "aplicacion": "GTX- DAKOTA-CHEROKEE",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 99.31,
+   "diam_ext_cil": 104.9,
+   "alt_pest": 4.76,
+   "largo": 152.4
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 103.31,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0609",
+  "codigo_fab": "A 0609",
+  "marca": "FADECYA",
+  "aplicacion": "5L Turbo Diesel 3,0L HILUX",
+  "descripcion": "TOYOTA 5L 99,5 mm",
+  "medidas": {
+   "diam_int": 99.5,
+   "diam_ext_cil": 105.09,
+   "alt_pest": 4.76,
+   "largo": 189
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 103.5,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UP 2086",
+  "codigo_fab": "UP 2086",
+  "marca": "FADECYA",
+  "aplicacion": "TRACTOR 540 640 980",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 100,
+   "diam_ext_cil": 104.6,
+   "alt_pest": 4.76,
+   "largo": 187.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 103,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0918",
+  "codigo_fab": "UC 0918",
+  "marca": "FADECYA",
+  "aplicacion": "NX 650",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 100,
+   "diam_ext_cil": 113.45,
+   "alt_pest": 3.3,
+   "largo": 140.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 107.07,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 2109",
+  "codigo_fab": "UC 2109",
+  "marca": "FADECYA",
+  "aplicacion": "KLR 650",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 100,
+   "diam_ext_cil": 117.65,
+   "alt_pest": 6.05,
+   "largo": 137.8
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 110.1,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1075",
+  "codigo_fab": "UC 1075",
+  "marca": "FADECYA",
+  "aplicacion": "JD K3500 Diesel TITAN",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 100,
+   "diam_ext_cil": 108,
+   "alt_pest": 2.5,
+   "largo": 192.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 103.58,
+     "label": "-.060\""
+    },
+    {
+     "valor": 104.08,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1446",
+  "codigo_fab": "UC 1446",
+  "marca": "FADECYA",
+  "aplicacion": "S4, S4T CHEVROLET D20",
+  "descripcion": "MAXION S4-S4T-S4T PLUS-PERK.1006-60 100m",
+  "medidas": {
+   "diam_int": 100,
+   "diam_ext_cil": 107.44,
+   "alt_pest": 3.48,
+   "largo": 226.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 104.27,
+     "label": "-.060\""
+    },
+    {
+     "valor": 105.03,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1446",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UP 2047",
+  "codigo_fab": "UP 2047",
+  "marca": "FADECYA",
+  "aplicacion": "MITSUBISHI 4D30-4D31",
+  "descripcion": "MITSUBISHI 4D30-4D31 C/PEST. 100 mm",
+  "medidas": {
+   "diam_int": 100,
+   "diam_ext_cil": 105.75,
+   "alt_pest": 4.76,
+   "largo": 196.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 104.15,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUP 2047",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UH 1446",
+  "codigo_fab": "UH 1446",
+  "marca": "FADECYA",
+  "aplicacion": "Serie 1000/PHASER/ Natasp",
+  "descripcion": "MAXION S4-S4T-S4T PLUS-PERK.1006-60 100m",
+  "medidas": {
+   "diam_int": 100,
+   "diam_ext_cil": 107.87,
+   "alt_pest": 4.85,
+   "largo": 226.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 104.77,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 2047",
+  "codigo_fab": "UC 2047",
+  "marca": "MITSUBISHI",
+  "aplicacion": "MITSUBISHI",
+  "descripcion": "MITSUBISHI 4D30-4D31 S/PEST. 100 mm",
+  "medidas": {
+   "diam_int": 100,
+   "diam_ext_cil": null,
+   "alt_pest": 4.76,
+   "largo": 196.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 104.15,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2047",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0748",
+  "codigo_fab": "A 0748",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": "USO UNIVERSAL 3.15/16\" x 260,4 mm*",
+  "medidas": {
+   "diam_int": 100.01,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1017",
+  "codigo_fab": "UC 1017",
+  "marca": "FADECYA",
+  "aplicacion": "4248",
+  "descripcion": "PERKINS 4.248 (EXT.104,27) 101,06 mm",
+  "medidas": {
+   "diam_int": 101.06,
+   "diam_ext_cil": 107.37,
+   "alt_pest": 3.81,
+   "largo": 227.3
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 106.56,
+     "label": "-.060\""
+    },
+    {
+     "valor": 104.27,
+     "label": "-.030\""
+    },
+    {
+     "valor": 105.03,
+     "label": "STD"
+    },
+    {
+     "valor": 104.8,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1017",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UCO 1017",
+  "codigo_fab": "UCO 1017",
+  "marca": "FADECYA",
+  "aplicacion": "4.248",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 101.06,
+   "diam_ext_cil": 107.37,
+   "alt_pest": 3.84,
+   "largo": 227.3
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 104.21,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUCO1017",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 1538",
+  "codigo_fab": "A 1538",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 101.6,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 109.41,
+     "label": "+.12\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 1554",
+  "codigo_fab": "A 1554",
+  "marca": "FORD",
+  "aplicacion": "FORD",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 101.6,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": null,
+     "label": "+.10\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AL 2141",
+  "codigo_fab": "AL 2141",
+  "marca": "INTERNATIONAL",
+  "aplicacion": "INTERNATIONAL",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 101.6,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 106.44,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1583",
+  "codigo_fab": "UC 1583",
+  "marca": "FADECYA",
+  "aplicacion": "Serie B-BT-BTA 5.9",
+  "descripcion": "CUMMINS 4B-4BT-6B-6BT-6BTAA 102 mm",
+  "medidas": {
+   "diam_int": 102,
+   "diam_ext_cil": 104.6,
+   "alt_pest": null,
+   "largo": 200
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 104.6,
+     "label": "STD"
+    },
+    {
+     "valor": 105.11,
+     "label": "+.020\""
+    },
+    {
+     "valor": 105.62,
+     "label": "+.040\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1583",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UZ 1384",
+  "codigo_fab": "UZ 1384",
+  "marca": "FADECYA",
+  "aplicacion": "6BDI 6BBI",
+  "descripcion": "ISUZU 6BB1/6BD1/6BD1T",
+  "medidas": {
+   "diam_int": 102,
+   "diam_ext_cil": 111.98,
+   "alt_pest": 3.95,
+   "largo": 203.75
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 107.14,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUZ 1384",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 2099",
+  "codigo_fab": "UC 2099",
+  "marca": "FADECYA",
+  "aplicacion": "OM 904/906",
+  "descripcion": "M.BENZ OM904LA-OM906LA 102 mm",
+  "medidas": {
+   "diam_int": 102,
+   "diam_ext_cil": 109.4,
+   "alt_pest": 6.15,
+   "largo": 220
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 107.08,
+     "label": "-.060\""
+    },
+    {
+     "valor": 106.08,
+     "label": "-.030\""
+    },
+    {
+     "valor": 106.58,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2099",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 4922",
+  "codigo_fab": "UC 4922",
+  "marca": "FADECYA",
+  "aplicacion": "3B COASTER, DYNA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 102,
+   "diam_ext_cil": 111.65,
+   "alt_pest": 2.55,
+   "largo": 188.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 106.06,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1326",
+  "codigo_fab": "UC 1326",
+  "marca": "FADECYA",
+  "aplicacion": "DYNA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 102,
+   "diam_ext_cil": 111.62,
+   "alt_pest": 2.5,
+   "largo": 187.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 106.12,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1971",
+  "codigo_fab": "UC 1971",
+  "marca": "FADECYA",
+  "aplicacion": "3B - 3B NEW",
+  "descripcion": "TOYOTA 3B 102 mm",
+  "medidas": {
+   "diam_int": 102,
+   "diam_ext_cil": 111.61,
+   "alt_pest": 2.5,
+   "largo": 188.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 106.06,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1971",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1477",
+  "codigo_fab": "UC 1477",
+  "marca": "FADECYA",
+  "aplicacion": "3B, COASTER, DYNA",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 102,
+   "diam_ext_cil": 111.6,
+   "alt_pest": 3.7,
+   "largo": 190.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 106.09,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1353",
+  "codigo_fab": "UC 1353",
+  "marca": "FADECYA",
+  "aplicacion": "3B - 3B NEW",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 102,
+   "diam_ext_cil": 111.7,
+   "alt_pest": 2.45,
+   "largo": 190.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 106,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UP 1583",
+  "codigo_fab": "UP 1583",
+  "marca": "CUMMINS",
+  "aplicacion": "CUMMINS",
+  "descripcion": "CUMMINS 4B-6B-6BT (Ex.104,60) C/P 102 mm",
+  "medidas": {
+   "diam_int": 102,
+   "diam_ext_cil": 106.19,
+   "alt_pest": null,
+   "largo": 200
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 104.6,
+     "label": "STD"
+    },
+    {
+     "valor": 105.11,
+     "label": "+.020\""
+    },
+    {
+     "valor": 105.62,
+     "label": "+.040\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUP 1583",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 0817",
+  "codigo_fab": "UC 0817",
+  "marca": "BEDFORD/CHEVROLET",
+  "aplicacion": "BEDFORD/CHEVROLET",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 103.19,
+   "diam_ext_cil": 110.98,
+   "alt_pest": 4.74,
+   "largo": 216.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 108.07,
+     "label": "STD"
+    },
+    {
+     "valor": 108.83,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1330",
+  "codigo_fab": "UC 1330",
+  "marca": "FADECYA",
+  "aplicacion": "CAMION 150 N,T Motor 8060.25",
+  "descripcion": "IVECO 150 TURBO 104 mm",
+  "medidas": {
+   "diam_int": 104,
+   "diam_ext_cil": 109.85,
+   "alt_pest": 5,
+   "largo": 198
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 106.22,
+     "label": "-.060\""
+    },
+    {
+     "valor": 106.98,
+     "label": "-.030\""
+    },
+    {
+     "valor": 107.74,
+     "label": "STD"
+    },
+    {
+     "valor": 108.5,
+     "label": "+.030\""
+    },
+    {
+     "valor": 107.23,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1330",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UP 2048",
+  "codigo_fab": "UP 2048",
+  "marca": "FADECYA",
+  "aplicacion": "4D34",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 104,
+   "diam_ext_cil": 109.65,
+   "alt_pest": 4.76,
+   "largo": 193
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 108.08,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AL 2146",
+  "codigo_fab": "AL 2146",
+  "marca": "MITSUBISHI",
+  "aplicacion": "MITSUBISHI",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 104,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 108.08,
+     "label": "-.030\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 2048",
+  "codigo_fab": "UC 2048",
+  "marca": "MITSUBISHI",
+  "aplicacion": "MITSUBISHI",
+  "descripcion": "MITSUBISHI 4D34 S/PESTAÑA 104 mm",
+  "medidas": {
+   "diam_int": 104,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 192.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 108.08,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 2048",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1070",
+  "codigo_fab": "UC 1070",
+  "marca": "FADECYA",
+  "aplicacion": "6-358",
+  "descripcion": "PERKINS 6.358-1104 104,14 mm",
+  "medidas": {
+   "diam_int": 104.14,
+   "diam_ext_cil": 112.81,
+   "alt_pest": 2.54,
+   "largo": 226.3
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 108.27,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1070",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UH 1070",
+  "codigo_fab": "UH 1070",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 104.14,
+   "diam_ext_cil": 116.66,
+   "alt_pest": 450,
+   "largo": 226.5
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UCO 1921",
+  "codigo_fab": "UCO 1921",
+  "marca": "FADECYA",
+  "aplicacion": "Diesel 133-156-615-620",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 104.2,
+   "diam_ext_cil": 117,
+   "alt_pest": 8.1,
+   "largo": 238.8
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 109.02,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1975",
+  "codigo_fab": "UC 1975",
+  "marca": "FADECYA",
+  "aplicacion": "Motor 3116 Diesel",
+  "descripcion": "CATERPILLAR 3116*CHEVROLET KODIAK 105 mm",
+  "medidas": {
+   "diam_int": 105,
+   "diam_ext_cil": 109.84,
+   "alt_pest": null,
+   "largo": 197
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 109.84,
+     "label": "STD"
+    },
+    {
+     "valor": 110.6,
+     "label": "+.030\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1975STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UZ 1069",
+  "codigo_fab": "UZ 1069",
+  "marca": "FADECYA",
+  "aplicacion": "6BG1, 6BG1T, 6BF1, 6130 cc",
+  "descripcion": "ISUZU 6BG1-6BG1T 105 mm",
+  "medidas": {
+   "diam_int": 105,
+   "diam_ext_cil": 113.9,
+   "alt_pest": 4,
+   "largo": 203
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 110.14,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUZ 1069",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UZ 0634",
+  "codigo_fab": "UZ 0634",
+  "marca": "FADECYA",
+  "aplicacion": "4BE1 3636 cc",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 105,
+   "diam_ext_cil": 113.9,
+   "alt_pest": 4,
+   "largo": 187
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 110.14,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0992",
+  "codigo_fab": "UC 0992",
+  "marca": "FADECYA",
+  "aplicacion": "D 226/TD 226",
+  "descripcion": "WEICHAI 226TD 105 mm",
+  "medidas": {
+   "diam_int": 105,
+   "diam_ext_cil": 111.78,
+   "alt_pest": 6.02,
+   "largo": 214
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 108.08,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UCO 0992",
+  "codigo_fab": "UCO 0992",
+  "marca": "FADECYA",
+  "aplicacion": "D 226/TD 226",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 105,
+   "diam_ext_cil": 111.78,
+   "alt_pest": 6.02,
+   "largo": 214
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 108.21,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AE 0595",
+  "codigo_fab": "AE 0595",
+  "marca": "FADECYA",
+  "aplicacion": "OM 924/926LA EuroIII Turbo Intercooled",
+  "descripcion": "M.BENZ OM924LA-OM926LA E3 (Ex110) 106 mm",
+  "medidas": {
+   "diam_int": 106,
+   "diam_ext_cil": 111.08,
+   "alt_pest": 4.9,
+   "largo": 224
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 110.49,
+     "label": "-.060\""
+    },
+    {
+     "valor": 109.49,
+     "label": "-.030\""
+    },
+    {
+     "valor": 109.99,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAE 0595STD",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UCO 0844",
+  "codigo_fab": "UCO 0844",
+  "marca": "FADECYA",
+  "aplicacion": "350, CIMARRON",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 106.36,
+   "diam_ext_cil": 117.79,
+   "alt_pest": 4.85,
+   "largo": 215.1
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 111.71,
+     "label": "-.060\""
+    },
+    {
+     "valor": 112.47,
+     "label": "-.030\""
+    },
+    {
+     "valor": 111.76,
+     "label": "STD"
+    },
+    {
+     "valor": 111.84,
+     "label": "+.030\""
+    },
+    {
+     "valor": 111.96,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUCO0844   ",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "A 0073",
+  "codigo_fab": "A 0073",
+  "marca": "USO",
+  "aplicacion": "USO",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 106.36,
+   "diam_ext_cil": null,
+   "alt_pest": 4.76,
+   "largo": 304.8
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 113.41,
+     "label": "+.090\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1389",
+  "codigo_fab": "UC 1389",
+  "marca": "FORD",
+  "aplicacion": "FORD",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 106.68,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 209.55
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 110.8,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1039",
+  "codigo_fab": "UC 1039",
+  "marca": "CUMMINS",
+  "aplicacion": "CUMMINS",
+  "descripcion": "CUMMINS QSB S/PEST. ØE.111,40 107 mm",
+  "medidas": {
+   "diam_int": 107.21,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 212.7
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 111.4,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1039",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1098",
+  "codigo_fab": "UC 1098",
+  "marca": "FADECYA",
+  "aplicacion": "FE 6 - FE 6t. 6925 cc",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 108,
+   "diam_ext_cil": 115.95,
+   "alt_pest": 8,
+   "largo": 219.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 111.06,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0399",
+  "codigo_fab": "UC 0399",
+  "marca": "MAN",
+  "aplicacion": "MAN",
+  "descripcion": "MAN D08 (Ex.111,28) S/PEST. 108 mm",
+  "medidas": {
+   "diam_int": 108,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 111.28,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0633",
+  "codigo_fab": "UC 0633",
+  "marca": "CATERPILLAR",
+  "aplicacion": "CATERPILLAR",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 110,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 197
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UCO 1913",
+  "codigo_fab": "UCO 1913",
+  "marca": "FADECYA",
+  "aplicacion": "DIESEL ND 6 6842 cc",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 110.06,
+   "diam_ext_cil": 118.9,
+   "alt_pest": 2.97,
+   "largo": 227
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 115.04,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0979",
+  "codigo_fab": "UC 0979",
+  "marca": "FADECYA",
+  "aplicacion": "TRACTOR 4200-5000",
+  "descripcion": "FORD TRACTOR 4200-4500(114,45) 111,76 mm",
+  "medidas": {
+   "diam_int": 111.76,
+   "diam_ext_cil": 120.37,
+   "alt_pest": 2.55,
+   "largo": 208.3
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 114.45,
+     "label": "-.060\""
+    },
+    {
+     "valor": 115.97,
+     "label": "-.030\""
+    },
+    {
+     "valor": 115.47,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "AE 3014",
+  "codigo_fab": "AE 3014",
+  "marca": "FORD",
+  "aplicacion": "FORD",
+  "descripcion": "NEW HOLAND 8030-TM150-TM165 P.121 111,76",
+  "medidas": {
+   "diam_int": 111.76,
+   "diam_ext_cil": 121,
+   "alt_pest": 4.9,
+   "largo": 208.3
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 118.75,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEAE 3014",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1387",
+  "codigo_fab": "UC 1387",
+  "marca": "FORD",
+  "aplicacion": "FORD",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 112,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 0365",
+  "codigo_fab": "UC 0365",
+  "marca": "LISTER",
+  "aplicacion": "LISTER",
+  "descripcion": "LISTER 6 HP-12 HP 114,30 mm",
+  "medidas": {
+   "diam_int": 114.3,
+   "diam_ext_cil": 135.58,
+   "alt_pest": null,
+   "largo": 250.8
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 120.67,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 0365",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UCO 1920",
+  "codigo_fab": "UCO 1920",
+  "marca": "FADECYA",
+  "aplicacion": "Diesel 825-180-200",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 118,
+   "diam_ext_cil": 133.6,
+   "alt_pest": 10.05,
+   "largo": 262
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 123.5,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1386",
+  "codigo_fab": "UC 1386",
+  "marca": "GARDNER",
+  "aplicacion": "GARDNER",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 120.65,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": 298.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 125.53,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UCO 0966",
+  "codigo_fab": "UCO 0966",
+  "marca": "FADECYA",
+  "aplicacion": "ALLIS AD14",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 122,
+   "diam_ext_cil": 131.97,
+   "alt_pest": 6,
+   "largo": 252
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 128.04,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUCO0966",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UCO 1914",
+  "codigo_fab": "UCO 1914",
+  "marca": "FADECYA",
+  "aplicacion": "PD 6T",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 125,
+   "diam_ext_cil": 133.9,
+   "alt_pest": 3.03,
+   "largo": 259.2
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 130.03,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1382",
+  "codigo_fab": "UC 1382",
+  "marca": "NISSAN",
+  "aplicacion": "NISSAN",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 125,
+   "diam_ext_cil": 134.4,
+   "alt_pest": 4.45,
+   "largo": 259.1
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 130.52,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "A 0987",
+  "codigo_fab": "A 0987",
+  "marca": "FADECYA",
+  "aplicacion": "OM 355/5 1521 ASP.NORM",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 128,
+   "diam_ext_cil": 134.35,
+   "alt_pest": 4.76,
+   "largo": 287.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 133.52,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UC 1343",
+  "codigo_fab": "UC 1343",
+  "marca": "FADECYA",
+  "aplicacion": "OM 355A 1526 TURBO",
+  "descripcion": "M.BENZ OM355A TURBO 128 mm",
+  "medidas": {
+   "diam_int": 128,
+   "diam_ext_cil": 137.44,
+   "alt_pest": 5.45,
+   "largo": 287.5
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 133.55,
+     "label": "-.060\""
+    },
+    {
+     "valor": 133.65,
+     "label": "-.030\""
+    },
+    {
+     "valor": 134.05,
+     "label": "STD"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUC 1343",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UC 1417",
+  "codigo_fab": "UC 1417",
+  "marca": "MERCEDES-BENZ",
+  "aplicacion": "MERCEDES-BENZ",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 128,
+   "diam_ext_cil": null,
+   "alt_pest": null,
+   "largo": null
+  },
+  "extra": {
+   "sobremedidas": []
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "UCO 0930",
+  "codigo_fab": "UCO 0930",
+  "marca": "FADECYA",
+  "aplicacion": "CAMION 619 N1 (Tratada)",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 137,
+   "diam_ext_cil": 146.98,
+   "alt_pest": 6,
+   "largo": 282
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 144.02,
+     "label": "-.060\""
+    },
+    {
+     "valor": 143.02,
+     "label": "-.030\""
+    },
+    {
+     "valor": 143.07,
+     "label": "STD"
+    },
+    {
+     "valor": 143.27,
+     "label": "+.030\""
+    },
+    {
+     "valor": 143.52,
+     "label": "+.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUCO0930   ",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "UCO 0931",
+  "codigo_fab": "UCO 0931",
+  "marca": "FADECYA",
+  "aplicacion": "190E31/37..Eurotrakker #AE351383",
+  "descripcion": null,
+  "medidas": {
+   "diam_int": 137,
+   "diam_ext_cil": 149,
+   "alt_pest": 6,
+   "largo": 282
+  },
+  "extra": {
+   "sobremedidas": [
+    {
+     "valor": 143.04,
+     "label": "-.060\""
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "C CEUCO0931",
+    "medida": null
+   }
+  ]
+ }
+]

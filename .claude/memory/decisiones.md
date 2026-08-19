@@ -404,3 +404,23 @@
 **Dónde no vive la contraseña:** en el repo. Misma regla que el `DEPLOY_SECRET` — el dueño la pasa al empezar la sesión. Si falta, las suites lo dicen al arrancar en vez de morir en el login siete minutos después.
 **Las cinco reglas operativas** (nunca esperar bloqueado, la suite de UI entera una vez al final, los checks nuevos se prueban antes con un script chico, nunca `pkill -f`, y no tocar el entorno mientras corre una suite) quedaron en **`CLAUDE.md`**, no acá: `decisiones.md` es memoria de por qué, y estas hay que cumplirlas. La lección de fondo: la regla de "una sola corrida al final" ya estaba escrita en este archivo desde la sesión anterior y se rompió igual — una regla que se lee como historia no se cumple.
 **Fecha:** 2026-08-19
+
+## Los catálogos técnicos viven en git como JSON, no en SQLite (2026-08-19)
+**Decisión:** las 1.396 fichas técnicas de la búsqueda por medidas (camisas, guías, subconjuntos) son tres archivos JSON en `CRAC/tecnicos/`, versionados, que `app/tecnicos.py` carga en memoria al primer uso y filtra en Python. **No hay tabla en la base.**
+**Por qué:** el primer plan era una tabla `repuestos_tecnicos` con las medidas en columnas. No hace falta: son 1.396 registros que no cambian con el uso —solo cuando se procesa un catálogo nuevo, unas pocas veces al año— y filtrarlos en Python tarda menos que el ida y vuelta a SQLite. Lo que se gana es lo que *no* hay que escribir: sin tabla no hay migración, ni importación, ni fingerprint para saber si el JSON cambió, ni el riesgo de que un deploy deje producción con el buscador vacío porque nadie corrió la importación. Se hace `git pull` y ya está.
+**Lo único que sí sale de la base:** el precio y el stock, con un solo `SELECT ... WHERE codigo IN (...)` sobre los ≤100 resultados ya recortados.
+**Cuándo dejaría de valer:** si los catálogos técnicos crecieran un orden de magnitud (decenas de miles de fichas) o pasaran a editarse desde la app. Hoy no es ninguno de los dos casos.
+**Fecha:** 2026-08-19
+
+## Los precios del buscador salen de nuestra base, no del repo del que vino
+**Decisión:** de `Chiappo-Repuestos-` se copiaron **solo los datos técnicos**. Su lista de precios (`api/_data/precios.js`, 3,7 MB) y sus 25 archivos `CRAC_*.js` (5,8 MB) se dejaron allá.
+**Por qué:** este sistema ya tiene el catálogo del proveedor entero —64.250 repuestos con precio y stock— y se actualiza todos los días con el Excel. Antes de escribir una línea se cruzaron los dos: **todo código que el otro repo sabe mapear existe en nuestra base** (camisas 136/136, guías RYC 555/555, Indy 164/164, Nubo 71/71, subconjuntos Mahle 109/201 con al menos una sobremedida). Copiar los precios habría metido una segunda lista que se desincroniza el primer día y hace que el mismo repuesto valga dos cosas según por dónde se entre.
+**Consecuencia visible:** una ficha sin código del proveedor (las ~360 que no están cruzadas) se muestra igual, con sus medidas, y dice **"Consultar"** en vez de un precio. Un dato que falta se dice, no se inventa.
+**Fecha:** 2026-08-19
+
+## El código del proveedor se resuelve al convertir, no en cada búsqueda
+**Decisión:** `scripts/convertir_tecnicos.js` deja en el JSON el código del proveedor **exacto**, resuelto contra `CRAC/precio-stock.csv`. En runtime la búsqueda de precio es una comparación directa contra `crac_repuestos.codigo`.
+**Por qué:** en la lista del proveedor los códigos vienen alineados con relleno (`"G IY1171   STD"`, `"S BE01010  0.4"`) y en los catálogos técnicos van con un solo espacio (`"G IY1171 STD"`). Sin resolver esa diferencia, Indy y Nubo daban **0 coincidencias** —235 fichas sin precio— y la mitad de los subconjuntos también. Se podía normalizar en cada consulta, pero eso obliga a un `replace()` en SQL que tira el índice, o a una columna normalizada nueva en una tabla de 64.000 filas. Hacerlo una vez, cuando se convierte el catálogo, cuesta cero y deja el runtime tonto.
+**Lo que hay que saber si se regenera:** el script avisa si dos códigos del proveedor normalizan igual (hoy hay 4, ninguno de los que usamos) y se queda con el primero. Si alguna vez un código nuestro cae en una de esas colisiones, hay que mirarlo a mano.
+**Subconjuntos, el caso raro:** un código Mahle no tiene UN código del proveedor sino **uno por sobremedida** (`codigo.padEnd(11) + medida`). Se guardan todos, y al buscar se muestra el que tiene stock y precio, diciendo cuál es en la columna "Precio de".
+**Fecha:** 2026-08-19

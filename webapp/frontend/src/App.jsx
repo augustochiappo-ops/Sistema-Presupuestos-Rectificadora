@@ -12,6 +12,7 @@ import DetallePresupuesto from './screens/Presupuestos/Detalle'
 import PedidoRepuestos from './screens/Presupuestos/Pedido'
 import PreciosPlaceholder from './screens/Precios/PlaceholderScreen'
 import RepuestosScreen from './screens/Repuestos/RepuestosScreen'
+import BusquedaMedidasScreen from './screens/BusquedaMedidas/BusquedaMedidasScreen'
 
 function Cargando() {
   return (
@@ -52,6 +53,7 @@ function App() {
         <Route path="presupuestos/:id/pedido" element={<PedidoRepuestos />} />
         <Route path="precios" element={<PreciosPlaceholder />} />
         <Route path="repuestos" element={<RepuestosScreen />} />
+        <Route path="busqueda-medidas" element={<BusquedaMedidasScreen />} />
         <Route path="*" element={<Navigate to="/motores" replace />} />
       </Route>
     </Routes>

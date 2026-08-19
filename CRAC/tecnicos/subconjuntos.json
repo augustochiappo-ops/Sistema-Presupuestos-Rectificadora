@@ -1,0 +1,7774 @@
+[
+ {
+  "codigo": "S BE01010",
+  "codigo_fab": "S BE01010",
+  "marca": "MAHLE",
+  "aplicacion": "INDUSTRIAL, AGRÍCOLA Y MARÍTIMO",
+  "descripcion": "IVECO CURSOR NEF TC Pz.52 (2 CIL) 104 mm",
+  "medidas": {
+   "diam_piston": 104,
+   "alt_piston": 96.385,
+   "diam_perno": 38
+  },
+  "extra": {
+   "fabricante": "IVECO",
+   "motor": "FPT - Motor NEF TC 2V TAA",
+   "nro_cil": 4,
+   "diam_cilindro": "104,00 / 132,00",
+   "alt_compresion": 62.385,
+   "prof_rebaje": 24.2,
+   "diams_dispon": "STD / 0,40 / 0,80",
+   "largo_perno": 82,
+   "perno_str": "∅38,00 × 82,00",
+   "juego_montaje": 0.131,
+   "codigo_aros": "A01030",
+   "medida_aros": "1-3,00 / 1-2,39 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,80"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE01010  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE01010  0.4",
+    "medida": "0.4"
+   },
+   {
+    "codigo": "S BE01010  0.8",
+    "medida": "0.8"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE01020",
+  "codigo_fab": "S BE01020",
+  "marca": "MAHLE",
+  "aplicacion": "VERTIS (MEDIANOS) 90V16, 130V18 / EUROCARGO 170E22, 260E25",
+  "descripcion": "IVECO TECTOR 170E22 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.385,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "IVECO",
+   "motor": "FPT - Motor NEF Truck Euro III",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00 / 120,00",
+   "alt_compresion": 71.385,
+   "prof_rebaje": 18.55,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 82.8,
+   "perno_str": "∅40,00 × 82,80",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A01080",
+   "medida_aros": "1-3,00 / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE01020  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE01020  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S BE01020  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE01040",
+  "codigo_fab": "S BE01040",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN FIAT (SERIE 170-697) — 270CV",
+  "descripcion": "FIAT 619 N1 (2 CIL) 137 mm",
+  "medidas": {
+   "diam_piston": 137,
+   "alt_piston": 167,
+   "diam_perno": 48
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "MOTOR 8210.02.00 / 8210.12.00",
+   "nro_cil": 6,
+   "diam_cilindro": "137,00 / 156,00",
+   "alt_compresion": 92,
+   "prof_rebaje": 32.4,
+   "diams_dispon": "STD-B",
+   "largo_perno": 117,
+   "perno_str": "∅48,00 × 117,00",
+   "juego_montaje": 0.2,
+   "codigo_aros": "A01040",
+   "medida_aros": "1-4,00T / 2-3,00 / 1-5,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=142,80 / B=137,02 / C=149,00 / L=282,00",
+   "codigo_camisa": "C01410",
+   "sobremedidas": [
+    "STD-B"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE01060",
+  "codigo_fab": "S BE01060",
+  "marca": "MAHLE",
+  "aplicacion": "DUCATO 2.8 E3 — INYECCIÓN ELECTRÓNICA",
+  "descripcion": "FIAT DUCATO 2.8TDi B/TRAP. 94,4 mm",
+  "medidas": {
+   "diam_piston": 94.4,
+   "alt_piston": 87.6,
+   "diam_perno": 32
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "DUCATO 2.8L Euro 3",
+   "nro_cil": 4,
+   "diam_cilindro": "94,40 / 100,00",
+   "alt_compresion": 58.75,
+   "prof_rebaje": 21.35,
+   "diams_dispon": "STD",
+   "largo_perno": 72,
+   "perno_str": "∅32,00 × 72,00",
+   "juego_montaje": 0.087,
+   "codigo_aros": "A01100",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=97,56 / B=92,65 / C=100,93 / L=167,20",
+   "codigo_camisa": "C01050",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE01060  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE10110",
+  "codigo_fab": "S BE10110",
+  "marca": "MAHLE",
+  "aplicacion": "IVECO DAILY (EURO V)",
+  "descripcion": "IVECO DAILY 3.0 16V F1C E5 95,80 mm",
+  "medidas": {
+   "diam_piston": 95.8,
+   "alt_piston": 93.5,
+   "diam_perno": 35.996
+  },
+  "extra": {
+   "fabricante": "IVECO",
+   "motor": "FPT - Motor F1C 3.0L 16V Euro V",
+   "nro_cil": 4,
+   "diam_cilindro": "95,80",
+   "alt_compresion": 63,
+   "prof_rebaje": 16,
+   "diams_dispon": "STD / 0,40",
+   "largo_perno": 81,
+   "perno_str": "∅35,996 × 81,00",
+   "juego_montaje": 0.092,
+   "codigo_aros": "A0010120",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE10110  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE10500",
+  "codigo_fab": "S BE10500",
+  "marca": "MAHLE",
+  "aplicacion": "DUCATO 2.3 JTD — EURO V",
+  "descripcion": "FIAT DUCATO 2.3JTD 16V F1A E5 Pz.-14,30",
+  "medidas": {
+   "diam_piston": 88,
+   "alt_piston": 84,
+   "diam_perno": 30.996
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FPT - Motor F1A 2.3L 16V Euro V",
+   "nro_cil": 4,
+   "diam_cilindro": "88,00",
+   "alt_compresion": 57,
+   "prof_rebaje": 14.3,
+   "diams_dispon": "STD",
+   "largo_perno": 67,
+   "perno_str": "∅30,996 × 67,00",
+   "juego_montaje": 0.077,
+   "codigo_aros": "A0010450",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE10500  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE250640",
+  "codigo_fab": "S BE250640",
+  "marca": "MAHLE",
+  "aplicacion": "PALIO, SIENA, PUNTO, IDEA, PALIO WEEKEND, STRADA (2015->)",
+  "descripcion": "FIAT E-TORQ 1.6 16V 2015--> 77 mm",
+  "medidas": {
+   "diam_piston": 77,
+   "alt_piston": 46.4,
+   "diam_perno": 19
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "MOTOR E.torQ 1.6L 16V FLEX (NPM)",
+   "nro_cil": 4,
+   "diam_cilindro": "77,00",
+   "alt_compresion": 25.9,
+   "prof_rebaje": 1.55,
+   "diams_dispon": "STD",
+   "largo_perno": 55.5,
+   "perno_str": "∅19,00 × 55,50",
+   "juego_montaje": 0.035,
+   "codigo_aros": "A25825",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE250640 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25125",
+  "codigo_fab": "S BE25125",
+  "marca": "MAHLE",
+  "aplicacion": "DIESEL 1300 CC",
+  "descripcion": "FIAT 147 1.3D 76 mm",
+  "medidas": {
+   "diam_piston": 76.1,
+   "alt_piston": 79.15,
+   "diam_perno": 22
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIASA 1.3 D",
+   "nro_cil": 4,
+   "diam_cilindro": "76,10 / 71,50",
+   "alt_compresion": 47.15,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 64.5,
+   "perno_str": "∅22,00 × 64,50",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A25125",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25125  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25125  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25127",
+  "codigo_fab": "S BE25127",
+  "marca": "MAHLE",
+  "aplicacion": "DIESEL 1300 CC (VARIANTE KH -0,50 MM)",
+  "descripcion": "FIAT 147 1.3D A.C.-0.5 76 mm",
+  "medidas": {
+   "diam_piston": 76.1,
+   "alt_piston": 79.15,
+   "diam_perno": 22
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIASA 1.3 D (KH -0,50)",
+   "nro_cil": 4,
+   "diam_cilindro": "76,10 / 71,50",
+   "alt_compresion": 46.65,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 64.5,
+   "perno_str": "∅22,00 × 64,50",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A25125",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25127  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25127  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25160",
+  "codigo_fab": "S BE25160",
+  "marca": "MAHLE",
+  "aplicacion": "TEMPRA NACIONAL — INYECCIÓN / TEMPRA 94",
+  "descripcion": "FIAT TEMPRA 2.0i 8V 84 mm BRASIL",
+  "medidas": {
+   "diam_piston": 84,
+   "alt_piston": 67,
+   "diam_perno": 22
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIAT 2.0 8V GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "84,00 / 90,00",
+   "alt_compresion": 39,
+   "prof_rebaje": "+1.20",
+   "diams_dispon": "STD / 0,20 / 0,40 / 0,60",
+   "largo_perno": 63.2,
+   "perno_str": "∅22,00 × 63,20",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A25180",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=87,50 / B=83,00 / C=89,10 / L=150,00",
+   "codigo_camisa": "C0250180",
+   "sobremedidas": [
+    "STD",
+    "0,20",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25160  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25160  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25180",
+  "codigo_fab": "S BE25180",
+  "marca": "MAHLE",
+  "aplicacion": "TEMPRA 16V",
+  "descripcion": "FIAT TEMPRA 2.0i 16V 84 mm",
+  "medidas": {
+   "diam_piston": 84,
+   "alt_piston": 67.75,
+   "diam_perno": 22
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIAT 2.0 16V GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "84,00 / 90,00",
+   "alt_compresion": 39.75,
+   "prof_rebaje": 4.4,
+   "diams_dispon": "STD / 0,20 / 0,40 / 0,60",
+   "largo_perno": 63.2,
+   "perno_str": "∅22,00 × 63,20",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A25180",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=87,50 / B=83,00 / C=89,10 / L=150,00",
+   "codigo_camisa": "C0250180",
+   "sobremedidas": [
+    "STD",
+    "0,20",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25180  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25180  0.4",
+    "medida": "0.4"
+   },
+   {
+    "codigo": "S BE25180  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25298",
+  "codigo_fab": "S BE25298",
+  "marca": "MAHLE",
+  "aplicacion": "BRAVO, DOBLO, IDEA, LINEA, PALIO, SIENA, STRADA",
+  "descripcion": "FIAT PALIO E-TORQUE 1.8 16V 80,50 mm",
+  "medidas": {
+   "diam_piston": 80.5,
+   "alt_piston": 45.9,
+   "diam_perno": 19
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "MOTOR E.torQ 1.8L 16V FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "80,50 / 85,80",
+   "alt_compresion": 25.4,
+   "prof_rebaje": 0.47,
+   "diams_dispon": "STD / 0,40",
+   "largo_perno": 55.5,
+   "perno_str": "∅19,00 × 55,50",
+   "juego_montaje": 0.035,
+   "codigo_aros": "A25870",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25298  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25327",
+  "codigo_fab": "S BE25327",
+  "marca": "MAHLE",
+  "aplicacion": "DOBLO, IDEA, PALIO, PALIO WEEKEND, PUNTO, SIENA, STRADA — HASTA 2014",
+  "descripcion": "FIAT E-TORQ 1.6 16V 77 mm",
+  "medidas": {
+   "diam_piston": 77,
+   "alt_piston": 45.9,
+   "diam_perno": 19
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "MOTOR E.torQ 1.6L 16V FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "77,00 / 85,80",
+   "alt_compresion": 25.4,
+   "prof_rebaje": 0.74,
+   "diams_dispon": "STD / 0,40",
+   "largo_perno": 55.5,
+   "perno_str": "∅19,00 × 55,50",
+   "juego_montaje": 0.035,
+   "codigo_aros": "A25825",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25327  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25340",
+  "codigo_fab": "S BE25340",
+  "marca": "MAHLE",
+  "aplicacion": "IDEA/PALIO/PUNTO/WEEKEND/SIENA ELX, STRADA, DOBLO — FLEX/TETRAFUEL",
+  "descripcion": "FIAT FIRE 1.4 8V (Pz.-6,25) 72 mm",
+  "medidas": {
+   "diam_piston": 72,
+   "alt_piston": 46,
+   "diam_perno": 17.974
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIRE 1.4 8V FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "72,00 / 78,90",
+   "alt_compresion": 26,
+   "prof_rebaje": 6.25,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 49,
+   "perno_str": "∅17,974 × 49,00",
+   "juego_montaje": 0.035,
+   "codigo_aros": "A25140",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=75,00 / B=71,00 / L=127,00",
+   "codigo_camisa": "C0250340",
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25340  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25340  0.4",
+    "medida": "0.4"
+   },
+   {
+    "codigo": "S BE25340  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25400",
+  "codigo_fab": "S BE25400",
+  "marca": "MAHLE",
+  "aplicacion": "UNO, PALIO, SIENA",
+  "descripcion": "FIAT FIRE 1.0 8V 70 mm",
+  "medidas": {
+   "diam_piston": 70,
+   "alt_piston": 53.05,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIRE 1.0 8V GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "70,00 / 64,90",
+   "alt_compresion": 33.05,
+   "prof_rebaje": 1,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 53,
+   "perno_str": "∅18,00 × 53,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A25910",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,50",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=73,00 / B=69,00 / C=74,60 / L=114,00",
+   "codigo_camisa": "C0250400",
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25400  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25400  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25410",
+  "codigo_fab": "S BE25410",
+  "marca": "MAHLE",
+  "aplicacion": "SIENA, PALIO, PALIO WEEKEND",
+  "descripcion": "FIAT FIRE 1.0 16V 70 mm",
+  "medidas": {
+   "diam_piston": 70,
+   "alt_piston": 53.05,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIRE 1.0 16V GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "70,00 / 64,90",
+   "alt_compresion": 33.05,
+   "prof_rebaje": 1.7,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 53,
+   "perno_str": "∅18,00 × 53,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A25910",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,50",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=73,00 / B=69,00 / C=74,60 / L=114,00",
+   "codigo_camisa": "C0250400",
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25410  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25410  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25460",
+  "codigo_fab": "S BE25460",
+  "marca": "MAHLE",
+  "aplicacion": "DOBLO, PALIO, PALIO WEEKEND, SIENA",
+  "descripcion": "FIAT FIRE 1.3 16V 70,80 mm",
+  "medidas": {
+   "diam_piston": 70.8,
+   "alt_piston": 48,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIRE 1.3 16V GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "70,80 / 78,90",
+   "alt_compresion": 28,
+   "prof_rebaje": 1.7,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 49,
+   "perno_str": "∅18,00 × 49,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A25930",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=74,00 / B=69,80 / C=75,50 / L=128,80",
+   "codigo_camisa": "C0250450",
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25460  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25460  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25620",
+  "codigo_fab": "S BE25620",
+  "marca": "MAHLE",
+  "aplicacion": "PALIO 1.6 16V — GNC",
+  "descripcion": "FIAT PALIO 1.6 16V 86,4 mm",
+  "medidas": {
+   "diam_piston": 86.4,
+   "alt_piston": 59.92,
+   "diam_perno": 22
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "SEVEL 1.6 16V GÁS",
+   "nro_cil": 4,
+   "diam_cilindro": "86,40 / 67,40",
+   "alt_compresion": 34.92,
+   "prof_rebaje": 2.06,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 56,
+   "perno_str": "∅22,00 × 56,00",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A25600",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=90,40 / B=85,40 / C=92,00 / L=127,00",
+   "codigo_camisa": "C0250031",
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25620  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25620  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25700",
+  "codigo_fab": "S BE25700",
+  "marca": "MAHLE",
+  "aplicacion": "PALIO 97 1.6 8V / PALIO 99 1.6 8V MPI SEVEL",
+  "descripcion": "FIAT PALIO 1.6 8V 86,4 mm",
+  "medidas": {
+   "diam_piston": 86.4,
+   "alt_piston": 65.8,
+   "diam_perno": 21.99
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "SEVEL 1.6 SPI / MPI 8V GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "86,40 / 67,40",
+   "alt_compresion": 33.8,
+   "prof_rebaje": 2.3,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 63,
+   "perno_str": "∅21,99 × 63,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A25700",
+   "medida_aros": "1-1,50 / 1-1,75 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=90,40 / B=85,40 / C=92,00 / L=127,00",
+   "codigo_camisa": "C0250031",
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25700  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25700  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25800",
+  "codigo_fab": "S BE25800",
+  "marca": "MAHLE",
+  "aplicacion": "PALIO 1.7TD — TURBO DIESEL",
+  "descripcion": "FIAT PALIO 1.7TD 82,6 mm",
+  "medidas": {
+   "diam_piston": 82.6,
+   "alt_piston": 76,
+   "diam_perno": 25.99
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIAT 1.7 TD",
+   "nro_cil": 4,
+   "diam_cilindro": "82,60 / 79,40",
+   "alt_compresion": 42.8,
+   "prof_rebaje": "+1.20",
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 69.2,
+   "perno_str": "∅25,99 × 69,20",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A25850",
+   "medida_aros": "1-3,00T / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25800  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25800  0.4",
+    "medida": "0.4"
+   },
+   {
+    "codigo": "S BE25800  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25801",
+  "codigo_fab": "S BE25801",
+  "marca": "MAHLE",
+  "aplicacion": "PALIO 1.7TD — TURBO DIESEL (VARIANTE KH -0,50 MM)",
+  "descripcion": "FIAT PALIO 1.7TD (-0,5) 82,6 mm",
+  "medidas": {
+   "diam_piston": 82.6,
+   "alt_piston": 76,
+   "diam_perno": 25.99
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIAT 1.7 TD (KH -0,50)",
+   "nro_cil": 4,
+   "diam_cilindro": "82,60 / 79,40",
+   "alt_compresion": 42.3,
+   "prof_rebaje": "+1.20",
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 69.2,
+   "perno_str": "∅25,99 × 69,20",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A25850",
+   "medida_aros": "1-3,00T / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25801  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25801  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25885",
+  "codigo_fab": "S BE25885",
+  "marca": "MAHLE",
+  "aplicacion": "LINEA (2008->)",
+  "descripcion": "FIAT LINEA 1.9 16V DOHC 86,4 mm",
+  "medidas": {
+   "diam_piston": 86.4,
+   "alt_piston": 56.2,
+   "diam_perno": 20.995
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "MOTOR SEVEL 1.9L 16V DOHC GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "86,40",
+   "alt_compresion": 28.65,
+   "prof_rebaje": 1.98,
+   "diams_dispon": "STD / 0,40",
+   "largo_perno": 50.65,
+   "perno_str": "∅20,995 × 50,65",
+   "juego_montaje": 0.045,
+   "codigo_aros": "A25530",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25885  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25900",
+  "codigo_fab": "S BE25900",
+  "marca": "MAHLE",
+  "aplicacion": "PALIO / DUNA 1.7D — ASPIRADO DIESEL",
+  "descripcion": "FIAT DUNA 1.7D 82,6 mm",
+  "medidas": {
+   "diam_piston": 82.6,
+   "alt_piston": 75.8,
+   "diam_perno": 24.99
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIAT 1.7 D",
+   "nro_cil": 4,
+   "diam_cilindro": "82,60 / 79,40",
+   "alt_compresion": 42.6,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 69.2,
+   "perno_str": "∅24,99 × 69,20",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A25900",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25900  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25900  0.4",
+    "medida": "0.4"
+   },
+   {
+    "codigo": "S BE25900  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25901",
+  "codigo_fab": "S BE25901",
+  "marca": "MAHLE",
+  "aplicacion": "PALIO / DUNA 1.7D — ASPIRADO DIESEL (VARIANTE KH -0,50 MM)",
+  "descripcion": "FIAT DUNA 1.7D (A.C.-0,5) 82,6 mm",
+  "medidas": {
+   "diam_piston": 82.6,
+   "alt_piston": 75.8,
+   "diam_perno": 24.99
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIAT 1.7 D (KH -0,50)",
+   "nro_cil": 4,
+   "diam_cilindro": "82,60 / 79,40",
+   "alt_compresion": 42.1,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 69.2,
+   "perno_str": "∅24,99 × 69,20",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A25900",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25901  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25901  0.4",
+    "medida": "0.4"
+   },
+   {
+    "codigo": "S BE25901  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25930",
+  "codigo_fab": "S BE25930",
+  "marca": "MAHLE",
+  "aplicacion": "NUEVO UNO / NUEVO PALIO / STRADA / GRAND SIENA — FLEX/TETRAFUEL",
+  "descripcion": "FIAT EVO 1.4 8V Pz.-3 72 mm",
+  "medidas": {
+   "diam_piston": 72,
+   "alt_piston": 47,
+   "diam_perno": 17.974
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "MOTOR EVOTEC 1.4L 8V FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "72,00",
+   "alt_compresion": 26,
+   "prof_rebaje": 3.09,
+   "diams_dispon": "STD / 0,40",
+   "largo_perno": 49,
+   "perno_str": "∅17,974 × 49,00",
+   "juego_montaje": 0.035,
+   "codigo_aros": "A251020",
+   "medida_aros": "1-1,00 / 1-1,00 / 1-1,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,40"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25930  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25930  0.4",
+    "medida": "0.4"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE25980",
+  "codigo_fab": "S BE25980",
+  "marca": "MAHLE",
+  "aplicacion": "PALIO / UNO — GAS — EXPORTACIÓN",
+  "descripcion": "FIAT PALIO 1.3 MPi 76 mm",
+  "medidas": {
+   "diam_piston": 76,
+   "alt_piston": 61.95,
+   "diam_perno": 22
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "FIASA 1.3 MPI",
+   "nro_cil": 4,
+   "diam_cilindro": "76,00 / 71,50",
+   "alt_compresion": 36.95,
+   "prof_rebaje": 1.7,
+   "diams_dispon": "STD / 0,40 / 0,60",
+   "largo_perno": 55,
+   "perno_str": "∅22,00 × 55,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A25010",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=80,00 / B=75,00 / C=81,60 / L=120,00",
+   "codigo_camisa": "C0250120",
+   "sobremedidas": [
+    "STD",
+    "0,40",
+    "0,60"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE25980  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE25980  0.4",
+    "medida": "0.4"
+   },
+   {
+    "codigo": "S BE25980  0.6",
+    "medida": "0.6"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE14145",
+  "codigo_fab": "S BE14145",
+  "marca": "MAHLE",
+  "aplicacion": "CORSA MPFI — 1000",
+  "descripcion": "CHEVROLET CORSA 1.0 8V (Pz.-2) 71,1 mm",
+  "medidas": {
+   "diam_piston": 71.1,
+   "alt_piston": 58.3,
+   "diam_perno": 17.99
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.0L 8V GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "71,10 / 62,90",
+   "alt_compresion": 37.3,
+   "prof_rebaje": 1.98,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 50,
+   "perno_str": "∅17,99 × 50,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A14140",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=75,00 / B=70,10 / C=76,60 / L=133,00",
+   "codigo_camisa": "C0140145",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE14145  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE14145  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE140675",
+  "codigo_fab": "S BE140675",
+  "marca": "MAHLE",
+  "aplicacion": "SONIC",
+  "descripcion": "CHEVROLET SONIC 1.6 16V ECOTEC 79 mm",
+  "medidas": {
+   "diam_piston": 79,
+   "alt_piston": 49.93,
+   "diam_perno": 19.005
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR ECOTEC 1.6L 16V CVVT",
+   "nro_cil": 4,
+   "diam_cilindro": "79,00",
+   "alt_compresion": 26.73,
+   "prof_rebaje": "+1,20",
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 46,
+   "perno_str": "∅19,005 × 46,00",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A0140860",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE140675 STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE140675 0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE141010",
+  "codigo_fab": "S BE141010",
+  "marca": "MAHLE",
+  "aplicacion": "S10 / TRAILBLAZER TURBODIESEL (2012->)",
+  "descripcion": "CHEVROLET S10 2.8TDi DURAMAX 94 mm -->13",
+  "medidas": {
+   "diam_piston": 94,
+   "alt_piston": 80,
+   "diam_perno": 32
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.8L DURAMAX VMM (GM I700)",
+   "nro_cil": 4,
+   "diam_cilindro": "94,00",
+   "alt_compresion": 52,
+   "prof_rebaje": 17,
+   "diams_dispon": "STD",
+   "largo_perno": 71,
+   "perno_str": "∅32,00 × 71,00",
+   "juego_montaje": 0.09,
+   "codigo_aros": "A141010",
+   "medida_aros": "1-3,00 / 1-2,00 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE141010 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE14165",
+  "codigo_fab": "S BE14165",
+  "marca": "MAHLE",
+  "aplicacion": "CELTA, CORSA — 1000",
+  "descripcion": "CHEVROLET CORSA 1.0 8V C/P 71,1 mm",
+  "medidas": {
+   "diam_piston": 71.1,
+   "alt_piston": 58.95,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.0L 8V VHC GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "71,10 / 62,90",
+   "alt_compresion": 37.95,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 50,
+   "perno_str": "∅18,00 × 50,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A14160",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=75,00 / B=70,10 / C=76,60 / L=133,00",
+   "codigo_camisa": "C0140145",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE14165  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE14165  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE14185",
+  "codigo_fab": "S BE14185",
+  "marca": "MAHLE",
+  "aplicacion": "CORSA",
+  "descripcion": "CHEVROLET CORSA 1.6 79 mm",
+  "medidas": {
+   "diam_piston": 79,
+   "alt_piston": 48,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.6L 8V MPFI GAS. (C16NE)",
+   "nro_cil": 4,
+   "diam_cilindro": "79,00 / 81,50",
+   "alt_compresion": 28,
+   "prof_rebaje": 2.7,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 55,
+   "perno_str": "∅18,00 × 55,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A14185",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=83,00 / B=77,98 / C=84,60 / L=147,90",
+   "codigo_camisa": "C0140180",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE14185  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE14185  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE 14040",
+  "codigo_fab": "S BE 14040",
+  "marca": "MAHLE",
+  "aplicacion": "CORSA",
+  "descripcion": "CHEVROLET CORSA 1.7D TURBODIESEL 79 mm",
+  "medidas": {
+   "diam_piston": 79,
+   "alt_piston": 39.5,
+   "diam_perno": 25
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.7L DIESEL",
+   "nro_cil": 4,
+   "diam_cilindro": "79,00",
+   "alt_compresion": null,
+   "prof_rebaje": null,
+   "diams_dispon": "STD",
+   "largo_perno": 64,
+   "perno_str": "∅25,00 × 64,00",
+   "juego_montaje": null,
+   "codigo_aros": "A95000",
+   "medida_aros": "1-2,00 / 1-1,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 142070",
+  "codigo_fab": "S BE 142070",
+  "marca": "MAHLE",
+  "aplicacion": "VECTRA / ASTRA / ZAFIRA X20XE — 2004/2005→ (canal de lubrificación)",
+  "descripcion": "CHEVROLET VECTRA 2.0i 16V X20XE 86 mm",
+  "medidas": {
+   "diam_piston": 86,
+   "alt_piston": 54.21,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.0L 8V FLEX (X20XE)",
+   "nro_cil": 4,
+   "diam_cilindro": "86,00",
+   "alt_compresion": 30.51,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 63,
+   "perno_str": "∅21,00 × 63,00",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14500",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 142120",
+  "codigo_fab": "S BE 142120",
+  "marca": "MAHLE",
+  "aplicacion": "S10 / TRAILBLAZER — TURBODIÉSEL 2016→",
+  "descripcion": "CHEVROLET S10 2.8TDi DURAMAX 2014→ 94 mm",
+  "medidas": {
+   "diam_piston": 94,
+   "alt_piston": 80,
+   "diam_perno": 32
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.8L 16V DURAMAX VMM 2016→",
+   "nro_cil": 4,
+   "diam_cilindro": "94,00",
+   "alt_compresion": 52,
+   "prof_rebaje": 17.45,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 75,
+   "perno_str": "∅32,00 × 75,00",
+   "juego_montaje": 0.09,
+   "codigo_aros": "A0143000",
+   "medida_aros": "1-2,00 / 1-1,50 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14240",
+  "codigo_fab": "S BE 14240",
+  "marca": "MAHLE",
+  "aplicacion": "MONZA 1800 KADETT — DESDE 06/86 EN ADELANTE / CARBURADO",
+  "descripcion": "CHEVROLET MONZA 1.8 84,80 mm",
+  "medidas": {
+   "diam_piston": 84.8,
+   "alt_piston": 58.25,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.8L GAS. FASE II MONZA",
+   "nro_cil": 4,
+   "diam_cilindro": "84,80 / 79,50",
+   "alt_compresion": 33.25,
+   "prof_rebaje": 2.85,
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 61.4,
+   "perno_str": "∅21,00 × 61,40",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14230",
+   "medida_aros": "2-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=89,00 / B=83,78 / C=90,60 / L=148,00",
+   "codigo_camisa": "C14240",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14270",
+  "codigo_fab": "S BE 14270",
+  "marca": "MAHLE",
+  "aplicacion": "2ª GENERACIÓN MONZA (87/88) EN ADELANTE / CARBURADO",
+  "descripcion": "CHEVROLET MONZA 2.0 86 mm",
+  "medidas": {
+   "diam_piston": 86,
+   "alt_piston": 50,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.0L GAS. 2a GENERACIÓN",
+   "nro_cil": 4,
+   "diam_cilindro": "86,00 / 86,00",
+   "alt_compresion": 30,
+   "prof_rebaje": 3.3,
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 61.5,
+   "perno_str": "∅21,00 × 61,50",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14270",
+   "medida_aros": "2-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=90,00 / B=84,98 / C=91,60 / L=142,50",
+   "codigo_camisa": "C14270",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14275",
+  "codigo_fab": "S BE 14275",
+  "marca": "MAHLE",
+  "aplicacion": "MONZA 2000 — EXPORTACIÓN",
+  "descripcion": "CHEVROLET MONZA 2.0 86 mm",
+  "medidas": {
+   "diam_piston": 86,
+   "alt_piston": 50.4,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.0L GAS. EXPORTACIÓN",
+   "nro_cil": 4,
+   "diam_cilindro": "86,00 / 86,00",
+   "alt_compresion": 30.4,
+   "prof_rebaje": 5,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 61.5,
+   "perno_str": "∅21,00 × 61,50",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14270",
+   "medida_aros": "2-1,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14285",
+  "codigo_fab": "S BE 14285",
+  "marca": "MAHLE",
+  "aplicacion": "2000 MONZA / KADETT",
+  "descripcion": "CHEVROLET MONZA 2.0i 86 mm",
+  "medidas": {
+   "diam_piston": 86,
+   "alt_piston": 55.4,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.0L INJECCIÓN MONZA (SUBST. S0142070)",
+   "nro_cil": 4,
+   "diam_cilindro": "86,00 / 86,00",
+   "alt_compresion": 30.4,
+   "prof_rebaje": 5,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 61.5,
+   "perno_str": "∅21,00 × 61,50",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14270",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=90,00 / B=84,98 / C=91,60 / L=142,50",
+   "codigo_camisa": "C14270",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14290",
+  "codigo_fab": "S BE 14290",
+  "marca": "MAHLE",
+  "aplicacion": "MONZA 2000 EFI - MPFI / ASTRA / KADETT / VECTRA MPFI / OMEGA GLS",
+  "descripcion": "CHEVROLET VECTRA 2.0 MPi - ASTRA 2.0 86 mm",
+  "medidas": {
+   "diam_piston": 86,
+   "alt_piston": 57.4,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.0L GAS. EFI-MPFI",
+   "nro_cil": 4,
+   "diam_cilindro": "86,00 / 86,00",
+   "alt_compresion": 30.4,
+   "prof_rebaje": 5,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 61.5,
+   "perno_str": "∅21,00 × 61,50",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14270",
+   "medida_aros": "2-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=90,00 / B=84,98 / C=91,60 / L=142,50",
+   "codigo_camisa": "C14270",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14300",
+  "codigo_fab": "S BE 14300",
+  "marca": "MAHLE",
+  "aplicacion": "VECTRA CD 1996-2000 / ZAFIRA 02 / ASTRA 2000-2001",
+  "descripcion": "CHEVROLET VECTRA 2.0 16V 86 mm",
+  "medidas": {
+   "diam_piston": 86,
+   "alt_piston": 55.4,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.0L 16V GAS. X20EV",
+   "nro_cil": 4,
+   "diam_cilindro": "86,00 / 86,00",
+   "alt_compresion": 30.4,
+   "prof_rebaje": 2.03,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 61.5,
+   "perno_str": "∅21,00 × 61,50",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A14300",
+   "medida_aros": "2-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=90,00 / B=84,98 / C=91,60 / L=142,50",
+   "codigo_camisa": "C14270",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14320",
+  "codigo_fab": "S BE 14320",
+  "marca": "MAHLE",
+  "aplicacion": "OMEGA / VECTRA / S-10",
+  "descripcion": "CHEVROLET VECTRA 2.2i 8V 86 mm",
+  "medidas": {
+   "diam_piston": 86,
+   "alt_piston": 55,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.2L 8V EFI/MPFI GAS",
+   "nro_cil": 4,
+   "diam_cilindro": "86,00 / 94,60",
+   "alt_compresion": 30,
+   "prof_rebaje": 7.1,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 61.5,
+   "perno_str": "∅21,00 × 61,50",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14270",
+   "medida_aros": "2-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=90,00 / B=84,98 / C=91,60 / L=142,50",
+   "codigo_camisa": "C14270",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14340",
+  "codigo_fab": "S BE 14340",
+  "marca": "MAHLE",
+  "aplicacion": "VECTRA 2200 — DESDE 1998",
+  "descripcion": "CHEVROLET VECTRA 2.2 16V 86 mm",
+  "medidas": {
+   "diam_piston": 86,
+   "alt_piston": 55.4,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.2L 16V",
+   "nro_cil": 4,
+   "diam_cilindro": "86,00 / 94,60",
+   "alt_compresion": 30.4,
+   "prof_rebaje": 7.5,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 61.5,
+   "perno_str": "∅21,00 × 61,50",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14300",
+   "medida_aros": "2-1,50 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=90,00 / B=84,98 / C=91,60 / L=142,50",
+   "codigo_camisa": "C14270",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14350",
+  "codigo_fab": "S BE 14350",
+  "marca": "MAHLE",
+  "aplicacion": "ASTRA T3000 / ASTRA 03 SOHC",
+  "descripcion": "CHEVROLET ASTRA 1.8 T3000 84,80 mm",
+  "medidas": {
+   "diam_piston": 84.8,
+   "alt_piston": 58.25,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.8L GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "84,80 / 79,50",
+   "alt_compresion": 33.25,
+   "prof_rebaje": 3.16,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 61.4,
+   "perno_str": "∅21,00 × 61,40",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14870",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14525",
+  "codigo_fab": "S BE 14525",
+  "marca": "MAHLE",
+  "aplicacion": "VERANEIO / OMEGA / SILVERADO — 6 CIL",
+  "descripcion": "CHEVROLET VERANEIO C20 3.7/8 (4.1L)",
+  "medidas": {
+   "diam_piston": 98.42,
+   "alt_piston": 63.18,
+   "diam_perno": 23.55
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 4.1L MPFI GAS.",
+   "nro_cil": 6,
+   "diam_cilindro": "98,42 / 89,70",
+   "alt_compresion": 35.18,
+   "prof_rebaje": 3.82,
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00 / 1,50",
+   "largo_perno": 70,
+   "perno_str": "∅23,55 × 70,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A14525",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00",
+    "1,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14690",
+  "codigo_fab": "S BE 14690",
+  "marca": "MAHLE",
+  "aplicacion": "MERIVA / STILO",
+  "descripcion": "CHEVROLET MERIVA 1.8 16V 80,50 mm",
+  "medidas": {
+   "diam_piston": 80.5,
+   "alt_piston": 45.1,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.8L 16V Familia I GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "80,50 / 88,20",
+   "alt_compresion": 24.1,
+   "prof_rebaje": 1.1,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 57,
+   "perno_str": "∅18,00 × 57,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A14195",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14710",
+  "codigo_fab": "S BE 14710",
+  "marca": "MAHLE",
+  "aplicacion": "S10 / BLAZER",
+  "descripcion": "CHEVROLET VECTRA 2.4 16V X24SE 87,50 mm",
+  "medidas": {
+   "diam_piston": 87.5,
+   "alt_piston": 50.3,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 2.4L 8V GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "87,50 / 99,83",
+   "alt_compresion": 27.3,
+   "prof_rebaje": 6.4,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 61.5,
+   "perno_str": "∅21,00 × 61,50",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14710",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14780",
+  "codigo_fab": "S BE 14780",
+  "marca": "MAHLE",
+  "aplicacion": "CELTA (2003->)",
+  "descripcion": "CHEVROLET CORSA 1.4 8V (CAM.-2,9) 77,60 mm",
+  "medidas": {
+   "diam_piston": 77.6,
+   "alt_piston": 52.05,
+   "diam_perno": 17.99
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.4L 8V MPFI GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "77,60 / 74,00",
+   "alt_compresion": 32.05,
+   "prof_rebaje": 2.9,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 55,
+   "perno_str": "∅17,99 × 55,00",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14840",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14840",
+  "codigo_fab": "S BE 14840",
+  "marca": "MAHLE",
+  "aplicacion": "CORSA 1994 - 1996",
+  "descripcion": "CHEVROLET CORSA 1.4 8V (CAM.-3,4) 77,60 mm",
+  "medidas": {
+   "diam_piston": 77.6,
+   "alt_piston": 52.05,
+   "diam_perno": 17.99
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.4L 8V EFI GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "77,60 / 74,00",
+   "alt_compresion": 32.05,
+   "prof_rebaje": 3.4,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 55,
+   "perno_str": "∅17,99 × 55,00",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A14840",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14920",
+  "codigo_fab": "S BE 14920",
+  "marca": "MAHLE",
+  "aplicacion": "BLAZER V6",
+  "descripcion": "CHEVROLET BLAZER 4.3 V6 244 101,60 mm",
+  "medidas": {
+   "diam_piston": 101.6,
+   "alt_piston": 61.6,
+   "diam_perno": 23.55
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 4.3L V6 MPFI",
+   "nro_cil": 6,
+   "diam_cilindro": "101,60 / 88,39",
+   "alt_compresion": 39.6,
+   "prof_rebaje": "1,85 / 4,50",
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 76.2,
+   "perno_str": "∅23,55 × 76,20",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A14920",
+   "medida_aros": "1-2,00 / 1-1,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 14925",
+  "codigo_fab": "S BE 14925",
+  "marca": "MAHLE",
+  "aplicacion": "STRADA / DOBLÔ / PALIO",
+  "descripcion": "CHEVROLET MERIVA 1.8 8V (Pz-3,8) 80,50 mm",
+  "medidas": {
+   "diam_piston": 80.5,
+   "alt_piston": 45.1,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.8L SOHC GAS. (GM)",
+   "nro_cil": 4,
+   "diam_cilindro": "80,50 / 88,20",
+   "alt_compresion": 24.1,
+   "prof_rebaje": 3.8,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 57,
+   "perno_str": "∅18,00 × 57,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A14195",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE26500",
+  "codigo_fab": "S BE26500",
+  "marca": "MAHLE",
+  "aplicacion": "FORD CARGO 6.6 L — TC FNH FASE II A PARTIR DE DIC. 86 (BIELA TRAPEZOIDAL)",
+  "descripcion": "FORD CARGO 6.6 (B/TRAP.)(2 CIL) 111,80mm",
+  "medidas": {
+   "diam_piston": 111.76,
+   "alt_piston": 111.81,
+   "diam_perno": 41.27
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "FORD CARGO 6.6 L",
+   "nro_cil": 6,
+   "diam_cilindro": "111,76 / 111,76",
+   "alt_compresion": 67.81,
+   "prof_rebaje": 18.6,
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 94.49,
+   "perno_str": "∅41,27 × 94,49",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A26500",
+   "medida_aros": "1-3,20T / 1-2,50 / 1-4,80",
+   "tipo_camisa": null,
+   "dim_camisa": "A=114,45 / B=110,50 / L=200,00",
+   "codigo_camisa": "C26020",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE26500  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE59910",
+  "codigo_fab": "S BE59910",
+  "marca": "MAHLE",
+  "aplicacion": "4000 / RANGER / EXPLORER",
+  "descripcion": "FORD EXPLORER 4.0 V6 244 100,4 mm",
+  "medidas": {
+   "diam_piston": 100.4,
+   "alt_piston": 70.12,
+   "diam_perno": 24
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 4.0L V6",
+   "nro_cil": 6,
+   "diam_cilindro": "100,40 / 84,25",
+   "alt_compresion": 37.12,
+   "prof_rebaje": 8,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 72,
+   "perno_str": "∅24,00 × 72,00",
+   "juego_montaje": 0.035,
+   "codigo_aros": "A25310",
+   "medida_aros": "1-1,60 / 1-1,75 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE59910  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE59910  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE591260",
+  "codigo_fab": "S BE591260",
+  "marca": "MAHLE",
+  "aplicacion": "RANGER — DIESEL",
+  "descripcion": "FORD PUMA 3.2eTGV 20V 89,9 mm",
+  "medidas": {
+   "diam_piston": 89.9,
+   "alt_piston": 75.2,
+   "diam_perno": 32
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 3.2 20V DURATORQ",
+   "nro_cil": 5,
+   "diam_cilindro": "89,90",
+   "alt_compresion": 48.2,
+   "prof_rebaje": 18,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 74.1,
+   "perno_str": "∅32,00 × 74,10",
+   "juego_montaje": 0.06,
+   "codigo_aros": "A0591030",
+   "medida_aros": "1-2,00 / 1-2,00 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE591260 STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE591260 0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE591220",
+  "codigo_fab": "S BE591220",
+  "marca": "MAHLE",
+  "aplicacion": "FUSION, RANGER — GASOLINA",
+  "descripcion": "FORD RANGER 2.3 16V Pz.2 FR.P.21 87.5 mm",
+  "medidas": {
+   "diam_piston": 87.5,
+   "alt_piston": 51,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 2.3 16V DURATEC",
+   "nro_cil": 4,
+   "diam_cilindro": "87,50",
+   "alt_compresion": 28.5,
+   "prof_rebaje": 4,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 63,
+   "perno_str": "∅21,00 × 63,00",
+   "juego_montaje": 0.035,
+   "codigo_aros": "A59560",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE591220 STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE591220 0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE591015",
+  "codigo_fab": "S BE591015",
+  "marca": "MAHLE",
+  "aplicacion": "FOCUS / ECOSPORT — HASTA 2012",
+  "descripcion": "FORD FOCUS 2.0 16V CJBA P.21 87,50 mm",
+  "medidas": {
+   "diam_piston": 87.5,
+   "alt_piston": 51,
+   "diam_perno": 20.995
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 2.0L 16V DURATEC FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "87,50",
+   "alt_compresion": 28.5,
+   "prof_rebaje": 2,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 60,
+   "perno_str": "∅20,995 × 60,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A59560",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE591015 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE59150",
+  "codigo_fab": "S BE59150",
+  "marca": "MAHLE",
+  "aplicacion": "2000 / R4 16V 2.000CC",
+  "descripcion": "FORD ZETEC 2.0 16V P.20,6 C/PL.84,80 mm",
+  "medidas": {
+   "diam_piston": 84.8,
+   "alt_piston": 56.85,
+   "diam_perno": 20.63
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 2.0 16V ZETEC",
+   "nro_cil": 4,
+   "diam_cilindro": "84,80",
+   "alt_compresion": 32.85,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 63.5,
+   "perno_str": "∅20,63 × 63,50",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A59980",
+   "medida_aros": "1-1,20 / 1-1,75 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE59150  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE59150  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE591240",
+  "codigo_fab": "S BE591240",
+  "marca": "MAHLE",
+  "aplicacion": "ECOSPORT — 2017-> — FLEX",
+  "descripcion": "FORD ECOSPORT 1.5 12V DRAGON C/LOMO 84mm",
+  "medidas": {
+   "diam_piston": 84,
+   "alt_piston": 47.5,
+   "diam_perno": 21
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 1.5 16V DRAGON",
+   "nro_cil": 3,
+   "diam_cilindro": "84,00",
+   "alt_compresion": 29.5,
+   "prof_rebaje": "+2,70",
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 46,
+   "perno_str": "∅21,00 × 46,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A0591070",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE591240 STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE591240 0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE591230",
+  "codigo_fab": "S BE591230",
+  "marca": "MAHLE",
+  "aplicacion": "FIESTA, KÁ, KÁ+ — FLEX",
+  "descripcion": "FORD SIGMA 1.5 16V UEJB P.19 79 mm",
+  "medidas": {
+   "diam_piston": 79.01,
+   "alt_piston": 46.78,
+   "diam_perno": 19
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 1.5 16V SIGMA",
+   "nro_cil": 4,
+   "diam_cilindro": "79,01",
+   "alt_compresion": 27.55,
+   "prof_rebaje": "+1,23",
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 55,
+   "perno_str": "∅19,00 × 55,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A0591010",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE591230 STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE591230 0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE590740",
+  "codigo_fab": "S BE590740",
+  "marca": "MAHLE",
+  "aplicacion": "NEW FIESTA, FOCUS, ECOSPORT (2010->)",
+  "descripcion": "FORD SIGMA 1.6 16V C/PZ.S/F FYJA/JB 79mm",
+  "medidas": {
+   "diam_piston": 79.01,
+   "alt_piston": 42.55,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR SIGMA 1.6L 16V FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "79,01",
+   "alt_compresion": 25.05,
+   "prof_rebaje": 0.65,
+   "diams_dispon": "STD",
+   "largo_perno": 51,
+   "perno_str": "∅18,00 × 51,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A59740",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE590740 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE59710",
+  "codigo_fab": "S BE59710",
+  "marca": "MAHLE",
+  "aplicacion": "FIESTA / ESCORT / ORION",
+  "descripcion": "FORD FIESTA 1.8D 82,50 mm",
+  "medidas": {
+   "diam_piston": 82.5,
+   "alt_piston": 73.7,
+   "diam_perno": 26
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 1.8 DIESEL",
+   "nro_cil": 4,
+   "diam_cilindro": "82,50 / 92,80",
+   "alt_compresion": 45.7,
+   "prof_rebaje": 1.6,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 59,
+   "perno_str": "∅26,00 × 59,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A59800",
+   "medida_aros": "1-2,00 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE59710  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE59710  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE59700",
+  "codigo_fab": "S BE59700",
+  "marca": "MAHLE",
+  "aplicacion": "1300 / FIESTA ARGENTINO",
+  "descripcion": "FORD FIESTA 1.3 (P.18) 74 mm",
+  "medidas": {
+   "diam_piston": 74,
+   "alt_piston": 53.9,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 1.3 8V ENDURA HCS GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "74,00",
+   "alt_compresion": 29.4,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 64,
+   "perno_str": "∅18,00 × 64,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A59600",
+   "medida_aros": "1-1,50 / 1-1,75 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE59700  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE59700  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE59570",
+  "codigo_fab": "S BE59570",
+  "marca": "MAHLE",
+  "aplicacion": "1600 / ESCORT, COURIER, FIESTA, KA",
+  "descripcion": "FORD ROCAM 1.6 8V 82 mm",
+  "medidas": {
+   "diam_piston": 82.07,
+   "alt_piston": 48.34,
+   "diam_perno": 18.03
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 1.6 8V HCS ZETEC ROCAM GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "82,07",
+   "alt_compresion": 24.84,
+   "prof_rebaje": 3,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 52,
+   "perno_str": "∅18,03 × 52,00",
+   "juego_montaje": 0.06,
+   "codigo_aros": "A59840",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE59570  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE59570  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE59560",
+  "codigo_fab": "S BE59560",
+  "marca": "MAHLE",
+  "aplicacion": "1000 / KA, FIESTA",
+  "descripcion": "FORD ROCAM 1.0 8V P.18 C/Pz. 68,70 mm",
+  "medidas": {
+   "diam_piston": 68.7,
+   "alt_piston": 53.88,
+   "diam_perno": 18.03
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 1.0 8V ZETEC ROCAM GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "68,70",
+   "alt_compresion": 28.88,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 44,
+   "perno_str": "∅18,03 × 44,00",
+   "juego_montaje": 0.06,
+   "codigo_aros": "A59870",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=72,10 / B=67,20 / C=74,00 / L=120,20",
+   "codigo_camisa": "C9192 / C0590560",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE59560  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE59560  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE59520",
+  "codigo_fab": "S BE59520",
+  "marca": "MAHLE",
+  "aplicacion": "1800 / ESCORT / FIESTA / MONDEO",
+  "descripcion": "FORD ZETEC 1.8 16V P.20,63 C/PL. 80,60mm",
+  "medidas": {
+   "diam_piston": 80.6,
+   "alt_piston": 57.2,
+   "diam_perno": 20.63
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 1.8 16V ZETEC DOHC",
+   "nro_cil": 4,
+   "diam_cilindro": "80,60",
+   "alt_compresion": 33.2,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 63.5,
+   "perno_str": "∅20,63 × 63,50",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A59520",
+   "medida_aros": "1-1,50 / 1-1,60 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE59520  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE59520  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE59500",
+  "codigo_fab": "S BE59500",
+  "marca": "MAHLE",
+  "aplicacion": "1000 / FIESTA / KA NACIONAL",
+  "descripcion": "FORD ROCAM 1.0 8V P.18 C/PL. 68,70 mm",
+  "medidas": {
+   "diam_piston": 68.7,
+   "alt_piston": 53.9,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "FORD",
+   "motor": "MOTOR 1.0 8V ENDURA HCS GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "68,70 / 67,80",
+   "alt_compresion": 29.4,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 59,
+   "perno_str": "∅18,00 × 59,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A59500",
+   "medida_aros": "1-1,50 / 1-1,75 / 1-3,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=72,10 / B=67,70 / C=74,00 / L=128,00",
+   "codigo_camisa": "C9014 / C0590500",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE59500  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE59500  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE 48100",
+  "codigo_fab": "S BE 48100",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN 608 D / 608E / 708E — CAMIÓN 1113/1114/1313/1314/1513/1514/2013/2014/2213/2214/0364/0365 (5 RANURAS SIN REBAJE DE VÁLVULAS)",
+  "descripcion": "M.BENZ OM352 5R (2 CIL) 97 mm",
+  "medidas": {
+   "diam_piston": 97,
+   "alt_piston": 115.7,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 314 (4 CIL.) / OM 352 (6 CIL.) [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,00 / 128,00",
+   "alt_compresion": 65.2,
+   "prof_rebaje": 20,
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A48100",
+   "medida_aros": "1-3,00T / 2-3,00 / 1-5,50 / 1-5,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48130",
+  "codigo_fab": "S BE 48130",
+  "marca": "MAHLE",
+  "aplicacion": "TRACTORES CBT; 1065/2080 OM 314 / 1105/2600/2105 OM 352",
+  "descripcion": "M.BENZ OM352 4R (2 CIL) 97 mm",
+  "medidas": {
+   "diam_piston": 97,
+   "alt_piston": 115.7,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 314 (4 CIL.) / OM 352 (6 CIL.) — TRACTORES CBT",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,00 / 128,00",
+   "alt_compresion": 65.2,
+   "prof_rebaje": 20,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A48130",
+   "medida_aros": "1-3,00T / 2-3,00 / 1-5,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48180",
+  "codigo_fab": "S BE 48180",
+  "marca": "MAHLE",
+  "aplicacion": "3 RANURAS SIN REBAJE DE VÁLVULAS (ARGENTINA)",
+  "descripcion": "M.BENZ OM352 3R (2 CIL) 97 mm",
+  "medidas": {
+   "diam_piston": 97,
+   "alt_piston": 110.2,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 314 / OM 352 (3 RANURAS SIN REBAJE) — ARGENTINA",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,00 / 128,00",
+   "alt_compresion": 65.2,
+   "prof_rebaje": 20,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48279",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,08 / B=96,50 / C=103,50 / L=222,00",
+   "codigo_camisa": "C48180",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48250",
+  "codigo_fab": "S BE 48250",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN 608D / 608E / 708E; 5 RANURAS CON REBAJE DE VÁLVULAS",
+  "descripcion": "M.BENZ OM352A 5R (2 CIL) 97 mm",
+  "medidas": {
+   "diam_piston": 97,
+   "alt_piston": 115.7,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 352A (5 RANURAS CON REBAJE) — CAMIÓN 608D/608E/708E",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,00 / 128,00",
+   "alt_compresion": 65.2,
+   "prof_rebaje": "20,00 / 2,40 / 2,40",
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A48100",
+   "medida_aros": "1-3,00T / 2-3,00 / 1-5,50 / 1-5,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48300",
+  "codigo_fab": "S BE 48300",
+  "marca": "MAHLE",
+  "aplicacion": "TRACTOR D50A-15C; 5675; 16:1",
+  "descripcion": "M.BENZ OM352A 3R (2 CIL) 97 mm",
+  "medidas": {
+   "diam_piston": 97,
+   "alt_piston": 105.2,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 352A (3 RANURAS) — TRACTOR D50A-15C",
+   "nro_cil": 6,
+   "diam_cilindro": "97,00 / 128,00",
+   "alt_compresion": 65.2,
+   "prof_rebaje": 20,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A48270",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48301",
+  "codigo_fab": "S BE 48301",
+  "marca": "MAHLE",
+  "aplicacion": "TRACTOR D50A-15C; 5675; 16:1",
+  "descripcion": "M.BENZ OM352A 3R (2 CIL)(-0,3) 97 mm",
+  "medidas": {
+   "diam_piston": 97,
+   "alt_piston": 104.9,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 352A (3 RANURAS) — TRACTOR D50A-15C [-0,30]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,00 / 128,00",
+   "alt_compresion": 64.9,
+   "prof_rebaje": 20,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A48270",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48330",
+  "codigo_fab": "S BE 48330",
+  "marca": "MAHLE",
+  "aplicacion": "MB180",
+  "descripcion": "M.BENZ OM616 90,90 mm",
+  "medidas": {
+   "diam_piston": 90.9,
+   "alt_piston": 81.85,
+   "diam_perno": 26
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 616",
+   "nro_cil": 4,
+   "diam_cilindro": "90,90",
+   "alt_compresion": 48.35,
+   "prof_rebaje": "1,15 / 8,85 / 1,15",
+   "diams_dispon": "STD / 0,60",
+   "largo_perno": 74,
+   "perno_str": "∅26,00 × 74,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A48210",
+   "medida_aros": "1-3,00 / 1-2,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,60"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48410",
+  "codigo_fab": "S BE 48410",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN 709 / 1214/1414/1614 / ÓMNIBUS 1315/1115/0371U ASPIRADO",
+  "descripcion": "M.BENZ OM366-OM364 (2 CIL) 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 364 / OM 366 [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.8,
+   "prof_rebaje": 22.7,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A48410",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48415",
+  "codigo_fab": "S BE 48415",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN 709 / 1214/1414/1614 / ÓMNIBUS 1315/1115/0371U ASPIRADO",
+  "descripcion": "M.BENZ OM366-OM364 (2 CIL) (-0,3) 97,5mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.5,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 364 / OM 366 [-0,30]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.5,
+   "prof_rebaje": 22.7,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A48410",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48416",
+  "codigo_fab": "S BE 48416",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN 709 / 1214/1414/1614 / ÓMNIBUS 1315/1115/0371U ASPIRADO",
+  "descripcion": "M.BENZ OM366-OM364 (2 CIL) (-0,6) 97,5mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.2,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 364 / OM 366 [-0,60]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.2,
+   "prof_rebaje": 22.7,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A48410",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48510",
+  "codigo_fab": "S BE 48510",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN 912 (OM 364A) / CAMIÓN 1218/1418/1618 — ÓMNIBUS 1318 BIELA PARALELA (OM 366A) / CAMIÓN 1621 TURBINADO INTERCOOLER (OM 366LA)",
+  "descripcion": "M.BENZ OM366A (2 CIL) 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 364A / OM 366A / OM 366LA [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.8,
+   "prof_rebaje": 22.35,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48515",
+  "codigo_fab": "S BE 48515",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN 912 (OM 364A) / CAMIÓN 1218/1418/1618 — ÓMNIBUS 1318 BIELA PARALELA (OM 366A) / CAMIÓN 1621 TURBINADO INTERCOOLER (OM 366LA)",
+  "descripcion": "M.BENZ OM366A (2 CIL) (-0,3) 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.5,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 364A / OM 366A / OM 366LA [-0,30]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.5,
+   "prof_rebaje": 22.35,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48516",
+  "codigo_fab": "S BE 48516",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN 912 (OM 364A) / CAMIÓN 1218/1418/1618 — ÓMNIBUS 1318 BIELA PARALELA (OM 366A) / CAMIÓN 1621 TURBINADO INTERCOOLER (OM 366LA)",
+  "descripcion": "M.BENZ OM366A (2 CIL) (-0,6) 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.2,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 364A / OM 366A / OM 366LA [-0,60]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.2,
+   "prof_rebaje": 22.35,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C1049",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 460100",
+  "codigo_fab": "S BE 460100",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR MAN D08.34 / D08.36 EURO V",
+  "descripcion": "MAN D08 (2 CIL) 108 mm",
+  "medidas": {
+   "diam_piston": 108,
+   "alt_piston": 103,
+   "diam_perno": 44
+  },
+  "extra": {
+   "fabricante": "MAN",
+   "motor": "MOTOR MAN D08.34 / D08.36 EURO V",
+   "nro_cil": "4/6",
+   "diam_cilindro": "108,00",
+   "alt_compresion": 63.9,
+   "prof_rebaje": 18.47,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 88,
+   "perno_str": "∅44,00 × 88,00",
+   "juego_montaje": 0.14,
+   "codigo_aros": "A0460040",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=111,31 / B=107,00 / C=— / L=217,00",
+   "codigo_camisa": "C0460100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48010",
+  "codigo_fab": "S BE 48010",
+  "marca": "MAHLE",
+  "aplicacion": "A PARTIR DE 1964",
+  "descripcion": "M.BENZ COMPRESOR 77 mm",
+  "medidas": {
+   "diam_piston": 77,
+   "alt_piston": 59,
+   "diam_perno": 16
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "COMPRESSOR MOTOR OM 314 / OM 352 — A PARTIR DE 1964",
+   "nro_cil": 1,
+   "diam_cilindro": "77,00 / 30,00",
+   "alt_compresion": 30,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,25 / 0,50 / 0,75 / 1,00",
+   "largo_perno": 66,
+   "perno_str": "∅16,00 × 66,00",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A48000",
+   "medida_aros": "3-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48030",
+  "codigo_fab": "S BE 48030",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR OM 314 / OM 352 / OM 364 / OM 366",
+  "descripcion": "M.BENZ COMPRESOR 94 mm",
+  "medidas": {
+   "diam_piston": 94,
+   "alt_piston": 52.3,
+   "diam_perno": 16
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "COMPRESSOR MOTOR OM 314 / OM 352 / OM 364 / OM 366",
+   "nro_cil": 1,
+   "diam_cilindro": "94,00 / 30,00",
+   "alt_compresion": 27,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,25 / 0,50 / 0,75 / 1,00",
+   "largo_perno": 66,
+   "perno_str": "∅16,00 × 66,00",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A48030",
+   "medida_aros": "3-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 45000",
+  "codigo_fab": "S BE 45000",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR MWM / FIAT / FNM / PERKINS / CUMMINS",
+  "descripcion": "BENDIX COMPRESOR (2 CIL) 2.1/2",
+  "medidas": {
+   "diam_piston": 63.5,
+   "alt_piston": 59.5,
+   "diam_perno": null
+  },
+  "extra": {
+   "fabricante": "BENDIX",
+   "motor": "COMPRESSOR TU-FLO500 MWM / FIAT / FNM / PERKINS / CUMMINS",
+   "nro_cil": 2,
+   "diam_cilindro": "63,50",
+   "alt_compresion": 26.85,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,254 / 0,508 / 0,762 / 1,016",
+   "largo_perno": null,
+   "perno_str": null,
+   "juego_montaje": 0.08,
+   "codigo_aros": "A45000",
+   "medida_aros": "5-2,38",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,254",
+    "0,508",
+    "0,762",
+    "1,016"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 480320",
+  "codigo_fab": "S BE 480320",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR OM 924/926 EURO V",
+  "descripcion": "M.BENZ OM924LA-OM926LA E5 (2 CIL) 106 mm",
+  "medidas": {
+   "diam_piston": 106,
+   "alt_piston": 98.4,
+   "diam_perno": 44
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 924/926 EURO V",
+   "nro_cil": "4/6",
+   "diam_cilindro": "106,00",
+   "alt_compresion": 61.4,
+   "prof_rebaje": 15.67,
+   "diams_dispon": "STD / 0,30 / 0,60",
+   "largo_perno": 85,
+   "perno_str": "∅44,00 × 85,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A0481040",
+   "medida_aros": "1-3,50 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=110,00 / B=104,50 / C=— / L=220,00",
+   "codigo_camisa": "C0480690",
+   "sobremedidas": [
+    "STD",
+    "0,30",
+    "0,60"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 480390",
+  "codigo_fab": "S BE 480390",
+  "marca": "MAHLE",
+  "aplicacion": "SPRINTER 311, 415, 515 CDI (2012->)",
+  "descripcion": "M.BENZ OM651LA 2.2CDi 83 mm",
+  "medidas": {
+   "diam_piston": 83,
+   "alt_piston": 75.5,
+   "diam_perno": 30
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 651LA 2.2L EURO V",
+   "nro_cil": 4,
+   "diam_cilindro": "83,00",
+   "alt_compresion": 48.5,
+   "prof_rebaje": 13.25,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 66,
+   "perno_str": "∅30,00 × 66,00",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A0481070",
+   "medida_aros": "1-2,00 / 1-1,75 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48880",
+  "codigo_fab": "S BE 48880",
+  "marca": "MAHLE",
+  "aplicacion": "SPRINTER 313 CDI Y 413 CDI - 129CV / 311 - 109cv; 2150 cc; 18,0:1",
+  "descripcion": "M.BENZ OM611 2.2CDi B/TRAP. 88 mm",
+  "medidas": {
+   "diam_piston": 88,
+   "alt_piston": 68.3,
+   "diam_perno": 30
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 611LA EURO III ELECTRÓNICO",
+   "nro_cil": 4,
+   "diam_cilindro": "88,00",
+   "alt_compresion": 42.3,
+   "prof_rebaje": "1,30 / 13,80",
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 70,
+   "perno_str": "∅30,00 × 70,00",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A48910",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48880",
+  "codigo_fab": "S BE 48880",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN ACCELO 715C - 156CV; 2700 cc; 18:1",
+  "descripcion": "M.BENZ OM611 2.2CDi B/TRAP. 88 mm",
+  "medidas": {
+   "diam_piston": 88,
+   "alt_piston": 68.3,
+   "diam_perno": 30
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 612LA",
+   "nro_cil": 5,
+   "diam_cilindro": "88,00",
+   "alt_compresion": 42.3,
+   "prof_rebaje": "1,30 / 13,80",
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 70,
+   "perno_str": "∅30,00 × 70,00",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A48910",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48890",
+  "codigo_fab": "S BE 48890",
+  "marca": "MAHLE",
+  "aplicacion": "OM 904 LA: 914-917, 927, 928, 936, 942, 944, 946, 947, 950, 953, 959, 961, 964, Euro 3R 4 Diesel, 4250 cm3, 90-130kw (122-177 PS), 18:1 TURBO, LLK, 3 Ventile, SA 505007 06/SA 505602 03, Aplic.: 1996->",
+  "descripcion": "M.BENZ OM904LA-OM906LA E3 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 101.2,
+   "diam_perno": 42
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 904LA, 906HLA, 906LA [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "102,00 / 130,00",
+   "alt_compresion": 64.4,
+   "prof_rebaje": 13.13,
+   "diams_dispon": "STD / 0,30 / 0,60",
+   "largo_perno": 80,
+   "perno_str": "∅42,00 × 80,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48940",
+   "medida_aros": "1-3,00 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=106,00 / B=100,50 / C=109,50 / L=220,00",
+   "codigo_camisa": "C48950",
+   "sobremedidas": [
+    "STD",
+    "0,30",
+    "0,60"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48950",
+  "codigo_fab": "S BE 48950",
+  "marca": "MAHLE",
+  "aplicacion": "4250/6400 cc; 17,4:1",
+  "descripcion": "M.BENZ OM904LA-OM906LA P.40 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 101.2,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 904/906 LA P.40 [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "102,00 / 130,00",
+   "alt_compresion": 64.4,
+   "prof_rebaje": 13.9,
+   "diams_dispon": "STD",
+   "largo_perno": 78,
+   "perno_str": "∅40,00 × 78,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48940",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=106,00 / B=100,50 / C=109,50 / L=220,00",
+   "codigo_camisa": "C48950",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48980",
+  "codigo_fab": "S BE 48980",
+  "marca": "MAHLE",
+  "aplicacion": "4250/6400 cc; 17,4:1",
+  "descripcion": "M.BENZ OM904LA-OM906LA P.42 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 101.2,
+   "diam_perno": 42
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 904/906 LA P.42 [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "102,00 / 130,00",
+   "alt_compresion": 64.4,
+   "prof_rebaje": 13.9,
+   "diams_dispon": "STD / 0,30 / 0,60 / 0,90",
+   "largo_perno": 80,
+   "perno_str": "∅42,00 × 80,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48940",
+   "medida_aros": "1-3,00 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=106,00 / B=100,50 / C=109,50 / L=220,00",
+   "codigo_camisa": "C48950",
+   "sobremedidas": [
+    "STD",
+    "0,30",
+    "0,60",
+    "0,90"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48800",
+  "codigo_fab": "S BE 48800",
+  "marca": "MAHLE",
+  "aplicacion": "ÓMNIBUS O 371 R / CAMIONES 1524 / 1525",
+  "descripcion": "M.BENZ OM355A S/FREZ. (1 CIL) 128 mm",
+  "medidas": {
+   "diam_piston": 128,
+   "alt_piston": 161.26,
+   "diam_perno": 48
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 355/5A [STD]",
+   "nro_cil": 5,
+   "diam_cilindro": "128,00 / 150,00",
+   "alt_compresion": 90.26,
+   "prof_rebaje": 29,
+   "diams_dispon": "STD / 0,25 / 1,00",
+   "largo_perno": 108,
+   "perno_str": "∅48,00 × 108,00",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48700",
+   "medida_aros": "1-3,50 / 1-3,50 / 1-3,50 / 1-6,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=133,50 / B=127,40 / C=137,50 / L=287,50",
+   "codigo_camisa": "C48600",
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48800",
+  "codigo_fab": "S BE 48800",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIONES 1932/1933 / ÓMNIBUS O 371 RSD; 15,1:1",
+  "descripcion": "M.BENZ OM355A S/FREZ. (1 CIL) 128 mm",
+  "medidas": {
+   "diam_piston": 128,
+   "alt_piston": 161.26,
+   "diam_perno": 48
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 355/6LA [STD]",
+   "nro_cil": 6,
+   "diam_cilindro": "128,00 / 150,00",
+   "alt_compresion": 90.26,
+   "prof_rebaje": 29,
+   "diams_dispon": "STD / 0,25 / 1,00",
+   "largo_perno": 108,
+   "perno_str": "∅48,00 × 108,00",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48700",
+   "medida_aros": "1-3,50 / 1-3,50 / 1-3,50 / 1-6,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=133,50 / B=127,40 / C=137,50 / L=287,50",
+   "codigo_camisa": "C48600",
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48520",
+  "codigo_fab": "S BE 48520",
+  "marca": "MAHLE",
+  "aplicacion": "BIELA TRAPEZOIDAL No 374.980; 17,25:1",
+  "descripcion": "M.BENZ OM366LA E1 B/Tr54,7(2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 364LA [STD]",
+   "nro_cil": 4,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.8,
+   "prof_rebaje": 22.6,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C48100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48520",
+  "codigo_fab": "S BE 48520",
+  "marca": "MAHLE",
+  "aplicacion": "OH1318/0371U/OF1318/1618/10812/No 376.948 OH1318/No 376.949 O3710/No 372.952-No 376.967/-OF1318/1618",
+  "descripcion": "M.BENZ OM366LA E1 B/Tr54,7(2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.5,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366A [STD]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.8,
+   "prof_rebaje": 22.6,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C48100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48520",
+  "codigo_fab": "S BE 48520",
+  "marca": "MAHLE",
+  "aplicacion": "ÓMNIBUS URBANO 0-371 UL A PARTIR No 376.994; EPA 91",
+  "descripcion": "M.BENZ OM366LA E1 B/Tr54,7(2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.5,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366LA EPA 91 [-0,30]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.5,
+   "prof_rebaje": 22.6,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C48100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48521",
+  "codigo_fab": "S BE 48521",
+  "marca": "MAHLE",
+  "aplicacion": "BIELA TRAPEZOIDAL No 374.980; 17,25:1",
+  "descripcion": "M.BENZ OM366LA E1 TRAP.-0,3(2 CIL)97,5mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.5,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 364LA [-0,30]",
+   "nro_cil": 4,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.5,
+   "prof_rebaje": 22.6,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C48100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48521",
+  "codigo_fab": "S BE 48521",
+  "marca": "MAHLE",
+  "aplicacion": "OH1318/0371U/OF1318/1618/10812/No 376.948 OH1318/No 376.949 O3710/No 372.952-No 376.967/-OF1318/1618",
+  "descripcion": "M.BENZ OM366LA E1 TRAP.-0,3(2 CIL)97,5mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.5,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366A [-0,30]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.5,
+   "prof_rebaje": 22.6,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C48100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48521",
+  "codigo_fab": "S BE 48521",
+  "marca": "MAHLE",
+  "aplicacion": "ÓMNIBUS URBANO 0-371 UL A PARTIR No 376.994; EPA 91",
+  "descripcion": "M.BENZ OM366LA E1 TRAP.-0,3(2 CIL)97,5mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 106.9,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366LA EPA 91 [STD]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 61.9,
+   "prof_rebaje": 22.6,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C48100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48530",
+  "codigo_fab": "S BE 48530",
+  "marca": "MAHLE",
+  "aplicacion": "BIELA PARALELA; 17:1",
+  "descripcion": "M.BENZ OM366LA (CAM.54,7) (2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 364 [STD]",
+   "nro_cil": 4,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.8,
+   "prof_rebaje": 22.6,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48530",
+  "codigo_fab": "S BE 48530",
+  "marca": "MAHLE",
+  "aplicacion": "BIELA PARALELA; 17:1",
+  "descripcion": "M.BENZ OM366LA (CAM.54,7) (2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366LA [STD]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.8,
+   "prof_rebaje": 22.6,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48540",
+  "codigo_fab": "S BE 48540",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM366LA (53,9)-0,3 (2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 108,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366LA [STD]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 63,
+   "prof_rebaje": 22.2,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.2,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48541",
+  "codigo_fab": "S BE 48541",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM366LA (53,9)-0,3 (2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.7,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366LA [-0,30]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.7,
+   "prof_rebaje": 22.2,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.2,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48550",
+  "codigo_fab": "S BE 48550",
+  "marca": "MAHLE",
+  "aplicacion": "BIELA TRAPEZOIDAL EURO I; 18:1",
+  "descripcion": "M.BENZ OM366LA (CAM.52,6) (2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 108,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366A (4 CIL.) / OM 364A (6 CIL.) / OM 366LA (6 CIL.) [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 63,
+   "prof_rebaje": 22.2,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C48100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48551",
+  "codigo_fab": "S BE 48551",
+  "marca": "MAHLE",
+  "aplicacion": "BIELA TRAPEZOIDAL EURO I; 18:1",
+  "descripcion": "M.BENZ OM366LA (52,6)(-0,3)(2 CIL) 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.7,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366A (4 CIL.) / OM 364A (6 CIL.) / OM 366LA (6 CIL.) [-0,30]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.7,
+   "prof_rebaje": 22.2,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C48100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48560",
+  "codigo_fab": "S BE 48560",
+  "marca": "MAHLE",
+  "aplicacion": "18:1",
+  "descripcion": "M.BENZ OM366LA (54,7)B/TR.(2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 108,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366LA [STD]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 63,
+   "prof_rebaje": 23,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=100,50 / B=96,50 / C=103,40 / L=222,00",
+   "codigo_camisa": "C48100",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48570",
+  "codigo_fab": "S BE 48570",
+  "marca": "MAHLE",
+  "aplicacion": "17,25:1",
+  "descripcion": "M.BENZ OM366LA (CAM.62,8) (2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 364 [STD]",
+   "nro_cil": 4,
+   "diam_cilindro": "97,50 / 133,00",
+   "alt_compresion": 62.8,
+   "prof_rebaje": 22.6,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48570",
+  "codigo_fab": "S BE 48570",
+  "marca": "MAHLE",
+  "aplicacion": "17,25:1",
+  "descripcion": "M.BENZ OM366LA (CAM.62,8) (2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366LA [STD]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,50",
+   "alt_compresion": 62.8,
+   "prof_rebaje": 22.6,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48515",
+   "medida_aros": "1-2,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48590",
+  "codigo_fab": "S BE 48590",
+  "marca": "MAHLE",
+  "aplicacion": "GAS",
+  "descripcion": "M.BENZ OM366LA GNC (CAM.63) (2 CIL)97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 106.2,
+   "diam_perno": 36
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 366LAG [STD]",
+   "nro_cil": 6,
+   "diam_cilindro": "97,50",
+   "alt_compresion": 61.2,
+   "prof_rebaje": 18.99,
+   "diams_dispon": "STD",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A48950",
+   "medida_aros": "1-2,50 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48690",
+  "codigo_fab": "S BE 48690",
+  "marca": "MAHLE",
+  "aplicacion": "AXOR 1933 Y 2533, ÓMNIBUS O500; 4800/7200 cc",
+  "descripcion": "M.BENZ OM924LA-OM926LA(2 CIL)P.12,5 106m",
+  "medidas": {
+   "diam_piston": 106,
+   "alt_piston": 98.4,
+   "diam_perno": 42
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 924/926 [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "106,00 / 136,00",
+   "alt_compresion": 61.4,
+   "prof_rebaje": 12.56,
+   "diams_dispon": "STD / 0,30 / 0,60",
+   "largo_perno": 80,
+   "perno_str": "∅42,00 × 80,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48690",
+   "medida_aros": "1-3,00 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=110,00 / B=104,50 / C=— / L=220,00",
+   "codigo_camisa": "C0480690",
+   "sobremedidas": [
+    "STD",
+    "0,30",
+    "0,60"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48760",
+  "codigo_fab": "S BE 48760",
+  "marca": "MAHLE",
+  "aplicacion": "6400 cc",
+  "descripcion": "M.BENZ OM904LA-OM906LA P.42 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 102.2,
+   "diam_perno": 42
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM904LA / OM906LA [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "102,00 / 130,00",
+   "alt_compresion": 64.4,
+   "prof_rebaje": 13.95,
+   "diams_dispon": "STD / 0,30 / 0,60",
+   "largo_perno": 80,
+   "perno_str": "∅42,00 × 80,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48760",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=106,00 / B=100,50 / C=109,50 / L=220,00",
+   "codigo_camisa": "C48950",
+   "sobremedidas": [
+    "STD",
+    "0,30",
+    "0,60"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48770",
+  "codigo_fab": "S BE 48770",
+  "marca": "MAHLE",
+  "aplicacion": "ÓMNIBUS OF1721, 1722; 4800 cc",
+  "descripcion": "M.BENZ OM924LA-OM926LA(2 CIL)P.13,4 106m",
+  "medidas": {
+   "diam_piston": 106,
+   "alt_piston": 98.4,
+   "diam_perno": 42
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM924LA / OM926LA [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "106,00 / 136,00",
+   "alt_compresion": 61.4,
+   "prof_rebaje": 13.4,
+   "diams_dispon": "STD / 0,30 / 0,60",
+   "largo_perno": 80,
+   "perno_str": "∅42,00 × 80,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48690",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,30",
+    "0,60"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 48780",
+  "codigo_fab": "S BE 48780",
+  "marca": "MAHLE",
+  "aplicacion": "AXXOR 1933, 2040, 2533, 2625, 2828, 2831 — ÓMNIBUS O500; 7800 cc",
+  "descripcion": "M.BENZ OM924LA-OM926LA(2 CIL)P.14,2 106m",
+  "medidas": {
+   "diam_piston": 106,
+   "alt_piston": 98.4,
+   "diam_perno": 42
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM924LA / OM926LA [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "106,00 / 136,00",
+   "alt_compresion": 61.4,
+   "prof_rebaje": 14.19,
+   "diams_dispon": "STD / 0,30 / 0,60",
+   "largo_perno": 80,
+   "perno_str": "∅42,00 × 80,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48690",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,30",
+    "0,60"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 94000",
+  "codigo_fab": "S BE 94000",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR OM 447A/LA, OM 449A/LA",
+  "descripcion": "KNORR COMPRESOR 90 mm",
+  "medidas": {
+   "diam_piston": 90,
+   "alt_piston": 57.5,
+   "diam_perno": 20
+  },
+  "extra": {
+   "fabricante": "KNORR",
+   "motor": "COMPRESSOR MOTOR OM 447A/LA, OM 449A/LA",
+   "nro_cil": 1,
+   "diam_cilindro": "90,00 / 36,00",
+   "alt_compresion": 35,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 60,
+   "perno_str": "∅20,00 × 60,00",
+   "juego_montaje": 0.08,
+   "codigo_aros": "A94000",
+   "medida_aros": "2-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 94100",
+  "codigo_fab": "S BE 94100",
+  "marca": "MAHLE",
+  "aplicacion": "IVECO DAILY (10/2014)",
+  "descripcion": "KNORR COMPRESOR 75 mm",
+  "medidas": {
+   "diam_piston": 75,
+   "alt_piston": 60,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "KNORR",
+   "motor": "COMPRESSOR LK15",
+   "nro_cil": 1,
+   "diam_cilindro": "75,00",
+   "alt_compresion": 31,
+   "prof_rebaje": null,
+   "diams_dispon": "STD",
+   "largo_perno": 63,
+   "perno_str": "∅18,00 × 63,00",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A94100",
+   "medida_aros": "3-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 94110",
+  "codigo_fab": "S BE 94110",
+  "marca": "MAHLE",
+  "aplicacion": "MWM 229 - 6 CIL / FORD F12000/F14000 / VW 11130/11140",
+  "descripcion": "KNORR (1 CIL) 88 mm",
+  "medidas": {
+   "diam_piston": 88,
+   "alt_piston": 61.5,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "KNORR",
+   "motor": "COMPRESSOR LK38",
+   "nro_cil": 1,
+   "diam_cilindro": "88,00 / 37,00",
+   "alt_compresion": 31.5,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,25 / 0,50 / 1,00",
+   "largo_perno": 63,
+   "perno_str": "∅18,00 × 63,00",
+   "juego_montaje": 0.06,
+   "codigo_aros": "A94050",
+   "medida_aros": "1-2,50 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 94230",
+  "codigo_fab": "S BE 94230",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "KNORR LK38/COMPR. M.BENZ 1938(1 CIL) 80 mm",
+  "medidas": {
+   "diam_piston": 80,
+   "alt_piston": 64,
+   "diam_perno": 18
+  },
+  "extra": {
+   "fabricante": "KNORR",
+   "motor": "COMPRESSOR LK38NG",
+   "nro_cil": 1,
+   "diam_cilindro": "80,00",
+   "alt_compresion": 31.01,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,25 / 0,50",
+   "largo_perno": 63,
+   "perno_str": "∅18,00 × 63,00",
+   "juego_montaje": 0.049,
+   "codigo_aros": "A94230",
+   "medida_aros": "2-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE10520",
+  "codigo_fab": "S BE10520",
+  "marca": "MAHLE",
+  "aplicacion": "TECTOR 170E28, 240E28, 260E28, 310E28 / ATTACK 170E28, 240E28",
+  "descripcion": "CUMMINS 4BTE Pz.76/56 C/C (2 CIL) 102mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.385,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR 5.9L 24V F4AE3681E EURO 5",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 71.385,
+   "prof_rebaje": 17.25,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.8,
+   "perno_str": "∅40,00 × 82,80",
+   "juego_montaje": 0.13,
+   "codigo_aros": "DC.8548 / A01080",
+   "medida_aros": "1-3,00 / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE10520  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE10520  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21100",
+  "codigo_fab": "S BE21100",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 4BT-6BT CAM.59 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.36,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR BT TURBO",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 71.56,
+   "prof_rebaje": 17.7,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 75.8,
+   "perno_str": "∅40,00 × 75,80",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A21100",
+   "medida_aros": "1-3,00T / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,575 / B=101,50 / L=200,00",
+   "codigo_camisa": "C21100",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21100  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE21100  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S BE21100  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE211010",
+  "codigo_fab": "S BE211010",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS ISF 3.8 Pz. 70/55 (2 Un) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 108.89,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR ISF 3.8L",
+   "nro_cil": 4,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 73.89,
+   "prof_rebaje": 18.025,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.8,
+   "perno_str": "∅40,00 × 82,80",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21540",
+   "medida_aros": "1-3,00T / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,56 / B=101,40 / L=199,49",
+   "codigo_camisa": "C0211010",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE211010 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE211020",
+  "codigo_fab": "S BE211020",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS QSB 4.5-6.7 Pz.73/61(2 Un) 107mm",
+  "medidas": {
+   "diam_piston": 107,
+   "alt_piston": 103.185,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR ISB 6.7L 12V / 4.5 16V",
+   "nro_cil": "4/6",
+   "diam_cilindro": "107,00",
+   "alt_compresion": 69.385,
+   "prof_rebaje": 18.3,
+   "diams_dispon": "STD",
+   "largo_perno": 90.2,
+   "perno_str": "∅40,00 × 90,20",
+   "juego_montaje": 0.115,
+   "codigo_aros": "A0210570",
+   "medida_aros": "1-2,97 / 1-2,545 / 1-3,54",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE211020 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21110",
+  "codigo_fab": "S BE21110",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 4B-6B CAM.59,1 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.36,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR B NA",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 71.56,
+   "prof_rebaje": 19.3,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 75.8,
+   "perno_str": "∅40,00 × 75,80",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A21110",
+   "medida_aros": "1-2,385 / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,575 / B=101,50 / L=200,00",
+   "codigo_camisa": "C21100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21110  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE21110  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21190",
+  "codigo_fab": "S BE21190",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 4B-6B CAM.54,2 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.41,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR SERIE B",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 71.58,
+   "prof_rebaje": 20.7,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 82.8,
+   "perno_str": "∅40,00 × 82,80",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A21100",
+   "medida_aros": "1-3,00T / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,575 / B=101,50 / L=200,00",
+   "codigo_camisa": "C21100",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21190  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE21190  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S BE21190  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21260",
+  "codigo_fab": "S BE21260",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 4BT-6BT CAM.51,24 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.51,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR SERIE B TURBO",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 71.685,
+   "prof_rebaje": 22,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 82.8,
+   "perno_str": "∅40,00 × 82,80",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A21100",
+   "medida_aros": "1-3,00T / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,575 / B=101,50 / L=200,00",
+   "codigo_camisa": "C21100",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21260  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE21260  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S BE21260  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21345",
+  "codigo_fab": "S BE21345",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS QSB (Pz.50,50) (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.41,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR SERIE B 18:1",
+   "nro_cil": "4/6",
+   "diam_cilindro": "102,00",
+   "alt_compresion": 71.585,
+   "prof_rebaje": 21.8,
+   "diams_dispon": "STD",
+   "largo_perno": 82.68,
+   "perno_str": "∅40,00 × 82,68",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A21540",
+   "medida_aros": "1-3,00T / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,575 / B=101,50 / L=200,00",
+   "codigo_camisa": "C21100",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21345  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21380",
+  "codigo_fab": "S BE21380",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 4BTA-6BTA CAM.51 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.39,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR SERIE B TURBO",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 71.58,
+   "prof_rebaje": 22.1,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 82.8,
+   "perno_str": "∅40,00 × 82,80",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A21100",
+   "medida_aros": "1-3,00T / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,575 / B=101,50 / L=200,00",
+   "codigo_camisa": "C21100",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21380  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE21380  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S BE21380  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21500",
+  "codigo_fab": "S BE21500",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTA (Pz.63,30) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 120.32,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR CT 8,3L HASTA 1991",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 78.82,
+   "prof_rebaje": 21.8,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21510",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=122,94 / B=114,02 / C=132,95 / L=237,12",
+   "codigo_camisa": "C21500",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21500  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21520",
+  "codigo_fab": "S BE21520",
+  "marca": "MAHLE",
+  "aplicacion": "VW 23.250 E — MOTOR 5.9L 24V L6 / VW 17.250 E CONSTELLATION / FORD CARGO 2628 E / VW 24.250 E",
+  "descripcion": "CUMMINS 4BTE-6BTE PZ.70-56 C/C(PAR) 102m",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.25,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR ISB-E (6 CIL.) CON CANAL DE ENFRIAMIENTO",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 71.45,
+   "prof_rebaje": 18.55,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.8,
+   "perno_str": "∅40,00 × 82,80",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A21540",
+   "medida_aros": "1-3,00T / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,575 / B=101,50 / L=200,00",
+   "codigo_camisa": "C21100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21520  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE21520  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21530",
+  "codigo_fab": "S BE21530",
+  "marca": "MAHLE",
+  "aplicacion": "VW 13.170 E — MOTOR 3.9L 16V L4 / VW 9.150 E — MOTOR 3.9L 16V / FORD CARGO 815 E / F4000 E / VW 8.150 E / FORD F-350 E / CARGO 1317 E",
+  "descripcion": "CUMMINS 4BTE/6BTE PZ.70-56 S/C(PAR) 102m",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.25,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR ISB-E (4 CIL.) SIN CANAL DE ENFRIAMIENTO",
+   "nro_cil": 4,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 71.45,
+   "prof_rebaje": 18.55,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.8,
+   "perno_str": "∅40,00 × 82,80",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A21540",
+   "medida_aros": "1-3,00T / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,575 / B=101,50 / L=200,00",
+   "codigo_camisa": "C21100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21530  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21540",
+  "codigo_fab": "S BE21540",
+  "marca": "MAHLE",
+  "aplicacion": "VW 19-320 TITAN CONSTELLATION / CARGO 4532 E / VW 19-320 CNC CONSTELLATION",
+  "descripcion": "CUMMINS 6CTE (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 115.6,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR ISC-E",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 79,
+   "prof_rebaje": 14.45,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21550",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=234,12",
+   "codigo_camisa": "C21900",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21540  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21550",
+  "codigo_fab": "S BE21550",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 4B-6B CAM.59 (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 105.39,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR SERIE B NA 3.9L (4 CIL.) / 5.9L (6 CIL.) DESPUÉS DE 1991",
+   "nro_cil": "4/6",
+   "diam_cilindro": "102,00",
+   "alt_compresion": 71.59,
+   "prof_rebaje": 19.3,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 82.8,
+   "perno_str": "∅40,00 × 82,80",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A21110",
+   "medida_aros": "1-2,385 / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,575 / B=101,50 / L=200,00",
+   "codigo_camisa": "C21100",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21550  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE21550  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21610",
+  "codigo_fab": "S BE21610",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTA (Pz.66,45) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 120.32,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR CT 8,3L HASTA 1991",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 78.82,
+   "prof_rebaje": 21.27,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21510",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=122,94 / B=114,02 / C=132,95 / L=237,12",
+   "codigo_camisa": "C21500",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21610  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21630",
+  "codigo_fab": "S BE21630",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTA (Pz.66,30) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 120.52,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR 8,3L CT / 6CTAA HASTA 1991",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 79.02,
+   "prof_rebaje": 21.27,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21510",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=122,94 / B=114,02 / C=132,95 / L=237,12",
+   "codigo_camisa": "C21500",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21630  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21850",
+  "codigo_fab": "S BE21850",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTA (Pz.56) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 120.52,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR 8,3L CT / SERIE C (→2.000)",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 79.02,
+   "prof_rebaje": 25,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21510",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=237,12",
+   "codigo_camisa": "C21510",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21850  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21940",
+  "codigo_fab": "S BE21940",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTA (Pz.56,75) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 120.425,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR SERIE C / CTA 8.3 1991→2000",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 78.925,
+   "prof_rebaje": 24,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21510",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=237,12",
+   "codigo_camisa": "C21510",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21940  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE21810",
+  "codigo_fab": "S BE21810",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "HOLSET COMPRESOR (1 CIL) 3.5/8",
+  "medidas": {
+   "diam_piston": 92.07,
+   "alt_piston": 73.3,
+   "diam_perno": 17.46
+  },
+  "extra": {
+   "fabricante": "HOLSET",
+   "motor": "COMPRESSOR MOTORES SERIE C/NH",
+   "nro_cil": 4,
+   "diam_cilindro": "92,07",
+   "alt_compresion": 33.55,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,25 / 0,50",
+   "largo_perno": 69.75,
+   "perno_str": "∅17,46 × 69,75",
+   "juego_montaje": 0.076,
+   "codigo_aros": "A21810",
+   "medida_aros": "1-3,18 / 1-3,18 / 1-4,77",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE21810  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE 57120",
+  "codigo_fab": "S BE 57120",
+  "marca": "MAHLE",
+  "aplicacion": "INYECCIÓN DIRECTA - CON CÁMARA",
+  "descripcion": "PERKINS 4.203 (C/POZO) 3.601",
+  "medidas": {
+   "diam_piston": 91.48,
+   "alt_piston": 109.5,
+   "diam_perno": 31.75
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR D4203",
+   "nro_cil": 4,
+   "diam_cilindro": "91,48 / 127,00",
+   "alt_compresion": 61.98,
+   "prof_rebaje": 18.53,
+   "diams_dispon": "STD",
+   "largo_perno": 75.3,
+   "perno_str": "∅31,75 × 75,30",
+   "juego_montaje": 0.14,
+   "codigo_aros": "A57100",
+   "medida_aros": "2-2,38 / 1-3,17 / 1-6,35 / 1-6,35",
+   "tipo_camisa": null,
+   "dim_camisa": "A=93,73 / B=90,65 / C=96,66 / L=215,90",
+   "codigo_camisa": "C1178",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57150",
+  "codigo_fab": "S BE 57150",
+  "marca": "MAHLE",
+  "aplicacion": "INYECCIÓN DIRECTA - SIN CÁMARA",
+  "descripcion": "PERKINS 4.203-6.305 5R (2 CIL.) 3.601",
+  "medidas": {
+   "diam_piston": 91.49,
+   "alt_piston": 108.05,
+   "diam_perno": 31.748
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR D3.152 / D4.203",
+   "nro_cil": 4,
+   "diam_cilindro": "91,49 / 127,00",
+   "alt_compresion": 57.25,
+   "prof_rebaje": null,
+   "diams_dispon": "STD",
+   "largo_perno": 75.3,
+   "perno_str": "∅31,748 × 75,30",
+   "juego_montaje": 0.15,
+   "codigo_aros": "A57150",
+   "medida_aros": "1-2,38 / 1-2,38 / 1-3,17 / 1-6,35 / 1-6,35",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57220",
+  "codigo_fab": "S BE 57220",
+  "marca": "MAHLE",
+  "aplicacion": "INDUSTRIAL / AGRÍCOLA - TRACTOR MF85 / MF178 / MF185 / MF186 / DT8000 / MF11 / MF33 / MF300 / MF350 / 590A VEHICULAR / AGRÍCOLA / INDUSTRIAL",
+  "descripcion": "PERKINS 4.248 Pz.61 P.35 101,06 mm",
+  "medidas": {
+   "diam_piston": 101.06,
+   "alt_piston": 121.42,
+   "diam_perno": 34.92
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR 4248",
+   "nro_cil": 4,
+   "diam_cilindro": "101,06 / 127,00",
+   "alt_compresion": 70.62,
+   "prof_rebaje": 20.78,
+   "diams_dispon": "STD",
+   "largo_perno": 83.9,
+   "perno_str": "∅34,92 × 83,90",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A57220",
+   "medida_aros": "1-2,45 / 1-2,45 / 1-2,45 / 1-4,80",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,27 / B=100,20 / C=107,38 / L=227,30",
+   "codigo_camisa": "C1477 / C57570",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57240",
+  "codigo_fab": "S BE 57240",
+  "marca": "MAHLE",
+  "aplicacion": "D-20, CAMIÓN D-40 1985 →",
+  "descripcion": "PERKINS 4.236 Q20B 98,48 mm",
+  "medidas": {
+   "diam_piston": 98.48,
+   "alt_piston": 121.41,
+   "diam_perno": 34.92
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR PERKINS Q20B4236 / 4236 PREMIUM / VEHICULAR",
+   "nro_cil": 4,
+   "diam_cilindro": "98,48 / 127,00",
+   "alt_compresion": 70.61,
+   "prof_rebaje": 20.77,
+   "diams_dispon": "STD",
+   "largo_perno": 84.1,
+   "perno_str": "∅34,92 × 84,10",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A57240",
+   "medida_aros": "1-2,38 / 1-2,38 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=103,29 / B=97,74 / L=228,86",
+   "codigo_camisa": "C1338 / C57210",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57251",
+  "codigo_fab": "S BE 57251",
+  "marca": "MAHLE",
+  "aplicacion": "TRACTOR MF299 / MF9150 / MF9170",
+  "descripcion": "PERKINS 6.354 F4T 3.7/8",
+  "medidas": {
+   "diam_piston": 98.48,
+   "alt_piston": 108.28,
+   "diam_perno": 38.1
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR TQ20B6354-4 / T6354.4 / LT6354.4",
+   "nro_cil": 6,
+   "diam_cilindro": "98,48 / 127,00",
+   "alt_compresion": 70.28,
+   "prof_rebaje": 19.28,
+   "diams_dispon": "STD",
+   "largo_perno": 82.8,
+   "perno_str": "∅38,10 × 82,80",
+   "juego_montaje": 0.06,
+   "codigo_aros": "A57250",
+   "medida_aros": "1-3,20T / 1-2,43 / 1-4,80",
+   "tipo_camisa": null,
+   "dim_camisa": "A=103,26 / B=97,74 / C=106,40 / L=227,30",
+   "codigo_camisa": "C1097 / C57190",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57260",
+  "codigo_fab": "S BE 57260",
+  "marca": "MAHLE",
+  "aplicacion": "AGRÍCOLA MF292 FEB. 86 EN ADELANTE",
+  "descripcion": "PERKINS 4.236T Q20BT 98,48 mm",
+  "medidas": {
+   "diam_piston": 98.48,
+   "alt_piston": 108.21,
+   "diam_perno": 38.09
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR T4236",
+   "nro_cil": 4,
+   "diam_cilindro": "98,48 / 127,00",
+   "alt_compresion": 70.21,
+   "prof_rebaje": 19.96,
+   "diams_dispon": "STD-A",
+   "largo_perno": 82.6,
+   "perno_str": "∅38,09 × 82,60",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A57250",
+   "medida_aros": "1-3,20T / 1-2,45 / 1-4,80",
+   "tipo_camisa": null,
+   "dim_camisa": "A=103,26 / B=97,74 / C=106,40 / L=227,30",
+   "codigo_camisa": "C1097 / C57190",
+   "sobremedidas": [
+    "STD-A"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57280",
+  "codigo_fab": "S BE 57280",
+  "marca": "MAHLE",
+  "aplicacion": "CAMIÓN D11000 / D13000 / D19000 / D21000 / D22000",
+  "descripcion": "PERKINS 6.354 F4 APA ASPIR. 98,48 mm",
+  "medidas": {
+   "diam_piston": 98.48,
+   "alt_piston": 121.1,
+   "diam_perno": 34.92
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR PERKINS Q20B6354",
+   "nro_cil": 6,
+   "diam_cilindro": "98,48 / 127,00",
+   "alt_compresion": 70.3,
+   "prof_rebaje": 24.48,
+   "diams_dispon": "STD",
+   "largo_perno": 84.1,
+   "perno_str": "∅34,92 × 84,10",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A57240",
+   "medida_aros": "1-2,38 / 1-2,38 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=103,26 / B=97,74 / C=106,40 / L=227,30",
+   "codigo_camisa": "C1097 / C57190",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57282",
+  "codigo_fab": "S BE 57282",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "PERKINS 6.354 F2 APA 98,48 mm",
+  "medidas": {
+   "diam_piston": 98.48,
+   "alt_piston": 120.7,
+   "diam_perno": 34.92
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR 6.354.2",
+   "nro_cil": 6,
+   "diam_cilindro": "98,48 / 127,00",
+   "alt_compresion": 70.1,
+   "prof_rebaje": 25.7,
+   "diams_dispon": "STD",
+   "largo_perno": 84.1,
+   "perno_str": "∅34,92 × 84,10",
+   "juego_montaje": 0.15,
+   "codigo_aros": "A57610",
+   "medida_aros": "1-3,16 / 2-2,38 / 2-6,33",
+   "tipo_camisa": null,
+   "dim_camisa": "A=103,26 / B=97,74 / C=106,40 / L=227,30",
+   "codigo_camisa": "C1097 / C57190",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57290",
+  "codigo_fab": "S BE 57290",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "PERKINS 6.354 F2T TURBO 98,48 mm",
+  "medidas": {
+   "diam_piston": 98.48,
+   "alt_piston": 121.22,
+   "diam_perno": 38.1
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR 6354 ARGENTINA",
+   "nro_cil": 6,
+   "diam_cilindro": "98,48 / 127,00",
+   "alt_compresion": 70.42,
+   "prof_rebaje": 19.9,
+   "diams_dispon": "STD",
+   "largo_perno": 82.8,
+   "perno_str": "∅38,10 × 82,80",
+   "juego_montaje": 0.15,
+   "codigo_aros": "A57290",
+   "medida_aros": "1-3,16 / 2-2,39 / 1-6,34",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57300",
+  "codigo_fab": "S BE 57300",
+  "marca": "MAHLE",
+  "aplicacion": "VEHICULAR - PICK-UP GM D20",
+  "descripcion": "MAXION S4 100 mm",
+  "medidas": {
+   "diam_piston": 100,
+   "alt_piston": 108.5,
+   "diam_perno": 34.92
+  },
+  "extra": {
+   "fabricante": "MAXION",
+   "motor": "MOTOR S4",
+   "nro_cil": 4,
+   "diam_cilindro": "100,00 / 127,00",
+   "alt_compresion": 70.5,
+   "prof_rebaje": 21,
+   "diams_dispon": "STD",
+   "largo_perno": 77,
+   "perno_str": "∅34,92 × 77,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A57300",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,267 / B=98,95 / C=107,375 / L=226,44",
+   "codigo_camisa": "C1949 / C57300",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57320",
+  "codigo_fab": "S BE 57320",
+  "marca": "MAHLE",
+  "aplicacion": "VEHICULAR GM PICK-UP D20 / No MOTOR SB=S4T, SF=S4T PLUS",
+  "descripcion": "MAXION S4T TURBO 100 mm",
+  "medidas": {
+   "diam_piston": 100,
+   "alt_piston": 108.5,
+   "diam_perno": 38.1
+  },
+  "extra": {
+   "fabricante": "MAXION",
+   "motor": "MOTOR S4T / S4T PLUS",
+   "nro_cil": 4,
+   "diam_cilindro": "100,00 / 127,00",
+   "alt_compresion": 70.5,
+   "prof_rebaje": 21,
+   "diams_dispon": "STD",
+   "largo_perno": 78,
+   "perno_str": "∅38,10 × 78,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A57300",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,267 / B=98,95 / C=107,375 / L=226,44",
+   "codigo_camisa": "C1949 / C57300",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57400",
+  "codigo_fab": "S BE 57400",
+  "marca": "MAHLE",
+  "aplicacion": "GM-S10 / FORD-F1000 / RANGER EURO I",
+  "descripcion": "MAXION HS2.5T 91,23 mm",
+  "medidas": {
+   "diam_piston": 90.73,
+   "alt_piston": 91.9,
+   "diam_perno": 30.16
+  },
+  "extra": {
+   "fabricante": "MAXION",
+   "motor": "MOTOR 2.5L HS",
+   "nro_cil": 4,
+   "diam_cilindro": "90,73 / 97,00",
+   "alt_compresion": 55.4,
+   "prof_rebaje": 18.4,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 76.9,
+   "perno_str": "∅30,16 × 76,90",
+   "juego_montaje": 0.08,
+   "codigo_aros": "A57900",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=94,15 / B=89,93 / C=97,00 / L=186,90",
+   "codigo_camisa": "C9059 / C57850",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57420",
+  "codigo_fab": "S BE 57420",
+  "marca": "MAHLE",
+  "aplicacion": "AGRÍCOLA MF620 / MF292",
+  "descripcion": "PERKINS P400T (MF620-MF292) 101,06 mm",
+  "medidas": {
+   "diam_piston": 101.06,
+   "alt_piston": 108.5,
+   "diam_perno": 38
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR P4000T",
+   "nro_cil": 4,
+   "diam_cilindro": "101,06 / 127,00",
+   "alt_compresion": 70.5,
+   "prof_rebaje": 21,
+   "diams_dispon": "STD",
+   "largo_perno": 78,
+   "perno_str": "∅38,00 × 78,00",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A57405",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,267 / B=98,95 / C=107,375 / L=226,44",
+   "codigo_camisa": "C1949 / C57300",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57430",
+  "codigo_fab": "S BE 57430",
+  "marca": "MAHLE",
+  "aplicacion": "AGRÍCOLA MF610 / MF290 / MF5290 / MF283 / MF275",
+  "descripcion": "PERKINS P4000 P.35 101,06 mm",
+  "medidas": {
+   "diam_piston": 101.06,
+   "alt_piston": 108.5,
+   "diam_perno": 34.92
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR P4000 NA",
+   "nro_cil": 4,
+   "diam_cilindro": "101,06 / 127,00",
+   "alt_compresion": 70.5,
+   "prof_rebaje": 21.14,
+   "diams_dispon": "STD",
+   "largo_perno": 77,
+   "perno_str": "∅34,92 × 77,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A57405",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,267 / B=98,95 / C=107,375 / L=226,44",
+   "codigo_camisa": "C1949 / C57300",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57440",
+  "codigo_fab": "S BE 57440",
+  "marca": "MAHLE",
+  "aplicacion": "EURO I",
+  "descripcion": "MAXION S4 EURO1 P.35 101 mm",
+  "medidas": {
+   "diam_piston": 101.06,
+   "alt_piston": 108.5,
+   "diam_perno": 34.92
+  },
+  "extra": {
+   "fabricante": "MAXION",
+   "motor": "MOTOR S4",
+   "nro_cil": 4,
+   "diam_cilindro": "101,06 / 127,00",
+   "alt_compresion": 70.5,
+   "prof_rebaje": 21,
+   "diams_dispon": "STD",
+   "largo_perno": 77,
+   "perno_str": "∅34,92 × 77,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A57405",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,267 / B=98,95 / C=107,375 / L=226,44",
+   "codigo_camisa": "C1949 / C57300",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57450",
+  "codigo_fab": "S BE 57450",
+  "marca": "MAHLE",
+  "aplicacion": "EURO I - PICK-UP GM D20",
+  "descripcion": "MAXION S4T PLUS 101 mm",
+  "medidas": {
+   "diam_piston": 101.06,
+   "alt_piston": 108.5,
+   "diam_perno": 38.1
+  },
+  "extra": {
+   "fabricante": "MAXION",
+   "motor": "MOTOR S4T / S4T PLUS",
+   "nro_cil": 4,
+   "diam_cilindro": "101,06 / 127,00",
+   "alt_compresion": 70.5,
+   "prof_rebaje": 21,
+   "diams_dispon": "STD",
+   "largo_perno": 78,
+   "perno_str": "∅38,10 × 78,00",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A57405",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,267 / B=98,95 / C=107,375 / L=226,44",
+   "codigo_camisa": "C1949 / C57300",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57460",
+  "codigo_fab": "S BE 57460",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "PERKINS 1004T-1006T (2 CIL) 100 mm",
+  "medidas": {
+   "diam_piston": 100,
+   "alt_piston": 108,
+   "diam_perno": 38.1
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR SERIE 1000 TURBO",
+   "nro_cil": "4/6",
+   "diam_cilindro": "100,00 / 108,00",
+   "alt_compresion": 70,
+   "prof_rebaje": 19.4,
+   "diams_dispon": "STD",
+   "largo_perno": 82.6,
+   "perno_str": "∅38,10 × 82,60",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A57030",
+   "medida_aros": "1-3,50T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,267 / B=98,95 / C=107,375 / L=226,44",
+   "codigo_camisa": "C1949 / C57300",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57500",
+  "codigo_fab": "S BE 57500",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "PERKINS 1004-42 (U5LP0058)(2 CIL) 103 mm",
+  "medidas": {
+   "diam_piston": 103,
+   "alt_piston": 108.243,
+   "diam_perno": 39.7
+  },
+  "extra": {
+   "fabricante": "PERKINS",
+   "motor": "MOTOR 1004.40 DARWIN",
+   "nro_cil": "4/6",
+   "diam_cilindro": "103,00 / 108,243",
+   "alt_compresion": 70.243,
+   "prof_rebaje": "22,00 / 1,50 / 1,50",
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 74,
+   "perno_str": "∅39,70 × 74,00",
+   "juego_montaje": 0.175,
+   "codigo_aros": "A57830",
+   "medida_aros": "1-2,50 / 1-2,50 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57510",
+  "codigo_fab": "S BE 57510",
+  "marca": "MAHLE",
+  "aplicacion": "RANGER DIESEL",
+  "descripcion": "MAXION NGD3.0 96 mm",
+  "medidas": {
+   "diam_piston": 96,
+   "alt_piston": 79.76,
+   "diam_perno": 32
+  },
+  "extra": {
+   "fabricante": "MAXION",
+   "motor": "MOTOR 3.0L HS / RANGER POWER STROKE 3.0L HS ELECTRÓNICO",
+   "nro_cil": 4,
+   "diam_cilindro": "96,00",
+   "alt_compresion": 52.76,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 76,
+   "perno_str": "∅32,00 × 76,00",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A57510",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57750",
+  "codigo_fab": "S BE 57750",
+  "marca": "MAHLE",
+  "aplicacion": "RANGER POWER STROKE",
+  "descripcion": "MAXION HS2.8L 93 mm",
+  "medidas": {
+   "diam_piston": 93,
+   "alt_piston": 79.65,
+   "diam_perno": 32
+  },
+  "extra": {
+   "fabricante": "MAXION",
+   "motor": "MOTOR 2.8L HS",
+   "nro_cil": 4,
+   "diam_cilindro": "93,00",
+   "alt_compresion": 52.65,
+   "prof_rebaje": 18.3,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 73,
+   "perno_str": "∅32,00 × 73,00",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A57750",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57850",
+  "codigo_fab": "S BE 57850",
+  "marca": "MAHLE",
+  "aplicacion": "MERCEDES BENZ SPRINTER 310 (→00) / LAND ROVER DEFENDER EURO I",
+  "descripcion": "MAXION HS2.5T E1 (TETON PUNTA) 90,98 mm",
+  "medidas": {
+   "diam_piston": 90.48,
+   "alt_piston": 91.9,
+   "diam_perno": 30.16
+  },
+  "extra": {
+   "fabricante": "MAXION",
+   "motor": "MOTOR 2.5L HS",
+   "nro_cil": 4,
+   "diam_cilindro": "90,48 / 97,00",
+   "alt_compresion": 55.4,
+   "prof_rebaje": 18.4,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 76.9,
+   "perno_str": "∅30,16 × 76,90",
+   "juego_montaje": 0.08,
+   "codigo_aros": "A57850",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=94,15 / B=89,93 / C=97,00 / L=186,90",
+   "codigo_camisa": "C9059 / C57850",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE 57860",
+  "codigo_fab": "S BE 57860",
+  "marca": "MAHLE",
+  "aplicacion": "312 EURO II INTERCOOLER / LAND ROVER EURO II (00→)",
+  "descripcion": "MAXION HS2.5T EURO 2 (MB OM312) 90,98 mm",
+  "medidas": {
+   "diam_piston": 90.5,
+   "alt_piston": 91.9,
+   "diam_perno": 30.16
+  },
+  "extra": {
+   "fabricante": "MAXION",
+   "motor": "MOTOR 2.5L",
+   "nro_cil": 4,
+   "diam_cilindro": "90,50 / 97,00",
+   "alt_compresion": 55.4,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,508 / 1,016",
+   "largo_perno": 76.9,
+   "perno_str": "∅30,16 × 76,90",
+   "juego_montaje": 0.08,
+   "codigo_aros": "A57850",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,508",
+    "1,016"
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "S BE700920",
+  "codigo_fab": "S BE700920",
+  "marca": "MAHLE",
+  "aplicacion": "UP! (2015->)",
+  "descripcion": "VW UP 1.0 TSi 12V 3 CIL 74,5 mm",
+  "medidas": {
+   "diam_piston": 74.5,
+   "alt_piston": 49.39,
+   "diam_perno": 19
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR EA211 1.0L 12V TSI FLEX",
+   "nro_cil": 3,
+   "diam_cilindro": "74,50",
+   "alt_compresion": 32.39,
+   "prof_rebaje": 0.75,
+   "diams_dispon": "STD",
+   "largo_perno": 47,
+   "perno_str": "∅19,00 × 47,00",
+   "juego_montaje": 0.075,
+   "codigo_aros": "A0701040",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE700920 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70280",
+  "codigo_fab": "S BE70280",
+  "marca": "MAHLE",
+  "aplicacion": "1900 / GOLF / PASSAT / POLO ASPIRADO",
+  "descripcion": "VW POLO 1.9D 79,5 mm",
+  "medidas": {
+   "diam_piston": 79.5,
+   "alt_piston": 65.65,
+   "diam_perno": 24
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR 1.9L DIESEL",
+   "nro_cil": 4,
+   "diam_cilindro": "79,50",
+   "alt_compresion": 39.65,
+   "prof_rebaje": 1.9,
+   "diams_dispon": "STD / 0,25 / 0,50",
+   "largo_perno": 64,
+   "perno_str": "∅24,00 × 64,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A70280",
+   "medida_aros": "1-1,75 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70280  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE70280  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70500",
+  "codigo_fab": "S BE70500",
+  "marca": "MAHLE",
+  "aplicacion": "1000 / GOL MI (ALTO TORQUE)",
+  "descripcion": "VW GOL 1.0 MI 8V 67,10 mm",
+  "medidas": {
+   "diam_piston": 67.11,
+   "alt_piston": 49.77,
+   "diam_perno": 17
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR AT 1.0L 8V GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "67,11 / 70,60",
+   "alt_compresion": 31.27,
+   "prof_rebaje": 6.07,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 45,
+   "perno_str": "∅17,00 × 45,00",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A70500",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=72,00 / B=66,10 / C=74,00 / L=130,00",
+   "codigo_camisa": "C70500",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70500  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE70500  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70580",
+  "codigo_fab": "S BE70580",
+  "marca": "MAHLE",
+  "aplicacion": "1600 / 10,8:1 / GOLF, AUDI A3, POLO, FOX",
+  "descripcion": "VW EA111 1.6 SURAN-FOX 76,5 mm",
+  "medidas": {
+   "diam_piston": 76.5,
+   "alt_piston": 50.7,
+   "diam_perno": 17
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR EA111 1.6L 8V GAS./FLEX (2001->2007)",
+   "nro_cil": 4,
+   "diam_cilindro": "76,50",
+   "alt_compresion": 28.7,
+   "prof_rebaje": 7.15,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 52,
+   "perno_str": "∅17,00 × 52,00",
+   "juego_montaje": 0.045,
+   "codigo_aros": "A70580",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70580  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE70580  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70610",
+  "codigo_fab": "S BE70610",
+  "marca": "MAHLE",
+  "aplicacion": "1400 / KOMBI",
+  "descripcion": "VW EA111 1.4 76,5 mm",
+  "medidas": {
+   "diam_piston": 76.5,
+   "alt_piston": 50.5,
+   "diam_perno": 17
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR EA111 1.4L 8V FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "76,50",
+   "alt_compresion": 28.5,
+   "prof_rebaje": 4.66,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 52,
+   "perno_str": "∅17,00 × 52,00",
+   "juego_montaje": 0.045,
+   "codigo_aros": "A70580",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70610  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE70610  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70630",
+  "codigo_fab": "S BE70630",
+  "marca": "MAHLE",
+  "aplicacion": "1600 / FOX, GOLF, POLO, NOVO VOYAGE E GOL G5 (2008->) / GOL G6 1.6 8V / TEC - FLEX",
+  "descripcion": "VW GOLF 1.6 8V/SURAN A/C 28,7 76,5 mm",
+  "medidas": {
+   "diam_piston": 76.5,
+   "alt_piston": 50.7,
+   "diam_perno": 17
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR EA111 1.6L 8V FLEX NEW FAMILY",
+   "nro_cil": 4,
+   "diam_cilindro": "76,50",
+   "alt_compresion": 28.7,
+   "prof_rebaje": 4.92,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 52,
+   "perno_str": "∅17,00 × 52,00",
+   "juego_montaje": 0.045,
+   "codigo_aros": "A70580",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70630  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE70630  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70670",
+  "codigo_fab": "S BE70670",
+  "marca": "MAHLE",
+  "aplicacion": "1600 / 8,3:1 / PASSAT / VOYAGE / PARATI / GOL / TS 1600 / MOTOR MD 270 / HASTA JUN./85, MOTOR 1600UC 1588cc REFRIGERADO A AGUA — PASSAT/VOYAGE/GOL/PARATI / AGO 82 A MAY 85 (TC=8,3:1), MOTOR 1600BS 1588cc REFRIGERADO AGUA — PASSAT LSE/TS DIC. A JUL. 82 (TC=8,3:1)",
+  "descripcion": "VW GACEL 1.6 79,5 mm",
+  "medidas": {
+   "diam_piston": 79.51,
+   "alt_piston": 73.7,
+   "diam_perno": 22
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR 1.6L GAS. (AGUA) [STD]",
+   "nro_cil": 4,
+   "diam_cilindro": "79,51 / 80,00",
+   "alt_compresion": 41.7,
+   "prof_rebaje": 5.5,
+   "diams_dispon": "STD",
+   "largo_perno": 63,
+   "perno_str": "∅22,00 × 63,00",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A70672",
+   "medida_aros": "1-1,75 / 1-2,00 / 1-4,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=84,26 / B=78,50 / C=85,85 / L=147,00",
+   "codigo_camisa": "C1450",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70670  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70670",
+  "codigo_fab": "S BE70670",
+  "marca": "MAHLE",
+  "aplicacion": "1600 / 8,3:1 / PASSAT / VOYAGE / PARATI / GOL / TS 1600 / MOTOR MD 270 / HASTA JUN./85, MOTOR 1600UC 1588cc REFRIGERADO A AGUA — PASSAT/VOYAGE/GOL/PARATI / AGO 82 A MAY 85 (TC=8,3:1), MOTOR 1600BS 1588cc REFRIGERADO AGUA — PASSAT LSE/TS DIC. A JUL. 82 (TC=8,3:1)",
+  "descripcion": "VW GACEL 1.6 79,5 mm",
+  "medidas": {
+   "diam_piston": 79.51,
+   "alt_piston": 73.4,
+   "diam_perno": 22
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR 1.6L GAS. (AGUA) [0,50/0,75/1,00]",
+   "nro_cil": 4,
+   "diam_cilindro": "79,51 / 80,00",
+   "alt_compresion": 41.5,
+   "prof_rebaje": 5.5,
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 63,
+   "perno_str": "∅22,00 × 63,00",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A70672",
+   "medida_aros": "1-1,75 / 1-2,00 / 1-4,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=84,26 / B=78,50 / C=85,85 / L=147,00",
+   "codigo_camisa": "C1450",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70670  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE70670  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S BE70670  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70700",
+  "codigo_fab": "S BE70700",
+  "marca": "MAHLE",
+  "aplicacion": "1600 / 23,5:1 / DIESEL PICK-UP / FURGÓN 1588cc / GOLF D / JETTA D / PASSAT D (TC=23,0:1), MOTOR 2000 DIESEL 1986cc — AUDI 100 / AVANT 5D (TC=23,5:1), MOTOR 2400 DIESEL 2383cc LT28D / LT31D / LT35D / LT40D / LT45D (TC=23,0:1)",
+  "descripcion": "VW SENDA 1.6D 76,5 mm",
+  "medidas": {
+   "diam_piston": 76.5,
+   "alt_piston": 71.7,
+   "diam_perno": 24
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR 1.6L DIESEL",
+   "nro_cil": 4,
+   "diam_cilindro": "76,50",
+   "alt_compresion": 41.7,
+   "prof_rebaje": 1.6,
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 64,
+   "perno_str": "∅24,00 × 64,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A70700",
+   "medida_aros": "1-1,75 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70700  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE70700  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S BE70700  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70780",
+  "codigo_fab": "S BE70780",
+  "marca": "MAHLE",
+  "aplicacion": "1800 / 8,5:1 / REFRIGERADO A AGUA INYECCIÓN Y CARBURADO ESCORT / BELINA / PAMPA 4X2 / VERONA / ROYALE / VERSALLES MOTOR (1990->) BIELA LARGA (TC=8,5:1)",
+  "descripcion": "VW AUDI 1.8 81 mm",
+  "medidas": {
+   "diam_piston": 81.01,
+   "alt_piston": 57.3,
+   "diam_perno": 20
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR 1.8L AP GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "81,01 / 86,40",
+   "alt_compresion": 32.2,
+   "prof_rebaje": "+1,10 / 8,10",
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 57,
+   "perno_str": "∅20,00 × 57,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A70680",
+   "medida_aros": "1-1,50 / 1-1,75 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70780  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE70780  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S BE70780  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70870",
+  "codigo_fab": "S BE70870",
+  "marca": "MAHLE",
+  "aplicacion": "2000 / 10,0:1 / ESCORT XR3 2.0i / VERSALLES GHIA 2.0i / ROYALLES 2.0i / VERONA 2.0i / POINTER 2.0",
+  "descripcion": "VW AUDI 2.0i 82,5 mm",
+  "medidas": {
+   "diam_piston": 82.5,
+   "alt_piston": 56.3,
+   "diam_perno": 20
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR 2.0L AP GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "82,50 / 92,80",
+   "alt_compresion": 29.3,
+   "prof_rebaje": 5.8,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 57,
+   "perno_str": "∅20,00 × 57,00",
+   "juego_montaje": 0.025,
+   "codigo_aros": "A70860",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-2,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=85,50 / B=81,50 / C=87,10 / L=146,00",
+   "codigo_camisa": "C1852",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70870  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE70870  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE70900",
+  "codigo_fab": "S BE70900",
+  "marca": "MAHLE",
+  "aplicacion": "1800 / 10,1:1 / AUDI",
+  "descripcion": "VW AUDI 1.8 (A.C.32,2) 81 mm",
+  "medidas": {
+   "diam_piston": 81,
+   "alt_piston": 62.47,
+   "diam_perno": 20
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR 1.8L S",
+   "nro_cil": 4,
+   "diam_cilindro": "81,00 / 86,40",
+   "alt_compresion": 32.2,
+   "prof_rebaje": "+1,27 / 4,40",
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 57,
+   "perno_str": "∅20,00 × 57,00",
+   "juego_montaje": 0.025,
+   "codigo_aros": "A70842",
+   "medida_aros": "1-1,50 / 1-1,75 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE70900  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE70900  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE180180",
+  "codigo_fab": "S BE180180",
+  "marca": "MAHLE",
+  "aplicacion": "FLUENCE",
+  "descripcion": "RENAULT M4R 2.0 16V 84 mm",
+  "medidas": {
+   "diam_piston": 84,
+   "alt_piston": 49.6,
+   "diam_perno": 19.99
+  },
+  "extra": {
+   "fabricante": "RENAULT",
+   "motor": "MOTOR M4R 2.0L 16V Hi-Flex",
+   "nro_cil": 4,
+   "diam_cilindro": "84,00",
+   "alt_compresion": 31.1,
+   "prof_rebaje": 4.2,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 53,
+   "perno_str": "∅19,99 × 53,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A0180740",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE180180 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE18100",
+  "codigo_fab": "S BE18100",
+  "marca": "MAHLE",
+  "aplicacion": "SCENIC, LAGUNA, MEGANE, CLIO, DUSTER — 1600 CC",
+  "descripcion": "RENAULT MEGANE 1.6 16V K4M 79,5 mm",
+  "medidas": {
+   "diam_piston": 79.5,
+   "alt_piston": 54.7,
+   "diam_perno": 19.991
+  },
+  "extra": {
+   "fabricante": "RENAULT",
+   "motor": "MOTOR K4M 1.6L 16V (NO REPOT.) GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "79,50 / 80,50",
+   "alt_compresion": 31.7,
+   "prof_rebaje": 1.7,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 62,
+   "perno_str": "∅19,991 × 62,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A18400",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE18100  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE18100  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE18693",
+  "codigo_fab": "S BE18693",
+  "marca": "MAHLE",
+  "aplicacion": "CLIO / TWINGO — 1200 CC",
+  "descripcion": "RENAULT TWINGO 1.2 16V D4F C/POZO 69 mm",
+  "medidas": {
+   "diam_piston": 69,
+   "alt_piston": 44.7,
+   "diam_perno": 17.499
+  },
+  "extra": {
+   "fabricante": "RENAULT",
+   "motor": "MOTOR D4F 1.2L 16V",
+   "nro_cil": 4,
+   "diam_cilindro": "69,00 / 76,80",
+   "alt_compresion": 26.7,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 54,
+   "perno_str": "∅17,499 × 54,00",
+   "juego_montaje": 0.024,
+   "codigo_aros": "A18330",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE18693  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE18693  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE18700",
+  "codigo_fab": "S BE18700",
+  "marca": "MAHLE",
+  "aplicacion": "TWINGO 96->99 — 1200 CC",
+  "descripcion": "RENAULT TWINGO 1.2 D7F 69 mm",
+  "medidas": {
+   "diam_piston": 69,
+   "alt_piston": 46.44,
+   "diam_perno": 17.5
+  },
+  "extra": {
+   "fabricante": "RENAULT",
+   "motor": "MOTOR D7F 1.2L",
+   "nro_cil": 4,
+   "diam_cilindro": "69,00 / 76,80",
+   "alt_compresion": 27.1,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 54,
+   "perno_str": "∅17,50 × 54,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A18700",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE18700  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE18700  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE18800",
+  "codigo_fab": "S BE18800",
+  "marca": "MAHLE",
+  "aplicacion": "CLIO / KANGOO / R19 — 1900 CC DIESEL",
+  "descripcion": "RENAULT KANGOO 1.9D 80 mm",
+  "medidas": {
+   "diam_piston": 80,
+   "alt_piston": 70.5,
+   "diam_perno": 24
+  },
+  "extra": {
+   "fabricante": "RENAULT",
+   "motor": "MOTOR 1900 L 8V DIESEL (F8Q)",
+   "nro_cil": 4,
+   "diam_cilindro": "80,00 / 94,55",
+   "alt_compresion": 42.255,
+   "prof_rebaje": 4.44,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 63,
+   "perno_str": "∅24,00 × 63,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A18150",
+   "medida_aros": "1-2,00 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE18800  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE18800  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE18810",
+  "codigo_fab": "S BE18810",
+  "marca": "MAHLE",
+  "aplicacion": "CLIO / KANGOO / MEGANE / SCENIC — 1600 CC",
+  "descripcion": "RENAULT MEGANE 1.6 8V K7M 79,5 mm",
+  "medidas": {
+   "diam_piston": 79.5,
+   "alt_piston": 53.8,
+   "diam_perno": 18.994
+  },
+  "extra": {
+   "fabricante": "RENAULT",
+   "motor": "MOTOR K7M 1.6L 8V (CIL. 1 Y 2)",
+   "nro_cil": 4,
+   "diam_cilindro": "79,50",
+   "alt_compresion": 29.25,
+   "prof_rebaje": "+2,55",
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 62,
+   "perno_str": "∅18,994 × 62,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A18850",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE18810  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE18810  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE30800",
+  "codigo_fab": "S BE30800",
+  "marca": "MAHLE",
+  "aplicacion": "FRONTIER — DIESEL 2.5 16V (HASTA 2012)",
+  "descripcion": "NISSAN YD25DDTi 2.5 APA C/C 47,4 89 mm",
+  "medidas": {
+   "diam_piston": 89,
+   "alt_piston": 73.83,
+   "diam_perno": 28
+  },
+  "extra": {
+   "fabricante": "NISSAN",
+   "motor": "MOTOR 2.5 16V YD25DTI ->2012 DIESEL",
+   "nro_cil": 4,
+   "diam_cilindro": "89,00",
+   "alt_compresion": 48.83,
+   "prof_rebaje": 17.4,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 71,
+   "perno_str": "∅28,00 × 71,00",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A0030640",
+   "medida_aros": "1-2,00 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE30800  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE30800  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE63010",
+  "codigo_fab": "S BE63010",
+  "marca": "MAHLE",
+  "aplicacion": "HILUX ASPIRADA",
+  "descripcion": "TOYOTA 3L 2.8 APA 96 mm",
+  "medidas": {
+   "diam_piston": 96,
+   "alt_piston": 80.3,
+   "diam_perno": 29
+  },
+  "extra": {
+   "fabricante": "TOYOTA",
+   "motor": "MOTOR 3L (2.8L) DIESEL",
+   "nro_cil": 4,
+   "diam_cilindro": "96,00",
+   "alt_compresion": 42.3,
+   "prof_rebaje": 2,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 74,
+   "perno_str": "∅29,00 × 74,00",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A63120",
+   "medida_aros": "1-2,00 / 1-2,00 / 1-4,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=100,05 / B=95,00 / C=107,55 / L=189,80",
+   "codigo_camisa": "C63010",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE63010  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE63010  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE630970",
+  "codigo_fab": "S BE630970",
+  "marca": "MAHLE",
+  "aplicacion": "COROLLA (2011->)",
+  "descripcion": "TOYOTA 2ZR-FE 1.8 16V 10/12 80,5 mm",
+  "medidas": {
+   "diam_piston": 80.5,
+   "alt_piston": 50,
+   "diam_perno": 20
+  },
+  "extra": {
+   "fabricante": "TOYOTA",
+   "motor": "MOTOR 2ZR-FBE / 2ZR-FE 1.8L 16V FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "80,50",
+   "alt_compresion": null,
+   "prof_rebaje": 3.7,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 50,
+   "perno_str": "∅20,00 × 50,00",
+   "juego_montaje": 0.02,
+   "codigo_aros": "A0632090",
+   "medida_aros": "1-1,20 / 1-1,00 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE630970 STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE630970 0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE630980",
+  "codigo_fab": "S BE630980",
+  "marca": "MAHLE",
+  "aplicacion": "COROLLA NEW XEI S/D — 2002->",
+  "descripcion": "TOYOTA 1ZZ-Fe 1.8 16V DOHC 79 mm",
+  "medidas": {
+   "diam_piston": 79,
+   "alt_piston": 51.9,
+   "diam_perno": 20
+  },
+  "extra": {
+   "fabricante": "TOYOTA",
+   "motor": "MOTOR 1ZZFE 1.8L 16V GAS. / FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "79,00",
+   "alt_compresion": 29.8,
+   "prof_rebaje": 6.7,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 50,
+   "perno_str": "∅20,00 × 50,00",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A0632030",
+   "medida_aros": "1-1,20 / 1-1,20 / 1-2,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE630980 STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE630980 0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE633030",
+  "codigo_fab": "S BE633030",
+  "marca": "MAHLE",
+  "aplicacion": "HILUX (2011->2014)",
+  "descripcion": "TOYOTA 1KD-FTv 3.0 16V APA C/C 96 mm",
+  "medidas": {
+   "diam_piston": 96,
+   "alt_piston": 78.5,
+   "diam_perno": 34
+  },
+  "extra": {
+   "fabricante": "TOYOTA",
+   "motor": "MOTOR 1KD-FTV 3.0L 16V DIESEL",
+   "nro_cil": 4,
+   "diam_cilindro": "96,00",
+   "alt_compresion": 49.6,
+   "prof_rebaje": 16.4,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 73,
+   "perno_str": "∅34,00 × 73,00",
+   "juego_montaje": 0.08,
+   "codigo_aros": "A63880",
+   "medida_aros": "1-2,00 / 1-1,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE633030 STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE633030 0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S BE633030 1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE633060",
+  "codigo_fab": "S BE633060",
+  "marca": "MAHLE",
+  "aplicacion": "HILUX",
+  "descripcion": "TOYOTA 2KD-FTv NEW APA C/C Pz.39 92 mm",
+  "medidas": {
+   "diam_piston": 92,
+   "alt_piston": 82.3,
+   "diam_perno": 34
+  },
+  "extra": {
+   "fabricante": "TOYOTA",
+   "motor": "MOTOR 2KD-FTV 2.5L 16V DIESEL",
+   "nro_cil": 4,
+   "diam_cilindro": "92,00",
+   "alt_compresion": 54.2,
+   "prof_rebaje": 19.5,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 65,
+   "perno_str": "∅34,00 × 65,00",
+   "juego_montaje": 0.08,
+   "codigo_aros": "A0631080",
+   "medida_aros": "1-2,00 / 1-1,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE633060 STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE633060 0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S BE633060 1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE13500",
+  "codigo_fab": "S BE13500",
+  "marca": "MAHLE",
+  "aplicacion": "6.07T — SILVERADO EURO I / GMC 6.140 / GMC 6.150 / GMC 3500HD / 6.07TCA — F250 / 6.07TCW — MARÍTIMO PARCIAL",
+  "descripcion": "MWM 4.07-6.07T (2 CIL) (93L30A1) 93 mm",
+  "medidas": {
+   "diam_piston": 93,
+   "alt_piston": 86.2,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "MWM",
+   "motor": "MOTOR SPRINT 6.07T/TCA/TCW",
+   "nro_cil": 6,
+   "diam_cilindro": "93,00 / 103,00",
+   "alt_compresion": 56.2,
+   "prof_rebaje": 20.7,
+   "diams_dispon": "STD",
+   "largo_perno": 77,
+   "perno_str": "∅35,00 × 77,00",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13500",
+   "medida_aros": "1-2,50T / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=96,07 / B=92,00 / C=102,50 / L=183,00",
+   "codigo_camisa": "C13500",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE13500  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE13510",
+  "codigo_fab": "S BE13510",
+  "marca": "MAHLE",
+  "aplicacion": "VOLARE A5-A6 / FURGOVAN 6000 / CAMIÓN 6000D / JEEP MARRUÁ / S10 / BLAZER / JEEP TROLLER T4 / MARCOPOLO VOLARE / REPOTENCIAMIENTO PICK-UP",
+  "descripcion": "MWM 4.07-6.07T (2 CIL) (93L29A1) 93 mm",
+  "medidas": {
+   "diam_piston": 93,
+   "alt_piston": 86.2,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "MWM",
+   "motor": "MOTOR SPRINT 4.07TCA",
+   "nro_cil": 4,
+   "diam_cilindro": "93,00 / 103,00",
+   "alt_compresion": 56.2,
+   "prof_rebaje": 20.7,
+   "diams_dispon": "STD",
+   "largo_perno": 74,
+   "perno_str": "∅35,00 × 74,00",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13500",
+   "medida_aros": "1-2,50T / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=96,07 / B=92,00 / C=102,50 / L=183,00",
+   "codigo_camisa": "C13500",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE13510  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE13950",
+  "codigo_fab": "S BE13950",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 4.07TCA (2 CIL) (93L87A1) B/TR.93 mm",
+  "medidas": {
+   "diam_piston": 93,
+   "alt_piston": 87.2,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "MWM",
+   "motor": "MOTOR SPRINT 4.07TCA BIELA TRAPEZOIDAL",
+   "nro_cil": 4,
+   "diam_cilindro": "93,00 / 103,00",
+   "alt_compresion": 56.2,
+   "prof_rebaje": 20.7,
+   "diams_dispon": "STD",
+   "largo_perno": 77,
+   "perno_str": "∅35,00 × 77,00",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13500",
+   "medida_aros": "1-2,50T / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE13950  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE13965",
+  "codigo_fab": "S BE13965",
+  "marca": "MAHLE",
+  "aplicacion": "S10 / BLAZER — 2800 CC",
+  "descripcion": "MWM 4.07TCE (2 CIL) (GM)(93L31A4) 93 mm",
+  "medidas": {
+   "diam_piston": 93,
+   "alt_piston": 86.2,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "MWM",
+   "motor": "MOTOR 4.07 TCE EURO III",
+   "nro_cil": 4,
+   "diam_cilindro": "93,00 / 103,00",
+   "alt_compresion": 56.15,
+   "prof_rebaje": 18.5,
+   "diams_dispon": "STD",
+   "largo_perno": 77,
+   "perno_str": "∅35,00 × 77,00",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13500",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": "S/SA",
+   "dim_camisa": "A=96,00 / B=92,50 / C=102,50 / L=182,00",
+   "codigo_camisa": "C13965",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE13965  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE13970",
+  "codigo_fab": "S BE13970",
+  "marca": "MAHLE",
+  "aplicacion": "FRONTIER / XTERRA — 4.07TCW MARÍTIMO PARCIAL — 2800 CC",
+  "descripcion": "MWM 4.07TCA (2 CIL) (NIS)(93L31A4) 93 mm",
+  "medidas": {
+   "diam_piston": 93,
+   "alt_piston": 86.2,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "MWM",
+   "motor": "MOTOR SPRINT 4.07TCA / 4.07TCW",
+   "nro_cil": 4,
+   "diam_cilindro": "93,00 / 103,00",
+   "alt_compresion": 56.2,
+   "prof_rebaje": "1,50 / 1,50 / 20,70",
+   "diams_dispon": "STD",
+   "largo_perno": 77,
+   "perno_str": "∅35,00 × 77,00",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13500",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=96,07 / B=92,00 / C=102,50 / L=183,00",
+   "codigo_camisa": "C13500",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE13970  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE13980",
+  "codigo_fab": "S BE13980",
+  "marca": "MAHLE",
+  "aplicacion": "DEDALUS / DELIVERY 5-140E / 8-150E / ÓMNIBUS 5-140 / 8-150 — 3200 CC",
+  "descripcion": "MWM 4.08 TCAE (2 CIL) 96 mm",
+  "medidas": {
+   "diam_piston": 96,
+   "alt_piston": 87.2,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "MWM",
+   "motor": "MOTOR SPRINT 4.08 TCE",
+   "nro_cil": 4,
+   "diam_cilindro": "96,00 / 103,00",
+   "alt_compresion": 56.2,
+   "prof_rebaje": "1,50 / 1,50 / 18,50",
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 77,
+   "perno_str": "∅35,00 × 77,00",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13980",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE13980  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE50110",
+  "codigo_fab": "S BE50110",
+  "marca": "MAHLE",
+  "aplicacion": "FL913 TRACTOR ASPIRADO (SIN CANAL DE REFRIGERACIÓN) ARGENTINA 04157745",
+  "descripcion": "DEUTZ 913 APA 3R*(1 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 123.6,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "DEUTZ",
+   "motor": "MOTOR DIESEL FL913 TRACTOR ASPIRADO",
+   "nro_cil": "3/4/5/6",
+   "diam_cilindro": "102,00 / 125,00",
+   "alt_compresion": 69.1,
+   "prof_rebaje": "+6,00 / -16,60",
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 80,
+   "perno_str": "∅35,00 × 80,00",
+   "juego_montaje": null,
+   "codigo_aros": "A50110",
+   "medida_aros": "1-3,00T / 1-2,55R / 1-5,00R",
+   "tipo_camisa": null,
+   "dim_camisa": "A=109,85 / B=102,00 / C=119,90 / L=222,60",
+   "codigo_camisa": "C50110",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE50110  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE50120",
+  "codigo_fab": "S BE50120",
+  "marca": "MAHLE",
+  "aplicacion": "FL913 ASPIRADO (CON CANAL DE REFRIGERACIÓN) F6L VEHICULAR ARGENTINA 2239500",
+  "descripcion": "DEUTZ 913 APA 3R (POZO 56)(2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 123.6,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "DEUTZ",
+   "motor": "MOTOR DIESEL FL913 ASPIRADO C/CANAL",
+   "nro_cil": "3/4/5/6",
+   "diam_cilindro": "102,00 / 125,00",
+   "alt_compresion": 69.1,
+   "prof_rebaje": "+6,00 / -16,60",
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 80,
+   "perno_str": "∅35,00 × 80,00",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A50110",
+   "medida_aros": "1-3,00T / 1-2,55R / 1-5,00R",
+   "tipo_camisa": null,
+   "dim_camisa": "A=109,85 / B=102,00 / C=119,90 / L=222,60",
+   "codigo_camisa": "C50110",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE50120  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE50150",
+  "codigo_fab": "S BE50150",
+  "marca": "MAHLE",
+  "aplicacion": "FL913 ASPIRADO (CON CANAL DE REFRIGERACIÓN) — GAS (GNP) 10,0:1",
+  "descripcion": "DEUTZ 913 APA 3R C/CANAL GAS(2 CIL) 102m",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 123.6,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "DEUTZ",
+   "motor": "MOTOR GAS (GNP) FL913 C/CANAL",
+   "nro_cil": null,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 69.1,
+   "prof_rebaje": "+6,00 / -27,80",
+   "diams_dispon": "STD",
+   "largo_perno": 80,
+   "perno_str": "∅35,00 × 80,00",
+   "juego_montaje": null,
+   "codigo_aros": "A50110",
+   "medida_aros": "1-3,00T / 1-2,55R / 1-5,00R",
+   "tipo_camisa": null,
+   "dim_camisa": "A=109,85 / B=102,00 / C=119,90 / L=222,60",
+   "codigo_camisa": "C50110",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE50150  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE50160",
+  "codigo_fab": "S BE50160",
+  "marca": "MAHLE",
+  "aplicacion": "BFL913C TURBO",
+  "descripcion": "DEUTZ 913 TURBO 3R (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 123.6,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "DEUTZ",
+   "motor": "MOTOR DIESEL BFL913C TURBO",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00 / 125,00",
+   "alt_compresion": 69.1,
+   "prof_rebaje": "+6,00 / -17,60",
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 80,
+   "perno_str": "∅40,00 × 80,00",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A50160",
+   "medida_aros": "1-3,00T / 1-3,00T / 1-3,50R",
+   "tipo_camisa": null,
+   "dim_camisa": "A=109,85 / B=102,00 / C=119,90 / L=222,60",
+   "codigo_camisa": "C50110",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE50160  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE50161",
+  "codigo_fab": "S BE50161",
+  "marca": "MAHLE",
+  "aplicacion": "BF 6L913C",
+  "descripcion": "DEUTZ 913 TURBO ECOL. 3R (2 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 123.6,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "DEUTZ",
+   "motor": "MOTOR DIESEL BF 6L913C",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00 / 125,00",
+   "alt_compresion": 75.1,
+   "prof_rebaje": "+6,00 / -17,35",
+   "diams_dispon": "STD",
+   "largo_perno": 80,
+   "perno_str": "∅40,00 × 80,00",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A50210",
+   "medida_aros": "1-2,94 / 2-3,00 / 3-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=108,70 / B=102,00 / C=124,36 / L=219,74",
+   "codigo_camisa": "C50180",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE50161  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE44000",
+  "codigo_fab": "S BE44000",
+  "marca": "MAHLE",
+  "aplicacion": "TU5JP4 — GAS. 2001-> / FLEX 2007-> — 1600 CC  10,5:1",
+  "descripcion": "PEUGEOT TU5JP4 1.6 16V 78,5 mm",
+  "medidas": {
+   "diam_piston": 78.5,
+   "alt_piston": 54.5,
+   "diam_perno": 19.5
+  },
+  "extra": {
+   "fabricante": "PEUGEOT",
+   "motor": "MOTOR TU5JP4 1.6L 16V GAS./FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "78,50 / 82,70",
+   "alt_compresion": 32.35,
+   "prof_rebaje": "+0,15",
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 57,
+   "perno_str": "∅19,50 × 57,00",
+   "juego_montaje": 0.041,
+   "codigo_aros": "A44500",
+   "medida_aros": "1-1,20 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE44000  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE44000  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE44060",
+  "codigo_fab": "S BE44060",
+  "marca": "MAHLE",
+  "aplicacion": "PEUGEOT 206 / CITROËN C3 — 1400 CC",
+  "descripcion": "PEUGEOT 205 1.4 TU3 LOMO 0,2mm P18 75 mm",
+  "medidas": {
+   "diam_piston": 75,
+   "alt_piston": 49.93,
+   "diam_perno": 17.97
+  },
+  "extra": {
+   "fabricante": "PEUGEOT",
+   "motor": "MOTOR TU3 1.4L 8V GAS./FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "75,00 / 77,00",
+   "alt_compresion": 27.75,
+   "prof_rebaje": 0.18,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 55,
+   "perno_str": "∅17,97 × 55,00",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A44060",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=79,30 / B=75,00 / C=89,20 / L=134,50",
+   "codigo_camisa": "C44060",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE44060  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE44200",
+  "codigo_fab": "S BE44200",
+  "marca": "MAHLE",
+  "aplicacion": "PEUGEOT 405 / CITROËN — 1900 CC DIESEL",
+  "descripcion": "PEUGEOT 405 1.9D XUD9 83 mm",
+  "medidas": {
+   "diam_piston": 83,
+   "alt_piston": 84.3,
+   "diam_perno": 25
+  },
+  "extra": {
+   "fabricante": "PEUGEOT",
+   "motor": "MOTOR XUD9A 1.9L DIESEL",
+   "nro_cil": 4,
+   "diam_cilindro": "83,00",
+   "alt_compresion": 46.8,
+   "prof_rebaje": 2.2,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 72,
+   "perno_str": "∅25,00 × 72,00",
+   "juego_montaje": 0.07,
+   "codigo_aros": "A66020",
+   "medida_aros": "1-2,00 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE44200  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE44200  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE76115",
+  "codigo_fab": "S BE76115",
+  "marca": "MAHLE",
+  "aplicacion": "DS9 05, DS9 06, DS9 08 — R6, 8471 cm³, 155-185KW TURBO (HASTA 05/1987)",
+  "descripcion": "SCANIA DSC9 P93 (1 CIL) 115 mm",
+  "medidas": {
+   "diam_piston": 115,
+   "alt_piston": 139.4,
+   "diam_perno": 50
+  },
+  "extra": {
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DS9 05/06/08 TURBO",
+   "nro_cil": 6,
+   "diam_cilindro": "115,00",
+   "alt_compresion": 87.4,
+   "prof_rebaje": "2,40 / 20,23",
+   "diams_dispon": "STD",
+   "largo_perno": 92,
+   "perno_str": "∅50,00 × 92,00",
+   "juego_montaje": 0.12,
+   "codigo_aros": "A76700",
+   "medida_aros": "1-3,16 / 1-2,39 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=128,00 / B=115,00 / C=140,72 / L=257,50",
+   "codigo_camisa": "C76200",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE76115  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE51190",
+  "codigo_fab": "S BE51190",
+  "marca": "MAHLE",
+  "aplicacion": "TWISTER / TORNADO — 250 CC",
+  "descripcion": "HONDA TWISTER 250 CC-TORNADO 250 CC",
+  "medidas": {
+   "diam_piston": 73,
+   "alt_piston": 50,
+   "diam_perno": 17
+  },
+  "extra": {
+   "fabricante": "HONDA",
+   "motor": "MOTOR 250CC",
+   "nro_cil": 1,
+   "diam_cilindro": "73,00 / 59,80",
+   "alt_compresion": 25,
+   "prof_rebaje": "2,15 / 1,25",
+   "diams_dispon": "STD / 0,25 / 0,50 / 0,75 / 1,00",
+   "largo_perno": 54.2,
+   "perno_str": "∅17,00 × 54,20",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A51190",
+   "medida_aros": "1-0,80 / 1-0,80 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=— / B=73,00 / C=81,00 / L=—",
+   "codigo_camisa": "C51190",
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE51190  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE51190  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE195010",
+  "codigo_fab": "S BE195010",
+  "marca": "MAHLE",
+  "aplicacion": "PICK UP L200 (1998->)",
+  "descripcion": "MITSUBISHI 4D56 APA T/CHICO S/CAN 91,1mm",
+  "medidas": {
+   "diam_piston": 91.1,
+   "alt_piston": 88.65,
+   "diam_perno": 29
+  },
+  "extra": {
+   "fabricante": "MITSUBISHI",
+   "motor": "MOTOR 2.5L 4D56T DIESEL",
+   "nro_cil": 4,
+   "diam_cilindro": "91,10",
+   "alt_compresion": 48.7,
+   "prof_rebaje": 1.55,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 75,
+   "perno_str": "∅29,00 × 75,00",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A195010",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-4,00",
+   "tipo_camisa": "SA",
+   "dim_camisa": "A=94,15 / B=90,10 / C=97,00 / L=170,00",
+   "codigo_camisa": "C195010",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE195010 STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE195010 0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE43121",
+  "codigo_fab": "S BE43121",
+  "marca": "MAHLE",
+  "aplicacion": "TRACTORES SERIE 5000 TURBO (HASTA 2005)",
+  "descripcion": "J.DEERE 300TC (P.41,2) (1 CIL) 106,5 mm",
+  "medidas": {
+   "diam_piston": 106.5,
+   "alt_piston": 112,
+   "diam_perno": 41.275
+  },
+  "extra": {
+   "fabricante": "JOHN DEERE",
+   "motor": "MOTOR 300 SERIE T",
+   "nro_cil": 6,
+   "diam_cilindro": "106,50",
+   "alt_compresion": 66.3,
+   "prof_rebaje": 18.83,
+   "diams_dispon": "STD",
+   "largo_perno": 84.33,
+   "perno_str": "∅41,275 × 84,33",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A43040",
+   "medida_aros": "1-3,155 / 1-2,375 / 1-3,444",
+   "tipo_camisa": null,
+   "dim_camisa": "A=119,99 / B=106,50 / C=126,01 / L=196,80",
+   "codigo_camisa": "C43121",
+   "sobremedidas": [
+    "STD"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE43121  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE68100",
+  "codigo_fab": "S BE68100",
+  "marca": "MAHLE",
+  "aplicacion": "EL-1030 / VW 6.90 / VW 7.90 — MODELO RC.CS.0053-6",
+  "descripcion": "VARGA 82 mm",
+  "medidas": {
+   "diam_piston": 82,
+   "alt_piston": 48.8,
+   "diam_perno": 16.355
+  },
+  "extra": {
+   "fabricante": "VARGA",
+   "motor": "COMPRESOR EL-1030",
+   "nro_cil": 1,
+   "diam_cilindro": "82,00 / 44,00",
+   "alt_compresion": 26.23,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,25 / 0,50",
+   "largo_perno": 58.9,
+   "perno_str": "∅16,355 × 58,90",
+   "juego_montaje": 0.14,
+   "codigo_aros": "A68100",
+   "medida_aros": "2-4,00 / 1-5,00",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE68100  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE68100  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE68150",
+  "codigo_fab": "S BE68150",
+  "marca": "MAHLE",
+  "aplicacion": "EL-1600 — A PARTIR DE 2000",
+  "descripcion": "VARGA (2 CIL) 69,70 mm",
+  "medidas": {
+   "diam_piston": 69.85,
+   "alt_piston": 49.78,
+   "diam_perno": 14.28
+  },
+  "extra": {
+   "fabricante": "VARGA",
+   "motor": "COMPRESOR EL-1600",
+   "nro_cil": 2,
+   "diam_cilindro": "69,85 / 47,50",
+   "alt_compresion": 26.3,
+   "prof_rebaje": null,
+   "diams_dispon": "STD / 0,25 / 0,50 / 0,75",
+   "largo_perno": 58.67,
+   "perno_str": "∅14,28 × 58,67",
+   "juego_montaje": 0.08,
+   "codigo_aros": "A68150",
+   "medida_aros": "1-2,00 / 1-2,00 / 1-4,76",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50",
+    "0,75"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE68150  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE68150  0.5",
+    "medida": "0.5"
+   }
+  ]
+ },
+ {
+  "codigo": "S BE14090",
+  "codigo_fab": "S BE14090",
+  "marca": "MAHLE",
+  "aplicacion": "CHEVETTE / MARAJÓ / HATCH / CHEVY 500 (1983->1987) — 1600 CC 8,5:1",
+  "descripcion": "CHEVETTE 1.6 82 mm",
+  "medidas": {
+   "diam_piston": 82,
+   "alt_piston": 68,
+   "diam_perno": 23
+  },
+  "extra": {
+   "fabricante": "GENERAL MOTORS",
+   "motor": "MOTOR 1.6L GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "82,00 / 75,70",
+   "alt_compresion": 33.3,
+   "prof_rebaje": 3.2,
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 70,
+   "perno_str": "∅23,00 × 70,00",
+   "juego_montaje": 0.03,
+   "codigo_aros": "A14070",
+   "medida_aros": "1-1,50 / 1-1,75 / 1-4,003",
+   "tipo_camisa": null,
+   "dim_camisa": "A=86,76 / B=81,00 / C=88,35 / L=133,00",
+   "codigo_camisa": "C0140010",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S BE14090  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "S BE14090  0.5",
+    "medida": "0.5"
+   }
+  ]
+ }
+]

@@ -132,6 +132,7 @@ Tener dos contraseñas dando vueltas ya costó dos corridas.
 
 - **Selección de motor**: desplegable/buscador con todos los motores de la Cámara.
 - **Cálculo automático**: al elegir el motor se consultan la lista de la Cámara (mano de obra) y el Excel del proveedor (repuestos asociados al motor).
+- **Búsqueda por medidas**: sección propia del menú lateral que encuentra una pieza por sus medidas (Ø, largo, alto…) con tolerancia, cuando no se sabe el código. Los catálogos técnicos (camisas, guías, subconjuntos) viven en `CRAC/tecnicos/*.json`; el precio y el stock salen del catálogo del proveedor ya importado.
 - **Buscador de repuestos**: ícono de lupa en cada ítem (ej. "válvulas") que abre una interfaz de búsqueda dentro del catálogo del proveedor. El código elegido queda guardado asociado al motor para próximos presupuestos.
 - **Edición post-creación**: los presupuestos se pueden modificar después de generados.
 - **Historial de clientes**: cada presupuesto queda vinculado a un cliente (nombre + motor + fecha).
