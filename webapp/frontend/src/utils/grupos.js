@@ -41,7 +41,10 @@ export const SIN_GRUPO = null
  */
 export function lineaDeOpcion(grupo, o, preciosDeHoy = false) {
   const enCatalogo = o.stock_actual !== null && o.stock_actual !== undefined
-  const precio = preciosDeHoy && enCatalogo ? (o.precio_actual || 0) : o.precio_unitario
+  // Redondeado por la misma razón que en lineaDeCatalogo: el backend guarda el
+  // unitario en pesos enteros, así que la pantalla tiene que cotizar sobre ese
+  // mismo número.
+  const precio = aPesos(preciosDeHoy && enCatalogo ? (o.precio_actual || 0) : o.precio_unitario)
   const stock = preciosDeHoy && enCatalogo ? o.stock_actual : o.stock_al_cotizar
   return {
     key: o.repuesto_codigo || `op-${grupo.grupo_num}-${o.descripcion}`,

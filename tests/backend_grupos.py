@@ -23,9 +23,16 @@ if not os.environ.get("DATA_DIR"):
     sys.exit("Falta DATA_DIR: apuntalo a una carpeta descartable, nunca a la base real.")
 
 # config lee el entorno al importarse, así que esto va antes de tocar `app`.
-os.environ["APP_USERNAME"] = "admin"
+#
+# La clave sale de APP_PASSWORD, la misma que usa la suite de UI y con la que
+# `tests/preparar.sh` levanta el backend: una sola contraseña en todo el
+# proyecto. Esta suite habla por el test client de Flask (no hay servidor), así
+# que se configura ella el hash; si no le pasaron nada usa una descartable,
+# porque no necesita coincidir con ningún servidor de afuera.
+os.environ["APP_USERNAME"] = os.environ.get("APP_USERNAME", "admin")
 from werkzeug.security import generate_password_hash  # noqa: E402
-os.environ["APP_PASSWORD_HASH"] = generate_password_hash("test123")
+CLAVE = os.environ.get("APP_PASSWORD") or "clave-descartable-de-la-suite"
+os.environ["APP_PASSWORD_HASH"] = generate_password_hash(CLAVE)
 
 from app import db, crac, facra  # noqa: E402
 from app.helpers import formato_precio_ars, pesos  # noqa: E402
@@ -237,7 +244,8 @@ app = create_app()
 cliente = app.test_client()
 
 check("ruta protegida sin login da 401", cliente.get(f"/api/presupuestos/{pid}/pedido").status_code == 401)
-r = cliente.post("/api/auth/login", json={"usuario": "admin", "password": "test123"})
+r = cliente.post("/api/auth/login",
+                 json={"usuario": os.environ["APP_USERNAME"], "password": CLAVE})
 check("login OK", r.status_code == 200, r.get_json())
 
 r = cliente.get(f"/api/presupuestos/{pid}/pedido")

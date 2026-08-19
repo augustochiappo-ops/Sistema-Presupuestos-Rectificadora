@@ -6,6 +6,11 @@ __pycache__/
 venv/
 *.egg-info/
 
+# Base de prueba que arma tests/preparar.sh, con los datos reales importados.
+# Vive dentro del repo —y no en /tmp— para que lo que prepara el hook de
+# arranque sobreviva hasta la sesión. El venv va en .venv/ (arriba).
+.datos-dev/
+
 # Base de datos local (generada en runtime)
 *.db
 *.sqlite

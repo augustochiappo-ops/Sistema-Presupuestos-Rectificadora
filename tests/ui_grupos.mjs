@@ -26,6 +26,24 @@ const { chromium } = await import(
 )
 
 const BASE = process.env.BASE_URL || 'http://localhost:5173'
+/*
+ * Las credenciales salen del MISMO lugar que las del backend: las pone
+ * `tests/preparar.sh`, que genera el hash con el que levanta el servidor y
+ * exporta esta misma clave. Antes acá había un `test123` escrito a mano y el
+ * backend se levantaba con otra: la suite moría en el login y la corrida
+ * entera se perdía. Si falta APP_PASSWORD, la suite lo dice acá y no gasta
+ * siete minutos para enterarse.
+ */
+const USUARIO = process.env.APP_USERNAME || 'admin'
+const CLAVE = process.env.APP_PASSWORD
+if (!CLAVE) {
+  console.error(
+    '\nFalta APP_PASSWORD: es la contraseña con la que la suite entra a la app.\n'
+    + 'Preparate el entorno con  export APP_PASSWORD="…" && tests/preparar.sh\n'
+    + '(no vive en el repo, misma regla que el DEPLOY_SECRET).\n',
+  )
+  process.exit(1)
+}
 const CHROMIUM = process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium'
 const SHOT = path.join(AQUI, 'capturas')
 // Mismo DATA_DIR con el que se levantó el backend: hace falta para simular a
@@ -88,8 +106,8 @@ py(`for t in ("presupuesto_items", "presupuesto_item_opciones", "presupuesto_pdf
 
 console.log('\n=== Login ===')
 await page.goto(BASE, { waitUntil: 'networkidle' })
-await page.fill('input[autocomplete="username"]', 'admin')
-await page.fill('input[type="password"]', 'test123')
+await page.fill('input[autocomplete="username"]', USUARIO)
+await page.fill('input[type="password"]', CLAVE)
 await page.click('button[type="submit"]')
 await page.waitForURL(/motores/, { timeout: 15000 })
 check('login entra a motores', page.url().includes('motores'))
@@ -520,7 +538,11 @@ await unitarioRevision.fill(unitarioOriginal)
 await esperar(500)
 await filaRevisionRep.locator('input').nth(1).fill(precioRepuestoOriginal)
 await esperar(900)
-check('deshacer las ediciones devuelve el total original',
+/* Además de dejar todo como estaba, esto verifica que el precio del catálogo
+   entre a la línea YA redondeado: si la línea se quedara con los centavos del
+   proveedor, reponer el precio que muestra la pantalla daría un total distinto
+   del original por unos pesos. Así se encontró justamente ese bug. */
+check('reponer el precio que muestra la pantalla devuelve el total exacto',
   (await montosDeLaBarra())[2] === montosEnRevision[2],
   `${JSON.stringify(await montosDeLaBarra())} vs ${JSON.stringify(montosEnRevision)}`)
 

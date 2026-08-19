@@ -21,12 +21,13 @@ línea por verificación y salen con código 1 si falla alguna.
 220 verificaciones sobre la lógica, la base y el PDF.
 
 ```bash
-# Una sola vez: entorno con las dependencias del backend + pypdf (para leer el PDF)
-python3 -m venv /tmp/rect-venv
-/tmp/rect-venv/bin/pip install -r webapp/backend/requirements.txt pypdf
+# El entorno lo prepara tests/preparar.sh (o el hook de arranque, antes de que
+# empiece la sesión). Después:
+source /tmp/rect-corrida/entorno.sh
+$VENV/bin/python tests/backend_grupos.py
 
-# Correr (DATA_DIR es obligatorio y tiene que ser una carpeta descartable)
-DATA_DIR=/tmp/rect-test /tmp/rect-venv/bin/python tests/backend_grupos.py
+# DATA_DIR es obligatorio y tiene que ser una carpeta descartable; por default
+# es .datos-dev/ (gitignoreada), que es la que deja preparar.sh.
 ```
 
 La primera corrida sobre un `DATA_DIR` nuevo importa sola los datos reales
@@ -63,27 +64,36 @@ Qué cubre, por bloque:
 `tests/capturas/`.
 
 ```bash
-# Terminal 1 — backend contra una base descartable
-cd webapp/backend
-DATA_DIR=/tmp/rect-test APP_USERNAME=admin \
-  APP_PASSWORD_HASH="$(/tmp/rect-venv/bin/python -c "from werkzeug.security import generate_password_hash as g; print(g('test123'))")" \
-  SESSION_COOKIE_SECURE=0 /tmp/rect-venv/bin/python wsgi.py
+# Todo el entorno de una: deps, base con los datos reales, backend y frontend.
+# Espera a que los dos respondan y PRUEBA EL LOGIN antes de devolver el control.
+export APP_PASSWORD="…"      # la que pasa el dueño en cada sesión
+tests/preparar.sh
 
-# Terminal 2 — frontend
-cd webapp/frontend && npm install && npm run dev
+# La suite. Toma la clave del entorno; si abrís otra terminal, primero:
+#   source /tmp/rect-corrida/entorno.sh
+node tests/ui_grupos.mjs
 
-# Terminal 3 — la suite
-cd webapp/frontend && npm install --no-save playwright-core   # solo la primera vez
-DATA_DIR=/tmp/rect-test node tests/ui_grupos.mjs
+# Al terminar
+tests/preparar.sh --parar
 ```
+
+**Nunca levantes los servidores a mano ni los mates con `pkill -f`.** Las dos
+cosas ya costaron corridas enteras: a mano es fácil levantar el backend con una
+contraseña distinta de la que teclea la suite (muere en el login siete minutos
+después), y `pkill -f wsgi.py` también matchea el shell que corre el pkill y se
+mata a sí mismo. El script es el dueño de las dos puntas de la clave y para por
+PID.
 
 El Chromium **ya está instalado** en el entorno remoto
 (`/opt/pw-browsers/chromium`): no hay que correr `playwright install`. Si está en
 otro lado, pasá `CHROMIUM_PATH`. La URL del frontend se puede cambiar con
 `BASE_URL`.
 
-La suite espera el usuario `admin` con contraseña `test123`, que es lo que
-configuran las variables de arriba.
+La suite entra con `APP_USERNAME` (default `admin`) y `APP_PASSWORD`, las mismas
+variables con las que `preparar.sh` levanta el backend: **hay una sola
+contraseña en todo el proyecto**, y no vive en el repo (misma regla que el
+`DEPLOY_SECRET`). Si falta, la suite lo dice al arrancar en vez de gastar siete
+minutos para morir en el login.
 
 Qué cubre: login · agrupado automático al tildar dentro de una categoría ·
 cantidad heredada por el grupo · las 6 medidas hermanas quedando marcadas en el
@@ -166,6 +176,6 @@ verificación en sí pase.
   por el botón `[title="Elegir cantidad"]`, no por `table tbody tr`.
 - **La suite de UI toca la base por SQL** (helper `py()`) para simular que el
   proveedor actualizó su lista. Necesita el mismo `DATA_DIR` con el que se
-  levantó el backend: `DATA_DIR=/tmp/rect-test node tests/ui_grupos.mjs`.
+  levantó el backend (lo deja puesto `source /tmp/rect-corrida/entorno.sh`).
 - **`config` del backend lee el entorno al importarse**, así que `APP_USERNAME` y
   `APP_PASSWORD_HASH` tienen que estar seteados antes de importar `app`.

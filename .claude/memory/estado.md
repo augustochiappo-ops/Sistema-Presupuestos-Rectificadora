@@ -687,9 +687,73 @@ cuenta y el total guardado también). Se corrige solo la primera vez que ese
 presupuesto se edita o se actualiza a precios de hoy. En producción hay **un**
 presupuesto en esa situación (#34, Pascolo).
 
+## Sesión 2026-08-19 (tercera): por qué la sesión anterior tardó una hora, y el arreglo
+
+El dueño preguntó por qué la sesión de los pesos enteros tardó **una hora**
+cuando antes no tardaba tanto. La respuesta, medida: **la suite de UI corrió 4
+veces y sólo la última era necesaria**, y ninguna de las tres perdidas falló por
+un problema de la app.
+
+| Qué | Tiempo |
+|---|---|
+| Corrida 1 — murió en el login (backend levantado con otra contraseña) | ~2 min |
+| Corrida 2 — murió en el login (`pkill -f wsgi.py` se mató a sí mismo) | ~4 min |
+| Corrida 3 — completa, falló un check recién escrito, no la app | ~7 min |
+| Corrida 4 — completa, verde | ~8 min |
+| Un `until` esperando en primer plano, que se comió su propio timeout | ~10 min |
+| Preparar el entorno desde cero a mano | ~6 min |
+| **Trabajo real** | **~20 min** |
+
+**Lo que se hizo, sin tocar una sola verificación:**
+
+- **`tests/preparar.sh`** — dueño único del entorno: deps, base con los datos
+  reales, backend y frontend; espera a que respondan y **prueba el login** antes
+  de devolver el control. `--deps`, `--parar` (por PID) y `--estado`. Escribe
+  `/tmp/rect-corrida/entorno.sh` para hacerle `source` desde cualquier comando
+  posterior, porque en Claude Code cada comando corre en un shell nuevo.
+- **`.claude/hooks/session-start.sh`** + `.claude/settings.json` — el hook
+  adelanta lo que tarda (venv, `node_modules`, `playwright-core`, importar los
+  64.250 repuestos) **antes** de que arranque la sesión, y deja `DATA_DIR`
+  puesto. Sale del camino crítico entero: ~6 minutos.
+- **Una sola contraseña.** Se fue el `test123` hardcodeado de la suite de UI: las
+  dos suites y el backend salen de `APP_PASSWORD` / `APP_USERNAME`. No vive en el
+  repo (regla del `DEPLOY_SECRET`); si falta, las suites lo dicen al arrancar.
+- **Cinco reglas en `CLAUDE.md`** (no en `decisiones.md`, a propósito): nunca
+  esperar bloqueado, la suite de UI entera una vez al final, los checks nuevos se
+  prueban antes con un script chico, nunca `pkill -f`, y **no tocar el entorno
+  mientras corre una suite**. La quinta salió de romperla en vivo mientras se
+  escribían las otras cuatro: reiniciar el backend para probar el manejo de
+  contraseñas raras dejó sin datos a la suite que estaba corriendo y se perdieron
+  sus 7 minutos.
+
+**La lección de fondo:** la regla de "una sola corrida al final" **ya estaba
+escrita** en `decisiones.md` desde la sesión anterior, y se rompió igual. Por eso
+estas cuatro van en `CLAUDE.md`, que es lo que se lee como instrucción, y por eso
+el resto se resolvió con herramientas (un script que no deja levantar el entorno
+mal) en vez de con buenas intenciones.
+
+**Ahorro esperado:** ~29 minutos de una sesión de 60.
+
+**Y de paso la suite encontró un bug de los pesos enteros, de esa misma
+mañana.** Una línea de repuesto se quedaba con el precio del catálogo **con
+centavos** hasta que se guardaba: la pantalla cotizaba `ceil(unitario ×
+cantidad)` y el backend `ceil(unitario) × cantidad`, así que el total que se
+aprobaba en la Revisión podía ser hasta (cantidad − 1) pesos MENOR que el que
+terminaba emitido. Arreglado en `lineaDeCatalogo` y `lineaDeOpcion`: el precio
+del catálogo entra a la línea ya redondeado, que es como lo guarda el backend.
+El check que lo encontró quedó como regresión ("reponer el precio que muestra la
+pantalla devuelve el total exacto").
+
 ## Próximo paso
 
-**`master` con el repaso de la sesión del 2026-08-18 ya hecho y sus tres fallas
+**`master` con el entorno de dev automatizado** (`tests/preparar.sh` + hook de
+arranque + una sola contraseña + las cuatro reglas operativas en `CLAUDE.md`,
+ver la sesión 2026-08-19 tercera más arriba). Eso es tooling y documentación: no
+toca la app, así que **no hay nada que deployar por ese cambio**. Producción
+quedó en `941e068`, que es el commit de los pesos enteros, deployado y verificado
+por HTTP.
+
+Antes de eso, **el repaso del 18 corregido** y sus tres fallas
 corregidas** (arrastre de una fila que quedaba trabado, la marca de opcional que
 sobrevivía a sacar el servicio, y las suites que se ensuciaban entre sí; ver la
 sección de la sesión 2026-08-19 más arriba). **Producción quedó parada en

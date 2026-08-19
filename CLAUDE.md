@@ -41,26 +41,70 @@ Así se trabaja en este repo, a pedido explícito del usuario:
    Si Claude no tiene el secreto en la sesión actual, se lo pide al usuario antes de deployar — nunca lo inventa ni lo reusa de una sesión vieja. Si hace falta algo más que el deploy (migración manual, revisar un log, etc.) y no hay un endpoint para eso, Claude le pasa al usuario el comando para pegar en la **consola Bash de PythonAnywhere**, explicando qué hace.
 4. Si Claude corrió el deploy, confirma el resultado (status HTTP) en el chat. Si en cambio le pasó un comando manual al usuario, este lo corre y pega el resultado si algo falla, para poder diagnosticar sin acceso directo al servidor.
 
-## Cómo levantar la app web (dev) y sacar capturas de pantalla
+## Cómo levantar el entorno de dev (un solo comando)
 
-Para verificar visualmente un cambio en la versión web o generar una captura de pantalla de la app:
+**No levantes los servidores a mano.** Hay un script que es el dueño del
+entorno, `tests/preparar.sh`:
 
-1. **Backend Flask**: parado en `webapp/backend`, corre en `http://127.0.0.1:5000`.
-   ```bash
-   cd webapp/backend
-   pip install -r requirements.txt
-   python wsgi.py   # o: flask --app wsgi run
-   ```
-   Necesita `APP_USERNAME`/`APP_PASSWORD_HASH` en el entorno para poder loguearse en dev (generar el hash con `werkzeug.security.generate_password_hash`).
-2. **Frontend Vite (dev server)**: parado en `webapp/frontend`, corre en `http://localhost:5173` y proxea `/api` al backend Flask (ver `vite.config.js`).
-   ```bash
-   cd webapp/frontend
-   npm install
-   npm run dev
-   ```
-3. **Captura con browser headless**: con ambos servidores arriba, usar el Chromium headless preinstalado en el entorno remoto (Playwright, `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`) para navegar a `http://localhost:5173` y sacar el screenshot. No hace falta correr `playwright install`: el browser ya está listo (usar `playwright-core` + `executablePath` apuntando al Chromium ya instalado).
-4. Para probar features reales conviene importar datos de FACRA (`Excel/Facra/*.xls`, endpoints `/api/excel/nomenclador` y `/api/excel/lista-orientadora`) en la base de datos local de prueba — la DB vive en `webapp/backend/data/` (gitignored), así que no contamina el repo ni la base real de producción.
-5. Recordar matar los procesos de backend y frontend al terminar si quedaron corriendo en background.
+```bash
+export APP_PASSWORD="…"     # la que pasa el dueño en cada sesión
+tests/preparar.sh           # deps + base con datos reales + backend + frontend
+```
+
+Deja el backend en `http://127.0.0.1:5000` y el frontend en
+`http://localhost:5173`, espera a que los dos respondan y **prueba el login**
+antes de devolver el control. Después:
+
+```bash
+source /tmp/rect-corrida/entorno.sh   # deja DATA_DIR y la clave puestas
+tests/preparar.sh --estado            # qué hay levantado
+tests/preparar.sh --parar             # bajar todo (por PID)
+```
+
+Las dependencias pesadas (venv, `node_modules`, `playwright-core`, importar los
+datos reales) las prepara solo el **hook de arranque**
+(`.claude/hooks/session-start.sh`), antes de que empiece la sesión, así que a
+partir de la segunda vez `preparar.sh` tarda segundos.
+
+Para capturas de pantalla: con los dos servidores arriba, Chromium headless ya
+está instalado en el entorno remoto (`/opt/pw-browsers/chromium`) —
+`playwright-core` + `executablePath`, **nunca** `playwright install`.
+
+### Cinco reglas que se ganaron a los golpes
+
+Las cinco salieron de sesiones que tardaron el doble de lo que debían (50 y 60
+minutos, 2026-08-19). Ninguna sacrifica cobertura: lo que atacan es desperdicio.
+
+1. **Nunca esperar bloqueado.** Lo que tarde —la suite de UI son ~7 minutos— va
+   en segundo plano, y mientras tanto se sigue: commitear, escribir la memoria,
+   preparar el deploy. Un `until … sleep` esperando en primer plano es tiempo
+   del dueño tirado a la basura; ya se comió 10 minutos de una sesión.
+2. **La suite de UI se corre entera, UNA vez, al final**, con todos los arreglos
+   ya hechos. No una vez por arreglo. (Ver `decisiones.md`: entera siempre, sin
+   filtros ni recortes de esperas — lo que se optimiza es cuándo se corre, no
+   qué cubre.)
+3. **Un check nuevo se prueba primero con un script chico** (un `.mjs` de veinte
+   líneas en el scratchpad que abra Chromium y verifique solo eso: ~1 minuto).
+   Meter un check sin probar y descubrir a los 7 minutos que estaba mal escrito
+   el check —no la app— ya pasó y cuesta una corrida entera.
+4. **Nunca `pkill -f`.** `pkill -f wsgi.py` también matchea la línea de comandos
+   del shell que corre el pkill: se mata a sí mismo, el servidor no vuelve, y la
+   corrida siguiente muere sin explicación. Se para con `tests/preparar.sh
+   --parar`, que mata por PID.
+5. **Mientras corre una suite no se toca el entorno.** Nada de reiniciar
+   servidores, cambiar `DATA_DIR` ni correr `preparar.sh` — la suite trabaja
+   contra esa base y se queda sin datos a mitad de camino. Pasó el 2026-08-19,
+   con la suite ya lanzada: se perdieron los 7 minutos completos. Si hay que
+   tocar el entorno, primero se espera a que termine.
+
+### Una sola contraseña en todo el proyecto
+
+`APP_PASSWORD` (usuario `APP_USERNAME`, default `admin`) la usan las tres cosas:
+con ella `preparar.sh` genera el hash del backend, con ella entra la suite de UI
+y con ella entra la de backend. **No vive en el repo** —misma regla que el
+`DEPLOY_SECRET`— así que el dueño la pasa al empezar la sesión; si falta, las
+suites lo dicen al arrancar en vez de morir en el login siete minutos después.
+Tener dos contraseñas dando vueltas ya costó dos corridas.
 
 ## Ramas y producción
 

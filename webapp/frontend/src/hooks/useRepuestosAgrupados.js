@@ -1,6 +1,6 @@
 import React from 'react'
 import { api } from '../api/client'
-import { formatPrecioARS } from '../utils/format'
+import { formatPrecioARS, aPesos } from '../utils/format'
 import {
   conCantidadRepuesto, conPrecioRepuesto, conSubtotalRepuesto, conOpcionalRepuesto,
 } from '../utils/grupos'
@@ -137,7 +137,12 @@ export function useRepuestosAgrupados({
 }
 
 export function lineaDeCatalogo(rep, cantidad) {
-  const unitario = rep.precio || 0
+  // El precio del catálogo entra YA redondeado a pesos enteros, que es como lo
+  // va a guardar el backend (_resolver_repuesto). Si la línea se quedara con
+  // los centavos del proveedor, el subtotal de la pantalla —ceil(unitario ×
+  // cantidad)— daría hasta (cantidad − 1) pesos menos que el que termina
+  // grabado, y el total que aprobás no sería el que se emite.
+  const unitario = aPesos(rep.precio || 0)
   return {
     key: rep.codigo,
     repuesto_codigo: rep.codigo,
