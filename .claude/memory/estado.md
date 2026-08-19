@@ -837,10 +837,26 @@ correr antes o después de las de grupos sin pisarles nada.
 agregar un resultado al presupuesto, y que la lupa del wizard ofrezca "buscar
 por medidas" como segunda pestaña.
 
+**Verificado al cerrar (2026-08-19, cuarta sesión):** las cuatro suites en verde
+(backend 237 + 35, UI 211 + 24), `npm run build` y `oxlint` limpios, deploy con
+status 200 y producción sirviendo el JS commiteado byte a byte, árbol de trabajo
+limpio, `master` sincronizado con `origin/master`, una sola rama —la que había
+creado el harness de la tarea (`claude/parts-search-section-6349n7`) se borró
+apenas se vio que ya estaba contenida en `master`— y ningún servidor de dev
+quedando corriendo.
+
 ## Próximo paso
 
-**Producción y `master` están sincronizados en `c2800fd`**, deployado y
-verificado por HTTP (el JS que sirve es byte a byte el commiteado). Ese commit
+**Producción y `master` están sincronizados en `932aa01`**, deployado y
+verificado por HTTP (el JS que sirve es byte a byte el commiteado, y
+`/api/tecnicos/familias` responde 401 sin sesión, o sea que el blueprint nuevo
+está montado). Ese commit trae la **búsqueda por medidas** (ver la sección de la
+sesión 2026-08-19 cuarta, arriba): sección propia en el menú, los tres catálogos
+técnicos como JSON en `CRAC/tecnicos/`, y precio y stock salidos de
+`crac_repuestos`. Quedó afuera a propósito, por pedido del dueño, agregar un
+resultado al presupuesto.
+
+Antes de eso, `c2800fd`. Ese commit
 trae el **entorno de dev automatizado** —`tests/preparar.sh`, el hook de
 arranque, una sola contraseña y las **cinco reglas operativas** de `CLAUDE.md`—
 y, además, **un arreglo de la app**: el precio del catálogo entra a la línea del
