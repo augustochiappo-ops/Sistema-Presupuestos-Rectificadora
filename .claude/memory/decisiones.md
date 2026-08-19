@@ -358,3 +358,10 @@
 **Por qué:** el bloque 7 de la suite de backend cuenta **exactamente** cuántos códigos eliminados tiene un motor. Como la papelera no se limpiaba, correr la suite de backend después de la de UI (mismo `DATA_DIR`) fallaba en dos verificaciones, y la corrida siguiente pasaba —porque la propia suite terminaba vaciando esa papelera—. Eso es lo que hace parecer "flaky" a un test que en realidad está midiendo bien.
 **Regla que queda:** si una suite falla una vez y pasa a la siguiente, buscar el estado que no se está limpiando antes de culpar al test.
 **Fecha:** 2026-08-19
+
+## Las suites se corren enteras, siempre — lo que se optimiza es cómo se espera
+**Decisión:** `tests/backend_grupos.py` y `tests/ui_grupos.mjs` se corren **completas**. No se agrega filtro por bloque ni se recortan las esperas de la suite de UI.
+**Por qué:** el dueño lo pidió explícitamente (2026-08-19): "hacé lo más seguro para que no se nos pase ninguna falla, no importa cuánto tarda". Las dos ideas de acelerarla la debilitan: correr un bloque suelto baja la cobertura, y acortar las esperas fijas produce fallas intermitentes — que es lo peor que le puede pasar a una suite, porque uno deja de creerle (ya pasó con la papelera, ver la entrada de arriba).
+**Los números, para no volver a discutirlo a ciegas:** la de backend son **2 segundos** con 220 checks (no hay ninguna excusa para saltearla, nunca). La de UI son **~6-7 minutos** con 195 checks, de los cuales ~160 segundos son esperas fijas; maneja un Chromium de verdad, así que no puede ser instantánea.
+**Lo que sí se optimiza:** correr la de UI **una sola vez, al final**, después de tener todos los arreglos hechos —no una vez por arreglo— y **en segundo plano**, siguiendo la conversación con el dueño mientras corre en vez de quedarse esperándola. La sesión del 2026-08-19 tardó 50 minutos por hacer justo lo contrario: tres corridas completas de la de UI y un bloqueo esperando la última.
+**Fecha:** 2026-08-19
