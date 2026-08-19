@@ -247,7 +247,7 @@ def init_db():
                 base_codigo   TEXT,
                 -- Descripción normalizada (sin acentos ni mayúsculas) para
                 -- buscar por palabras sueltas y en cualquier orden. Se llena al
-                -- importar; ver crac.normalizar_busqueda.
+                -- importar (crac.importar_precio_stock) con texto.normalizar.
                 busqueda      TEXT
             );
             CREATE INDEX IF NOT EXISTS idx_crac_repuestos_codigo ON crac_repuestos(codigo);

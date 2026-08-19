@@ -542,6 +542,59 @@ Seis pedidos del dueño en una tanda, después de probar el sistema en el taller
   - **la migración del buscador corrió sola sobre las 64.250 filas**: `?descripcion=fiat 2.8` devuelve 273 repuestos y `?descripcion=2.8 fiat` los mismos 273; `?busqueda=citroen 1.6` en motores devuelve 3;
   - **nada de lo que ya estaba cambió**: los 2 presupuestos del dueño conservan su total exacto (#34 Pascolo $1.219.391,79 y #35 Naselli $625.000), el #34 sigue con 7 ítems y ninguno opcional, sus 3 grupos siguen cotizando una sola opción cada uno (las otras 17 se leen hoy como opcionales, que es lo que eran), su revalidación da `hay_cambios: false` / `hay_subas: false`, y las fichas de los motores 622, 665 y 675 siguen enteras.
 
+## Repaso de la sesión anterior: tres fallas encontradas y corregidas (sesión 2026-08-19, `master` directo)
+
+El dueño pidió revisar lo que había hecho el agente en la sesión del 2026-08-18
+(los dos bloques: precio de mano de obra editable + paso de Revisión, y
+"se cotiza todo lo cargado" + opcionales + buscadores), porque esa sesión se le
+trabó, la reinició varias veces y le quedó un servidor levantado. Se revisó el
+diff completo de los dos bloques y se corrieron las dos suites.
+
+**Lo primero, la buena noticia:** el trabajo de esa sesión está entero y bien
+puesto. Se verificó que el `static_build/` commiteado es exactamente el que
+produce compilar el código fuente commiteado (se reconstruyó `143bc22` en un
+worktree aparte y salieron los mismos hashes, `index-i6kXhcQT.js` /
+`index-CjgNvZJv.css`), y que **producción está sirviendo justo ese bundle** — o
+sea que el deploy de esa sesión llegó. No quedó nada a medio subir.
+
+**Falla 1 — una fila que se dejaba de poder arrastrar para siempre.** En
+`useArrastreOpcionales`, apretar el mouse sobre el recuadro del precio de una
+línea apaga el arrastre de la fila (a propósito: si no, seleccionar el número
+arrastra el renglón entero), pero el desbloqueo colgaba del `mouseup`/`blur` del
+propio recuadro. Al soltar el botón afuera —lo que uno hace justo al querer
+seleccionar el número— la fila **quedaba sin poder mandarse a Opcionales con el
+mouse** hasta perder el foco. Ahora el desbloqueo escucha en `document`.
+La verificación de UI del arrastre **estaba fallando y la sesión anterior la dio
+por verde**: Playwright agarra la fila por el centro, que cae justo sobre ese
+recuadro. La suite ahora agarra la fila por la descripción (por donde la agarra
+el usuario) y suma un check del bug real: soltar el mouse afuera devuelve el
+arrastre.
+
+**Falla 2 — un servicio volvía marcado como opcional sin que nadie lo tocara.**
+Poner un servicio en cantidad 0 lo saca del presupuesto y borra su precio pisado,
+pero **no borraba su marca de opcional**. Volver a agregarlo más tarde lo traía
+como opcional, sin sumar al total. Corregido en `PasoServicios` (y también al
+borrar un ítem manual), con un check nuevo en la suite de UI.
+
+**Falla 3 — las suites se ensuciaban entre sí.** Ninguna de las dos vaciaba
+`motor_repuestos_papelera` al arrancar, y el bloque 7 de la de backend cuenta
+exactamente cuántos códigos eliminados tiene el motor: correr backend después de
+UI sobre el mismo `DATA_DIR` fallaba dos verificaciones y la corrida siguiente
+volvía a pasar. Eso es lo que hace parecer flaky a un test que mide bien — y es
+la clase de cosa que vuelve confusa una sesión. Las dos suites limpian ahora esa
+tabla; el README lo aclara.
+
+**De paso:** `.claude/launch.json` apuntaba a un `node.exe` bajo
+`C:\Users\Usuario\...`, una ruta de la máquina Windows del usuario que no
+existe en el entorno donde realmente se trabaja (Claude Code web, Linux). Quedó
+en `"node"`, que resuelve por PATH en cualquier lado. Es el único sospechoso
+concreto que apareció para el "quedaba un servidor abierto".
+
+**Estado de las verificaciones:** `tests/backend_grupos.py` en **220 checks** y
+`tests/ui_grupos.mjs` en **195** (191 + los 4 nuevos), las dos en verde, corridas
+una después de la otra sobre el mismo `DATA_DIR` para probar que ya no se
+contaminan. `npm run build` y `oxlint` limpios.
+
 ## Cómo verificar que no se rompió nada (`tests/`)
 
 Desde el 2026-08-10 hay dos suites en `tests/`, escritas junto con los grupos de repuestos. **Correrlas antes de dar por terminado cualquier cambio que toque repuestos, presupuestos o el PDF.** Instrucciones completas en `tests/README.md`.
@@ -558,7 +611,11 @@ El checklist completo está en `CLAUDE.md`, sección **Memoria del proyecto → 
 
 ## Próximo paso
 
-**`master` con el cambio grande del armado de presupuestos: se cotiza todo lo cargado (se cayó la regla del "más caro"), caja de Opcionales en pantalla y en el PDF, subtotal editable y buscadores tolerantes a acentos y al orden de las palabras (`fc0c324`, 2026-08-18, deployado y verificado en producción por HTTP).** Antes de eso, el precio de mano de obra editable, la lista de servicios más alta y el paso de Revisión previo a emitir (`fc35a9e`, 2026-08-18, deployado y verificado en producción por HTTP). Antes de eso, el paso Repuestos partido en dos ejes: el círculo del motor y la cantidad (`6b22255`, 2026-08-14, deployado y verificado en producción). Antes de eso, el bloque de líneas de familia + "Deshacer" global + el arreglo del bug de los aros (2026-08-12, deployado). Antes de eso, `722da1b` (borrar repuestos del motor con papelera, familias de medidas, notas de precio y el arreglo del bug de las supermedidas — 2026-08-12). Antes de eso, producción y `master` estaban sincronizados en `dfea837` (borrar clientes + códigos de a uno + repuestos por grupos + textos del PDF, deployado y verificado por API el 2026-08-11; el commit de cierre posterior es solo documentación y no cambia nada de lo que sirve producción). Rama única `master` — `main` fue eliminada y no hay que recrearla. El deploy lo puede correr Claude desde el entorno remoto pasando el `DEPLOY_SECRET` de la sesión (ver nota operativa arriba).
+**`master` con el repaso de la sesión del 2026-08-18 ya hecho y sus tres fallas
+corregidas** (arrastre de una fila que quedaba trabado, la marca de opcional que
+sobrevivía a sacar el servicio, y las suites que se ensuciaban entre sí; ver la
+sección de la sesión 2026-08-19 más arriba). Antes de eso, el cambio grande del
+armado de presupuestos: se cotiza todo lo cargado (se cayó la regla del "más caro"), caja de Opcionales en pantalla y en el PDF, subtotal editable y buscadores tolerantes a acentos y al orden de las palabras (`fc0c324`, 2026-08-18, deployado y verificado en producción por HTTP). Antes de eso, el precio de mano de obra editable, la lista de servicios más alta y el paso de Revisión previo a emitir (`fc35a9e`, 2026-08-18, deployado y verificado en producción por HTTP). Antes de eso, el paso Repuestos partido en dos ejes: el círculo del motor y la cantidad (`6b22255`, 2026-08-14, deployado y verificado en producción). Antes de eso, el bloque de líneas de familia + "Deshacer" global + el arreglo del bug de los aros (2026-08-12, deployado). Antes de eso, `722da1b` (borrar repuestos del motor con papelera, familias de medidas, notas de precio y el arreglo del bug de las supermedidas — 2026-08-12). Antes de eso, producción y `master` estaban sincronizados en `dfea837` (borrar clientes + códigos de a uno + repuestos por grupos + textos del PDF, deployado y verificado por API el 2026-08-11; el commit de cierre posterior es solo documentación y no cambia nada de lo que sirve producción). Rama única `master` — `main` fue eliminada y no hay que recrearla. El deploy lo puede correr Claude desde el entorno remoto pasando el `DEPLOY_SECRET` de la sesión (ver nota operativa arriba).
 
 **Producción YA NO está vacía — el dueño la está usando** (censo del 2026-08-12, después del deploy): **1 presupuesto** (#34, cliente Pascolo, FIAT 1100, $1.219.391,79), **1 cliente** (Pascolo) y **3 motores con ficha de repuestos cargada a mano**: #622 FIAT 1100 (19 opciones en Aros / Cojinete axial / Cojinetes bancada), #665 FIAT Ducato 2.3 (7) y #675 FIAT Fire 1400 (12). 491 motores y 64.250 repuestos. El catálogo del proveedor **sigue sin fecha de importación** (`app_meta.catalogo_importado_en` en `null`): se cargó antes de que existiera esa columna, así que la pantalla no muestra "última carga" hasta la próxima importación.
 

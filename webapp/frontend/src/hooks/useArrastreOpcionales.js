@@ -15,6 +15,32 @@ import React from 'react'
 export function useArrastreOpcionales(onMover) {
   const [zonaActiva, setZonaActiva] = React.useState(null)
   const arrastrando = React.useRef(null)
+  // Fila a la que se le apagó el arrastre para poder escribir en un recuadro
+  // (ver propsCampoEditable). Se guarda para poder devolvérselo siempre.
+  const filaBloqueada = React.useRef(null)
+
+  const desbloquearFila = React.useCallback(() => {
+    if (filaBloqueada.current) {
+      filaBloqueada.current.draggable = true
+      filaBloqueada.current = null
+    }
+  }, [])
+
+  /*
+   * El desbloqueo va en `document` y no en el recuadro: si se aprieta el mouse
+   * sobre el precio y se suelta en cualquier otro lado —lo más común al querer
+   * seleccionar el número—, el recuadro nunca recibe el mouseup y la fila
+   * quedaría sin poder arrastrarse hasta que perdiera el foco.
+   */
+  React.useEffect(() => {
+    document.addEventListener('mouseup', desbloquearFila)
+    document.addEventListener('dragend', desbloquearFila)
+    return () => {
+      document.removeEventListener('mouseup', desbloquearFila)
+      document.removeEventListener('dragend', desbloquearFila)
+      desbloquearFila()
+    }
+  }, [desbloquearFila])
 
   const propsFila = React.useCallback((clave) => ({
     draggable: true,
@@ -46,15 +72,15 @@ export function useArrastreOpcionales(onMover) {
    * le da prioridad al drag del contenedor. Mientras el mouse está apretado
    * sobre el recuadro, la fila deja de ser arrastrable.
    */
-  const propsCampoEditable = React.useMemo(() => {
-    const filaDe = (e) => e.currentTarget.closest('[draggable]')
-    const permitir = (e) => { const f = filaDe(e); if (f) f.draggable = true }
-    return {
-      onMouseDown: (e) => { const f = filaDe(e); if (f) f.draggable = false },
-      onMouseUp: permitir,
-      onBlur: permitir,
-    }
-  }, [])
+  const propsCampoEditable = React.useMemo(() => ({
+    onMouseDown: (e) => {
+      const fila = e.currentTarget.closest('[draggable]')
+      if (!fila) return
+      desbloquearFila()          // por si quedó otra a medio camino
+      fila.draggable = false
+      filaBloqueada.current = fila
+    },
+  }), [desbloquearFila])
 
   return { zonaActiva, propsFila, propsZona, propsCampoEditable }
 }

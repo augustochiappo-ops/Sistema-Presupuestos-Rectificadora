@@ -64,9 +64,13 @@ check("catálogo cargado", crac.get_info_catalogo()["total"] == 64250)
 # Las fichas de repuestos de los motores sobreviven al borrado de datos de
 # prueba (a propósito: son trabajo cargado a mano). Para que dos corridas
 # seguidas sobre el mismo DATA_DIR den lo mismo, acá se arranca sin ninguna.
+# La papelera va en la misma lista: el bloque 7 cuenta exactamente cuántos
+# códigos eliminados tiene el motor, así que lo que dejó otra corrida (o la
+# suite de UI, que usa el mismo DATA_DIR) haría fallar esa cuenta.
 with db.get_connection() as _conn:
     _conn.execute("DELETE FROM motor_repuesto_opciones")
     _conn.execute("DELETE FROM motor_repuesto_grupos")
+    _conn.execute("DELETE FROM motor_repuestos_papelera")
 
 print("\n=== 1. Medidas del catálogo ===")
 familia = [r["medida"] for r in crac.get_medidas_hermanas("CAAC02740  STD")]

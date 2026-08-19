@@ -75,20 +75,28 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   // Tipeo a mano en el recuadro: fija la cantidad tal cual y limpia el tag de
   // grupo (un valor tipeado a mano no participa del cálculo del par adaptativo).
   // Sacar el servicio del presupuesto (cantidad 0) también borra su precio
-  // pisado: un precio que ya no se ve en ningún lado no puede volver solo si el
-  // servicio se agrega de nuevo más tarde.
+  // pisado y su marca de opcional: nada que ya no se ve en ningún lado puede
+  // volver solo si el servicio se agrega de nuevo más tarde.
   const cambiarCantidad = (id, cantidad) => {
     const nuevas = { ...cantidades }
     const nuevosPrecios = { ...precios }
+    let nuevosOpcionales = value.opcionales || []
     if (cantidad > 0) {
       nuevas[id] = cantidad
     } else {
       delete nuevas[id]
       delete nuevosPrecios[id]
+      nuevosOpcionales = nuevosOpcionales.filter((c) => String(c) !== String(id))
     }
     const nuevosGrupos = { ...grupos }
     delete nuevosGrupos[id]
-    onChange({ ...value, cantidades: nuevas, grupos: nuevosGrupos, precios: nuevosPrecios })
+    onChange({
+      ...value,
+      cantidades: nuevas,
+      grupos: nuevosGrupos,
+      precios: nuevosPrecios,
+      opcionales: nuevosOpcionales,
+    })
   }
 
   // Botón "+" o recuadro adaptativo: fija la cantidad y tagea el ítem con su
@@ -148,7 +156,11 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   const quitarCustom = (id) => {
     const antes = value
     const it = customItems.find((c) => c.id === id)
-    onChange({ ...value, customItems: customItems.filter((c) => c.id !== id) })
+    onChange({
+      ...value,
+      customItems: customItems.filter((c) => c.id !== id),
+      opcionales: (value.opcionales || []).filter((c) => String(c) !== String(id)),
+    })
     avisarBorrado({
       mensaje: `Se quitó ${it?.descripcion_custom || 'el ítem'} del presupuesto.`,
       onDeshacer: () => onChange(antes),

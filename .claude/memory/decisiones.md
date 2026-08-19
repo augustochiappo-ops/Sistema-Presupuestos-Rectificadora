@@ -341,3 +341,20 @@
 **Qué NO cambió:** los avisos de "ya no tiene stock" y "ya no está en la lista" siguen apareciendo, suba o baje el precio — no son un problema de precio sino de disponibilidad.
 **Implementación:** el backend devuelve `hay_subas` en el resumen de revalidación y el detalle lo decide por línea comparando `precio_actual > precio_unitario`.
 **Fecha:** 2026-08-18
+
+## Una fila deja de arrastrarse mientras se escribe en ella, pero el mouse la libera en cualquier lado
+**Decisión:** `useArrastreOpcionales` sigue apagando el `draggable` de la fila cuando se aprieta el mouse sobre un recuadro editable (si no, querer seleccionar el texto de un precio arrastra el renglón entero), pero el **desbloqueo escucha en `document`**, no en el recuadro: cualquier `mouseup` o `dragend`, caiga donde caiga, devuelve el arrastre.
+**Por qué:** como estaba, el desbloqueo colgaba del `onMouseUp`/`onBlur` del propio recuadro. Al apretar sobre el precio y soltar afuera —justo lo que uno hace al querer seleccionar el número— el recuadro nunca recibía el evento y **esa fila quedaba sin poder arrastrarse a Opcionales** hasta que perdiera el foco. Se descubrió porque la verificación de UI del arrastre fallaba: Playwright agarra la fila por el centro, que cae sobre el recuadro del precio.
+**Lo que no cambió:** sobre el recuadro del precio el arrastre sigue apagado a propósito. La fila se agarra por la descripción — y para el celular está la flechita, que hace lo mismo.
+**Fecha:** 2026-08-19
+
+## Sacar una línea del presupuesto se lleva también su marca de opcional
+**Decisión:** poner un servicio en cantidad 0 (o borrar un ítem manual) borra su entrada de `opcionales`, igual que ya borraba su precio pisado.
+**Por qué:** la clave quedaba colgada en el estado del wizard. Volver a agregar el mismo servicio más tarde lo traía marcado como opcional —sin sumar al total— sin que nadie lo hubiera tocado. Es la misma regla que ya estaba escrita para el precio pisado ("un dato que ya no se ve en ningún lado no puede volver solo"), que al agregar los opcionales no se extendió.
+**Fecha:** 2026-08-19
+
+## Las suites de verificación limpian también la papelera de repuestos
+**Decisión:** el arranque de `tests/backend_grupos.py` y de `tests/ui_grupos.mjs` vacía `motor_repuestos_papelera` además de las fichas, los presupuestos y los clientes.
+**Por qué:** el bloque 7 de la suite de backend cuenta **exactamente** cuántos códigos eliminados tiene un motor. Como la papelera no se limpiaba, correr la suite de backend después de la de UI (mismo `DATA_DIR`) fallaba en dos verificaciones, y la corrida siguiente pasaba —porque la propia suite terminaba vaciando esa papelera—. Eso es lo que hace parecer "flaky" a un test que en realidad está midiendo bien.
+**Regla que queda:** si una suite falla una vez y pasa a la siguiente, buscar el estado que no se está limpiando antes de culpar al test.
+**Fecha:** 2026-08-19

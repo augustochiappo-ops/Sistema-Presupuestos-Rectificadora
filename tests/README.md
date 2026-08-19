@@ -59,7 +59,7 @@ Qué cubre, por bloque:
 
 ## 2. UI — `ui_grupos.mjs`
 
-191 verificaciones con navegador real, más capturas de pantalla en
+195 verificaciones con navegador real, más capturas de pantalla en
 `tests/capturas/`.
 
 ```bash
@@ -89,8 +89,11 @@ Qué cubre: login · agrupado automático al tildar dentro de una categoría ·
 cantidad heredada por el grupo · las 6 medidas hermanas quedando marcadas en el
 motor (sin entrar al presupuesto) · **precio unitario y subtotal editables**
 (escribir uno recalcula el otro) · **caja de opcionales** en el paso Servicios y
-en la Revisión, con la flechita del renglón y con arrastre de verdad · casilla
-"Opcional" en el pop-up de repuestos · aviso "¿cantidad correcta?" ·
+en la Revisión, con la flechita del renglón y con arrastre de verdad (la fila se
+agarra por la descripción: sobre el recuadro del precio el arrastre está apagado
+a propósito, y soltar el mouse afuera se lo tiene que devolver) · sacar del
+presupuesto un servicio opcional y volver a agregarlo **no** lo trae marcado ·
+casilla "Opcional" en el pop-up de repuestos · aviso "¿cantidad correcta?" ·
 **buscadores sin acentos y por palabras sueltas** (mano de obra y catálogo) ·
 confirmación del presupuesto · detalle con "Repuestos por categoría" y el chip
 "Cotiza" · marcar aprobado · pantalla de
@@ -123,9 +126,17 @@ y lo elegido entra al presupuesto) · **el paso Repuestos arranca en cero** aunq
 el motor tenga ficha cargada.
 
 Las dos suites **arrancan limpiando el estado que ellas mismas generan**
-(presupuestos, clientes y fichas de motor), así que se pueden correr dos veces
-seguidas sobre el mismo `DATA_DIR` y dan el mismo resultado. Los datos importados
-(motores, mano de obra, catálogo) no se tocan.
+(presupuestos, clientes, fichas de motor y la papelera de repuestos eliminados),
+así que se pueden correr dos veces seguidas sobre el mismo `DATA_DIR` —y una
+después de la otra— y dan el mismo resultado. Los datos importados (motores,
+mano de obra, catálogo) no se tocan.
+
+> La papelera se agregó a esa limpieza el 2026-08-19. Antes quedaba con lo que
+> dejaba la corrida anterior, y el bloque 7 de la suite de backend —que cuenta
+> exactamente cuántos códigos eliminados tiene el motor— fallaba al correrla
+> después de la de UI, para volver a pasar en la corrida siguiente. Si alguna
+> vez una suite falla una vez y pasa a la siguiente, sospechar de un estado que
+> no se está limpiando, no de un test "flaky".
 
 También falla si la página tira **cualquier error de JavaScript**, aunque la
 verificación en sí pase.

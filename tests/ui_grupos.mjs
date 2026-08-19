@@ -82,7 +82,8 @@ async function montosDeLaBarra() {
 // precargado desde la ficha y las verificaciones de cantidades dejarían de
 // medir lo que dicen medir. No toca motores, mano de obra ni catálogo.
 py(`for t in ("presupuesto_items", "presupuesto_item_opciones", "presupuesto_pdfs",
-             "presupuestos", "clientes", "motor_repuesto_opciones", "motor_repuesto_grupos"):
+             "presupuestos", "clientes", "motor_repuesto_opciones", "motor_repuesto_grupos",
+             "motor_repuestos_papelera"):
     c.execute("DELETE FROM " + t)`)
 
 console.log('\n=== Login ===')
@@ -185,8 +186,24 @@ check('volver al presupuesto lo hace sumar de nuevo',
 check('y la caja de opcionales vuelve a estar vacía',
   (await page.locator('text=/Arrastrá acá los servicios o repuestos/').count()) === 1)
 
+/* Apretar el mouse sobre el precio apaga el arrastre de la fila (si no, querer
+   seleccionar el número arrastraría el renglón entero). Se suelta el botón
+   afuera del recuadro —lo más común— y la fila tiene que volver a ser
+   arrastrable: si no, no se la puede mandar más a opcionales con el mouse. */
+const celdaPrecio = filaPreview.locator('input').first()
+const caja = await celdaPrecio.boundingBox()
+await page.mouse.move(caja.x + caja.width / 2, caja.y + caja.height / 2)
+await page.mouse.down()
+await page.mouse.move(caja.x + caja.width / 2, caja.y - 120)
+await page.mouse.up()
+await esperar(300)
+check('soltar el mouse fuera del precio devuelve el arrastre de la fila',
+  await filaPreview.evaluate((tr) => tr.draggable))
+
 // Arrastre real (HTML5 drag & drop): la fila del presupuesto a la caja de abajo.
-await page.locator('.servicios-picker-grid table tbody tr').first().dragTo(
+// Se agarra por la descripción, que es de donde la agarra el usuario — sobre el
+// recuadro del precio el arrastre está apagado a propósito.
+await page.locator('.servicios-picker-grid table tbody tr').first().locator('td').first().dragTo(
   page.locator('text=/Arrastrá acá los servicios o repuestos/'),
 )
 await esperar(900)
@@ -199,6 +216,24 @@ await esperar(900)
 // contra el precio de la Cámara.
 await page.locator('button[title="Volver al precio de la lista"]').click()
 await esperar(900)
+
+/* Sacar del presupuesto un servicio que estaba marcado como opcional y volver a
+   ponerlo no lo trae de vuelta marcado: la marca se va con la línea, igual que
+   el precio pisado. Si no, el servicio reaparece sin sumar al total y sin que
+   nadie lo haya tocado. */
+await page.locator('button[title*="Pasar a opcionales"]').first().click()
+await esperar(700)
+const cantidadPrimera = page.locator('.servicios-picker-grid input[type="number"]').first()
+await cantidadPrimera.fill('0')
+await esperar(700)
+check('poner cantidad 0 saca del presupuesto al servicio opcional',
+  (await page.locator('text=/Todavía no elegiste servicios/').count()) === 1)
+await cantidadPrimera.fill('4')
+await esperar(700)
+check('volver a agregarlo no lo trae marcado como opcional',
+  (await page.getByText('opcional', { exact: true }).count()) === 0)
+check('y vuelve a sumar al total', (await montosDeLaBarra())[0] !== '$ 0,00',
+  JSON.stringify((await montosDeLaBarra()).slice(0, 3)))
 
 /* Buscador sin acentos y por palabras sueltas (2026-08-18). */
 const buscadorMO = page.locator('.servicios-picker-grid input[placeholder*="Buscar por número"]')
