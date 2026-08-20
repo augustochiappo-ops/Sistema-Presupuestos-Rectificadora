@@ -1,7 +1,7 @@
 """
 Suite de verificación de la búsqueda por medidas (`app/tecnicos.py`), contra los
-catálogos técnicos del repo (280 camisas, 915 guías y 201 subconjuntos) y los
-64.250 repuestos del proveedor ya importados en la base.
+catálogos técnicos del repo (280 camisas, 915 guías, 201 subconjuntos y 35
+pistones) y los 64.250 repuestos del proveedor ya importados en la base.
 
 Cómo se corre: ver tests/README.md. Resumen:
 
@@ -46,16 +46,18 @@ def codigos(resultado):
 print("\n=== 0. Catálogos cargados ===")
 db.init_db()
 familias = {f["id"]: f for f in tecnicos.get_familias()}
-check("están las tres familias", sorted(familias) == ["camisas", "guias", "subconjuntos"], list(familias))
+check("están las cuatro familias",
+      sorted(familias) == ["camisas", "guias", "pistones", "subconjuntos"], list(familias))
 check("280 camisas", familias.get("camisas", {}).get("total") == 280, familias.get("camisas"))
 check("915 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") == 915, familias.get("guias"))
 check("201 subconjuntos", familias.get("subconjuntos", {}).get("total") == 201, familias.get("subconjuntos"))
+check("35 pistones (Persan)", familias.get("pistones", {}).get("total") == 35, familias.get("pistones"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
 
 print("\n=== 1. Sin filtros no se devuelve el catálogo ===")
 vacio = tecnicos.buscar("camisas", {})
 check("sin ningún filtro no hay resultados", vacio["total"] == 0 and not vacio["capped"], vacio)
-check("una familia que no existe tampoco explota", tecnicos.buscar("pistones", {"codigo": "x"})["total"] == 0)
+check("una familia que no existe tampoco explota", tecnicos.buscar("bielas", {"codigo": "x"})["total"] == 0)
 
 print("\n=== 2. Valor ± tolerancia ===")
 # UC 2112: Ø interior 56,5 — el filtro tiene que encontrarla pidiendo 56,5 y
@@ -110,6 +112,33 @@ if sub["total"]:
     check("y se dice cuál es", elegido["medida_crac"] == "STD", elegido["medida_crac"])
     check("el precio no es None", elegido["precio"] is not None, elegido["precio"])
 
+print("\n=== 5 bis. Pistones ===")
+# Los mismos tres filtros que subconjuntos, sobre el catálogo Persan.
+pis = tecnicos.buscar("pistones", {"diam_piston": "98.42", "tol_diam_piston": "0.1"})
+check("Ø pistón 98,42 ±0,1 encuentra los Chevrolet",
+      {"P PS121PH", "P PS132PH", "P PS152PH"} <= set(codigos(pis)), codigos(pis))
+uno = tecnicos.buscar("pistones", {"codigo": "PS082PH"})
+check("se encuentra por su código", codigos(uno) == ["P PS082PH"], codigos(uno))
+if uno["total"]:
+    p82 = uno["resultados"][0]
+    check("con las medidas del catálogo",
+          p82["medidas"] == {"diam_piston": 62.0, "alt_piston": 61.75, "diam_perno": 20.0}, p82["medidas"])
+    # Las sobremedidas salen de la lista viva del proveedor, no del TXT: el TXT
+    # decía solo STD y 0.6 y el proveedor tiene además 1.0 y 1.5.
+    check("y con precio del proveedor", p82["precio"] is not None and p82["codigo_crac"], p82["precio"])
+    check("sin nada para revisar", not p82["extra"]["revisar"], p82["extra"]["revisar"])
+r = tecnicos.buscar("pistones", {"aplicacion": "falcon"})
+check("y por el motor", codigos(r) == ["P PS169PH"], codigos(r))
+
+# Las filas que el PDF dejó corridas de columna no cargan medidas inventadas:
+# van sin dato y con el motivo en `extra.revisar` (la pantalla las muestra "?").
+dudoso = tecnicos.buscar("pistones", {"codigo": "PS171PH"})["resultados"][0]
+check("un pistón con columnas corridas no trae medidas",
+      all(v is None for v in dudoso["medidas"].values()), dudoso["medidas"])
+check("pero sí el motivo para revisarlo",
+      set(dudoso["extra"]["revisar"]) >= {"diam_piston", "alt_piston", "diam_perno"}, dudoso["extra"]["revisar"])
+check("y el precio del proveedor igual está", dudoso["precio"] is not None, dudoso["precio"])
+
 print("\n=== 6. Filtros de texto ===")
 r = tecnicos.buscar("guias", {"aplicacion": "fiat tractor"})
 check("la aplicación busca por palabras sueltas y en cualquier orden", r["total"] > 0, r["total"])
@@ -140,7 +169,7 @@ cliente = app.test_client()
 check("sin sesión no se entra", cliente.get("/api/tecnicos/familias").status_code == 401)
 cliente.post("/api/auth/login", json={"usuario": os.environ["APP_USERNAME"], "password": CLAVE})
 resp = cliente.get("/api/tecnicos/familias")
-check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 3, resp.get_json())
+check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 4, resp.get_json())
 resp = cliente.get("/api/tecnicos/buscar?familia=camisas&diam_int=56.5&tol_diam_int=0")
 datos = resp.get_json()
 check("y la búsqueda", resp.status_code == 200 and "UC 2112" in [r["codigo"] for r in datos["resultados"]], datos)

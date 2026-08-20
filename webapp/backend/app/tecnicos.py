@@ -57,6 +57,13 @@ ESPEC = {
         "medidas": ["diam_piston", "alt_piston", "diam_perno"],
         "descripcion": True,
     },
+    # Los mismos filtros que subconjuntos, a propósito: es la misma pieza
+    # buscada de la misma manera (Ø del pistón, alto, perno), solo que suelta.
+    "pistones": {
+        "label": "Pistones",
+        "medidas": ["diam_piston", "alt_piston", "diam_perno"],
+        "descripcion": True,
+    },
 }
 
 _cache: dict[str, list[dict]] = {}

@@ -424,3 +424,21 @@
 **Lo que hay que saber si se regenera:** el script avisa si dos códigos del proveedor normalizan igual (hoy hay 4, ninguno de los que usamos) y se queda con el primero. Si alguna vez un código nuestro cae en una de esas colisiones, hay que mirarlo a mano.
 **Subconjuntos, el caso raro:** un código Mahle no tiene UN código del proveedor sino **uno por sobremedida** (`codigo.padEnd(11) + medida`). Se guardan todos, y al buscar se muestra el que tiene stock y precio, diciendo cuál es en la columna "Precio de".
 **Fecha:** 2026-08-19
+
+## Un dato que hay que verificar no se muestra igual que un dato que falta ("?")
+**Decisión:** los campos del catálogo de pistones que el TXT trae mal —filas que el lector de PDF sacó corridas de columna, largos totales imposibles— **no se cargan con lo que dice el TXT ni se cargan como vacíos**: van a `extra.revisar` (campo → motivo) y la pantalla los muestra como **"?"**, con el motivo en el tooltip. El "—" queda para el dato que simplemente no existe.
+**Por qué:** pedido explícito del dueño (2026-08-20: "dejalos en blanco y un signo de pregunta, después me fijo"), y coincide con lo que ya hacía el buscador: una ficha sin código del proveedor dice "Consultar" y no un precio inventado. Cargar el número corrido sería peor que no cargarlo, porque el filtro de medidas devolvería el pistón equivocado y nadie tendría cómo darse cuenta.
+**La regla que descarta un largo total:** tiene que ser un número positivo **y mayor que la altura de compresión**. Con eso caen solos los siete casos en que la celda del PDF se leyó vacía, negativa o con el "+ó-" adentro (un largo de -4,00 mm, o de 13,80 mm en un pistón de 65,00 de altura de compresión).
+**Dónde se anotan:** en el pendiente #1 de `estado.md`, con qué le pasa a cada uno y cómo se arregla (volver a correr la extracción de Persan para esos números y regenerar el JSON).
+**Fecha:** 2026-08-20
+
+## Las sobremedidas de un pistón salen de la lista viva del proveedor, no del TXT
+**Decisión:** `codigos_crac` de cada pistón se arma cruzando el código base contra `CRAC/precio-stock.csv`, ignorando la columna `MEDIDAS CRAC` que trae el TXT.
+**Por qué:** esa columna es una **foto del día que se procesó el catálogo**. Para `PS082PH` dice "STD - 0.6" y la lista de hoy tiene además 1.0 y 1.5: respetarla habría dejado dos sobremedidas con stock invisibles en el buscador. El TXT es la fuente de los **datos técnicos**; de lo que se consigue y a cuánto, la fuente es la lista, que se actualiza todos los días.
+**El detalle que costó:** en la lista del proveedor **el código y la sobremedida comparten un campo de ancho fijo (14 caracteres)**, así que el separador se come los espacios y a veces un dígito: `"P PS082PH  0.6"`, pero también `"P PS140PH/1STD"` y `"P PS136PH/10.4"` —ese `.4` es un `0.4` recortado—. Partir por espacios no sirve. Se matchea por prefijo **y se exige que lo que sobra sea una sobremedida válida** (`STD`, `0.6`, `030`, `.4`); sin esa segunda condición la base `P PS161C` se lleva puesto al `P PS161C /10.4`, que es otro producto.
+**Fecha:** 2026-08-20
+
+## Una tabla ancha scrollea; no aplasta la columna que envuelve
+**Decisión:** `DataTable` le pone al `<table>` un `minWidth` igual a la suma de lo que pide cada columna (`width`, o `minWidth`, o 120 px para las que envuelven texto).
+**Por qué:** la tabla es `tableLayout: fixed` con `width: 100%`. Cuando la suma de los anchos declarados no entra en el contenedor, el navegador los reparte proporcionalmente y **la columna sin ancho fijo queda en cero**: el texto sale una letra por renglón y el encabezado desaparece. Se destapó al agregar pistones, que tiene más columnas que las otras familias, pero le pasaba a cualquier tabla del sistema en una pantalla angosta. El div de afuera ya tenía `overflow: auto`, así que con el mínimo puesto la tabla simplemente **scrollea**, que es lo que uno espera de una tabla ancha.
+**Fecha:** 2026-08-20

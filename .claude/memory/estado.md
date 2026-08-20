@@ -846,6 +846,63 @@ apenas se vio que ya estaba contenida en `master`— y ningún servidor de dev
 quedando corriendo. **El dueño probó la pantalla en producción y confirmó que
 anda bien** antes de cerrar.
 
+## Sesión 2026-08-20 — Pistones Persan en la búsqueda por medidas
+
+**Lo que pidió el dueño:** una **cuarta familia, "Pistones"**, en la búsqueda por
+medidas, cargada con los datos del catálogo **Persan** cruzados con la lista del
+proveedor (el TXT que genera la skill `datos-persan`), **con los mismos filtros
+que subconjuntos**. Y aparte, en camisas, renombrar el filtro "Ø de sobremedida"
+y la columna "Sobremedidas" a **"Ø exterior"** — solo el nombre, nada más.
+
+**Cómo quedó armado.** Mismo esquema que las otras tres familias, sin inventar
+nada nuevo:
+
+- `CRAC/tecnicos/fuentes/persan_pistones.txt` — el TXT que pasó el dueño, en el
+  repo, para poder regenerar el JSON y ampliarlo con las tandas que vengan (el
+  catálogo Persan tiene 204 páginas; estas son 35 fichas).
+- `scripts/convertir_pistones_persan.py` — se corre **a mano** y escribe
+  `CRAC/tecnicos/pistones.json`.
+- `ESPEC["pistones"]` en `tecnicos.py` y una entrada más en `familias.js`: los
+  filtros son **los mismos tres de subconjuntos** (Ø pistón, alto total, Ø
+  perno) más código / motor / descripción. El pistón se busca igual esté suelto
+  o en conjunto.
+
+**Las sobremedidas salen de la lista del proveedor, no del TXT.** El TXT trae una
+columna `MEDIDAS CRAC` que es una **foto del día que se procesó el catálogo** y
+ya viene corta: para `PS082PH` dice "STD - 0.6" y la lista de hoy tiene además
+1.0 y 1.5. Se cruzan las cuatro. Fueron **82 códigos del proveedor** para 35
+pistones, y **los 35 matchearon**.
+
+Lo que costó ese cruce: en la lista del proveedor **el código y la sobremedida
+comparten un campo de ancho fijo (14)**, así que el separador se come los
+espacios y a veces un dígito — `"P PS082PH  0.6"` pero también
+`"P PS140PH/1STD"` y `"P PS136PH/10.4"`, donde ese `.4` es un `0.4` recortado.
+Partir por espacios no sirve: se matchea por prefijo y se exige que **lo que
+sobra sea una sobremedida válida**, o la base `P PS161C` se lleva puesto al
+`P PS161C /10.4`, que es otro producto.
+
+**Los datos que no se pueden creer van con "?", no en blanco.** El TXT sale de
+leer tablas de un PDF y algunas filas salieron corridas de columna. Esos campos
+**no se cargan con lo que dice el TXT ni se cargan como vacíos**: van a
+`extra.revisar` (campo → motivo) y la pantalla los muestra como **"?"** con el
+motivo en el tooltip. Un dato que falta y un dato que hay que verificar no son
+lo mismo, y un pistón con el Ø equivocado en el buscador es peor que un pistón
+sin Ø. Son **10 de 35** (ver el pendiente correspondiente en *Próximo paso*).
+
+**Un bug de `DataTable` que esto destapó.** La tabla es `tableLayout: fixed` con
+`width: 100%`: cuando la suma de los anchos no entra en la pantalla, el
+navegador reparte proporcionalmente y **la columna sin ancho fijo queda en
+cero** — el texto sale una letra por renglón y el encabezado desaparece. Se veía
+en pistones, que tiene más columnas, pero le pasaba a cualquier tabla en una
+pantalla angosta. Ahora la tabla lleva un `minWidth` igual a la suma de lo que
+pide cada columna, y el div de afuera —que ya tenía `overflow: auto`— la deja
+**scrollear**, que es lo que uno espera de una tabla ancha.
+
+**Suites:** `tests/backend_medidas.py` y `tests/ui_medidas.mjs` se ampliaron con
+los casos de pistones (incluido que el pistón con columnas corridas aparece,
+trae precio y muestra "?" en vez de medidas inventadas) y con el nombre nuevo de
+camisas.
+
 ## Próximo paso
 
 **Producción y `master` están sincronizados en `932aa01`**, deployado y
@@ -883,13 +940,31 @@ armado de presupuestos: se cotiza todo lo cargado (se cayó la regla del "más c
 
 Pendientes, en orden de lo que más conviene atacar:
 
-1. **Tablero de estados del trabajo** (Aprobado → Repuestos pedidos → En taller → Listo → Entregado). El dueño lo pidió explícitamente para más adelante, "cuando nos familiaricemos con el programa". Es la única parte del negocio que el sistema no toca: hoy `aprobado_en` es un flag binario sin consecuencia. Barato de hacer — los datos ya están, hace falta una columna `estado`, una tabla de cambios de estado y una pantalla.
-2. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
-3. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
-4. ~~**Unificar la grafía "Chiappo" / "Chicappo"**~~ → **resuelto el 2026-08-11**: el dueño confirmó que la correcta es **Chiappo**, y el PDF ya la usa (verificado contra producción).
-5. ~~**Opción "no cotizar" por repuesto**~~ → **resuelto el 2026-08-18**: al caerse la regla del "más caro" ya no hay nada por lo que competir, y la casilla **Opcional** cubre justo ese caso (queda en la lista para pedir, sale en el PDF y no suma al total).
-6. **Repuestos fuera de catálogo en la ficha del motor** — hoy los repuestos sin código quedan solo en el presupuesto. El dueño los quiere también en el motor; lo dejó para una segunda tanda (2026-08-14) porque la ficha se indexa por código del proveedor y guardarlos exige tocar el esquema.
-7. **Casilla invertida en el paso Repuestos** — en vez de "este repuesto también es de este motor" (la casilla que se está diseñando el 2026-08-14, que marca pertenencia a la ficha), listar todo lo de la ficha con una casilla de "entra en este presupuesto". Se evaluó el 2026-08-14 al diseñar el paso Repuestos y **el dueño la dejó explícitamente para más adelante**: se descartó por ahora porque dos casillas por fila (una para el motor y otra para el presupuesto) se pisan entre sí, y porque la cantidad ya dice "entra en el presupuesto".
+1. **Verificar 10 pistones Persan cuyos datos no se pudieron leer** (2026-08-20,
+   pedido del dueño: "dejalos en blanco con un signo de pregunta, después me
+   fijo"). En la pantalla salen con **"?"** y el motivo en el tooltip. Son tres
+   casos distintos:
+   - **Columnas corridas en el TXT** — `P PS171PH` (Renault 12) y `P PS184PH`
+     (Opel K-180): el Ø del pistón quedó en "ALT. COMP." (73,00 y 90,49), el
+     perno en "AROS", y se perdieron las medidas disponibles. **Lo que los
+     arregla es volver a correr la extracción de Persan para esos dos números**
+     y regenerar el JSON con `scripts/convertir_pistones_persan.py`.
+   - **Sin match en el catálogo Persan** — `P PS136PH/10` (Fiat 1500 Coupé):
+     el número 136 no apareció en el PDF, así que la fila entró solo con código,
+     descripción y precio.
+   - **Largo total que no es creíble** — `P PS127PH`, `P PS128PH`, `P PS140PH`,
+     `P PS140PH/1`, `P PS157PH`, `P PS160PH` y `P PS169PH`: la celda del PDF se
+     leyó vacía, negativa o con el "+ó-" adentro (un largo de -4,00 mm, o de
+     13,80 mm en un pistón con 65,00 de altura de compresión). El script los
+     descarta con esa regla —positivo y mayor que la altura de compresión— en
+     vez de cargar un número que haría mentir al filtro de "alto total".
+2. **Tablero de estados del trabajo** (Aprobado → Repuestos pedidos → En taller → Listo → Entregado). El dueño lo pidió explícitamente para más adelante, "cuando nos familiaricemos con el programa". Es la única parte del negocio que el sistema no toca: hoy `aprobado_en` es un flag binario sin consecuencia. Barato de hacer — los datos ya están, hace falta una columna `estado`, una tabla de cambios de estado y una pantalla.
+3. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
+4. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
+5. ~~**Unificar la grafía "Chiappo" / "Chicappo"**~~ → **resuelto el 2026-08-11**: el dueño confirmó que la correcta es **Chiappo**, y el PDF ya la usa (verificado contra producción).
+6. ~~**Opción "no cotizar" por repuesto**~~ → **resuelto el 2026-08-18**: al caerse la regla del "más caro" ya no hay nada por lo que competir, y la casilla **Opcional** cubre justo ese caso (queda en la lista para pedir, sale en el PDF y no suma al total).
+7. **Repuestos fuera de catálogo en la ficha del motor** — hoy los repuestos sin código quedan solo en el presupuesto. El dueño los quiere también en el motor; lo dejó para una segunda tanda (2026-08-14) porque la ficha se indexa por código del proveedor y guardarlos exige tocar el esquema.
+8. **Casilla invertida en el paso Repuestos** — en vez de "este repuesto también es de este motor" (la casilla que se está diseñando el 2026-08-14, que marca pertenencia a la ficha), listar todo lo de la ficha con una casilla de "entra en este presupuesto". Se evaluó el 2026-08-14 al diseñar el paso Repuestos y **el dueño la dejó explícitamente para más adelante**: se descartó por ahora porque dos casillas por fila (una para el motor y otra para el presupuesto) se pisan entre sí, y porque la cantidad ya dice "entra en el presupuesto".
 
 Como puede haber más de una sesión de Claude tocando este repo en paralelo (celular + escritorio), conviene chequear ramas remotas pendientes al empezar cada sesión.
 

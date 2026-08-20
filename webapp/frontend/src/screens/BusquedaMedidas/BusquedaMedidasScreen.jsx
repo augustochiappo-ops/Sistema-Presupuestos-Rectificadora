@@ -57,6 +57,16 @@ function celdaSobremedidas(fila) {
 
 function celda(col, fila) {
   const valor = fila[col.key]
+
+  // Un dato que la ficha no trae y un dato que quedó en duda no son lo mismo:
+  // el catálogo de pistones sale de leer tablas de un PDF y algunas filas
+  // salieron corridas de columna. Esas van con "?" (y el motivo en el tooltip)
+  // para que nadie tome por bueno un Ø que en realidad no se leyó.
+  const motivo = fila.revisar?.[col.key]
+  if (motivo && (valor === null || valor === undefined || valor === '')) {
+    return <span title={motivo} style={{ color: 'var(--text-faint)' }}>?</span>
+  }
+
   switch (col.tipo) {
     case 'mm':
       return formatMm(valor)

@@ -52,6 +52,14 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
 
   const cols = React.useMemo(() => aplicarOrden(columns, orden), [columns, orden])
 
+  // Lo que la tabla necesita para no aplastar ninguna columna. Una columna sin
+  // ancho ni mínimo declarados es de las que envuelven texto: 120 px es lo
+  // menos que se puede leer.
+  const anchoMinimo = React.useMemo(
+    () => cols.reduce((total, c) => total + (c.width || c.minWidth || 120), 0),
+    [cols],
+  )
+
   const soltar = (indiceDestino) => {
     setDestino(null)
     setArrastrando(null)
@@ -92,7 +100,14 @@ export function DataTable({ columns = [], rows = [], onRowClick, emptyMessage = 
       )}
 
       <div style={{ overflow: 'auto', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', ...style }} {...rest}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-body)', tableLayout: 'fixed' }}>
+        {/* El ancho mínimo es la suma de lo que pide cada columna. Sin esto,
+            `tableLayout: fixed` reparte proporcionalmente cuando no entran y la
+            columna sin ancho fijo queda en cero: el texto sale una letra por
+            renglón y el encabezado desaparece. Con el mínimo puesto, la tabla
+            se sale del contenedor y el div de afuera —que ya tiene overflow
+            auto— la deja scrollear, que es lo que uno espera de una tabla
+            ancha. */}
+        <table style={{ width: '100%', minWidth: anchoMinimo, borderCollapse: 'collapse', fontFamily: 'var(--font-body)', tableLayout: 'fixed' }}>
           <thead>
             <tr>
               {cols.map((c, i) => (

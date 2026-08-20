@@ -61,10 +61,14 @@ await esperar(900)
 check('se entra a la pantalla', page.url().includes('busqueda-medidas'), page.url())
 
 console.log('\n=== Estado inicial ===')
-check('las tres familias con su total',
+check('las cuatro familias con su total',
   (await page.locator('button', { hasText: /^Camisas\s*280$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Guías de válvulas\s*915$/ }).count()) === 1
-  && (await page.locator('button', { hasText: /^Subconjuntos\s*201$/ }).count()) === 1)
+  && (await page.locator('button', { hasText: /^Subconjuntos\s*201$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Pistones\s*35$/ }).count()) === 1)
+check('en camisas el filtro se llama Ø exterior',
+  await page.locator('label', { hasText: 'Ø EXTERIOR' }).count() === 1
+  && await page.locator('label', { hasText: 'sobremedida' }).count() === 0)
 check('sin filtros no se lista nada', await filas().count() === 0)
 check('y se ofrecen ejemplos', await page.locator('button', { hasText: 'Ø interior 102 mm' }).count() === 1)
 await page.screenshot({ path: path.join(SHOT, 'medidas-inicial.png'), fullPage: true })
@@ -81,6 +85,7 @@ check('todas las filas caen en el rango pedido',
     const v = parseFloat(tr.children[3].textContent.replace('.', '').replace(',', '.'))
     return !Number.isNaN(v) && v >= 101.5 && v <= 102.5
   }))), 'alguna fila quedó fuera de 102 ± 0,5')
+check('y la columna también', await page.locator('th', { hasText: 'Ø exterior' }).count() === 1)
 await page.screenshot({ path: path.join(SHOT, 'medidas-camisas.png'), fullPage: true })
 
 console.log('\n=== Achicar la tolerancia achica el resultado ===')
@@ -130,6 +135,27 @@ const sub = await textoDeFila(0)
 check('se encuentra el subconjunto', sub.includes('S BE01010'), sub)
 check('y se dice de qué sobremedida es el precio', sub.includes('STD'), sub)
 await page.screenshot({ path: path.join(SHOT, 'medidas-subconjuntos.png'), fullPage: true })
+
+console.log('\n=== Pistones: el catálogo Persan, con lo que no se pudo leer marcado ===')
+await page.fill('input[placeholder="Código…"]', '')
+await page.locator('button', { hasText: 'Pistones' }).click()
+await esperar(500)
+await page.fill('input[placeholder="Código…"]', 'PS082PH')
+await esperar(1200)
+const pis = await textoDeFila(0)
+check('se encuentra el pistón por su código', pis.includes('P PS082PH'), pis)
+check('con las medidas del catálogo', pis.includes('62') && pis.includes('61,75'), pis)
+check('y con precio de la base', /\$\s?[\d.]+/.test(pis), pis)
+await page.screenshot({ path: path.join(SHOT, 'medidas-pistones.png'), fullPage: true })
+
+await page.fill('input[placeholder="Código…"]', 'PS171PH')
+await esperar(1200)
+const dudoso = await filas().nth(0)
+check('el pistón con datos dudosos aparece igual',
+  (await dudoso.textContent()).includes('P PS171PH'), await dudoso.textContent())
+check('y las medidas que no se pudieron leer van con "?"',
+  (await dudoso.locator('td', { hasText: /^\?$/ }).count()) >= 3,
+  await dudoso.textContent())
 
 console.log('\n=== Una pieza sin equivalencia no inventa precio ===')
 await page.fill('input[placeholder="Código…"]', '')

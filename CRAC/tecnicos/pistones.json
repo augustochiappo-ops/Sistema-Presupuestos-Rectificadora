@@ -1,0 +1,1486 @@
+[
+ {
+  "codigo": "P PS082PH",
+  "codigo_fab": "82",
+  "marca": "SEAT",
+  "aplicacion": "600D, 600E, 600L, 750T, Multipla, 770 Coupé",
+  "descripcion": "FIAT 750 62 mm",
+  "medidas": {
+   "diam_piston": 62.0,
+   "alt_piston": 61.75,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "motor": "100D000, 100D006, 100D008",
+   "cilindrada": "767 C.C.",
+   "r_compresion": "7,50/8",
+   "nro_cil": "4",
+   "caracteristicas": null,
+   "alt_compresion": 30.75,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 51.0,
+   "perno_str": "∅20,00 × 51,00",
+   "hermanado": "B",
+   "aros": "2,00 / 2,00 / 3,97",
+   "huelgo": 0.05,
+   "alt_medicion": 1.0,
+   "medidas_dispon": "Std. / +0,40 / +0,60 / +0,80 / +1,00 / +1,50",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS082PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS082PH  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "P PS082PH  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "P PS082PH  1.5",
+    "medida": "1.5"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS109PH",
+  "codigo_fab": "109",
+  "marca": "I.K.A.",
+  "aplicacion": "6-226 3700 C.C. - R.C. 7,50:1",
+  "descripcion": "IKA CONTINENTAL 4 Y 6 CIL. 3.5/16\"",
+  "medidas": {
+   "diam_piston": 84.14,
+   "alt_piston": 89.7,
+   "diam_perno": 21.82
+  },
+  "extra": {
+   "motor": "4-151",
+   "cilindrada": "2467 C.C.",
+   "r_compresion": "7,50:1",
+   "nro_cil": "4 6",
+   "caracteristicas": null,
+   "alt_compresion": 50.8,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 71.3,
+   "perno_str": "∅21,82 × 71,30",
+   "hermanado": "B",
+   "aros": "2,38 / 2,38 / 3,97 / 3,97",
+   "huelgo": 0.03,
+   "alt_medicion": 2.0,
+   "medidas_dispon": "Std. / 0,508 (.020) / 0,762 (.030) / 1,016 (.040) / 1,524 (.060)",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS109PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS109PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS109PH  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "P PS109PH  060",
+    "medida": "060"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS120PH",
+  "codigo_fab": "120",
+  "marca": "BORGWARD",
+  "aplicacion": "Rastrojero 42 HP",
+  "descripcion": "RASTROJERO 42 HP 78 mm",
+  "medidas": {
+   "diam_piston": 78.0,
+   "alt_piston": 83.0,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "motor": "1D301/E1 - Diesel",
+   "cilindrada": "1578 C.C.",
+   "r_compresion": "19,80:1",
+   "nro_cil": "4",
+   "caracteristicas": null,
+   "alt_compresion": 44.0,
+   "cam_diam": "22,00",
+   "cam_prof": null,
+   "largo_perno": 69.0,
+   "perno_str": "∅22,00 × 69,00",
+   "hermanado": "A",
+   "aros": "2,50 / 2,50 / 2,50 / 5,00 / 5,00",
+   "huelgo": 0.06,
+   "alt_medicion": 2.0,
+   "medidas_dispon": "Std. / +0,50 / +1,00",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS120PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS120PH  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "P PS120PH  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS121PH",
+  "codigo_fab": "121",
+  "marca": "GENERAL MOTORS",
+  "aplicacion": "Opala 3.800",
+  "descripcion": "CHEVROLET 230 B/C 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.42,
+   "alt_piston": 96.5,
+   "diam_perno": 23.55
+  },
+  "extra": {
+   "motor": "230 B/C",
+   "cilindrada": "3769 C.C.",
+   "r_compresion": "7,50:1",
+   "nro_cil": "6",
+   "caracteristicas": null,
+   "alt_compresion": 45.72,
+   "cam_diam": "71,90",
+   "cam_prof": null,
+   "largo_perno": 76.4,
+   "perno_str": "∅23,55 × 76,40",
+   "hermanado": "C",
+   "aros": "1,98 / 1,98 / 4,76",
+   "huelgo": 0.025,
+   "alt_medicion": 34.5,
+   "medidas_dispon": "Std. / 0,508 (.020) / 0,762 (.030) / 1,016 (.040) / 1,524 (.060)",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS121PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS121PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS121PH  040",
+    "medida": "040"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS127PH",
+  "codigo_fab": "127",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "L321/328/336/348, LA321, LAK321, LAL322, LK321, LP321/328/336/342/348, LPM327, LPS322, LS322,",
+  "descripcion": "M.BENZ OM321 95 mm",
+  "medidas": {
+   "diam_piston": 95.0,
+   "alt_piston": null,
+   "diam_perno": 30.0
+  },
+  "extra": {
+   "motor": "OM 321 - Diesel",
+   "cilindrada": "5100 C.C.",
+   "r_compresion": "21,00:1",
+   "nro_cil": "6 -",
+   "caracteristicas": null,
+   "alt_compresion": 65.0,
+   "cam_diam": "65,00",
+   "cam_prof": null,
+   "largo_perno": 82.0,
+   "perno_str": "∅30,00 × 82,00",
+   "hermanado": "B",
+   "aros": "3,00 / 3,00 / 3,00 / 3,00 / 5,50 / 5,50",
+   "huelgo": 0.11,
+   "alt_medicion": 20.0,
+   "medidas_dispon": "Std. / +0,50 / +1,00",
+   "revisar": {
+    "alt_piston": "el largo total del TXT no es creíble"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS127PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS127PH  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "P PS127PH  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS128PH",
+  "codigo_fab": "128",
+  "marca": "FORD",
+  "aplicacion": "Galaxie LTD, F-100/250/350/600/7000",
+  "descripcion": "FORD F100 V8 3.3/4\"",
+  "medidas": {
+   "diam_piston": 95.25,
+   "alt_piston": null,
+   "diam_perno": 23.17
+  },
+  "extra": {
+   "motor": "292",
+   "cilindrada": "4785 C.C.",
+   "r_compresion": "7,00:1",
+   "nro_cil": "V 8",
+   "caracteristicas": null,
+   "alt_compresion": 45.2,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 77.0,
+   "perno_str": "∅23,17 × 77,00",
+   "hermanado": "C",
+   "aros": "1,98 / 1,98 / 4,76",
+   "huelgo": 0.06,
+   "alt_medicion": 42.4,
+   "medidas_dispon": "Std. / 0,508 (.020) / 0,762 (.030) / 1,016 (.040) / 1,524 (.060)",
+   "revisar": {
+    "alt_piston": "el largo total del TXT no es creíble"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS128PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS128PH  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "P PS128PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS128PH  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "P PS128PH  060",
+    "medida": "060"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS129PH",
+  "codigo_fab": "129",
+  "marca": "PERKINS",
+  "aplicacion": "4.203, P 4.203 - Diesel 3330 C.C. - R.C. 17,40:1 6.305, P 6.305 - Diesel 5000 C.C. - R.C. 17,40:1",
+  "descripcion": "PERKINS 4.203-6.305 5R 3.602\"",
+  "medidas": {
+   "diam_piston": 91.48,
+   "alt_piston": 108.04,
+   "diam_perno": 31.75
+  },
+  "extra": {
+   "motor": "3.152, P 3.152 - Diesel",
+   "cilindrada": "2500 C.C.",
+   "r_compresion": "17,40:1",
+   "nro_cil": "3 4 6",
+   "caracteristicas": null,
+   "alt_compresion": 57.24,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 75.3,
+   "perno_str": "∅31,75 × 75,30",
+   "hermanado": "C",
+   "aros": "2,38 / 2,38 / 3,17 / 6,35 / 6,35",
+   "huelgo": 0.13,
+   "alt_medicion": 2.0,
+   "medidas_dispon": "Std.",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS129PH  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS130PH",
+  "codigo_fab": "130",
+  "marca": "CHRYSLER-DODGE",
+  "aplicacion": "Valiant I/II/III/IV, Polara, Pick Up",
+  "descripcion": "VALIANT B/C 3.400\"",
+  "medidas": {
+   "diam_piston": 86.36,
+   "alt_piston": 89.15,
+   "diam_perno": 22.88
+  },
+  "extra": {
+   "motor": "Slant Six 225 B/C",
+   "cilindrada": "3687 C.C.",
+   "r_compresion": "7,30:1",
+   "nro_cil": "6",
+   "caracteristicas": null,
+   "alt_compresion": 44.7,
+   "cam_diam": "63,50",
+   "cam_prof": null,
+   "largo_perno": 75.5,
+   "perno_str": "∅22,88 × 75,50",
+   "hermanado": "C",
+   "aros": "1,98 / 1,98 / 4,76",
+   "huelgo": 0.025,
+   "alt_medicion": 62.0,
+   "medidas_dispon": "Std. / 0,508 (.020) / 0,762 (.030) / 1,016 (.040) / 1,524 (.060)",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS130PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS130PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS130PH  040",
+    "medida": "040"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS132PH",
+  "codigo_fab": "132",
+  "marca": "GENERAL MOTORS",
+  "aplicacion": "Chevy Super, Pick Up C10",
+  "descripcion": "CHEVROLET 236 A/C 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.42,
+   "alt_piston": 96.5,
+   "diam_perno": 23.55
+  },
+  "extra": {
+   "motor": "236",
+   "cilindrada": "3769 C.C.",
+   "r_compresion": "8,50:1",
+   "nro_cil": "6",
+   "caracteristicas": null,
+   "alt_compresion": 45.72,
+   "cam_diam": "79,00",
+   "cam_prof": null,
+   "largo_perno": 76.4,
+   "perno_str": "∅23,55 × 76,40",
+   "hermanado": "C",
+   "aros": "1,98 / 1,98 / 4,76",
+   "huelgo": 0.025,
+   "alt_medicion": 34.5,
+   "medidas_dispon": "Std. / 0,508 (.020) / 0,762 (.030) / 1,016 (.040) / 1,524 (.060)",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS132PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS132PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS132PH  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "P PS132PH  060",
+    "medida": "060"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS134PH",
+  "codigo_fab": "134",
+  "marca": "I.K.A.",
+  "aplicacion": "Torino GS/TS/S",
+  "descripcion": "IKA TORNADO 4B 8:1 3.344\"",
+  "medidas": {
+   "diam_piston": 84.94,
+   "alt_piston": 94.0,
+   "diam_perno": 21.82
+  },
+  "extra": {
+   "motor": "O.H.C. 230 - Tornado 4 Bancadas",
+   "cilindrada": "3770 C.C.",
+   "r_compresion": "8,00:1",
+   "nro_cil": "6",
+   "caracteristicas": null,
+   "alt_compresion": 49.1,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 71.9,
+   "perno_str": "∅21,82 × 71,90",
+   "hermanado": "B",
+   "aros": "1,98 / 1,98 / 4,76",
+   "huelgo": 0.025,
+   "alt_medicion": 2.0,
+   "medidas_dispon": "Std. / 0,508 (.020) / 0,762 (.030) / 1,016 (.040) / 1,524 (.060)",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS134PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS134PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS134PH  040",
+    "medida": "040"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS135PH",
+  "codigo_fab": "135",
+  "marca": "I.K.A.",
+  "aplicacion": "Torino GS/TS/S/L",
+  "descripcion": "IKA TORNADO 4B 7,5:1 3.344\"",
+  "medidas": {
+   "diam_piston": 84.94,
+   "alt_piston": 90.7,
+   "diam_perno": 21.82
+  },
+  "extra": {
+   "motor": "O.H.C. 230 - Tornado 4 Bancadas",
+   "cilindrada": "3770 C.C.",
+   "r_compresion": "7,50:1",
+   "nro_cil": "6",
+   "caracteristicas": null,
+   "alt_compresion": 49.1,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 71.9,
+   "perno_str": "∅21,82 × 71,90",
+   "hermanado": "B",
+   "aros": "1,98 / 1,98 / 4,76",
+   "huelgo": 0.025,
+   "alt_medicion": 2.0,
+   "medidas_dispon": "Std. / 0,508 (.020) / 0,762 (.030) / 1,016 (.040) / 1,524 (.060)",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS135PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS135PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS135PH  040",
+    "medida": "040"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS136PH/10",
+  "codigo_fab": "136",
+  "marca": null,
+  "aplicacion": null,
+  "descripcion": "FIAT 1500 COUPE 77 mm",
+  "medidas": {
+   "diam_piston": null,
+   "alt_piston": null,
+   "diam_perno": null
+  },
+  "extra": {
+   "motor": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "nro_cil": null,
+   "caracteristicas": null,
+   "alt_compresion": null,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": null,
+   "perno_str": null,
+   "hermanado": null,
+   "aros": null,
+   "huelgo": null,
+   "alt_medicion": null,
+   "medidas_dispon": null,
+   "revisar": {
+    "alt_piston": "el largo total del TXT no es creíble"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS136PH/10.4",
+    "medida": "0.4"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS138PH",
+  "codigo_fab": "138",
+  "marca": "CHRYSLER-DODGE",
+  "aplicacion": "Valiant IV, Serie Coronado, Dodge",
+  "descripcion": "VALIANT A/C 3.400\"",
+  "medidas": {
+   "diam_piston": 86.36,
+   "alt_piston": 89.15,
+   "diam_perno": 22.88
+  },
+  "extra": {
+   "motor": "Slant Six 225 A/C",
+   "cilindrada": "3687 C.C.",
+   "r_compresion": "8,20:1",
+   "nro_cil": "6",
+   "caracteristicas": null,
+   "alt_compresion": 44.7,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 75.5,
+   "perno_str": "∅22,88 × 75,50",
+   "hermanado": "C",
+   "aros": "1,98 / 1,98 / 4,76",
+   "huelgo": 0.025,
+   "alt_medicion": 62.0,
+   "medidas_dispon": "Std. / 0,508 (.020) / 0,762 (.030) / 1,016 (.040) / 1,524 (.060)",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS138PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS138PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS138PH  040",
+    "medida": "040"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS140PH",
+  "codigo_fab": "140",
+  "marca": "CITROËN",
+  "aplicacion": "2CVAZ/AZAM/AZL/AZU/ /AZU 250, 250 GA Furgonetas, Dyane/4/4 AYA 2",
+  "descripcion": "CITROEN 2 CV 66 mm",
+  "medidas": {
+   "diam_piston": 66.0,
+   "alt_piston": null,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "motor": "A79/0 (pistón lado derecho) / (right side piston)",
+   "cilindrada": "425 C.C.",
+   "r_compresion": "7,00/7",
+   "nro_cil": "2",
+   "caracteristicas": null,
+   "alt_compresion": 34.6,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 55.5,
+   "perno_str": "∅20,00 × 55,50",
+   "hermanado": "B",
+   "aros": "2,00 / 2,00 / 4,50",
+   "huelgo": 0.05,
+   "alt_medicion": 21.0,
+   "medidas_dispon": "Std. / +0,50 / +1,00 / +1,50 / +2,00",
+   "revisar": {
+    "alt_piston": "el largo total del TXT no es creíble"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS140PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS140PH  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "P PS140PH  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS140PH/1",
+  "codigo_fab": "140",
+  "marca": "CITROËN",
+  "aplicacion": "2CVAZ/AZAM/AZL/AZU/ /AZU 250, 250 GA Furgonetas, Dyane/4/4 AYA 2",
+  "descripcion": "CITROEN 2 CV 66 mm",
+  "medidas": {
+   "diam_piston": 66.0,
+   "alt_piston": null,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "motor": "A79/0 (pistón lado derecho) / (right side piston)",
+   "cilindrada": "425 C.C.",
+   "r_compresion": "7,00/7",
+   "nro_cil": "2",
+   "caracteristicas": null,
+   "alt_compresion": 34.6,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 55.5,
+   "perno_str": "∅20,00 × 55,50",
+   "hermanado": "B",
+   "aros": "2,00 / 2,00 / 4,50",
+   "huelgo": 0.05,
+   "alt_medicion": 21.0,
+   "medidas_dispon": "Std. / +0,50 / +1,00 / +1,50 / +2,00",
+   "revisar": {
+    "alt_piston": "el largo total del TXT no es creíble"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS140PH/1STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS142PH",
+  "codigo_fab": "142",
+  "marca": "BORGWARD",
+  "aplicacion": "F20/25/30/35, E2 Rastrojero 52 HP",
+  "descripcion": "RASTROJERO 52 HP 78 mm",
+  "medidas": {
+   "diam_piston": 78.0,
+   "alt_piston": 90.0,
+   "diam_perno": 25.0
+  },
+  "extra": {
+   "motor": "D301/E1 - Diesel",
+   "cilindrada": "1796 C.C.",
+   "r_compresion": "19,80:1",
+   "nro_cil": "4",
+   "caracteristicas": null,
+   "alt_compresion": 48.0,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 64.0,
+   "perno_str": "∅25,00 × 64,00",
+   "hermanado": "B",
+   "aros": "2,50 / 2,50 / 2,50 / 5,00 / 5,00",
+   "huelgo": 0.05,
+   "alt_medicion": 2.5,
+   "medidas_dispon": "Std. / +0,50 / +1,00",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS142PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS142PH  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "P PS142PH  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS149PH",
+  "codigo_fab": "149",
+  "marca": "PERKINS",
+  "aplicacion": null,
+  "descripcion": "PERKINS 6.354 F2 S/APA C/GUIA 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.48,
+   "alt_piston": 121.22,
+   "diam_perno": 34.92
+  },
+  "extra": {
+   "motor": "6.354 (FASE 1)",
+   "cilindrada": "5800 C.C.",
+   "r_compresion": "16,00:1",
+   "nro_cil": "6",
+   "caracteristicas": null,
+   "alt_compresion": 70.42,
+   "cam_diam": "54,10",
+   "cam_prof": null,
+   "largo_perno": 84.0,
+   "perno_str": "∅34,92 × 84,00",
+   "hermanado": "C",
+   "aros": "2,38 / 2,38 / 2,38 / 6,35 / 6,35",
+   "huelgo": 0.15,
+   "alt_medicion": 2.0,
+   "medidas_dispon": "Std.",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS149PH  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS150PH",
+  "codigo_fab": "150",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "L 3500/3500 K, LA 3500/3500 K, L 4500, LAK 311/312, LK 311/312, L 312, LA 312, LAS 312, LS 312, B OP 311/312, DL 17, FL 16, TLF 15/16, TLFA 16, DL 17/25, L 323/328, LP 323, OL 22, Unimog 406.120/121",
+  "descripcion": "M.BENZ OM312 90 mm",
+  "medidas": {
+   "diam_piston": 90.0,
+   "alt_piston": 115.5,
+   "diam_perno": 30.0
+  },
+  "extra": {
+   "motor": "OM 312 - Diesel",
+   "cilindrada": "4580 C.C.",
+   "r_compresion": "19,80:1",
+   "nro_cil": "6",
+   "caracteristicas": null,
+   "alt_compresion": 65.0,
+   "cam_diam": "61,00",
+   "cam_prof": null,
+   "largo_perno": 78.0,
+   "perno_str": "∅30,00 × 78,00",
+   "hermanado": "A",
+   "aros": "3,00 / 3,00 / 3,00 / 3,00 / 5,50 / 5,50",
+   "huelgo": 0.11,
+   "alt_medicion": 20.0,
+   "medidas_dispon": "Std. / +0,50 / +1,00",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS150PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS150PH  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "P PS150PH  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS152PH",
+  "codigo_fab": "152",
+  "marca": "GENERAL MOTORS",
+  "aplicacion": "Chevy SS, Chevy SS Coupé, Chevy Malibú, Opala, Caravan, Comodoro",
+  "descripcion": "CHEVROLET 250 A/C 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.42,
+   "alt_piston": 89.4,
+   "diam_perno": 23.55
+  },
+  "extra": {
+   "motor": "250 - A/C",
+   "cilindrada": "4097 C.C.",
+   "r_compresion": "8,00/8",
+   "nro_cil": "6",
+   "caracteristicas": null,
+   "alt_compresion": 42.16,
+   "cam_diam": "75,20",
+   "cam_prof": null,
+   "largo_perno": 76.4,
+   "perno_str": "∅23,55 × 76,40",
+   "hermanado": "C",
+   "aros": "1,98 / 1,98 / 4,76",
+   "huelgo": 0.025,
+   "alt_medicion": 27.4,
+   "medidas_dispon": "Std. / 0,508 (.020) / 0,762 (.030) / 1,016 (.040) / 1,524 (.060)",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS152PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS152PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS152PH  040",
+    "medida": "040"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS157PH",
+  "codigo_fab": "157",
+  "marca": "PEUGEOT",
+  "aplicacion": "504",
+  "descripcion": "PEUGEOT 504 7.85:1 85 mm",
+  "medidas": {
+   "diam_piston": 85.0,
+   "alt_piston": null,
+   "diam_perno": 23.0
+  },
+  "extra": {
+   "motor": "XC6-A",
+   "cilindrada": "1600 C.C.",
+   "r_compresion": "7,85:1",
+   "nro_cil": "4",
+   "caracteristicas": null,
+   "alt_compresion": 41.5,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 70.0,
+   "perno_str": "∅23,00 × 70,00",
+   "hermanado": "B",
+   "aros": "2,00 / 2,00 / 4,50",
+   "huelgo": 0.04,
+   "alt_medicion": 15.0,
+   "medidas_dispon": "Std.",
+   "revisar": {
+    "alt_piston": "el largo total del TXT no es creíble"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS157PH  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS160PH",
+  "codigo_fab": "160",
+  "marca": "CITROËN",
+  "aplicacion": "2 CV 6, Dyane, Mehari AY, CE 4x4, FAF, AK 400, Fourgonette, Acadiane, 2CV Charleston, 3CV",
+  "descripcion": "CITROEN 3 CV 74 mm",
+  "medidas": {
+   "diam_piston": 74.0,
+   "alt_piston": null,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "motor": "M 28-1, AK 2, AM, 2M, / A06/635, AY",
+   "cilindrada": "602 C.C.",
+   "r_compresion": "8,50:1",
+   "nro_cil": "2",
+   "caracteristicas": null,
+   "alt_compresion": 34.9,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 63.8,
+   "perno_str": "∅20,00 × 63,80",
+   "hermanado": "B",
+   "aros": "1,50 / 2,00 / 4,00",
+   "huelgo": 0.04,
+   "alt_medicion": 11.5,
+   "medidas_dispon": "Std. / +0,50 / +1,00 / +1,50 / +2,00",
+   "revisar": {
+    "alt_piston": "el largo total del TXT no es creíble"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS160PH  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "P PS160PH  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS161C",
+  "codigo_fab": "161",
+  "marca": "FIAT",
+  "aplicacion": "128/Familiar 1100, Special 1100, Panorama 128 AC 5000, 128 BB.OAO 1116 C.C. - R.C. 8,80/9,20:1 128 Sport, Coupé, 3P, Berlinetta 1.1/C/CL 138 A.000, 138 B.000, 138 AE.OOA.O 1116 C.C. - R.C. 9,20:1 Ritmo 60 L/CL, Uno 55, Ritmo Strada (U.S.A.) 146 A4.048 1116 C.C. - R.C. 9,20:1 Uno 60 S/SL",
+  "descripcion": "FIAT 128 1100 CC COMPETICION 80 mm",
+  "medidas": {
+   "diam_piston": 80.0,
+   "alt_piston": 77.3,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "motor": "128 A 000",
+   "cilindrada": "1116 C.C.",
+   "r_compresion": "8,80/9",
+   "nro_cil": "4 4 4 4",
+   "caracteristicas": null,
+   "alt_compresion": 34.7,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 71.0,
+   "perno_str": "∅22,00 × 71,00",
+   "hermanado": "C",
+   "aros": "1,50 / 2,00 / 3,97",
+   "huelgo": 0.05,
+   "alt_medicion": 25.7,
+   "medidas_dispon": "Std. / +0,40 / +0,60 / +0,80 / +1,00",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS161C   STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS161C   0.4",
+    "medida": "0.4"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS161C/10",
+  "codigo_fab": "161",
+  "marca": "FIAT",
+  "aplicacion": "128/Familiar 1100, Special 1100, Panorama 128 AC 5000, 128 BB.OAO 1116 C.C. - R.C. 8,80/9,20:1 128 Sport, Coupé, 3P, Berlinetta 1.1/C/CL 138 A.000, 138 B.000, 138 AE.OOA.O 1116 C.C. - R.C. 9,20:1 Ritmo 60 L/CL, Uno 55, Ritmo Strada (U.S.A.) 146 A4.048 1116 C.C. - R.C. 9,20:1 Uno 60 S/SL",
+  "descripcion": "FIAT 128 1100 CC COMPETICION 80 mm",
+  "medidas": {
+   "diam_piston": 80.0,
+   "alt_piston": 77.3,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "motor": "128 A 000",
+   "cilindrada": "1116 C.C.",
+   "r_compresion": "8,80/9",
+   "nro_cil": "4 4 4 4",
+   "caracteristicas": null,
+   "alt_compresion": 34.7,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 71.0,
+   "perno_str": "∅22,00 × 71,00",
+   "hermanado": "C",
+   "aros": "1,50 / 2,00 / 3,97",
+   "huelgo": 0.05,
+   "alt_medicion": 25.7,
+   "medidas_dispon": "Std. / +0,40 / +0,60 / +0,80 / +1,00",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS161C /10.4",
+    "medida": "0.4"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS161PH",
+  "codigo_fab": "161",
+  "marca": "FIAT",
+  "aplicacion": "128/Familiar 1100, Special 1100, Panorama 128 AC 5000, 128 BB.OAO 1116 C.C. - R.C. 8,80/9,20:1 128 Sport, Coupé, 3P, Berlinetta 1.1/C/CL 138 A.000, 138 B.000, 138 AE.OOA.O 1116 C.C. - R.C. 9,20:1 Ritmo 60 L/CL, Uno 55, Ritmo Strada (U.S.A.) 146 A4.048 1116 C.C. - R.C. 9,20:1 Uno 60 S/SL",
+  "descripcion": "FIAT 128 1100 CC 80 mm",
+  "medidas": {
+   "diam_piston": 80.0,
+   "alt_piston": 77.3,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "motor": "128 A 000",
+   "cilindrada": "1116 C.C.",
+   "r_compresion": "8,80/9",
+   "nro_cil": "4 4 4 4",
+   "caracteristicas": null,
+   "alt_compresion": 34.7,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 71.0,
+   "perno_str": "∅22,00 × 71,00",
+   "hermanado": "C",
+   "aros": "1,50 / 2,00 / 3,97",
+   "huelgo": 0.05,
+   "alt_medicion": 25.7,
+   "medidas_dispon": "Std. / +0,40 / +0,60 / +0,80 / +1,00",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS161PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS161PH  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "P PS161PH  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS164PH",
+  "codigo_fab": "164",
+  "marca": "FIAT",
+  "aplicacion": "1600, 1600 Coupé",
+  "descripcion": "FIAT 1600 78 mm",
+  "medidas": {
+   "diam_piston": 78.0,
+   "alt_piston": 82.0,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "motor": "115C.2.038",
+   "cilindrada": "1625 C.C.",
+   "r_compresion": "7,50:1",
+   "nro_cil": "4",
+   "caracteristicas": null,
+   "alt_compresion": 36.8,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 65.8,
+   "perno_str": "∅22,00 × 65,80",
+   "hermanado": "C",
+   "aros": "2,00 / 2,00 / 3,97",
+   "huelgo": 0.04,
+   "alt_medicion": 25.0,
+   "medidas_dispon": "Std. / +0,40 / +0,60 / +0,80 / +1,00",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS164PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS164PH  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "P PS164PH  1.0",
+    "medida": "1.0"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS169PH",
+  "codigo_fab": "169",
+  "marca": "FORD",
+  "aplicacion": "Falcon, Fairlane 221 A/C 3620 C.C. - R.C. 8,10/8,20:",
+  "descripcion": "FORD FALCON 188-221 A/C 3.680\"",
+  "medidas": {
+   "diam_piston": 93.47,
+   "alt_piston": null,
+   "diam_perno": 23.17
+  },
+  "extra": {
+   "motor": "188 B/C",
+   "cilindrada": "3620 C.C.",
+   "r_compresion": null,
+   "nro_cil": "6 6",
+   "caracteristicas": null,
+   "alt_compresion": 37.86,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 77.0,
+   "perno_str": "∅23,17 × 77,00",
+   "hermanado": "C",
+   "aros": "1,98 / 1,98 / 4,76",
+   "huelgo": 0.05,
+   "alt_medicion": 47.0,
+   "medidas_dispon": "Std. / 0,508 (.020) / 0,762 (.030) / 1,016 (.040) / 1,524 (.060)",
+   "revisar": {
+    "alt_piston": "el largo total del TXT no es creíble"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS169PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS169PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS169PH  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "P PS169PH  060",
+    "medida": "060"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS170PH",
+  "codigo_fab": "170",
+  "marca": "TENSA",
+  "aplicacion": "Compresor Cummins, Perkins",
+  "descripcion": "TENSA (COMPRESOR) 2.600\"",
+  "medidas": {
+   "diam_piston": 60.31,
+   "alt_piston": 47.75,
+   "diam_perno": 12.7
+  },
+  "extra": {
+   "motor": "111 - 1201",
+   "cilindrada": null,
+   "r_compresion": null,
+   "nro_cil": "2",
+   "caracteristicas": null,
+   "alt_compresion": 24.35,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 52.4,
+   "perno_str": "∅12,70 × 52,40",
+   "hermanado": "A",
+   "aros": "2,38 / 2,38 / 4,76",
+   "huelgo": 0.127,
+   "alt_medicion": 20.0,
+   "medidas_dispon": "Std. / 0,254 (.010) / 0,508 (.020)",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS170PH  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS171PH",
+  "codigo_fab": "171",
+  "marca": "RENAULT",
+  "aplicacion": "R5, R 6 TL, R 5 LS/TS, R 5 Automatic, R 1170, R 10-1300, R 12, R 12 S/L/TL/TR/TS, R 12 Societe, R 2360, R 15, R 15 TL/GTL, R 1171, R 1177, R 1192, R 1224, R 1300, R 1330, R 1337, R 2126, R 2136, R 2136A, R 2137, Estafette 1300, Rodeo 6",
+  "descripcion": "RENAULT 12 1.3 A/C 73 mm",
+  "medidas": {
+   "diam_piston": null,
+   "alt_piston": null,
+   "diam_perno": null
+  },
+  "extra": {
+   "motor": "810, 810-01/02/03/05/06/ / /07/10/25/26/B7/C7/F7",
+   "cilindrada": "1289 C.C.",
+   "r_compresion": "8,00/8",
+   "nro_cil": "4",
+   "caracteristicas": null,
+   "alt_compresion": null,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": null,
+   "perno_str": null,
+   "hermanado": null,
+   "aros": null,
+   "huelgo": null,
+   "alt_medicion": null,
+   "medidas_dispon": null,
+   "revisar": {
+    "diam_piston": "columnas corridas en el TXT de origen",
+    "alt_piston": "columnas corridas en el TXT de origen",
+    "diam_perno": "columnas corridas en el TXT de origen",
+    "perno_str": "columnas corridas en el TXT de origen",
+    "alt_compresion": "columnas corridas en el TXT de origen",
+    "camara": "columnas corridas en el TXT de origen",
+    "aros": "columnas corridas en el TXT de origen",
+    "huelgo": "columnas corridas en el TXT de origen",
+    "medidas_dispon": "columnas corridas en el TXT de origen"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS171PH  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS179PH",
+  "codigo_fab": "179",
+  "marca": "RENAULT",
+  "aplicacion": "R 6",
+  "descripcion": "RENAULT 6 1100 CC 68 mm",
+  "medidas": {
+   "diam_piston": 68.0,
+   "alt_piston": 62.7,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "motor": "M-1100",
+   "cilindrada": "1118 C.C.",
+   "r_compresion": "8,50:1",
+   "nro_cil": "4",
+   "caracteristicas": null,
+   "alt_compresion": 37.5,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 58.0,
+   "perno_str": "∅20,00 × 58,00",
+   "hermanado": "C",
+   "aros": "1,75 / 2,00 / 4,00",
+   "huelgo": 0.05,
+   "alt_medicion": 11.5,
+   "medidas_dispon": "Std.",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS179PH  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS180PH",
+  "codigo_fab": "180",
+  "marca": "FIAT",
+  "aplicacion": "128 128 AR 000 1290 C.C. - R.C. 8,90:1 128 Rally 1300 128 AC 000 1290 C.C. - R.C. 8,90/9,20:1 128 3P, 128 Sport, 128 Special 128 AS 000 1290 C.C. - R.C. 8,90/9,20:1 X 1/9",
+  "descripcion": "FIAT 128 1300 CC 86 mm",
+  "medidas": {
+   "diam_piston": 86.0,
+   "alt_piston": 77.3,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "motor": "128 A 1.000",
+   "cilindrada": "1290 C.C.",
+   "r_compresion": "8,90/9",
+   "nro_cil": "4 4 4 4",
+   "caracteristicas": null,
+   "alt_compresion": 34.7,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 69.0,
+   "perno_str": "∅22,00 × 69,00",
+   "hermanado": "C",
+   "aros": "1,50 / 2,00 / 3,97",
+   "huelgo": 0.07,
+   "alt_medicion": 25.0,
+   "medidas_dispon": "Std. / +0,40 / +0,60 / +0,80 / +1,00",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS180PH  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS181PH",
+  "codigo_fab": "181",
+  "marca": "RENAULT",
+  "aplicacion": "R4S/F/L",
+  "descripcion": "RENAULT 4S 65 mm",
+  "medidas": {
+   "diam_piston": 65.0,
+   "alt_piston": 63.4,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "motor": "M-1000",
+   "cilindrada": "1020 C.C.",
+   "r_compresion": "8,00:1",
+   "nro_cil": "4",
+   "caracteristicas": null,
+   "alt_compresion": 37.5,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 55.0,
+   "perno_str": "∅20,00 × 55,00",
+   "hermanado": "C",
+   "aros": "1,75 / 2,00 / 4,00",
+   "huelgo": 0.05,
+   "alt_medicion": 11.0,
+   "medidas_dispon": "Std.",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS181PH  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS184PH",
+  "codigo_fab": "184",
+  "marca": "GENERAL MOTORS",
+  "aplicacion": "K-180 (Argentina)",
+  "descripcion": "OPEL K180 3.9/16\"",
+  "medidas": {
+   "diam_piston": null,
+   "alt_piston": null,
+   "diam_perno": null
+  },
+  "extra": {
+   "motor": null,
+   "cilindrada": "1797 C.C.",
+   "r_compresion": "8,20:1",
+   "nro_cil": "4",
+   "caracteristicas": "(1)",
+   "alt_compresion": null,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": null,
+   "perno_str": null,
+   "hermanado": null,
+   "aros": null,
+   "huelgo": null,
+   "alt_medicion": null,
+   "medidas_dispon": null,
+   "revisar": {
+    "diam_piston": "columnas corridas en el TXT de origen",
+    "alt_piston": "columnas corridas en el TXT de origen",
+    "diam_perno": "columnas corridas en el TXT de origen",
+    "perno_str": "columnas corridas en el TXT de origen",
+    "alt_compresion": "columnas corridas en el TXT de origen",
+    "camara": "columnas corridas en el TXT de origen",
+    "aros": "columnas corridas en el TXT de origen",
+    "huelgo": "columnas corridas en el TXT de origen",
+    "medidas_dispon": "columnas corridas en el TXT de origen"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS184PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS184PH  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "P PS184PH  040",
+    "medida": "040"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS188PH",
+  "codigo_fab": "188",
+  "marca": "PEUGEOT",
+  "aplicacion": "XDP 6.90 - Diesel 3168 C.C. - R.C. 22,10:1 504 D/GLD Berline, Break, Familiar, J7D, J9D",
+  "descripcion": "INDENOR XD6.90 90 mm",
+  "medidas": {
+   "diam_piston": 90.0,
+   "alt_piston": 96.35,
+   "diam_perno": 28.0
+  },
+  "extra": {
+   "motor": "XDP 4.90 - Diesel",
+   "cilindrada": "2112 C.C.",
+   "r_compresion": "22,10:1",
+   "nro_cil": "4 6",
+   "caracteristicas": null,
+   "alt_compresion": 56.85,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 77.0,
+   "perno_str": "∅28,00 × 77,00",
+   "hermanado": "C",
+   "aros": "2,00 / 2,00 / 2,00 / 4,50",
+   "huelgo": 0.1,
+   "alt_medicion": 16.0,
+   "medidas_dispon": null,
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS188PH  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS189PH",
+  "codigo_fab": "189",
+  "marca": "SEAT",
+  "aplicacion": "850 100 G 000 903 C.C. - R.C. 9,00:1 127, Marbella, Panda",
+  "descripcion": "FIAT 133 65 mm",
+  "medidas": {
+   "diam_piston": 65.0,
+   "alt_piston": 61.25,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "motor": "100 G 000",
+   "cilindrada": "843 C.C.",
+   "r_compresion": "8,00:1",
+   "nro_cil": "4 4",
+   "caracteristicas": null,
+   "alt_compresion": 30.75,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 54.0,
+   "perno_str": "∅20,00 × 54,00",
+   "hermanado": "C",
+   "aros": "1,75 / 2,00 / 3,97",
+   "huelgo": 0.05,
+   "alt_medicion": 22.0,
+   "medidas_dispon": "Std. / +0,40 / +0,60 / +0,80 / +1,00",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS189PH  STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "P PS189PH  0.8",
+    "medida": "0.8"
+   }
+  ]
+ },
+ {
+  "codigo": "P PS191PH",
+  "codigo_fab": "191",
+  "marca": "PEUGEOT",
+  "aplicacion": "504 F 11/H 11 Ambulancia, L, GL, GR, Berlina, Familiar, Cabriolet, Coupé, 504 E/SE/TN/SES, 505 GL/GR/SR/ Break, Familiar, Furgón, Combi",
+  "descripcion": "PEUGEOT 504 2000 CC 8,35:1 88 mm",
+  "medidas": {
+   "diam_piston": 88.0,
+   "alt_piston": 72.4,
+   "diam_perno": 23.0
+  },
+  "extra": {
+   "motor": "XN1, XN1P, XN1T",
+   "cilindrada": "1971 C.C.",
+   "r_compresion": "8,00/8",
+   "nro_cil": "4",
+   "caracteristicas": null,
+   "alt_compresion": 37.9,
+   "cam_diam": null,
+   "cam_prof": null,
+   "largo_perno": 74.0,
+   "perno_str": "∅23,00 × 74,00",
+   "hermanado": "B",
+   "aros": "1,50 / 2,00 / 4,00",
+   "huelgo": 0.065,
+   "alt_medicion": 41.5,
+   "medidas_dispon": "Std.",
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "P PS191PH  STD",
+    "medida": "STD"
+   }
+  ]
+ }
+]
