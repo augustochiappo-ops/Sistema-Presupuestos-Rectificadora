@@ -184,12 +184,14 @@ export const FAMILIAS = [
     ],
     columnas: [
       { key: 'codigo', header: 'Código', width: 100, strong: true },
-      { key: 'marca', header: 'Marca', width: 120 },
-      { key: 'descripcion', header: 'Motor / aplicación', wrap: true, minWidth: 180 },
+      // 150 y no menos: la marca más larga del catálogo es "MERCEDES BENZ" y
+      // cortada en "MERCEDES …" no se distingue de "MERCEDES ..." de nada.
+      { key: 'marca', header: 'Marca', width: 150 },
+      { key: 'descripcion', header: 'Motor / aplicación', wrap: true, minWidth: 160 },
       { key: 'diam_perno', header: 'Ø perno', width: 90, align: 'right', tipo: 'mm' },
       { key: 'diam_int', header: 'Ø int. semi', width: 100, align: 'right', tipo: 'mm' },
       { key: 'ancho', header: 'Ancho', width: 95, align: 'right', tipo: 'mm' },
-      { key: 'sobremedidas', header: 'Ø exterior (STD y sobremedidas)', minWidth: 230, tipo: 'sobremedidas' },
+      { key: 'sobremedidas', header: 'Ø exterior y sobremedidas', minWidth: 230, tipo: 'sobremedidas' },
       // Un buje tiene un precio por sobremedida: esta columna dice de cuál es
       // el que se está mostrando (igual que en subconjuntos y pistones).
       { key: 'medida_crac', header: 'Precio de', width: 90 },
