@@ -8,6 +8,7 @@ import { Icon } from '../../components/Icon'
 import { formatPrecioARS } from '../../utils/format'
 import { CampoMedida } from './CampoMedida'
 import { CeldaForma, FiltroFormas, ModalFormas, describirForma } from './formas'
+import { CeldaDibujo, ModalDibujo } from './pistones'
 import { FAMILIAS, camposDe } from './familias'
 
 const ESPERA_MS = 280
@@ -90,6 +91,8 @@ function celda(col, fila, acciones) {
       return celdaSobremedidas(fila)
     case 'forma':
       return <CeldaForma forma={valor} onVerLamina={acciones.verLamina} />
+    case 'dibujo':
+      return <CeldaDibujo fila={fila} onVer={() => acciones.verDibujo(fila)} />
     default:
       return valor === null || valor === undefined || valor === '' ? '—' : valor
   }
@@ -137,6 +140,8 @@ export default function BusquedaMedidasScreen() {
   const [cargando, setCargando] = React.useState(false)
   const [orden, setOrden] = React.useState(null)
   const [lamina, setLamina] = React.useState(false)
+  // El subconjunto cuyo dibujo se está mirando en grande, o null.
+  const [dibujo, setDibujo] = React.useState(null)
 
   React.useEffect(() => {
     api.get('/tecnicos/familias').then(setFamilias).catch(() => setFamilias([]))
@@ -235,7 +240,7 @@ export default function BusquedaMedidasScreen() {
           {orden?.key === col.key && <Icon n={orden.dir === 1 ? 'arrow-up' : 'arrow-down'} s={13} />}
         </span>
       ),
-      render: (_, fila) => celda(col, fila, { verLamina: () => setLamina(true) }),
+      render: (_, fila) => celda(col, fila, { verLamina: () => setLamina(true), verDibujo: setDibujo }),
     })),
     [familia, orden],
   )
@@ -438,6 +443,7 @@ export default function BusquedaMedidasScreen() {
       />
 
       <ModalFormas open={lamina} onClose={() => setLamina(false)} />
+      <ModalDibujo fila={dibujo} onClose={() => setDibujo(null)} />
     </div>
   )
 }

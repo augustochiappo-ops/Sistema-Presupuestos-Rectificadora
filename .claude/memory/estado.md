@@ -990,6 +990,58 @@ la forma (que el dibujo **cargue de verdad** y no salga un cuadrito roto, que la
 "N" no tenga uno prestado, el filtro por letra y la lámina). Las dos verdes, más
 `backend_grupos.py` como control de que no se rompió nada.
 
+## Sesión 2026-08-21 (segunda) — El dibujo del pistón, y la forma "N" que faltaba
+
+Dos pedidos del dueño, los dos sobre dibujos del catálogo. Mandó un `.rar` con
+56 fotos de pistones Mahle ("te paso algunas… determiná cómo las recortarías y
+cómo las agregás al sistema, quiero que todas tengan el mismo tamaño cuando se
+vean") y el Excel `NUBO_2025.xlsx`, cuya pestaña **REF** trae la lámina de
+formas de guía con la **N** — la que faltaba desde la sesión anterior.
+
+**1. Los dibujos de pistón, recortados solos.** Las 56 fotos son rectángulos
+sacados a ojo del PDF del catálogo: adentro viene el pistón y también los
+números de la fila, las rayas de la grilla, alguna barra negra y a veces medio
+dibujo del vecino. Se hizo `scripts/recortar_pistones_mahle.py`, que encuentra
+las **dos vistas** del pistón (el corte y el círculo, una sobre la otra y del
+mismo ancho) y tira todo lo demás — el detalle de cómo, en `decisiones.md`.
+Salieron **48 dibujos** (las 56 fotos son 48 códigos: seis vinieron por
+duplicado, un `.jpg` del PDF y un `.png` recortado a mano, y gana el más
+grande), 557 KB en total, en `webapp/frontend/public/pistones/`. Las fotos
+crudas quedaron en `CRAC/tecnicos/fuentes/pistones/` para poder volver a
+correrlo.
+
+Lo del **mismo tamaño** se resolvió sin reescalar: cada recorte se rellena con
+transparente hasta una proporción **exacta de 13:20**, así los 48 archivos
+tienen la misma proporción al pixel y la pantalla, que los pide con una altura
+fija, los muestra todos iguales. La suite lo verifica midiendo las cajas en
+pantalla, no los PNG.
+
+En la pantalla: columna **Dibujo** en Subconjuntos, al lado del código,
+miniatura de 56 px; un clic la abre en grande junto a la descripción y la
+aplicación. Los 153 subconjuntos que todavía no tienen foto van con un guión —
+qué códigos tienen dibujo lo dice un manifiesto generado por el script, así no
+hay 404 ni cuadritos rotos.
+
+**2. La forma "N".** Era el pendiente 2 de la lista y estaba trabado por una
+sola cosa: la lámina había llegado pegada en el chat y no como archivo. Ahora
+llegó dentro del Excel (`xl/media/image7.jpg`, guardada como
+`CRAC/tecnicos/fuentes/nubo_formas.jpg`). Se recortó **solo la N**, como pidió
+el dueño, con `scripts/recortar_forma_n.py`. Esa lámina dibuja con sombreado y
+las nueve de RYC son línea pura, así que la rampa de transparencia se corta
+abajo y queda solo el contorno y la letra: una N de línea que no desentona.
+El filtro de formas ya no tiene ninguna letra pelada y la lámina muestra diez.
+
+**Cómo se abrió el `.rar`.** Es RAR5 y el entorno no traía con qué: `7z` (23.01)
+lo lista pero no lo descomprime ("Unsupported Method"). Lo abrió `unrar`, que se
+instala con `apt-get install -y unrar`. Vale anotarlo porque el contenedor
+arranca limpio en cada sesión.
+
+**Verificado:** `tests/backend_medidas.py`, `tests/backend_grupos.py`,
+`tests/ui_medidas.mjs` (con seis chequeos nuevos del dibujo: que la columna
+esté, que cargue de verdad, que el que no tiene vaya con guión y sin imagen
+rota, que **todos se vean del mismo tamaño**, que el grande sea el de la fila y
+que la lámina tenga las diez formas) y `tests/ui_grupos.mjs`.
+
 ## Próximo paso
 
 **Producción y `master` están sincronizados en `31d5ebd`**, deployado y
@@ -1056,17 +1108,10 @@ Pendientes, en orden de lo que más conviene atacar:
      13,80 mm en un pistón con 65,00 de altura de compresión). El script los
      descarta con esa regla —positivo y mayor que la altura de compresión— en
      vez de cargar un número que haría mentir al filtro de "alto total".
-2. **El dibujo de la forma "N"** (7 guías Indy). La lámina de RYC no tiene esa
-   letra, pero la **segunda lámina** que el dueño pegó en el chat el 2026-08-21
-   sí: es la misma referencia de otro catálogo, con las diez formas (las nueve
-   de RYC más la N) y los nombres de los ocho detalles. Los nombres ya se
-   cargaron a mano; el dibujo no se pudo recortar porque la imagen llegó
-   **pegada en el chat y no como archivo adjunto**, y sin el archivo no hay
-   pixeles que cortar. Para cerrarlo: que el dueño la **adjunte como archivo**
-   (o mande el PDF de donde salió) y se corre `scripts/recortar_formas_ryc.py`
-   con una caja más. Ojo con el estilo: esa lámina es sombreada y la de RYC es
-   línea pura; conviene recortar de ella **solo la N**, o rehacer las diez de
-   una para que no queden dos estilos mezclados.
+2. ~~**El dibujo de la forma "N"**~~ → **resuelto el 2026-08-21 (segunda
+   sesión)**: el dueño mandó la referencia de Nubo como archivo (dentro de
+   `NUBO_2025.xlsx`, pestaña REF) y se recortó solo la N, pasada a línea para
+   que no desentone con las nueve de RYC. Ver la sesión de arriba.
 3. **Tablero de estados del trabajo** (Aprobado → Repuestos pedidos → En taller → Listo → Entregado). El dueño lo pidió explícitamente para más adelante, "cuando nos familiaricemos con el programa". Es la única parte del negocio que el sistema no toca: hoy `aprobado_en` es un flag binario sin consecuencia. Barato de hacer — los datos ya están, hace falta una columna `estado`, una tabla de cambios de estado y una pantalla.
 4. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
 5. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.

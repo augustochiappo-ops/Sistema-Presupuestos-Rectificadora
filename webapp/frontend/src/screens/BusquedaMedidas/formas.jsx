@@ -10,13 +10,13 @@ import { Modal } from '../../components/Modal'
  * misma lámina, un archivo por forma en /formas/ (ver
  * scripts/recortar_formas_ryc.py).
  *
- * Las nueve letras dibujadas son las del catálogo RYC. Indy y Nubo usan las
- * mismas letras salvo la "N", que es de Indy y no está en la lámina: esa se
- * muestra sin dibujo, con el código solo. Un dibujo que no sabemos si
- * corresponde sería peor que ninguno.
+ * Nueve de los diez dibujos son los de la lámina del catálogo RYC. El décimo
+ * es la "N", que usan Indy y Nubo y que esa lámina no trae: sale de la
+ * referencia del catálogo NUBO 2025, recortada aparte y pasada a línea para
+ * que no desentone con las otras nueve (ver scripts/recortar_forma_n.py).
  */
 
-const LETRAS = ['A', 'B', 'C', 'E', 'F', 'G', 'L', 'M', 'P']
+const LETRAS = ['A', 'B', 'C', 'E', 'F', 'G', 'L', 'M', 'N', 'P']
 const DETALLES = ['detalle-1-2', 'detalle-3-6', 'detalle-7', 'detalle-8']
 
 // Qué es cada número, según la referencia del catálogo. Sin esto "A-1-6" es una
@@ -167,7 +167,7 @@ export function FiltroFormas({ valores, valor, onCambiar, onVerLamina }) {
   )
 }
 
-/** La lámina entera: las nueve formas y las cuatro figuras de detalles. */
+/** La lámina entera: las diez formas y las cuatro figuras de detalles. */
 export function ModalFormas({ open, onClose }) {
   return (
     <Modal open={open} title="Formas de guía del catálogo" onClose={onClose} maxWidth={860}>
@@ -180,7 +180,7 @@ export function ModalFormas({ open, onClose }) {
         con los detalles 1 y 6.
       </p>
 
-      {/* Las nueve en una sola fila: partidas en dos se leen como si fueran
+      {/* Las diez en una sola fila: partidas en dos se leen como si fueran
           dos grupos de algo, y no lo son. */}
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 26 }}>
         {LETRAS.map((letra) => (
@@ -219,9 +219,9 @@ export function ModalFormas({ open, onClose }) {
       </div>
 
       <p style={{ margin: '20px 0 0', fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)', lineHeight: 1.5 }}>
-        Los dibujos son los del catálogo RYC. Las guías Indy y Nubo usan las mismas letras,
-        salvo la <strong>N</strong> de Indy, que no está en esta lámina y por eso se muestra
-        sin dibujo.
+        Los dibujos son los del catálogo RYC, salvo la <strong>N</strong> —que RYC no
+        tiene— tomada de la referencia de Nubo. Las guías Indy y Nubo usan las mismas
+        letras.
       </p>
       </div>
     </Modal>

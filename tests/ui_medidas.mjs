@@ -137,6 +137,56 @@ check('se encuentra el subconjunto', sub.includes('S BE01010'), sub)
 check('y se dice de qué sobremedida es el precio', sub.includes('STD'), sub)
 await page.screenshot({ path: path.join(SHOT, 'medidas-subconjuntos.png'), fullPage: true })
 
+console.log('\n=== Subconjuntos: el dibujo del pistón ===')
+// El dibujo del catálogo al lado del código: la forma de la cabeza y de la
+// falda se reconocen de un vistazo, las medidas no.
+check('la columna Dibujo está', await page.locator('th', { hasText: 'Dibujo' }).count() === 1)
+await page.fill('input[placeholder="Código…"]', 'S BE25400')
+await esperar(1200)
+const mini = filas().nth(0).locator('img')
+check('la fila trae su miniatura', await mini.count() === 1)
+check('y el dibujo carga de verdad',
+  await mini.evaluate((img) => img.complete && img.naturalWidth > 0),
+  await mini.getAttribute('src'))
+// Un subconjunto todavía sin foto no puede quedar con un cuadrito roto.
+await page.fill('input[placeholder="Código…"]', 'S BE25127')
+await esperar(1200)
+check('el que no tiene dibujo va con un guión, sin imagen rota',
+  await filas().nth(0).locator('img').count() === 0
+  && (await textoDeFila(0)).includes('—'),
+  await textoDeFila(0))
+
+// Lo que pidió el dueño: que se vean TODOS del mismo tamaño. Los archivos
+// tienen distinta cantidad de pixeles, así que lo que se mide es la caja en
+// pantalla, no el PNG.
+await page.fill('input[placeholder="Código…"]', '')
+await page.fill('input[placeholder="Descripción…"]', 'fiat')
+await esperar(1300)
+const cajas = await page.locator('table tbody tr img').evaluateAll(
+  (imgs) => imgs.map((i) => `${Math.round(i.getBoundingClientRect().width)}x${Math.round(i.getBoundingClientRect().height)}`),
+)
+check('todos los dibujos se ven del mismo tamaño',
+  cajas.length >= 5 && new Set(cajas).size === 1, cajas.join(' '))
+await page.screenshot({ path: path.join(SHOT, 'medidas-dibujos-piston.png'), fullPage: true })
+
+console.log('\n=== El dibujo en grande ===')
+await page.locator('table tbody tr img').first().click()
+await esperar(600)
+const grande = page.locator('[data-dibujo-piston] img')
+check('se abre el dibujo en grande', await grande.count() === 1)
+check('y es el del código de esa fila',
+  await grande.getAttribute('src') === await page.locator('table tbody tr img').first().getAttribute('src'),
+  await grande.getAttribute('src'))
+check('en grande de verdad, no la miniatura estirada',
+  await grande.evaluate((img) => img.getBoundingClientRect().height > 200),
+  await grande.evaluate((img) => img.getBoundingClientRect().height))
+await page.screenshot({ path: path.join(SHOT, 'medidas-dibujo-grande.png'), fullPage: true })
+await page.mouse.click(20, 500)
+await esperar(400)
+check('y se cierra tocando afuera', await page.locator('[data-dibujo-piston]').count() === 0)
+await page.fill('input[placeholder="Descripción…"]', '')
+await esperar(600)
+
 console.log('\n=== Pistones: el catálogo Persan, con lo que no se pudo leer marcado ===')
 await page.fill('input[placeholder="Código…"]', '')
 await page.locator('button', { hasText: 'Pistones' }).click()
@@ -187,8 +237,10 @@ check('todos los dibujos del filtro cargan',
     (imgs) => imgs.every((i) => i.complete && i.naturalWidth > 0),
   ),
   'alguna forma no tiene su PNG')
-// La "N" es de Indy y no está en la lámina: va sin dibujo, no con uno prestado.
-check('la N va sin dibujo', await page.locator('button[aria-pressed] img').count() === 8)
+// La "N" no está en la lámina de RYC: su dibujo se recortó de la referencia de
+// Nubo, así que ahora las nueve del filtro tienen el suyo y ninguna queda con
+// la letra sola.
+check('la N ya tiene su dibujo', await page.locator('button[aria-pressed] img').count() === 9)
 
 await chips.first().click()
 await esperar(1300)
@@ -207,8 +259,8 @@ await page.locator('button', { hasText: 'Ver la lámina' }).click()
 await esperar(600)
 check('se abre la lámina', await page.locator('text=/Formas de guía del catálogo/').count() === 1)
 const lamina = page.locator('[data-lamina="formas"]')
-check('con las nueve formas y las cuatro figuras de detalles',
-  await lamina.locator('img[alt^="Forma "]').count() === 9
+check('con las diez formas y las cuatro figuras de detalles',
+  await lamina.locator('img[alt^="Forma "]').count() === 10
   && await lamina.locator('img[alt^="Detalles"]').count() === 4,
   `${await lamina.locator('img').count()} dibujos en total`)
 check('y explica cómo se lee el código',

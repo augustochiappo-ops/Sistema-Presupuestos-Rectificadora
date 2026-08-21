@@ -55,9 +55,9 @@ export const FAMILIAS = [
       { campo: 'codigo', label: 'Código', ancho: 200, icono: 'tag' },
       { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
     ],
-    // Las nueve letras de la lámina no están todas en el catálogo, y hay una
-    // que la lámina no tiene: se lista lo que existe en las fichas (la "N" es
-    // de Indy y se muestra sin dibujo).
+    // No están en el catálogo todas las letras dibujadas: se lista lo que
+    // existe en las fichas. La "N" es de Indy y de Nubo y no está en la lámina
+    // de RYC — su dibujo sale de la referencia de Nubo (ver formas.jsx).
     formas: {
       campo: 'forma',
       label: 'Forma del cuerpo',
@@ -113,6 +113,10 @@ export const FAMILIAS = [
     ],
     columnas: [
       { key: 'codigo', header: 'Código', width: 130, strong: true, wrap: true },
+      // El dibujo del pistón, al lado del código: la cámara de la cabeza y la
+      // forma de la falda se reconocen de un vistazo y las medidas no. Los que
+      // todavía no se recortaron del catálogo van con un guión.
+      { key: 'dibujo', header: 'Dibujo', width: 80, tipo: 'dibujo' },
       { key: 'marca', header: 'Marca', width: 100 },
       { key: 'descripcion', header: 'Descripción', wrap: true, minWidth: 220 },
       { key: 'nro_cil', header: 'Nº cil.', width: 80, align: 'right' },
