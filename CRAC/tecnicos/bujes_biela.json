@@ -1,0 +1,11873 @@
+[
+ {
+  "codigo": "I-1013",
+  "codigo_fab": "I-1013",
+  "marca": "A.B.H.",
+  "aplicacion": "A.B.H. DIESEL (BUJE DE BRONCE)",
+  "descripcion": "DIESEL (BUJE DE BRONCE)",
+  "medidas": {
+   "diam_perno": 29.5,
+   "diam_int": 29.0,
+   "ancho": 30.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.04,
+      35.07
+     ],
+     "texto": "35,04/07"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-11",
+  "codigo_fab": "I-11",
+  "marca": "BEDFORD",
+  "aplicacion": "BEDFORD 300-350 D",
+  "descripcion": "300-350 D",
+  "medidas": {
+   "diam_perno": 34.9,
+   "diam_int": 34.4,
+   "ancho": 35.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.22,
+      38.25
+     ],
+     "texto": "38,22/25"
+    },
+    {
+     "label": "003",
+     "valor": 38.33
+    },
+    {
+     "label": "005",
+     "valor": 38.37
+    },
+    {
+     "label": "010",
+     "valor": 38.49
+    },
+    {
+     "label": "015",
+     "valor": 38.61
+    },
+    {
+     "label": "020",
+     "valor": 38.73
+    },
+    {
+     "label": "030",
+     "valor": 38.97
+    },
+    {
+     "label": "040",
+     "valor": 39.21
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-011  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-011  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-011  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-011  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-011  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "B I I-011  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-35",
+  "codigo_fab": "I-35",
+  "marca": "BORGWARD",
+  "aplicacion": "BORGWARD V M TURBO",
+  "descripcion": "V M TURBO",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.5,
+   "ancho": 30.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      34.08,
+      34.11
+     ],
+     "texto": "34,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 34.19
+    },
+    {
+     "label": "005",
+     "valor": 34.23
+    },
+    {
+     "label": "010",
+     "valor": 34.35
+    },
+    {
+     "label": "015",
+     "valor": 34.47
+    },
+    {
+     "label": "020",
+     "valor": 34.59
+    },
+    {
+     "label": "030",
+     "valor": 34.83
+    },
+    {
+     "label": "040",
+     "valor": 35.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-035  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-035  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-035  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-06",
+  "codigo_fab": "I-06",
+  "marca": "BORGWARD",
+  "aplicacion": "BORGWARD RASTROJERO 52 HP.",
+  "descripcion": "RASTROJERO 52 HP.",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 26.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.08,
+      28.11
+     ],
+     "texto": "28,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 28.19
+    },
+    {
+     "label": "005",
+     "valor": 28.23
+    },
+    {
+     "label": "010",
+     "valor": 28.35
+    },
+    {
+     "label": "015",
+     "valor": 28.47
+    },
+    {
+     "label": "020",
+     "valor": 28.59
+    },
+    {
+     "label": "030",
+     "valor": 28.83
+    },
+    {
+     "label": "040",
+     "valor": 29.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-006  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-006  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-006  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-006  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-36",
+  "codigo_fab": "I-36",
+  "marca": "BORGWARD",
+  "aplicacion": "BORGWARD RASTROJERO 42 HP.",
+  "descripcion": "RASTROJERO 42 HP.",
+  "medidas": {
+   "diam_perno": 22.0,
+   "diam_int": 21.5,
+   "ancho": 26.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      25.12,
+      25.15
+     ],
+     "texto": "25,12/15"
+    },
+    {
+     "label": "003",
+     "valor": 25.23
+    },
+    {
+     "label": "005",
+     "valor": 25.27
+    },
+    {
+     "label": "010",
+     "valor": 25.39
+    },
+    {
+     "label": "015",
+     "valor": 25.51
+    },
+    {
+     "label": "020",
+     "valor": 25.63
+    },
+    {
+     "label": "030",
+     "valor": 25.87
+    },
+    {
+     "label": "040",
+     "valor": 26.11
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-036  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-036  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-036  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-93",
+  "codigo_fab": "I-93",
+  "marca": "BOUNOUS",
+  "aplicacion": "BOUNOUS 7,5 MM",
+  "descripcion": "7,5 MM",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 30.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.11,
+      30.14
+     ],
+     "texto": "30,11/14"
+    },
+    {
+     "label": "003",
+     "valor": 30.22
+    },
+    {
+     "label": "005",
+     "valor": 30.26
+    },
+    {
+     "label": "010",
+     "valor": 30.38
+    },
+    {
+     "label": "015",
+     "valor": 30.5
+    },
+    {
+     "label": "020",
+     "valor": 30.62
+    },
+    {
+     "label": "030",
+     "valor": 30.86
+    },
+    {
+     "label": "040",
+     "valor": 31.1
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-093  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-68",
+  "codigo_fab": "I-68",
+  "marca": "CASE",
+  "aplicacion": "CASE 830",
+  "descripcion": "830",
+  "medidas": {
+   "diam_perno": 38.1,
+   "diam_int": 37.5,
+   "ancho": 35.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      43.06,
+      43.09
+     ],
+     "texto": "43,06/09"
+    },
+    {
+     "label": "003",
+     "valor": 43.17
+    },
+    {
+     "label": "005",
+     "valor": 43.21
+    },
+    {
+     "label": "010",
+     "valor": 43.33
+    },
+    {
+     "label": "015",
+     "valor": 43.45
+    },
+    {
+     "label": "020",
+     "valor": 43.57
+    },
+    {
+     "label": "030",
+     "valor": 43.81
+    },
+    {
+     "label": "040",
+     "valor": 44.05
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-068  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-1060",
+  "codigo_fab": "I-1060",
+  "marca": "CATERPILLAR",
+  "aplicacion": "CATERPILLAR D6/7/8",
+  "descripcion": "D6/7/8",
+  "medidas": {
+   "diam_perno": 60.7,
+   "diam_int": 60.35,
+   "ancho": 52.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      68.35,
+      68.38
+     ],
+     "texto": "68,35/38"
+    },
+    {
+     "label": "003",
+     "valor": 68.46
+    },
+    {
+     "label": "005",
+     "valor": 68.5
+    },
+    {
+     "label": "010",
+     "valor": 68.62
+    },
+    {
+     "label": "015",
+     "valor": 68.74
+    },
+    {
+     "label": "020",
+     "valor": 68.86
+    },
+    {
+     "label": "030",
+     "valor": 69.1
+    },
+    {
+     "label": "040",
+     "valor": 69.34
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-1081",
+  "codigo_fab": "I-1081",
+  "marca": "CATERPILLAR",
+  "aplicacion": "CATERPILLAR D4",
+  "descripcion": "D4",
+  "medidas": {
+   "diam_perno": 44.45,
+   "diam_int": 44.0,
+   "ancho": 40.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      50.93,
+      50.95
+     ],
+     "texto": "50,93/95"
+    },
+    {
+     "label": "003",
+     "valor": 51.03
+    },
+    {
+     "label": "005",
+     "valor": 51.07
+    },
+    {
+     "label": "010",
+     "valor": 51.19
+    },
+    {
+     "label": "015",
+     "valor": 51.31
+    },
+    {
+     "label": "020",
+     "valor": 51.43
+    },
+    {
+     "label": "030",
+     "valor": 51.67
+    },
+    {
+     "label": "040",
+     "valor": 51.91
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-1081 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-1082",
+  "codigo_fab": "I-1082",
+  "marca": "CATERPILLAR",
+  "aplicacion": "CATERPILLAR 48-51",
+  "descripcion": "48-51",
+  "medidas": {
+   "diam_perno": 46.03,
+   "diam_int": 45.5,
+   "ancho": 43.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      52.0,
+      52.03
+     ],
+     "texto": "52,00/03"
+    },
+    {
+     "label": "003",
+     "valor": 52.11
+    },
+    {
+     "label": "005",
+     "valor": 52.15
+    },
+    {
+     "label": "010",
+     "valor": 52.27
+    },
+    {
+     "label": "015",
+     "valor": 52.39
+    },
+    {
+     "label": "020",
+     "valor": 52.51
+    },
+    {
+     "label": "030",
+     "valor": 52.75
+    },
+    {
+     "label": "040",
+     "valor": 52.99
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-1083",
+  "codigo_fab": "I-1083",
+  "marca": "CATERPILLAR",
+  "aplicacion": "CATERPILLAR 977",
+  "descripcion": "977",
+  "medidas": {
+   "diam_perno": 38.1,
+   "diam_int": 37.6,
+   "ancho": 36.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      41.48,
+      41.5
+     ],
+     "texto": "41,48/50"
+    },
+    {
+     "label": "003",
+     "valor": 41.58
+    },
+    {
+     "label": "005",
+     "valor": 41.62
+    },
+    {
+     "label": "010",
+     "valor": 41.74
+    },
+    {
+     "label": "015",
+     "valor": 41.86
+    },
+    {
+     "label": "020",
+     "valor": 41.98
+    },
+    {
+     "label": "030",
+     "valor": 42.22
+    },
+    {
+     "label": "040",
+     "valor": 42.46
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-1088",
+  "codigo_fab": "I-1088",
+  "marca": "CATERPILLAR",
+  "aplicacion": "CATERPILLAR D7- D8",
+  "descripcion": "D7- D8",
+  "medidas": {
+   "diam_perno": 60.32,
+   "diam_int": 59.69,
+   "ancho": 53.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      66.53,
+      66.55
+     ],
+     "texto": "66,53/55"
+    },
+    {
+     "label": "003",
+     "valor": 66.63
+    },
+    {
+     "label": "005",
+     "valor": 66.67
+    },
+    {
+     "label": "010",
+     "valor": 66.79
+    },
+    {
+     "label": "015",
+     "valor": 66.91
+    },
+    {
+     "label": "020",
+     "valor": 67.03
+    },
+    {
+     "label": "030",
+     "valor": 67.27
+    },
+    {
+     "label": "040",
+     "valor": 67.51
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-1088 005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-1088 010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-1088 020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-1088 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-114",
+  "codigo_fab": "I-114",
+  "marca": "CHEVROLET",
+  "aplicacion": "CHEVROLET VECTRA 2.0 TD 16v X20DTL",
+  "descripcion": "VECTRA 2.0 TD 16v X20DTL",
+  "medidas": {
+   "diam_perno": 29.0,
+   "diam_int": 28.5,
+   "ancho": 26.3
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      32.0,
+      32.05
+     ],
+     "texto": "32,00/05"
+    },
+    {
+     "label": "003",
+     "valor": 32.13
+    },
+    {
+     "label": "005",
+     "valor": 32.17
+    },
+    {
+     "label": "010",
+     "valor": 32.29
+    },
+    {
+     "label": "015",
+     "valor": 32.41
+    },
+    {
+     "label": "020",
+     "valor": 32.53
+    },
+    {
+     "label": "030",
+     "valor": 32.77
+    },
+    {
+     "label": "040",
+     "valor": 33.01
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-155",
+  "codigo_fab": "I-155",
+  "marca": "CHEVROLET",
+  "aplicacion": "CHEVROLET VECTRA 1.7 D X17DTL",
+  "descripcion": "VECTRA 1.7 D X17DTL",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 26.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      29.61,
+      29.64
+     ],
+     "texto": "29,61/64"
+    },
+    {
+     "label": "003",
+     "valor": 29.72
+    },
+    {
+     "label": "005",
+     "valor": 29.76
+    },
+    {
+     "label": "010",
+     "valor": 29.88
+    },
+    {
+     "label": "015",
+     "valor": 30.0
+    },
+    {
+     "label": "020",
+     "valor": 30.12
+    },
+    {
+     "label": "030",
+     "valor": 30.36
+    },
+    {
+     "label": "040",
+     "valor": 30.6
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-155  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-155  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-115",
+  "codigo_fab": "I-115",
+  "marca": "CHEVROLET",
+  "aplicacion": "CHEVROLET CORSA 1.7 D",
+  "descripcion": "CORSA 1.7 D",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 24.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.15,
+      28.18
+     ],
+     "texto": "28,15/18"
+    },
+    {
+     "label": "003",
+     "valor": 28.26
+    },
+    {
+     "label": "005",
+     "valor": 28.3
+    },
+    {
+     "label": "010",
+     "valor": 28.42
+    },
+    {
+     "label": "015",
+     "valor": 28.54
+    },
+    {
+     "label": "020",
+     "valor": 28.66
+    },
+    {
+     "label": "030",
+     "valor": 28.9
+    },
+    {
+     "label": "040",
+     "valor": 29.14
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-115  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-116",
+  "codigo_fab": "I-116",
+  "marca": "CHEVROLET",
+  "aplicacion": "CHEVROLET CORSA 1.7 D TURBO",
+  "descripcion": "CORSA 1.7 D TURBO",
+  "medidas": {
+   "diam_perno": 27.0,
+   "diam_int": 26.5,
+   "ancho": 24.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.07,
+      30.1
+     ],
+     "texto": "30,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 30.18
+    },
+    {
+     "label": "005",
+     "valor": 30.22
+    },
+    {
+     "label": "010",
+     "valor": 30.34
+    },
+    {
+     "label": "015",
+     "valor": 30.46
+    },
+    {
+     "label": "020",
+     "valor": 30.58
+    },
+    {
+     "label": "030",
+     "valor": 30.82
+    },
+    {
+     "label": "040",
+     "valor": 31.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-116  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-116  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-71",
+  "codigo_fab": "I-71",
+  "marca": "CITROEN",
+  "aplicacion": "CITROEN 3 CV",
+  "descripcion": "3 CV",
+  "medidas": {
+   "diam_perno": 20.0,
+   "diam_int": 19.5,
+   "ancho": 25.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      22.1,
+      22.13
+     ],
+     "texto": "22,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 22.21
+    },
+    {
+     "label": "005",
+     "valor": 22.25
+    },
+    {
+     "label": "010",
+     "valor": 22.37
+    },
+    {
+     "label": "015",
+     "valor": 22.49
+    },
+    {
+     "label": "020",
+     "valor": 22.61
+    },
+    {
+     "label": "030",
+     "valor": 22.85
+    },
+    {
+     "label": "040",
+     "valor": 23.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-071  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-143",
+  "codigo_fab": "I-143",
+  "marca": "CITROEN",
+  "aplicacion": "CITROEN C3 1.4 CDI/ DV4 TD",
+  "descripcion": "C3 1.4 CDI/ DV4 TD",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 20.2
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.08,
+      28.11
+     ],
+     "texto": "28,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 28.19
+    },
+    {
+     "label": "005",
+     "valor": 28.23
+    },
+    {
+     "label": "010",
+     "valor": 28.35
+    },
+    {
+     "label": "015",
+     "valor": 28.47
+    },
+    {
+     "label": "020",
+     "valor": 28.59
+    },
+    {
+     "label": "030",
+     "valor": 28.83
+    },
+    {
+     "label": "040",
+     "valor": 29.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-143  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-143  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-143  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-143X",
+  "codigo_fab": "I-143X",
+  "marca": "CITROEN",
+  "aplicacion": "CITROEN C3 1.4 CDI/ DV4 TD BJE TRAP",
+  "descripcion": "C3 1.4 CDI/ DV4 TD BJE TRAP",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": [
+    14.6,
+    20.2
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.08,
+      28.1
+     ],
+     "texto": "28,08/10"
+    },
+    {
+     "label": "003",
+     "valor": 28.18
+    },
+    {
+     "label": "005",
+     "valor": 28.22
+    },
+    {
+     "label": "010",
+     "valor": 28.34
+    },
+    {
+     "label": "015",
+     "valor": 28.46
+    },
+    {
+     "label": "020",
+     "valor": 28.58
+    },
+    {
+     "label": "030",
+     "valor": 28.82
+    },
+    {
+     "label": "040",
+     "valor": 29.06
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-118",
+  "codigo_fab": "I-118",
+  "marca": "CUMMINS",
+  "aplicacion": "CUMMINS 4/6 B-BT",
+  "descripcion": "4/6 B-BT",
+  "medidas": {
+   "diam_perno": 40.0,
+   "diam_int": 39.5,
+   "ancho": [
+    23.5,
+    38.0
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      43.08,
+      43.11
+     ],
+     "texto": "43,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 43.19
+    },
+    {
+     "label": "005",
+     "valor": 43.23
+    },
+    {
+     "label": "010",
+     "valor": 43.35
+    },
+    {
+     "label": "015",
+     "valor": 43.47
+    },
+    {
+     "label": "020",
+     "valor": 43.59
+    },
+    {
+     "label": "030",
+     "valor": 43.83
+    },
+    {
+     "label": "040",
+     "valor": 44.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-118  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-118  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-118  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-118  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-119",
+  "codigo_fab": "I-119",
+  "marca": "CUMMINS",
+  "aplicacion": "CUMMINS C-CT-CTA 6 CIL.",
+  "descripcion": "C-CT-CTA 6 CIL.",
+  "medidas": {
+   "diam_perno": 45.0,
+   "diam_int": 44.5,
+   "ancho": [
+    24.7,
+    45.0
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      49.08,
+      49.11
+     ],
+     "texto": "49,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 49.19
+    },
+    {
+     "label": "005",
+     "valor": 49.23
+    },
+    {
+     "label": "010",
+     "valor": 49.35
+    },
+    {
+     "label": "015",
+     "valor": 49.47
+    },
+    {
+     "label": "020",
+     "valor": 49.59
+    },
+    {
+     "label": "030",
+     "valor": 49.83
+    },
+    {
+     "label": "040",
+     "valor": 50.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-119  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-119  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-119  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-119  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-21",
+  "codigo_fab": "I-21",
+  "marca": "DEUTZ",
+  "aplicacion": "DEUTZ A/F-A/FL2-3-4/1114-2114",
+  "descripcion": "A/F-A/FL2-3-4/1114-2114",
+  "medidas": {
+   "diam_perno": 45.0,
+   "diam_int": 44.5,
+   "ancho": 39.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      48.05,
+      48.08
+     ],
+     "texto": "48,05/08"
+    },
+    {
+     "label": "003",
+     "valor": 48.16
+    },
+    {
+     "label": "005",
+     "valor": 48.2
+    },
+    {
+     "label": "010",
+     "valor": 48.32
+    },
+    {
+     "label": "015",
+     "valor": 48.44
+    },
+    {
+     "label": "020",
+     "valor": 48.56
+    },
+    {
+     "label": "030",
+     "valor": 48.8
+    },
+    {
+     "label": "040",
+     "valor": 49.04
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-021  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-021  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-021  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-021  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-021  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-24",
+  "codigo_fab": "I-24",
+  "marca": "DEUTZ",
+  "aplicacion": "DEUTZ 514 GRUESO",
+  "descripcion": "514 GRUESO",
+  "medidas": {
+   "diam_perno": 40.0,
+   "diam_int": 39.5,
+   "ancho": 41.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      48.05,
+      48.08
+     ],
+     "texto": "48,05/08"
+    },
+    {
+     "label": "003",
+     "valor": 48.16
+    },
+    {
+     "label": "005",
+     "valor": 48.2
+    },
+    {
+     "label": "010",
+     "valor": 48.32
+    },
+    {
+     "label": "015",
+     "valor": 48.44
+    },
+    {
+     "label": "020",
+     "valor": 48.56
+    },
+    {
+     "label": "030",
+     "valor": 48.8
+    },
+    {
+     "label": "040",
+     "valor": 49.04
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-024  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-024  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-024  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-024  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-28",
+  "codigo_fab": "I-28",
+  "marca": "DEUTZ",
+  "aplicacion": "DEUTZ 514- 1014 FINO",
+  "descripcion": "514- 1014 FINO",
+  "medidas": {
+   "diam_perno": 40.0,
+   "diam_int": 39.5,
+   "ancho": 41.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      43.05,
+      43.08
+     ],
+     "texto": "43,05/08"
+    },
+    {
+     "label": "003",
+     "valor": 43.16
+    },
+    {
+     "label": "005",
+     "valor": 43.2
+    },
+    {
+     "label": "010",
+     "valor": 43.32
+    },
+    {
+     "label": "015",
+     "valor": 43.44
+    },
+    {
+     "label": "020",
+     "valor": 43.56
+    },
+    {
+     "label": "030",
+     "valor": 43.8
+    },
+    {
+     "label": "040",
+     "valor": 44.04
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-028  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-028  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-028  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-028  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-46",
+  "codigo_fab": "I-46",
+  "marca": "DEUTZ",
+  "aplicacion": "DEUTZ BF 6L/F3L-4L-5L-6L 913",
+  "descripcion": "BF 6L/F3L-4L-5L-6L 913",
+  "medidas": {
+   "diam_perno": 35.0,
+   "diam_int": 34.5,
+   "ancho": 33.2
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.08,
+      38.11
+     ],
+     "texto": "38,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 38.19
+    },
+    {
+     "label": "005",
+     "valor": 38.23
+    },
+    {
+     "label": "010",
+     "valor": 38.35
+    },
+    {
+     "label": "015",
+     "valor": 38.47
+    },
+    {
+     "label": "020",
+     "valor": 38.59
+    },
+    {
+     "label": "030",
+     "valor": 38.83
+    },
+    {
+     "label": "040",
+     "valor": 39.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-046  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-046  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-046  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-47",
+  "codigo_fab": "I-47",
+  "marca": "DEUTZ",
+  "aplicacion": "DEUTZ 913 TURBO",
+  "descripcion": "913 TURBO",
+  "medidas": {
+   "diam_perno": 40.0,
+   "diam_int": 39.5,
+   "ancho": 33.2
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      43.08,
+      43.11
+     ],
+     "texto": "43,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 43.19
+    },
+    {
+     "label": "005",
+     "valor": 43.23
+    },
+    {
+     "label": "010",
+     "valor": 43.35
+    },
+    {
+     "label": "015",
+     "valor": 43.47
+    },
+    {
+     "label": "020",
+     "valor": 43.59
+    },
+    {
+     "label": "030",
+     "valor": 43.83
+    },
+    {
+     "label": "040",
+     "valor": 44.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-047  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-047  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-047  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-047  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-156",
+  "codigo_fab": "I-156",
+  "marca": "DEUTZ",
+  "aplicacion": "DEUTZ 1013",
+  "descripcion": "1013",
+  "medidas": {
+   "diam_perno": 42.0,
+   "diam_int": 41.5,
+   "ancho": 29.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      45.59,
+      45.62
+     ],
+     "texto": "45,59/62"
+    },
+    {
+     "label": "003",
+     "valor": 45.7
+    },
+    {
+     "label": "005",
+     "valor": 45.74
+    },
+    {
+     "label": "010",
+     "valor": 45.86
+    },
+    {
+     "label": "015",
+     "valor": 45.98
+    },
+    {
+     "label": "020",
+     "valor": 46.1
+    },
+    {
+     "label": "030",
+     "valor": 46.34
+    },
+    {
+     "label": "040",
+     "valor": 46.58
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-156  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-04",
+  "codigo_fab": "I-04",
+  "marca": "DODGE",
+  "aplicacion": "DODGE 1500",
+  "descripcion": "1500",
+  "medidas": {
+   "diam_perno": 23.8,
+   "diam_int": 23.3,
+   "ancho": 27.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      27.1,
+      27.13
+     ],
+     "texto": "27,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 27.21
+    },
+    {
+     "label": "005",
+     "valor": 27.25
+    },
+    {
+     "label": "010",
+     "valor": 27.37
+    },
+    {
+     "label": "015",
+     "valor": 27.49
+    },
+    {
+     "label": "020",
+     "valor": 27.61
+    },
+    {
+     "label": "030",
+     "valor": 27.85
+    },
+    {
+     "label": "040",
+     "valor": 28.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-004  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-004  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-004  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-004  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-17",
+  "codigo_fab": "I-17",
+  "marca": "FIAT",
+  "aplicacion": "FIAT 1180-1380",
+  "descripcion": "1180-1380",
+  "medidas": {
+   "diam_perno": 34.0,
+   "diam_int": 33.5,
+   "ancho": 34.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.0,
+      38.03
+     ],
+     "texto": "38,00/03"
+    },
+    {
+     "label": "003",
+     "valor": 38.11
+    },
+    {
+     "label": "005",
+     "valor": 38.15
+    },
+    {
+     "label": "010",
+     "valor": 38.27
+    },
+    {
+     "label": "015",
+     "valor": 38.39
+    },
+    {
+     "label": "020",
+     "valor": 38.51
+    },
+    {
+     "label": "030",
+     "valor": 38.75
+    },
+    {
+     "label": "040",
+     "valor": 38.99
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-017  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-017  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-017  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-18",
+  "codigo_fab": "I-18",
+  "marca": "FIAT",
+  "aplicacion": "FIAT CN3/CN4/CP3(400-700)B Largo",
+  "descripcion": "CN3/CN4/CP3(400-700)B Largo",
+  "medidas": {
+   "diam_perno": 40.0,
+   "diam_int": 39.5,
+   "ancho": 36.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      44.08,
+      44.11
+     ],
+     "texto": "44,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 44.19
+    },
+    {
+     "label": "005",
+     "valor": 44.23
+    },
+    {
+     "label": "010",
+     "valor": 44.35
+    },
+    {
+     "label": "015",
+     "valor": 44.47
+    },
+    {
+     "label": "020",
+     "valor": 44.59
+    },
+    {
+     "label": "030",
+     "valor": 44.83
+    },
+    {
+     "label": "040",
+     "valor": 45.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-018  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-018  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-018  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-018  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-20",
+  "codigo_fab": "I-20",
+  "marca": "FIAT",
+  "aplicacion": "FIAT U-25",
+  "descripcion": "U-25",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": 30.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.7,
+      30.73
+     ],
+     "texto": "30,70/73"
+    },
+    {
+     "label": "003",
+     "valor": 30.81
+    },
+    {
+     "label": "005",
+     "valor": 30.85
+    },
+    {
+     "label": "010",
+     "valor": 30.97
+    },
+    {
+     "label": "015",
+     "valor": 31.09
+    },
+    {
+     "label": "020",
+     "valor": 31.21
+    },
+    {
+     "label": "030",
+     "valor": 31.45
+    },
+    {
+     "label": "040",
+     "valor": 31.69
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-020  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-020  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-020  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-020  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-22",
+  "codigo_fab": "I-22",
+  "marca": "FIAT",
+  "aplicacion": "FIAT 55-60 R (6546)",
+  "descripcion": "55-60 R (6546)",
+  "medidas": {
+   "diam_perno": 44.0,
+   "diam_int": 43.5,
+   "ancho": 46.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      48.07,
+      48.1
+     ],
+     "texto": "48,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 48.18
+    },
+    {
+     "label": "005",
+     "valor": 48.22
+    },
+    {
+     "label": "010",
+     "valor": 48.34
+    },
+    {
+     "label": "015",
+     "valor": 48.46
+    },
+    {
+     "label": "020",
+     "valor": 48.58
+    },
+    {
+     "label": "030",
+     "valor": 48.82
+    },
+    {
+     "label": "040",
+     "valor": 49.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-022  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-022  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-022  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-022  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-022  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-23",
+  "codigo_fab": "I-23",
+  "marca": "FIAT",
+  "aplicacion": "FIAT AU 130-150 turbo",
+  "descripcion": "AU 130-150 turbo",
+  "medidas": {
+   "diam_perno": 38.0,
+   "diam_int": 37.5,
+   "ancho": 35.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      42.0,
+      42.03
+     ],
+     "texto": "42,00/03"
+    },
+    {
+     "label": "003",
+     "valor": 42.11
+    },
+    {
+     "label": "005",
+     "valor": 42.15
+    },
+    {
+     "label": "010",
+     "valor": 42.27
+    },
+    {
+     "label": "015",
+     "valor": 42.39
+    },
+    {
+     "label": "020",
+     "valor": 42.51
+    },
+    {
+     "label": "030",
+     "valor": 42.75
+    },
+    {
+     "label": "040",
+     "valor": 42.99
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-023  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-023  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-023  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-023  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-25",
+  "codigo_fab": "I-25",
+  "marca": "FIAT",
+  "aplicacion": "FIAT SOMECA",
+  "descripcion": "SOMECA",
+  "medidas": {
+   "diam_perno": 38.0,
+   "diam_int": 37.5,
+   "ancho": 36.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      43.09,
+      43.12
+     ],
+     "texto": "43,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 43.2
+    },
+    {
+     "label": "005",
+     "valor": 43.24
+    },
+    {
+     "label": "010",
+     "valor": 43.36
+    },
+    {
+     "label": "015",
+     "valor": 43.48
+    },
+    {
+     "label": "020",
+     "valor": 43.6
+    },
+    {
+     "label": "030",
+     "valor": 43.84
+    },
+    {
+     "label": "040",
+     "valor": 44.08
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-025  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-025  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-025  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-025  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-025  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "B I I-025  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-32",
+  "codigo_fab": "I-32",
+  "marca": "FIAT",
+  "aplicacion": "FIAT 750",
+  "descripcion": "750",
+  "medidas": {
+   "diam_perno": 19.99,
+   "diam_int": 19.5,
+   "ancho": 21.4
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      22.14,
+      22.17
+     ],
+     "texto": "22,14/17"
+    },
+    {
+     "label": "003",
+     "valor": 22.25
+    },
+    {
+     "label": "005",
+     "valor": 22.29
+    },
+    {
+     "label": "010",
+     "valor": 22.41
+    },
+    {
+     "label": "015",
+     "valor": 22.53
+    },
+    {
+     "label": "020",
+     "valor": 22.65
+    },
+    {
+     "label": "030",
+     "valor": 22.89
+    },
+    {
+     "label": "040",
+     "valor": 23.13
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-032  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-40",
+  "codigo_fab": "I-40",
+  "marca": "FIAT",
+  "aplicacion": "FIAT 619 N1bje largo( 221A)",
+  "descripcion": "619 N1bje largo( 221A)",
+  "medidas": {
+   "diam_perno": 48.0,
+   "diam_int": 47.5,
+   "ancho": 49.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      53.03,
+      53.06
+     ],
+     "texto": "53,03/06"
+    },
+    {
+     "label": "003",
+     "valor": 53.14
+    },
+    {
+     "label": "005",
+     "valor": 53.18
+    },
+    {
+     "label": "010",
+     "valor": 53.3
+    },
+    {
+     "label": "015",
+     "valor": 53.42
+    },
+    {
+     "label": "020",
+     "valor": 53.54
+    },
+    {
+     "label": "030",
+     "valor": 53.78
+    },
+    {
+     "label": "040",
+     "valor": 54.02
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-040  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-040  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-040  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-040  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "B I I-040  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-42",
+  "codigo_fab": "I-42",
+  "marca": "FIAT",
+  "aplicacion": "FIAT TIPO 1.4/1.6/1.3 D/ 128",
+  "descripcion": "TIPO 1.4/1.6/1.3 D/ 128",
+  "medidas": {
+   "diam_perno": 22.0,
+   "diam_int": 21.5,
+   "ancho": 25.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      24.08,
+      24.11
+     ],
+     "texto": "24,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 24.19
+    },
+    {
+     "label": "005",
+     "valor": 24.23
+    },
+    {
+     "label": "010",
+     "valor": 24.35
+    },
+    {
+     "label": "015",
+     "valor": 24.47
+    },
+    {
+     "label": "020",
+     "valor": 24.59
+    },
+    {
+     "label": "030",
+     "valor": 24.83
+    },
+    {
+     "label": "040",
+     "valor": 25.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-042  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-042  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-042  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-59",
+  "codigo_fab": "I-59",
+  "marca": "FIAT",
+  "aplicacion": "FIAT 1.7 TURBO DIESEL",
+  "descripcion": "1.7 TURBO DIESEL",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 25.3
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.09,
+      28.12
+     ],
+     "texto": "28,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 28.2
+    },
+    {
+     "label": "005",
+     "valor": 28.24
+    },
+    {
+     "label": "010",
+     "valor": 28.36
+    },
+    {
+     "label": "015",
+     "valor": 28.48
+    },
+    {
+     "label": "020",
+     "valor": 28.6
+    },
+    {
+     "label": "030",
+     "valor": 28.84
+    },
+    {
+     "label": "040",
+     "valor": 29.08
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-059  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-059  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-059  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-059  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-73",
+  "codigo_fab": "I-73",
+  "marca": "FIAT",
+  "aplicacion": "FIAT 1500",
+  "descripcion": "1500",
+  "medidas": {
+   "diam_perno": 21.99,
+   "diam_int": 21.5,
+   "ancho": 22.4
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      24.09,
+      24.12
+     ],
+     "texto": "24,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 24.2
+    },
+    {
+     "label": "005",
+     "valor": 24.24
+    },
+    {
+     "label": "010",
+     "valor": 24.36
+    },
+    {
+     "label": "015",
+     "valor": 24.48
+    },
+    {
+     "label": "020",
+     "valor": 24.6
+    },
+    {
+     "label": "030",
+     "valor": 24.84
+    },
+    {
+     "label": "040",
+     "valor": 25.08
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-073  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-79",
+  "codigo_fab": "I-79",
+  "marca": "FIAT",
+  "aplicacion": "FIAT DUCATO 2.5/IVECO 8140.27",
+  "descripcion": "DUCATO 2.5/IVECO 8140.27",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": 30.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.0,
+      35.03
+     ],
+     "texto": "35,00/03"
+    },
+    {
+     "label": "003",
+     "valor": 35.11
+    },
+    {
+     "label": "005",
+     "valor": 35.15
+    },
+    {
+     "label": "010",
+     "valor": 35.27
+    },
+    {
+     "label": "015",
+     "valor": 35.39
+    },
+    {
+     "label": "020",
+     "valor": 35.51
+    },
+    {
+     "label": "030",
+     "valor": 35.75
+    },
+    {
+     "label": "040",
+     "valor": 35.99
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-079  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-079  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-101",
+  "codigo_fab": "I-101",
+  "marca": "FIAT",
+  "aplicacion": "FIAT DUCATO 2.5  TRAPEZOIDAL",
+  "descripcion": "DUCATO 2.5  TRAPEZOIDAL",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": [
+    20.8,
+    30.0
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.0,
+      35.03
+     ],
+     "texto": "35,00/03"
+    },
+    {
+     "label": "003",
+     "valor": 35.11
+    },
+    {
+     "label": "005",
+     "valor": 35.15
+    },
+    {
+     "label": "010",
+     "valor": 35.27
+    },
+    {
+     "label": "015",
+     "valor": 35.39
+    },
+    {
+     "label": "020",
+     "valor": 35.51
+    },
+    {
+     "label": "030",
+     "valor": 35.75
+    },
+    {
+     "label": "040",
+     "valor": 35.99
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-92",
+  "codigo_fab": "I-92",
+  "marca": "FIAT",
+  "aplicacion": "FIAT 1.7 DIESEL",
+  "descripcion": "1.7 DIESEL",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 25.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      27.1,
+      27.13
+     ],
+     "texto": "27,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 27.21
+    },
+    {
+     "label": "005",
+     "valor": 27.25
+    },
+    {
+     "label": "010",
+     "valor": 27.37
+    },
+    {
+     "label": "015",
+     "valor": 27.49
+    },
+    {
+     "label": "020",
+     "valor": 27.61
+    },
+    {
+     "label": "030",
+     "valor": 27.85
+    },
+    {
+     "label": "040",
+     "valor": 28.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-092  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-092  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-092  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-092  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-103",
+  "codigo_fab": "I-103",
+  "marca": "FIAT",
+  "aplicacion": "FIAT MAREA 1.9 JTD",
+  "descripcion": "MAREA 1.9 JTD",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 21.6
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.98,
+      29.01
+     ],
+     "texto": "28,98/29,01"
+    },
+    {
+     "label": "003",
+     "valor": 29.09
+    },
+    {
+     "label": "005",
+     "valor": 29.13
+    },
+    {
+     "label": "010",
+     "valor": 29.25
+    },
+    {
+     "label": "015",
+     "valor": 29.37
+    },
+    {
+     "label": "020",
+     "valor": 29.49
+    },
+    {
+     "label": "030",
+     "valor": 29.73
+    },
+    {
+     "label": "040",
+     "valor": 29.97
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-103  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-105",
+  "codigo_fab": "I-105",
+  "marca": "FIAT",
+  "aplicacion": "FIAT EURO CARGO",
+  "descripcion": "EURO CARGO",
+  "medidas": {
+   "diam_perno": 38.0,
+   "diam_int": 37.5,
+   "ancho": [
+    28.6,
+    34.4
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      41.94,
+      41.97
+     ],
+     "texto": "41,94/97"
+    },
+    {
+     "label": "003",
+     "valor": 42.05
+    },
+    {
+     "label": "005",
+     "valor": 42.09
+    },
+    {
+     "label": "010",
+     "valor": 42.21
+    },
+    {
+     "label": "015",
+     "valor": 42.33
+    },
+    {
+     "label": "020",
+     "valor": 42.45
+    },
+    {
+     "label": "030",
+     "valor": 42.69
+    },
+    {
+     "label": "040",
+     "valor": 42.93
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-110",
+  "codigo_fab": "I-110",
+  "marca": "FIAT",
+  "aplicacion": "FIAT 1580 TURBO",
+  "descripcion": "1580 TURBO",
+  "medidas": {
+   "diam_perno": 42.0,
+   "diam_int": 41.5,
+   "ancho": 38.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      46.08,
+      46.11
+     ],
+     "texto": "46,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 46.19
+    },
+    {
+     "label": "005",
+     "valor": 46.23
+    },
+    {
+     "label": "010",
+     "valor": 46.35
+    },
+    {
+     "label": "015",
+     "valor": 46.47
+    },
+    {
+     "label": "020",
+     "valor": 46.59
+    },
+    {
+     "label": "030",
+     "valor": 46.83
+    },
+    {
+     "label": "040",
+     "valor": 47.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-110  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-110  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-110  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-110  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-111",
+  "codigo_fab": "I-111",
+  "marca": "FIAT",
+  "aplicacion": "FIAT PALIO Perno 25",
+  "descripcion": "PALIO Perno 25",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 25.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.04,
+      28.07
+     ],
+     "texto": "28,04/07"
+    },
+    {
+     "label": "003",
+     "valor": 28.15
+    },
+    {
+     "label": "005",
+     "valor": 28.19
+    },
+    {
+     "label": "010",
+     "valor": 28.31
+    },
+    {
+     "label": "015",
+     "valor": 28.43
+    },
+    {
+     "label": "020",
+     "valor": 28.55
+    },
+    {
+     "label": "030",
+     "valor": 28.79
+    },
+    {
+     "label": "040",
+     "valor": 29.03
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-120",
+  "codigo_fab": "I-120",
+  "marca": "FIAT",
+  "aplicacion": "FIAT DUCATO 1.9",
+  "descripcion": "DUCATO 1.9",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 26.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.58,
+      28.61
+     ],
+     "texto": "28,58/61"
+    },
+    {
+     "label": "003",
+     "valor": 28.69
+    },
+    {
+     "label": "005",
+     "valor": 28.73
+    },
+    {
+     "label": "010",
+     "valor": 28.85
+    },
+    {
+     "label": "015",
+     "valor": 28.97
+    },
+    {
+     "label": "020",
+     "valor": 29.09
+    },
+    {
+     "label": "030",
+     "valor": 29.33
+    },
+    {
+     "label": "040",
+     "valor": 29.57
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-136",
+  "codigo_fab": "I-136",
+  "marca": "FIAT",
+  "aplicacion": "FIAT DUCATO 2.8",
+  "descripcion": "DUCATO 2.8",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": 30.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.54,
+      35.56
+     ],
+     "texto": "35,54/56"
+    },
+    {
+     "label": "003",
+     "valor": 35.64
+    },
+    {
+     "label": "005",
+     "valor": 35.68
+    },
+    {
+     "label": "010",
+     "valor": 35.8
+    },
+    {
+     "label": "015",
+     "valor": 35.92
+    },
+    {
+     "label": "020",
+     "valor": 36.04
+    },
+    {
+     "label": "030",
+     "valor": 36.28
+    },
+    {
+     "label": "040",
+     "valor": 36.52
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-136X",
+  "codigo_fab": "I-136X",
+  "marca": "FIAT",
+  "aplicacion": "FIAT DUCATO 2.8 TRAPEZOIDAL",
+  "descripcion": "DUCATO 2.8 TRAPEZOIDAL",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": [
+    21.0,
+    30.3
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.54,
+      35.56
+     ],
+     "texto": "35,54/56"
+    },
+    {
+     "label": "003",
+     "valor": 35.64
+    },
+    {
+     "label": "005",
+     "valor": 35.68
+    },
+    {
+     "label": "010",
+     "valor": 35.8
+    },
+    {
+     "label": "015",
+     "valor": 35.92
+    },
+    {
+     "label": "020",
+     "valor": 36.04
+    },
+    {
+     "label": "030",
+     "valor": 36.28
+    },
+    {
+     "label": "040",
+     "valor": 36.52
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-136X 003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-136X 005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-136X STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-159",
+  "codigo_fab": "I-159",
+  "marca": "FIAT",
+  "aplicacion": "FIAT DUCATO 2.3 TD MULTIJET 16 V",
+  "descripcion": "DUCATO 2.3 TD MULTIJET 16 V",
+  "medidas": {
+   "diam_perno": 31.0,
+   "diam_int": 30.5,
+   "ancho": [
+    18.0,
+    29.0
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      34.58,
+      34.61
+     ],
+     "texto": "34,58/61"
+    },
+    {
+     "label": "003",
+     "valor": 34.69
+    },
+    {
+     "label": "005",
+     "valor": 34.73
+    },
+    {
+     "label": "010",
+     "valor": 34.85
+    },
+    {
+     "label": "015",
+     "valor": 34.97
+    },
+    {
+     "label": "020",
+     "valor": 35.09
+    },
+    {
+     "label": "030",
+     "valor": 35.33
+    },
+    {
+     "label": "040",
+     "valor": 35.57
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-159  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-154",
+  "codigo_fab": "I-154",
+  "marca": "FIAT",
+  "aplicacion": "FIAT 1.3 16V DIESEL",
+  "descripcion": "1.3 16V DIESEL",
+  "medidas": {
+   "diam_perno": 23.0,
+   "diam_int": 22.5,
+   "ancho": [
+    13.6,
+    22.6
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      25.88,
+      25.91
+     ],
+     "texto": "25,88/91"
+    },
+    {
+     "label": "003",
+     "valor": 25.99
+    },
+    {
+     "label": "005",
+     "valor": 26.03
+    },
+    {
+     "label": "010",
+     "valor": 26.15
+    },
+    {
+     "label": "015",
+     "valor": 26.27
+    },
+    {
+     "label": "020",
+     "valor": 26.39
+    },
+    {
+     "label": "030",
+     "valor": 26.63
+    },
+    {
+     "label": "040",
+     "valor": 26.87
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-154  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-55",
+  "codigo_fab": "I-55",
+  "marca": "FORD",
+  "aplicacion": "FORD TRANSIT 2.5",
+  "descripcion": "TRANSIT 2.5",
+  "medidas": {
+   "diam_perno": 29.0,
+   "diam_int": 28.5,
+   "ancho": 31.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      32.02,
+      32.05
+     ],
+     "texto": "32,02/05"
+    },
+    {
+     "label": "003",
+     "valor": 32.13
+    },
+    {
+     "label": "005",
+     "valor": 32.17
+    },
+    {
+     "label": "010",
+     "valor": 32.29
+    },
+    {
+     "label": "015",
+     "valor": 32.41
+    },
+    {
+     "label": "020",
+     "valor": 32.53
+    },
+    {
+     "label": "030",
+     "valor": 32.77
+    },
+    {
+     "label": "040",
+     "valor": 33.01
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-055  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-055  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-63",
+  "codigo_fab": "I-63",
+  "marca": "FORD",
+  "aplicacion": "FORD DIESEL 1.8",
+  "descripcion": "DIESEL 1.8",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 26.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.53,
+      28.56
+     ],
+     "texto": "28,53/56"
+    },
+    {
+     "label": "003",
+     "valor": 28.64
+    },
+    {
+     "label": "005",
+     "valor": 28.68
+    },
+    {
+     "label": "010",
+     "valor": 28.8
+    },
+    {
+     "label": "015",
+     "valor": 28.92
+    },
+    {
+     "label": "020",
+     "valor": 29.04
+    },
+    {
+     "label": "030",
+     "valor": 29.28
+    },
+    {
+     "label": "040",
+     "valor": 29.52
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-063  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-063  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-063  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-96",
+  "codigo_fab": "I-96",
+  "marca": "FORD",
+  "aplicacion": "FORD F100 (BUJE DE BRONCE)",
+  "descripcion": "F100 (BUJE DE BRONCE)",
+  "medidas": {
+   "diam_perno": 23.16,
+   "diam_int": 22.8,
+   "ancho": 32.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      24.79,
+      24.82
+     ],
+     "texto": "24,79/82"
+    },
+    {
+     "label": "003",
+     "valor": 24.9
+    },
+    {
+     "label": "005",
+     "valor": 24.94
+    },
+    {
+     "label": "010",
+     "valor": 25.06
+    },
+    {
+     "label": "015",
+     "valor": 25.18
+    },
+    {
+     "label": "020",
+     "valor": 25.3
+    },
+    {
+     "label": "030",
+     "valor": 25.54
+    },
+    {
+     "label": "040",
+     "valor": 25.78
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-096  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-143",
+  "codigo_fab": "I-143",
+  "marca": "FORD",
+  "aplicacion": "FORD VER CITROEN",
+  "descripcion": "VER CITROEN",
+  "medidas": {
+   "diam_perno": null,
+   "diam_int": null,
+   "ancho": null
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": []
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-143  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-143  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-143  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-158",
+  "codigo_fab": "I-158",
+  "marca": "FORD",
+  "aplicacion": "FORD 5000",
+  "descripcion": "5000",
+  "medidas": {
+   "diam_perno": 38.1,
+   "diam_int": 37.6,
+   "ancho": 41.15
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      41.36,
+      41.39
+     ],
+     "texto": "41,36/39"
+    },
+    {
+     "label": "003",
+     "valor": 41.47
+    },
+    {
+     "label": "005",
+     "valor": 41.51
+    },
+    {
+     "label": "010",
+     "valor": 41.63
+    },
+    {
+     "label": "015",
+     "valor": 41.75
+    },
+    {
+     "label": "020",
+     "valor": 41.87
+    },
+    {
+     "label": "030",
+     "valor": 42.11
+    },
+    {
+     "label": "040",
+     "valor": 42.35
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-158  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-164",
+  "codigo_fab": "I-164",
+  "marca": "FORD",
+  "aplicacion": "FORD FORD FOCUS/MONDEO 1.8TD",
+  "descripcion": "FORD FOCUS/MONDEO 1.8TD",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": [
+    15.5,
+    25.0
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      31.07,
+      31.1
+     ],
+     "texto": "31,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 31.18
+    },
+    {
+     "label": "005",
+     "valor": 31.22
+    },
+    {
+     "label": "010",
+     "valor": 31.34
+    },
+    {
+     "label": "015",
+     "valor": 31.46
+    },
+    {
+     "label": "020",
+     "valor": 31.58
+    },
+    {
+     "label": "030",
+     "valor": 31.82
+    },
+    {
+     "label": "040",
+     "valor": 32.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-164  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-167",
+  "codigo_fab": "I-167",
+  "marca": "FORD",
+  "aplicacion": "FORD PUMA 2.2 TDCI",
+  "descripcion": "PUMA 2.2 TDCI",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.5,
+   "ancho": 30.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      32.08,
+      32.1
+     ],
+     "texto": "32,08/10"
+    },
+    {
+     "label": "003",
+     "valor": 32.18
+    },
+    {
+     "label": "005",
+     "valor": 32.22
+    },
+    {
+     "label": "010",
+     "valor": 32.34
+    },
+    {
+     "label": "015",
+     "valor": 32.46
+    },
+    {
+     "label": "020",
+     "valor": 32.58
+    },
+    {
+     "label": "030",
+     "valor": 32.82
+    },
+    {
+     "label": "040",
+     "valor": 33.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-167  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-167  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-167  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-168",
+  "codigo_fab": "I-168",
+  "marca": "FORD",
+  "aplicacion": "FORD PUMA 3.2 TDCI",
+  "descripcion": "PUMA 3.2 TDCI",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": 30.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.08,
+      35.1
+     ],
+     "texto": "35,08/10"
+    },
+    {
+     "label": "003",
+     "valor": 35.18
+    },
+    {
+     "label": "005",
+     "valor": 35.22
+    },
+    {
+     "label": "010",
+     "valor": 35.34
+    },
+    {
+     "label": "015",
+     "valor": 35.46
+    },
+    {
+     "label": "020",
+     "valor": 35.58
+    },
+    {
+     "label": "030",
+     "valor": 35.82
+    },
+    {
+     "label": "040",
+     "valor": 36.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-168  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-168  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-168  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-170",
+  "codigo_fab": "I-170",
+  "marca": "FORD",
+  "aplicacion": "FORD DURATEC 2.5 iVCT",
+  "descripcion": "DURATEC 2.5 iVCT",
+  "medidas": {
+   "diam_perno": 20.0,
+   "diam_int": 19.5,
+   "ancho": 18.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      22.1,
+      22.13
+     ],
+     "texto": "22,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 22.21
+    },
+    {
+     "label": "005",
+     "valor": 22.25
+    },
+    {
+     "label": "010",
+     "valor": 22.37
+    },
+    {
+     "label": "015",
+     "valor": 22.49
+    },
+    {
+     "label": "020",
+     "valor": 22.61
+    },
+    {
+     "label": "030",
+     "valor": 22.85
+    },
+    {
+     "label": "040",
+     "valor": 23.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-170  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-170  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-1087",
+  "codigo_fab": "I-1087",
+  "marca": "GM",
+  "aplicacion": "GM 71 BALANCEADOR",
+  "descripcion": "71 BALANCEADOR",
+  "medidas": {
+   "diam_perno": 36.0,
+   "diam_int": 35.5,
+   "ancho": 27.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      42.88,
+      42.9
+     ],
+     "texto": "42,88/90"
+    },
+    {
+     "label": "003",
+     "valor": 42.98
+    },
+    {
+     "label": "005",
+     "valor": 43.02
+    },
+    {
+     "label": "010",
+     "valor": 43.14
+    },
+    {
+     "label": "015",
+     "valor": 43.26
+    },
+    {
+     "label": "020",
+     "valor": 43.38
+    },
+    {
+     "label": "030",
+     "valor": 43.62
+    },
+    {
+     "label": "040",
+     "valor": 43.86
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-26",
+  "codigo_fab": "I-26",
+  "marca": "HANOMAG",
+  "aplicacion": "HANOMAG R-55",
+  "descripcion": "R-55",
+  "medidas": {
+   "diam_perno": 35.0,
+   "diam_int": 34.5,
+   "ancho": 42.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      44.05,
+      44.08
+     ],
+     "texto": "44,05/08"
+    },
+    {
+     "label": "003",
+     "valor": 44.16
+    },
+    {
+     "label": "005",
+     "valor": 44.2
+    },
+    {
+     "label": "010",
+     "valor": 44.32
+    },
+    {
+     "label": "015",
+     "valor": 44.44
+    },
+    {
+     "label": "020",
+     "valor": 44.56
+    },
+    {
+     "label": "030",
+     "valor": 44.8
+    },
+    {
+     "label": "040",
+     "valor": 45.04
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-026  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-026  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-026  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-66",
+  "codigo_fab": "I-66",
+  "marca": "HANOMAG",
+  "aplicacion": "HANOMAG R-57",
+  "descripcion": "R-57",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.5,
+   "ancho": 31.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      36.08,
+      36.11
+     ],
+     "texto": "36,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 36.19
+    },
+    {
+     "label": "005",
+     "valor": 36.23
+    },
+    {
+     "label": "010",
+     "valor": 36.35
+    },
+    {
+     "label": "015",
+     "valor": 36.47
+    },
+    {
+     "label": "020",
+     "valor": 36.59
+    },
+    {
+     "label": "030",
+     "valor": 36.83
+    },
+    {
+     "label": "040",
+     "valor": 37.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-066  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-066  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-70",
+  "codigo_fab": "I-70",
+  "marca": "HANOMAG",
+  "aplicacion": "HANOMAG R35-40",
+  "descripcion": "R35-40",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.6,
+   "ancho": 33.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.15,
+      38.18
+     ],
+     "texto": "38,15/18"
+    },
+    {
+     "label": "003",
+     "valor": 38.26
+    },
+    {
+     "label": "005",
+     "valor": 38.3
+    },
+    {
+     "label": "010",
+     "valor": 38.42
+    },
+    {
+     "label": "015",
+     "valor": 38.54
+    },
+    {
+     "label": "020",
+     "valor": 38.66
+    },
+    {
+     "label": "030",
+     "valor": 38.9
+    },
+    {
+     "label": "040",
+     "valor": 39.14
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-070  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-070  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-070  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-070  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "B I I-070  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-05",
+  "codigo_fab": "I-05",
+  "marca": "IKA",
+  "aplicacion": "IKA OHC 181-230(bje de bronce)",
+  "descripcion": "OHC 181-230(bje de bronce)",
+  "medidas": {
+   "diam_perno": 21.85,
+   "diam_int": 21.5,
+   "ancho": 26.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      23.39,
+      23.42
+     ],
+     "texto": "23,39/42"
+    },
+    {
+     "label": "003",
+     "valor": 23.5
+    },
+    {
+     "label": "005",
+     "valor": 23.54
+    },
+    {
+     "label": "010",
+     "valor": 23.66
+    },
+    {
+     "label": "015",
+     "valor": 23.78
+    },
+    {
+     "label": "020",
+     "valor": 23.9
+    },
+    {
+     "label": "030",
+     "valor": 24.14
+    },
+    {
+     "label": "040",
+     "valor": 24.38
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-005  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-69",
+  "codigo_fab": "I-69",
+  "marca": "IKA",
+  "aplicacion": "IKA TORNADO 7 BANCADAS",
+  "descripcion": "TORNADO 7 BANCADAS",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 28.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      26.49,
+      26.52
+     ],
+     "texto": "26,49/52"
+    },
+    {
+     "label": "003",
+     "valor": 26.6
+    },
+    {
+     "label": "005",
+     "valor": 26.64
+    },
+    {
+     "label": "010",
+     "valor": 26.76
+    },
+    {
+     "label": "015",
+     "valor": 26.88
+    },
+    {
+     "label": "020",
+     "valor": 27.0
+    },
+    {
+     "label": "030",
+     "valor": 27.24
+    },
+    {
+     "label": "040",
+     "valor": 27.48
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-069  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-30",
+  "codigo_fab": "I-30",
+  "marca": "INDENOR",
+  "aplicacion": "INDENOR XD4.88",
+  "descripcion": "XD4.88",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": 29.7
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      31.06,
+      31.09
+     ],
+     "texto": "31,06/09"
+    },
+    {
+     "label": "003",
+     "valor": 31.17
+    },
+    {
+     "label": "005",
+     "valor": 31.21
+    },
+    {
+     "label": "010",
+     "valor": 31.33
+    },
+    {
+     "label": "015",
+     "valor": 31.45
+    },
+    {
+     "label": "020",
+     "valor": 31.57
+    },
+    {
+     "label": "030",
+     "valor": 31.81
+    },
+    {
+     "label": "040",
+     "valor": 32.05
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-030  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-030  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-030  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-030  015",
+    "medida": "015"
+   },
+   {
+    "codigo": "B I I-030  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-030  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "B I I-030  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "B I I-030  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-89",
+  "codigo_fab": "I-89",
+  "marca": "INDENOR",
+  "aplicacion": "INDENOR XD2/3",
+  "descripcion": "XD2/3",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.7,
+   "ancho": 29.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      33.1,
+      33.13
+     ],
+     "texto": "33,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 33.21
+    },
+    {
+     "label": "005",
+     "valor": 33.25
+    },
+    {
+     "label": "010",
+     "valor": 33.37
+    },
+    {
+     "label": "015",
+     "valor": 33.49
+    },
+    {
+     "label": "020",
+     "valor": 33.61
+    },
+    {
+     "label": "030",
+     "valor": 33.85
+    },
+    {
+     "label": "040",
+     "valor": 34.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-089  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-089  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-089  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-089  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-089  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-90",
+  "codigo_fab": "I-90",
+  "marca": "INDENOR",
+  "aplicacion": "INDENOR XD3 TURBO",
+  "descripcion": "XD3 TURBO",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": 29.8
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.1,
+      35.13
+     ],
+     "texto": "35,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 35.21
+    },
+    {
+     "label": "005",
+     "valor": 35.25
+    },
+    {
+     "label": "010",
+     "valor": 35.37
+    },
+    {
+     "label": "015",
+     "valor": 35.49
+    },
+    {
+     "label": "020",
+     "valor": 35.61
+    },
+    {
+     "label": "030",
+     "valor": 35.85
+    },
+    {
+     "label": "040",
+     "valor": 36.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-090  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-090  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-82",
+  "codigo_fab": "I-82",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU 4JG2 2.8/4JB1 3.1 TURBO",
+  "descripcion": "4JG2 2.8/4JB1 3.1 TURBO",
+  "medidas": {
+   "diam_perno": 34.0,
+   "diam_int": 33.5,
+   "ancho": 38.4
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      37.13,
+      37.16
+     ],
+     "texto": "37,13/16"
+    },
+    {
+     "label": "003",
+     "valor": 37.24
+    },
+    {
+     "label": "005",
+     "valor": 37.28
+    },
+    {
+     "label": "010",
+     "valor": 37.4
+    },
+    {
+     "label": "015",
+     "valor": 37.52
+    },
+    {
+     "label": "020",
+     "valor": 37.64
+    },
+    {
+     "label": "030",
+     "valor": 37.88
+    },
+    {
+     "label": "040",
+     "valor": 38.12
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-082  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-082  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-082  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-113",
+  "codigo_fab": "I-113",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU C220-C2210-DL201",
+  "descripcion": "C220-C2210-DL201",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 34.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.14,
+      28.17
+     ],
+     "texto": "28,14/17"
+    },
+    {
+     "label": "003",
+     "valor": 28.25
+    },
+    {
+     "label": "005",
+     "valor": 28.29
+    },
+    {
+     "label": "010",
+     "valor": 28.41
+    },
+    {
+     "label": "015",
+     "valor": 28.53
+    },
+    {
+     "label": "020",
+     "valor": 28.65
+    },
+    {
+     "label": "030",
+     "valor": 28.89
+    },
+    {
+     "label": "040",
+     "valor": 29.13
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-113  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-115",
+  "codigo_fab": "I-115",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU 4EE1/4EC1T",
+  "descripcion": "4EE1/4EC1T",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 24.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.15,
+      28.17
+     ],
+     "texto": "28,15/17"
+    },
+    {
+     "label": "003",
+     "valor": 28.25
+    },
+    {
+     "label": "005",
+     "valor": 28.29
+    },
+    {
+     "label": "010",
+     "valor": 28.41
+    },
+    {
+     "label": "015",
+     "valor": 28.53
+    },
+    {
+     "label": "020",
+     "valor": 28.65
+    },
+    {
+     "label": "030",
+     "valor": 28.89
+    },
+    {
+     "label": "040",
+     "valor": 29.13
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-115  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-116",
+  "codigo_fab": "I-116",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU XD17DT",
+  "descripcion": "XD17DT",
+  "medidas": {
+   "diam_perno": 27.0,
+   "diam_int": 26.5,
+   "ancho": 24.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.07,
+      30.09
+     ],
+     "texto": "30,07/09"
+    },
+    {
+     "label": "003",
+     "valor": 30.17
+    },
+    {
+     "label": "005",
+     "valor": 30.21
+    },
+    {
+     "label": "010",
+     "valor": 30.33
+    },
+    {
+     "label": "015",
+     "valor": 30.45
+    },
+    {
+     "label": "020",
+     "valor": 30.57
+    },
+    {
+     "label": "030",
+     "valor": 30.81
+    },
+    {
+     "label": "040",
+     "valor": 31.05
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-116  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-116  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-123",
+  "codigo_fab": "I-123",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU 4FA1-4FB1-4FC1-4FE1",
+  "descripcion": "4FA1-4FB1-4FC1-4FE1",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 26.75
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.08,
+      28.11
+     ],
+     "texto": "28,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 28.19
+    },
+    {
+     "label": "005",
+     "valor": 28.23
+    },
+    {
+     "label": "010",
+     "valor": 28.35
+    },
+    {
+     "label": "015",
+     "valor": 28.47
+    },
+    {
+     "label": "020",
+     "valor": 28.59
+    },
+    {
+     "label": "030",
+     "valor": 28.83
+    },
+    {
+     "label": "040",
+     "valor": 29.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-123  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-125",
+  "codigo_fab": "I-125",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU 4HF1",
+  "descripcion": "4HF1",
+  "medidas": {
+   "diam_perno": 36.0,
+   "diam_int": 35.5,
+   "ancho": 41.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      40.1,
+      40.13
+     ],
+     "texto": "40,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 40.21
+    },
+    {
+     "label": "005",
+     "valor": 40.25
+    },
+    {
+     "label": "010",
+     "valor": 40.37
+    },
+    {
+     "label": "015",
+     "valor": 40.49
+    },
+    {
+     "label": "020",
+     "valor": 40.61
+    },
+    {
+     "label": "030",
+     "valor": 40.85
+    },
+    {
+     "label": "040",
+     "valor": 41.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-125  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-133",
+  "codigo_fab": "I-133",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU 4BD1-6BB1-GBD1",
+  "descripcion": "4BD1-6BB1-GBD1",
+  "medidas": {
+   "diam_perno": 35.0,
+   "diam_int": 34.5,
+   "ancho": 37.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.07,
+      38.1
+     ],
+     "texto": "38,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 38.18
+    },
+    {
+     "label": "005",
+     "valor": 38.22
+    },
+    {
+     "label": "010",
+     "valor": 38.34
+    },
+    {
+     "label": "015",
+     "valor": 38.46
+    },
+    {
+     "label": "020",
+     "valor": 38.58
+    },
+    {
+     "label": "030",
+     "valor": 38.82
+    },
+    {
+     "label": "040",
+     "valor": 39.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-133  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-135",
+  "codigo_fab": "I-135",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU 4JA1-4JB1-4JC1-4JD1",
+  "descripcion": "4JA1-4JB1-4JC1-4JD1",
+  "medidas": {
+   "diam_perno": 31.0,
+   "diam_int": 30.5,
+   "ancho": 33.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      34.18,
+      34.2
+     ],
+     "texto": "34,18/20"
+    },
+    {
+     "label": "003",
+     "valor": 34.28
+    },
+    {
+     "label": "005",
+     "valor": 34.32
+    },
+    {
+     "label": "010",
+     "valor": 34.44
+    },
+    {
+     "label": "015",
+     "valor": 34.56
+    },
+    {
+     "label": "020",
+     "valor": 34.68
+    },
+    {
+     "label": "030",
+     "valor": 34.92
+    },
+    {
+     "label": "040",
+     "valor": 35.16
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-135  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-135  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-135  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-135  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-141",
+  "codigo_fab": "I-141",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU C190",
+  "descripcion": "C190",
+  "medidas": {
+   "diam_perno": 27.0,
+   "diam_int": 26.5,
+   "ancho": 27.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.09,
+      30.11
+     ],
+     "texto": "30,09/11"
+    },
+    {
+     "label": "003",
+     "valor": 30.19
+    },
+    {
+     "label": "005",
+     "valor": 30.23
+    },
+    {
+     "label": "010",
+     "valor": 30.35
+    },
+    {
+     "label": "015",
+     "valor": 30.47
+    },
+    {
+     "label": "020",
+     "valor": 30.59
+    },
+    {
+     "label": "030",
+     "valor": 30.83
+    },
+    {
+     "label": "040",
+     "valor": 31.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-141  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-141  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-142",
+  "codigo_fab": "I-142",
+  "marca": "ISUZU",
+  "aplicacion": "ISUZU C190-C223-C223T",
+  "descripcion": "C190-C223-C223T",
+  "medidas": {
+   "diam_perno": 27.0,
+   "diam_int": 26.5,
+   "ancho": 30.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.09,
+      30.11
+     ],
+     "texto": "30,09/11"
+    },
+    {
+     "label": "003",
+     "valor": 30.19
+    },
+    {
+     "label": "005",
+     "valor": 30.23
+    },
+    {
+     "label": "010",
+     "valor": 30.35
+    },
+    {
+     "label": "015",
+     "valor": 30.47
+    },
+    {
+     "label": "020",
+     "valor": 30.59
+    },
+    {
+     "label": "030",
+     "valor": 30.83
+    },
+    {
+     "label": "040",
+     "valor": 31.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-142  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-142  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-15",
+  "codigo_fab": "I-15",
+  "marca": "JOHN DEERE",
+  "aplicacion": "JOHN DEERE 730",
+  "descripcion": "730",
+  "medidas": {
+   "diam_perno": 59.8,
+   "diam_int": 59.3,
+   "ancho": 52.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      68.37,
+      68.4
+     ],
+     "texto": "68,37/40"
+    },
+    {
+     "label": "003",
+     "valor": 68.48
+    },
+    {
+     "label": "005",
+     "valor": 68.52
+    },
+    {
+     "label": "010",
+     "valor": 68.64
+    },
+    {
+     "label": "015",
+     "valor": 68.76
+    },
+    {
+     "label": "020",
+     "valor": 68.88
+    },
+    {
+     "label": "030",
+     "valor": 69.12
+    },
+    {
+     "label": "040",
+     "valor": 69.36
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-015  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-015  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-015  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-015  015",
+    "medida": "015"
+   },
+   {
+    "codigo": "B I I-015  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-015  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-16",
+  "codigo_fab": "I-16",
+  "marca": "JOHN DEERE",
+  "aplicacion": "JOHN DEERE 2420",
+  "descripcion": "2420",
+  "medidas": {
+   "diam_perno": 30.17,
+   "diam_int": 29.6,
+   "ancho": 40.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      33.41,
+      33.44
+     ],
+     "texto": "33,41/44"
+    },
+    {
+     "label": "003",
+     "valor": 33.52
+    },
+    {
+     "label": "005",
+     "valor": 33.56
+    },
+    {
+     "label": "010",
+     "valor": 33.68
+    },
+    {
+     "label": "015",
+     "valor": 33.8
+    },
+    {
+     "label": "020",
+     "valor": 33.92
+    },
+    {
+     "label": "030",
+     "valor": 34.16
+    },
+    {
+     "label": "040",
+     "valor": 34.4
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-016  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-016  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-016  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-56",
+  "codigo_fab": "I-56",
+  "marca": "JOHN DEERE",
+  "aplicacion": "JOHN DEERE 3530",
+  "descripcion": "3530",
+  "medidas": {
+   "diam_perno": 34.9,
+   "diam_int": 34.4,
+   "ancho": 40.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.22,
+      38.25
+     ],
+     "texto": "38,22/25"
+    },
+    {
+     "label": "003",
+     "valor": 38.33
+    },
+    {
+     "label": "005",
+     "valor": 38.37
+    },
+    {
+     "label": "010",
+     "valor": 38.49
+    },
+    {
+     "label": "015",
+     "valor": 38.61
+    },
+    {
+     "label": "020",
+     "valor": 38.73
+    },
+    {
+     "label": "030",
+     "valor": 38.97
+    },
+    {
+     "label": "040",
+     "valor": 39.21
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-056  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-056  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-056  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-056  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-75",
+  "codigo_fab": "I-75",
+  "marca": "JOHN DEERE",
+  "aplicacion": "JOHN DEERE 5020",
+  "descripcion": "5020",
+  "medidas": {
+   "diam_perno": 44.45,
+   "diam_int": 44.0,
+   "ancho": 41.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.78,
+      47.81
+     ],
+     "texto": "47,78/81"
+    },
+    {
+     "label": "003",
+     "valor": 47.89
+    },
+    {
+     "label": "005",
+     "valor": 47.93
+    },
+    {
+     "label": "010",
+     "valor": 48.05
+    },
+    {
+     "label": "015",
+     "valor": 48.17
+    },
+    {
+     "label": "020",
+     "valor": 48.29
+    },
+    {
+     "label": "030",
+     "valor": 48.53
+    },
+    {
+     "label": "040",
+     "valor": 48.77
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-075  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-075  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-075  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-76",
+  "codigo_fab": "I-76",
+  "marca": "JOHN DEERE",
+  "aplicacion": "JOHN DEERE BALANCEADOR",
+  "descripcion": "BALANCEADOR",
+  "medidas": {
+   "diam_perno": null,
+   "diam_int": 36.0,
+   "ancho": 28.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      41.4,
+      41.43
+     ],
+     "texto": "41,40/43"
+    },
+    {
+     "label": "003",
+     "valor": 41.51
+    },
+    {
+     "label": "005",
+     "valor": 41.55
+    },
+    {
+     "label": "010",
+     "valor": 41.67
+    },
+    {
+     "label": "015",
+     "valor": 41.79
+    },
+    {
+     "label": "020",
+     "valor": 41.91
+    },
+    {
+     "label": "030",
+     "valor": 42.15
+    },
+    {
+     "label": "040",
+     "valor": 42.39
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-076  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-108",
+  "codigo_fab": "I-108",
+  "marca": "JOHN DEERE",
+  "aplicacion": "JOHN DEERE 6068T",
+  "descripcion": "6068T",
+  "medidas": {
+   "diam_perno": 41.25,
+   "diam_int": 40.75,
+   "ancho": 35.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      46.09,
+      46.12
+     ],
+     "texto": "46,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 46.2
+    },
+    {
+     "label": "005",
+     "valor": 46.24
+    },
+    {
+     "label": "010",
+     "valor": 46.36
+    },
+    {
+     "label": "015",
+     "valor": 46.48
+    },
+    {
+     "label": "020",
+     "valor": 46.6
+    },
+    {
+     "label": "030",
+     "valor": 46.84
+    },
+    {
+     "label": "040",
+     "valor": 47.08
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-108  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-108  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-108  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-53",
+  "codigo_fab": "I-53",
+  "marca": "LEYLAND",
+  "aplicacion": "LEYLAND TIGER",
+  "descripcion": "TIGER",
+  "medidas": {
+   "diam_perno": 41.28,
+   "diam_int": 40.2,
+   "ancho": 45.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      46.13,
+      46.16
+     ],
+     "texto": "46,13/16"
+    },
+    {
+     "label": "003",
+     "valor": 46.24
+    },
+    {
+     "label": "005",
+     "valor": 46.28
+    },
+    {
+     "label": "010",
+     "valor": 46.4
+    },
+    {
+     "label": "015",
+     "valor": 46.52
+    },
+    {
+     "label": "020",
+     "valor": 46.64
+    },
+    {
+     "label": "030",
+     "valor": 46.88
+    },
+    {
+     "label": "040",
+     "valor": 47.12
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-053  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-053  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-65",
+  "codigo_fab": "I-65",
+  "marca": "LISTER.",
+  "aplicacion": "LISTER. 6 HP.",
+  "descripcion": "6 HP.",
+  "medidas": {
+   "diam_perno": 31.75,
+   "diam_int": 31.2,
+   "ancho": 50.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.28,
+      38.31
+     ],
+     "texto": "38,28/31"
+    },
+    {
+     "label": "003",
+     "valor": 38.39
+    },
+    {
+     "label": "005",
+     "valor": 38.43
+    },
+    {
+     "label": "010",
+     "valor": 38.55
+    },
+    {
+     "label": "015",
+     "valor": 38.67
+    },
+    {
+     "label": "020",
+     "valor": 38.79
+    },
+    {
+     "label": "030",
+     "valor": 39.03
+    },
+    {
+     "label": "040",
+     "valor": 39.27
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-065  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-12",
+  "codigo_fab": "I-12",
+  "marca": "MAXION",
+  "aplicacion": "MAXION S4 EURO",
+  "descripcion": "S4 EURO",
+  "medidas": {
+   "diam_perno": 34.92,
+   "diam_int": 34.5,
+   "ancho": 34.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      39.02,
+      39.05
+     ],
+     "texto": "39,02/05"
+    },
+    {
+     "label": "003",
+     "valor": 39.13
+    },
+    {
+     "label": "005",
+     "valor": 39.17
+    },
+    {
+     "label": "010",
+     "valor": 39.29
+    },
+    {
+     "label": "015",
+     "valor": 39.41
+    },
+    {
+     "label": "020",
+     "valor": 39.53
+    },
+    {
+     "label": "030",
+     "valor": 39.77
+    },
+    {
+     "label": "040",
+     "valor": 40.01
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-012  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-012  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-012  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-012  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-91",
+  "codigo_fab": "I-91",
+  "marca": "MAXION",
+  "aplicacion": "MAXION S4 PLUS /EURO TURBO",
+  "descripcion": "S4 PLUS /EURO TURBO",
+  "medidas": {
+   "diam_perno": 38.1,
+   "diam_int": 37.5,
+   "ancho": 34.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      42.17,
+      42.2
+     ],
+     "texto": "42,17/20"
+    },
+    {
+     "label": "003",
+     "valor": 42.38
+    },
+    {
+     "label": "005",
+     "valor": 42.42
+    },
+    {
+     "label": "010",
+     "valor": 42.54
+    },
+    {
+     "label": "015",
+     "valor": 42.66
+    },
+    {
+     "label": "020",
+     "valor": 42.78
+    },
+    {
+     "label": "030",
+     "valor": 43.02
+    },
+    {
+     "label": "040",
+     "valor": 43.26
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-091  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-091  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-091  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-091  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-61",
+  "codigo_fab": "I-61",
+  "marca": "MAXION",
+  "aplicacion": "MAXION ROVER-GEMINI III",
+  "descripcion": "ROVER-GEMINI III",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.5,
+   "ancho": 30.15
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      34.17,
+      34.2
+     ],
+     "texto": "34,17/20"
+    },
+    {
+     "label": "003",
+     "valor": 34.28
+    },
+    {
+     "label": "005",
+     "valor": 34.32
+    },
+    {
+     "label": "010",
+     "valor": 34.44
+    },
+    {
+     "label": "015",
+     "valor": 34.56
+    },
+    {
+     "label": "020",
+     "valor": 34.68
+    },
+    {
+     "label": "030",
+     "valor": 34.92
+    },
+    {
+     "label": "040",
+     "valor": 35.16
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-061  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-061  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-061  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-061  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-061  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-148",
+  "codigo_fab": "I-148",
+  "marca": "MAXION",
+  "aplicacion": "MAXION 2.8 RANGER TDI BJE ENTERIZO",
+  "descripcion": "2.8 RANGER TDI BJE ENTERIZO",
+  "medidas": {
+   "diam_perno": 31.82,
+   "diam_int": 31.3,
+   "ancho": 32.9
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      36.79,
+      36.82
+     ],
+     "texto": "36,79/82"
+    },
+    {
+     "label": "003",
+     "valor": 36.9
+    },
+    {
+     "label": "005",
+     "valor": 36.94
+    },
+    {
+     "label": "010",
+     "valor": 37.06
+    },
+    {
+     "label": "015",
+     "valor": 37.18
+    },
+    {
+     "label": "020",
+     "valor": 37.3
+    },
+    {
+     "label": "030",
+     "valor": 37.54
+    },
+    {
+     "label": "040",
+     "valor": 37.78
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-148  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-81",
+  "codigo_fab": "I-81",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA XA/XB/ K2700",
+  "descripcion": "XA/XB/ K2700",
+  "medidas": {
+   "diam_perno": 31.5,
+   "diam_int": 31.0,
+   "ancho": 27.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.1,
+      35.13
+     ],
+     "texto": "35,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 35.21
+    },
+    {
+     "label": "005",
+     "valor": 35.25
+    },
+    {
+     "label": "010",
+     "valor": 35.37
+    },
+    {
+     "label": "015",
+     "valor": 35.49
+    },
+    {
+     "label": "020",
+     "valor": 35.61
+    },
+    {
+     "label": "030",
+     "valor": 35.85
+    },
+    {
+     "label": "040",
+     "valor": 36.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-081  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-081  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-87",
+  "codigo_fab": "I-87",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA S/KIA 2400",
+  "descripcion": "S/KIA 2400",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": 27.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      31.15,
+      31.18
+     ],
+     "texto": "31,15/18"
+    },
+    {
+     "label": "003",
+     "valor": 31.26
+    },
+    {
+     "label": "005",
+     "valor": 31.3
+    },
+    {
+     "label": "010",
+     "valor": 31.42
+    },
+    {
+     "label": "015",
+     "valor": 31.54
+    },
+    {
+     "label": "020",
+     "valor": 31.66
+    },
+    {
+     "label": "030",
+     "valor": 31.9
+    },
+    {
+     "label": "040",
+     "valor": 32.14
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-087  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-087  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-112",
+  "codigo_fab": "I-112",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA S2",
+  "descripcion": "S2",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": 26.8
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      31.11,
+      31.14
+     ],
+     "texto": "31,11/14"
+    },
+    {
+     "label": "003",
+     "valor": 31.22
+    },
+    {
+     "label": "005",
+     "valor": 31.26
+    },
+    {
+     "label": "010",
+     "valor": 31.38
+    },
+    {
+     "label": "015",
+     "valor": 31.5
+    },
+    {
+     "label": "020",
+     "valor": 31.62
+    },
+    {
+     "label": "030",
+     "valor": 31.86
+    },
+    {
+     "label": "040",
+     "valor": 32.1
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-112  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-131",
+  "codigo_fab": "I-131",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA S2 LARGO",
+  "descripcion": "S2 LARGO",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": 32.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      31.1,
+      31.13
+     ],
+     "texto": "31,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 31.21
+    },
+    {
+     "label": "005",
+     "valor": 31.25
+    },
+    {
+     "label": "010",
+     "valor": 31.37
+    },
+    {
+     "label": "015",
+     "valor": 31.49
+    },
+    {
+     "label": "020",
+     "valor": 31.61
+    },
+    {
+     "label": "030",
+     "valor": 31.85
+    },
+    {
+     "label": "040",
+     "valor": 32.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-131  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-130",
+  "codigo_fab": "I-130",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA TF-TM",
+  "descripcion": "TF-TM",
+  "medidas": {
+   "diam_perno": 35.0,
+   "diam_int": 34.5,
+   "ancho": 38.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.06,
+      38.09
+     ],
+     "texto": "38,06/09"
+    },
+    {
+     "label": "003",
+     "valor": 38.17
+    },
+    {
+     "label": "005",
+     "valor": 38.21
+    },
+    {
+     "label": "010",
+     "valor": 38.33
+    },
+    {
+     "label": "015",
+     "valor": 38.45
+    },
+    {
+     "label": "020",
+     "valor": 38.57
+    },
+    {
+     "label": "030",
+     "valor": 38.81
+    },
+    {
+     "label": "040",
+     "valor": 39.05
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-130  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-132",
+  "codigo_fab": "I-132",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA RFT",
+  "descripcion": "RFT",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.5,
+   "ancho": 26.8
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      33.08,
+      33.11
+     ],
+     "texto": "33,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 33.19
+    },
+    {
+     "label": "005",
+     "valor": 33.23
+    },
+    {
+     "label": "010",
+     "valor": 33.35
+    },
+    {
+     "label": "015",
+     "valor": 33.47
+    },
+    {
+     "label": "020",
+     "valor": 33.59
+    },
+    {
+     "label": "030",
+     "valor": 33.83
+    },
+    {
+     "label": "040",
+     "valor": 34.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-132  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-137",
+  "codigo_fab": "I-137",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA HA",
+  "descripcion": "HA",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.5,
+   "ancho": 33.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      33.07,
+      33.09
+     ],
+     "texto": "33,07/09"
+    },
+    {
+     "label": "003",
+     "valor": 33.12
+    },
+    {
+     "label": "005",
+     "valor": 33.16
+    },
+    {
+     "label": "010",
+     "valor": 33.28
+    },
+    {
+     "label": "015",
+     "valor": 33.4
+    },
+    {
+     "label": "020",
+     "valor": 33.52
+    },
+    {
+     "label": "030",
+     "valor": 33.76
+    },
+    {
+     "label": "040",
+     "valor": 34.0
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-137  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-137  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-152",
+  "codigo_fab": "I-152",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA B2500 WL",
+  "descripcion": "B2500 WL",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": 31.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.08,
+      35.11
+     ],
+     "texto": "35,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 35.19
+    },
+    {
+     "label": "005",
+     "valor": 35.23
+    },
+    {
+     "label": "010",
+     "valor": 35.35
+    },
+    {
+     "label": "015",
+     "valor": 35.47
+    },
+    {
+     "label": "020",
+     "valor": 35.59
+    },
+    {
+     "label": "030",
+     "valor": 35.83
+    },
+    {
+     "label": "040",
+     "valor": 36.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-152  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-138",
+  "codigo_fab": "I-138",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA R2/RF",
+  "descripcion": "R2/RF",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 26.3
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      27.98,
+      28.01
+     ],
+     "texto": "27,98/28,01"
+    },
+    {
+     "label": "003",
+     "valor": 28.09
+    },
+    {
+     "label": "005",
+     "valor": 28.13
+    },
+    {
+     "label": "010",
+     "valor": 28.25
+    },
+    {
+     "label": "015",
+     "valor": 28.37
+    },
+    {
+     "label": "020",
+     "valor": 28.49
+    },
+    {
+     "label": "030",
+     "valor": 28.73
+    },
+    {
+     "label": "040",
+     "valor": 28.97
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-138  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-138  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-170",
+  "codigo_fab": "I-170",
+  "marca": "MAZDA",
+  "aplicacion": "MAZDA MZR (VER FORD)",
+  "descripcion": "MZR (VER FORD)",
+  "medidas": {
+   "diam_perno": null,
+   "diam_int": null,
+   "ancho": null
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": []
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-170  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-170  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-01",
+  "codigo_fab": "I-01",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ 321",
+  "descripcion": "321",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.5,
+   "ancho": 35.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.08,
+      35.11
+     ],
+     "texto": "35,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 35.19
+    },
+    {
+     "label": "005",
+     "valor": 35.23
+    },
+    {
+     "label": "010",
+     "valor": 35.35
+    },
+    {
+     "label": "015",
+     "valor": 35.47
+    },
+    {
+     "label": "020",
+     "valor": 35.59
+    },
+    {
+     "label": "030",
+     "valor": 35.83
+    },
+    {
+     "label": "040",
+     "valor": 36.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-001  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-001  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-001  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-02",
+  "codigo_fab": "I-02",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ 170",
+  "descripcion": "170",
+  "medidas": {
+   "diam_perno": 22.0,
+   "diam_int": 21.5,
+   "ancho": 28.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      25.21,
+      25.24
+     ],
+     "texto": "25,21/24"
+    },
+    {
+     "label": "003",
+     "valor": 25.32
+    },
+    {
+     "label": "005",
+     "valor": 25.36
+    },
+    {
+     "label": "010",
+     "valor": 25.48
+    },
+    {
+     "label": "015",
+     "valor": 25.6
+    },
+    {
+     "label": "020",
+     "valor": 25.72
+    },
+    {
+     "label": "030",
+     "valor": 25.96
+    },
+    {
+     "label": "040",
+     "valor": 26.2
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-002  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-002  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-03",
+  "codigo_fab": "I-03",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ OM 352/364/366-G/A/LA",
+  "descripcion": "OM 352/364/366-G/A/LA",
+  "medidas": {
+   "diam_perno": 36.0,
+   "diam_int": 35.5,
+   "ancho": 34.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      39.08,
+      39.11
+     ],
+     "texto": "39,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 39.19
+    },
+    {
+     "label": "005",
+     "valor": 39.23
+    },
+    {
+     "label": "010",
+     "valor": 39.35
+    },
+    {
+     "label": "015",
+     "valor": 39.47
+    },
+    {
+     "label": "020",
+     "valor": 39.59
+    },
+    {
+     "label": "030",
+     "valor": 39.83
+    },
+    {
+     "label": "040",
+     "valor": 40.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-003  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-003  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-003  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-003  015",
+    "medida": "015"
+   },
+   {
+    "codigo": "B I I-003  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-003  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "B I I-003  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "B I I-003  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-13",
+  "codigo_fab": "I-13",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ BALANCIN 1114 (bje de bronce)",
+  "descripcion": "BALANCIN 1114 (bje de bronce)",
+  "medidas": {
+   "diam_perno": 20.0,
+   "diam_int": 19.5,
+   "ancho": 23.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      22.21,
+      22.23
+     ],
+     "texto": "22,21/23"
+    },
+    {
+     "label": "003",
+     "valor": 22.31
+    },
+    {
+     "label": "005",
+     "valor": 22.35
+    },
+    {
+     "label": "010",
+     "valor": 22.47
+    },
+    {
+     "label": "015",
+     "valor": 22.59
+    },
+    {
+     "label": "020",
+     "valor": 22.71
+    },
+    {
+     "label": "030",
+     "valor": 22.95
+    },
+    {
+     "label": "040",
+     "valor": 23.19
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-013  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-14",
+  "codigo_fab": "I-14",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ OM 312-321",
+  "descripcion": "OM 312-321",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.5,
+   "ancho": 35.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      33.14,
+      33.17
+     ],
+     "texto": "33,14/17"
+    },
+    {
+     "label": "003",
+     "valor": 33.25
+    },
+    {
+     "label": "005",
+     "valor": 33.29
+    },
+    {
+     "label": "010",
+     "valor": 33.41
+    },
+    {
+     "label": "015",
+     "valor": 33.53
+    },
+    {
+     "label": "020",
+     "valor": 33.65
+    },
+    {
+     "label": "030",
+     "valor": 33.89
+    },
+    {
+     "label": "040",
+     "valor": 34.13
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-014  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-014  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-014  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-014  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-27",
+  "codigo_fab": "I-27",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ COMPRESOR (bje de bronce)",
+  "descripcion": "COMPRESOR (bje de bronce)",
+  "medidas": {
+   "diam_perno": 16.0,
+   "diam_int": 15.5,
+   "ancho": 27.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      19.11,
+      19.14
+     ],
+     "texto": "19,11/14"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-027  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-33",
+  "codigo_fab": "I-33",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ 1521",
+  "descripcion": "1521",
+  "medidas": {
+   "diam_perno": 48.0,
+   "diam_int": 47.5,
+   "ancho": 45.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      52.08,
+      52.11
+     ],
+     "texto": "52,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 52.19
+    },
+    {
+     "label": "005",
+     "valor": 52.23
+    },
+    {
+     "label": "010",
+     "valor": 52.35
+    },
+    {
+     "label": "015",
+     "valor": 52.47
+    },
+    {
+     "label": "020",
+     "valor": 52.59
+    },
+    {
+     "label": "030",
+     "valor": 52.83
+    },
+    {
+     "label": "040",
+     "valor": 53.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-033  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-033  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-033  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-033  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-50",
+  "codigo_fab": "I-50",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ 332",
+  "descripcion": "332",
+  "medidas": {
+   "diam_perno": 44.0,
+   "diam_int": 43.5,
+   "ancho": 45.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      48.08,
+      48.11
+     ],
+     "texto": "48,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 48.19
+    },
+    {
+     "label": "005",
+     "valor": 48.23
+    },
+    {
+     "label": "010",
+     "valor": 48.35
+    },
+    {
+     "label": "015",
+     "valor": 48.47
+    },
+    {
+     "label": "020",
+     "valor": 48.59
+    },
+    {
+     "label": "030",
+     "valor": 48.83
+    },
+    {
+     "label": "040",
+     "valor": 49.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-050  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-050  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-74",
+  "codigo_fab": "I-74",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ 6600",
+  "descripcion": "6600",
+  "medidas": {
+   "diam_perno": 38.0,
+   "diam_int": 37.5,
+   "ancho": 45.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      43.13,
+      43.16
+     ],
+     "texto": "43,13/16"
+    },
+    {
+     "label": "003",
+     "valor": 43.24
+    },
+    {
+     "label": "005",
+     "valor": 43.28
+    },
+    {
+     "label": "010",
+     "valor": 43.4
+    },
+    {
+     "label": "015",
+     "valor": 43.52
+    },
+    {
+     "label": "020",
+     "valor": 43.64
+    },
+    {
+     "label": "030",
+     "valor": 43.88
+    },
+    {
+     "label": "040",
+     "valor": 44.12
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-074  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-074  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-77",
+  "codigo_fab": "I-77",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ 180-OM616",
+  "descripcion": "180-OM616",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 31.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      29.05,
+      29.08
+     ],
+     "texto": "29,05/08"
+    },
+    {
+     "label": "003",
+     "valor": 29.16
+    },
+    {
+     "label": "005",
+     "valor": 29.2
+    },
+    {
+     "label": "010",
+     "valor": 29.32
+    },
+    {
+     "label": "015",
+     "valor": 29.44
+    },
+    {
+     "label": "020",
+     "valor": 29.56
+    },
+    {
+     "label": "030",
+     "valor": 29.8
+    },
+    {
+     "label": "040",
+     "valor": 30.04
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-077  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-077  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-106",
+  "codigo_fab": "I-106",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ OM 904/906",
+  "descripcion": "OM 904/906",
+  "medidas": {
+   "diam_perno": 40.0,
+   "diam_int": 39.5,
+   "ancho": 33.6
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      44.07,
+      44.1
+     ],
+     "texto": "44,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 44.18
+    },
+    {
+     "label": "005",
+     "valor": 44.22
+    },
+    {
+     "label": "010",
+     "valor": 44.34
+    },
+    {
+     "label": "015",
+     "valor": 44.46
+    },
+    {
+     "label": "020",
+     "valor": 44.58
+    },
+    {
+     "label": "030",
+     "valor": 44.82
+    },
+    {
+     "label": "040",
+     "valor": 45.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-106  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-107",
+  "codigo_fab": "I-107",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ OM 904/906",
+  "descripcion": "OM 904/906",
+  "medidas": {
+   "diam_perno": 42.0,
+   "diam_int": 41.5,
+   "ancho": 33.6
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      46.07,
+      46.1
+     ],
+     "texto": "46,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 46.18
+    },
+    {
+     "label": "005",
+     "valor": 46.22
+    },
+    {
+     "label": "010",
+     "valor": 46.34
+    },
+    {
+     "label": "015",
+     "valor": 46.46
+    },
+    {
+     "label": "020",
+     "valor": 46.58
+    },
+    {
+     "label": "030",
+     "valor": 46.82
+    },
+    {
+     "label": "040",
+     "valor": 47.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-107  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-107  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-107  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "B I I-107  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-117",
+  "codigo_fab": "I-117",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ OM 447/449",
+  "descripcion": "OM 447/449",
+  "medidas": {
+   "diam_perno": 46.0,
+   "diam_int": 45.5,
+   "ancho": [
+    25.0,
+    38.0
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      50.69,
+      50.72
+     ],
+     "texto": "50,69/72"
+    },
+    {
+     "label": "003",
+     "valor": 50.8
+    },
+    {
+     "label": "005",
+     "valor": 50.84
+    },
+    {
+     "label": "010",
+     "valor": 50.96
+    },
+    {
+     "label": "015",
+     "valor": 51.08
+    },
+    {
+     "label": "020",
+     "valor": 51.2
+    },
+    {
+     "label": "030",
+     "valor": 51.44
+    },
+    {
+     "label": "040",
+     "valor": 51.68
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-117  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-117  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-127",
+  "codigo_fab": "I-127",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ MUSSO 5 CIL",
+  "descripcion": "MUSSO 5 CIL",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 22.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.58,
+      28.61
+     ],
+     "texto": "28,58/61"
+    },
+    {
+     "label": "003",
+     "valor": 28.69
+    },
+    {
+     "label": "005",
+     "valor": 28.73
+    },
+    {
+     "label": "010",
+     "valor": 28.85
+    },
+    {
+     "label": "015",
+     "valor": 28.97
+    },
+    {
+     "label": "020",
+     "valor": 29.09
+    },
+    {
+     "label": "030",
+     "valor": 29.33
+    },
+    {
+     "label": "040",
+     "valor": 29.57
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-127  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-140",
+  "codigo_fab": "I-140",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ OM 611",
+  "descripcion": "OM 611",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.5,
+   "ancho": 21.8
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      32.59,
+      32.62
+     ],
+     "texto": "32,59/62"
+    },
+    {
+     "label": "003",
+     "valor": 32.7
+    },
+    {
+     "label": "005",
+     "valor": 32.74
+    },
+    {
+     "label": "010",
+     "valor": 32.86
+    },
+    {
+     "label": "015",
+     "valor": 32.98
+    },
+    {
+     "label": "020",
+     "valor": 33.1
+    },
+    {
+     "label": "030",
+     "valor": 33.34
+    },
+    {
+     "label": "040",
+     "valor": 33.58
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-140  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-140  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-169",
+  "codigo_fab": "I-169",
+  "marca": "MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ OM 457",
+  "descripcion": "OM 457",
+  "medidas": {
+   "diam_perno": 52.0,
+   "diam_int": 51.5,
+   "ancho": 38.4
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      57.09,
+      57.12
+     ],
+     "texto": "57,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 57.2
+    },
+    {
+     "label": "005",
+     "valor": 57.24
+    },
+    {
+     "label": "010",
+     "valor": 57.36
+    },
+    {
+     "label": "015",
+     "valor": 57.48
+    },
+    {
+     "label": "020",
+     "valor": 57.6
+    },
+    {
+     "label": "030",
+     "valor": 57.84
+    },
+    {
+     "label": "040",
+     "valor": 58.08
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-169  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-169  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-34",
+  "codigo_fab": "I-34",
+  "marca": "MITSUBISHI",
+  "aplicacion": "MITSUBISHI MONTERO  4M40 2.8",
+  "descripcion": "MONTERO  4M40 2.8",
+  "medidas": {
+   "diam_perno": 30.0,
+   "diam_int": 29.5,
+   "ancho": 36.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      33.1,
+      33.13
+     ],
+     "texto": "33,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 33.21
+    },
+    {
+     "label": "005",
+     "valor": 33.25
+    },
+    {
+     "label": "010",
+     "valor": 33.37
+    },
+    {
+     "label": "015",
+     "valor": 33.49
+    },
+    {
+     "label": "020",
+     "valor": 33.61
+    },
+    {
+     "label": "030",
+     "valor": 33.85
+    },
+    {
+     "label": "040",
+     "valor": 34.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-034  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-034  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-88",
+  "codigo_fab": "I-88",
+  "marca": "MITSUBISHI",
+  "aplicacion": "MITSUBISHI 4D-55/56 P29",
+  "descripcion": "4D-55/56 P29",
+  "medidas": {
+   "diam_perno": 29.0,
+   "diam_int": 28.5,
+   "ancho": 32.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      32.1,
+      32.13
+     ],
+     "texto": "32,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 32.21
+    },
+    {
+     "label": "005",
+     "valor": 32.25
+    },
+    {
+     "label": "010",
+     "valor": 32.37
+    },
+    {
+     "label": "015",
+     "valor": 32.49
+    },
+    {
+     "label": "020",
+     "valor": 32.61
+    },
+    {
+     "label": "030",
+     "valor": 32.85
+    },
+    {
+     "label": "040",
+     "valor": 33.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-088  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-088  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-088  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-088  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-161",
+  "codigo_fab": "I-161",
+  "marca": "MITSUBISHI",
+  "aplicacion": "MITSUBISHI 56T P32",
+  "descripcion": "56T P32",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": [
+    26.0,
+    37.6
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.08,
+      35.11
+     ],
+     "texto": "35,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 35.19
+    },
+    {
+     "label": "005",
+     "valor": 35.23
+    },
+    {
+     "label": "010",
+     "valor": 35.35
+    },
+    {
+     "label": "015",
+     "valor": 35.47
+    },
+    {
+     "label": "020",
+     "valor": 35.59
+    },
+    {
+     "label": "030",
+     "valor": 35.83
+    },
+    {
+     "label": "040",
+     "valor": 36.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-161  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-161  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-126",
+  "codigo_fab": "I-126",
+  "marca": "MITSUBISHI",
+  "aplicacion": "MITSUBISHI CANTER",
+  "descripcion": "CANTER",
+  "medidas": {
+   "diam_perno": 34.0,
+   "diam_int": 33.5,
+   "ancho": 38.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      37.08,
+      37.11
+     ],
+     "texto": "37,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 37.19
+    },
+    {
+     "label": "005",
+     "valor": 37.23
+    },
+    {
+     "label": "010",
+     "valor": 37.35
+    },
+    {
+     "label": "015",
+     "valor": 37.47
+    },
+    {
+     "label": "020",
+     "valor": 37.59
+    },
+    {
+     "label": "030",
+     "valor": 37.83
+    },
+    {
+     "label": "040",
+     "valor": 38.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-126  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-38",
+  "codigo_fab": "I-38",
+  "marca": "M.W.M",
+  "aplicacion": "M.W.M D225/26/29/29PID",
+  "descripcion": "D225/26/29/29PID",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": 30.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      36.09,
+      36.12
+     ],
+     "texto": "36,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 36.2
+    },
+    {
+     "label": "005",
+     "valor": 36.24
+    },
+    {
+     "label": "010",
+     "valor": 36.36
+    },
+    {
+     "label": "015",
+     "valor": 36.48
+    },
+    {
+     "label": "020",
+     "valor": 36.6
+    },
+    {
+     "label": "030",
+     "valor": 36.84
+    },
+    {
+     "label": "040",
+     "valor": 37.08
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-038  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-038  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-038  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-31",
+  "codigo_fab": "I-31",
+  "marca": "M.W.M",
+  "aplicacion": "M.W.M 6.07 T",
+  "descripcion": "6.07 T",
+  "medidas": {
+   "diam_perno": 35.0,
+   "diam_int": 34.5,
+   "ancho": 28.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.59,
+      38.62
+     ],
+     "texto": "38,59/62"
+    },
+    {
+     "label": "003",
+     "valor": 38.7
+    },
+    {
+     "label": "005",
+     "valor": 38.74
+    },
+    {
+     "label": "010",
+     "valor": 38.86
+    },
+    {
+     "label": "015",
+     "valor": 38.98
+    },
+    {
+     "label": "020",
+     "valor": 39.1
+    },
+    {
+     "label": "030",
+     "valor": 39.34
+    },
+    {
+     "label": "040",
+     "valor": 39.58
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-031  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-031  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-031  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-031  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-44",
+  "codigo_fab": "I-44",
+  "marca": "M.W.M",
+  "aplicacion": "M.W.M TD 229 / 229 EC.",
+  "descripcion": "TD 229 / 229 EC.",
+  "medidas": {
+   "diam_perno": 35.0,
+   "diam_int": 34.5,
+   "ancho": 32.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.08,
+      38.11
+     ],
+     "texto": "38,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 38.17
+    },
+    {
+     "label": "005",
+     "valor": 38.21
+    },
+    {
+     "label": "010",
+     "valor": 38.33
+    },
+    {
+     "label": "015",
+     "valor": 38.45
+    },
+    {
+     "label": "020",
+     "valor": 38.57
+    },
+    {
+     "label": "030",
+     "valor": 38.81
+    },
+    {
+     "label": "040",
+     "valor": 39.05
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-044  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-52",
+  "codigo_fab": "I-52",
+  "marca": "M.W.M",
+  "aplicacion": "M.W.M 4.10/6.10",
+  "descripcion": "4.10/6.10",
+  "medidas": {
+   "diam_perno": 38.0,
+   "diam_int": 37.5,
+   "ancho": 31.8
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      41.07,
+      41.1
+     ],
+     "texto": "41,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 41.18
+    },
+    {
+     "label": "005",
+     "valor": 41.22
+    },
+    {
+     "label": "010",
+     "valor": 41.34
+    },
+    {
+     "label": "015",
+     "valor": 41.46
+    },
+    {
+     "label": "020",
+     "valor": 41.58
+    },
+    {
+     "label": "030",
+     "valor": 41.82
+    },
+    {
+     "label": "040",
+     "valor": 42.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-052  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-052  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-52X",
+  "codigo_fab": "I-52X",
+  "marca": "M.W.M",
+  "aplicacion": "M.W.M 4.10/6.10 TRAPEZOIDAL",
+  "descripcion": "4.10/6.10 TRAPEZOIDAL",
+  "medidas": {
+   "diam_perno": 38.0,
+   "diam_int": 37.5,
+   "ancho": [
+    23.3,
+    31.8
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      41.07,
+      41.1
+     ],
+     "texto": "41,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 41.18
+    },
+    {
+     "label": "005",
+     "valor": 41.22
+    },
+    {
+     "label": "010",
+     "valor": 41.34
+    },
+    {
+     "label": "015",
+     "valor": 41.46
+    },
+    {
+     "label": "020",
+     "valor": 41.58
+    },
+    {
+     "label": "030",
+     "valor": 41.82
+    },
+    {
+     "label": "040",
+     "valor": 42.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-052X 003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-052X 005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-052X 010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-052X 020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-052X ESP",
+    "medida": "ESP"
+   },
+   {
+    "codigo": "B I I-052X STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-109",
+  "codigo_fab": "I-109",
+  "marca": "NISSAN",
+  "aplicacion": "NISSAN LD 20 TURBO",
+  "descripcion": "LD 20 TURBO",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 26.3
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.99,
+      29.02
+     ],
+     "texto": "28,99/29,02"
+    },
+    {
+     "label": "003",
+     "valor": 29.1
+    },
+    {
+     "label": "005",
+     "valor": 29.14
+    },
+    {
+     "label": "010",
+     "valor": 29.26
+    },
+    {
+     "label": "015",
+     "valor": 29.38
+    },
+    {
+     "label": "020",
+     "valor": 29.5
+    },
+    {
+     "label": "030",
+     "valor": 29.74
+    },
+    {
+     "label": "040",
+     "valor": 29.98
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-109  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-138",
+  "codigo_fab": "I-138",
+  "marca": "NISSAN",
+  "aplicacion": "NISSAN LD 20 ASPIRADO",
+  "descripcion": "LD 20 ASPIRADO",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 26.3
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      27.98,
+      28.01
+     ],
+     "texto": "27,98/28,01"
+    },
+    {
+     "label": "003",
+     "valor": 28.09
+    },
+    {
+     "label": "005",
+     "valor": 28.13
+    },
+    {
+     "label": "010",
+     "valor": 28.25
+    },
+    {
+     "label": "015",
+     "valor": 28.37
+    },
+    {
+     "label": "020",
+     "valor": 28.49
+    },
+    {
+     "label": "030",
+     "valor": 28.73
+    },
+    {
+     "label": "040",
+     "valor": 28.97
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-138  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-138  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-128",
+  "codigo_fab": "I-128",
+  "marca": "NISSAN",
+  "aplicacion": "NISSAN TB42",
+  "descripcion": "TB42",
+  "medidas": {
+   "diam_perno": 33.0,
+   "diam_int": 32.5,
+   "ancho": 38.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      36.08,
+      36.11
+     ],
+     "texto": "36,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 36.19
+    },
+    {
+     "label": "005",
+     "valor": 36.23
+    },
+    {
+     "label": "010",
+     "valor": 36.35
+    },
+    {
+     "label": "015",
+     "valor": 36.47
+    },
+    {
+     "label": "020",
+     "valor": 36.59
+    },
+    {
+     "label": "030",
+     "valor": 36.83
+    },
+    {
+     "label": "040",
+     "valor": 37.07
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-129",
+  "codigo_fab": "I-129",
+  "marca": "NISSAN",
+  "aplicacion": "NISSAN ED30",
+  "descripcion": "ED30",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": 35.1
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      36.08,
+      36.11
+     ],
+     "texto": "36,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 36.19
+    },
+    {
+     "label": "005",
+     "valor": 36.23
+    },
+    {
+     "label": "010",
+     "valor": 36.35
+    },
+    {
+     "label": "015",
+     "valor": 36.47
+    },
+    {
+     "label": "020",
+     "valor": 36.59
+    },
+    {
+     "label": "030",
+     "valor": 36.83
+    },
+    {
+     "label": "040",
+     "valor": 37.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-129  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-129  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-139",
+  "codigo_fab": "I-139",
+  "marca": "NISSAN",
+  "aplicacion": "NISSAN SD 20-22",
+  "descripcion": "SD 20-22",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 30.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      29.08,
+      29.11
+     ],
+     "texto": "29,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 29.19
+    },
+    {
+     "label": "005",
+     "valor": 29.23
+    },
+    {
+     "label": "010",
+     "valor": 29.35
+    },
+    {
+     "label": "015",
+     "valor": 29.47
+    },
+    {
+     "label": "020",
+     "valor": 29.59
+    },
+    {
+     "label": "030",
+     "valor": 29.83
+    },
+    {
+     "label": "040",
+     "valor": 30.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-139  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-144",
+  "codigo_fab": "I-144",
+  "marca": "NISSAN",
+  "aplicacion": "NISSAN ED 33-ED33T-ED35-ED35T",
+  "descripcion": "ED 33-ED33T-ED35-ED35T",
+  "medidas": {
+   "diam_perno": 34.0,
+   "diam_int": 33.5,
+   "ancho": 35.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.09,
+      38.12
+     ],
+     "texto": "38,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 38.2
+    },
+    {
+     "label": "005",
+     "valor": 38.24
+    },
+    {
+     "label": "010",
+     "valor": 38.36
+    },
+    {
+     "label": "015",
+     "valor": 38.48
+    },
+    {
+     "label": "020",
+     "valor": 38.6
+    },
+    {
+     "label": "030",
+     "valor": 38.84
+    },
+    {
+     "label": "040",
+     "valor": 39.08
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-144  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-166",
+  "codigo_fab": "I-166",
+  "marca": "NISSAN",
+  "aplicacion": "NISSAN YD 22/25",
+  "descripcion": "YD 22/25",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": [
+    19.8,
+    26.3
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      31.07,
+      31.1
+     ],
+     "texto": "31,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 31.18
+    },
+    {
+     "label": "005",
+     "valor": 31.22
+    },
+    {
+     "label": "010",
+     "valor": 31.34
+    },
+    {
+     "label": "015",
+     "valor": 31.46
+    },
+    {
+     "label": "020",
+     "valor": 31.58
+    },
+    {
+     "label": "030",
+     "valor": 31.82
+    },
+    {
+     "label": "040",
+     "valor": 32.06
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-07",
+  "codigo_fab": "I-07",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS 6-305",
+  "descripcion": "6-305",
+  "medidas": {
+   "diam_perno": 31.75,
+   "diam_int": 31.25,
+   "ancho": 27.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      35.02,
+      35.05
+     ],
+     "texto": "35,02/05"
+    },
+    {
+     "label": "003",
+     "valor": 35.13
+    },
+    {
+     "label": "005",
+     "valor": 35.17
+    },
+    {
+     "label": "010",
+     "valor": 35.29
+    },
+    {
+     "label": "015",
+     "valor": 35.41
+    },
+    {
+     "label": "020",
+     "valor": 35.53
+    },
+    {
+     "label": "030",
+     "valor": 35.77
+    },
+    {
+     "label": "040",
+     "valor": 36.01
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-007  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-007  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-007  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-007  015",
+    "medida": "015"
+   },
+   {
+    "codigo": "B I I-007  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-007  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "B I I-007  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "B I I-007  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-29",
+  "codigo_fab": "I-29",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS 6-354",
+  "descripcion": "6-354",
+  "medidas": {
+   "diam_perno": 34.9,
+   "diam_int": 34.4,
+   "ancho": 34.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      39.02,
+      39.05
+     ],
+     "texto": "39,02/05"
+    },
+    {
+     "label": "003",
+     "valor": 39.13
+    },
+    {
+     "label": "005",
+     "valor": 39.17
+    },
+    {
+     "label": "010",
+     "valor": 39.29
+    },
+    {
+     "label": "015",
+     "valor": 39.41
+    },
+    {
+     "label": "020",
+     "valor": 39.53
+    },
+    {
+     "label": "030",
+     "valor": 39.77
+    },
+    {
+     "label": "040",
+     "valor": 40.01
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-029  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-029  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-029  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-029  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-029  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "B I I-029  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "B I I-029  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-37",
+  "codigo_fab": "I-37",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS TURBO FASE II",
+  "descripcion": "TURBO FASE II",
+  "medidas": {
+   "diam_perno": 38.1,
+   "diam_int": 37.5,
+   "ancho": 34.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      42.17,
+      42.2
+     ],
+     "texto": "42,17/20"
+    },
+    {
+     "label": "003",
+     "valor": 42.23
+    },
+    {
+     "label": "005",
+     "valor": 42.27
+    },
+    {
+     "label": "010",
+     "valor": 42.39
+    },
+    {
+     "label": "015",
+     "valor": 42.51
+    },
+    {
+     "label": "020",
+     "valor": 42.63
+    },
+    {
+     "label": "030",
+     "valor": 42.87
+    },
+    {
+     "label": "040",
+     "valor": 43.11
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-037  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-037  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-037  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-037  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-86",
+  "codigo_fab": "I-86",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS TURBO FASE IV",
+  "descripcion": "TURBO FASE IV",
+  "medidas": {
+   "diam_perno": 38.1,
+   "diam_int": 37.5,
+   "ancho": 34.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      42.17,
+      42.2
+     ],
+     "texto": "42,17/20"
+    },
+    {
+     "label": "003",
+     "valor": 42.23
+    },
+    {
+     "label": "005",
+     "valor": 42.27
+    },
+    {
+     "label": "010",
+     "valor": 42.39
+    },
+    {
+     "label": "015",
+     "valor": 42.51
+    },
+    {
+     "label": "020",
+     "valor": 42.63
+    },
+    {
+     "label": "030",
+     "valor": 42.87
+    },
+    {
+     "label": "040",
+     "valor": 43.11
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-086  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-086  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-086  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-086  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-086  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-97",
+  "codigo_fab": "I-97",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS TURBO FASE IV S/TRAPEZ.",
+  "descripcion": "TURBO FASE IV S/TRAPEZ.",
+  "medidas": {
+   "diam_perno": 38.1,
+   "diam_int": 37.5,
+   "ancho": [
+    28.4,
+    34.0
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      42.17,
+      42.2
+     ],
+     "texto": "42,17/20"
+    },
+    {
+     "label": "003",
+     "valor": 42.23
+    },
+    {
+     "label": "005",
+     "valor": 42.27
+    },
+    {
+     "label": "010",
+     "valor": 42.39
+    },
+    {
+     "label": "015",
+     "valor": 42.51
+    },
+    {
+     "label": "020",
+     "valor": 42.63
+    },
+    {
+     "label": "030",
+     "valor": 42.87
+    },
+    {
+     "label": "040",
+     "valor": 43.11
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-85",
+  "codigo_fab": "I-85",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS R6 L4",
+  "descripcion": "R6 L4",
+  "medidas": {
+   "diam_perno": 36.51,
+   "diam_int": 36.0,
+   "ancho": 35.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      40.33,
+      40.36
+     ],
+     "texto": "40,33/36"
+    },
+    {
+     "label": "003",
+     "valor": 40.44
+    },
+    {
+     "label": "005",
+     "valor": 40.48
+    },
+    {
+     "label": "010",
+     "valor": 40.6
+    },
+    {
+     "label": "015",
+     "valor": 40.72
+    },
+    {
+     "label": "020",
+     "valor": 40.84
+    },
+    {
+     "label": "030",
+     "valor": 41.08
+    },
+    {
+     "label": "040",
+     "valor": 41.32
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-99",
+  "codigo_fab": "I-99",
+  "marca": "PERKINS",
+  "aplicacion": "PERKINS COMPRESOR (BUJE DE BRONCE)",
+  "descripcion": "COMPRESOR (BUJE DE BRONCE)",
+  "medidas": {
+   "diam_perno": 12.7,
+   "diam_int": 12.4,
+   "ancho": 22.2
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      16.14,
+      16.17
+     ],
+     "texto": "16,14/17"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-08",
+  "codigo_fab": "I-08",
+  "marca": "PEUGEOT",
+  "aplicacion": "PEUGEOT 404 22 mm",
+  "descripcion": "404 22 mm",
+  "medidas": {
+   "diam_perno": 22.0,
+   "diam_int": 21.5,
+   "ancho": 27.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      24.14,
+      24.17
+     ],
+     "texto": "24,14/17"
+    },
+    {
+     "label": "003",
+     "valor": 24.25
+    },
+    {
+     "label": "005",
+     "valor": 24.29
+    },
+    {
+     "label": "010",
+     "valor": 24.41
+    },
+    {
+     "label": "015",
+     "valor": 24.53
+    },
+    {
+     "label": "020",
+     "valor": 24.65
+    },
+    {
+     "label": "030",
+     "valor": 24.89
+    },
+    {
+     "label": "040",
+     "valor": 25.13
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-008  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-10",
+  "codigo_fab": "I-10",
+  "marca": "PEUGEOT",
+  "aplicacion": "PEUGEOT DIESEL XUD9(205/405/306)",
+  "descripcion": "DIESEL XUD9(205/405/306)",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.4,
+   "ancho": 24.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      27.3,
+      27.33
+     ],
+     "texto": "27,30/33"
+    },
+    {
+     "label": "003",
+     "valor": 27.41
+    },
+    {
+     "label": "005",
+     "valor": 27.45
+    },
+    {
+     "label": "010",
+     "valor": 27.57
+    },
+    {
+     "label": "015",
+     "valor": 27.69
+    },
+    {
+     "label": "020",
+     "valor": 27.81
+    },
+    {
+     "label": "030",
+     "valor": 28.05
+    },
+    {
+     "label": "040",
+     "valor": 28.29
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-010  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-010  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-010  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-49",
+  "codigo_fab": "I-49",
+  "marca": "PEUGEOT",
+  "aplicacion": "PEUGEOT 504 23 mm (BUJE DE BRONCE)",
+  "descripcion": "504 23 mm (BUJE DE BRONCE)",
+  "medidas": {
+   "diam_perno": 23.0,
+   "diam_int": 22.5,
+   "ancho": 27.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      24.44,
+      24.47
+     ],
+     "texto": "24,44/47"
+    },
+    {
+     "label": "003",
+     "valor": 24.55
+    },
+    {
+     "label": "005",
+     "valor": 24.59
+    },
+    {
+     "label": "010",
+     "valor": 24.71
+    },
+    {
+     "label": "015",
+     "valor": 24.83
+    },
+    {
+     "label": "020",
+     "valor": 24.95
+    },
+    {
+     "label": "030",
+     "valor": 25.19
+    },
+    {
+     "label": "040",
+     "valor": 25.43
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-64",
+  "codigo_fab": "I-64",
+  "marca": "PEUGEOT",
+  "aplicacion": "PEUGEOT XDU9T",
+  "descripcion": "XDU9T",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": 24.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.35,
+      30.38
+     ],
+     "texto": "30,35/38"
+    },
+    {
+     "label": "003",
+     "valor": 30.46
+    },
+    {
+     "label": "005",
+     "valor": 30.5
+    },
+    {
+     "label": "010",
+     "valor": 30.62
+    },
+    {
+     "label": "015",
+     "valor": 30.74
+    },
+    {
+     "label": "020",
+     "valor": 30.86
+    },
+    {
+     "label": "030",
+     "valor": 31.1
+    },
+    {
+     "label": "040",
+     "valor": 31.34
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-064  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-064  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-064  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-143",
+  "codigo_fab": "I-143",
+  "marca": "PEUGEOT",
+  "aplicacion": "PEUGEOT VER CITROEN",
+  "descripcion": "VER CITROEN",
+  "medidas": {
+   "diam_perno": null,
+   "diam_int": null,
+   "ancho": null
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": []
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-143  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-143  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-143  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-149",
+  "codigo_fab": "I-149",
+  "marca": "PEUGEOT",
+  "aplicacion": "PEUGEOT DJ5T",
+  "descripcion": "DJ5T",
+  "medidas": {
+   "diam_perno": 34.0,
+   "diam_int": 33.5,
+   "ancho": 27.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      37.2,
+      37.23
+     ],
+     "texto": "37,20/23"
+    },
+    {
+     "label": "003",
+     "valor": 37.31
+    },
+    {
+     "label": "005",
+     "valor": 37.35
+    },
+    {
+     "label": "010",
+     "valor": 37.47
+    },
+    {
+     "label": "015",
+     "valor": 37.59
+    },
+    {
+     "label": "020",
+     "valor": 37.71
+    },
+    {
+     "label": "030",
+     "valor": 37.95
+    },
+    {
+     "label": "040",
+     "valor": 38.19
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-149  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-150",
+  "codigo_fab": "I-150",
+  "marca": "PEUGEOT",
+  "aplicacion": "PEUGEOT DV6 TD 1.6 16v HDI",
+  "descripcion": "DV6 TD 1.6 16v HDI",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": [
+    14.0,
+    21.0
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      29.1,
+      29.13
+     ],
+     "texto": "29,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 29.21
+    },
+    {
+     "label": "005",
+     "valor": 29.25
+    },
+    {
+     "label": "010",
+     "valor": 29.37
+    },
+    {
+     "label": "015",
+     "valor": 29.49
+    },
+    {
+     "label": "020",
+     "valor": 29.61
+    },
+    {
+     "label": "030",
+     "valor": 29.85
+    },
+    {
+     "label": "040",
+     "valor": 30.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-150  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-160",
+  "codigo_fab": "I-160",
+  "marca": "PEUGEOT",
+  "aplicacion": "PEUGEOT 1.4 D 8v TUD3",
+  "descripcion": "1.4 D 8v TUD3",
+  "medidas": {
+   "diam_perno": 23.0,
+   "diam_int": 22.5,
+   "ancho": 23.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      25.35,
+      25.38
+     ],
+     "texto": "25,35/38"
+    },
+    {
+     "label": "003",
+     "valor": 25.46
+    },
+    {
+     "label": "005",
+     "valor": 25.5
+    },
+    {
+     "label": "010",
+     "valor": 25.62
+    },
+    {
+     "label": "015",
+     "valor": 25.74
+    },
+    {
+     "label": "020",
+     "valor": 25.86
+    },
+    {
+     "label": "030",
+     "valor": 26.1
+    },
+    {
+     "label": "040",
+     "valor": 26.34
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-160  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-19",
+  "codigo_fab": "I-19",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT 850  (BUJE DE BRONCE)",
+  "descripcion": "850  (BUJE DE BRONCE)",
+  "medidas": {
+   "diam_perno": 14.0,
+   "diam_int": 13.5,
+   "ancho": 18.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      16.16,
+      16.19
+     ],
+     "texto": "16,16/19"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-019  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-48",
+  "codigo_fab": "I-48",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT 1.9 DIESEL F8Q",
+  "descripcion": "1.9 DIESEL F8Q",
+  "medidas": {
+   "diam_perno": 24.0,
+   "diam_int": 23.5,
+   "ancho": 25.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      26.12,
+      26.15
+     ],
+     "texto": "26,12/15"
+    },
+    {
+     "label": "003",
+     "valor": 26.23
+    },
+    {
+     "label": "005",
+     "valor": 26.27
+    },
+    {
+     "label": "010",
+     "valor": 26.39
+    },
+    {
+     "label": "015",
+     "valor": 26.51
+    },
+    {
+     "label": "020",
+     "valor": 26.63
+    },
+    {
+     "label": "030",
+     "valor": 26.87
+    },
+    {
+     "label": "040",
+     "valor": 27.11
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-048  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-048  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-58",
+  "codigo_fab": "I-58",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT 2.2 DIESEL (R18/TRAFIC/R21)",
+  "descripcion": "2.2 DIESEL (R18/TRAFIC/R21)",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": 25.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.05,
+      30.08
+     ],
+     "texto": "30,05/08"
+    },
+    {
+     "label": "003",
+     "valor": 30.16
+    },
+    {
+     "label": "005",
+     "valor": 30.2
+    },
+    {
+     "label": "010",
+     "valor": 30.32
+    },
+    {
+     "label": "015",
+     "valor": 30.44
+    },
+    {
+     "label": "020",
+     "valor": 30.56
+    },
+    {
+     "label": "030",
+     "valor": 30.8
+    },
+    {
+     "label": "040",
+     "valor": 31.04
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-058  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-058  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-058  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-058  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-69",
+  "codigo_fab": "I-69",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT TORINO 7 BANCADAS",
+  "descripcion": "TORINO 7 BANCADAS",
+  "medidas": {
+   "diam_perno": 25.0,
+   "diam_int": 24.5,
+   "ancho": 28.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      26.42,
+      26.44
+     ],
+     "texto": "26,42/44"
+    },
+    {
+     "label": "003",
+     "valor": 26.52
+    },
+    {
+     "label": "005",
+     "valor": 26.56
+    },
+    {
+     "label": "010",
+     "valor": 26.68
+    },
+    {
+     "label": "015",
+     "valor": 26.8
+    },
+    {
+     "label": "020",
+     "valor": 26.92
+    },
+    {
+     "label": "030",
+     "valor": 27.16
+    },
+    {
+     "label": "040",
+     "valor": 27.4
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-069  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-98",
+  "codigo_fab": "I-98",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT K9K",
+  "descripcion": "K9K",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 21.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      28.57,
+      28.6
+     ],
+     "texto": "28,57/60"
+    },
+    {
+     "label": "003",
+     "valor": 28.68
+    },
+    {
+     "label": "005",
+     "valor": 28.72
+    },
+    {
+     "label": "010",
+     "valor": 28.84
+    },
+    {
+     "label": "015",
+     "valor": 28.96
+    },
+    {
+     "label": "020",
+     "valor": 29.08
+    },
+    {
+     "label": "030",
+     "valor": 29.32
+    },
+    {
+     "label": "040",
+     "valor": 29.56
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-098  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-098  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-100",
+  "codigo_fab": "I-100",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT F3R 1.8/2.0  8V.",
+  "descripcion": "F3R 1.8/2.0  8V.",
+  "medidas": {
+   "diam_perno": 21.0,
+   "diam_int": 20.5,
+   "ancho": 24.6
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      23.05,
+      23.08
+     ],
+     "texto": "23,05/08"
+    },
+    {
+     "label": "003",
+     "valor": 23.16
+    },
+    {
+     "label": "005",
+     "valor": 23.2
+    },
+    {
+     "label": "010",
+     "valor": 23.32
+    },
+    {
+     "label": "015",
+     "valor": 23.44
+    },
+    {
+     "label": "020",
+     "valor": 23.56
+    },
+    {
+     "label": "030",
+     "valor": 23.8
+    },
+    {
+     "label": "040",
+     "valor": 24.04
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-100  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-100  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-100  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-102",
+  "codigo_fab": "I-102",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT TURBO DIESEL F9Q",
+  "descripcion": "TURBO DIESEL F9Q",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": 24.7
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.37,
+      30.4
+     ],
+     "texto": "30,37/40"
+    },
+    {
+     "label": "003",
+     "valor": 30.48
+    },
+    {
+     "label": "005",
+     "valor": 30.52
+    },
+    {
+     "label": "010",
+     "valor": 30.64
+    },
+    {
+     "label": "015",
+     "valor": 30.76
+    },
+    {
+     "label": "020",
+     "valor": 30.88
+    },
+    {
+     "label": "030",
+     "valor": 31.12
+    },
+    {
+     "label": "040",
+     "valor": 31.36
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-102  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-102X",
+  "codigo_fab": "I-102X",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT TURBO DIESEL F9Q TRAP.",
+  "descripcion": "TURBO DIESEL F9Q TRAP.",
+  "medidas": {
+   "diam_perno": 28.0,
+   "diam_int": 27.5,
+   "ancho": [
+    16.8,
+    24.7
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.37,
+      30.4
+     ],
+     "texto": "30,37/40"
+    },
+    {
+     "label": "003",
+     "valor": 30.48
+    },
+    {
+     "label": "005",
+     "valor": 30.52
+    },
+    {
+     "label": "010",
+     "valor": 30.64
+    },
+    {
+     "label": "015",
+     "valor": 30.76
+    },
+    {
+     "label": "020",
+     "valor": 30.88
+    },
+    {
+     "label": "030",
+     "valor": 31.12
+    },
+    {
+     "label": "040",
+     "valor": 31.36
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-147",
+  "codigo_fab": "I-147",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT MASTER 2.5 G9U",
+  "descripcion": "MASTER 2.5 G9U",
+  "medidas": {
+   "diam_perno": 31.0,
+   "diam_int": 30.5,
+   "ancho": [
+    17.0,
+    25.7
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      33.6,
+      33.63
+     ],
+     "texto": "33,60/63"
+    },
+    {
+     "label": "003",
+     "valor": 33.71
+    },
+    {
+     "label": "005",
+     "valor": 33.75
+    },
+    {
+     "label": "010",
+     "valor": 33.87
+    },
+    {
+     "label": "015",
+     "valor": 33.99
+    },
+    {
+     "label": "020",
+     "valor": 34.11
+    },
+    {
+     "label": "030",
+     "valor": 34.35
+    },
+    {
+     "label": "040",
+     "valor": 34.59
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-147  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-147  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-147  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-147  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-151",
+  "codigo_fab": "I-151",
+  "marca": "RENAULT",
+  "aplicacion": "RENAULT LAGUNA NQ7",
+  "descripcion": "LAGUNA NQ7",
+  "medidas": {
+   "diam_perno": 23.0,
+   "diam_int": 22.5,
+   "ancho": 25.2
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      26.08,
+      26.11
+     ],
+     "texto": "26,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 26.19
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-151  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-51",
+  "codigo_fab": "I-51",
+  "marca": "SCANIA",
+  "aplicacion": "SCANIA L71",
+  "descripcion": "L71",
+  "medidas": {
+   "diam_perno": 42.0,
+   "diam_int": 41.5,
+   "ancho": 42.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      45.43,
+      45.46
+     ],
+     "texto": "45,43/46"
+    },
+    {
+     "label": "003",
+     "valor": 45.54
+    },
+    {
+     "label": "005",
+     "valor": 45.58
+    },
+    {
+     "label": "010",
+     "valor": 45.7
+    },
+    {
+     "label": "015",
+     "valor": 45.82
+    },
+    {
+     "label": "020",
+     "valor": 45.94
+    },
+    {
+     "label": "030",
+     "valor": 46.18
+    },
+    {
+     "label": "040",
+     "valor": 46.42
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-051  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-051  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-72",
+  "codigo_fab": "I-72",
+  "marca": "SCANIA",
+  "aplicacion": "SCANIA L75/76",
+  "descripcion": "L75/76",
+  "medidas": {
+   "diam_perno": 47.0,
+   "diam_int": 46.2,
+   "ancho": 47.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      51.13,
+      51.16
+     ],
+     "texto": "51,13/16"
+    },
+    {
+     "label": "003",
+     "valor": 51.24
+    },
+    {
+     "label": "005",
+     "valor": 51.28
+    },
+    {
+     "label": "010",
+     "valor": 51.4
+    },
+    {
+     "label": "015",
+     "valor": 51.52
+    },
+    {
+     "label": "020",
+     "valor": 51.64
+    },
+    {
+     "label": "030",
+     "valor": 51.88
+    },
+    {
+     "label": "040",
+     "valor": 52.12
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-072  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-072  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-072  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-072  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-80",
+  "codigo_fab": "I-80",
+  "marca": "SCANIA",
+  "aplicacion": "SCANIA L111 BUJE LARGO",
+  "descripcion": "L111 BUJE LARGO",
+  "medidas": {
+   "diam_perno": 50.0,
+   "diam_int": 49.5,
+   "ancho": 50.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      53.88,
+      53.91
+     ],
+     "texto": "53,88/91"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-080  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-080  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-080  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-080  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "B I I-080  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-84",
+  "codigo_fab": "I-84",
+  "marca": "SCANIA",
+  "aplicacion": "SCANIA L111 TRAPEZOIDAL",
+  "descripcion": "L111 TRAPEZOIDAL",
+  "medidas": {
+   "diam_perno": 50.0,
+   "diam_int": 49.5,
+   "ancho": [
+    13.5,
+    23.0
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      53.88,
+      53.91
+     ],
+     "texto": "53,88/91"
+    },
+    {
+     "label": "003",
+     "valor": 53.99
+    },
+    {
+     "label": "005",
+     "valor": 54.03
+    },
+    {
+     "label": "010",
+     "valor": 54.15
+    },
+    {
+     "label": "015",
+     "valor": 54.27
+    },
+    {
+     "label": "020",
+     "valor": 54.39
+    },
+    {
+     "label": "030",
+     "valor": 54.63
+    },
+    {
+     "label": "040",
+     "valor": 54.87
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-84X",
+  "codigo_fab": "I-84X",
+  "marca": "SCANIA",
+  "aplicacion": "SCANIA L 111 SEMI TRAP",
+  "descripcion": "L 111 SEMI TRAP",
+  "medidas": {
+   "diam_perno": 50.0,
+   "diam_int": 49.5,
+   "ancho": [
+    30.0,
+    49.0
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      53.88,
+      53.91
+     ],
+     "texto": "53,88/91"
+    },
+    {
+     "label": "003",
+     "valor": 53.99
+    },
+    {
+     "label": "005",
+     "valor": 54.03
+    },
+    {
+     "label": "010",
+     "valor": 54.15
+    },
+    {
+     "label": "015",
+     "valor": 54.27
+    },
+    {
+     "label": "020",
+     "valor": 54.39
+    },
+    {
+     "label": "030",
+     "valor": 54.63
+    },
+    {
+     "label": "040",
+     "valor": 54.87
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-084X STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-100",
+  "codigo_fab": "I-100",
+  "marca": "SUBARU",
+  "aplicacion": "SUBARU EA 61/62/63/64/71 1.4/1.6 8v",
+  "descripcion": "EA 61/62/63/64/71 1.4/1.6 8v",
+  "medidas": {
+   "diam_perno": 21.0,
+   "diam_int": 20.5,
+   "ancho": 24.6
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      23.05,
+      23.07
+     ],
+     "texto": "23,05/07"
+    },
+    {
+     "label": "003",
+     "valor": 23.15
+    },
+    {
+     "label": "005",
+     "valor": 23.19
+    },
+    {
+     "label": "010",
+     "valor": 23.31
+    },
+    {
+     "label": "015",
+     "valor": 23.43
+    },
+    {
+     "label": "020",
+     "valor": 23.55
+    },
+    {
+     "label": "030",
+     "valor": 23.79
+    },
+    {
+     "label": "040",
+     "valor": 24.03
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-100  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-100  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-100  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-39",
+  "codigo_fab": "I-39",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA 3B/11B/14B TURBO",
+  "descripcion": "3B/11B/14B TURBO",
+  "medidas": {
+   "diam_perno": 34.0,
+   "diam_int": 33.5,
+   "ancho": 36.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      38.09,
+      38.12
+     ],
+     "texto": "38,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 38.2
+    },
+    {
+     "label": "005",
+     "valor": 38.24
+    },
+    {
+     "label": "010",
+     "valor": 38.36
+    },
+    {
+     "label": "015",
+     "valor": 38.48
+    },
+    {
+     "label": "020",
+     "valor": 38.6
+    },
+    {
+     "label": "030",
+     "valor": 38.84
+    },
+    {
+     "label": "040",
+     "valor": 39.08
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-039  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-41",
+  "codigo_fab": "I-41",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA HILUX DIESEL/ 2L",
+  "descripcion": "HILUX DIESEL/ 2L",
+  "medidas": {
+   "diam_perno": 27.0,
+   "diam_int": 26.5,
+   "ancho": 30.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.08,
+      30.11
+     ],
+     "texto": "30,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 30.19
+    },
+    {
+     "label": "005",
+     "valor": 30.23
+    },
+    {
+     "label": "010",
+     "valor": 30.35
+    },
+    {
+     "label": "015",
+     "valor": 30.47
+    },
+    {
+     "label": "020",
+     "valor": 30.59
+    },
+    {
+     "label": "030",
+     "valor": 30.83
+    },
+    {
+     "label": "040",
+     "valor": 31.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-041  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-041  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-041  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-45",
+  "codigo_fab": "I-45",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA HILUX NAFTERA",
+  "descripcion": "HILUX NAFTERA",
+  "medidas": {
+   "diam_perno": 22.0,
+   "diam_int": 21.5,
+   "ancho": 27.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      24.08,
+      24.11
+     ],
+     "texto": "24,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 24.19
+    },
+    {
+     "label": "005",
+     "valor": 24.23
+    },
+    {
+     "label": "010",
+     "valor": 24.35
+    },
+    {
+     "label": "015",
+     "valor": 24.47
+    },
+    {
+     "label": "020",
+     "valor": 24.59
+    },
+    {
+     "label": "030",
+     "valor": 24.83
+    },
+    {
+     "label": "040",
+     "valor": 25.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-045  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-54",
+  "codigo_fab": "I-54",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA 1C/2C",
+  "descripcion": "1C/2C",
+  "medidas": {
+   "diam_perno": 27.0,
+   "diam_int": 26.5,
+   "ancho": 27.2
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      30.1,
+      30.13
+     ],
+     "texto": "30,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 30.21
+    },
+    {
+     "label": "005",
+     "valor": 30.25
+    },
+    {
+     "label": "010",
+     "valor": 30.37
+    },
+    {
+     "label": "015",
+     "valor": 30.49
+    },
+    {
+     "label": "020",
+     "valor": 30.61
+    },
+    {
+     "label": "030",
+     "valor": 30.85
+    },
+    {
+     "label": "040",
+     "valor": 31.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-054  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-60",
+  "codigo_fab": "I-60",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA 3B-11B-14B ASPIRADO",
+  "descripcion": "3B-11B-14B ASPIRADO",
+  "medidas": {
+   "diam_perno": 32.0,
+   "diam_int": 31.5,
+   "ancho": 31.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      36.12,
+      36.15
+     ],
+     "texto": "36,12/15"
+    },
+    {
+     "label": "003",
+     "valor": 36.23
+    },
+    {
+     "label": "005",
+     "valor": 36.27
+    },
+    {
+     "label": "010",
+     "valor": 36.39
+    },
+    {
+     "label": "015",
+     "valor": 36.51
+    },
+    {
+     "label": "020",
+     "valor": 36.63
+    },
+    {
+     "label": "030",
+     "valor": 36.87
+    },
+    {
+     "label": "040",
+     "valor": 37.11
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-060  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-62",
+  "codigo_fab": "I-62",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA DINA",
+  "descripcion": "DINA",
+  "medidas": {
+   "diam_perno": 29.0,
+   "diam_int": 28.5,
+   "ancho": 31.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      33.1,
+      33.13
+     ],
+     "texto": "33,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 33.21
+    },
+    {
+     "label": "005",
+     "valor": 33.25
+    },
+    {
+     "label": "010",
+     "valor": 33.37
+    },
+    {
+     "label": "015",
+     "valor": 33.49
+    },
+    {
+     "label": "020",
+     "valor": 33.61
+    },
+    {
+     "label": "030",
+     "valor": 33.85
+    },
+    {
+     "label": "040",
+     "valor": 34.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-062  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-062  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-062  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "B I I-062  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-83",
+  "codigo_fab": "I-83",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA HILUX 3L 2.8",
+  "descripcion": "HILUX 3L 2.8",
+  "medidas": {
+   "diam_perno": 29.0,
+   "diam_int": 28.5,
+   "ancho": 32.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      32.1,
+      32.13
+     ],
+     "texto": "32,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 32.21
+    },
+    {
+     "label": "005",
+     "valor": 32.25
+    },
+    {
+     "label": "010",
+     "valor": 32.37
+    },
+    {
+     "label": "015",
+     "valor": 32.49
+    },
+    {
+     "label": "020",
+     "valor": 32.61
+    },
+    {
+     "label": "030",
+     "valor": 32.85
+    },
+    {
+     "label": "040",
+     "valor": 33.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-083  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-083  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-083  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-083  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-083  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-145",
+  "codigo_fab": "I-145",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA K-2K-3K-4K-5K-7K",
+  "descripcion": "K-2K-3K-4K-5K-7K",
+  "medidas": {
+   "diam_perno": 18.0,
+   "diam_int": 17.5,
+   "ancho": 25.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      20.09,
+      20.12
+     ],
+     "texto": "20,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 20.2
+    },
+    {
+     "label": "005",
+     "valor": 20.24
+    },
+    {
+     "label": "010",
+     "valor": 20.36
+    },
+    {
+     "label": "015",
+     "valor": 20.48
+    },
+    {
+     "label": "020",
+     "valor": 20.6
+    },
+    {
+     "label": "030",
+     "valor": 20.84
+    },
+    {
+     "label": "040",
+     "valor": 21.08
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-145  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-146",
+  "codigo_fab": "I-146",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA 1KZ",
+  "descripcion": "1KZ",
+  "medidas": {
+   "diam_perno": 34.0,
+   "diam_int": 33.5,
+   "ancho": 22.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      37.02,
+      37.05
+     ],
+     "texto": "37,02/05"
+    },
+    {
+     "label": "003",
+     "valor": 37.13
+    },
+    {
+     "label": "005",
+     "valor": 37.17
+    },
+    {
+     "label": "010",
+     "valor": 37.29
+    },
+    {
+     "label": "015",
+     "valor": 37.41
+    },
+    {
+     "label": "020",
+     "valor": 37.53
+    },
+    {
+     "label": "030",
+     "valor": 37.77
+    },
+    {
+     "label": "040",
+     "valor": 38.01
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-153",
+  "codigo_fab": "I-153",
+  "marca": "TOYOTA",
+  "aplicacion": "TOYOTA 1KD-RN 3.0 D HILUX/SW",
+  "descripcion": "1KD-RN 3.0 D HILUX/SW",
+  "medidas": {
+   "diam_perno": 34.0,
+   "diam_int": 33.5,
+   "ancho": 33.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      37.09,
+      37.12
+     ],
+     "texto": "37,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 37.2
+    },
+    {
+     "label": "005",
+     "valor": 37.24
+    },
+    {
+     "label": "010",
+     "valor": 37.36
+    },
+    {
+     "label": "015",
+     "valor": 37.48
+    },
+    {
+     "label": "020",
+     "valor": 37.6
+    },
+    {
+     "label": "030",
+     "valor": 37.84
+    },
+    {
+     "label": "040",
+     "valor": 38.08
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-153  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-153  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-153  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-09",
+  "codigo_fab": "I-09",
+  "marca": "VOLKSWAGEN",
+  "aplicacion": "VOLKSWAGEN 1.6/1.8",
+  "descripcion": "1.6/1.8",
+  "medidas": {
+   "diam_perno": 22.0,
+   "diam_int": 21.5,
+   "ancho": 25.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      25.1,
+      25.13
+     ],
+     "texto": "25,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 25.21
+    },
+    {
+     "label": "005",
+     "valor": 25.25
+    },
+    {
+     "label": "010",
+     "valor": 25.37
+    },
+    {
+     "label": "015",
+     "valor": 25.49
+    },
+    {
+     "label": "020",
+     "valor": 25.61
+    },
+    {
+     "label": "030",
+     "valor": 25.85
+    },
+    {
+     "label": "040",
+     "valor": 26.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-009  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-43",
+  "codigo_fab": "I-43",
+  "marca": "VOLKSWAGEN",
+  "aplicacion": "VOLKSWAGEN DIESEL  1.6/1.9",
+  "descripcion": "DIESEL  1.6/1.9",
+  "medidas": {
+   "diam_perno": 24.0,
+   "diam_int": 23.5,
+   "ancho": 25.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      27.07,
+      27.1
+     ],
+     "texto": "27,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 27.18
+    },
+    {
+     "label": "005",
+     "valor": 27.22
+    },
+    {
+     "label": "010",
+     "valor": 27.34
+    },
+    {
+     "label": "015",
+     "valor": 27.46
+    },
+    {
+     "label": "020",
+     "valor": 27.58
+    },
+    {
+     "label": "030",
+     "valor": 27.82
+    },
+    {
+     "label": "040",
+     "valor": 28.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-043  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-043  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-043  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-043  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-57",
+  "codigo_fab": "I-57",
+  "marca": "VOLKSWAGEN",
+  "aplicacion": "VOLKSWAGEN 1.6/1.8",
+  "descripcion": "1.6/1.8",
+  "medidas": {
+   "diam_perno": 20.0,
+   "diam_int": 19.5,
+   "ancho": 25.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      23.05,
+      23.08
+     ],
+     "texto": "23,05/08"
+    },
+    {
+     "label": "003",
+     "valor": 23.16
+    },
+    {
+     "label": "005",
+     "valor": 23.2
+    },
+    {
+     "label": "010",
+     "valor": 23.32
+    },
+    {
+     "label": "015",
+     "valor": 23.44
+    },
+    {
+     "label": "020",
+     "valor": 23.56
+    },
+    {
+     "label": "030",
+     "valor": 23.8
+    },
+    {
+     "label": "040",
+     "valor": 24.04
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-057  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-057  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-057  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-057  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-057  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "B I I-057  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-67",
+  "codigo_fab": "I-67",
+  "marca": "VOLKSWAGEN",
+  "aplicacion": "VOLKSWAGEN 1600 KOMBI",
+  "descripcion": "1600 KOMBI",
+  "medidas": {
+   "diam_perno": 22.0,
+   "diam_int": 21.5,
+   "ancho": 22.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      24.04,
+      24.07
+     ],
+     "texto": "24,04/07"
+    },
+    {
+     "label": "003",
+     "valor": 24.15
+    },
+    {
+     "label": "005",
+     "valor": 24.19
+    },
+    {
+     "label": "010",
+     "valor": 24.31
+    },
+    {
+     "label": "015",
+     "valor": 24.43
+    },
+    {
+     "label": "020",
+     "valor": 24.55
+    },
+    {
+     "label": "030",
+     "valor": 24.79
+    },
+    {
+     "label": "040",
+     "valor": 25.03
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-067  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-78",
+  "codigo_fab": "I-78",
+  "marca": "VOLKSWAGEN",
+  "aplicacion": "VOLKSWAGEN 1.9 TURBO DIESEL",
+  "descripcion": "1.9 TURBO DIESEL",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 25.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      29.02,
+      29.05
+     ],
+     "texto": "29,02/05"
+    },
+    {
+     "label": "003",
+     "valor": 29.13
+    },
+    {
+     "label": "005",
+     "valor": 29.17
+    },
+    {
+     "label": "010",
+     "valor": 29.29
+    },
+    {
+     "label": "015",
+     "valor": 29.41
+    },
+    {
+     "label": "020",
+     "valor": 29.53
+    },
+    {
+     "label": "030",
+     "valor": 29.77
+    },
+    {
+     "label": "040",
+     "valor": 30.01
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-078  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-078  010",
+    "medida": "010"
+   },
+   {
+    "codigo": "B I I-078  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-104",
+  "codigo_fab": "I-104",
+  "marca": "VOLKSWAGEN",
+  "aplicacion": "VOLKSWAGEN GOL 1000",
+  "descripcion": "GOL 1000",
+  "medidas": {
+   "diam_perno": 17.0,
+   "diam_int": 16.5,
+   "ancho": 20.3
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      20.08,
+      20.11
+     ],
+     "texto": "20,08/11"
+    },
+    {
+     "label": "003",
+     "valor": 20.19
+    },
+    {
+     "label": "005",
+     "valor": 20.23
+    },
+    {
+     "label": "010",
+     "valor": 20.35
+    },
+    {
+     "label": "015",
+     "valor": 20.47
+    },
+    {
+     "label": "020",
+     "valor": 20.59
+    },
+    {
+     "label": "030",
+     "valor": 20.83
+    },
+    {
+     "label": "040",
+     "valor": 21.07
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-104  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-134",
+  "codigo_fab": "I-134",
+  "marca": "VOLKSWAGEN",
+  "aplicacion": "VOLKSWAGEN POLO  Perno 24",
+  "descripcion": "POLO  Perno 24",
+  "medidas": {
+   "diam_perno": 24.0,
+   "diam_int": 23.5,
+   "ancho": 27.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      27.1,
+      27.13
+     ],
+     "texto": "27,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 27.21
+    },
+    {
+     "label": "005",
+     "valor": 27.25
+    },
+    {
+     "label": "010",
+     "valor": 27.37
+    },
+    {
+     "label": "015",
+     "valor": 27.49
+    },
+    {
+     "label": "020",
+     "valor": 27.61
+    },
+    {
+     "label": "030",
+     "valor": 27.85
+    },
+    {
+     "label": "040",
+     "valor": 28.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-134  003",
+    "medida": "003"
+   },
+   {
+    "codigo": "B I I-134  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-134  015",
+    "medida": "015"
+   },
+   {
+    "codigo": "B I I-134  020",
+    "medida": "020"
+   },
+   {
+    "codigo": "B I I-134  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-162",
+  "codigo_fab": "I-162",
+  "marca": "VOLKSWAGEN",
+  "aplicacion": "VOLKSWAGEN AMAROK 2.5 TD Bje Enterizo",
+  "descripcion": "AMAROK 2.5 TD Bje Enterizo",
+  "medidas": {
+   "diam_perno": 26.0,
+   "diam_int": 25.5,
+   "ancho": 26.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      29.1,
+      29.13
+     ],
+     "texto": "29,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 29.21
+    },
+    {
+     "label": "005",
+     "valor": 29.25
+    },
+    {
+     "label": "010",
+     "valor": 29.37
+    },
+    {
+     "label": "015",
+     "valor": 29.49
+    },
+    {
+     "label": "020",
+     "valor": 29.61
+    },
+    {
+     "label": "030",
+     "valor": 29.85
+    },
+    {
+     "label": "040",
+     "valor": 30.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-162  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-163",
+  "codigo_fab": "I-163",
+  "marca": "VOLKSWAGEN",
+  "aplicacion": "VOLKSWAGEN VW BORA 2.0 BJE RECTO",
+  "descripcion": "VW BORA 2.0 BJE RECTO",
+  "medidas": {
+   "diam_perno": 19.0,
+   "diam_int": 18.5,
+   "ancho": 21.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      21.1,
+      21.13
+     ],
+     "texto": "21,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 21.21
+    },
+    {
+     "label": "005",
+     "valor": 21.25
+    },
+    {
+     "label": "010",
+     "valor": 21.37
+    },
+    {
+     "label": "015",
+     "valor": 21.49
+    },
+    {
+     "label": "020",
+     "valor": 21.61
+    },
+    {
+     "label": "030",
+     "valor": 21.85
+    },
+    {
+     "label": "040",
+     "valor": 22.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-163  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-157",
+  "codigo_fab": "I-157",
+  "marca": "VALTRA (VALMET)",
+  "aplicacion": "VALTRA (VALMET) TRACTOR",
+  "descripcion": "TRACTOR",
+  "medidas": {
+   "diam_perno": 40.0,
+   "diam_int": 39.5,
+   "ancho": [
+    27.0,
+    39.7
+   ]
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      44.07,
+      44.1
+     ],
+     "texto": "44,07/10"
+    },
+    {
+     "label": "003",
+     "valor": 44.18
+    },
+    {
+     "label": "005",
+     "valor": 44.22
+    },
+    {
+     "label": "010",
+     "valor": 44.34
+    },
+    {
+     "label": "015",
+     "valor": 44.46
+    },
+    {
+     "label": "020",
+     "valor": 44.58
+    },
+    {
+     "label": "030",
+     "valor": 44.82
+    },
+    {
+     "label": "040",
+     "valor": 45.06
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-157  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "B I I-157  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-1039",
+  "codigo_fab": "I-1039",
+  "marca": "VOLVO",
+  "aplicacion": "VOLVO TITAN",
+  "descripcion": "TITAN",
+  "medidas": {
+   "diam_perno": 45.0,
+   "diam_int": 44.0,
+   "ancho": 44.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      54.06,
+      54.08
+     ],
+     "texto": "54,06/08"
+    },
+    {
+     "label": "003",
+     "valor": 54.16
+    },
+    {
+     "label": "005",
+     "valor": 54.2
+    },
+    {
+     "label": "010",
+     "valor": 54.32
+    },
+    {
+     "label": "015",
+     "valor": 54.44
+    },
+    {
+     "label": "020",
+     "valor": 54.56
+    },
+    {
+     "label": "030",
+     "valor": 54.8
+    },
+    {
+     "label": "040",
+     "valor": 55.04
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-1039 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-94",
+  "codigo_fab": "I-94",
+  "marca": "WACO/westinghouse",
+  "aplicacion": "WACO/westinghouse COMPRESOR",
+  "descripcion": "COMPRESOR",
+  "medidas": {
+   "diam_perno": 20.0,
+   "diam_int": 19.5,
+   "ancho": 21.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      23.2,
+      23.23
+     ],
+     "texto": "23,20/23"
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-094  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "I-95",
+  "codigo_fab": "I-95",
+  "marca": "ZANELLO",
+  "aplicacion": "ZANELLO TRACTOR",
+  "descripcion": "TRACTOR",
+  "medidas": {
+   "diam_perno": 35.0,
+   "diam_int": 34.5,
+   "ancho": 13.5
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      39.09,
+      39.12
+     ],
+     "texto": "39,09/12"
+    },
+    {
+     "label": "003",
+     "valor": 39.2
+    },
+    {
+     "label": "005",
+     "valor": 39.24
+    },
+    {
+     "label": "010",
+     "valor": 39.36
+    },
+    {
+     "label": "015",
+     "valor": 39.48
+    },
+    {
+     "label": "020",
+     "valor": 39.6
+    },
+    {
+     "label": "030",
+     "valor": 39.84
+    },
+    {
+     "label": "040",
+     "valor": 40.08
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-1034",
+  "codigo_fab": "I-1034",
+  "marca": "ZETOR",
+  "aplicacion": "ZETOR 102  (BUJE DE BRONCE )",
+  "descripcion": "102  (BUJE DE BRONCE )",
+  "medidas": {
+   "diam_perno": 35.0,
+   "diam_int": 34.5,
+   "ancho": 35.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      40.09,
+      40.11
+     ],
+     "texto": "40,09/11"
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-1054",
+  "codigo_fab": "I-1054",
+  "marca": "ZETOR",
+  "aplicacion": "ZETOR TRACTOR",
+  "descripcion": "TRACTOR",
+  "medidas": {
+   "diam_perno": 40.0,
+   "diam_int": 39.2,
+   "ancho": 43.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      46.18,
+      46.2
+     ],
+     "texto": "46,18/20"
+    },
+    {
+     "label": "003",
+     "valor": 46.28
+    },
+    {
+     "label": "005",
+     "valor": 46.32
+    },
+    {
+     "label": "010",
+     "valor": 46.44
+    },
+    {
+     "label": "015",
+     "valor": 46.56
+    },
+    {
+     "label": "020",
+     "valor": 46.68
+    },
+    {
+     "label": "030",
+     "valor": 46.92
+    },
+    {
+     "label": "040",
+     "valor": 47.16
+    }
+   ]
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "I-1098",
+  "codigo_fab": "I-1098",
+  "marca": "ZETOR",
+  "aplicacion": "ZETOR 110",
+  "descripcion": "110",
+  "medidas": {
+   "diam_perno": 40.0,
+   "diam_int": 39.5,
+   "ancho": 38.0
+  },
+  "extra": {
+   "fabricante": "INDUBRON",
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      45.1,
+      45.13
+     ],
+     "texto": "45,10/13"
+    },
+    {
+     "label": "003",
+     "valor": 45.21
+    },
+    {
+     "label": "005",
+     "valor": 45.25
+    },
+    {
+     "label": "010",
+     "valor": 45.37
+    },
+    {
+     "label": "015",
+     "valor": 45.49
+    },
+    {
+     "label": "020",
+     "valor": 45.61
+    },
+    {
+     "label": "030",
+     "valor": 45.85
+    },
+    {
+     "label": "040",
+     "valor": 46.09
+    }
+   ]
+  },
+  "codigos_crac": [
+   {
+    "codigo": "B I I-1098 STD",
+    "medida": "STD"
+   }
+  ]
+ }
+]

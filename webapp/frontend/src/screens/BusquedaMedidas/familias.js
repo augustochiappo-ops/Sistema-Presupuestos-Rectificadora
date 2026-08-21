@@ -75,6 +75,10 @@ export const FAMILIAS = [
       { key: 'diam_vastago', header: 'Ø vást.', width: 90, align: 'right', tipo: 'mm' },
       { key: 'diam_ext', header: 'Ø ext.', width: 90, align: 'right', tipo: 'mm' },
       { key: 'largo', header: 'Largo', width: 90, align: 'right', tipo: 'mm' },
+      // El código de forma del catálogo RYC (F, A-1, P-3-6…): dice si la guía
+      // es recta, con pestaña, escalonada. No está en la tabla de medidas y
+      // es lo primero que se mira para saber si una guía reemplaza a otra.
+      { key: 'forma', header: 'Forma', width: 90 },
       { key: 'material', header: 'Material', width: 130 },
       { key: 'precio', header: 'Precio', width: 120, align: 'right', tipo: 'precio' },
       { key: 'stock', header: 'Stock', width: 90, align: 'center', tipo: 'stock' },
@@ -160,6 +164,42 @@ export const FAMILIAS = [
       { label: 'Ø pistón 98,42 mm', filtros: { diam_piston: '98.42', tol_diam_piston: '0.1' } },
       { label: 'Ø perno 22 mm', filtros: { diam_perno: '22', tol_diam_perno: '0.1' } },
       { label: 'Motor: Falcon', filtros: { aplicacion: 'falcon' } },
+    ],
+  },
+  {
+    id: 'bujes_biela',
+    label: 'Bujes de biela',
+    // El Ø exterior no está acá sino con las sobremedidas: un buje tiene el
+    // STD y hasta siete medidas más, y se busca contra todas a la vez (mismo
+    // mecanismo que el "Ø exterior" de camisas).
+    medidas: [
+      { campo: 'diam_perno', label: 'Ø perno' },
+      { campo: 'diam_sobremedida', label: 'Ø exterior' },
+      { campo: 'ancho', label: 'Ancho' },
+      { campo: 'diam_int', label: 'Ø int. semiterminado' },
+    ],
+    textos: [
+      { campo: 'codigo', label: 'Código', ancho: 200, icono: 'tag' },
+      { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
+    ],
+    columnas: [
+      { key: 'codigo', header: 'Código', width: 100, strong: true },
+      { key: 'marca', header: 'Marca', width: 120 },
+      { key: 'descripcion', header: 'Motor / aplicación', wrap: true, minWidth: 180 },
+      { key: 'diam_perno', header: 'Ø perno', width: 90, align: 'right', tipo: 'mm' },
+      { key: 'diam_int', header: 'Ø int. semi', width: 100, align: 'right', tipo: 'mm' },
+      { key: 'ancho', header: 'Ancho', width: 95, align: 'right', tipo: 'mm' },
+      { key: 'sobremedidas', header: 'Ø exterior (STD y sobremedidas)', minWidth: 230, tipo: 'sobremedidas' },
+      // Un buje tiene un precio por sobremedida: esta columna dice de cuál es
+      // el que se está mostrando (igual que en subconjuntos y pistones).
+      { key: 'medida_crac', header: 'Precio de', width: 90 },
+      { key: 'precio', header: 'Precio', width: 110, align: 'right', tipo: 'precio' },
+      { key: 'stock', header: 'Stock', width: 85, align: 'center', tipo: 'stock' },
+    ],
+    ejemplos: [
+      { label: 'Ø perno 25 mm', filtros: { diam_perno: '25', tol_diam_perno: '0.1' } },
+      { label: 'Ø exterior 28 o más', filtros: { diam_sobremedida: '28', tol_diam_sobremedida: '+' } },
+      { label: 'Motor: Corsa', filtros: { aplicacion: 'corsa' } },
     ],
   },
 ]

@@ -903,6 +903,72 @@ los casos de pistones (incluido que el pistón con columnas corridas aparece,
 trae precio y muestra "?" en vez de medidas inventadas) y con el nombre nuevo de
 camisas.
 
+## Sesión 2026-08-21 — Bujes de biela Indubrón, tolerancias con signo y la forma de las guías
+
+Tres pedidos del dueño en una tanda, todos sobre la **búsqueda por medidas**.
+
+**1. Verificar la extracción de Indubrón antes de cargarla.** El dueño pasó el
+`Indubrón.xlsm` y el TXT ya extraído, y pidió chequear que estuviera bien antes
+de hacer la pantalla. Se comparó **fila por fila y campo por campo** contra la
+hoja `CATALOGO BIELA`: **190 filas, 13 campos cada una, cero diferencias**
+(normalizando coma/punto decimal y espacios). Es la primera extracción que sale
+exacta — la de pistones Persan, que salió de un PDF, tenía 10 de 35 filas con
+columnas corridas.
+
+Lo que sí hay que saber de esos datos, y no es error: **7 códigos aparecen dos
+veces**, bajo dos marcas (el I-115 es el buje del Corsa 1.7 D y el del Isuzu
+4EE1); el catálogo los lista así y se muestran las dos fichas. Y **3 filas son
+referencias cruzadas** ("VER CITROEN", "VER FORD") sin ninguna medida: se cargan
+igual, porque buscando "Ford" tienen que aparecer para mandar a la ficha que sí
+tiene los datos.
+
+**2. La pestaña "Bujes de biela"**, quinta familia del buscador. 190 fichas en
+`CRAC/tecnicos/bujes_biela.json`, generadas por
+`scripts/convertir_bujes_indubron.py` desde el TXT, que quedó en
+`CRAC/tecnicos/fuentes/`. Se filtra por **Ø perno, Ø exterior, ancho y Ø interior
+semiterminado**, más código y motor.
+
+- El **Ø exterior** no es un número sino una familia: el STD y hasta siete
+  sobremedidas (003, 005, 010, 015, 020, 030, 040). Se buscan todas a la vez con
+  el mismo mecanismo que el "Ø exterior" de camisas, y la pantalla resalta cuál
+  fue la que matcheó.
+- **429 códigos del proveedor cruzados** (`B I I-001  STD` y compañía: categoría
+  B, marca I de Indubrón, el número a tres dígitos y la sobremedida). **24
+  códigos del catálogo no están en la lista del proveedor** y salen con
+  "Consultar", como corresponde. El sufijo de letra cuenta: I-143 e I-143X son
+  dos productos y no comparten precio.
+- Medidas dobles: el Ø exterior STD viene con su banda de tolerancia
+  ("35,04/07") y veinte bujes son escalonados, con dos anchos ("14,60/20,20").
+  Se guardan los dos valores y la ficha entra si **cualquiera** sirve — el
+  escalonado aparece buscando 14,6 y buscando 20,2, pero no buscando 17.
+
+**3. Tolerancia con signo (`+` / `−`).** Pedido con el caso que lo motivó: buscó
+una guía de válvula de 40 y después encontró una de 50 que también le servía.
+Ahora el casillero de tolerancia acepta signo: `+` es "ese valor o más", `−` es
+"ese valor o menos", sin signo sigue siendo el `±` de siempre, y con número al
+lado el signo acota (`+2` sobre 40 es de 40 a 42). Se cambia con un botón de
+tres estados entre los dos casilleros **o** escribiéndolo adelante del número.
+Vale para las cinco familias, porque la regla vive en un solo lugar
+(`_rango()` de `app/tecnicos.py`). El resumen de arriba de la tabla lo dice con
+palabras: "Ø perno: 45 mm o más", "45 a 47 mm".
+
+**4. La forma de las guías.** El dueño preguntó si se podía acceder a la forma,
+que no está en la tabla. **El dato ya estaba en los datos** (`extra.forma` de
+`guias.json`, viene del catálogo RYC: F, A-1, P-3-6…) y solo faltaba mostrarlo:
+ahora es una columna más de la tabla de guías. Lo tienen **884 de 915** fichas.
+Lo que NO tenemos es el **dibujo** de cada forma: la letra remite a una lámina
+del catálogo RYC que no está en el repo. Si el dueño manda esa hoja del PDF, se
+puede recortar cada figura y mostrarla al lado del código (ver pendientes).
+
+**Suites:** `tests/backend_medidas.py` pasó de 35 a **71** verificaciones y
+`tests/ui_medidas.mjs` de 24 a **46**, con los casos de bujes (las dos fichas del
+mismo código, el Ø exterior por sobremedida, el buje escalonado por sus dos
+anchos, el trapezoidal sin el precio del recto), los del signo (`+`, `−`, `+2`,
+el valor exacto en los dos, y que el `+` **llegue entero por la URL**: viaja como
+`%2B` y si se escapara mal la tolerancia se caería al ±0,5 sin avisar) y el de
+la columna Forma. Las dos verdes, más `backend_grupos.py` como control de que no
+se rompió nada.
+
 ## Próximo paso
 
 **Producción y `master` están sincronizados en `932aa01`**, deployado y
@@ -958,13 +1024,22 @@ Pendientes, en orden de lo que más conviene atacar:
      13,80 mm en un pistón con 65,00 de altura de compresión). El script los
      descarta con esa regla —positivo y mayor que la altura de compresión— en
      vez de cargar un número que haría mentir al filtro de "alto total".
-2. **Tablero de estados del trabajo** (Aprobado → Repuestos pedidos → En taller → Listo → Entregado). El dueño lo pidió explícitamente para más adelante, "cuando nos familiaricemos con el programa". Es la única parte del negocio que el sistema no toca: hoy `aprobado_en` es un flag binario sin consecuencia. Barato de hacer — los datos ya están, hace falta una columna `estado`, una tabla de cambios de estado y una pantalla.
-3. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
-4. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
-5. ~~**Unificar la grafía "Chiappo" / "Chicappo"**~~ → **resuelto el 2026-08-11**: el dueño confirmó que la correcta es **Chiappo**, y el PDF ya la usa (verificado contra producción).
-6. ~~**Opción "no cotizar" por repuesto**~~ → **resuelto el 2026-08-18**: al caerse la regla del "más caro" ya no hay nada por lo que competir, y la casilla **Opcional** cubre justo ese caso (queda en la lista para pedir, sale en el PDF y no suma al total).
-7. **Repuestos fuera de catálogo en la ficha del motor** — hoy los repuestos sin código quedan solo en el presupuesto. El dueño los quiere también en el motor; lo dejó para una segunda tanda (2026-08-14) porque la ficha se indexa por código del proveedor y guardarlos exige tocar el esquema.
-8. **Casilla invertida en el paso Repuestos** — en vez de "este repuesto también es de este motor" (la casilla que se está diseñando el 2026-08-14, que marca pertenencia a la ficha), listar todo lo de la ficha con una casilla de "entra en este presupuesto". Se evaluó el 2026-08-14 al diseñar el paso Repuestos y **el dueño la dejó explícitamente para más adelante**: se descartó por ahora porque dos casillas por fila (una para el motor y otra para el presupuesto) se pisan entre sí, y porque la cantidad ya dice "entra en el presupuesto".
+2. **El dibujo de la forma de las guías** (2026-08-21). La columna **Forma** ya
+   está en la tabla con el código del catálogo RYC (F, A-1, P-3-6…), que es lo
+   que el dato tiene: lo traen 884 de las 915 guías. Lo que falta para que se
+   vea la **figura** es la lámina del catálogo RYC donde están dibujadas —no
+   está en el repo—. Si el dueño manda esa hoja del PDF, se recorta cada figura
+   (como se hizo con los pistones Mahle en la skill `foto-mahle-006`) y se
+   muestra al lado del código, o en el tooltip. Mientras tanto, el código solo
+   ya sirve para comparar dos guías entre sí.
+
+3. **Tablero de estados del trabajo** (Aprobado → Repuestos pedidos → En taller → Listo → Entregado). El dueño lo pidió explícitamente para más adelante, "cuando nos familiaricemos con el programa". Es la única parte del negocio que el sistema no toca: hoy `aprobado_en` es un flag binario sin consecuencia. Barato de hacer — los datos ya están, hace falta una columna `estado`, una tabla de cambios de estado y una pantalla.
+4. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
+5. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
+6. ~~**Unificar la grafía "Chiappo" / "Chicappo"**~~ → **resuelto el 2026-08-11**: el dueño confirmó que la correcta es **Chiappo**, y el PDF ya la usa (verificado contra producción).
+7. ~~**Opción "no cotizar" por repuesto**~~ → **resuelto el 2026-08-18**: al caerse la regla del "más caro" ya no hay nada por lo que competir, y la casilla **Opcional** cubre justo ese caso (queda en la lista para pedir, sale en el PDF y no suma al total).
+8. **Repuestos fuera de catálogo en la ficha del motor** — hoy los repuestos sin código quedan solo en el presupuesto. El dueño los quiere también en el motor; lo dejó para una segunda tanda (2026-08-14) porque la ficha se indexa por código del proveedor y guardarlos exige tocar el esquema.
+9. **Casilla invertida en el paso Repuestos** — en vez de "este repuesto también es de este motor" (la casilla que se está diseñando el 2026-08-14, que marca pertenencia a la ficha), listar todo lo de la ficha con una casilla de "entra en este presupuesto". Se evaluó el 2026-08-14 al diseñar el paso Repuestos y **el dueño la dejó explícitamente para más adelante**: se descartó por ahora porque dos casillas por fila (una para el motor y otra para el presupuesto) se pisan entre sí, y porque la cantidad ya dice "entra en el presupuesto".
 
 Como puede haber más de una sesión de Claude tocando este repo en paralelo (celular + escritorio), conviene chequear ramas remotas pendientes al empezar cada sesión.
 

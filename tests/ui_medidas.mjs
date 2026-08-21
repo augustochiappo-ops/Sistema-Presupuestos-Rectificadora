@@ -61,11 +61,12 @@ await esperar(900)
 check('se entra a la pantalla', page.url().includes('busqueda-medidas'), page.url())
 
 console.log('\n=== Estado inicial ===')
-check('las cuatro familias con su total',
+check('las cinco familias con su total',
   (await page.locator('button', { hasText: /^Camisas\s*280$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Guías de válvulas\s*915$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Subconjuntos\s*201$/ }).count()) === 1
-  && (await page.locator('button', { hasText: /^Pistones\s*35$/ }).count()) === 1)
+  && (await page.locator('button', { hasText: /^Pistones\s*35$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Bujes de biela\s*190$/ }).count()) === 1)
 check('en camisas el filtro se llama Ø exterior',
   await page.locator('label', { hasText: 'Ø EXTERIOR' }).count() === 1
   && await page.locator('label', { hasText: 'sobremedida' }).count() === 0)
@@ -156,6 +157,76 @@ check('el pistón con datos dudosos aparece igual',
 check('y las medidas que no se pudieron leer van con "?"',
   (await dudoso.locator('td', { hasText: /^\?$/ }).count()) >= 3,
   await dudoso.textContent())
+
+console.log('\n=== Guías: la forma sale en la tabla ===')
+// El código de forma del catálogo (F, A-1, P-3-6…) estaba en los datos pero no
+// se mostraba, y es lo primero que se mira para saber si una guía reemplaza a
+// otra.
+await page.fill('input[placeholder="Código…"]', '')
+await page.locator('button', { hasText: 'Guías de válvulas' }).click()
+await esperar(500)
+await page.fill('input[placeholder="Código…"]', '3084')
+await esperar(1200)
+check('la columna Forma está', await page.locator('th', { hasText: 'Forma' }).count() === 1)
+const guiaForma = await textoDeFila(0)
+check('y trae la forma de la guía', /8,02.*13,08.*40,5.*F.*Fundición Gris/.test(guiaForma), guiaForma)
+
+console.log('\n=== Bujes de biela (Indubrón) ===')
+await page.fill('input[placeholder="Código…"]', '')
+await page.locator('button', { hasText: 'Bujes de biela' }).click()
+await esperar(500)
+await page.fill('input[placeholder="Código…"]', 'I-115')
+await esperar(1200)
+check('el mismo código aparece bajo sus dos marcas', await filas().count() === 2, await filas().count())
+const buje = await textoDeFila(0)
+check('con las medidas del catálogo', buje.includes('I-115') && buje.includes('CHEVROLET') && buje.includes('24,5'), buje)
+check('el Ø exterior STD conserva su banda', buje.includes('28,15/18'), buje)
+check('y las siete sobremedidas', buje.includes('28,26') && buje.includes('29,14'), buje)
+check('con precio de la base', /\$\s?[\d.]+/.test(buje), buje)
+await page.screenshot({ path: path.join(SHOT, 'medidas-bujes.png'), fullPage: true })
+
+console.log('\n=== Tolerancia con signo: ese valor o más / o menos ===')
+// Vaciar el código ya deja la pantalla sin filtros; el botón "Limpiar filtros"
+// desaparece cuando no queda ninguno, así que acá no hay nada que apretar.
+await page.fill('input[placeholder="Código…"]', '')
+await esperar(400)
+const perno = page.locator('label', { hasText: 'Ø PERNO' })
+const signo = perno.locator('button')
+const pernos = () => filas().evaluateAll((trs) => trs.map(
+  (tr) => parseFloat(tr.children[3].textContent.replace('.', '').replace(',', '.')),
+))
+await perno.locator('input').nth(0).fill('45')
+await esperar(1200)
+const conTolerancia = await pernos()
+check('el botón arranca en ±', (await signo.textContent()).trim() === '±')
+check('con ±0,5 solo salen los de 45', conTolerancia.every((v) => v >= 44.5 && v <= 45.5), conTolerancia)
+
+await signo.click()
+await esperar(1200)
+const conMas = await pernos()
+check('un clic lo pasa a +', (await signo.textContent()).trim() === '+')
+check('y trae también los más gruesos',
+  conMas.length > conTolerancia.length && conMas.every((v) => v >= 45), conMas)
+check('el tag lo dice con palabras', await page.locator('text=/Ø perno: 45 mm o más/').count() === 1)
+
+await signo.click()
+await esperar(1200)
+const conMenos = await pernos()
+check('otro clic lo pasa a −', (await signo.textContent()).trim() === '−')
+check('y trae los más finos', conMenos.every((v) => v <= 45) && conMenos.length > conTolerancia.length, conMenos.slice(0, 5))
+check('con su tag', await page.locator('text=/Ø perno: 45 mm o menos/').count() === 1)
+
+// Escribir el signo en el casillero es lo que hace todo el mundo: tiene que
+// terminar en el mismo estado que apretar el botón.
+await signo.click()
+await perno.locator('input').nth(1).fill('+2')
+await esperar(1200)
+check('escribir "+2" mueve el signo al botón',
+  (await signo.textContent()).trim() === '+' && await perno.locator('input').nth(1).inputValue() === '2')
+check('y el rango queda acotado de un lado',
+  (await pernos()).every((v) => v >= 45 && v <= 47), await pernos())
+check('con el tag del rango', await page.locator('text=/Ø perno: 45 a 47 mm/').count() === 1)
+await page.screenshot({ path: path.join(SHOT, 'medidas-signo.png'), fullPage: true })
 
 console.log('\n=== Una pieza sin equivalencia no inventa precio ===')
 await page.fill('input[placeholder="Código…"]', '')

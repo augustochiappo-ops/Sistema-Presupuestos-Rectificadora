@@ -3,8 +3,8 @@
 Cuatro suites. Dos cubren el bloque de **grupos de repuestos** (qué cotiza cada
 categoría, opcionales, ficha del motor, pedido, medidas automáticas), escritas el
 2026-08-10 junto con la feature; las otras dos cubren la **búsqueda por
-medidas** (los catálogos técnicos de camisas, guías y subconjuntos), escritas el
-2026-08-19 junto con esa pantalla. Sirven para no romperlas al tocar repuestos
+medidas** (los catálogos técnicos de camisas, guías, subconjuntos, pistones y
+bujes de biela), escritas el 2026-08-19 junto con esa pantalla. Sirven para no romperlas al tocar repuestos
 más adelante.
 
 No son tests unitarios ni usan pytest: son scripts que corren de punta a punta
@@ -141,7 +141,7 @@ el motor tenga ficha cargada.
 
 ## 3. Backend — `backend_medidas.py`
 
-35 verificaciones sobre la búsqueda por medidas (`app/tecnicos.py`): los
+71 verificaciones sobre la búsqueda por medidas (`app/tecnicos.py`): los
 catálogos técnicos que trae el repo y su cruce con el catálogo del proveedor.
 
 ```bash
@@ -151,33 +151,39 @@ $VENV/bin/python tests/backend_medidas.py
 
 | Bloque | Qué verifica |
 |---|---|
-| Catálogos | Las tres familias cargadas con sus totales exactos (280 camisas, 915 guías, 201 subconjuntos) |
+| Catálogos | Las cinco familias cargadas con sus totales exactos (280 camisas, 915 guías, 201 subconjuntos, 35 pistones, 190 bujes de biela) |
 | Sin filtros | No devuelve el catálogo entero, y una familia inexistente no explota |
 | Valor ± tolerancia | Encuentra con el valor exacto y con ±0,5, deja de encontrar con ±0,1, usa ±0,5 si no se escribe tolerancia, y acepta la coma decimal |
 | Acumulación | Sumar un segundo filtro achica el resultado y no pierde la pieza buscada |
 | Precio y stock | Salen de `crac_repuestos` (no del catálogo técnico), el código del proveedor es el exacto (con su relleno de alineación) y una ficha sin equivalencia viene con `precio: null` en vez de con un precio inventado |
 | Subconjuntos | Un código Mahle tiene un código del proveedor **por sobremedida**: se elige el que tiene stock y precio, y se informa cuál |
+| Bujes de biela | El mismo código bajo dos marcas son dos fichas; el Ø exterior encuentra por cualquier sobremedida y dice cuál matcheó; un buje escalonado aparece por sus **dos** anchos y no por el promedio; el trapezoidal (I-143X) no se lleva el precio del recto (I-143) |
+| Tolerancia con signo | `+` trae el valor y todo lo mayor, `−` el valor y todo lo menor, el valor exacto entra en los dos, `+2` acota de un solo lado, y el `+` **llega entero por la URL** (viaja como `%2B`) |
 | Texto | Aplicación por palabras sueltas y en cualquier orden, sin acentos ni mayúsculas; código por fragmento |
 | Tope | Se devuelven 100 como mucho y se avisa con `capped` |
 | HTTP | 401 sin sesión; con sesión, familias y búsqueda |
 
 ## 4. UI — `ui_medidas.mjs`
 
-24 verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
+46 verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
 
 ```bash
 source /tmp/rect-corrida/entorno.sh
 node tests/ui_medidas.mjs
 ```
 
-Qué cubre: la sección en el menú lateral · las tres pestañas con su total ·
+Qué cubre: la sección en el menú lateral · las cinco pestañas con su total ·
 estado inicial sin resultados y con **ejemplos clicables** · buscar por medida y
 que **todas** las filas caigan dentro del rango pedido · achicar la tolerancia y
 ver menos filas · el tag del filtro activo · **ordenar** haciendo clic en
 cualquier parte del encabezado · guías por código con su precio y su stock ·
 **los filtros se guardan por familia** (cambiar de pestaña y volver no borra lo
 escrito) · subconjuntos mostrando de qué sobremedida es el precio · una camisa
-sin equivalencia diciendo "Consultar" en vez de un precio.
+sin equivalencia diciendo "Consultar" en vez de un precio · la **forma** en la
+tabla de guías · bujes de biela con su banda de tolerancia y sus siete
+sobremedidas · el **botón de signo** de la tolerancia (± → + → −), que escribir
+"+2" en el casillero mueve el signo al botón, y que el tag de arriba lo diga con
+palabras ("45 mm o más", "45 a 47 mm").
 
 Es de solo lectura, así que puede correr antes o después de `ui_grupos.mjs` sin
 pisarle nada.

@@ -64,6 +64,14 @@ ESPEC = {
         "medidas": ["diam_piston", "alt_piston", "diam_perno"],
         "descripcion": True,
     },
+    "bujes_biela": {
+        "label": "Bujes de biela",
+        "medidas": ["diam_perno", "diam_int", "ancho"],
+        # El Ø exterior de un buje no es un número sino una familia: el STD y
+        # hasta siete sobremedidas. Se filtra como en camisas, contra la lista
+        # entera, y la pantalla marca cuál fue la que matcheó.
+        "sobremedidas": True,
+    },
 }
 
 _cache: dict[str, list[dict]] = {}
@@ -118,16 +126,48 @@ def get_familias() -> list[dict]:
 
 
 # ─── Filtros ─────────────────────────────────────────────────────────────────
-def _rango(valor, tolerancia) -> tuple[float, float] | None:
-    """`valor ± tolerancia`, o None si no se pidió filtrar por este campo."""
+def _numero(valor):
     try:
-        centro = float(str(valor).replace(",", "."))
+        return float(str(valor).replace(",", "."))
     except (TypeError, ValueError):
         return None
-    try:
-        margen = abs(float(str(tolerancia).replace(",", ".")))
-    except (TypeError, ValueError):
-        margen = TOLERANCIA_DEFECTO
+
+
+def _rango(valor, tolerancia) -> tuple[float, float] | None:
+    """
+    El rango de una medida buscada, o None si no se pidió filtrar por este campo.
+
+    La tolerancia puede llevar signo, y el signo la hace de un solo lado:
+
+        "0.5"  → 40 ± 0,5      (39,50 a 40,50)  — lo de siempre
+        "+"    → 40 o más      (40 a infinito)
+        "-"    → 40 o menos    (de -infinito a 40)
+        "+2"   → 40 a 42
+        "-2"   → 38 a 40
+
+    Sale de cómo busca el taller: una guía de 40 de largo entra donde va una de
+    50, así que "40 y para arriba" encuentra en un intento lo que con ± exige
+    adivinar la tolerancia. El signo solo, sin número, no pone tope.
+    """
+    centro = _numero(valor)
+    if centro is None:
+        return None
+
+    tol = str(tolerancia or "").strip().replace(",", ".")
+    signo = tol[0] if tol[:1] in ("+", "-") else ""
+    resto = tol[1:].strip() if signo else tol
+
+    margen = _numero(resto)
+    if margen is None:
+        # Sin número: con signo no hay tope de ese lado, sin signo vale el ±0,5
+        # de siempre.
+        margen = float("inf") if signo else TOLERANCIA_DEFECTO
+    margen = abs(margen)
+
+    if signo == "+":
+        return centro, centro + margen
+    if signo == "-":
+        return centro - margen, centro
     return centro - margen, centro + margen
 
 
@@ -136,9 +176,18 @@ def _en_rango(valor, rango: tuple[float, float]) -> bool:
     Una medida que la ficha no tiene NO entra en el rango. Es a propósito: si
     alguien filtra por largo, una ficha sin largo cargado no es una respuesta,
     es un dato que falta.
+
+    Una medida puede traer más de un valor y no uno solo: el Ø exterior STD de
+    un buje viene con su banda de tolerancia (35,04 y 35,07) y un buje
+    escalonado tiene dos anchos (14,60 y 20,20). Entra si CUALQUIERA de ellos
+    cae en el rango pedido — buscando 14,6 o buscando 20,2 aparece el mismo
+    buje escalonado, pero buscando 17 no aparece ninguno, porque un buje de
+    14,60/20,20 no tiene ningún ancho de 17.
     """
     if valor is None:
         return False
+    if isinstance(valor, (list, tuple)):
+        return any(_en_rango(v, rango) for v in valor)
     return rango[0] <= valor <= rango[1]
 
 

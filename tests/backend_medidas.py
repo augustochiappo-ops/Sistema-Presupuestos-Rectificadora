@@ -1,7 +1,8 @@
 """
 Suite de verificación de la búsqueda por medidas (`app/tecnicos.py`), contra los
-catálogos técnicos del repo (280 camisas, 915 guías, 201 subconjuntos y 35
-pistones) y los 64.250 repuestos del proveedor ya importados en la base.
+catálogos técnicos del repo (280 camisas, 915 guías, 201 subconjuntos, 35
+pistones y 190 bujes de biela) y los 64.250 repuestos del proveedor ya
+importados en la base.
 
 Cómo se corre: ver tests/README.md. Resumen:
 
@@ -46,12 +47,15 @@ def codigos(resultado):
 print("\n=== 0. Catálogos cargados ===")
 db.init_db()
 familias = {f["id"]: f for f in tecnicos.get_familias()}
-check("están las cuatro familias",
-      sorted(familias) == ["camisas", "guias", "pistones", "subconjuntos"], list(familias))
+check("están las cinco familias",
+      sorted(familias) == ["bujes_biela", "camisas", "guias", "pistones", "subconjuntos"],
+      list(familias))
 check("280 camisas", familias.get("camisas", {}).get("total") == 280, familias.get("camisas"))
 check("915 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") == 915, familias.get("guias"))
 check("201 subconjuntos", familias.get("subconjuntos", {}).get("total") == 201, familias.get("subconjuntos"))
 check("35 pistones (Persan)", familias.get("pistones", {}).get("total") == 35, familias.get("pistones"))
+check("190 bujes de biela (Indubrón)",
+      familias.get("bujes_biela", {}).get("total") == 190, familias.get("bujes_biela"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
 
 print("\n=== 1. Sin filtros no se devuelve el catálogo ===")
@@ -139,6 +143,86 @@ check("pero sí el motivo para revisarlo",
       set(dudoso["extra"]["revisar"]) >= {"diam_piston", "alt_piston", "diam_perno"}, dudoso["extra"]["revisar"])
 check("y el precio del proveedor igual está", dudoso["precio"] is not None, dudoso["precio"])
 
+print("\n=== 5 ter. Bujes de biela (Indubrón) ===")
+# El mismo buje puede estar listado bajo dos marcas (el I-115 es el del Corsa
+# 1.7 D y el del Isuzu 4EE1): son dos fichas, no una repetida por error.
+uno = tecnicos.buscar("bujes_biela", {"codigo": "I-115"})
+check("se encuentra por su código", codigos(uno) == ["I-115", "I-115"], codigos(uno))
+check("y aparece bajo sus dos marcas",
+      [x["marca"] for x in uno["resultados"]] == ["CHEVROLET", "ISUZU"],
+      [x["marca"] for x in uno["resultados"]])
+if uno["total"]:
+    b115 = uno["resultados"][0]
+    check("con las medidas del catálogo",
+          b115["medidas"] == {"diam_perno": 25.0, "diam_int": 24.5, "ancho": 24.0}, b115["medidas"])
+    check("el STD y las siete sobremedidas",
+          [x["label"] for x in b115["extra"]["sobremedidas"]]
+          == ["STD", "003", "005", "010", "015", "020", "030", "040"],
+          b115["extra"]["sobremedidas"])
+    check("el Ø exterior STD conserva su banda de tolerancia",
+          b115["extra"]["sobremedidas"][0]["valor"] == [28.15, 28.18], b115["extra"]["sobremedidas"][0])
+    check("y trae precio del proveedor",
+          b115["codigo_crac"] == "B I I-115  STD" and b115["precio"] is not None, b115["codigo_crac"])
+
+r = tecnicos.buscar("bujes_biela", {"diam_perno": "25", "tol_diam_perno": "0.1"})
+check("el Ø del perno filtra", "I-115" in codigos(r) and r["total"] > 1, r["total"])
+
+# El Ø exterior se busca contra el STD y contra todas las sobremedidas, como en
+# camisas: 29,14 es la sobremedida 040 del I-115.
+r = tecnicos.buscar("bujes_biela", {"diam_sobremedida": "29.14", "tol_diam_sobremedida": "0.01"})
+check("el Ø exterior encuentra por una sobremedida", "I-115" in codigos(r), codigos(r)[:5])
+if "I-115" in codigos(r):
+    ficha = [x for x in r["resultados"] if x["codigo"] == "I-115"][0]
+    check("y dice cuál matcheó",
+          [x["label"] for x in ficha["sobremedidas_match"]] == ["040"], ficha["sobremedidas_match"])
+
+# I-143X es trapezoidal: 14,60 de un lado y 20,20 del otro. Tiene los dos
+# anchos, no los 17 que quedarían de promediarlos.
+r = tecnicos.buscar("bujes_biela", {"ancho": "14.6", "tol_ancho": "0.05"})
+check("un buje escalonado aparece por su ancho chico", "I-143X" in codigos(r), codigos(r)[:5])
+r = tecnicos.buscar("bujes_biela", {"ancho": "20.2", "tol_ancho": "0.05"})
+check("y también por el grande", "I-143X" in codigos(r), codigos(r)[:5])
+r = tecnicos.buscar("bujes_biela", {"ancho": "17", "tol_ancho": "0.05"})
+check("pero no por un ancho que no tiene", "I-143X" not in codigos(r), codigos(r)[:5])
+
+r = tecnicos.buscar("bujes_biela", {"aplicacion": "corsa"})
+check("se busca por marca y modelo juntos", "I-115" in codigos(r), codigos(r))
+
+# "I-143" (Citroën) e "I-143X" (el trapezoidal) son dos productos: el precio de
+# uno no se le puede poner al otro.
+trap = tecnicos.buscar("bujes_biela", {"codigo": "I-143X"})["resultados"][0]
+check("el trapezoidal no se lleva el código del recto",
+      trap["codigo_crac"] is None and trap["precio"] is None, trap["codigo_crac"])
+
+print("\n=== 5 quater. Tolerancia con signo: ese valor o más / o menos ===")
+# Lo que pidió el dueño: una guía de 40 de largo entra donde va una de 50, así
+# que "40 y para arriba" tiene que encontrarlas a las dos.
+base = {"diam_vastago": "8", "tol_diam_vastago": "0"}
+solo = tecnicos.buscar("guias", {**base, "largo": "40.5", "tol_largo": "0"})
+mas = tecnicos.buscar("guias", {**base, "largo": "40.5", "tol_largo": "+"})
+menos = tecnicos.buscar("guias", {**base, "largo": "40.5", "tol_largo": "-"})
+check("con + entran las más largas", mas["total"] > solo["total"], (solo["total"], mas["total"]))
+check("con − entran las más cortas", menos["total"] > solo["total"], (solo["total"], menos["total"]))
+largos_mas = [x["medidas"]["largo"] for x in mas["resultados"]]
+largos_menos = [x["medidas"]["largo"] for x in menos["resultados"]]
+check("+ no trae ninguna más corta que el valor", all(l >= 40.5 for l in largos_mas), sorted(largos_mas)[:3])
+check("− no trae ninguna más larga", all(l <= 40.5 for l in largos_menos), sorted(largos_menos)[-3:])
+check("el valor exacto entra en los dos",
+      set(codigos(solo)) <= set(codigos(mas)) and set(codigos(solo)) <= set(codigos(menos)))
+
+# Con número, el signo acota de un solo lado: "+2" es de 40,5 a 42,5.
+acotado = tecnicos.buscar("guias", {**base, "largo": "40.5", "tol_largo": "+2"})
+check("con +2 el rango tiene tope",
+      all(40.5 <= x["medidas"]["largo"] <= 42.5 for x in acotado["resultados"]),
+      [x["medidas"]["largo"] for x in acotado["resultados"]])
+check("y es menos que sin tope", acotado["total"] <= mas["total"], (acotado["total"], mas["total"]))
+
+con_signo = tecnicos.buscar("bujes_biela", {"diam_perno": "45", "tol_diam_perno": "+"})
+check("el signo también sirve en bujes", con_signo["total"] > 0, con_signo["total"])
+check("y ningún perno es menor al pedido",
+      all(x["medidas"]["diam_perno"] >= 45 for x in con_signo["resultados"]),
+      [x["medidas"]["diam_perno"] for x in con_signo["resultados"]][:5])
+
 print("\n=== 6. Filtros de texto ===")
 r = tecnicos.buscar("guias", {"aplicacion": "fiat tractor"})
 check("la aplicación busca por palabras sueltas y en cualquier orden", r["total"] > 0, r["total"])
@@ -169,10 +253,17 @@ cliente = app.test_client()
 check("sin sesión no se entra", cliente.get("/api/tecnicos/familias").status_code == 401)
 cliente.post("/api/auth/login", json={"usuario": os.environ["APP_USERNAME"], "password": CLAVE})
 resp = cliente.get("/api/tecnicos/familias")
-check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 4, resp.get_json())
+check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 5, resp.get_json())
 resp = cliente.get("/api/tecnicos/buscar?familia=camisas&diam_int=56.5&tol_diam_int=0")
 datos = resp.get_json()
 check("y la búsqueda", resp.status_code == 200 and "UC 2112" in [r["codigo"] for r in datos["resultados"]], datos)
+# El "+" viaja como %2B: si se escapara mal llegaría un espacio, la tolerancia
+# se caería al ±0,5 de siempre y nadie se enteraría.
+resp = cliente.get("/api/tecnicos/buscar?familia=bujes_biela&diam_perno=45&tol_diam_perno=%2B")
+datos = resp.get_json()
+check("y el signo + llega entero por la URL",
+      resp.status_code == 200 and datos["total"] > 0
+      and all(r["medidas"]["diam_perno"] >= 45 for r in datos["resultados"]), datos["total"])
 
 print("\n" + "=" * 50)
 if fallos:

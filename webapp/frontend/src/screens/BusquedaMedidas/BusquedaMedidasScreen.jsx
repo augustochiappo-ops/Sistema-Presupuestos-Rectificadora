@@ -15,6 +15,9 @@ const TIPO_GUIA = { A: 'Admisión', E: 'Escape', AE: 'A/E' }
 
 function formatMm(valor) {
   if (valor === null || valor === undefined || valor === '') return '—'
+  // Una medida puede traer dos valores: el Ø exterior STD de un buje viene con
+  // su banda de tolerancia y un buje escalonado tiene dos anchos.
+  if (Array.isArray(valor)) return valor.map(formatMm).join(' / ')
   const n = Number(valor)
   if (Number.isNaN(n)) return String(valor)
   return n.toLocaleString('es-AR', { maximumFractionDigits: 2 })
@@ -41,13 +44,13 @@ function celdaSobremedidas(fila) {
         return (
           <span
             key={`${s.label}-${i}`}
-            title={s.label || undefined}
+            title={[s.label, s.texto && `${formatMm(s.valor)} mm`].filter(Boolean).join(' — ') || undefined}
             style={{
               color: resaltada ? 'var(--text-strong)' : 'var(--text-muted)',
               fontWeight: resaltada ? 'var(--weight-semibold)' : 'var(--weight-regular)',
             }}
           >
-            {formatMm(s.valor)}
+            {s.texto || formatMm(s.valor)}
           </span>
         )
       })}
@@ -89,9 +92,28 @@ function celda(col, fila) {
   }
 }
 
+/*
+ * Cómo se lee un filtro de medida en el resumen de arriba de la tabla. Con
+ * signo la tolerancia es de un solo lado, así que la etiqueta lo dice con
+ * palabras: "40 mm o más" en vez de un "± +" que no significa nada.
+ */
+function etiquetaMedida(valor, tolerancia) {
+  const texto = (tolerancia ?? '').toString().trim()
+  const signo = texto.startsWith('+') ? '+' : texto.startsWith('-') ? '-' : ''
+  const magnitud = (signo ? texto.slice(1) : texto).trim()
+  if (!signo) return `${valor} ± ${magnitud || '0,5'} mm`
+  if (!magnitud) return `${valor} mm o ${signo === '+' ? 'más' : 'menos'}`
+  const desde = Number(valor.replace(',', '.'))
+  const salto = Number(magnitud.replace(',', '.'))
+  if (Number.isNaN(desde) || Number.isNaN(salto)) return `${valor} ${signo}${magnitud} mm`
+  const [a, b] = signo === '+' ? [desde, desde + salto] : [desde - salto, desde]
+  return `${formatMm(a)} a ${formatMm(b)} mm`
+}
+
 function comparar(a, b, key) {
-  const va = a[key]
-  const vb = b[key]
+  const primero = (v) => (Array.isArray(v) ? v[0] : v)
+  const va = primero(a[key])
+  const vb = primero(b[key])
   const vacio = (v) => v === null || v === undefined || v === ''
   // Lo que no tiene dato va siempre al final, ordene como ordene: una fila sin
   // largo cargado no es "la más corta".
@@ -219,8 +241,7 @@ export default function BusquedaMedidasScreen() {
     for (const m of familia.medidas || []) {
       const valor = (filtros[m.campo] ?? '').toString().trim()
       if (!valor) continue
-      const tol = (filtros[`tol_${m.campo}`] ?? '').toString().trim() || '0,5'
-      puestas.push(`${m.label}: ${valor} ± ${tol} mm`)
+      puestas.push(`${m.label}: ${etiquetaMedida(valor, filtros[`tol_${m.campo}`])}`)
     }
     for (const t of familia.textos || []) {
       const valor = (filtros[t.campo] ?? '').toString().trim()
@@ -290,6 +311,15 @@ export default function BusquedaMedidasScreen() {
               onTolerancia={(v) => setFiltro(`tol_${m.campo}`, v)}
             />
           ))}
+        </div>
+
+        {/* El botón del signo no se explica solo la primera vez, y es el que
+            evita tener que adivinar la tolerancia cuando lo que se busca es
+            "de acá para arriba". */}
+        <div style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)' }}>
+          El botón entre los dos casilleros cambia cómo se busca la medida:
+          <strong> ±</strong> hacia los dos lados, <strong>+</strong> ese valor o más,
+          <strong> −</strong> ese valor o menos.
         </div>
 
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
