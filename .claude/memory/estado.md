@@ -992,12 +992,13 @@ la forma (que el dibujo **cargue de verdad** y no salga un cuadrito roto, que la
 
 ## Próximo paso
 
-**Producción y `master` están sincronizados en `b96eb94`**, deployado y
+**Producción y `master` están sincronizados en `31d5ebd`**, deployado y
 verificado por HTTP: el JS que sirve producción es el mismo archivo commiteado
-(`index-DK_d2Eeh.js`) y los dibujos de forma responden con su tamaño exacto
-(`/formas/A.png`, 3.181 bytes). Ese commit trae **los dibujos de las formas de
-guía**; los dos anteriores (`f157d14` y `05d7012`), los **bujes de biela
-Indubrón** y la **tolerancia con signo** (ver la sesión del 2026-08-21, arriba).
+(`index-CfWxz9Is.js`) y los dibujos de forma responden con su tamaño exacto
+(`/formas/A.png`, 3.181 bytes). Ese commit trae **el nombre de los ocho
+detalles** de la forma; antes, `b96eb94` trae **los dibujos de las formas de
+guía**, y `f157d14` / `05d7012` los **bujes de biela Indubrón** y la
+**tolerancia con signo** (ver la sesión del 2026-08-21, arriba).
 
 Antes de eso, `9b6b47f`: pistones Persan en el buscador y el "Ø exterior" de
 camisas.
