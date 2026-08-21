@@ -984,11 +984,12 @@ la forma (que el dibujo **cargue de verdad** y no salga un cuadrito roto, que la
 
 ## Próximo paso
 
-**`master` está en `f157d14`** — bujes de biela Indubrón, tolerancia con signo
-(`+` / `−`) y la columna Forma en guías (ver la sesión del 2026-08-21, arriba).
-**Falta deployarlo:** en esta sesión el dueño no pasó el `DEPLOY_SECRET`, así
-que producción sigue sirviendo lo anterior. El deploy es el `curl` de siempre a
-`/api/deploy` con el secreto de la sesión.
+**Producción y `master` están sincronizados en `b96eb94`**, deployado y
+verificado por HTTP: el JS que sirve producción es el mismo archivo commiteado
+(`index-DK_d2Eeh.js`) y los dibujos de forma responden con su tamaño exacto
+(`/formas/A.png`, 3.181 bytes). Ese commit trae **los dibujos de las formas de
+guía**; los dos anteriores (`f157d14` y `05d7012`), los **bujes de biela
+Indubrón** y la **tolerancia con signo** (ver la sesión del 2026-08-21, arriba).
 
 Antes de eso, `9b6b47f`: pistones Persan en el buscador y el "Ø exterior" de
 camisas.
