@@ -971,7 +971,7 @@ se rompió nada.
 
 ## Próximo paso
 
-**`master` está en `05d7012`** — bujes de biela Indubrón, tolerancia con signo
+**`master` está en `f157d14`** — bujes de biela Indubrón, tolerancia con signo
 (`+` / `−`) y la columna Forma en guías (ver la sesión del 2026-08-21, arriba).
 **Falta deployarlo:** en esta sesión el dueño no pasó el `DEPLOY_SECRET`, así
 que producción sigue sirviendo lo anterior. El deploy es el `curl` de siempre a
