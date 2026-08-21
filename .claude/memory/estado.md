@@ -971,7 +971,16 @@ se rompió nada.
 
 ## Próximo paso
 
-**Producción y `master` están sincronizados en `932aa01`**, deployado y
+**`master` está en `05d7012`** — bujes de biela Indubrón, tolerancia con signo
+(`+` / `−`) y la columna Forma en guías (ver la sesión del 2026-08-21, arriba).
+**Falta deployarlo:** en esta sesión el dueño no pasó el `DEPLOY_SECRET`, así
+que producción sigue sirviendo lo anterior. El deploy es el `curl` de siempre a
+`/api/deploy` con el secreto de la sesión.
+
+Antes de eso, `9b6b47f`: pistones Persan en el buscador y el "Ø exterior" de
+camisas.
+
+Antes de eso, **producción y `master` sincronizados en `932aa01`**, deployado y
 verificado por HTTP (el JS que sirve es byte a byte el commiteado, y
 `/api/tecnicos/familias` responde 401 sin sesión, o sea que el blueprint nuevo
 está montado). Ese commit trae la **búsqueda por medidas** (ver la sección de la
