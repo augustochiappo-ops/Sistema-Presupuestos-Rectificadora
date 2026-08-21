@@ -242,6 +242,42 @@ if r["total"]:
     check("y dice qué sobremedida matcheó",
           [s["label"] for s in ficha["sobremedidas_match"]] == ['-.060"'], ficha["sobremedidas_match"])
 
+print("\n=== 7 bis. La forma de la guía ===")
+# "A-1-6" es el cuerpo A con los detalles 1 y 6. Algunas fichas venían sin los
+# guiones o con dos detalles pegados, y se normalizan al cargar el catálogo.
+r = tecnicos.buscar("guias", {"codigo": "NB059B"})
+check("una forma sin guiones se normaliza",
+      {x["extra"]["forma"] for x in r["resultados"]} == {"A-1"},
+      [x["extra"]["forma"] for x in r["resultados"]])
+r = tecnicos.buscar("guias", {"codigo": "R 3173"})
+check("y dos detalles pegados se separan",
+      r["resultados"][0]["extra"]["forma"] == "P-3-6", r["resultados"][0]["extra"]["forma"])
+check("la forma de siempre no se toca",
+      tecnicos.buscar("guias", {"codigo": "3084"})["resultados"][0]["extra"]["forma"] == "F")
+
+r = tecnicos.buscar("guias", {"forma": "A"})
+check("se puede filtrar por la letra del cuerpo",
+      r["total"] == 100 and all(x["extra"]["forma"].startswith("A") for x in r["resultados"]),
+      [x["extra"]["forma"] for x in r["resultados"]][:5])
+r = tecnicos.buscar("guias", {"forma": "B"})
+check("una forma con pocas guías las trae todas",
+      0 < r["total"] < 100 and all(x["extra"]["forma"].startswith("B") for x in r["resultados"]),
+      r["total"])
+r = tecnicos.buscar("guias", {"forma": "A", "diam_vastago": "8", "tol_diam_vastago": "0.1"})
+check("y se combina con las medidas",
+      r["total"] > 0 and all(x["extra"]["forma"].startswith("A") for x in r["resultados"]),
+      r["total"])
+check("la forma no existe como filtro en otras familias",
+      tecnicos.buscar("camisas", {"forma": "A"})["total"] == 0)
+
+# Cada letra que ofrece el filtro tiene que tener su dibujo recortado, o la
+# pantalla muestra un cuadrito roto.
+FORMAS_DIR = os.path.join(RAIZ, "webapp", "frontend", "public", "formas")
+faltan = [f"{l}.png" for l in "ABCEFGLMP" if not os.path.exists(os.path.join(FORMAS_DIR, f"{l}.png"))]
+faltan += [f"{d}.png" for d in ("detalle-1-2", "detalle-3-6", "detalle-7", "detalle-8")
+           if not os.path.exists(os.path.join(FORMAS_DIR, f"{d}.png"))]
+check("están los trece dibujos de la lámina", not faltan, faltan)
+
 print("\n=== 8. El tope de 100 se avisa ===")
 r = tecnicos.buscar("guias", {"aplicacion": "guia"})
 check("se devuelven 100 como mucho", r["total"] == 100, r["total"])

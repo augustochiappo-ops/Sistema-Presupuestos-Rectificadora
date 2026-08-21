@@ -55,6 +55,14 @@ export const FAMILIAS = [
       { campo: 'codigo', label: 'Código', ancho: 200, icono: 'tag' },
       { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
     ],
+    // Las nueve letras de la lámina no están todas en el catálogo, y hay una
+    // que la lámina no tiene: se lista lo que existe en las fichas (la "N" es
+    // de Indy y se muestra sin dibujo).
+    formas: {
+      campo: 'forma',
+      label: 'Forma del cuerpo',
+      valores: ['A', 'B', 'C', 'E', 'F', 'G', 'M', 'N', 'P'],
+    },
     opciones: [
       {
         campo: 'tipo',
@@ -75,10 +83,11 @@ export const FAMILIAS = [
       { key: 'diam_vastago', header: 'Ø vást.', width: 90, align: 'right', tipo: 'mm' },
       { key: 'diam_ext', header: 'Ø ext.', width: 90, align: 'right', tipo: 'mm' },
       { key: 'largo', header: 'Largo', width: 90, align: 'right', tipo: 'mm' },
-      // El código de forma del catálogo RYC (F, A-1, P-3-6…): dice si la guía
-      // es recta, con pestaña, escalonada. No está en la tabla de medidas y
-      // es lo primero que se mira para saber si una guía reemplaza a otra.
-      { key: 'forma', header: 'Forma', width: 90 },
+      // La forma del catálogo (F, A-1, P-3-6…): dice si la guía es recta, con
+      // pestaña, escalonada. Es lo primero que se mira para saber si una guía
+      // reemplaza a otra, y va con su dibujo porque la letra sola no se
+      // acuerda nadie.
+      { key: 'forma', header: 'Forma', width: 130, tipo: 'forma' },
       { key: 'material', header: 'Material', width: 130 },
       { key: 'precio', header: 'Precio', width: 120, align: 'right', tipo: 'precio' },
       { key: 'stock', header: 'Stock', width: 90, align: 'center', tipo: 'stock' },
@@ -214,5 +223,6 @@ export function camposDe(familia) {
     ...(familia.medidas || []).flatMap((m) => [m.campo, `tol_${m.campo}`]),
     ...(familia.textos || []).map((t) => t.campo),
     ...(familia.opciones || []).map((o) => o.campo),
+    ...(familia.formas ? [familia.formas.campo] : []),
   ]
 }

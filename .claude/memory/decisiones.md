@@ -461,3 +461,17 @@
 **Por qué así y no un intervalo continuo:** un buje de 14,60/20,20 tiene dos anchos, no todos los anchos entre 14,60 y 20,20. Tratarlo como intervalo lo haría aparecer buscando 17, que es un ancho que la pieza no tiene. Con "cualquiera de los dos" aparece buscando 14,6 y buscando 20,2, que es lo correcto en los dos casos — y para la banda de tolerancia del STD da lo mismo, porque son 3 centésimas de diferencia.
 **Por qué no promediar ni quedarse con uno:** promediar inventa una medida que no existe en ninguna pieza; quedarse con la primera hace que el buje escalonado sea inencontrable por su otro ancho, que es justo el que se mide cuando se mira del otro lado.
 **Fecha:** 2026-08-21
+
+## La forma de la guía se muestra dibujada, recortada de la lámina del catálogo
+**Decisión:** la columna **Forma** de guías muestra el dibujo de la forma al lado del código, el filtro es una fila de nueve dibujos clicables (no un `<select>` de letras), y un botón abre la **lámina completa** con las nueve formas y las cuatro figuras de detalles numerados.
+**Por qué:** el código solo ("A-1-6") no le dice nada a nadie que no tenga la lámina del catálogo al lado; la forma, en cambio, se reconoce de un vistazo cuando se tiene la guía en la mano. El dueño mandó la lámina justamente para eso (2026-08-21).
+**De dónde salen los dibujos:** de la última página del catálogo RYC 2025, una sola imagen de 1399×572. `scripts/recortar_formas_ryc.py` la corta en trece PNG (nueve formas + cuatro figuras de detalles) y les saca el fondo: cada pixel queda negro con transparencia proporcional a lo oscuro que era, así el trazo conserva el antialias y se ve limpio sobre fila blanca o beige, a 38 px en la tabla y a 104 px en la lámina. Son 66 KB en total, viven en `webapp/frontend/public/formas/` y se commitean.
+**Las cajas de recorte están escritas a mano, y eso es a propósito:** detectarlas por huecos de blanco separaba los números de su figura (el "1" y el "2" son dos etiquetas del MISMO dibujo, y el "4" cuelga por fuera del contorno). El script se defiende solo: avisa si a una caja le quedó tinta pegada por fuera, que es lo único que puede salir mal al retocarlas y en el recorte chico no se ve.
+**La "N" va sin dibujo.** Siete guías Indy tienen forma "N", que no está en la lámina de RYC (Indy y Nubo usan las mismas letras que RYC en todo lo demás). Se muestra el código sin dibujo: uno prestado sería peor que ninguno, misma regla que el "?" de los pistones.
+**Fecha:** 2026-08-21
+
+## La forma se normaliza al cargar el catálogo, no en el JSON
+**Decisión:** `_normalizar_forma()` en `app/tecnicos.py` arregla al vuelo las formas que vienen mal escritas: `A1` → `A-1`, `P36` → `P-3-6`, `A-13` → `A-1-3`. Son 6 fichas de 915.
+**Por qué ahí y no en el JSON:** el JSON se regenera cuando se procesa un catálogo nuevo, y una corrección escrita adentro se pierde en silencio la próxima vez. En el `_catalogo()` vale también para el catálogo que venga mañana, sin depender de que el script de conversión se acuerde.
+**La regla y por qué es segura:** la lámina define los detalles del **1 al 8**, así que un número de más de un dígito solo puede ser dos detalles pegados. Lo que no encaje en "letra + dígitos" se deja tal cual vino — mejor un código raro en pantalla que uno inventado.
+**Fecha:** 2026-08-21

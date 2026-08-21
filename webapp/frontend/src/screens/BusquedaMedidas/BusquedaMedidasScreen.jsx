@@ -7,6 +7,7 @@ import { StatusBadge } from '../../components/StatusBadge'
 import { Icon } from '../../components/Icon'
 import { formatPrecioARS } from '../../utils/format'
 import { CampoMedida } from './CampoMedida'
+import { CeldaForma, FiltroFormas, ModalFormas, describirForma } from './formas'
 import { FAMILIAS, camposDe } from './familias'
 
 const ESPERA_MS = 280
@@ -58,7 +59,7 @@ function celdaSobremedidas(fila) {
   )
 }
 
-function celda(col, fila) {
+function celda(col, fila, acciones) {
   const valor = fila[col.key]
 
   // Un dato que la ficha no trae y un dato que quedó en duda no son lo mismo:
@@ -87,6 +88,8 @@ function celda(col, fila) {
       return TIPO_GUIA[valor] || valor || '—'
     case 'sobremedidas':
       return celdaSobremedidas(fila)
+    case 'forma':
+      return <CeldaForma forma={valor} onVerLamina={acciones.verLamina} />
     default:
       return valor === null || valor === undefined || valor === '' ? '—' : valor
   }
@@ -133,6 +136,7 @@ export default function BusquedaMedidasScreen() {
   const [resultado, setResultado] = React.useState({ total: 0, capped: false, resultados: [] })
   const [cargando, setCargando] = React.useState(false)
   const [orden, setOrden] = React.useState(null)
+  const [lamina, setLamina] = React.useState(false)
 
   React.useEffect(() => {
     api.get('/tecnicos/familias').then(setFamilias).catch(() => setFamilias([]))
@@ -231,7 +235,7 @@ export default function BusquedaMedidasScreen() {
           {orden?.key === col.key && <Icon n={orden.dir === 1 ? 'arrow-up' : 'arrow-down'} s={13} />}
         </span>
       ),
-      render: (_, fila) => celda(col, fila),
+      render: (_, fila) => celda(col, fila, { verLamina: () => setLamina(true) }),
     })),
     [familia, orden],
   )
@@ -246,6 +250,10 @@ export default function BusquedaMedidasScreen() {
     for (const t of familia.textos || []) {
       const valor = (filtros[t.campo] ?? '').toString().trim()
       if (valor) puestas.push(`${t.label}: “${valor}”`)
+    }
+    if (familia.formas) {
+      const valor = (filtros[familia.formas.campo] ?? '').toString().trim()
+      if (valor) puestas.push(`${familia.formas.label}: ${describirForma(valor)}`)
     }
     for (const o of familia.opciones || []) {
       const valor = (filtros[o.campo] ?? '').toString().trim()
@@ -321,6 +329,15 @@ export default function BusquedaMedidasScreen() {
           <strong> ±</strong> hacia los dos lados, <strong>+</strong> ese valor o más,
           <strong> −</strong> ese valor o menos.
         </div>
+
+        {familia.formas && (
+          <FiltroFormas
+            valores={familia.formas.valores}
+            valor={filtros[familia.formas.campo] ?? ''}
+            onCambiar={(v) => setFiltro(familia.formas.campo, v)}
+            onVerLamina={() => setLamina(true)}
+          />
+        )}
 
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
           {(familia.textos || []).map((t) => (
@@ -419,6 +436,8 @@ export default function BusquedaMedidasScreen() {
         striped
         style={{ minWidth: 0 }}
       />
+
+      <ModalFormas open={lamina} onClose={() => setLamina(false)} />
     </div>
   )
 }

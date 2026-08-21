@@ -158,10 +158,11 @@ check('y las medidas que no se pudieron leer van con "?"',
   (await dudoso.locator('td', { hasText: /^\?$/ }).count()) >= 3,
   await dudoso.textContent())
 
-console.log('\n=== Guías: la forma sale en la tabla ===')
+console.log('\n=== Guías: la forma, con su dibujo ===')
 // El código de forma del catálogo (F, A-1, P-3-6…) estaba en los datos pero no
 // se mostraba, y es lo primero que se mira para saber si una guía reemplaza a
-// otra.
+// otra. Va con el dibujo recortado de la lámina del catálogo: la letra sola no
+// se la acuerda nadie.
 await page.fill('input[placeholder="Código…"]', '')
 await page.locator('button', { hasText: 'Guías de válvulas' }).click()
 await esperar(500)
@@ -170,6 +171,53 @@ await esperar(1200)
 check('la columna Forma está', await page.locator('th', { hasText: 'Forma' }).count() === 1)
 const guiaForma = await textoDeFila(0)
 check('y trae la forma de la guía', /8,02.*13,08.*40,5.*F.*Fundición Gris/.test(guiaForma), guiaForma)
+const dibujo = filas().nth(0).locator('img')
+check('con el dibujo al lado del código', await dibujo.count() === 1)
+check('y el dibujo carga de verdad',
+  await dibujo.evaluate((img) => img.complete && img.naturalWidth > 0),
+  await dibujo.getAttribute('src'))
+
+console.log('\n=== Filtrar por la forma del cuerpo ===')
+await page.fill('input[placeholder="Código…"]', '')
+await esperar(400)
+const chips = page.locator('button[aria-pressed]')
+check('están las nueve formas del catálogo', await chips.count() === 9, await chips.count())
+check('todos los dibujos del filtro cargan',
+  await page.locator('button[aria-pressed] img').evaluateAll(
+    (imgs) => imgs.every((i) => i.complete && i.naturalWidth > 0),
+  ),
+  'alguna forma no tiene su PNG')
+// La "N" es de Indy y no está en la lámina: va sin dibujo, no con uno prestado.
+check('la N va sin dibujo', await page.locator('button[aria-pressed] img').count() === 8)
+
+await chips.first().click()
+await esperar(1300)
+const formas = await filas().evaluateAll((trs) => trs.map((tr) => tr.children[7].textContent.trim()))
+check('filtra por la letra del cuerpo', formas.length > 0 && formas.every((f) => f.startsWith('A')), formas.slice(0, 5))
+check('con su tag', await page.locator('text=/Forma del cuerpo: Cuerpo A/').count() === 1)
+await page.screenshot({ path: path.join(SHOT, 'medidas-formas.png'), fullPage: true })
+
+// Volver a tocar la misma forma la saca.
+await chips.first().click()
+await esperar(1300)
+check('tocarla de nuevo saca el filtro', await page.locator('text=/Forma del cuerpo:/').count() === 0)
+
+console.log('\n=== La lámina de formas ===')
+await page.locator('button', { hasText: 'Ver la lámina' }).click()
+await esperar(600)
+check('se abre la lámina', await page.locator('text=/Formas de guía del catálogo/').count() === 1)
+const lamina = page.locator('[data-lamina="formas"]')
+check('con las nueve formas y las cuatro figuras de detalles',
+  await lamina.locator('img[alt^="Forma "]').count() === 9
+  && await lamina.locator('img[alt^="Detalles"]').count() === 4,
+  `${await lamina.locator('img').count()} dibujos en total`)
+check('y explica cómo se lee el código',
+  await page.locator('text=/es el cuerpo A con los detalles 1 y 6/').count() === 1)
+await page.screenshot({ path: path.join(SHOT, 'medidas-lamina.png'), fullPage: true })
+// Se cierra tocando fuera de la tarjeta, que es lo que hace cualquiera.
+await page.mouse.click(20, 500)
+await esperar(400)
+check('y se cierra tocando afuera', await page.locator('text=/Formas de guía del catálogo/').count() === 0)
 
 console.log('\n=== Bujes de biela (Indubrón) ===')
 await page.fill('input[placeholder="Código…"]', '')

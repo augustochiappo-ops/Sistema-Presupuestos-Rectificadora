@@ -21,6 +21,7 @@ proveedor puede aparecer en esta capa de datos pero nunca en pantalla.
 """
 import json
 import os
+import re
 
 from . import config, texto
 from .db import get_connection
@@ -51,6 +52,10 @@ ESPEC = {
         "label": "Guías de válvulas",
         "medidas": ["diam_vastago", "diam_ext", "largo"],
         "tipo": True,
+        # Forma del cuerpo (la letra de "A-1-6"): se filtra por la letra sola,
+        # que es lo que distingue una guía recta de una con pestaña. Los
+        # detalles numerados afinan demasiado para ser un filtro.
+        "forma": True,
     },
     "subconjuntos": {
         "label": "Subconjuntos",
@@ -75,6 +80,30 @@ ESPEC = {
 }
 
 _cache: dict[str, list[dict]] = {}
+
+
+def _normalizar_forma(valor) -> str | None:
+    """
+    La forma de una guía es la letra del cuerpo más los detalles numerados que
+    tenga: "A-1-6" es el cuerpo A con los detalles 1 y 6 de la lámina del
+    catálogo RYC.
+
+    Algunas fichas vienen sin los guiones ("A1", "F1") o con dos detalles
+    pegados ("P36", "A-13"), porque el catálogo de origen los escribió así. Como
+    la lámina define los detalles del 1 al 8, un número de más de un dígito solo
+    puede ser dos detalles pegados: se separan. Lo que no encaje en
+    "letra + dígitos" se deja tal cual vino — mejor un código raro en pantalla
+    que uno inventado.
+    """
+    texto = str(valor or "").strip().upper()
+    if not texto:
+        return None
+    m = re.match(r"^([A-Z]+)([\d\s-]*)$", texto)
+    if not m:
+        return texto
+    letra, resto = m.group(1), m.group(2)
+    digitos = re.findall(r"\d", resto)
+    return "-".join([letra, *digitos]) if digitos else letra
 
 
 def _catalogo(familia: str) -> list[dict]:
@@ -110,6 +139,12 @@ def _catalogo(familia: str) -> list[dict]:
             )
         )
         ficha["_descripcion"] = texto.normalizar(ficha.get("descripcion") or "")
+        if "forma" in extra:
+            # La forma se normaliza acá y no en el JSON: así vale también para
+            # el catálogo que se regenere mañana, sin depender de que el script
+            # de conversión se acuerde.
+            extra["forma"] = _normalizar_forma(extra.get("forma"))
+            ficha["_forma_base"] = (extra["forma"] or "")[:1]
 
     _cache[familia] = fichas
     return fichas
@@ -230,13 +265,14 @@ def buscar(familia: str, filtros: dict) -> dict:
     aplicacion = (filtros.get("aplicacion") or "").strip()
     descripcion = (filtros.get("descripcion") or "").strip() if espec.get("descripcion") else ""
     tipo = (filtros.get("tipo") or "").strip() if espec.get("tipo") else ""
+    forma = (filtros.get("forma") or "").strip().upper() if espec.get("forma") else ""
 
     rango_sobre = etiqueta_sobre = None
     if espec.get("sobremedidas"):
         rango_sobre = _rango(filtros.get("diam_sobremedida"), filtros.get("tol_diam_sobremedida"))
         etiqueta_sobre = (filtros.get("sobremedida") or "").strip() or None
 
-    hay_filtro = any([rangos, codigo, aplicacion, descripcion, tipo, rango_sobre, etiqueta_sobre])
+    hay_filtro = any([rangos, codigo, aplicacion, descripcion, tipo, forma, rango_sobre, etiqueta_sobre])
     if not hay_filtro:
         return {"total": 0, "capped": False, "resultados": []}
 
@@ -249,6 +285,8 @@ def buscar(familia: str, filtros: dict) -> dict:
         if descripcion and not _contiene(ficha["_descripcion"], descripcion):
             continue
         if tipo and ficha.get("tipo") != tipo:
+            continue
+        if forma and ficha.get("_forma_base") != forma:
             continue
 
         medidas = ficha.get("medidas") or {}

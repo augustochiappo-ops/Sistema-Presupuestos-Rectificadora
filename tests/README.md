@@ -141,7 +141,7 @@ el motor tenga ficha cargada.
 
 ## 3. Backend — `backend_medidas.py`
 
-71 verificaciones sobre la búsqueda por medidas (`app/tecnicos.py`): los
+79 verificaciones sobre la búsqueda por medidas (`app/tecnicos.py`): los
 catálogos técnicos que trae el repo y su cruce con el catálogo del proveedor.
 
 ```bash
@@ -159,13 +159,14 @@ $VENV/bin/python tests/backend_medidas.py
 | Subconjuntos | Un código Mahle tiene un código del proveedor **por sobremedida**: se elige el que tiene stock y precio, y se informa cuál |
 | Bujes de biela | El mismo código bajo dos marcas son dos fichas; el Ø exterior encuentra por cualquier sobremedida y dice cuál matcheó; un buje escalonado aparece por sus **dos** anchos y no por el promedio; el trapezoidal (I-143X) no se lleva el precio del recto (I-143) |
 | Tolerancia con signo | `+` trae el valor y todo lo mayor, `−` el valor y todo lo menor, el valor exacto entra en los dos, `+2` acota de un solo lado, y el `+` **llega entero por la URL** (viaja como `%2B`) |
+| Forma de la guía | Las formas escritas sin guiones (`A1`) o con dos detalles pegados (`P36`) se normalizan al cargar el catálogo; se filtra por la letra del cuerpo y se combina con las medidas; están los **trece dibujos** que la pantalla va a pedir |
 | Texto | Aplicación por palabras sueltas y en cualquier orden, sin acentos ni mayúsculas; código por fragmento |
 | Tope | Se devuelven 100 como mucho y se avisa con `capped` |
 | HTTP | 401 sin sesión; con sesión, familias y búsqueda |
 
 ## 4. UI — `ui_medidas.mjs`
 
-46 verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
+58 verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
 
 ```bash
 source /tmp/rect-corrida/entorno.sh
@@ -179,8 +180,9 @@ ver menos filas · el tag del filtro activo · **ordenar** haciendo clic en
 cualquier parte del encabezado · guías por código con su precio y su stock ·
 **los filtros se guardan por familia** (cambiar de pestaña y volver no borra lo
 escrito) · subconjuntos mostrando de qué sobremedida es el precio · una camisa
-sin equivalencia diciendo "Consultar" en vez de un precio · la **forma** en la
-tabla de guías · bujes de biela con su banda de tolerancia y sus siete
+sin equivalencia diciendo "Consultar" en vez de un precio · la **forma** con su
+dibujo en la tabla de guías, el filtro de nueve formas (que cargan de verdad, y
+la "N" sin dibujo prestado) y la **lámina** completa · bujes de biela con su banda de tolerancia y sus siete
 sobremedidas · el **botón de signo** de la tolerancia (± → + → −), que escribir
 "+2" en el casillero mueve el signo al botón, y que el tag de arriba lo diga con
 palabras ("45 mm o más", "45 a 47 mm").

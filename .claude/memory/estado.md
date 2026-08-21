@@ -952,22 +952,35 @@ Vale para las cinco familias, porque la regla vive en un solo lugar
 (`_rango()` de `app/tecnicos.py`). El resumen de arriba de la tabla lo dice con
 palabras: "Ø perno: 45 mm o más", "45 a 47 mm".
 
-**4. La forma de las guías.** El dueño preguntó si se podía acceder a la forma,
-que no está en la tabla. **El dato ya estaba en los datos** (`extra.forma` de
-`guias.json`, viene del catálogo RYC: F, A-1, P-3-6…) y solo faltaba mostrarlo:
-ahora es una columna más de la tabla de guías. Lo tienen **884 de 915** fichas.
-Lo que NO tenemos es el **dibujo** de cada forma: la letra remite a una lámina
-del catálogo RYC que no está en el repo. Si el dueño manda esa hoja del PDF, se
-puede recortar cada figura y mostrarla al lado del código (ver pendientes).
+**4. La forma de las guías, dibujada.** El dueño preguntó si se podía acceder a
+la forma, que no estaba en la tabla. El dato ya estaba (`extra.forma` de
+`guias.json`, del catálogo RYC: F, A-1, P-3-6…) y lo tienen **884 de 915**
+fichas. Primero se agregó como columna de texto; **el mismo día el dueño mandó
+la lámina del catálogo RYC** y quedó completo:
 
-**Suites:** `tests/backend_medidas.py` pasó de 35 a **71** verificaciones y
-`tests/ui_medidas.mjs` de 24 a **46**, con los casos de bujes (las dos fichas del
+- `scripts/recortar_formas_ryc.py` corta la lámina (una imagen de 1399×572, la
+  última página del catálogo) en **trece PNG**: las nueve formas de cuerpo
+  (A, B, C, E, F, G, L, M, P) y las cuatro figuras de detalles numerados. Les
+  saca el fondo dejando el trazo con su antialias, así se ven limpios sobre
+  cualquier fila. 66 KB en total, en `webapp/frontend/public/formas/`.
+- La columna **Forma** muestra el dibujo al lado del código, el **filtro** es
+  una fila de nueve dibujos clicables (tocar el elegido lo saca) y un botón
+  abre la **lámina completa** con la explicación de cómo se lee "A-1-6".
+- Seis fichas traían la forma mal escrita (`A1`, `P36`, `A-13`): se normalizan
+  al cargar el catálogo, no en el JSON, para que la corrección sobreviva a
+  regenerarlo.
+- Las **siete guías Indy con forma "N"** van sin dibujo: esa letra no está en
+  la lámina de RYC. Un dibujo prestado sería peor que ninguno.
+
+**Suites:** `tests/backend_medidas.py` pasó de 35 a **79** verificaciones y
+`tests/ui_medidas.mjs` de 24 a **58**, con los casos de bujes (las dos fichas del
 mismo código, el Ø exterior por sobremedida, el buje escalonado por sus dos
 anchos, el trapezoidal sin el precio del recto), los del signo (`+`, `−`, `+2`,
 el valor exacto en los dos, y que el `+` **llegue entero por la URL**: viaja como
 `%2B` y si se escapara mal la tolerancia se caería al ±0,5 sin avisar) y el de
-la columna Forma. Las dos verdes, más `backend_grupos.py` como control de que no
-se rompió nada.
+la forma (que el dibujo **cargue de verdad** y no salga un cuadrito roto, que la
+"N" no tenga uno prestado, el filtro por letra y la lámina). Las dos verdes, más
+`backend_grupos.py` como control de que no se rompió nada.
 
 ## Próximo paso
 
@@ -1033,15 +1046,11 @@ Pendientes, en orden de lo que más conviene atacar:
      13,80 mm en un pistón con 65,00 de altura de compresión). El script los
      descarta con esa regla —positivo y mayor que la altura de compresión— en
      vez de cargar un número que haría mentir al filtro de "alto total".
-2. **El dibujo de la forma de las guías** (2026-08-21). La columna **Forma** ya
-   está en la tabla con el código del catálogo RYC (F, A-1, P-3-6…), que es lo
-   que el dato tiene: lo traen 884 de las 915 guías. Lo que falta para que se
-   vea la **figura** es la lámina del catálogo RYC donde están dibujadas —no
-   está en el repo—. Si el dueño manda esa hoja del PDF, se recorta cada figura
-   (como se hizo con los pistones Mahle en la skill `foto-mahle-006`) y se
-   muestra al lado del código, o en el tooltip. Mientras tanto, el código solo
-   ya sirve para comparar dos guías entre sí.
-
+2. ~~**El dibujo de la forma de las guías**~~ → **resuelto el 2026-08-21**: el
+   dueño mandó la lámina del catálogo RYC y los trece dibujos ya están en la
+   pantalla (columna, filtro y lámina completa). Lo único que quedó sin dibujo
+   son las **siete guías Indy con forma "N"**, una letra que la lámina de RYC no
+   tiene; si aparece la lámina de Indy, se agrega ese recorte y listo.
 3. **Tablero de estados del trabajo** (Aprobado → Repuestos pedidos → En taller → Listo → Entregado). El dueño lo pidió explícitamente para más adelante, "cuando nos familiaricemos con el programa". Es la única parte del negocio que el sistema no toca: hoy `aprobado_en` es un flag binario sin consecuencia. Barato de hacer — los datos ya están, hace falta una columna `estado`, una tabla de cambios de estado y una pantalla.
 4. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
 5. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
