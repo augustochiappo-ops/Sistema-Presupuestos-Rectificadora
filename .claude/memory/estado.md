@@ -1042,9 +1042,50 @@ esté, que cargue de verdad, que el que no tiene vaya con guión y sin imagen
 rota, que **todos se vean del mismo tamaño**, que el grande sea el de la fila y
 que la lámina tenga las diez formas) y `tests/ui_grupos.mjs`.
 
+**Deployado y verificado en producción** (commit `8086a86`): el JS que sirve es
+el commiteado, `/pistones/SBE25400.png` responde con sus 8.715 bytes exactos y
+`/formas/N.png` con los 1.120 suyos.
+
+### Cómo agregar las fotos de pistón que faltan (153 subconjuntos)
+
+El dueño va a ir mandando más fotos. **Este es el prompt que él va a pegar**, y
+dice todo lo que hay que hacer — está acá para que las dos puntas digan lo
+mismo:
+
+> Te paso fotos nuevas de pistones Mahle (subconjuntos), recortadas a ojo del
+> catálogo, con el código en el nombre del archivo. El pipeline ya está hecho de
+> la sesión del 2026-08-21: copiá las fotos a `CRAC/tecnicos/fuentes/pistones/`
+> (sacándoles los espacios de más al nombre) y corré
+> `.venv/bin/python scripts/recortar_pistones_mahle.py --hoja`.
+>
+> Mirá la lámina de control que deja en `/tmp/pistones-recortados.png` y
+> fijate en cada recorte que estén **las dos vistas** (el corte y el círculo) y
+> que no haya quedado ningún número, corchete de cota ni raya de la grilla. Si
+> alguno salió mal, **ajustá el script, no el PNG a mano**, y contame qué
+> cambiaste. Prestale atención a los avisos que imprime: fotos cuyo código no
+> está en `subconjuntos.json`, o de las que no pudo sacar dibujo.
+>
+> Todos los dibujos tienen que quedar **del mismo tamaño en pantalla** (el
+> script ya lo resuelve rellenando hasta la proporción 13:20; no lo cambies sin
+> avisarme).
+>
+> Después: `npm run build` en `webapp/frontend` y commitear `static_build/`,
+> correr `tests/ui_medidas.mjs` entera y en segundo plano, pushear a `master` y
+> deployar con el `DEPLOY_SECRET` que te paso.
+>
+> Si las fotos vienen en `.rar`, se abren con `unrar`
+> (`apt-get install -y unrar`); `7z` lista el archivo pero no lo descomprime.
+
 ## Próximo paso
 
-**Producción y `master` están sincronizados en `31d5ebd`**, deployado y
+**Producción y `master` están sincronizados en `8086a86`**, deployado y
+verificado por HTTP: el JS que sirve producción es el commiteado
+(`index-CLde4Y4K.js`, 482.516 bytes), `/pistones/SBE25400.png` responde con sus
+8.715 bytes exactos y `/formas/N.png` con los 1.120 suyos. Ese commit trae los
+**48 dibujos de pistón** en Subconjuntos y la **forma N** de guía (ver la
+sesión 2026-08-21 segunda, arriba).
+
+Antes de eso, `31d5ebd`, deployado y
 verificado por HTTP: el JS que sirve producción es el mismo archivo commiteado
 (`index-CfWxz9Is.js`) y los dibujos de forma responden con su tamaño exacto
 (`/formas/A.png`, 3.181 bytes). Ese commit trae **el nombre de los ocho
@@ -1112,13 +1153,21 @@ Pendientes, en orden de lo que más conviene atacar:
    sesión)**: el dueño mandó la referencia de Nubo como archivo (dentro de
    `NUBO_2025.xlsx`, pestaña REF) y se recortó solo la N, pasada a línea para
    que no desentone con las nueve de RYC. Ver la sesión de arriba.
-3. **Tablero de estados del trabajo** (Aprobado → Repuestos pedidos → En taller → Listo → Entregado). El dueño lo pidió explícitamente para más adelante, "cuando nos familiaricemos con el programa". Es la única parte del negocio que el sistema no toca: hoy `aprobado_en` es un flag binario sin consecuencia. Barato de hacer — los datos ya están, hace falta una columna `estado`, una tabla de cambios de estado y una pantalla.
-4. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
-5. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
-6. ~~**Unificar la grafía "Chiappo" / "Chicappo"**~~ → **resuelto el 2026-08-11**: el dueño confirmó que la correcta es **Chiappo**, y el PDF ya la usa (verificado contra producción).
-7. ~~**Opción "no cotizar" por repuesto**~~ → **resuelto el 2026-08-18**: al caerse la regla del "más caro" ya no hay nada por lo que competir, y la casilla **Opcional** cubre justo ese caso (queda en la lista para pedir, sale en el PDF y no suma al total).
-8. **Repuestos fuera de catálogo en la ficha del motor** — hoy los repuestos sin código quedan solo en el presupuesto. El dueño los quiere también en el motor; lo dejó para una segunda tanda (2026-08-14) porque la ficha se indexa por código del proveedor y guardarlos exige tocar el esquema.
-9. **Casilla invertida en el paso Repuestos** — en vez de "este repuesto también es de este motor" (la casilla que se está diseñando el 2026-08-14, que marca pertenencia a la ficha), listar todo lo de la ficha con una casilla de "entra en este presupuesto". Se evaluó el 2026-08-14 al diseñar el paso Repuestos y **el dueño la dejó explícitamente para más adelante**: se descartó por ahora porque dos casillas por fila (una para el motor y otra para el presupuesto) se pisan entre sí, y porque la cantidad ya dice "entra en el presupuesto".
+3. **El dibujo del pistón también al armar el presupuesto** (pedido del dueño,
+   2026-08-21, "capaz que después nos sirva"). Hoy el dibujo se ve solo en la
+   búsqueda por medidas. Al elegir el subconjunto en el paso Repuestos sería
+   igual de útil, pero ahí el catálogo se lista por **código del proveedor**
+   (`S BE25400  STD`) y no por el de la ficha: hay que resolver la sobremedida
+   del código para llegar al dibujo (`claveDe()` de `pistones.jsx` sobre el
+   código sin la medida). El componente ya está hecho y sirve tal cual.
+
+4. **Tablero de estados del trabajo** (Aprobado → Repuestos pedidos → En taller → Listo → Entregado). El dueño lo pidió explícitamente para más adelante, "cuando nos familiaricemos con el programa". Es la única parte del negocio que el sistema no toca: hoy `aprobado_en` es un flag binario sin consecuencia. Barato de hacer — los datos ya están, hace falta una columna `estado`, una tabla de cambios de estado y una pantalla.
+5. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
+6. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.
+7. ~~**Unificar la grafía "Chiappo" / "Chicappo"**~~ → **resuelto el 2026-08-11**: el dueño confirmó que la correcta es **Chiappo**, y el PDF ya la usa (verificado contra producción).
+8. ~~**Opción "no cotizar" por repuesto**~~ → **resuelto el 2026-08-18**: al caerse la regla del "más caro" ya no hay nada por lo que competir, y la casilla **Opcional** cubre justo ese caso (queda en la lista para pedir, sale en el PDF y no suma al total).
+9. **Repuestos fuera de catálogo en la ficha del motor** — hoy los repuestos sin código quedan solo en el presupuesto. El dueño los quiere también en el motor; lo dejó para una segunda tanda (2026-08-14) porque la ficha se indexa por código del proveedor y guardarlos exige tocar el esquema.
+10. **Casilla invertida en el paso Repuestos** — en vez de "este repuesto también es de este motor" (la casilla que se está diseñando el 2026-08-14, que marca pertenencia a la ficha), listar todo lo de la ficha con una casilla de "entra en este presupuesto". Se evaluó el 2026-08-14 al diseñar el paso Repuestos y **el dueño la dejó explícitamente para más adelante**: se descartó por ahora porque dos casillas por fila (una para el motor y otra para el presupuesto) se pisan entre sí, y porque la cantidad ya dice "entra en el presupuesto".
 
 Como puede haber más de una sesión de Claude tocando este repo en paralelo (celular + escritorio), conviene chequear ramas remotas pendientes al empezar cada sesión.
 
