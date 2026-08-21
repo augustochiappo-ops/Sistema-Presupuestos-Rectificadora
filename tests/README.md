@@ -166,7 +166,7 @@ $VENV/bin/python tests/backend_medidas.py
 
 ## 4. UI — `ui_medidas.mjs`
 
-58 verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
+59 verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
 
 ```bash
 source /tmp/rect-corrida/entorno.sh
@@ -182,7 +182,8 @@ cualquier parte del encabezado · guías por código con su precio y su stock ·
 escrito) · subconjuntos mostrando de qué sobremedida es el precio · una camisa
 sin equivalencia diciendo "Consultar" en vez de un precio · la **forma** con su
 dibujo en la tabla de guías, el filtro de nueve formas (que cargan de verdad, y
-la "N" sin dibujo prestado) y la **lámina** completa · bujes de biela con su banda de tolerancia y sus siete
+la "N" sin dibujo prestado) y la **lámina** completa con el nombre de cada
+detalle · bujes de biela con su banda de tolerancia y sus siete
 sobremedidas · el **botón de signo** de la tolerancia (± → + → −), que escribir
 "+2" en el casillero mueve el signo al botón, y que el tag de arriba lo diga con
 palabras ("45 mm o más", "45 a 47 mm").

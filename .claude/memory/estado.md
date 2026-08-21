@@ -971,9 +971,17 @@ la lámina del catálogo RYC** y quedó completo:
   regenerarlo.
 - Las **siete guías Indy con forma "N"** van sin dibujo: esa letra no está en
   la lámina de RYC. Un dibujo prestado sería peor que ninguno.
+- Al final de la sesión el dueño pasó **otra lámina** (pegada en el chat, de
+  otro catálogo) que trae dos cosas que la de RYC no tiene: **el nombre de cada
+  uno de los ocho detalles** y **el dibujo de la forma N**. Los nombres ya
+  están cargados (la lámina los lista y el tooltip de cada guía dice "Cuerpo A ·
+  1 ranura exterior… · 6 cámara interna en el extremo…", que es lo que hace que
+  el código deje de ser una matrícula). El dibujo de la N **no**: la imagen
+  llegó pegada en el chat y no como archivo, así que no se pudo recortar (ver
+  pendientes).
 
 **Suites:** `tests/backend_medidas.py` pasó de 35 a **79** verificaciones y
-`tests/ui_medidas.mjs` de 24 a **58**, con los casos de bujes (las dos fichas del
+`tests/ui_medidas.mjs` de 24 a **59**, con los casos de bujes (las dos fichas del
 mismo código, el Ø exterior por sobremedida, el buje escalonado por sus dos
 anchos, el trapezoidal sin el precio del recto), los del signo (`+`, `−`, `+2`,
 el valor exacto en los dos, y que el `+` **llegue entero por la URL**: viaja como
@@ -1047,11 +1055,17 @@ Pendientes, en orden de lo que más conviene atacar:
      13,80 mm en un pistón con 65,00 de altura de compresión). El script los
      descarta con esa regla —positivo y mayor que la altura de compresión— en
      vez de cargar un número que haría mentir al filtro de "alto total".
-2. ~~**El dibujo de la forma de las guías**~~ → **resuelto el 2026-08-21**: el
-   dueño mandó la lámina del catálogo RYC y los trece dibujos ya están en la
-   pantalla (columna, filtro y lámina completa). Lo único que quedó sin dibujo
-   son las **siete guías Indy con forma "N"**, una letra que la lámina de RYC no
-   tiene; si aparece la lámina de Indy, se agrega ese recorte y listo.
+2. **El dibujo de la forma "N"** (7 guías Indy). La lámina de RYC no tiene esa
+   letra, pero la **segunda lámina** que el dueño pegó en el chat el 2026-08-21
+   sí: es la misma referencia de otro catálogo, con las diez formas (las nueve
+   de RYC más la N) y los nombres de los ocho detalles. Los nombres ya se
+   cargaron a mano; el dibujo no se pudo recortar porque la imagen llegó
+   **pegada en el chat y no como archivo adjunto**, y sin el archivo no hay
+   pixeles que cortar. Para cerrarlo: que el dueño la **adjunte como archivo**
+   (o mande el PDF de donde salió) y se corre `scripts/recortar_formas_ryc.py`
+   con una caja más. Ojo con el estilo: esa lámina es sombreada y la de RYC es
+   línea pura; conviene recortar de ella **solo la N**, o rehacer las diez de
+   una para que no queden dos estilos mezclados.
 3. **Tablero de estados del trabajo** (Aprobado → Repuestos pedidos → En taller → Listo → Entregado). El dueño lo pidió explícitamente para más adelante, "cuando nos familiaricemos con el programa". Es la única parte del negocio que el sistema no toca: hoy `aprobado_en` es un flag binario sin consecuencia. Barato de hacer — los datos ya están, hace falta una columna `estado`, una tabla de cambios de estado y una pantalla.
 4. **Mecanismo de carga diaria del CSV del proveedor** — único punto realmente abierto de `INTEGRACION-PENDIENTE.md` (la fecha de última carga ya se resolvió). Una vez definido, sacar `CRAC/precio-stock.csv` de git como se hizo con `Excel/Proveedor/`, para no inflar el historial con cada actualización.
 5. **Upgrade de PythonAnywhere al plan Developer**, necesario para la automatización de pedidos a CRAC (ver `CRAC/AUTOMATIZACION-PEDIDOS.md`) y de paso da más CPU y disco.

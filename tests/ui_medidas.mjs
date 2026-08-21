@@ -213,6 +213,10 @@ check('con las nueve formas y las cuatro figuras de detalles',
   `${await lamina.locator('img').count()} dibujos en total`)
 check('y explica cómo se lee el código',
   await page.locator('text=/es el cuerpo A con los detalles 1 y 6/').count() === 1)
+check('con el nombre de cada detalle',
+  await lamina.locator('li').count() === 8
+  && await lamina.locator('text=/Agujero para lubricación/').count() === 1,
+  await lamina.locator('li').count())
 await page.screenshot({ path: path.join(SHOT, 'medidas-lamina.png'), fullPage: true })
 // Se cierra tocando fuera de la tarjeta, que es lo que hace cualquiera.
 await page.mouse.click(20, 500)

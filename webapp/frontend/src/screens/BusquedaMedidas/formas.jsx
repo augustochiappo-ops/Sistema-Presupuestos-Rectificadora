@@ -19,6 +19,19 @@ import { Modal } from '../../components/Modal'
 const LETRAS = ['A', 'B', 'C', 'E', 'F', 'G', 'L', 'M', 'P']
 const DETALLES = ['detalle-1-2', 'detalle-3-6', 'detalle-7', 'detalle-8']
 
+// Qué es cada número, según la referencia del catálogo. Sin esto "A-1-6" es una
+// matrícula; con esto dice qué tiene la guía en la mano.
+const NOMBRES = {
+  1: 'Ranura exterior para el asiento del anillo de fijación',
+  2: 'Rebaje',
+  3: 'Extremidad cónica',
+  4: 'Cámara interna',
+  5: 'Agujero para lubricación',
+  6: 'Cámara interna en el extremo de la guía',
+  7: 'Filete de lubricación',
+  8: 'Filete de lubricación total',
+}
+
 export const tieneDibujo = (letra) => LETRAS.includes(letra)
 
 export function letraDe(forma) {
@@ -36,17 +49,19 @@ export function DibujoForma({ letra, alto = 38, style }) {
   )
 }
 
-/** Cómo se lee un código de forma, para el tooltip: "Cuerpo A · detalles 1 y 6". */
+/**
+ * Cómo se lee un código de forma, para el tooltip: "Cuerpo A · 1 ranura
+ * exterior… · 6 cámara interna en el extremo…". Un detalle que la referencia no
+ * nombra se muestra con su número, que es lo que dice el catálogo.
+ */
 export function describirForma(forma) {
   const partes = (forma || '').split('-').filter(Boolean)
   if (!partes.length) return ''
   const [letra, ...detalles] = partes
   const cuerpo = `Cuerpo ${letra}`
   if (!detalles.length) return cuerpo
-  const lista = detalles.length === 1
-    ? detalles[0]
-    : `${detalles.slice(0, -1).join(', ')} y ${detalles[detalles.length - 1]}`
-  return `${cuerpo} · ${detalles.length === 1 ? 'detalle' : 'detalles'} ${lista}`
+  return [cuerpo, ...detalles.map((n) => (NOMBRES[n] ? `${n} ${NOMBRES[n].toLowerCase()}` : `detalle ${n}`))]
+    .join(' · ')
 }
 
 /** La celda de la tabla: el dibujo, el código, y un clic que abre la lámina. */
@@ -181,6 +196,17 @@ export function ModalFormas({ open, onClose }) {
       <h4 style={{ margin: '0 0 12px', fontFamily: 'var(--font-display)', fontSize: 'var(--text-base)', color: 'var(--text-strong)' }}>
         Los detalles, del 1 al 8
       </h4>
+      <ol
+        style={{
+          margin: '0 0 18px', paddingLeft: 20, columns: 2, columnGap: 30,
+          fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
+          color: 'var(--text-body)', lineHeight: 1.6,
+        }}
+      >
+        {Object.entries(NOMBRES).map(([n, nombre]) => (
+          <li key={n} style={{ breakInside: 'avoid' }}>{nombre}</li>
+        ))}
+      </ol>
       <div style={{ display: 'flex', gap: 26, flexWrap: 'wrap', alignItems: 'flex-end' }}>
         {DETALLES.map((nombre) => (
           <img
