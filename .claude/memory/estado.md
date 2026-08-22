@@ -1112,10 +1112,12 @@ publica la página; los 5 restantes son celdas con la etiqueta escrita adentro
   subconjuntos y pistones: la tabla dice de qué medida es el precio que muestra.
 - **Filtro "Solo las que tiene el proveedor"**, tildado por defecto. Salió
   primero solo en camisas (era la única familia con piezas que el proveedor no
-  vende) y **el dueño pidió en el acto extenderlo a las cinco**, porque va a
-  pasar los catálogos completos de las otras familias y ahí va a pasar lo
-  mismo. Se destilda para ver el catálogo entero, y la línea de resultados
-  avisa cuántas quedaron afuera con un link que las muestra.
+  vende) y **el dueño pidió en el acto extenderlo**, porque va a pasar los
+  catálogos completos de las otras familias y ahí va a pasar lo mismo. Quedó en
+  **todas menos subconjuntos** (segunda aclaración del dueño): la ficha de
+  Mahle se consulta igual aunque el subconjunto no se pueda pedir. Se destilda
+  para ver el catálogo entero, y la línea de resultados avisa cuántas quedaron
+  afuera con un link que las muestra.
 - **Las sobremedidas se leen sin apoyar el mouse**: cada una va con su etiqueta
   arriba del Ø exterior, y las métricas dicen milímetros (`+0,50 mm`) para no
   confundirlas con las de pulgadas.
@@ -1144,7 +1146,24 @@ deploy a producción confirmado.
 
 ## Próximo paso
 
-**Producción y `master` están sincronizados en `8086a86`**, deployado y
+**Producción y `master` están sincronizados en el cierre del 2026-08-22**
+(camisas de Fadecya rehechas + el filtro del proveedor), deployado y verificado
+por HTTP: el JS que sirve producción es el commiteado (`index-CQb1Nz4r.js`,
+485.191 bytes) y la raíz responde 200. Ese commit trae las **396 camisas** con
+las sobremedidas bien etiquetadas, las **húmedas**, el **"?"** de los datos
+dudosos y la casilla **"Solo las que tiene el proveedor"** —tildada por defecto
+en camisas, guías, pistones y bujes de biela; **en subconjuntos no está**, por
+pedido del dueño (ver la sesión 2026-08-22, arriba).
+
+**Lo que el dueño dejó anunciado para la próxima:** va a pasar **los catálogos
+completos de las otras familias** (guías, pistones, bujes), igual que pasó el de
+camisas. Cuando lleguen, el camino ya está hecho: se agrega el catálogo entero
+—incluida la parte que el proveedor no vende— y el filtro se encarga de que la
+búsqueda siga mostrando por defecto solo lo que se puede pedir. Conviene pedirle
+la fuente en **Excel además del PDF**: con las camisas, tener las dos fue lo que
+permitió descubrir que las etiquetas de sobremedida estaban corridas.
+
+Antes de eso, `8086a86`, deployado y
 verificado por HTTP: el JS que sirve producción es el commiteado
 (`index-CLde4Y4K.js`, 482.516 bytes), `/pistones/SBE25400.png` responde con sus
 8.715 bytes exactos y `/formas/N.png` con los 1.120 suyos. Ese commit trae los

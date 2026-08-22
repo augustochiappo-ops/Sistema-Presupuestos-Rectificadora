@@ -58,17 +58,24 @@ check("35 pistones (Persan)", familias.get("pistones", {}).get("total") == 35, f
 check("190 bujes de biela (Indubrón)",
       familias.get("bujes_biela", {}).get("total") == 190, familias.get("bujes_biela"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
-# La casilla "Solo las que tiene el proveedor" va en las cinco: los catálogos
-# técnicos son los del fabricante y siempre traen más de lo que se puede pedir.
-check("las cinco ofrecen el filtro del proveedor",
-      all(f["filtro_proveedor"] for f in familias.values()),
+# La casilla "Solo las que tiene el proveedor" va en todas menos subconjuntos:
+# los catálogos técnicos son los del fabricante y traen más de lo que se puede
+# pedir, pero la ficha de Mahle se consulta igual aunque no se pueda pedir.
+check("ofrecen el filtro del proveedor todas menos subconjuntos",
+      {k for k, v in familias.items() if v["filtro_proveedor"]}
+      == {"camisas", "guias", "pistones", "bujes_biela"},
       {k: v.get("filtro_proveedor") for k, v in familias.items()})
 for id_familia in familias:
     con = tecnicos.buscar(id_familia, {"aplicacion": "a"})
     sin = tecnicos.buscar(id_familia, {"aplicacion": "a", "solo_crac": "0"})
-    check(f"y en {id_familia} filtra de verdad",
-          all(x["codigo_crac"] for x in con["resultados"]) and sin["total"] >= con["total"],
-          (con["total"], sin["total"]))
+    if familias[id_familia]["filtro_proveedor"]:
+        check(f"y en {id_familia} filtra de verdad",
+              all(x["codigo_crac"] for x in con["resultados"]) and sin["total"] >= con["total"],
+              (con["total"], sin["total"]))
+    else:
+        check(f"y en {id_familia} no esconde nada, ni pidiéndoselo",
+              con["total"] == sin["total"] and con["sin_proveedor"] == 0,
+              (con["total"], sin["total"]))
 
 print("\n=== 1. Sin filtros no se devuelve el catálogo ===")
 vacio = tecnicos.buscar("camisas", {})

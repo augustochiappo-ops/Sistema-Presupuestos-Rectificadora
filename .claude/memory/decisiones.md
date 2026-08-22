@@ -553,7 +553,7 @@ en varias de esas fichas la página dice 3,95 o 3,98, o sea que el 4,00 del Exce
 es un redondeo y no un 4,76 mal escrito. Corregir a ojo, en un dato con el que
 se decide si una camisa entra en un motor, es peor que mostrar la duda.
 
-## El filtro "solo las que tiene el proveedor", tildado y en las cinco familias (2026-08-22)
+## El filtro "solo las que tiene el proveedor": tildado, en todas menos subconjuntos (2026-08-22)
 
 **Contexto.** Al sumar las 107 camisas húmedas, el catálogo pasó a tener piezas
 que el proveedor no vende: salen del catálogo de fábrica de Fadecya, no de su
@@ -562,9 +562,13 @@ disponible, **tildado por defecto** y que se pueda destildar.
 
 **Decisión.** Salió **solo en camisas** —era la única familia con piezas que el
 proveedor no vende, y activarlo en las demás habría escondido piezas que hoy se
-ven sin que nadie lo pidiera— y el dueño pidió extenderlo **a las cinco** apenas
-lo vio: va a pasar los catálogos completos de las otras familias, y ahí va a
-pasar exactamente lo mismo que con las húmedas. Se implementó como una propiedad
+ven sin que nadie lo pidiera— y el dueño pidió extenderlo apenas lo vio: va a
+pasar los catálogos completos de las otras familias, y ahí va a pasar
+exactamente lo mismo que con las húmedas. Quedó en **todas menos
+subconjuntos**, que dejó afuera expresamente: esa pestaña se usa para leer la
+ficha del pistón Mahle —medidas, dibujo, código de aros, camisa que le va—
+aunque el subconjunto no se pueda pedir, así que esconder por defecto la mitad
+de las fichas estorbaría en vez de ayudar. Se implementó como una propiedad
 de la familia (`filtro_proveedor` en `ESPEC`), así prenderlo o apagarlo en una
 familia es una línea, y la pantalla lee de ahí si muestra la casilla — no la
 tiene duplicada.

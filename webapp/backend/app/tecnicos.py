@@ -43,10 +43,13 @@ TOLERANCIA_DEFECTO = 0.5
 # pantalla para armar los filtros.
 #
 # `filtro_proveedor` es la casilla "Solo las que tiene el proveedor", tildada por
-# defecto. Va en las cinco familias: los catálogos técnicos son los del
-# fabricante y siempre traen más piezas de las que el proveedor vende, así que
-# la búsqueda arranca mostrando lo que se puede pedir hoy y la casilla abre el
-# catálogo entero cuando hace falta saber qué existe.
+# defecto: los catálogos técnicos son los del fabricante y siempre traen más
+# piezas de las que el proveedor vende, así que la búsqueda arranca mostrando lo
+# que se puede pedir hoy y la casilla abre el catálogo entero cuando hace falta
+# saber qué existe. Va en todas MENOS subconjuntos (pedido del dueño,
+# 2026-08-22): ahí el catálogo de Mahle se usa para leer la ficha del pistón
+# —medidas, dibujo, código de aros— aunque el subconjunto no se pueda pedir,
+# así que esconder la mitad de las fichas por defecto estorba.
 ESPEC = {
     "camisas": {
         "label": "Camisas",
@@ -70,7 +73,6 @@ ESPEC = {
         "label": "Subconjuntos",
         "medidas": ["diam_piston", "alt_piston", "diam_perno"],
         "descripcion": True,
-        "filtro_proveedor": True,
     },
     # Los mismos filtros que subconjuntos, a propósito: es la misma pieza
     # buscada de la misma manera (Ø del pistón, alto, perno), solo que suelta.

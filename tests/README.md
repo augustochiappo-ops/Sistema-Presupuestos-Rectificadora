@@ -151,7 +151,7 @@ $VENV/bin/python tests/backend_medidas.py
 
 | Bloque | Qué verifica |
 |---|---|
-| Catálogos | Las cinco familias cargadas con sus totales exactos (396 camisas, 915 guías, 201 subconjuntos, 35 pistones, 190 bujes de biela), las cinco con el filtro "solo las que tiene el proveedor" y filtrando de verdad |
+| Catálogos | Las cinco familias cargadas con sus totales exactos (396 camisas, 915 guías, 201 subconjuntos, 35 pistones, 190 bujes de biela), y el filtro "solo las que tiene el proveedor" en todas menos subconjuntos, filtrando de verdad donde está |
 | Sin filtros | No devuelve el catálogo entero, y una familia inexistente no explota |
 | Valor ± tolerancia | Encuentra con el valor exacto y con ±0,5, deja de encontrar con ±0,1, usa ±0,5 si no se escribe tolerancia, y acepta la coma decimal |
 | Acumulación | Sumar un segundo filtro achica el resultado y no pierde la pieza buscada |
