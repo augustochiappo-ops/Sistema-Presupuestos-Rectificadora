@@ -101,6 +101,24 @@ HEREDADAS = [
      "alt_pest": None, "largo": None, "sobremedidas": {"STD": 87.2}},
 ]
 
+def paso_de(label: str):
+    """Cuánto crece el Ø exterior en esa sobremedida, en mm. None si no se sabe."""
+    if label == "STD":
+        return 0.0
+    m = re.match(r'^([+-])\.(\d+)"$', label)
+    if m:
+        digitos = m.group(2)
+        milesimas = int(digitos) * (10 ** (3 - len(digitos))) if len(digitos) < 3 else int(digitos)
+        return (1 if m.group(1) == "+" else -1) * milesimas * 0.0254
+    m = re.match(r"^([+-])([\d.]+)MM$", label)
+    return (1 if m.group(1) == "+" else -1) * float(m.group(2)) if m else None
+
+
+# Cuánto puede alejarse un Ø exterior de "STD + el paso de su medida" antes de
+# considerarlo mal cargado. Un cuarto de milímetro es redondeo del catálogo (la
+# página escribe 76,00 donde el Excel pone 76,24); un milímetro ya no.
+TOLERANCIA_PASO = 1.0
+
 NOTA_ALTO_PESTANA = (
     "El catálogo de Fadecya dice 4,00. En la página, los 4,00 son casi siempre "
     "un 4,76 mal cargado, pero acá el Excel también dice 4,00: medir la pieza "
@@ -136,6 +154,13 @@ RANGOS = {
 }
 
 
+def pestana_creible(diam_ext_cil, diam_int) -> bool:
+    """El Ø de pestaña tiene que ser mayor que el interior: la pestaña sobresale."""
+    if diam_ext_cil is None:
+        return False
+    return diam_int is None or diam_ext_cil > diam_int
+
+
 def creible(campo: str, valor):
     if valor is None:
         return None
@@ -164,7 +189,10 @@ def limpiar_marca(seccion) -> str | None:
     página ("PERKINS ( continuacion )")."""
     if not seccion:
         return None
-    limpia = re.sub(r"\s*\(\s*continuaci[oó]n\s*\)\s*$", "", texto(seccion), flags=re.I)
+    # El título de sección a veces trae, entre paréntesis, una aclaración
+    # técnica ("diámetro y altura pestaña constante en las sobre medidas") o un
+    # "(continuación)": la marca es lo que va antes.
+    limpia = texto(seccion).split("(")[0]
     limpia = " ".join(limpia.upper().split()).replace("MERCEDES-BENZ", "MERCEDES BENZ")
     if not limpia or limpia in SECCIONES_SIN_MARCA:
         return None
@@ -208,6 +236,7 @@ def leer_excel() -> list[dict]:
     hoja = pd.read_excel(XLSX, sheet_name=0, header=None)
     fichas: list[dict] = []
     marca = None
+    nota_seccion = None
     # Etiquetas que una fila dejó escritas para la fila de abajo. Pasa en un
     # solo bloque del catálogo (UC 1278), que trae su propio encabezado y sus
     # valores en las filas siguientes, sin repetir el código.
@@ -226,6 +255,11 @@ def leer_excel() -> list[dict]:
             titulo = texto(fila[2])
             if titulo and "NOTA:" not in titulo.upper():
                 marca = titulo
+                # La aclaración entre paréntesis del título vale para todas las
+                # camisas de esa sección: se les guarda como nota.
+                entre = re.search(r"\((.+)\)", titulo)
+                aclaracion = (entre.group(1).strip() if entre else "")
+                nota_seccion = aclaracion if aclaracion and "continuaci" not in aclaracion.lower() else None
             continue
 
         if codigo:
@@ -240,7 +274,7 @@ def leer_excel() -> list[dict]:
                 "alt_pest": numero(fila[8]),
                 "largo": numero(fila[9]),
                 "sobremedidas": {},
-                "notas": [],
+                "notas": [nota_seccion] if nota_seccion else [],
                 "fila": i,
             }
             fichas.append(ficha)
@@ -395,6 +429,14 @@ def combinar() -> list[dict]:
         for campo in ("diam_int", "diam_ext_cil", "alt_pest", "largo", "bocas", "marca"):
             if vieja.get(campo) in (None, "") and base.get(campo) not in (None, ""):
                 vieja[campo] = base[campo]
+        # El mismo código puede venir con dos Ø de pestaña distintos y uno de los
+        # dos imposible: la A 1166 figura con 61,70 bajo HONDA (menos que su Ø
+        # interior de 62,50) y con 68,85 bajo motos. Gana el que puede ser.
+        if (
+            not pestana_creible(vieja.get("diam_ext_cil"), vieja.get("diam_int"))
+            and pestana_creible(base.get("diam_ext_cil"), base.get("diam_int") or vieja.get("diam_int"))
+        ):
+            vieja["diam_ext_cil"] = base["diam_ext_cil"]
         for etiqueta, valor in base["sobremedidas"].items():
             vieja["sobremedidas"].setdefault(etiqueta, valor)
         for nota in base["notas"]:
@@ -460,11 +502,37 @@ def combinar() -> list[dict]:
             for campo in ("diam_int", "diam_ext_cil", "alt_pest", "largo"):
                 if f.get(campo) is None and de_pagina[0].get(campo) is not None:
                     f[campo] = de_pagina[0][campo]
+            # Y si el Ø de pestaña del Excel es imposible pero el de la página
+            # cierra, se usa el de la página en vez de publicar un número que
+            # no puede ser.
+            if not pestana_creible(f.get("diam_ext_cil"), f.get("diam_int")) and pestana_creible(
+                de_pagina[0].get("diam_ext_cil"), f.get("diam_int")
+            ):
+                f["diam_ext_cil"] = de_pagina[0]["diam_ext_cil"]
 
         revisar = {}
         if f["alt_pest"] == 4:
             revisar["alt_pest"] = NOTA_ALTO_PESTANA
-        if f["diam_ext_cil"] and f["diam_int"] and f["diam_ext_cil"] <= f["diam_int"]:
+        # Una sobremedida tiene que caer donde su nombre dice: la +.030" es la
+        # STD más 0,76 mm. La que no cierra está mal cargada en el catálogo
+        # (la UC 0817 repite ahí el Ø de pestaña), y se marca en vez de
+        # corregirla a ojo.
+        std = sobremedidas.get("STD")
+        if std is not None:
+            descolgadas = [
+                etiqueta for etiqueta, valor in sobremedidas.items()
+                if valor is not None and paso_de(etiqueta) is not None
+                and abs(std + paso_de(etiqueta) - valor) > TOLERANCIA_PASO
+            ]
+            if descolgadas:
+                revisar["sobremedidas"] = (
+                    "El catálogo da un Ø exterior que no coincide con la medida: "
+                    + ", ".join(descolgadas)
+                    + " tendría que estar cerca de la STD ("
+                    + f"{std:.2f}".replace(".", ",")
+                    + " mm) más esa sobremedida. Confirmar antes de pedirla."
+                )
+        if f["diam_ext_cil"] and not pestana_creible(f["diam_ext_cil"], f["diam_int"]):
             revisar["diam_ext_cil"] = (
                 "El catálogo da un Ø de pestaña menor que el Ø interior, que no "
                 "puede ser: está mal cargado en el catálogo."

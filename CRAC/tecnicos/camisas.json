@@ -33,7 +33,7 @@
  {
   "codigo": "UCO 0100",
   "codigo_fab": "UCO 0100",
-  "marca": "BEDFORD - CIMARRON (DIÁMETRO Y ALTURA PESTAÑA CONSTANTE EN LAS SOBRE MEDIDAS)",
+  "marca": "BEDFORD - CIMARRON",
   "aplicacion": "200, 300D, CIMARRON",
   "descripcion": "BEDFORD 300 3.7/8",
   "medidas": {
@@ -45,7 +45,9 @@
   "extra": {
    "tipo_camisa": "Seca",
    "bocas": "4/6",
-   "notas": [],
+   "notas": [
+    "diámetro y altura pestaña constante en las sobre medidas"
+   ],
    "sobremedidas": [
     {
      "label": "STD",
@@ -96,7 +98,7 @@
  {
   "codigo": "UC 0817",
   "codigo_fab": "UC 0817",
-  "marca": "BEDFORD - CIMARRON (DIÁMETRO Y ALTURA PESTAÑA CONSTANTE EN LAS SOBRE MEDIDAS)",
+  "marca": "BEDFORD - CIMARRON",
   "aplicacion": "220NA / 330NA Turbo diesel",
   "descripcion": null,
   "medidas": {
@@ -108,7 +110,9 @@
   "extra": {
    "tipo_camisa": "Seca",
    "bocas": "4/6",
-   "notas": [],
+   "notas": [
+    "diámetro y altura pestaña constante en las sobre medidas"
+   ],
    "sobremedidas": [
     {
      "label": "STD",
@@ -119,14 +123,16 @@
      "valor": 110.98
     }
    ],
-   "revisar": null
+   "revisar": {
+    "sobremedidas": "El catálogo da un Ø exterior que no coincide con la medida: +.030\" tendría que estar cerca de la STD (109,07 mm) más esa sobremedida. Confirmar antes de pedirla."
+   }
   },
   "codigos_crac": []
  },
  {
   "codigo": "UCO 0844",
   "codigo_fab": "UCO 0844",
-  "marca": "BEDFORD - CIMARRON (DIÁMETRO Y ALTURA PESTAÑA CONSTANTE EN LAS SOBRE MEDIDAS)",
+  "marca": "BEDFORD - CIMARRON",
   "aplicacion": "350, CIMARRON",
   "descripcion": "BEDFORD 350 4.3/16",
   "medidas": {
@@ -138,7 +144,9 @@
   "extra": {
    "tipo_camisa": "Seca",
    "bocas": "4/6",
-   "notas": [],
+   "notas": [
+    "diámetro y altura pestaña constante en las sobre medidas"
+   ],
    "sobremedidas": [
     {
      "label": "STD",
@@ -5038,7 +5046,7 @@
   "descripcion": "HONDA CBX 150 62,50 mm",
   "medidas": {
    "diam_int": 62.5,
-   "diam_ext_cil": 61.7,
+   "diam_ext_cil": 68.85,
    "alt_pest": 4.76,
    "largo": 97.0
   },
@@ -5052,9 +5060,7 @@
      "valor": 67.26
     }
    ],
-   "revisar": {
-    "diam_ext_cil": "El catálogo da un Ø de pestaña menor que el Ø interior, que no puede ser: está mal cargado en el catálogo."
-   }
+   "revisar": null
   },
   "codigos_crac": [
    {

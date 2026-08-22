@@ -1121,7 +1121,12 @@ publica la página; los 5 restantes son celdas con la etiqueta escrita adentro
   realidad 4,76. Como los números salen del Excel, esas 16 fichas ya quedan
   bien. Las **10 que dicen 4,00 también en el Excel** se dejan en 4,00 con un
   **"?"** al lado y la explicación al apoyar el mouse (pedido textual). El mismo
-  mecanismo marca la UCO 0460, que trae un Ø de pestaña menor que el interior.
+  mecanismo marca otras dos incoherencias del catálogo que aparecieron al
+  cruzar las fuentes: la **UCO 0460**, con un Ø de pestaña menor que el
+  interior, y la **UC 0817**, cuya `+.030"` repite el Ø de pestaña en vez de ser
+  la STD más 0,76 mm. Y donde el Excel se contradice a sí mismo se toma la fila
+  que puede ser: la **A 1166** figura con Ø de pestaña 61,70 bajo HONDA (menos
+  que su Ø interior) y con 68,85 bajo motos — vale la segunda.
 - **Columna Tipo** (Seca / Húmeda) y las aclaraciones del catálogo ("con
   parallamas", "block nuevo") debajo del motor.
 
