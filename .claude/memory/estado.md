@@ -1146,10 +1146,14 @@ deploy a producción confirmado.
 
 ## Próximo paso
 
-**Producción y `master` están sincronizados en el cierre del 2026-08-22**
-(camisas de Fadecya rehechas + el filtro del proveedor), deployado y verificado
-por HTTP: el JS que sirve producción es el commiteado (`index-CQb1Nz4r.js`,
-485.191 bytes) y la raíz responde 200. Ese commit trae las **396 camisas** con
+**Producción y `master` están sincronizados en `ab35c9d`** (2026-08-22: camisas
+de Fadecya rehechas + el filtro del proveedor), deployado y verificado por HTTP:
+el JS que sirve producción es el commiteado (`index-CQb1Nz4r.js`, 485.191
+bytes), la raíz responde 200 y `/api/tecnicos/familias` responde 401 sin sesión.
+Los tres commits de la tanda son `4a7e103` (el catálogo de camisas rehecho y la
+pantalla), `dda3b06` (las incoherencias del catálogo marcadas) y `151a84d` +
+`ab35c9d` (el filtro del proveedor, primero en las cinco familias y después
+sacado de subconjuntos). Ese commit trae las **396 camisas** con
 las sobremedidas bien etiquetadas, las **húmedas**, el **"?"** de los datos
 dudosos y la casilla **"Solo las que tiene el proveedor"** —tildada por defecto
 en camisas, guías, pistones y bujes de biela; **en subconjuntos no está**, por
