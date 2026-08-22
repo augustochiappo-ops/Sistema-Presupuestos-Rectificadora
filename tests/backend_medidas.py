@@ -1,6 +1,6 @@
 """
 Suite de verificación de la búsqueda por medidas (`app/tecnicos.py`), contra los
-catálogos técnicos del repo (280 camisas, 915 guías, 201 subconjuntos, 35
+catálogos técnicos del repo (396 camisas, 915 guías, 201 subconjuntos, 35
 pistones y 190 bujes de biela) y los 64.250 repuestos del proveedor ya
 importados en la base.
 
@@ -50,7 +50,8 @@ familias = {f["id"]: f for f in tecnicos.get_familias()}
 check("están las cinco familias",
       sorted(familias) == ["bujes_biela", "camisas", "guias", "pistones", "subconjuntos"],
       list(familias))
-check("280 camisas", familias.get("camisas", {}).get("total") == 280, familias.get("camisas"))
+check("396 camisas (secas y húmedas)",
+      familias.get("camisas", {}).get("total") == 396, familias.get("camisas"))
 check("915 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") == 915, familias.get("guias"))
 check("201 subconjuntos", familias.get("subconjuntos", {}).get("total") == 201, familias.get("subconjuntos"))
 check("35 pistones (Persan)", familias.get("pistones", {}).get("total") == 35, familias.get("pistones"))
@@ -100,7 +101,9 @@ check("la guía trae el código exacto del proveedor", guia["codigo_crac"] == "G
 check("el precio es el de la base", guia["precio"] == en_base["precio"], (guia["precio"], en_base["precio"]))
 check("el stock también", guia["stock"] == bool(en_base["stock"]), (guia["stock"], en_base["stock"]))
 
-sin_equivalencia = tecnicos.buscar("camisas", {"codigo": "UC 1694"})
+# UC 1694 no está en la lista del proveedor: hay que destildar el filtro para
+# verla (el filtro tiene su propia sección más abajo).
+sin_equivalencia = tecnicos.buscar("camisas", {"codigo": "UC 1694", "solo_crac": "0"})
 check("una ficha sin equivalencia igual aparece", sin_equivalencia["total"] == 1, codigos(sin_equivalencia))
 if sin_equivalencia["total"]:
     ficha = sin_equivalencia["resultados"][0]
@@ -240,7 +243,70 @@ check("Ø de sobremedida encuentra la camisa", "UC 2112" in codigos(r), codigos(
 if r["total"]:
     ficha = [x for x in r["resultados"] if x["codigo"] == "UC 2112"][0]
     check("y dice qué sobremedida matcheó",
-          [s["label"] for s in ficha["sobremedidas_match"]] == ['-.060"'], ficha["sobremedidas_match"])
+          [s["label"] for s in ficha["sobremedidas_match"]] == ["STD"], ficha["sobremedidas_match"])
+
+print("\n=== 7 ter. Camisas: etiquetas de sobremedida, húmedas y filtro del proveedor ===")
+# El error que motivó rehacer el catálogo: las etiquetas salían corridas, y toda
+# camisa empezaba en -.060" tuviera la medida que tuviera. La etiqueta ahora es
+# la del catálogo, y las métricas se guardan como métricas.
+def camisa(codigo):
+    r = tecnicos.buscar("camisas", {"codigo": codigo, "solo_crac": "0"})
+    return r["resultados"][0] if r["total"] else None
+
+
+def sobremedidas(codigo):
+    return [(s["label"], s["valor"]) for s in camisa(codigo)["extra"]["sobremedidas"]]
+
+
+check("una camisa en pulgadas trae las cinco medidas del catálogo",
+      sobremedidas("A 0069") == [('-.060"', 65.24), ('-.030"', 66.0), ("STD", 66.76),
+                                 ('+.030"', 67.52), ('+.060"', 68.28)],
+      sobremedidas("A 0069"))
+check("una camisa en milímetros NO se guarda como si fuera en pulgadas",
+      sobremedidas("UC 1902") == [("STD", 96.08), ("+0.20MM", 96.28), ("+0.50MM", 96.58)],
+      sobremedidas("UC 1902"))
+check("y la de +2,00 mm tampoco",
+      sobremedidas("AE 1776") == [("STD", 79.5), ("+2.00MM", 81.5)], sobremedidas("AE 1776"))
+check("la camisa con las doce medidas métricas está completa",
+      [l for l, _ in sobremedidas("UC 1278")]
+      == ['-.030"', "STD", "+0.05MM", "+0.10MM", "+0.20MM", "+0.25MM", "+0.50MM",
+          "+0.75MM", "+1.00MM", "+1.25MM", "+1.50MM", "+2.00MM"],
+      sobremedidas("UC 1278"))
+
+# El alto de pestaña: la página dice 4,00 donde el Excel dice 4,76.
+check("el alto de pestaña sale del Excel y no de la página",
+      camisa("A 0069")["medidas"]["alt_pest"] == 4.76, camisa("A 0069")["medidas"])
+dudosa = camisa("A 4601")
+check("cuando el Excel también dice 4,00 se deja el 4,00",
+      dudosa["medidas"]["alt_pest"] == 4.0, dudosa["medidas"])
+check("y queda marcado para que la pantalla le ponga el signo de pregunta",
+      "alt_pest" in (dudosa["extra"]["revisar"] or {}), dudosa["extra"]["revisar"])
+
+# Cada sobremedida tiene su código en la lista del proveedor, como en
+# subconjuntos: así el precio es el de la medida que se está mirando.
+codigos_a55 = camisa("A 0055")["extra"]
+medidas_a55 = tecnicos.buscar("camisas", {"codigo": "A 0055"})["resultados"][0]
+check("la camisa trae el código del proveedor de la STD",
+      medidas_a55["codigo_crac"] == "C CEA  055 STD" and medidas_a55["medida_crac"] == "STD",
+      (medidas_a55["codigo_crac"], medidas_a55["medida_crac"]))
+check("con precio de la base", medidas_a55["precio"] is not None, medidas_a55["precio"])
+
+humeda = camisa("UCO 4661")
+check("las camisas húmedas están en el catálogo",
+      humeda is not None and humeda["extra"]["tipo_camisa"] == "Húmeda", humeda)
+
+# El filtro nuevo: por defecto solo lo que el proveedor tiene.
+con_filtro = tecnicos.buscar("camisas", {"aplicacion": "diesel"})
+sin_filtro = tecnicos.buscar("camisas", {"aplicacion": "diesel", "solo_crac": "0"})
+check("por defecto se muestran solo las que el proveedor tiene",
+      all(x["codigo_crac"] for x in con_filtro["resultados"]), codigos(con_filtro))
+check("destildando el filtro aparecen todas",
+      sin_filtro["total"] > con_filtro["total"], (con_filtro["total"], sin_filtro["total"]))
+check("y se avisa cuántas quedaron afuera",
+      con_filtro["sin_proveedor"] == sin_filtro["total"] - con_filtro["total"],
+      (con_filtro["sin_proveedor"], con_filtro["total"], sin_filtro["total"]))
+check("sin el filtro no se cuenta ninguna afuera",
+      sin_filtro["sin_proveedor"] == 0, sin_filtro["sin_proveedor"])
 
 print("\n=== 7 bis. La forma de la guía ===")
 # "A-1-6" es el cuerpo A con los detalles 1 y 6. Algunas fichas venían sin los

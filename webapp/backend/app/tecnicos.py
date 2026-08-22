@@ -3,12 +3,13 @@ Catálogos técnicos: los que permiten buscar una pieza POR SUS MEDIDAS
 ("una camisa de Ø 104,5 con pestaña de 4,45") en vez de por código o
 descripción, que es lo que ya hace `crac.py`.
 
-De dónde salen: del repo del buscador web del negocio, convertidos con
-`scripts/convertir_tecnicos.js` a `CRAC/tecnicos/*.json`. Son 1.396 fichas que
-cambian solo cuando se procesa un catálogo nuevo (unas pocas veces al año), así
-que viven en git y se cargan en memoria — no van a SQLite. Sin tabla no hay
-migración, ni paso de importación, ni riesgo de que un deploy deje producción
-con el buscador vacío: alcanza con el `git pull`.
+De dónde salen: de los catálogos de cada fabricante, convertidos a
+`CRAC/tecnicos/*.json` por los scripts de `scripts/` (`convertir_tecnicos.js`
+para guías y subconjuntos, `convertir_camisas_fadecya.py` para camisas). Son
+1.500 fichas que cambian solo cuando se procesa un catálogo nuevo (unas pocas
+veces al año), así que viven en git y se cargan en memoria — no van a SQLite.
+Sin tabla no hay migración, ni paso de importación, ni riesgo de que un deploy
+deje producción con el buscador vacío: alcanza con el `git pull`.
 
 Lo que sí sale de la base es el PRECIO y el STOCK. La ficha técnica trae el
 código del proveedor ya resuelto (ver el encabezado del script de conversión) y
@@ -47,6 +48,11 @@ ESPEC = {
         # Ø de sobremedida: no es un campo de la ficha sino de cada sobremedida
         # de la lista, así que se filtra aparte (ver `_sobremedidas_match`).
         "sobremedidas": True,
+        # El catálogo de camisas es el único que trae piezas que el proveedor no
+        # vende: las húmedas salen del catálogo de fábrica de Fadecya, no de su
+        # lista. Por eso acá —y solo acá— la búsqueda arranca mostrando lo que se
+        # puede pedir, con la casilla para ver el catálogo entero.
+        "filtro_proveedor": True,
     },
     "guias": {
         "label": "Guías de válvulas",
@@ -156,7 +162,12 @@ def get_familias() -> list[dict]:
     for id_familia, espec in ESPEC.items():
         fichas = _catalogo(id_familia)
         if fichas:
-            familias.append({"id": id_familia, "label": espec["label"], "total": len(fichas)})
+            familias.append({
+                "id": id_familia,
+                "label": espec["label"],
+                "total": len(fichas),
+                "filtro_proveedor": bool(espec.get("filtro_proveedor")),
+            })
     return familias
 
 
@@ -253,7 +264,7 @@ def buscar(familia: str, filtros: dict) -> dict:
     """
     espec = ESPEC.get(familia)
     if not espec:
-        return {"total": 0, "capped": False, "resultados": []}
+        return {"total": 0, "capped": False, "sin_proveedor": 0, "resultados": []}
 
     rangos = {
         campo: _rango(filtros.get(campo), filtros.get(f"tol_{campo}"))
@@ -272,11 +283,22 @@ def buscar(familia: str, filtros: dict) -> dict:
         rango_sobre = _rango(filtros.get("diam_sobremedida"), filtros.get("tol_diam_sobremedida"))
         etiqueta_sobre = (filtros.get("sobremedida") or "").strip() or None
 
+    # Solo en las familias que lo declaran (hoy camisas): la búsqueda arranca
+    # mostrando lo que el proveedor tiene, y `solo_crac=0` la abre al catálogo
+    # entero, para saber qué existe aunque haya que conseguirlo por otro lado.
+    solo_crac = (
+        espec.get("filtro_proveedor")
+        and str(filtros.get("solo_crac", "1")).strip() not in ("0", "false", "no")
+    )
+
     hay_filtro = any([rangos, codigo, aplicacion, descripcion, tipo, forma, rango_sobre, etiqueta_sobre])
     if not hay_filtro:
-        return {"total": 0, "capped": False, "resultados": []}
+        return {"total": 0, "capped": False, "sin_proveedor": 0, "resultados": []}
 
     encontradas = []
+    # Cuántas quedaron afuera solo por no estar en la lista del proveedor: la
+    # pantalla lo dice, así se sabe que destildando el filtro hay más.
+    ocultas = 0
     for ficha in _catalogo(familia):
         if codigo and not _contiene(ficha["_codigo"], codigo):
             continue
@@ -299,6 +321,10 @@ def buscar(familia: str, filtros: dict) -> dict:
             if match_sobre is None:
                 continue
 
+        if solo_crac and not ficha.get("codigos_crac"):
+            ocultas += 1
+            continue
+
         encontradas.append((ficha, match_sobre))
         if len(encontradas) > LIMITE_RESULTADOS:
             break
@@ -308,7 +334,12 @@ def buscar(familia: str, filtros: dict) -> dict:
 
     precios = _precios([f for f, _ in encontradas])
     resultados = [_salida(ficha, match, precios) for ficha, match in encontradas]
-    return {"total": len(resultados), "capped": capped, "resultados": resultados}
+    return {
+        "total": len(resultados),
+        "capped": capped,
+        "sin_proveedor": ocultas,
+        "resultados": resultados,
+    }
 
 
 # ─── Precio y stock, de la base ──────────────────────────────────────────────

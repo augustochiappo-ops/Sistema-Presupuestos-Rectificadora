@@ -494,3 +494,81 @@
 **Por qué ahí y no en el JSON:** el JSON se regenera cuando se procesa un catálogo nuevo, y una corrección escrita adentro se pierde en silencio la próxima vez. En el `_catalogo()` vale también para el catálogo que venga mañana, sin depender de que el script de conversión se acuerde.
 **La regla y por qué es segura:** la lámina define los detalles del **1 al 8**, así que un número de más de un dígito solo puede ser dos detalles pegados. Lo que no encaje en "letra + dígitos" se deja tal cual vino — mejor un código raro en pantalla que uno inventado.
 **Fecha:** 2026-08-21
+
+---
+
+## Las etiquetas de sobremedida de las camisas: la regla del paréntesis (2026-08-22)
+
+**Contexto.** El buscador de camisas mostraba mal la sobremedida de más de la
+mitad del catálogo. El JSON venía del buscador web viejo, que numeraba las
+medidas de cada camisa en orden fijo (`-.060"`, `-.030"`, STD, …) sin mirar en
+qué columna del catálogo estaba cada valor. Una camisa STD figuraba como
+`-.060"`, y las medidas métricas (`+0,50 mm`) aparecían como pulgadas.
+
+**El problema real.** El Excel de Fadecya tiene, en las nueve columnas de
+"DIMENSIONES EXTERIORES INDICATIVAS", **dos filas de encabezado superpuestas**:
+pulgadas arriba y milímetros entre paréntesis abajo, y no coinciden columna a
+columna. Leer una fila por posición es, literalmente, tirar una moneda.
+
+**Decisión.** La etiqueta la decide **la celda, no la columna**: si el valor
+está entre paréntesis se lee con el encabezado métrico, y si no, con el de
+pulgadas. Además, tres formas sueltas que el catálogo escribe a mano dentro de
+la celda: `+.090"= 104,05` (etiqueta y valor juntos), `+.040"=` (la etiqueta
+apunta al valor de la celda siguiente) y un bloque —la UC 1278— que trae su
+propio encabezado y sus valores en las filas de abajo, sin repetir el código.
+
+**Por qué se confía en esto.** Se cruzó contra la página de Fadecya, que publica
+las sobremedidas disponibles fila por fila: de los 366 valores que están en las
+dos fuentes, la regla acierta **361**, y los 5 restantes son justamente los
+`+.040"=`, que se resuelven aparte. No es una heurística que "parece andar": es
+una regla verificada contra la fuente independiente.
+
+**Qué fuente manda para qué.** Los números salen del **Excel** (el dueño confía
+más en él: "yo confío más en el excel que en lo que dice la página"). Las
+**etiquetas** las confirma la página, que también aporta las camisas nuevas
+desde 2019 y las sobremedidas que Fadecya agregó después. El precio y el stock,
+como siempre, salen de la base del proveedor.
+
+**Lo que se descarta a propósito.** El asterisco (`81,76*`) y el `+` de adelante
+de los Ø exteriores de las húmedas (`+124,92`). El dueño no sabe qué significan
+y pidió expresamente no ponerlos en el programa: un signo que no se puede
+explicar en pantalla es ruido. El número se guarda igual.
+
+## Un dato mal cargado se muestra con "?" y no se corrige a ojo (2026-08-22)
+
+**Contexto.** El dueño avisó que en la página de Fadecya los altos de pestaña de
+4,00 son en realidad 4,76. Como los números salen del Excel, 16 fichas se
+arreglaron solas. Pero quedaron **10 que dicen 4,00 también en el Excel** — y
+ahí las dos fuentes coinciden en un valor sospechoso.
+
+**Decisión (del dueño, textual).** "Si el excel también dice 4.00 poné 4.00 pero
+con un signo de pregunta al lado. Y cuando se apoya el mouse arriba quiero que
+salga una nota aclarando qué significa el signo de pregunta." Es decir: **no se
+corrige, no se borra, se marca**. El JSON lo lleva en `extra.revisar`, un
+mecanismo que ya existía para los pistones con columnas corridas; lo que se
+sumó es el caso "hay valor **y** hay reparo", que antes no se mostraba.
+
+**Por qué así.** Cambiar los 4,00 a 4,76 por regla habría metido un error nuevo:
+en varias de esas fichas la página dice 3,95 o 3,98, o sea que el 4,00 del Excel
+es un redondeo y no un 4,76 mal escrito. Corregir a ojo, en un dato con el que
+se decide si una camisa entra en un motor, es peor que mostrar la duda.
+
+## El filtro "solo las que tiene el proveedor", tildado y solo en camisas (2026-08-22)
+
+**Contexto.** Al sumar las 107 camisas húmedas, el catálogo pasó a tener piezas
+que el proveedor no vende: salen del catálogo de fábrica de Fadecya, no de su
+lista. El dueño lo pidió así: agregarlas, pero con un filtro que muestre solo lo
+disponible, **tildado por defecto** y que se pueda destildar.
+
+**Decisión.** El filtro existe **solo en camisas**. Guías, subconjuntos,
+pistones y bujes también tienen fichas sin código del proveedor, y activarles el
+filtro por defecto habría escondido piezas que hoy se ven, sin que nadie lo
+pidiera. En camisas es distinto: las piezas que esconde son las que se
+acaban de agregar. Se implementó como una propiedad de la familia
+(`filtro_proveedor` en `ESPEC`), así extenderlo a otra es una línea.
+
+**Detalle de UX.** Cuando el filtro esconde algo, la línea de resultados lo dice
+("hay 13 más en el catálogo que el proveedor no tiene") y ese texto es el botón
+que las muestra. Un filtro activado por defecto que no avisa lo que esconde es
+una trampa: alguien busca una camisa que sabe que existe, no la encuentra y
+concluye que el sistema está incompleto.

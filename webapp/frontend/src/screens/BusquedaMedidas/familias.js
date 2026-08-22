@@ -26,19 +26,32 @@ export const FAMILIAS = [
       { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
     ],
     columnas: [
-      { key: 'codigo', header: 'Código', width: 140, strong: true, wrap: true },
-      { key: 'marca', header: 'Marca', width: 110 },
-      { key: 'aplicacion', header: 'Motor / aplicación', wrap: true, minWidth: 220 },
-      { key: 'diam_int', header: 'Ø int.', width: 90, align: 'right', tipo: 'mm' },
-      { key: 'diam_ext_cil', header: 'Ø pest.', width: 90, align: 'right', tipo: 'mm' },
-      { key: 'alt_pest', header: 'Alto pest.', width: 100, align: 'right', tipo: 'mm' },
-      { key: 'largo', header: 'Largo', width: 90, align: 'right', tipo: 'mm' },
-      { key: 'sobremedidas', header: 'Ø exterior', width: 170, tipo: 'sobremedidas' },
-      { key: 'precio', header: 'Precio', width: 120, align: 'right', tipo: 'precio' },
-      { key: 'stock', header: 'Stock', width: 90, align: 'center', tipo: 'stock' },
+      // Los anchos son ajustados a propósito: con la columna de sobremedidas
+      // sumada, la tabla tiene que entrar en pantalla sin empujar el precio y
+      // el stock fuera del borde derecho.
+      { key: 'codigo', header: 'Código', width: 110, strong: true, wrap: true },
+      { key: 'marca', header: 'Marca', width: 105 },
+      { key: 'aplicacion', header: 'Motor / aplicación', wrap: true, minWidth: 170, tipo: 'aplicacion' },
+      // Seca o húmeda: no son la misma pieza ni se montan igual, y ahora que el
+      // catálogo trae las dos hay que poder distinguirlas de un vistazo.
+      { key: 'tipo_camisa', header: 'Tipo', width: 75 },
+      { key: 'diam_int', header: 'Ø int.', width: 80, align: 'right', tipo: 'mm' },
+      { key: 'diam_ext_cil', header: 'Ø pest.', width: 85, align: 'right', tipo: 'mm' },
+      // Con dos decimales siempre: en esta columna la diferencia entre 4,00 y
+      // 4,76 es la que decide si la camisa entra, y un "4" pelado la disimula.
+      { key: 'alt_pest', header: 'Alto pest.', width: 95, align: 'right', tipo: 'mm', decimales: 2 },
+      { key: 'largo', header: 'Largo', width: 75, align: 'right', tipo: 'mm' },
+      // Cada sobremedida con su etiqueta arriba del Ø: sin la etiqueta a la
+      // vista, cinco números seguidos no dicen cuál pedir.
+      { key: 'sobremedidas', header: 'Sobremedidas y Ø ext.', minWidth: 200, tipo: 'sobremedidas' },
+      // Una camisa tiene un precio por sobremedida: esta columna dice de cuál
+      // es el que se está mostrando (igual que en subconjuntos y bujes).
+      { key: 'medida_crac', header: 'Precio de', width: 85, tipo: 'medida' },
+      { key: 'precio', header: 'Precio', width: 105, align: 'right', tipo: 'precio' },
+      { key: 'stock', header: 'Stock', width: 70, align: 'center', tipo: 'stock' },
     ],
     ejemplos: [
-      { label: 'Ø interior 102 mm', filtros: { diam_int: '102' } },
+      { label: 'Ø interior 98,42 mm', filtros: { diam_int: '98.42' } },
       { label: 'Alto de pestaña 4,76', filtros: { alt_pest: '4.76', tol_alt_pest: '0.1' } },
       { label: 'Motor: Perkins', filtros: { aplicacion: 'perkins' } },
     ],

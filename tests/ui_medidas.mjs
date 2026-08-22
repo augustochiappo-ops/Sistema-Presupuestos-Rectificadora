@@ -62,7 +62,7 @@ check('se entra a la pantalla', page.url().includes('busqueda-medidas'), page.ur
 
 console.log('\n=== Estado inicial ===')
 check('las cinco familias con su total',
-  (await page.locator('button', { hasText: /^Camisas\s*280$/ }).count()) === 1
+  (await page.locator('button', { hasText: /^Camisas\s*396$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Guías de válvulas\s*915$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Subconjuntos\s*201$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Pistones\s*35$/ }).count()) === 1
@@ -71,23 +71,75 @@ check('en camisas el filtro se llama Ø exterior',
   await page.locator('label', { hasText: 'Ø EXTERIOR' }).count() === 1
   && await page.locator('label', { hasText: 'sobremedida' }).count() === 0)
 check('sin filtros no se lista nada', await filas().count() === 0)
-check('y se ofrecen ejemplos', await page.locator('button', { hasText: 'Ø interior 102 mm' }).count() === 1)
+check('y se ofrecen ejemplos', await page.locator('button', { hasText: 'Ø interior 98,42 mm' }).count() === 1)
 await page.screenshot({ path: path.join(SHOT, 'medidas-inicial.png'), fullPage: true })
 
 console.log('\n=== Camisas: buscar por medida ===')
-await page.locator('button', { hasText: 'Ø interior 102 mm' }).click()
+await page.locator('button', { hasText: 'Ø interior 98,42 mm' }).click()
 await esperar(1200)
 const encontradas = await filas().count()
 check('el ejemplo trae resultados', encontradas > 0, encontradas)
 check('se dice cuántas son', /pieza(s)? encontrada/.test(await page.locator('text=/pieza(s)? encontrada/').first().textContent()))
-check('queda el tag del filtro activo', await page.locator('text=/Ø interior: 102 ± 0,5 mm/').count() === 1)
+check('queda el tag del filtro activo', await page.locator('text=/Ø interior: 98.42 ± 0,5 mm/').count() === 1)
 check('todas las filas caen en el rango pedido',
   (await filas().evaluateAll((trs) => trs.every((tr) => {
-    const v = parseFloat(tr.children[3].textContent.replace('.', '').replace(',', '.'))
-    return !Number.isNaN(v) && v >= 101.5 && v <= 102.5
+    // La columna 4 es el Ø interior (0 código, 1 marca, 2 aplicación, 3 tipo).
+    const v = parseFloat(tr.children[4].textContent.replace('.', '').replace(',', '.'))
+    return !Number.isNaN(v) && v >= 97.92 && v <= 98.92
   }))), 'alguna fila quedó fuera de 102 ± 0,5')
-check('y la columna también', await page.locator('th', { hasText: 'Ø exterior' }).count() === 1)
+check('y la columna también', await page.locator('th', { hasText: 'Sobremedidas y Ø ext.' }).count() === 1)
 await page.screenshot({ path: path.join(SHOT, 'medidas-camisas.png'), fullPage: true })
+
+console.log('\n=== Camisas: la sobremedida se lee sin apoyar el mouse ===')
+await page.locator('button', { hasText: 'Limpiar filtros' }).click()
+await esperar(400)
+await page.fill('input[placeholder="Código…"]', 'A 0069')
+await esperar(1200)
+const enPulgadas = await textoDeFila(0)
+check('la etiqueta de cada sobremedida está escrita en la celda',
+  ['-.060"', '-.030"', 'STD', '+.030"', '+.060"'].every((e) => enPulgadas.includes(e)), enPulgadas)
+check('con su Ø exterior al lado', enPulgadas.includes('65,24') && enPulgadas.includes('68,28'), enPulgadas)
+check('y el alto de pestaña es el del Excel, no el 4,00 de la página',
+  enPulgadas.includes('4,76'), enPulgadas)
+
+await page.fill('input[placeholder="Código…"]', 'UC 1902')
+await esperar(1200)
+const enMm = await textoDeFila(0)
+check('una sobremedida en milímetros se muestra en milímetros',
+  enMm.includes('+0,50 mm') && enMm.includes('+0,20 mm'), enMm)
+check('y no disfrazada de pulgadas', !enMm.includes('+.020"'), enMm)
+
+// La A 4601 no está en la lista del proveedor: para verla hay que destildar el
+// filtro (que abajo tiene su propia sección).
+await page.fill('input[placeholder="Código…"]', 'A 4601')
+await page.locator('text=Solo las que tiene el proveedor').click()
+await esperar(1200)
+const dudosa = await textoDeFila(0)
+check('un alto de pestaña dudoso se muestra con el signo de pregunta',
+  dudosa.includes('4,00') && dudosa.includes('?'), dudosa)
+const nota = await page.locator('td span[title]', { hasText: '4,00' }).first().getAttribute('title')
+check('y al apoyar el mouse se explica por qué', (nota || '').includes('4,76'), nota)
+await page.screenshot({ path: path.join(SHOT, 'medidas-camisas-sobremedidas.png'), fullPage: true })
+
+console.log('\n=== Camisas: el filtro de lo que tiene el proveedor ===')
+await page.locator('button', { hasText: 'Limpiar filtros' }).click()
+await esperar(400)
+check('viene tildado',
+  await page.locator('label', { hasText: 'Solo las que tiene el proveedor' }).locator('input').isChecked())
+await page.fill('input[placeholder="Motor / aplicación…"]', 'diesel')
+await esperar(1200)
+const conFiltro = await filas().count()
+check('avisa cuántas quedaron afuera',
+  await page.locator('text=/hay \\d+ más en el catálogo/').count() === 1)
+await page.locator('text=/hay \\d+ más en el catálogo/').click()
+await esperar(1200)
+check('y al tocar el aviso aparecen', await filas().count() > conFiltro, [conFiltro, await filas().count()])
+check('entre ellas hay camisas húmedas',
+  (await filas().allTextContents()).some((t) => t.includes('Húmeda')))
+await page.locator('button', { hasText: 'Limpiar filtros' }).click()
+await esperar(400)
+await page.locator('button', { hasText: 'Ø interior 98,42 mm' }).click()
+await esperar(1200)
 
 console.log('\n=== Achicar la tolerancia achica el resultado ===')
 await page.locator('label', { hasText: 'Ø INTERIOR' }).locator('input').nth(1).fill('0.1')
@@ -339,6 +391,9 @@ await esperar(500)
 await page.locator('button', { hasText: 'Limpiar filtros' }).click()
 await esperar(400)
 await page.fill('input[placeholder="Código…"]', 'UC 1694')
+await esperar(1200)
+check('con el filtro del proveedor tildado no aparece', await filas().count() === 0, await filas().count())
+await page.locator('text=Solo las que tiene el proveedor').click()
 await esperar(1200)
 const sinPrecio = await textoDeFila(0)
 check('la camisa sin código del proveedor aparece igual', sinPrecio.includes('UC 1694'), sinPrecio)

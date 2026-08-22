@@ -15,14 +15,14 @@ const ESPERA_MS = 280
 
 const TIPO_GUIA = { A: 'Admisión', E: 'Escape', AE: 'A/E' }
 
-function formatMm(valor) {
+function formatMm(valor, decimales = 0) {
   if (valor === null || valor === undefined || valor === '') return '—'
   // Una medida puede traer dos valores: el Ø exterior STD de un buje viene con
   // su banda de tolerancia y un buje escalonado tiene dos anchos.
-  if (Array.isArray(valor)) return valor.map(formatMm).join(' / ')
+  if (Array.isArray(valor)) return valor.map((v) => formatMm(v, decimales)).join(' / ')
   const n = Number(valor)
   if (Number.isNaN(n)) return String(valor)
-  return n.toLocaleString('es-AR', { maximumFractionDigits: 2 })
+  return n.toLocaleString('es-AR', { minimumFractionDigits: decimales, maximumFractionDigits: 2 })
 }
 
 /*
@@ -35,27 +35,101 @@ function aFila(ficha, i) {
   return { id: `${ficha.codigo}-${i}`, ...ficha, ...(ficha.medidas || {}), ...(ficha.extra || {}) }
 }
 
+/*
+ * Cómo se escribe una medida de sobremedida en pantalla. El catálogo usa dos
+ * sistemas y hay que respetarlos: las de pulgadas son ".030" de toda la vida y
+ * las métricas se piden en milímetros ("+0,50 mm"). Confundir una con otra es
+ * pedir la camisa equivocada, así que la unidad va siempre escrita.
+ */
+function formatEtiqueta(label) {
+  const mm = /^([+-])(\d+(?:[.,]\d+)?)\s*MM$/i.exec(String(label || '').trim())
+  if (!mm) return label || ''
+  return `${mm[1]}${Number(mm[2].replace(',', '.')).toLocaleString('es-AR', {
+    minimumFractionDigits: 2, maximumFractionDigits: 2,
+  })} mm`
+}
+
+/*
+ * Las sobremedidas van con la etiqueta A LA VISTA, arriba del Ø exterior, y no
+ * escondida en el tooltip: el número solo no dice si esa camisa es la STD, la
+ * de 30 o la de medio milímetro, que es justamente lo que hay que pedir.
+ */
 function celdaSobremedidas(fila) {
   const lista = Array.isArray(fila.sobremedidas) ? fila.sobremedidas : []
   if (!lista.length) return '—'
   const matcheadas = new Set((fila.sobremedidas_match || []).map((s) => s.label))
   return (
-    <span style={{ display: 'inline-flex', flexWrap: 'wrap', gap: '2px 8px' }}>
+    <span style={{ display: 'inline-flex', flexWrap: 'wrap', gap: '6px 12px' }}>
       {lista.map((s, i) => {
         const resaltada = matcheadas.has(s.label)
         return (
           <span
             key={`${s.label}-${i}`}
-            title={[s.label, s.texto && `${formatMm(s.valor)} mm`].filter(Boolean).join(' — ') || undefined}
-            style={{
-              color: resaltada ? 'var(--text-strong)' : 'var(--text-muted)',
-              fontWeight: resaltada ? 'var(--weight-semibold)' : 'var(--weight-regular)',
-            }}
+            style={{ display: 'inline-flex', flexDirection: 'column', lineHeight: 1.2 }}
           >
-            {s.texto || formatMm(s.valor)}
+            <span
+              style={{
+                fontSize: 'var(--text-xs)',
+                color: resaltada ? 'var(--text-body)' : 'var(--text-faint)',
+                fontWeight: resaltada ? 'var(--weight-semibold)' : 'var(--weight-regular)',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {formatEtiqueta(s.label)}
+            </span>
+            <span
+              style={{
+                color: resaltada ? 'var(--text-strong)' : 'var(--text-body)',
+                fontWeight: resaltada ? 'var(--weight-semibold)' : 'var(--weight-regular)',
+              }}
+            >
+              {s.texto || formatMm(s.valor)}
+            </span>
           </span>
         )
       })}
+    </span>
+  )
+}
+
+/*
+ * El motor o la aplicación, con las aclaraciones que el catálogo escribe al
+ * costado de la fila ("con parallamas", "block nuevo", "anillo de goma"). Son
+ * las que deciden si esa camisa entra en ese motor, así que van en la tabla y
+ * no perdidas en el catálogo.
+ */
+function celdaAplicacion(fila, key) {
+  const texto = fila[key]
+  const notas = Array.isArray(fila.notas) ? fila.notas : []
+  if (!texto && !notas.length) return '—'
+  return (
+    <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 2 }}>
+      <span>{texto || '—'}</span>
+      {notas.map((n) => (
+        <span key={n} style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{n}</span>
+      ))}
+    </span>
+  )
+}
+
+/*
+ * Una medida que el catálogo trae mal cargada no se borra ni se corrige a ojo:
+ * se muestra con un "?" al lado y el motivo en el tooltip. Es la diferencia
+ * entre "no lo sabemos" y "esto dice el catálogo, pero no le creas del todo".
+ */
+function conReparo(contenido, motivo) {
+  return (
+    <span title={motivo} style={{ cursor: 'help', whiteSpace: 'nowrap' }}>
+      {contenido}
+      <span
+        style={{
+          marginLeft: 4, padding: '0 5px', borderRadius: 'var(--radius-pill)',
+          background: 'var(--surface-sunken)', color: 'var(--text-muted)',
+          fontSize: 'var(--text-xs)', fontWeight: 'var(--weight-semibold)',
+        }}
+      >
+        ?
+      </span>
     </span>
   )
 }
@@ -71,10 +145,21 @@ function celda(col, fila, acciones) {
   if (motivo && (valor === null || valor === undefined || valor === '')) {
     return <span title={motivo} style={{ color: 'var(--text-faint)' }}>?</span>
   }
+  // El otro caso: el catálogo SÍ trae el número pero está mal cargado (un alto
+  // de pestaña de 4,00 que debería ser 4,76, un Ø de pestaña menor que el
+  // interior). Se muestra el número con un "?" al lado y el motivo al apoyar
+  // el mouse — borrarlo sería esconder lo único que dice el catálogo.
+  if (motivo) return conReparo(contenidoCelda(col, fila, acciones), motivo)
+
+  return contenidoCelda(col, fila, acciones)
+}
+
+function contenidoCelda(col, fila, acciones) {
+  const valor = fila[col.key]
 
   switch (col.tipo) {
     case 'mm':
-      return formatMm(valor)
+      return formatMm(valor, col.decimales)
     case 'precio':
       // Sin código del proveedor no hay precio que mostrar, y poner "—" haría
       // pensar que la pieza no se consigue: lo que pasa es que no la tenemos
@@ -89,6 +174,11 @@ function celda(col, fila, acciones) {
       return TIPO_GUIA[valor] || valor || '—'
     case 'sobremedidas':
       return celdaSobremedidas(fila)
+    // De qué sobremedida es el precio que se está mostrando.
+    case 'medida':
+      return valor ? formatEtiqueta(valor) : '—'
+    case 'aplicacion':
+      return celdaAplicacion(fila, col.key)
     case 'forma':
       return <CeldaForma forma={valor} onVerLamina={acciones.verLamina} />
     case 'dibujo':
@@ -151,7 +241,13 @@ export default function BusquedaMedidasScreen() {
   // orden de FAMILIAS (el del catálogo, no el que devuelva la API).
   const visibles = React.useMemo(() => {
     const cargadas = new Map(familias.map((f) => [f.id, f]))
-    return FAMILIAS.filter((f) => cargadas.has(f.id)).map((f) => ({ ...f, total: cargadas.get(f.id).total }))
+    // `filtroProveedor` lo decide el backend (ESPEC), que es el que aplica el
+    // filtro: acá no se duplica la lista de familias que lo tienen.
+    return FAMILIAS.filter((f) => cargadas.has(f.id)).map((f) => ({
+      ...f,
+      total: cargadas.get(f.id).total,
+      filtroProveedor: !!cargadas.get(f.id).filtro_proveedor,
+    }))
   }, [familias])
 
   const familia = visibles.find((f) => f.id === familiaId) || visibles[0] || FAMILIAS[0]
@@ -161,6 +257,10 @@ export default function BusquedaMedidasScreen() {
     () => filtrosPorFamilia[familia.id] || {},
     [filtrosPorFamilia, familia.id],
   )
+
+  // Filtro aparte de los de medida: no busca nada, decide sobre qué catálogo se
+  // busca. Viene tildado — lo normal es querer lo que se puede pedir hoy.
+  const soloProveedor = familia.filtroProveedor && filtros.solo_crac !== '0'
 
   const setFiltro = (campo, valor) => {
     setFiltrosPorFamilia((prev) => ({ ...prev, [familia.id]: { ...(prev[familia.id] || {}), [campo]: valor } }))
@@ -177,6 +277,7 @@ export default function BusquedaMedidasScreen() {
       if (campo.startsWith('tol_') && !(filtros[campo.slice(4)] ?? '').toString().trim()) continue
       params.set(campo, valor)
     }
+    if (familia.filtroProveedor && filtros.solo_crac === '0') params.set('solo_crac', '0')
     return params
   }, [familia, filtros])
 
@@ -372,6 +473,27 @@ export default function BusquedaMedidasScreen() {
               ))}
             </select>
           ))}
+          {familia.filtroProveedor && (
+          <label
+            title="Destildalo para buscar en todo el catálogo, incluso las piezas que hoy no están en la lista del proveedor."
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, height: 44, padding: '0 14px',
+              borderRadius: 'var(--radius-pill)', border: '1px solid var(--border-default)',
+              background: soloProveedor ? 'var(--surface-sunken)' : 'var(--surface-card)',
+              cursor: 'pointer', userSelect: 'none',
+              fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
+              color: 'var(--text-body)',
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={soloProveedor}
+              onChange={(e) => setFiltro('solo_crac', e.target.checked ? '' : '0')}
+              style={{ width: 16, height: 16, accentColor: 'var(--surface-inverse)', cursor: 'pointer' }}
+            />
+            Solo las que tiene el proveedor
+          </label>
+          )}
           {hayFiltro && (
             <button
               onClick={limpiar}
@@ -430,6 +552,21 @@ export default function BusquedaMedidasScreen() {
             ? 'Buscando…'
             : `${resultado.total} ${resultado.total === 1 ? 'pieza encontrada' : 'piezas encontradas'}`}
           {resultado.capped && ' — se muestran las primeras 100, afiná los filtros para ver el resto'}
+          {!cargando && soloProveedor && resultado.sin_proveedor > 0 && (
+            <>
+              {' — '}
+              <button
+                onClick={() => setFiltro('solo_crac', '0')}
+                style={{
+                  border: 'none', background: 'transparent', padding: 0, cursor: 'pointer',
+                  fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)',
+                  color: 'var(--text-body)', textDecoration: 'underline',
+                }}
+              >
+                hay {resultado.sin_proveedor} más en el catálogo que el proveedor no tiene
+              </button>
+            </>
+          )}
         </div>
       )}
 

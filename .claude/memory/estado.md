@@ -1076,6 +1076,65 @@ mismo:
 > Si las fotos vienen en `.rar`, se abren con `unrar`
 > (`apt-get install -y unrar`); `7z` lista el archivo pero no lo descomprime.
 
+## Sesión 2026-08-22 — Camisas: las sobremedidas mal etiquetadas, las húmedas y el "?"
+
+El dueño abrió la sesión con las dos fuentes de Fadecya —el Excel de la lista
+2019 y la página de productos del sitio impresa a PDF— y una frase que resultó
+ser la punta de un error grande: *"quiero que analices errores que tenemos en el
+buscador de camisas"*.
+
+**El error: las etiquetas de sobremedida estaban corridas.** El `camisas.json`
+que teníamos numeraba las sobremedidas de cada camisa empezando siempre por
+`-.060"`, sin mirar en qué columna del catálogo estaba cada valor. Resultado:
+**106 de 213 camisas comparables tenían mal la etiqueta** — la UC 1592, que es
+STD, figuraba como `-.060"`; el `-.060"` aparecía 201 veces en un catálogo donde
+en realidad son 68. Pedir por esa etiqueta es pedir la camisa equivocada.
+
+**Por qué pasaba.** En el Excel, las nueve columnas de "DIMENSIONES EXTERIORES
+INDICATIVAS" tienen **dos encabezados superpuestos**: uno en pulgadas
+(`-.060"`, `-.030"`, STD, `+.030"`…) y otro en milímetros entre paréntesis
+(`(+1,00)`, `(+2,00)`, `(+0,05)`…). Cuál vale lo dice **la celda**: si el valor
+está entre paréntesis se lee con el encabezado métrico, y si no, con el de
+pulgadas. Con esa regla, el Excel reproduce **361 de 366** etiquetas que también
+publica la página; los 5 restantes son celdas con la etiqueta escrita adentro
+(`+.040"=`) y se resuelven aparte. Está todo en `convertir_camisas_fadecya.py`.
+
+**Lo que se hizo:**
+
+- **`scripts/convertir_camisas_fadecya.py`** (nuevo) genera `camisas.json`
+  cruzando tres fuentes: el Excel (todos los números), la página (confirma las
+  etiquetas y trae las camisas nuevas desde 2019) y `precio-stock.csv` (el
+  código del proveedor). Las dos fuentes quedaron commiteadas en
+  `CRAC/tecnicos/fuentes/fadecya_camisas_2019.xlsx` y `…_web.pdf`.
+- **396 camisas** (antes 280), de las cuales **107 son húmedas** — el dueño
+  pidió agregarlas. **248 tienen código del proveedor** (antes 136), y ahora
+  **uno por sobremedida** (`C CEA  055 STD`, `… -30`, `… 030`…), como
+  subconjuntos y pistones: la tabla dice de qué medida es el precio que muestra.
+- **Filtro "Solo las que tiene el proveedor"**, tildado por defecto y solo en
+  camisas (es la única familia con piezas que el proveedor no vende). Se
+  destilda para ver el catálogo entero, y la línea de resultados avisa cuántas
+  quedaron afuera con un link que las muestra.
+- **Las sobremedidas se leen sin apoyar el mouse**: cada una va con su etiqueta
+  arriba del Ø exterior, y las métricas dicen milímetros (`+0,50 mm`) para no
+  confundirlas con las de pulgadas.
+- **El alto de pestaña.** El dueño avisó que los 4,00 de la página son en
+  realidad 4,76. Como los números salen del Excel, esas 16 fichas ya quedan
+  bien. Las **10 que dicen 4,00 también en el Excel** se dejan en 4,00 con un
+  **"?"** al lado y la explicación al apoyar el mouse (pedido textual). El mismo
+  mecanismo marca la UCO 0460, que trae un Ø de pestaña menor que el interior.
+- **Columna Tipo** (Seca / Húmeda) y las aclaraciones del catálogo ("con
+  parallamas", "block nuevo") debajo del motor.
+
+**Dos cosas que el dueño no supo explicar y por eso NO están en el programa:**
+el **asterisco** de algunos valores del Excel (`81,76*`) y el **"+"** que llevan
+adelante los Ø exteriores de casi todas las húmedas (`+124,92`). Se guarda el
+número, se descarta el signo. Si más adelante aparece la referencia del
+catálogo, el script es el único lugar donde hay que tocar.
+
+**Verificado:** `tests/backend_medidas.py` (bloque nuevo "7 ter. Camisas") y
+`tests/ui_medidas.mjs` (dos bloques nuevos), las dos suites en verde, y el
+deploy a producción confirmado.
+
 ## Próximo paso
 
 **Producción y `master` están sincronizados en `8086a86`**, deployado y
