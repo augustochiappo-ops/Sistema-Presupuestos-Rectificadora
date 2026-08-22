@@ -1110,10 +1110,12 @@ publica la página; los 5 restantes son celdas con la etiqueta escrita adentro
   pidió agregarlas. **248 tienen código del proveedor** (antes 136), y ahora
   **uno por sobremedida** (`C CEA  055 STD`, `… -30`, `… 030`…), como
   subconjuntos y pistones: la tabla dice de qué medida es el precio que muestra.
-- **Filtro "Solo las que tiene el proveedor"**, tildado por defecto y solo en
-  camisas (es la única familia con piezas que el proveedor no vende). Se
-  destilda para ver el catálogo entero, y la línea de resultados avisa cuántas
-  quedaron afuera con un link que las muestra.
+- **Filtro "Solo las que tiene el proveedor"**, tildado por defecto. Salió
+  primero solo en camisas (era la única familia con piezas que el proveedor no
+  vende) y **el dueño pidió en el acto extenderlo a las cinco**, porque va a
+  pasar los catálogos completos de las otras familias y ahí va a pasar lo
+  mismo. Se destilda para ver el catálogo entero, y la línea de resultados
+  avisa cuántas quedaron afuera con un link que las muestra.
 - **Las sobremedidas se leen sin apoyar el mouse**: cada una va con su etiqueta
   arriba del Ø exterior, y las métricas dicen milímetros (`+0,50 mm`) para no
   confundirlas con las de pulgadas.

@@ -268,6 +268,9 @@ console.log('\n=== Guías: la forma, con su dibujo ===')
 await page.fill('input[placeholder="Código…"]', '')
 await page.locator('button', { hasText: 'Guías de válvulas' }).click()
 await esperar(500)
+// La 3084 está en el catálogo de RYC pero no en la lista del proveedor: acá se
+// mira el dato de la ficha, así que se destilda el filtro.
+await page.locator('text=Solo las que tiene el proveedor').click()
 await page.fill('input[placeholder="Código…"]', '3084')
 await esperar(1200)
 check('la columna Forma está', await page.locator('th', { hasText: 'Forma' }).count() === 1)

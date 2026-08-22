@@ -58,6 +58,17 @@ check("35 pistones (Persan)", familias.get("pistones", {}).get("total") == 35, f
 check("190 bujes de biela (Indubrón)",
       familias.get("bujes_biela", {}).get("total") == 190, familias.get("bujes_biela"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
+# La casilla "Solo las que tiene el proveedor" va en las cinco: los catálogos
+# técnicos son los del fabricante y siempre traen más de lo que se puede pedir.
+check("las cinco ofrecen el filtro del proveedor",
+      all(f["filtro_proveedor"] for f in familias.values()),
+      {k: v.get("filtro_proveedor") for k, v in familias.items()})
+for id_familia in familias:
+    con = tecnicos.buscar(id_familia, {"aplicacion": "a"})
+    sin = tecnicos.buscar(id_familia, {"aplicacion": "a", "solo_crac": "0"})
+    check(f"y en {id_familia} filtra de verdad",
+          all(x["codigo_crac"] for x in con["resultados"]) and sin["total"] >= con["total"],
+          (con["total"], sin["total"]))
 
 print("\n=== 1. Sin filtros no se devuelve el catálogo ===")
 vacio = tecnicos.buscar("camisas", {})
@@ -86,7 +97,13 @@ con_largo = tecnicos.buscar("guias", {
     "diam_vastago": "11", "tol_diam_vastago": "0.1",
     "largo": "84.5", "tol_largo": "0.5",
 })
-check("Ø vástago 11 ±0,1 da 30 guías", solo_vastago["total"] == 30, solo_vastago["total"])
+# 24 y no 30: seis de esas guías están en el catálogo de RYC pero no en la lista
+# del proveedor, y el filtro de "solo las que tiene" viene tildado.
+check("Ø vástago 11 ±0,1 da 24 guías que se pueden pedir",
+      solo_vastago["total"] == 24, solo_vastago["total"])
+check("y 30 en el catálogo entero",
+      tecnicos.buscar("guias", {"diam_vastago": "11", "tol_diam_vastago": "0.1",
+                                "solo_crac": "0"})["total"] == 30)
 check("sumar el largo achica el resultado", 0 < con_largo["total"] < solo_vastago["total"], con_largo["total"])
 check("y la guía buscada sigue estando", "G IY1171 STD" in codigos(con_largo), codigos(con_largo))
 
@@ -180,12 +197,14 @@ if "I-115" in codigos(r):
           [x["label"] for x in ficha["sobremedidas_match"]] == ["040"], ficha["sobremedidas_match"])
 
 # I-143X es trapezoidal: 14,60 de un lado y 20,20 del otro. Tiene los dos
-# anchos, no los 17 que quedarían de promediarlos.
-r = tecnicos.buscar("bujes_biela", {"ancho": "14.6", "tol_ancho": "0.05"})
+# anchos, no los 17 que quedarían de promediarlos. No está en la lista del
+# proveedor, así que estas búsquedas van con el filtro destildado.
+todo = {"solo_crac": "0"}
+r = tecnicos.buscar("bujes_biela", {**todo, "ancho": "14.6", "tol_ancho": "0.05"})
 check("un buje escalonado aparece por su ancho chico", "I-143X" in codigos(r), codigos(r)[:5])
-r = tecnicos.buscar("bujes_biela", {"ancho": "20.2", "tol_ancho": "0.05"})
+r = tecnicos.buscar("bujes_biela", {**todo, "ancho": "20.2", "tol_ancho": "0.05"})
 check("y también por el grande", "I-143X" in codigos(r), codigos(r)[:5])
-r = tecnicos.buscar("bujes_biela", {"ancho": "17", "tol_ancho": "0.05"})
+r = tecnicos.buscar("bujes_biela", {**todo, "ancho": "17", "tol_ancho": "0.05"})
 check("pero no por un ancho que no tiene", "I-143X" not in codigos(r), codigos(r)[:5])
 
 r = tecnicos.buscar("bujes_biela", {"aplicacion": "corsa"})
@@ -193,7 +212,7 @@ check("se busca por marca y modelo juntos", "I-115" in codigos(r), codigos(r))
 
 # "I-143" (Citroën) e "I-143X" (el trapezoidal) son dos productos: el precio de
 # uno no se le puede poner al otro.
-trap = tecnicos.buscar("bujes_biela", {"codigo": "I-143X"})["resultados"][0]
+trap = tecnicos.buscar("bujes_biela", {"codigo": "I-143X", "solo_crac": "0"})["resultados"][0]
 check("el trapezoidal no se lleva el código del recto",
       trap["codigo_crac"] is None and trap["precio"] is None, trap["codigo_crac"])
 
@@ -311,15 +330,16 @@ check("sin el filtro no se cuenta ninguna afuera",
 print("\n=== 7 bis. La forma de la guía ===")
 # "A-1-6" es el cuerpo A con los detalles 1 y 6. Algunas fichas venían sin los
 # guiones o con dos detalles pegados, y se normalizan al cargar el catálogo.
-r = tecnicos.buscar("guias", {"codigo": "NB059B"})
+# Se busca en el catálogo entero: acá se verifica el dato, no si se consigue.
+r = tecnicos.buscar("guias", {"codigo": "NB059B", "solo_crac": "0"})
 check("una forma sin guiones se normaliza",
       {x["extra"]["forma"] for x in r["resultados"]} == {"A-1"},
       [x["extra"]["forma"] for x in r["resultados"]])
-r = tecnicos.buscar("guias", {"codigo": "R 3173"})
+r = tecnicos.buscar("guias", {"codigo": "R 3173", "solo_crac": "0"})
 check("y dos detalles pegados se separan",
       r["resultados"][0]["extra"]["forma"] == "P-3-6", r["resultados"][0]["extra"]["forma"])
 check("la forma de siempre no se toca",
-      tecnicos.buscar("guias", {"codigo": "3084"})["resultados"][0]["extra"]["forma"] == "F")
+      tecnicos.buscar("guias", {"codigo": "3084", "solo_crac": "0"})["resultados"][0]["extra"]["forma"] == "F")
 
 r = tecnicos.buscar("guias", {"forma": "A"})
 check("se puede filtrar por la letra del cuerpo",

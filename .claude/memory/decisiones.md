@@ -553,19 +553,27 @@ en varias de esas fichas la página dice 3,95 o 3,98, o sea que el 4,00 del Exce
 es un redondeo y no un 4,76 mal escrito. Corregir a ojo, en un dato con el que
 se decide si una camisa entra en un motor, es peor que mostrar la duda.
 
-## El filtro "solo las que tiene el proveedor", tildado y solo en camisas (2026-08-22)
+## El filtro "solo las que tiene el proveedor", tildado y en las cinco familias (2026-08-22)
 
 **Contexto.** Al sumar las 107 camisas húmedas, el catálogo pasó a tener piezas
 que el proveedor no vende: salen del catálogo de fábrica de Fadecya, no de su
 lista. El dueño lo pidió así: agregarlas, pero con un filtro que muestre solo lo
 disponible, **tildado por defecto** y que se pueda destildar.
 
-**Decisión.** El filtro existe **solo en camisas**. Guías, subconjuntos,
-pistones y bujes también tienen fichas sin código del proveedor, y activarles el
-filtro por defecto habría escondido piezas que hoy se ven, sin que nadie lo
-pidiera. En camisas es distinto: las piezas que esconde son las que se
-acaban de agregar. Se implementó como una propiedad de la familia
-(`filtro_proveedor` en `ESPEC`), así extenderlo a otra es una línea.
+**Decisión.** Salió **solo en camisas** —era la única familia con piezas que el
+proveedor no vende, y activarlo en las demás habría escondido piezas que hoy se
+ven sin que nadie lo pidiera— y el dueño pidió extenderlo **a las cinco** apenas
+lo vio: va a pasar los catálogos completos de las otras familias, y ahí va a
+pasar exactamente lo mismo que con las húmedas. Se implementó como una propiedad
+de la familia (`filtro_proveedor` en `ESPEC`), así prenderlo o apagarlo en una
+familia es una línea, y la pantalla lee de ahí si muestra la casilla — no la
+tiene duplicada.
+
+**Lo que cambió al extenderlo.** Las búsquedas de las otras familias devuelven
+menos por defecto (Ø vástago 11 ±0,1 pasó de 30 guías a 24). Las suites que
+verifican el **dato del catálogo** —que un buje escalonado tiene sus dos anchos,
+que la forma "P36" se normaliza a "P-3-6"— van con `solo_crac=0`: ahí se está
+verificando el catálogo, no si la pieza se consigue.
 
 **Detalle de UX.** Cuando el filtro esconde algo, la línea de resultados lo dice
 ("hay 13 más en el catálogo que el proveedor no tiene") y ese texto es el botón

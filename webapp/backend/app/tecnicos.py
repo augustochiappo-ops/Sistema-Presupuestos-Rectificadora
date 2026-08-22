@@ -41,6 +41,12 @@ TOLERANCIA_DEFECTO = 0.5
 # Qué se puede filtrar en cada familia. `medidas` son los campos numéricos: cada
 # uno se filtra con `<campo>` y `tol_<campo>`. El orden es el que usa la
 # pantalla para armar los filtros.
+#
+# `filtro_proveedor` es la casilla "Solo las que tiene el proveedor", tildada por
+# defecto. Va en las cinco familias: los catálogos técnicos son los del
+# fabricante y siempre traen más piezas de las que el proveedor vende, así que
+# la búsqueda arranca mostrando lo que se puede pedir hoy y la casilla abre el
+# catálogo entero cuando hace falta saber qué existe.
 ESPEC = {
     "camisas": {
         "label": "Camisas",
@@ -48,16 +54,13 @@ ESPEC = {
         # Ø de sobremedida: no es un campo de la ficha sino de cada sobremedida
         # de la lista, así que se filtra aparte (ver `_sobremedidas_match`).
         "sobremedidas": True,
-        # El catálogo de camisas es el único que trae piezas que el proveedor no
-        # vende: las húmedas salen del catálogo de fábrica de Fadecya, no de su
-        # lista. Por eso acá —y solo acá— la búsqueda arranca mostrando lo que se
-        # puede pedir, con la casilla para ver el catálogo entero.
         "filtro_proveedor": True,
     },
     "guias": {
         "label": "Guías de válvulas",
         "medidas": ["diam_vastago", "diam_ext", "largo"],
         "tipo": True,
+        "filtro_proveedor": True,
         # Forma del cuerpo (la letra de "A-1-6"): se filtra por la letra sola,
         # que es lo que distingue una guía recta de una con pestaña. Los
         # detalles numerados afinan demasiado para ser un filtro.
@@ -67,6 +70,7 @@ ESPEC = {
         "label": "Subconjuntos",
         "medidas": ["diam_piston", "alt_piston", "diam_perno"],
         "descripcion": True,
+        "filtro_proveedor": True,
     },
     # Los mismos filtros que subconjuntos, a propósito: es la misma pieza
     # buscada de la misma manera (Ø del pistón, alto, perno), solo que suelta.
@@ -74,6 +78,7 @@ ESPEC = {
         "label": "Pistones",
         "medidas": ["diam_piston", "alt_piston", "diam_perno"],
         "descripcion": True,
+        "filtro_proveedor": True,
     },
     "bujes_biela": {
         "label": "Bujes de biela",
@@ -82,6 +87,7 @@ ESPEC = {
         # hasta siete sobremedidas. Se filtra como en camisas, contra la lista
         # entera, y la pantalla marca cuál fue la que matcheó.
         "sobremedidas": True,
+        "filtro_proveedor": True,
     },
 }
 
@@ -283,9 +289,9 @@ def buscar(familia: str, filtros: dict) -> dict:
         rango_sobre = _rango(filtros.get("diam_sobremedida"), filtros.get("tol_diam_sobremedida"))
         etiqueta_sobre = (filtros.get("sobremedida") or "").strip() or None
 
-    # Solo en las familias que lo declaran (hoy camisas): la búsqueda arranca
-    # mostrando lo que el proveedor tiene, y `solo_crac=0` la abre al catálogo
-    # entero, para saber qué existe aunque haya que conseguirlo por otro lado.
+    # La búsqueda arranca mostrando lo que el proveedor tiene, y `solo_crac=0`
+    # la abre al catálogo entero, para saber qué existe aunque haya que
+    # conseguirlo por otro lado (ver `filtro_proveedor` en ESPEC).
     solo_crac = (
         espec.get("filtro_proveedor")
         and str(filtros.get("solo_crac", "1")).strip() not in ("0", "false", "no")

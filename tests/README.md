@@ -151,13 +151,13 @@ $VENV/bin/python tests/backend_medidas.py
 
 | Bloque | Qué verifica |
 |---|---|
-| Catálogos | Las cinco familias cargadas con sus totales exactos (396 camisas, 915 guías, 201 subconjuntos, 35 pistones, 190 bujes de biela) |
+| Catálogos | Las cinco familias cargadas con sus totales exactos (396 camisas, 915 guías, 201 subconjuntos, 35 pistones, 190 bujes de biela), las cinco con el filtro "solo las que tiene el proveedor" y filtrando de verdad |
 | Sin filtros | No devuelve el catálogo entero, y una familia inexistente no explota |
 | Valor ± tolerancia | Encuentra con el valor exacto y con ±0,5, deja de encontrar con ±0,1, usa ±0,5 si no se escribe tolerancia, y acepta la coma decimal |
 | Acumulación | Sumar un segundo filtro achica el resultado y no pierde la pieza buscada |
 | Precio y stock | Salen de `crac_repuestos` (no del catálogo técnico), el código del proveedor es el exacto (con su relleno de alineación) y una ficha sin equivalencia viene con `precio: null` en vez de con un precio inventado |
 | Subconjuntos | Un código Mahle tiene un código del proveedor **por sobremedida**: se elige el que tiene stock y precio, y se informa cuál |
-| Camisas | Las etiquetas de sobremedida son las del catálogo (las de pulgadas como pulgadas y las métricas como milímetros, que era el error viejo); el alto de pestaña sale del Excel y no del 4,00 de la página; el que también dice 4,00 en el Excel queda marcado para revisar; están las camisas húmedas; y el filtro "solo las que tiene el proveedor" viene activado, se puede destildar y avisa cuántas quedaron afuera |
+| Camisas | Las etiquetas de sobremedida son las del catálogo (las de pulgadas como pulgadas y las métricas como milímetros, que era el error viejo); el alto de pestaña sale del Excel y no del 4,00 de la página; el que también dice 4,00 en el Excel queda marcado para revisar; están las camisas húmedas; y el filtro del proveedor viene activado, se puede destildar y avisa cuántas quedaron afuera |
 | Bujes de biela | El mismo código bajo dos marcas son dos fichas; el Ø exterior encuentra por cualquier sobremedida y dice cuál matcheó; un buje escalonado aparece por sus **dos** anchos y no por el promedio; el trapezoidal (I-143X) no se lleva el precio del recto (I-143) |
 | Tolerancia con signo | `+` trae el valor y todo lo mayor, `−` el valor y todo lo menor, el valor exacto entra en los dos, `+2` acota de un solo lado, y el `+` **llega entero por la URL** (viaja como `%2B`) |
 | Forma de la guía | Las formas escritas sin guiones (`A1`) o con dos detalles pegados (`P36`) se normalizan al cargar el catálogo; se filtra por la letra del cuerpo y se combina con las medidas; están los **trece dibujos** que la pantalla va a pedir |
