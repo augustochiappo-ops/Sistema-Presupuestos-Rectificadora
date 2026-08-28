@@ -1181,6 +1181,13 @@ es distinto en cada catálogo (`A5177` → `F IY 5177`, `C105` + tipo A →
 `F NB 105A`, `523` → `F R 523T`), con los 68 cruces de Nubo y RYC revisados uno
 por uno contra la descripción del proveedor.
 
+**La columna "Motor / aplicación" quedó legible.** Indy empieza 477 de sus 559
+descripciones con "ASIENTO VALV." —que no dice nada, toda la pestaña son
+asientos de válvula— y además repite la marca adentro del texto. Se saca la
+muletilla y se descarta la repetición, así que lo que queda en la columna es el
+motor: "ALCO ADM 251-16V-9X10-1/2" en vez de "ALCO ASIENTO VALV. ALCO ADM
+251-16V-9X10-1/2".
+
 **Lo que el catálogo no dice, no se inventó.** Las siete filas de Nubo con
 medidas pero sin código quedaron afuera (sin código no hay nada que pedir); los
 44 asientos sin tipo cargado y los 211 sin ángulo se muestran con un guión; y los

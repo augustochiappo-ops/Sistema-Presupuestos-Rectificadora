@@ -193,7 +193,7 @@
   "codigo": "A5177",
   "codigo_fab": "A5177",
   "marca": "INDY",
-  "aplicacion": "ALCO ASIENTO VALV. ALCO ADM 251-16V-9X10-1/2",
+  "aplicacion": "ALCO ADM 251-16V-9X10-1/2",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -212,7 +212,7 @@
   "codigo": "A5178",
   "codigo_fab": "A5178",
   "marca": "INDY",
-  "aplicacion": "ALCO ASIENTO VALV. ALCO ESC 251-16V-9X10-1/2",
+  "aplicacion": "ALCO ESC 251-16V-9X10-1/2",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -231,7 +231,7 @@
   "codigo": "F IY 5180",
   "codigo_fab": "A5180",
   "marca": "INDY",
-  "aplicacion": "AUDI ASIENTO VALV. AUDI ESC - 4000 S 5000S QUATTROWAGON",
+  "aplicacion": "AUDI ESC - 4000 S 5000S QUATTROWAGON",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -271,7 +271,7 @@
   "codigo": "F IY 5179",
   "codigo_fab": "A5179",
   "marca": "INDY",
-  "aplicacion": "AUDI ASIENTO VALV. AUDI ADM - 4000 S 5000S QUATTROWAGON",
+  "aplicacion": "AUDI ADM - 4000 S 5000S QUATTROWAGON",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -311,7 +311,7 @@
   "codigo": "F IY 5239",
   "codigo_fab": "A5239",
   "marca": "INDY",
-  "aplicacion": "BEDFORD ASIENTO VALV. BEDFORD 57/70 ESC - BEDFORD-CHEVROLET 4",
+  "aplicacion": "BEDFORD 57/70 ESC - BEDFORD-CHEVROLET 4",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -335,7 +335,7 @@
   "codigo": "A5240",
   "codigo_fab": "A5240",
   "marca": "INDY",
-  "aplicacion": "BEDFORD ASIENTO VALV.BEDFORD 57/70 ADM. -CHEVROLET 6 - 57/70 ADM",
+  "aplicacion": "BEDFORD 57/70 ADM. -CHEVROLET 6 - 57/70 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -354,7 +354,7 @@
   "codigo": "F IY 5092",
   "codigo_fab": "A5092",
   "marca": "INDY",
-  "aplicacion": "BORGWARD ASIENTO VALV. VM BORGWARD ESC VM HR88/92 Normal",
+  "aplicacion": "VM BORGWARD ESC VM HR88/92 Normal",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -394,7 +394,7 @@
   "codigo": "A5281",
   "codigo_fab": "A5281",
   "marca": "INDY",
-  "aplicacion": "BORGWARD ASIENTO VALV. BORGWARD ESC VM HR88/92/94 H-HT-Turbo Diesel",
+  "aplicacion": "BORGWARD ESC VM HR88/92/94 H-HT-Turbo Diesel",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -413,7 +413,7 @@
   "codigo": "F IY 5091",
   "codigo_fab": "A5091",
   "marca": "INDY",
-  "aplicacion": "BORGWARD ASIENTO VALV. VM BORGWARD ADM VM HR88/92/94 H-HT-Turbo Diesel",
+  "aplicacion": "VM BORGWARD ADM VM HR88/92/94 H-HT-Turbo Diesel",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -453,7 +453,7 @@
   "codigo": "A5639",
   "codigo_fab": "A5639",
   "marca": "INDY",
-  "aplicacion": "BORGWARD ASIENTO VALV.VM BORGWARD",
+  "aplicacion": "VM BORGWARD",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -472,7 +472,7 @@
   "codigo": "A5143",
   "codigo_fab": "A5143",
   "marca": "INDY",
-  "aplicacion": "CASE ASIENTO VALV. CASE 830 A-E",
+  "aplicacion": "CASE 830 A-E",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -491,7 +491,7 @@
   "codigo": "F IY 5162",
   "codigo_fab": "A5162",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV.CATERPILLAR 2106 3204",
+  "aplicacion": "CATERPILLAR 2106 3204",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -515,7 +515,7 @@
   "codigo": "F IY 5673",
   "codigo_fab": "A5673",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV.CATERPILLAR 3126E ADM. 442 C.I (7.2L) 3126B C7 18V (12ADM, 6 ESC) ACERT",
+  "aplicacion": "CATERPILLAR 3126E ADM. 442 C.I (7.2L) 3126B C7 18V (12ADM, 6 ESC) ACERT",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -543,7 +543,7 @@
   "codigo": "F IY 5029",
   "codigo_fab": "A5029",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR D343 ESC, 3406/3408/3412-D343D3",
+  "aplicacion": "CATERPILLAR D343 ESC, 3406/3408/3412-D343D3",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -567,7 +567,7 @@
   "codigo": "A5554",
   "codigo_fab": "A5554",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV.CATERPILLAR 3114 ESC. 4C / 3,116 6C 30º 120H GMC 12-170 Cod, viejo A5034",
+  "aplicacion": "CATERPILLAR 3114 ESC. 4C / 3,116 6C 30º 120H GMC 12-170 Cod, viejo A5034",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -586,7 +586,7 @@
   "codigo": "F IY 5028",
   "codigo_fab": "A5028",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR D343 ADM. 3406/3408/3412-D343D3",
+  "aplicacion": "CATERPILLAR D343 ADM. 3406/3408/3412-D343D3",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -610,7 +610,7 @@
   "codigo": "A5299",
   "codigo_fab": "A5299",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR 3208 ESC 3204/3208 N.A, 3204/3208 Turbo",
+  "aplicacion": "CATERPILLAR 3208 ESC 3204/3208 N.A, 3204/3208 Turbo",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -629,7 +629,7 @@
   "codigo": "A5553",
   "codigo_fab": "A5553",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR 3114 ADM. 3,114 4C / 3,116 6C 30º 120H GMC 12-170 Cod, viejo A5035",
+  "aplicacion": "CATERPILLAR 3114 ADM. 3,114 4C / 3,116 6C 30º 120H GMC 12-170 Cod, viejo A5035",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -648,7 +648,7 @@
   "codigo": "F IY 5496",
   "codigo_fab": "A5496",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR 3304-3306 ESC,",
+  "aplicacion": "CATERPILLAR 3304-3306 ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -672,7 +672,7 @@
   "codigo": "F IY 5013",
   "codigo_fab": "A5013",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR 3306 ESC D330C, D333C, 3304, 3306, 977, 1673 cc",
+  "aplicacion": "CATERPILLAR 3306 ESC D330C, D333C, 3304, 3306, 977, 1673 cc",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -696,7 +696,7 @@
   "codigo": "A5497",
   "codigo_fab": "A5497",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR 3304-3306 ADM.",
+  "aplicacion": "CATERPILLAR 3304-3306 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -715,7 +715,7 @@
   "codigo": "F IY 5012",
   "codigo_fab": "A5012",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR 3306 ADM, D330C, D333C, 3304, 3306, 977, 1673 cc",
+  "aplicacion": "CATERPILLAR 3306 ADM, D330C, D333C, 3304, 3306, 977, 1673 cc",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -743,7 +743,7 @@
   "codigo": "F IY 5181",
   "codigo_fab": "A5181",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR 3204 ADM. 3204/3208 N.A, 3204/3208 Turbo",
+  "aplicacion": "CATERPILLAR 3204 ADM. 3204/3208 N.A, 3204/3208 Turbo",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -771,7 +771,7 @@
   "codigo": "A5548",
   "codigo_fab": "A5548",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR CT150-A002 3500 GNC A-E",
+  "aplicacion": "CATERPILLAR CT150-A002 3500 GNC A-E",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -790,7 +790,7 @@
   "codigo": "F IY 5406",
   "codigo_fab": "A5406",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR ESC. D353/79/98,G353/79/98/99,D399/D9",
+  "aplicacion": "CATERPILLAR ESC. D353/79/98,G353/79/98/99,D399/D9",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -818,7 +818,7 @@
   "codigo": "A5011",
   "codigo_fab": "A5011",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR D8 ESC. 3306 Asp Normal y Turbo",
+  "aplicacion": "CATERPILLAR D8 ESC. 3306 Asp Normal y Turbo",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -837,7 +837,7 @@
   "codigo": "A5014",
   "codigo_fab": "A5014",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR ADM. 3306 Asp Normal y Turbo",
+  "aplicacion": "CATERPILLAR ADM. 3306 Asp Normal y Turbo",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -856,7 +856,7 @@
   "codigo": "F IY 5405",
   "codigo_fab": "A5405",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR ADM. D353/79/98,G353/79/98/99,D399/D9",
+  "aplicacion": "CATERPILLAR ADM. D353/79/98,G353/79/98/99,D399/D9",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -884,7 +884,7 @@
   "codigo": "F IY 5672",
   "codigo_fab": "A5672",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR 3126E ESC, 442 C.I (7.2L) 3126B C7 18V (12ADM, 6 ESC) ACERT",
+  "aplicacion": "CATERPILLAR 3126E ESC, 442 C.I (7.2L) 3126B C7 18V (12ADM, 6 ESC) ACERT",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -912,7 +912,7 @@
   "codigo": "A5361",
   "codigo_fab": "A5361",
   "marca": "INDY",
-  "aplicacion": "CATERPILLAR ASIENTO VALV. CATERPILLAR 1673 CA ESC,",
+  "aplicacion": "CATERPILLAR 1673 CA ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -969,7 +969,7 @@
   "codigo": "F IY 5691",
   "codigo_fab": "A5691",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV. GM Cruze 1,8 L 16v",
+  "aplicacion": "CHEVROLET GM Cruze 1,8 L 16v",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -997,7 +997,7 @@
   "codigo": "A5522D",
   "codigo_fab": "A5522D",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV.CHEVROLET CORSA/ASTRA ESC, Corsa GSI-GLS, Tigra, Astra, Vectra Motor 1,6 C16XE DOCH 16V",
+  "aplicacion": "CHEVROLET CORSA/ASTRA ESC, Corsa GSI-GLS, Tigra, Astra, Vectra Motor 1,6 C16XE DOCH 16V",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1016,7 +1016,7 @@
   "codigo": "A5692",
   "codigo_fab": "A5692",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV. GM Cruze 1,8 L 16v",
+  "aplicacion": "CHEVROLET GM Cruze 1,8 L 16v",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1035,7 +1035,7 @@
   "codigo": "A5514D",
   "codigo_fab": "A5514D",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV. CHEVROLET CORSA,ASTRA 1,6 ADM. Corsa GSI-GLS, Tigra, Astra, Vectra Motor 1,6 C16XE DOCH 16V",
+  "aplicacion": "CHEVROLET CORSA,ASTRA 1,6 ADM. Corsa GSI-GLS, Tigra, Astra, Vectra Motor 1,6 C16XE DOCH 16V",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1054,7 +1054,7 @@
   "codigo": "F IY 5488",
   "codigo_fab": "A5488",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV.CHEVROLET CORSA 1,6 NAFTA GNC 8V ESC",
+  "aplicacion": "CHEVROLET CORSA 1,6 NAFTA GNC 8V ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1078,7 +1078,7 @@
   "codigo": "F IY 5527D",
   "codigo_fab": "A5527D",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV.CHEVROLET ASTRA / BLAZER ESC. Vectra, Kadet, Monza, Omega Motor C18NZ/C20NE 1,8-2,0-2,2I, - Astra 2,0 i Blazer 2,2i,- Pick Up S10 2,2i nafta",
+  "aplicacion": "CHEVROLET ASTRA / BLAZER ESC. Vectra, Kadet, Monza, Omega Motor C18NZ/C20NE 1,8-2,0-2,2I, - Astra 2,0 i Blazer 2,2i,- Pick Up S10 2,2i nafta",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1102,7 +1102,7 @@
   "codigo": "F IY 5216",
   "codigo_fab": "A5216",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV. CHEVROLET 250 ESC, 230/250/GIVC 2.2L/153/181",
+  "aplicacion": "CHEVROLET 250 ESC, 230/250/GIVC 2.2L/153/181",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1142,7 +1142,7 @@
   "codigo": "F IY 5487",
   "codigo_fab": "A5487",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV.CHEVROLET CORSA 1,6 ADM.",
+  "aplicacion": "CHEVROLET CORSA 1,6 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1166,7 +1166,7 @@
   "codigo": "A5513D",
   "codigo_fab": "A5513D",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV.CHEVROLET ASTRA / BLAZER 1,8/2,0/2,2 ADM, Vectra, Kadet, Monza, Omega Motor C18NZ/C20NE 1,8-2,0-2,2I, - Astra 2,0 i Blazer 2,2i,- Pick Up S10 2,2i nafta",
+  "aplicacion": "CHEVROLET ASTRA / BLAZER 1,8/2,0/2,2 ADM, Vectra, Kadet, Monza, Omega Motor C18NZ/C20NE 1,8-2,0-2,2I, - Astra 2,0 i Blazer 2,2i,- Pick Up S10 2,2i nafta",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1185,7 +1185,7 @@
   "codigo": "F IY 5215",
   "codigo_fab": "A5215",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV. CHEVROLET 250 ADM. 230/250/GIVC 2.2L/153/181",
+  "aplicacion": "CHEVROLET 250 ADM. 230/250/GIVC 2.2L/153/181",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1225,7 +1225,7 @@
   "codigo": "A5122",
   "codigo_fab": "A5122",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV. CHEVROLET 366 (66/87) 427-45 ESC.",
+  "aplicacion": "CHEVROLET 366 (66/87) 427-45 ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1244,7 +1244,7 @@
   "codigo": "A5229",
   "codigo_fab": "A5229",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV.CHEVROLET ADAP. ESC.",
+  "aplicacion": "CHEVROLET ADAP. ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1263,7 +1263,7 @@
   "codigo": "A5120",
   "codigo_fab": "A5120",
   "marca": "INDY",
-  "aplicacion": "CHEVROLET ASIENTO VALV. CHEVROLET 366 (66/87) 427-45 ADM.",
+  "aplicacion": "CHEVROLET 366 (66/87) 427-45 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1282,7 +1282,7 @@
   "codigo": "A5725",
   "codigo_fab": "A5725",
   "marca": "INDY",
-  "aplicacion": "CHRYSLER ASIENTO CHRYSLER",
+  "aplicacion": "CHRYSLER",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1301,7 +1301,7 @@
   "codigo": "A5724",
   "codigo_fab": "A5724",
   "marca": "INDY",
-  "aplicacion": "CHRYSLER ASIENTO CHRYSLER",
+  "aplicacion": "CHRYSLER",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1320,7 +1320,7 @@
   "codigo": "A5722",
   "codigo_fab": "A5722",
   "marca": "INDY",
-  "aplicacion": "CHRYSLER ASIENTO CHRYSLER",
+  "aplicacion": "CHRYSLER",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1339,7 +1339,7 @@
   "codigo": "A5723",
   "codigo_fab": "A5723",
   "marca": "INDY",
-  "aplicacion": "CHRYSLER ASIENTO CHRYSLER",
+  "aplicacion": "CHRYSLER",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1358,7 +1358,7 @@
   "codigo": "F IY 9088",
   "codigo_fab": "A9088",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS ISB ESC Serie ISBC Electrónico 24 válvulas MODELO ORIGINAL",
+  "aplicacion": "CUMMINS ISB ESC Serie ISBC Electrónico 24 válvulas MODELO ORIGINAL",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1382,7 +1382,7 @@
   "codigo": "F IY 9099",
   "codigo_fab": "A9099",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS ISB ADM Serie ISBC Electrónico 24 válvulas MODELO ORIGINAL",
+  "aplicacion": "CUMMINS ISB ADM Serie ISBC Electrónico 24 válvulas MODELO ORIGINAL",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1406,7 +1406,7 @@
   "codigo": "F IY 5065",
   "codigo_fab": "A5065",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS ISB Serie ISB Electronico 24 valvulas",
+  "aplicacion": "CUMMINS ISB Serie ISB Electronico 24 valvulas",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -1434,7 +1434,7 @@
   "codigo": "A5689",
   "codigo_fab": "A5689",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS ISC ADM Serie ISC Electrónico 24 válvulas MODELO ORIGINAL",
+  "aplicacion": "CUMMINS ISC ADM Serie ISC Electrónico 24 válvulas MODELO ORIGINAL",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1453,7 +1453,7 @@
   "codigo": "F IY 5690",
   "codigo_fab": "A5690",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS ISC ESC Serie ISC Electrónico 24 válvulas MODELO ORIGINAL",
+  "aplicacion": "CUMMINS ISC ESC Serie ISC Electrónico 24 válvulas MODELO ORIGINAL",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1477,7 +1477,7 @@
   "codigo": "F IY 5064",
   "codigo_fab": "A5064",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS QSX 15",
+  "aplicacion": "CUMMINS QSX 15",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -1505,7 +1505,7 @@
   "codigo": "F IY 9229",
   "codigo_fab": "A9229",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS ISCe ADM, CUMMINS 24 VALV. 8.3 - 9 LTS FORD CARGO 1832 ELECT. QSL9 - ISC - ISL - ISLE - ISL GAS 6 LTA",
+  "aplicacion": "CUMMINS ISCe ADM, CUMMINS 24 VALV. 8.3 - 9 LTS FORD CARGO 1832 ELECT. QSL9 - ISC - ISL - ISLE - ISL GAS 6 LTA",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1537,7 +1537,7 @@
   "codigo": "F IY 9230",
   "codigo_fab": "A9230",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS ISCe ESC, CUMMINS 24 VALV. 8.3 - 9 LTS FORD CARGO 1832 ELECT. QSL9 - ISC - ISL - ISLE - ISL GAS 6 LTA",
+  "aplicacion": "CUMMINS ISCe ESC, CUMMINS 24 VALV. 8.3 - 9 LTS FORD CARGO 1832 ELECT. QSL9 - ISC - ISL - ISLE - ISL GAS 6 LTA",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1569,7 +1569,7 @@
   "codigo": "A5614",
   "codigo_fab": "A5614",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS V6 V8 ADM,",
+  "aplicacion": "CUMMINS V6 V8 ADM,",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1588,7 +1588,7 @@
   "codigo": "F IY 5252",
   "codigo_fab": "A5252",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS SERIE B ESC, 4B 4BT 6B 6BT",
+  "aplicacion": "CUMMINS SERIE B ESC, 4B 4BT 6B 6BT",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1620,7 +1620,7 @@
   "codigo": "A5623",
   "codigo_fab": "A5623",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS L10 M11 ADM",
+  "aplicacion": "CUMMINS L10 M11 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1639,7 +1639,7 @@
   "codigo": "A5624",
   "codigo_fab": "A5624",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS L10 M11 ESC",
+  "aplicacion": "CUMMINS L10 M11 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1658,7 +1658,7 @@
   "codigo": "A5545",
   "codigo_fab": "A5545",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS LTA A-E L10, M11 MECANICO / ELECTRONICO",
+  "aplicacion": "CUMMINS LTA A-E L10, M11 MECANICO / ELECTRONICO",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -1677,7 +1677,7 @@
   "codigo": "A5432D",
   "codigo_fab": "A5432D",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS NVH450 A-E V 1486 V/VT600",
+  "aplicacion": "CUMMINS NVH450 A-E V 1486 V/VT600",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -1696,7 +1696,7 @@
   "codigo": "F IY 5251",
   "codigo_fab": "A5251",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS SERIE B ADM 4B 4BT 6B 6BT",
+  "aplicacion": "CUMMINS SERIE B ADM 4B 4BT 6B 6BT",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1728,7 +1728,7 @@
   "codigo": "F IY 5273",
   "codigo_fab": "A5273",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS MOT. SERIE C ESC 8.3 I Turbo Aftercooler Diesel FORD CARGO",
+  "aplicacion": "CUMMINS MOT. SERIE C ESC 8.3 I Turbo Aftercooler Diesel FORD CARGO",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1768,7 +1768,7 @@
   "codigo": "A9008",
   "codigo_fab": "A9008",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS MOT. SERIE C MOT 6CT ESC",
+  "aplicacion": "CUMMINS MOT. SERIE C MOT 6CT ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1787,7 +1787,7 @@
   "codigo": "F IY 5612",
   "codigo_fab": "A5612",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS N14 ELECTRONICO ESC,",
+  "aplicacion": "CUMMINS N14 ELECTRONICO ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1815,7 +1815,7 @@
   "codigo": "F IY 5613",
   "codigo_fab": "A5613",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS N14 ELECTRONICO ADM,",
+  "aplicacion": "CUMMINS N14 ELECTRONICO ADM,",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1843,7 +1843,7 @@
   "codigo": "F IY 5027",
   "codigo_fab": "A5027",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS 230 A-E NH 230/250, NHC230/250, NT280/300/10/35/420, NTA, NTC, CT, VT700, VT1710",
+  "aplicacion": "CUMMINS 230 A-E NH 230/250, NHC230/250, NT280/300/10/35/420, NTA, NTC, CT, VT700, VT1710",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -1875,7 +1875,7 @@
   "codigo": "F IY 5433",
   "codigo_fab": "A5433",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS N 855 A-E",
+  "aplicacion": "CUMMINS N 855 A-E",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -1903,7 +1903,7 @@
   "codigo": "A5695",
   "codigo_fab": "A5695",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS N14 ESC,",
+  "aplicacion": "CUMMINS N14 ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -1922,7 +1922,7 @@
   "codigo": "A5610",
   "codigo_fab": "A5610",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS N 14 ADM,",
+  "aplicacion": "CUMMINS N 14 ADM,",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1941,7 +1941,7 @@
   "codigo": "F IY 5278",
   "codigo_fab": "A5278",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS SERIE C ADM 8.3 I Turbo Aftercooler Diesel FORD CARGO",
+  "aplicacion": "CUMMINS SERIE C ADM 8.3 I Turbo Aftercooler Diesel FORD CARGO",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -1981,7 +1981,7 @@
   "codigo": "A5609",
   "codigo_fab": "A5609",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS SERIE 6CT ADM,",
+  "aplicacion": "CUMMINS SERIE 6CT ADM,",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2000,7 +2000,7 @@
   "codigo": "A5341",
   "codigo_fab": "A5341",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS ADM. SERIE K, KT 450, KT150, KTA 600, KTA 2300",
+  "aplicacion": "CUMMINS ADM. SERIE K, KT 450, KT150, KTA 600, KTA 2300",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2019,7 +2019,7 @@
   "codigo": "A5342",
   "codigo_fab": "A5342",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV.CUMMINS 205093 ESC SERIE K, KT 450, KT150, KTA 600, KTA 2300",
+  "aplicacion": "CUMMINS 205093 ESC SERIE K, KT 450, KT150, KTA 600, KTA 2300",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2038,7 +2038,7 @@
   "codigo": "A5615",
   "codigo_fab": "A5615",
   "marca": "INDY",
-  "aplicacion": "CUMMINS ASIENTO VALV. CUMMINS ISX DIESEL ESC.",
+  "aplicacion": "CUMMINS ISX DIESEL ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2057,7 +2057,7 @@
   "codigo": "A9293",
   "codigo_fab": "A9293",
   "marca": "INDY",
-  "aplicacion": "CUMMINS adaptacion Cummins",
+  "aplicacion": "adaptacion Cummins",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -2076,7 +2076,7 @@
   "codigo": "A9294",
   "codigo_fab": "A9294",
   "marca": "INDY",
-  "aplicacion": "CUMMINS adaptacion Cummins",
+  "aplicacion": "adaptacion Cummins",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -2095,7 +2095,7 @@
   "codigo": "F IY 5182",
   "codigo_fab": "A5182",
   "marca": "INDY",
-  "aplicacion": "DETROIT ASIENTO DE VALV.DETROIT S 53 (60-73) IMATER A-E",
+  "aplicacion": "DETROIT S 53 (60-73) IMATER A-E",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -2123,7 +2123,7 @@
   "codigo": "F IY 5015",
   "codigo_fab": "A5015",
   "marca": "INDY",
-  "aplicacion": "DETROIT ASIENTO VALV. DETROIT S 71E A-E",
+  "aplicacion": "DETROIT S 71E A-E",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2155,7 +2155,7 @@
   "codigo": "F IY 5109",
   "codigo_fab": "A5109",
   "marca": "INDY",
-  "aplicacion": "DETROIT ASIENTO VALV.DETROIT S 71E A-E",
+  "aplicacion": "DETROIT S 71E A-E",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -2183,7 +2183,7 @@
   "codigo": "F IY 5264",
   "codigo_fab": "A5264",
   "marca": "INDY",
-  "aplicacion": "DETROIT ASIENTO VALV.DETROIT S92 A-E",
+  "aplicacion": "DETROIT S92 A-E",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -2211,7 +2211,7 @@
   "codigo": "A5618",
   "codigo_fab": "A5618",
   "marca": "INDY",
-  "aplicacion": "DETROIT ASIENTO VALV.DETROIT S 60 ESC,",
+  "aplicacion": "DETROIT S 60 ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2230,7 +2230,7 @@
   "codigo": "A5619",
   "codigo_fab": "A5619",
   "marca": "INDY",
-  "aplicacion": "DETROIT ASIENTO VALV.DETROIT S 60 ADM.",
+  "aplicacion": "DETROIT S 60 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2249,7 +2249,7 @@
   "codigo": "F IY 5088",
   "codigo_fab": "A5088",
   "marca": "INDY",
-  "aplicacion": "DETROIT ASIENTO VALV.DETROIT GM S149 MATERIALMAGNE A-E",
+  "aplicacion": "DETROIT GM S149 MATERIALMAGNE A-E",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -2273,7 +2273,7 @@
   "codigo": "A5164",
   "codigo_fab": "A5164",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 913 ESC",
+  "aplicacion": "DEUTZ 913 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2292,7 +2292,7 @@
   "codigo": "F IY 5166",
   "codigo_fab": "A5166",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 913 SIDAC ADM",
+  "aplicacion": "DEUTZ 913 SIDAC ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2328,7 +2328,7 @@
   "codigo": "A9139",
   "codigo_fab": "A9139",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO ESC DEUTZ F1L514",
+  "aplicacion": "ESC DEUTZ F1L514",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2347,7 +2347,7 @@
   "codigo": "F IY 5705",
   "codigo_fab": "A5705",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV.DEUTZ TCD 2013-4V ESC",
+  "aplicacion": "DEUTZ TCD 2013-4V ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2371,7 +2371,7 @@
   "codigo": "A5409",
   "codigo_fab": "A5409",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV.DEUTZ BF 4M/6M 1012 ESC",
+  "aplicacion": "DEUTZ BF 4M/6M 1012 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2390,7 +2390,7 @@
   "codigo": "F IY 5704",
   "codigo_fab": "A5704",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV.DEUTZ TCD 2013-4V ADM",
+  "aplicacion": "DEUTZ TCD 2013-4V ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2414,7 +2414,7 @@
   "codigo": "F IY 5031",
   "codigo_fab": "A5031",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV.DEUTZ 913 ESC F6L913/F1L812/F2L912D",
+  "aplicacion": "DEUTZ 913 ESC F6L913/F1L812/F2L912D",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2454,7 +2454,7 @@
   "codigo": "A5195",
   "codigo_fab": "A5195",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV.DEUTZ 913 ESC",
+  "aplicacion": "DEUTZ 913 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2473,7 +2473,7 @@
   "codigo": "F IY 5262",
   "codigo_fab": "A5262",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 913 TURBO ESC",
+  "aplicacion": "DEUTZ 913 TURBO ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2513,7 +2513,7 @@
   "codigo": "A6685",
   "codigo_fab": "A6685",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO DEUTZ 913",
+  "aplicacion": "DEUTZ UTZ 913",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2532,7 +2532,7 @@
   "codigo": "A5560",
   "codigo_fab": "A5560",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ FL 1011",
+  "aplicacion": "DEUTZ FL 1011",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2551,7 +2551,7 @@
   "codigo": "A5410",
   "codigo_fab": "A5410",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ ADM. BF 4M/6M 1012",
+  "aplicacion": "DEUTZ ADM. BF 4M/6M 1012",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2570,7 +2570,7 @@
   "codigo": "A5473",
   "codigo_fab": "A5473",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ ADM. 1013 BF 4M/6M 1013",
+  "aplicacion": "DEUTZ ADM. 1013 BF 4M/6M 1013",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2589,7 +2589,7 @@
   "codigo": "A5668",
   "codigo_fab": "A5668",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV.DEUTZ BF6M 1015C GAS ADM.",
+  "aplicacion": "DEUTZ BF6M 1015C GAS ADM.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2608,7 +2608,7 @@
   "codigo": "A5470",
   "codigo_fab": "A5470",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ ESC,",
+  "aplicacion": "DEUTZ ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2627,7 +2627,7 @@
   "codigo": "F IY 5030",
   "codigo_fab": "A5030",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 913 ADM F6L 913/F1L 812/F2L91",
+  "aplicacion": "DEUTZ 913 ADM F6L 913/F1L 812/F2L91",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2667,7 +2667,7 @@
   "codigo": "F IY 5136",
   "codigo_fab": "A5136",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 514 ACERO ESC",
+  "aplicacion": "DEUTZ 514 ACERO ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2703,7 +2703,7 @@
   "codigo": "A5335",
   "codigo_fab": "A5335",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 913 GAS",
+  "aplicacion": "DEUTZ 913 GAS",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2722,7 +2722,7 @@
   "codigo": "F IY 5196",
   "codigo_fab": "A5196",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 913 TURBO ADM.",
+  "aplicacion": "DEUTZ 913 TURBO ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2750,7 +2750,7 @@
   "codigo": "A5197",
   "codigo_fab": "A5197",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 913 ADM.",
+  "aplicacion": "DEUTZ 913 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2769,7 +2769,7 @@
   "codigo": "F IY 5139",
   "codigo_fab": "A5139",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 2114 ESC",
+  "aplicacion": "DEUTZ 2114 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2809,7 +2809,7 @@
   "codigo": "F IY 5471",
   "codigo_fab": "A5471",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ ADM. BF 6M/8M 1015",
+  "aplicacion": "DEUTZ ADM. BF 6M/8M 1015",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2841,7 +2841,7 @@
   "codigo": "A5472",
   "codigo_fab": "A5472",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. ADM. 1013 BF 4M/6M 1013",
+  "aplicacion": "DEUTZ ADM. 1013 BF 4M/6M 1013",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2860,7 +2860,7 @@
   "codigo": "F IY 5137",
   "codigo_fab": "A5137",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 413 FW ESC. 413 FL 413 F413 F W",
+  "aplicacion": "DEUTZ 413 FW ESC. 413 FL 413 F413 F W",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2892,7 +2892,7 @@
   "codigo": "A5649",
   "codigo_fab": "A5649",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 413 GNC ESC,",
+  "aplicacion": "DEUTZ 413 GNC ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -2911,7 +2911,7 @@
   "codigo": "F IY 5140",
   "codigo_fab": "A5140",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 2114 1114 ADM.",
+  "aplicacion": "DEUTZ 2114 1114 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2951,7 +2951,7 @@
   "codigo": "F IY 5138",
   "codigo_fab": "A5138",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 413 FW ADM 413 FL 413 F413 F W",
+  "aplicacion": "DEUTZ 413 FW ADM 413 FL 413 F413 F W",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -2987,7 +2987,7 @@
   "codigo": "F IY 5135",
   "codigo_fab": "A5135",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 514 ACERO ADM",
+  "aplicacion": "DEUTZ 514 ACERO ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3031,7 +3031,7 @@
   "codigo": "A5648",
   "codigo_fab": "A5648",
   "marca": "INDY",
-  "aplicacion": "DEUTZ ASIENTO VALV. DEUTZ 413 GNC ADM.",
+  "aplicacion": "DEUTZ 413 GNC ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3050,7 +3050,7 @@
   "codigo": "A5349",
   "codigo_fab": "A5349",
   "marca": "INDY",
-  "aplicacion": "DODGE ASIENTO VALV. DODGE 350 A-E",
+  "aplicacion": "DODGE 350 A-E",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -3069,7 +3069,7 @@
   "codigo": "F IY 5212",
   "codigo_fab": "A5212",
   "marca": "INDY",
-  "aplicacion": "DODGE ASIENTO VALV. DODGE 1500/1800-GNC ESC,",
+  "aplicacion": "DODGE 1500/1800-GNC ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3109,7 +3109,7 @@
   "codigo": "F IY 5211",
   "codigo_fab": "A5211",
   "marca": "INDY",
-  "aplicacion": "DODGE ASIENTO VALV. DODGE 1500/1800-GNC ADM.",
+  "aplicacion": "DODGE 1500/1800-GNC ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3149,7 +3149,7 @@
   "codigo": "F IY 5203",
   "codigo_fab": "A5203",
   "marca": "INDY",
-  "aplicacion": "DODGE ASIENTO VALV. DODGE ESC,",
+  "aplicacion": "DODGE ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3181,7 +3181,7 @@
   "codigo": "A5119",
   "codigo_fab": "A5119",
   "marca": "INDY",
-  "aplicacion": "DODGE ASIENTO VALV. DODGE 361 - 413 (60-77) ADM.",
+  "aplicacion": "DODGE 361 - 413 (60-77) ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3200,7 +3200,7 @@
   "codigo": "A9078",
   "codigo_fab": "A9078",
   "marca": "INDY",
-  "aplicacion": "FIAT FIAT 600 / 600D - 600E - 750",
+  "aplicacion": "FIAT 600 / 600D - 600E - 750",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3219,7 +3219,7 @@
   "codigo": "A9123",
   "codigo_fab": "A9123",
   "marca": "INDY",
-  "aplicacion": "FIAT FIAT IVECO TURBO 190E42",
+  "aplicacion": "FIAT IVECO TURBO 190E42",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3276,7 +3276,7 @@
   "codigo": "F IY 5533",
   "codigo_fab": "A5533",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT PALIO/UNO ESC, FIRE 1,3 16V",
+  "aplicacion": "FIAT PALIO/UNO ESC, FIRE 1,3 16V",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3308,7 +3308,7 @@
   "codigo": "A9092D",
   "codigo_fab": "A9092D",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT PALIO/UNO ESC, FIRE 1.3 16V - 8V",
+  "aplicacion": "FIAT PALIO/UNO ESC, FIRE 1.3 16V - 8V",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3327,7 +3327,7 @@
   "codigo": "F IY 5111",
   "codigo_fab": "A5111",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 600 750 ESC.",
+  "aplicacion": "FIAT 600 750 ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3371,7 +3371,7 @@
   "codigo": "F IY 5110",
   "codigo_fab": "A5110",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 600 750 ADM.",
+  "aplicacion": "FIAT 600 750 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3407,7 +3407,7 @@
   "codigo": "F IY 5534",
   "codigo_fab": "A5534",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT PALIO/UNO ADM. FIRE 1,3 16V",
+  "aplicacion": "FIAT PALIO/UNO ADM. FIRE 1,3 16V",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3439,7 +3439,7 @@
   "codigo": "F IY 5642",
   "codigo_fab": "A5642",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT FIRE 1,3 8V ESC.",
+  "aplicacion": "FIAT FIRE 1,3 8V ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3467,7 +3467,7 @@
   "codigo": "F IY 5520",
   "codigo_fab": "A5520",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV.FIAT PALIO/SIENA/MAREA 1580 CC 16V ESC,",
+  "aplicacion": "FIAT PALIO/SIENA/MAREA 1580 CC 16V ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3499,7 +3499,7 @@
   "codigo": "A9131",
   "codigo_fab": "A9131",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. MOTOR FIRE 1,3 8V",
+  "aplicacion": "FIAT MOTOR FIRE 1,3 8V",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3518,7 +3518,7 @@
   "codigo": "F IY 5519",
   "codigo_fab": "A5519",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT PALIO/SIENA/MAREA 1580 CC / E-TORQ?",
+  "aplicacion": "FIAT PALIO/SIENA/MAREA 1580 CC / E-TORQ?",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3554,7 +3554,7 @@
   "codigo": "F IY 5101",
   "codigo_fab": "A5101",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 147/DUNA ESC 1300 cc DIESEL DUNA",
+  "aplicacion": "FIAT 147/DUNA ESC 1300 cc DIESEL DUNA",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3594,7 +3594,7 @@
   "codigo": "F IY 5308",
   "codigo_fab": "A5308",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT EUROPA REGATA 1,4-1,5 ESC,",
+  "aplicacion": "FIAT EUROPA REGATA 1,4-1,5 ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3626,7 +3626,7 @@
   "codigo": "F IY 5151",
   "codigo_fab": "A5151",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT TIPO 1,4/1,6 ESC,",
+  "aplicacion": "FIAT TIPO 1,4/1,6 ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3666,7 +3666,7 @@
   "codigo": "A5641",
   "codigo_fab": "A5641",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT FIRE 1,3 8V ADM.",
+  "aplicacion": "FIAT FIRE 1,3 8V ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3685,7 +3685,7 @@
   "codigo": "F IY 5146",
   "codigo_fab": "A5146",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 1500 ESC,",
+  "aplicacion": "FIAT 1500 ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3729,7 +3729,7 @@
   "codigo": "F IY 5102",
   "codigo_fab": "A5102",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 147/DUNA ADM. 1300cc DIESEL DUNA",
+  "aplicacion": "FIAT 147/DUNA ADM. 1300cc DIESEL DUNA",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3769,7 +3769,7 @@
   "codigo": "F IY 5714",
   "codigo_fab": "A5714",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. IVECO TECTOR 170 ADM.",
+  "aplicacion": "FIAT IVECO TECTOR 170 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3797,7 +3797,7 @@
   "codigo": "F IY 5715",
   "codigo_fab": "A5715",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. IVECO TECTOR 170 ESC.",
+  "aplicacion": "FIAT IVECO TECTOR 170 ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3825,7 +3825,7 @@
   "codigo": "F IY 5149",
   "codigo_fab": "A5149",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT DUNA 1,7 DIESEL ESC.",
+  "aplicacion": "FIAT DUNA 1,7 DIESEL ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3865,7 +3865,7 @@
   "codigo": "F IY 5330",
   "codigo_fab": "A5330",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT DUCATO DAILY/GRINTO ESC",
+  "aplicacion": "FIAT DUCATO DAILY/GRINTO ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -3893,7 +3893,7 @@
   "codigo": "F IY 5304",
   "codigo_fab": "A5304",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 128 EUROPA ADM REGATTA",
+  "aplicacion": "FIAT 128 EUROPA ADM REGATTA",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3925,7 +3925,7 @@
   "codigo": "F IY 5147",
   "codigo_fab": "A5147",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 1500 ADM.",
+  "aplicacion": "FIAT 1500 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3969,7 +3969,7 @@
   "codigo": "A5444",
   "codigo_fab": "A5444",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 1500 ADM.",
+  "aplicacion": "FIAT 1500 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -3988,7 +3988,7 @@
   "codigo": "A5445",
   "codigo_fab": "A5445",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 1300 ADM.",
+  "aplicacion": "FIAT 1300 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4043,7 +4043,7 @@
   "codigo": "F IY 5152",
   "codigo_fab": "A5152",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV.FIAT TIPO 1,4/1,6 ADM.",
+  "aplicacion": "FIAT TIPO 1,4/1,6 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4083,7 +4083,7 @@
   "codigo": "F IY 5150",
   "codigo_fab": "A5150",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV.FIAT DUNA 1,7 DIESEL TURBO ADM,",
+  "aplicacion": "FIAT DUNA 1,7 DIESEL TURBO ADM,",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4123,7 +4123,7 @@
   "codigo": "F IY 5118",
   "codigo_fab": "A5118",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 150 TURBO ESC. IVECO 150-160 TURBO",
+  "aplicacion": "FIAT 150 TURBO ESC. IVECO 150-160 TURBO",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4159,7 +4159,7 @@
   "codigo": "A9101",
   "codigo_fab": "A9101",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 400/500 ESC. FIAT - CP3 130/130PT/673N/NR",
+  "aplicacion": "FIAT 400/500 ESC. FIAT - CP3 130/130PT/673N/NR",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4178,7 +4178,7 @@
   "codigo": "F IY 5186",
   "codigo_fab": "A5186",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV .FIAT 400/500 ESC CP3/673N/130",
+  "aplicacion": "FIAT 400/500 ESC CP3/673N/130",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4206,7 +4206,7 @@
   "codigo": "A5530",
   "codigo_fab": "A5530",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 150 TURBO ESC.",
+  "aplicacion": "FIAT 150 TURBO ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4225,7 +4225,7 @@
   "codigo": "F IY 5184",
   "codigo_fab": "A5184",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT TIPO 1,6 SPI MPI A-E",
+  "aplicacion": "FIAT TIPO 1,6 SPI MPI A-E",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -4265,7 +4265,7 @@
   "codigo": "F IY 5678",
   "codigo_fab": "A5678",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO ESC. IVECO CURSOR 8 ESC",
+  "aplicacion": "FIAT ESC. IVECO CURSOR 8 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4293,7 +4293,7 @@
   "codigo": "F IY 5677",
   "codigo_fab": "A5677",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO ADM. IVECO CURSOR 8 ADM.",
+  "aplicacion": "FIAT ADM. IVECO CURSOR 8 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4321,7 +4321,7 @@
   "codigo": "F IY 5393",
   "codigo_fab": "A5393",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT DUCATO SIENA 1,7 ADM. 1.7/19 Turbo Dies Ducato,Palio,Siena",
+  "aplicacion": "FIAT DUCATO SIENA 1,7 ADM. 1.7/19 Turbo Dies Ducato,Palio,Siena",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4357,7 +4357,7 @@
   "codigo": "A9368",
   "codigo_fab": "A9368",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV.IVECO CURSOR 10-STRALIS-EURO STAR EUROTECH MP ESC CURSOR 10 - STRALIS AS/AD/AT 190/260/440 - EURO TECH MP 190/260/440 - EURO STAR LD 190/260/440",
+  "aplicacion": "FIAT IVECO CURSOR 10-STRALIS-EURO STAR EUROTECH MP ESC CURSOR 10 - STRALIS AS/AD/AT 190/260/440 - EURO TECH MP 190/260/440 - EURO STAR LD 190/260/440",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4376,7 +4376,7 @@
   "codigo": "F IY 5329",
   "codigo_fab": "A5329",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT DUCATO DAILY/GRINTO ADM.",
+  "aplicacion": "FIAT DUCATO DAILY/GRINTO ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4404,7 +4404,7 @@
   "codigo": "A5633",
   "codigo_fab": "A5633",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT EURO TECH ESC,",
+  "aplicacion": "FIAT EURO TECH ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4423,7 +4423,7 @@
   "codigo": "F IY 5148",
   "codigo_fab": "A5148",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 150 TURBO 160 TURBO ADM.",
+  "aplicacion": "FIAT 150 TURBO 160 TURBO ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4459,7 +4459,7 @@
   "codigo": "F IY 5185",
   "codigo_fab": "A5185",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 400/500 CP3/673N/13",
+  "aplicacion": "FIAT 400/500 CP3/673N/13",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4487,7 +4487,7 @@
   "codigo": "A5634",
   "codigo_fab": "A5634",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT IVECO EURO TRAKKER CURSOR 13",
+  "aplicacion": "FIAT IVECO EURO TRAKKER CURSOR 13",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4506,7 +4506,7 @@
   "codigo": "A5635",
   "codigo_fab": "A5635",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT EURO TRAKKER CURSOR 13",
+  "aplicacion": "FIAT EURO TRAKKER CURSOR 13",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4525,7 +4525,7 @@
   "codigo": "F IY 5188",
   "codigo_fab": "A5188",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 190 TURBO ESC.",
+  "aplicacion": "FIAT 190 TURBO ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4553,7 +4553,7 @@
   "codigo": "F IY 5021",
   "codigo_fab": "A5021",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 619 ESC 619 N1/691/693/697/N/180N",
+  "aplicacion": "FIAT 619 ESC 619 N1/691/693/697/N/180N",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4585,7 +4585,7 @@
   "codigo": "A5636",
   "codigo_fab": "A5636",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT EURO TECH ADM",
+  "aplicacion": "FIAT EURO TECH ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4604,7 +4604,7 @@
   "codigo": "A9118",
   "codigo_fab": "A9118",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 619 ESC",
+  "aplicacion": "FIAT 619 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4623,7 +4623,7 @@
   "codigo": "F IY 5187",
   "codigo_fab": "A5187",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV. FIAT 190 TURBO ADM",
+  "aplicacion": "FIAT 190 TURBO ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4651,7 +4651,7 @@
   "codigo": "F IY 5020",
   "codigo_fab": "A5020",
   "marca": "INDY",
-  "aplicacion": "FIAT ASIENTO VALV.FIAT 619 ADM 619 N1/691/693T/697/N/180",
+  "aplicacion": "FIAT 619 ADM 619 N1/691/693T/697/N/180",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4687,7 +4687,7 @@
   "codigo": "F IY 5249",
   "codigo_fab": "A5249",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD ADAP F 100",
+  "aplicacion": "FORD ADAP F 100",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4768,7 +4768,7 @@
   "codigo": "F IY 9376",
   "codigo_fab": "A9376",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALVULA Ford Ranger motor PUMA 3.2, 5 Cil. 4V, TURBO ESC",
+  "aplicacion": "Ford Ranger motor PUMA 3.2, 5 Cil. 4V, TURBO ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4796,7 +4796,7 @@
   "codigo": "F IY 5348",
   "codigo_fab": "A5348",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD ZETEC 1,8 16VALV. ESC Mondeo, Fiesta, Escort, Focus Zetec E 1,8i-2,0i 16v",
+  "aplicacion": "FORD ZETEC 1,8 16VALV. ESC Mondeo, Fiesta, Escort, Focus Zetec E 1,8i-2,0i 16v",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4828,7 +4828,7 @@
   "codigo": "A5440",
   "codigo_fab": "A5440",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD ESCORT ESC",
+  "aplicacion": "FORD ESCORT ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4847,7 +4847,7 @@
   "codigo": "F IY 9375",
   "codigo_fab": "A9375",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALVULA Ford Ranger motor PUMA 3.2, 5 Cil. 4V, TURBO ADM",
+  "aplicacion": "Ford Ranger motor PUMA 3.2, 5 Cil. 4V, TURBO ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -4875,7 +4875,7 @@
   "codigo": "F IY 5699",
   "codigo_fab": "A5699",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD RANGER Motor NGD 3,0 cc. ESC",
+  "aplicacion": "FORD RANGER Motor NGD 3,0 cc. ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4903,7 +4903,7 @@
   "codigo": "F IY 5245",
   "codigo_fab": "A5245",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD FIESTA /KA ESC",
+  "aplicacion": "FORD FIESTA /KA ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4931,7 +4931,7 @@
   "codigo": "F IY 5443",
   "codigo_fab": "A5443",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD ENDURA 1,0-1,3 ADM.",
+  "aplicacion": "FORD ENDURA 1,0-1,3 ADM.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4959,7 +4959,7 @@
   "codigo": "F IY 5250",
   "codigo_fab": "A5250",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD FIESTA/ ESCORT ESC",
+  "aplicacion": "FORD FIESTA/ ESCORT ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -4987,7 +4987,7 @@
   "codigo": "F IY 5324",
   "codigo_fab": "A5324",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD FIESTA DIESEL ESC Fiesta CLD. CLXD, Escort, Orion, Courier 1,8i Diesel- Mondeo 1,8i Turbo diesel",
+  "aplicacion": "FORD FIESTA DIESEL ESC Fiesta CLD. CLXD, Escort, Orion, Courier 1,8i Diesel- Mondeo 1,8i Turbo diesel",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5019,7 +5019,7 @@
   "codigo": "A5437",
   "codigo_fab": "A5437",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD ZETEC 1,8 16VALV. ADM Mondeo, Fiesta, Escort, Focus Zetec E 1,8i-2,0i 16v",
+  "aplicacion": "FORD ZETEC 1,8 16VALV. ADM Mondeo, Fiesta, Escort, Focus Zetec E 1,8i-2,0i 16v",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5038,7 +5038,7 @@
   "codigo": "F IY 5247",
   "codigo_fab": "A5247",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD FIESTA DIESEL ESC",
+  "aplicacion": "FORD FIESTA DIESEL ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5078,7 +5078,7 @@
   "codigo": "F IY 5698",
   "codigo_fab": "A5698",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD RANGER MOTOR NGD 3,0 cc. ADM",
+  "aplicacion": "FORD RANGER MOTOR NGD 3,0 cc. ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5106,7 +5106,7 @@
   "codigo": "A5442",
   "codigo_fab": "A5442",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD ESCORT ADM",
+  "aplicacion": "FORD ESCORT ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5125,7 +5125,7 @@
   "codigo": "F IY 5669",
   "codigo_fab": "A5669",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. Eco Sport,Fiesta, Rocam 1,4/1,6i cc. 8v",
+  "aplicacion": "FORD Eco Sport,Fiesta, Rocam 1,4/1,6i cc. 8v",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5153,7 +5153,7 @@
   "codigo": "F IY 5620",
   "codigo_fab": "A5620",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD KA 1,3 ADM",
+  "aplicacion": "FORD KA 1,3 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5181,7 +5181,7 @@
   "codigo": "F IY 5231",
   "codigo_fab": "A5231",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD TANDIBER FALCON 221 ESC",
+  "aplicacion": "FORD TANDIBER FALCON 221 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5217,7 +5217,7 @@
   "codigo": "F IY 5206",
   "codigo_fab": "A5206",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD FALCON 221 ECONO GNC ESC",
+  "aplicacion": "FORD FALCON 221 ECONO GNC ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5261,7 +5261,7 @@
   "codigo": "A5439",
   "codigo_fab": "A5439",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD ESCORT ADM",
+  "aplicacion": "FORD ESCORT ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5280,7 +5280,7 @@
   "codigo": "F IY 5237",
   "codigo_fab": "A5237",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD FIESTA/ESCORT ADM ENDURA D 1800CC. DI",
+  "aplicacion": "FORD FIESTA/ESCORT ADM ENDURA D 1800CC. DI",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5312,7 +5312,7 @@
   "codigo": "A5232",
   "codigo_fab": "A5232",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD FALCON GNC ESC",
+  "aplicacion": "FORD FALCON GNC ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5331,7 +5331,7 @@
   "codigo": "F IY 5323",
   "codigo_fab": "A5323",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD FIESTA DIESEL ADM Fiesta CLD. CLXD, Escort, Orion, Courier 1,8i Diesel- Mondeo 1,8i Turbo diesel",
+  "aplicacion": "FORD FIESTA DIESEL ADM Fiesta CLD. CLXD, Escort, Orion, Courier 1,8i Diesel- Mondeo 1,8i Turbo diesel",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5363,7 +5363,7 @@
   "codigo": "F IY 5221",
   "codigo_fab": "A5221",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD FALCON ECONO-MAX ESC",
+  "aplicacion": "FORD FALCON ECONO-MAX ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5407,7 +5407,7 @@
   "codigo": "F IY 5246",
   "codigo_fab": "A5246",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD FIESTA ADM",
+  "aplicacion": "FORD FIESTA ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5447,7 +5447,7 @@
   "codigo": "A5441",
   "codigo_fab": "A5441",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD CORSEL ADM",
+  "aplicacion": "FORD CORSEL ADM",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5466,7 +5466,7 @@
   "codigo": "F IY 5261",
   "codigo_fab": "A5261",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD V8 ESC",
+  "aplicacion": "FORD V8 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5494,7 +5494,7 @@
   "codigo": "F IY 5290",
   "codigo_fab": "A5290",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD ADAP.TAUNUS ESC",
+  "aplicacion": "FORD ADAP.TAUNUS ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5522,7 +5522,7 @@
   "codigo": "F IY 5421",
   "codigo_fab": "A5421",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD ESC",
+  "aplicacion": "FORD ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5550,7 +5550,7 @@
   "codigo": "A5436",
   "codigo_fab": "A5436",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD FASE I ESC",
+  "aplicacion": "FORD FASE I ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5569,7 +5569,7 @@
   "codigo": "F IY 5391",
   "codigo_fab": "A5391",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD ZETEC ROCAM 1,6 ADM Eco Sport,Fiesta, Zetec Rocam 1,4/1,6i 8v",
+  "aplicacion": "FORD ZETEC ROCAM 1,6 ADM Eco Sport,Fiesta, Zetec Rocam 1,4/1,6i 8v",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5597,7 +5597,7 @@
   "codigo": "F IY 5205",
   "codigo_fab": "A5205",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD FALCON 221 ECONO GNC ADM",
+  "aplicacion": "FORD FALCON 221 ECONO GNC ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5633,7 +5633,7 @@
   "codigo": "A5435",
   "codigo_fab": "A5435",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD CARGO FASE II ESC",
+  "aplicacion": "FORD CARGO FASE II ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5652,7 +5652,7 @@
   "codigo": "F IY 5289",
   "codigo_fab": "A5289",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV.FORD ADAPT TAUNUS ADM",
+  "aplicacion": "FORD ADAPT TAUNUS ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5680,7 +5680,7 @@
   "codigo": "F IY 5416",
   "codigo_fab": "A5416",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD TRACTOR ADM",
+  "aplicacion": "FORD TRACTOR ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5712,7 +5712,7 @@
   "codigo": "A5434",
   "codigo_fab": "A5434",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD CARGO FASE II ADM",
+  "aplicacion": "FORD CARGO FASE II ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5731,7 +5731,7 @@
   "codigo": "A6808",
   "codigo_fab": "A6808",
   "marca": "INDY",
-  "aplicacion": "FORD ASIENTO VALV. FORD ROCAM 1,0",
+  "aplicacion": "FORD ROCAM 1,0",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5788,7 +5788,7 @@
   "codigo": "A9383",
   "codigo_fab": "A9383",
   "marca": "INDY",
-  "aplicacion": "GUASCOR ASIENTO VALVULA GUASCOR",
+  "aplicacion": "GUASCOR",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -5807,7 +5807,7 @@
   "codigo": "A5711",
   "codigo_fab": "A5711",
   "marca": "INDY",
-  "aplicacion": "HINO ASIENTO VALVULA HINO J08C ESC",
+  "aplicacion": "HINO J08C ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5826,7 +5826,7 @@
   "codigo": "A5710",
   "codigo_fab": "A5710",
   "marca": "INDY",
-  "aplicacion": "HINO ASIENTO VALVULA HINO J08C ESC",
+  "aplicacion": "HINO J08C ESC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5864,7 +5864,7 @@
   "codigo": "F IY 5033",
   "codigo_fab": "A5033",
   "marca": "INDY",
-  "aplicacion": "INDENOR ASIENTO VALVULA INDENOR XD 2 DIESEL ESC",
+  "aplicacion": "INDENOR XD 2 DIESEL ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5904,7 +5904,7 @@
   "codigo": "F IY 5037",
   "codigo_fab": "A5037",
   "marca": "INDY",
-  "aplicacion": "INDENOR ASIENTO VALVULA INDENOR XD3 DIESEL TURBO ESC",
+  "aplicacion": "INDENOR XD3 DIESEL TURBO ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -5936,7 +5936,7 @@
   "codigo": "F IY 5032",
   "codigo_fab": "A5032",
   "marca": "INDY",
-  "aplicacion": "INDENOR ASIENTO VALVULA INDENOR XD 2 DIESEL ADM",
+  "aplicacion": "INDENOR XD 2 DIESEL ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -5976,7 +5976,7 @@
   "codigo": "F IY 5036",
   "codigo_fab": "A5036",
   "marca": "INDY",
-  "aplicacion": "INDENOR ASIENTO VALV.INDENOR XD3 DIESEL TURBO ADM",
+  "aplicacion": "INDENOR XD3 DIESEL TURBO ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6008,7 +6008,7 @@
   "codigo": "A5606",
   "codigo_fab": "A5606",
   "marca": "INDY",
-  "aplicacion": "INTERNATIONAL ASIENTO VALV. INTERNATIONAL DT 360 ESC",
+  "aplicacion": "INTERNATIONAL DT 360 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6027,7 +6027,7 @@
   "codigo": "F IY 5155",
   "codigo_fab": "A5155",
   "marca": "INDY",
-  "aplicacion": "INTERNATIONAL ASIENTO VALV.INTERNATIONAL DT 466 ESC",
+  "aplicacion": "INTERNATIONAL DT 466 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6051,7 +6051,7 @@
   "codigo": "A5607",
   "codigo_fab": "A5607",
   "marca": "INDY",
-  "aplicacion": "INTERNATIONAL ASIENTO VALV. INTERNATIONAL DT 360 ADM",
+  "aplicacion": "INTERNATIONAL DT 360 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6070,7 +6070,7 @@
   "codigo": "F IY 5156",
   "codigo_fab": "A5156",
   "marca": "INDY",
-  "aplicacion": "INTERNATIONAL ASIENTO VALV. INTERNATIONAL DT 466 ADM",
+  "aplicacion": "INTERNATIONAL DT 466 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6094,7 +6094,7 @@
   "codigo": "A5586",
   "codigo_fab": "A5586",
   "marca": "INDY",
-  "aplicacion": "ISUZU ASIENTO VALV. ISUZU 4JA 1 EX",
+  "aplicacion": "ISUZU 4JA 1 EX",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6113,7 +6113,7 @@
   "codigo": "A5588",
   "codigo_fab": "A5588",
   "marca": "INDY",
-  "aplicacion": "ISUZU ASIENTO VALV.ISUZU 4BE 1 EX",
+  "aplicacion": "ISUZU 4BE 1 EX",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6132,7 +6132,7 @@
   "codigo": "F IY 5408",
   "codigo_fab": "A5408",
   "marca": "INDY",
-  "aplicacion": "ISUZU ASIENTO VALV. ISUZU 4BD/6BDI ESC",
+  "aplicacion": "ISUZU 4BD/6BDI ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6160,7 +6160,7 @@
   "codigo": "A5585",
   "codigo_fab": "A5585",
   "marca": "INDY",
-  "aplicacion": "ISUZU ASIENTO VALV. ISUZU 4JA 1 EN",
+  "aplicacion": "ISUZU 4JA 1 EN",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6179,7 +6179,7 @@
   "codigo": "A5587",
   "codigo_fab": "A5587",
   "marca": "INDY",
-  "aplicacion": "ISUZU ASIENTO VALV. ISUZU 4BE 1 IN",
+  "aplicacion": "ISUZU 4BE 1 IN",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6198,7 +6198,7 @@
   "codigo": "F IY 5407",
   "codigo_fab": "A5407",
   "marca": "INDY",
-  "aplicacion": "ISUZU ASIENTO VALVULA ISUZU 4BD/6BDI DIESEL ADM",
+  "aplicacion": "ISUZU 4BD/6BDI DIESEL ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6226,7 +6226,7 @@
   "codigo": "A5121",
   "codigo_fab": "A5121",
   "marca": "INDY",
-  "aplicacion": "ISUZU ASIENTO VALV. IZUSU 580 ESC",
+  "aplicacion": "ISUZU IZUSU 580 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6245,7 +6245,7 @@
   "codigo": "F IY 9369",
   "codigo_fab": "A9369",
   "marca": "INDY",
-  "aplicacion": "IVECO ASIENTO VALV.IVECO CURSOR 10-STRALIS-EURO STAR EUROTECH MP ADM CURSOR 10 - STRALIS AS/AD/AT 190/260/440 - EURO TECH MP 190/260/440 - EURO STAR LD 190/260/440",
+  "aplicacion": "IVECO CURSOR 10-STRALIS-EURO STAR EUROTECH MP ADM CURSOR 10 - STRALIS AS/AD/AT 190/260/440 - EURO TECH MP 190/260/440 - EURO STAR LD 190/260/440",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6273,7 +6273,7 @@
   "codigo": "F IY 5283",
   "codigo_fab": "A5283",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO VALVULA JHON DEERE 60 68 ESC 179D/T,239D/T.3179D/T.359D",
+  "aplicacion": "JOHN DEERE JHON DEERE 60 68 ESC 179D/T,239D/T.3179D/T.359D",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6301,7 +6301,7 @@
   "codigo": "F IY 5104",
   "codigo_fab": "A5104",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO VALVULA JHON DEERE ESC",
+  "aplicacion": "JOHN DEERE JHON DEERE ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6329,7 +6329,7 @@
   "codigo": "F IY 5129",
   "codigo_fab": "A5129",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO VALVULA JHON DEERE TRACTOR 3420/4420 ESC",
+  "aplicacion": "JOHN DEERE JHON DEERE TRACTOR 3420/4420 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6357,7 +6357,7 @@
   "codigo": "A5383",
   "codigo_fab": "A5383",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO JHON DEERE",
+  "aplicacion": "JOHN DEERE JHON DEERE",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6376,7 +6376,7 @@
   "codigo": "A5384",
   "codigo_fab": "A5384",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO JHON DEERE",
+  "aplicacion": "JOHN DEERE JHON DEERE",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6395,7 +6395,7 @@
   "codigo": "F IY 5284",
   "codigo_fab": "A5284",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO VALVULA JHON DEERE 60 68 ADM 164-219-329 DIESEL",
+  "aplicacion": "JOHN DEERE JHON DEERE 60 68 ADM 164-219-329 DIESEL",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6423,7 +6423,7 @@
   "codigo": "F IY 5128",
   "codigo_fab": "A5128",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO VALVULA JHON DEERE 3420 ADM",
+  "aplicacion": "JOHN DEERE JHON DEERE 3420 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6451,7 +6451,7 @@
   "codigo": "F IY 5103",
   "codigo_fab": "A5103",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO VALVULA JHON DEERE TRACTOR 3420/4420 ADM",
+  "aplicacion": "JOHN DEERE JHON DEERE TRACTOR 3420/4420 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6483,7 +6483,7 @@
   "codigo": "A5385",
   "codigo_fab": "A5385",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO VALV. JHON DEERE R119132",
+  "aplicacion": "JOHN DEERE JHON DEERE R119132",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6502,7 +6502,7 @@
   "codigo": "A5712",
   "codigo_fab": "A5712",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO VALV. JOHN DEERE R119132; L6, 466 C.I., (7.6L), 6076A/6076T, Diesel, OHV, 12 Valve, TURBO16/7/2024; 496 C.I., (8.1L), 6081, Diesel, OHV, 12 Valve, PowerTech TURBO",
+  "aplicacion": "JOHN DEERE R119132; L6, 466 C.I., (7.6L), 6076A/6076T, Diesel, OHV, 12 Valve, TURBO16/7/2024; 496 C.I., (8.1L), 6081, Diesel, OHV, 12 Valve, PowerTech TURBO",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6521,7 +6521,7 @@
   "codigo": "F IY 5386",
   "codigo_fab": "A5386",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO VALV. JHON DEERE R121193; L6, 466 C.I., (7.6L), 6076A/6076T, Diesel, OHV, 12 Valve, TURBO16/7/2024; 496 C.I., (8.1L), 6081, Diesel, OHV, 12 Valve, PowerTech TURBO",
+  "aplicacion": "JOHN DEERE JHON DEERE R121193; L6, 466 C.I., (7.6L), 6076A/6076T, Diesel, OHV, 12 Valve, TURBO16/7/2024; 496 C.I., (8.1L), 6081, Diesel, OHV, 12 Valve, PowerTech TURBO",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6545,7 +6545,7 @@
   "codigo": "A5713",
   "codigo_fab": "A5713",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE ASIENTO VALV. JHON DEERE R121193; L6, 466 C.I., (7.6L), 6076A/6076T, Diesel, OHV, 12 Valve, TURBO16/7/2024; 496 C.I., (8.1L), 6081, Diesel, OHV, 12 Valve, PowerTech TURBO",
+  "aplicacion": "JOHN DEERE JHON DEERE R121193; L6, 466 C.I., (7.6L), 6076A/6076T, Diesel, OHV, 12 Valve, TURBO16/7/2024; 496 C.I., (8.1L), 6081, Diesel, OHV, 12 Valve, PowerTech TURBO",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6602,7 +6602,7 @@
   "codigo": "A6769",
   "codigo_fab": "A6769",
   "marca": "INDY",
-  "aplicacion": "JOHN DEERE John Deere PowerTech 6090 9.0L / TIER 2 - 3 / 6 Cyl",
+  "aplicacion": "John Deere PowerTech 6090 9.0L / TIER 2 - 3 / 6 Cyl",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -6697,7 +6697,7 @@
   "codigo": "A5054",
   "codigo_fab": "A5054",
   "marca": "INDY",
-  "aplicacion": "LAND ROVER ASIENTO VALV. LAND ROVER A-E MODEL 88-109-110-111",
+  "aplicacion": "LAND ROVER A-E MODEL 88-109-110-111",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -6716,7 +6716,7 @@
   "codigo": "A5153",
   "codigo_fab": "A5153",
   "marca": "INDY",
-  "aplicacion": "LAND ROVER ASIENTO VALV. LAND ROVER ESC ENG. /MOT MODEL NAFTERO",
+  "aplicacion": "LAND ROVER ESC ENG. /MOT MODEL NAFTERO",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6735,7 +6735,7 @@
   "codigo": "F IY 5451",
   "codigo_fab": "A5451",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. M.W.M SPRINT 4,07/6,07/6,07T ADM",
+  "aplicacion": "M.W.M SPRINT 4,07/6,07/6,07T ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6763,7 +6763,7 @@
   "codigo": "A5090D",
   "codigo_fab": "A5090D",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. M.W.M 225 D299-TD229 ESC",
+  "aplicacion": "M.W.M 225 D299-TD229 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6782,7 +6782,7 @@
   "codigo": "A5424",
   "codigo_fab": "A5424",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. M.W.M TURBO ESC D225/226/D299-TURNINADO Brasil",
+  "aplicacion": "M.W.M TURBO ESC D225/226/D299-TURNINADO Brasil",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6801,7 +6801,7 @@
   "codigo": "F IY 5452",
   "codigo_fab": "A5452",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV, M.W.M SPRINT 4,07/6,07/6,07T ESC",
+  "aplicacion": ", M.W.M SPRINT 4,07/6,07/6,07T ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6833,7 +6833,7 @@
   "codigo": "F IY 5412D",
   "codigo_fab": "A5412D",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. M.W.M ESC",
+  "aplicacion": "M.W.M ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6861,7 +6861,7 @@
   "codigo": "A9117D",
   "codigo_fab": "A9117D",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. M.W.M ESC",
+  "aplicacion": "M.W.M ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6880,7 +6880,7 @@
   "codigo": "F IY 5089",
   "codigo_fab": "A5089",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. M.W.M 225 D299-TD229 ADM",
+  "aplicacion": "M.W.M 225 D299-TD229 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6908,7 +6908,7 @@
   "codigo": "A5422",
   "codigo_fab": "A5422",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. M.W.M D225/226/D299-TD229 ADM",
+  "aplicacion": "M.W.M D225/226/D299-TD229 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6927,7 +6927,7 @@
   "codigo": "A5423",
   "codigo_fab": "A5423",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. M.W.M TURBO ADM D225/226/D299 TURBINADO Brasil",
+  "aplicacion": "M.W.M TURBO ADM D225/226/D299 TURBINADO Brasil",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -6946,7 +6946,7 @@
   "codigo": "A9093",
   "codigo_fab": "A9093",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. MWM D-327/227/226Z ADM",
+  "aplicacion": "M.W.M MWM D-327/227/226Z ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6965,7 +6965,7 @@
   "codigo": "F IY 5411",
   "codigo_fab": "A5411",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. M.W.M. ADM. SERIE 10 - ACTEON 4,12T TCE",
+  "aplicacion": "M.W.M. ADM. SERIE 10 - ACTEON 4,12T TCE",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -6997,7 +6997,7 @@
   "codigo": "A9114",
   "codigo_fab": "A9114",
   "marca": "INDY",
-  "aplicacion": "M.W.M ASIENTO VALV. M.W.M. ADM.",
+  "aplicacion": "M.W.M. ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7016,7 +7016,7 @@
   "codigo": "A5616",
   "codigo_fab": "A5616",
   "marca": "INDY",
-  "aplicacion": "MACK ASIENTO VALV. MACK E7/E6 ADM",
+  "aplicacion": "MACK E7/E6 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7035,7 +7035,7 @@
   "codigo": "A5617",
   "codigo_fab": "A5617",
   "marca": "INDY",
-  "aplicacion": "MACK ASIENTO VALV. MACK E7/E6 ESC",
+  "aplicacion": "MACK E7/E6 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7054,7 +7054,7 @@
   "codigo": "A5057",
   "codigo_fab": "A5057",
   "marca": "INDY",
-  "aplicacion": "MACK ASIENTO VALV. MACK 673 ESC 673/5/6-707-711-864-6",
+  "aplicacion": "MACK 673 ESC 673/5/6-707-711-864-6",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7073,7 +7073,7 @@
   "codigo": "A5605",
   "codigo_fab": "A5605",
   "marca": "INDY",
-  "aplicacion": "MACK ASIENTO VALV. MACK E7 ESC",
+  "aplicacion": "MACK E7 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7092,7 +7092,7 @@
   "codigo": "A5056",
   "codigo_fab": "A5056",
   "marca": "INDY",
-  "aplicacion": "MACK ASIENTO VALV. MACK 673 ADM",
+  "aplicacion": "MACK 673 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7111,7 +7111,7 @@
   "codigo": "A5644",
   "codigo_fab": "A5644",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN ESC",
+  "aplicacion": "MAN ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7130,7 +7130,7 @@
   "codigo": "A5643",
   "codigo_fab": "A5643",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN ADM",
+  "aplicacion": "MAN ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7149,7 +7149,7 @@
   "codigo": "A5505",
   "codigo_fab": "A5505",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN D0826",
+  "aplicacion": "MAN D0826",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7168,7 +7168,7 @@
   "codigo": "A5580",
   "codigo_fab": "A5580",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN 2816 TGA ESC",
+  "aplicacion": "MAN 2816 TGA ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7187,7 +7187,7 @@
   "codigo": "A5579",
   "codigo_fab": "A5579",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN 2816 TGA ADM",
+  "aplicacion": "MAN 2816 TGA ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7206,7 +7206,7 @@
   "codigo": "A5370",
   "codigo_fab": "A5370",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN 2876 ESC",
+  "aplicacion": "MAN 2876 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7225,7 +7225,7 @@
   "codigo": "A5371",
   "codigo_fab": "A5371",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN 2876 ADM",
+  "aplicacion": "MAN 2876 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7244,7 +7244,7 @@
   "codigo": "A5532",
   "codigo_fab": "A5532",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALVULA MAN D 0826",
+  "aplicacion": "MAN D 0826",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7263,7 +7263,7 @@
   "codigo": "A5260",
   "codigo_fab": "A5260",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV.MAN ADM 2530/2532/2538.",
+  "aplicacion": "MAN ADM 2530/2532/2538.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7282,7 +7282,7 @@
   "codigo": "A5337",
   "codigo_fab": "A5337",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN ADM D 2555",
+  "aplicacion": "MAN ADM D 2555",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7301,7 +7301,7 @@
   "codigo": "A5338",
   "codigo_fab": "A5338",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN ADM D 2865/2866",
+  "aplicacion": "MAN ADM D 2865/2866",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7320,7 +7320,7 @@
   "codigo": "F IY 6767",
   "codigo_fab": "A6767",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN D0834/ 836- VW 17.280 (4.6, 16v, L4 y 6.9, 24v, L6) ESC / V-TRONIC (15.190)",
+  "aplicacion": "MAN D0834/ 836- VW 17.280 (4.6, 16v, L4 y 6.9, 24v, L6) ESC / V-TRONIC (15.190)",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7348,7 +7348,7 @@
   "codigo": "A6767T",
   "codigo_fab": "A6767T",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN D0834/ 836- VW 17.280 (4.6, 16v, L4 y 6.9, 24v, L6) ESC / V-TRONIC (15.190)",
+  "aplicacion": "MAN D0834/ 836- VW 17.280 (4.6, 16v, L4 y 6.9, 24v, L6) ESC / V-TRONIC (15.190)",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7367,7 +7367,7 @@
   "codigo": "F IY 6766",
   "codigo_fab": "A6766",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN D0834/ 836- VW 17.280 (4.6, 16v, L4 y 6.9, 24v, L6) ADM / V-TRONIC (15.190)",
+  "aplicacion": "MAN D0834/ 836- VW 17.280 (4.6, 16v, L4 y 6.9, 24v, L6) ADM / V-TRONIC (15.190)",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7395,7 +7395,7 @@
   "codigo": "A9126D",
   "codigo_fab": "A9126D",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALVULA MAN 2840 ADM MARINE DIESEL ENGINE MAN 2840",
+  "aplicacion": "MAN 2840 ADM MARINE DIESEL ENGINE MAN 2840",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7414,7 +7414,7 @@
   "codigo": "A5339",
   "codigo_fab": "A5339",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV.MAN ESC 2530/2532/2538.",
+  "aplicacion": "MAN ESC 2530/2532/2538.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7433,7 +7433,7 @@
   "codigo": "A5340",
   "codigo_fab": "A5340",
   "marca": "INDY",
-  "aplicacion": "MAN ASIENTO VALV. MAN Nº 51,032,03,0168",
+  "aplicacion": "MAN Nº 51,032,03,0168",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -7452,7 +7452,7 @@
   "codigo": "A5276",
   "codigo_fab": "A5276",
   "marca": "INDY",
-  "aplicacion": "MAXION MAXION HS GEMINI ROVER F100-BLAZER-M. BENZ",
+  "aplicacion": "MAXION HS GEMINI ROVER F100-BLAZER-M. BENZ",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7471,7 +7471,7 @@
   "codigo": "F IY 5174",
   "codigo_fab": "A5174",
   "marca": "INDY",
-  "aplicacion": "MAXION ASIENTO VALV. MAXION HS GEMINI ESC",
+  "aplicacion": "MAXION HS GEMINI ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7507,7 +7507,7 @@
   "codigo": "F IY 5285",
   "codigo_fab": "A5285",
   "marca": "INDY",
-  "aplicacion": "MAXION ASIENTO VALV.MAXION S4-S4T ESC / CHEVROLET D 20 - D 6000 / GMC D-40 (442/443) 1992-1995 / S4 4,0, 8V, L4 OHV",
+  "aplicacion": "MAXION S4-S4T ESC / CHEVROLET D 20 - D 6000 / GMC D-40 (442/443) 1992-1995 / S4 4,0, 8V, L4 OHV",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7539,7 +7539,7 @@
   "codigo": "F IY 5175",
   "codigo_fab": "A5175",
   "marca": "INDY",
-  "aplicacion": "MAXION ASIENTO VALV.MAXION HS GEMINI ADM",
+  "aplicacion": "MAXION HS GEMINI ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7575,7 +7575,7 @@
   "codigo": "F IY 5172",
   "codigo_fab": "A5172",
   "marca": "INDY",
-  "aplicacion": "MAXION ASIENTO VALV.MAXION F100 ADM F 100 MB SPRINTER",
+  "aplicacion": "MAXION F100 ADM F 100 MB SPRINTER",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7607,7 +7607,7 @@
   "codigo": "F IY 5270",
   "codigo_fab": "A5270",
   "marca": "INDY",
-  "aplicacion": "MAXION ASIENTO VALV.MAXION S 4T ADM CHEVROLET D 20",
+  "aplicacion": "MAXION S 4T ADM CHEVROLET D 20",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7635,7 +7635,7 @@
   "codigo": "F IY 5271",
   "codigo_fab": "A5271",
   "marca": "INDY",
-  "aplicacion": "MAXION ASIENTO VALV.MAXION S 4 ADM / CHEVROLET D 20 - D 6000 / GMC D-40 (442/443) 1992-1995 / S4 4,0, 8V, L4 OHV",
+  "aplicacion": "MAXION S 4 ADM / CHEVROLET D 20 - D 6000 / GMC D-40 (442/443) 1992-1995 / S4 4,0, 8V, L4 OHV",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7663,7 +7663,7 @@
   "codigo": "A5142",
   "codigo_fab": "A5142",
   "marca": "INDY",
-  "aplicacion": "MAZ ASIENTO VALV. MAZ ESC",
+  "aplicacion": "MAZ ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7682,7 +7682,7 @@
   "codigo": "A5141",
   "codigo_fab": "A5141",
   "marca": "INDY",
-  "aplicacion": "MAZ ASIENTO VALV. MAZ ADM",
+  "aplicacion": "MAZ ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7720,7 +7720,7 @@
   "codigo": "F IY 5132",
   "codigo_fab": "A5132",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ OM 360 ESC 327-360",
+  "aplicacion": "MERCEDES BENZ M.BENZ OM 360 ESC 327-360",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7748,7 +7748,7 @@
   "codigo": "F IY 5486",
   "codigo_fab": "A5486",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV.M. BENZ OM 904 ESC EURO TOP BREAK",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 904 ESC EURO TOP BREAK",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7772,7 +7772,7 @@
   "codigo": "A5559",
   "codigo_fab": "A5559",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ SPRINTER 313 16V ESC",
+  "aplicacion": "MERCEDES BENZ M.BENZ SPRINTER 313 16V ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7791,7 +7791,7 @@
   "codigo": "A5558",
   "codigo_fab": "A5558",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ SPRINTER 313 16V ADM",
+  "aplicacion": "MERCEDES BENZ M. BENZ SPRINTER 313 16V ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7810,7 +7810,7 @@
   "codigo": "F IY 5364",
   "codigo_fab": "A5364",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ 904 E ADM EURO 4 ELEC 904-906",
+  "aplicacion": "MERCEDES BENZ M. BENZ 904 E ADM EURO 4 ELEC 904-906",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -7846,7 +7846,7 @@
   "codigo": "A5484",
   "codigo_fab": "A5484",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 601 ESC",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 601 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7865,7 +7865,7 @@
   "codigo": "F IY 5002",
   "codigo_fab": "A5002",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 352 ESC 352-314-900/91",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 352 ESC 352-314-900/91",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7905,7 +7905,7 @@
   "codigo": "F IY 5094",
   "codigo_fab": "A5094",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 366 ESC 366 ASPIRADO",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 366 ESC 366 ASPIRADO",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7945,7 +7945,7 @@
   "codigo": "F IY 5096",
   "codigo_fab": "A5096",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ 366 TURBO ESC",
+  "aplicacion": "MERCEDES BENZ M. BENZ 366 TURBO ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -7981,7 +7981,7 @@
   "codigo": "A9115",
   "codigo_fab": "A9115",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ OM 352 ESC",
+  "aplicacion": "MERCEDES BENZ M.BENZ OM 352 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8000,7 +8000,7 @@
   "codigo": "F IY 5483",
   "codigo_fab": "A5483",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ OM 601 ESC",
+  "aplicacion": "MERCEDES BENZ M.BENZ OM 601 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8024,7 +8024,7 @@
   "codigo": "F IY 5263",
   "codigo_fab": "A5263",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ OM 355 ESC 355/355A/3550/355 Cooler",
+  "aplicacion": "MERCEDES BENZ M.BENZ OM 355 ESC 355/355A/3550/355 Cooler",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8056,7 +8056,7 @@
   "codigo": "F IY 5006",
   "codigo_fab": "A5006",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ OM 355 ESC 355-346-910/916/918/9",
+  "aplicacion": "MERCEDES BENZ M.BENZ OM 355 ESC 355-346-910/916/918/9",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8096,7 +8096,7 @@
   "codigo": "F IY 5363",
   "codigo_fab": "A5363",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ 904 E ESC EURO 4 ELEC 904-906",
+  "aplicacion": "MERCEDES BENZ M.BENZ 904 E ESC EURO 4 ELEC 904-906",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8132,7 +8132,7 @@
   "codigo": "A9122",
   "codigo_fab": "A9122",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ 904 E ESC 904 E ELECTRÓNICO EURO 4",
+  "aplicacion": "MERCEDES BENZ M. BENZ 904 E ESC 904 E ELECTRÓNICO EURO 4",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8151,7 +8151,7 @@
   "codigo": "F IY 5482",
   "codigo_fab": "A5482",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. MERCEDES BENZ OM 601",
+  "aplicacion": "MERCEDES BENZ OM 601",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8175,7 +8175,7 @@
   "codigo": "F IY 5368",
   "codigo_fab": "A5368",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 457 ESC",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 457 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8203,7 +8203,7 @@
   "codigo": "A9142",
   "codigo_fab": "A9142",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 457 ESC",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 457 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8222,7 +8222,7 @@
   "codigo": "F IY 5003",
   "codigo_fab": "A5003",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ OM 366 ADM 364-366-1518",
+  "aplicacion": "MERCEDES BENZ M.BENZ OM 366 ADM 364-366-1518",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8262,7 +8262,7 @@
   "codigo": "F IY 5016",
   "codigo_fab": "A5016",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ 364/6 ADM 366 TURBO Ecologic",
+  "aplicacion": "MERCEDES BENZ M.BENZ 364/6 ADM 366 TURBO Ecologic",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8294,7 +8294,7 @@
   "codigo": "F IY 5093",
   "codigo_fab": "A5093",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV.M.BENZ OM 366 TURBO ADM.",
+  "aplicacion": "MERCEDES BENZ M.BENZ OM 366 TURBO ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8330,7 +8330,7 @@
   "codigo": "A5358",
   "codigo_fab": "A5358",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ 1518 TURBO ESC",
+  "aplicacion": "MERCEDES BENZ M.BENZ 1518 TURBO ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8349,7 +8349,7 @@
   "codigo": "A9116",
   "codigo_fab": "A9116",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 366 ADM OM 364-366-1518 TURBO",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 366 ADM OM 364-366-1518 TURBO",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8368,7 +8368,7 @@
   "codigo": "F IY 5000",
   "codigo_fab": "A5000",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV.M. BENZ 352 ADM 352-314-900/910/914",
+  "aplicacion": "MERCEDES BENZ M. BENZ 352 ADM 352-314-900/910/914",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8408,7 +8408,7 @@
   "codigo": "F IY 5001",
   "codigo_fab": "A5001",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV.M. BENZ 352 ADM 352-314-900/910/914",
+  "aplicacion": "MERCEDES BENZ M. BENZ 352 ADM 352-314-900/910/914",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8452,7 +8452,7 @@
   "codigo": "A5350",
   "codigo_fab": "A5350",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ 1518 ADM",
+  "aplicacion": "MERCEDES BENZ M.BENZ 1518 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8471,7 +8471,7 @@
   "codigo": "A5357",
   "codigo_fab": "A5357",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ OM 314/352 ADM",
+  "aplicacion": "MERCEDES BENZ M.BENZ OM 314/352 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8490,7 +8490,7 @@
   "codigo": "F IY 5008",
   "codigo_fab": "A5008",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 352 ADM",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 352 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8526,7 +8526,7 @@
   "codigo": "F IY 5372",
   "codigo_fab": "A5372",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M.BENZ OM 457 LA ADM",
+  "aplicacion": "MERCEDES BENZ M.BENZ OM 457 LA ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8550,7 +8550,7 @@
   "codigo": "F IY 5485",
   "codigo_fab": "A5485",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ ACTROS ADM",
+  "aplicacion": "MERCEDES BENZ M. BENZ ACTROS ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8582,7 +8582,7 @@
   "codigo": "A9141",
   "codigo_fab": "A9141",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 457 LA ADM",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 457 LA ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8601,7 +8601,7 @@
   "codigo": "A9287",
   "codigo_fab": "A9287",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 457 LA ADM",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 457 LA ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8620,7 +8620,7 @@
   "codigo": "F IY 5005",
   "codigo_fab": "A5005",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 346/355 ADM 355-346-910/916/918/9",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 346/355 ADM 355-346-910/916/918/9",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8660,7 +8660,7 @@
   "codigo": "F IY 5161",
   "codigo_fab": "A5161",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 355 ADM",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 355 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8700,7 +8700,7 @@
   "codigo": "A5280",
   "codigo_fab": "A5280",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 400 ESC 447 LA - 449 LA",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 400 ESC 447 LA - 449 LA",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8719,7 +8719,7 @@
   "codigo": "A5660",
   "codigo_fab": "A5660",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ 407 ESC",
+  "aplicacion": "MERCEDES BENZ M. BENZ 407 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8738,7 +8738,7 @@
   "codigo": "A5541",
   "codigo_fab": "A5541",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 403 ESC 401-402-403-404-4",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 403 ESC 401-402-403-404-4",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -8757,7 +8757,7 @@
   "codigo": "A5233",
   "codigo_fab": "A5233",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 401 ADM",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 401 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8776,7 +8776,7 @@
   "codigo": "F IY 5279",
   "codigo_fab": "A5279",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 400 ADM 447 LA - 449 LA",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 400 ADM 447 LA - 449 LA",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8804,7 +8804,7 @@
   "codigo": "A5543",
   "codigo_fab": "A5543",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ 400 ADM 401A TURBO 402",
+  "aplicacion": "MERCEDES BENZ M. BENZ 400 ADM 401A TURBO 402",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8823,7 +8823,7 @@
   "codigo": "A5659",
   "codigo_fab": "A5659",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ 407 ADM",
+  "aplicacion": "MERCEDES BENZ M. BENZ 407 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8842,7 +8842,7 @@
   "codigo": "A5344",
   "codigo_fab": "A5344",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV.M. BENZ OM 400 ESC",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 400 ESC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8861,7 +8861,7 @@
   "codigo": "A9004",
   "codigo_fab": "A9004",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV.M. BENZ OM 400 ADM OM 442 /447",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 400 ADM OM 442 /447",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8880,7 +8880,7 @@
   "codigo": "A9005",
   "codigo_fab": "A9005",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV.M. BENZ OM 400 ADM OM 442 /447",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 400 ADM OM 442 /447",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8899,7 +8899,7 @@
   "codigo": "A9005-1",
   "codigo_fab": "A9005-1",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8918,7 +8918,7 @@
   "codigo": "A9005-2",
   "codigo_fab": "A9005-2",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO MERCEDES BENZ",
+  "aplicacion": "MERCEDES BENZ",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8937,7 +8937,7 @@
   "codigo": "A5154",
   "codigo_fab": "A5154",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 407 ADM",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 407 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -8956,7 +8956,7 @@
   "codigo": "F IY 5131",
   "codigo_fab": "A5131",
   "marca": "INDY",
-  "aplicacion": "MERCEDES BENZ ASIENTO VALV. M. BENZ OM 360 ADM 327-360-360H7",
+  "aplicacion": "MERCEDES BENZ M. BENZ OM 360 ADM 327-360-360H7",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9003,7 +9003,7 @@
   "codigo": "A5596",
   "codigo_fab": "A5596",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 6D14 EX",
+  "aplicacion": "MITSUBISHI 6D14 EX",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9022,7 +9022,7 @@
   "codigo": "A5598",
   "codigo_fab": "A5598",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 6D15 ESC",
+  "aplicacion": "MITSUBISHI 6D15 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9041,7 +9041,7 @@
   "codigo": "A5590",
   "codigo_fab": "A5590",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 4D56/55 IN",
+  "aplicacion": "MITSUBISHI 4D56/55 IN",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9060,7 +9060,7 @@
   "codigo": "A5595",
   "codigo_fab": "A5595",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 6D14 IN",
+  "aplicacion": "MITSUBISHI 6D14 IN",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9079,7 +9079,7 @@
   "codigo": "A5594",
   "codigo_fab": "A5594",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 6D22 EX",
+  "aplicacion": "MITSUBISHI 6D22 EX",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9098,7 +9098,7 @@
   "codigo": "A5597",
   "codigo_fab": "A5597",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 6D15 ADM",
+  "aplicacion": "MITSUBISHI 6D15 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9117,7 +9117,7 @@
   "codigo": "A5592",
   "codigo_fab": "A5592",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 8DC9 EX",
+  "aplicacion": "MITSUBISHI 8DC9 EX",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9136,7 +9136,7 @@
   "codigo": "A5593",
   "codigo_fab": "A5593",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 6D22 IN",
+  "aplicacion": "MITSUBISHI 6D22 IN",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9155,7 +9155,7 @@
   "codigo": "A5591",
   "codigo_fab": "A5591",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 8DC9 IN",
+  "aplicacion": "MITSUBISHI 8DC9 IN",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9174,7 +9174,7 @@
   "codigo": "A5584",
   "codigo_fab": "A5584",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 4D31 EX",
+  "aplicacion": "MITSUBISHI 4D31 EX",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9193,7 +9193,7 @@
   "codigo": "A5589",
   "codigo_fab": "A5589",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 4D56/55 EX",
+  "aplicacion": "MITSUBISHI 4D56/55 EX",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9212,7 +9212,7 @@
   "codigo": "A5583",
   "codigo_fab": "A5583",
   "marca": "INDY",
-  "aplicacion": "MITSUBISHI ASIENTO VALVULA MITSUBISHI 4D31 IN",
+  "aplicacion": "MITSUBISHI 4D31 IN",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9255,7 +9255,7 @@
   "codigo": "F IY 9171",
   "codigo_fab": "A9171",
   "marca": "INDY",
-  "aplicacion": "NISSAN NISSAN SENTRA CD 17 -SENTRA 16V ESC",
+  "aplicacion": "NISSAN SENTRA CD 17 -SENTRA 16V ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9283,7 +9283,7 @@
   "codigo": "F IY 9170",
   "codigo_fab": "A9170",
   "marca": "INDY",
-  "aplicacion": "NISSAN NISSAN SENTRA CD 17 -SENTRA 16V ADM",
+  "aplicacion": "NISSAN SENTRA CD 17 -SENTRA 16V ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9311,7 +9311,7 @@
   "codigo": "F IY 5116",
   "codigo_fab": "A5116",
   "marca": "INDY",
-  "aplicacion": "NISSAN ASIENTO VALV. NISSAN FD6 ESC",
+  "aplicacion": "NISSAN FD6 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9363,7 +9363,7 @@
   "codigo": "F IY 5115",
   "codigo_fab": "A5115",
   "marca": "INDY",
-  "aplicacion": "NISSAN ASIENTO VALV. NISSAN FD6 ADM",
+  "aplicacion": "NISSAN FD6 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9387,7 +9387,7 @@
   "codigo": "A5040",
   "codigo_fab": "A5040",
   "marca": "INDY",
-  "aplicacion": "PEGASO ASIENTO VALV. PEGASO 9109 ESC",
+  "aplicacion": "PEGASO 9109 ESC",
   "descripcion": null,
   "tipo": "AE",
   "medidas": {
@@ -9406,7 +9406,7 @@
   "codigo": "A5017",
   "codigo_fab": "A5017",
   "marca": "INDY",
-  "aplicacion": "PEGASO ASIENTO VALV. PEGASO 360 HP ESC 9156/360 HP",
+  "aplicacion": "PEGASO 360 HP ESC 9156/360 HP",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9425,7 +9425,7 @@
   "codigo": "A5039",
   "codigo_fab": "A5039",
   "marca": "INDY",
-  "aplicacion": "PEGASO ASIENTO VALV. PEGASO 9156 ESC",
+  "aplicacion": "PEGASO 9156 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9444,7 +9444,7 @@
   "codigo": "A5018",
   "codigo_fab": "A5018",
   "marca": "INDY",
-  "aplicacion": "PEGASO ASIENTO VALV. PEGASO 360 HP ADM 9156/360 HP",
+  "aplicacion": "PEGASO 360 HP ADM 9156/360 HP",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9463,7 +9463,7 @@
   "codigo": "A5038",
   "codigo_fab": "A5038",
   "marca": "INDY",
-  "aplicacion": "PEGASO ASIENTO VALV. PEGASO 9156 ADM",
+  "aplicacion": "PEGASO 9156 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9482,7 +9482,7 @@
   "codigo": "A9113",
   "codigo_fab": "A9113",
   "marca": "INDY",
-  "aplicacion": "PERKINS PERKINS - 6-354-4 - Asp. Normal y Turbo",
+  "aplicacion": "PERKINS - 6-354-4 - Asp. Normal y Turbo",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9501,7 +9501,7 @@
   "codigo": "A9138",
   "codigo_fab": "A9138",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6305 ESC PERKINS T4.33",
+  "aplicacion": "PERKINS 6305 ESC PERKINS T4.33",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9520,7 +9520,7 @@
   "codigo": "F IY 5127",
   "codigo_fab": "A5127",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6305 ESC T 4.33",
+  "aplicacion": "PERKINS 6305 ESC T 4.33",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9564,7 +9564,7 @@
   "codigo": "F IY 5286",
   "codigo_fab": "A5286",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6-305 ESC",
+  "aplicacion": "PERKINS 6-305 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9588,7 +9588,7 @@
   "codigo": "A5493",
   "codigo_fab": "A5493",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 4203 ESC",
+  "aplicacion": "PERKINS 4203 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9607,7 +9607,7 @@
   "codigo": "A5388",
   "codigo_fab": "A5388",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS ESC",
+  "aplicacion": "PERKINS ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9626,7 +9626,7 @@
   "codigo": "A5701D",
   "codigo_fab": "A5701D",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 740/107 ESC",
+  "aplicacion": "PERKINS 740/107 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9645,7 +9645,7 @@
   "codigo": "A9137",
   "codigo_fab": "A9137",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6305 ADM PERKINS T4.33",
+  "aplicacion": "PERKINS 6305 ADM PERKINS T4.33",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9664,7 +9664,7 @@
   "codigo": "F IY 5126",
   "codigo_fab": "A5126",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6305 ADM",
+  "aplicacion": "PERKINS 6305 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9696,7 +9696,7 @@
   "codigo": "A5446",
   "codigo_fab": "A5446",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6358 ESC",
+  "aplicacion": "PERKINS 6358 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9715,7 +9715,7 @@
   "codigo": "F IY 5282",
   "codigo_fab": "A5282",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6305 ADM",
+  "aplicacion": "PERKINS 6305 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9743,7 +9743,7 @@
   "codigo": "A5492",
   "codigo_fab": "A5492",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 4203 ADM",
+  "aplicacion": "PERKINS 4203 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9762,7 +9762,7 @@
   "codigo": "A5025",
   "codigo_fab": "A5025",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6-354 4-236 ESC 6-354/4-236/6-35, 26-354,4 ASP TURBO",
+  "aplicacion": "PERKINS 6-354 4-236 ESC 6-354/4-236/6-35, 26-354,4 ASP TURBO",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9781,7 +9781,7 @@
   "codigo": "A5374",
   "codigo_fab": "A5374",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS ESC 6-354. 4-236/48 Q20B4 (D10/20 - AGCO EST)",
+  "aplicacion": "PERKINS ESC 6-354. 4-236/48 Q20B4 (D10/20 - AGCO EST)",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9800,7 +9800,7 @@
   "codigo": "F IY 5023",
   "codigo_fab": "A5023",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6354 ESC 6-354/4-236/6-35, 26-354,4 ASP NORMAL",
+  "aplicacion": "PERKINS 6354 ESC 6-354/4-236/6-35, 26-354,4 ASP NORMAL",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9840,7 +9840,7 @@
   "codigo": "A5019",
   "codigo_fab": "A5019",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6-357 ESC",
+  "aplicacion": "PERKINS 6-357 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -9859,7 +9859,7 @@
   "codigo": "A5700",
   "codigo_fab": "A5700",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 740/101 ADM",
+  "aplicacion": "PERKINS 740/101 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9878,7 +9878,7 @@
   "codigo": "A5447D",
   "codigo_fab": "A5447D",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6358 ADM V8 510",
+  "aplicacion": "PERKINS 6358 ADM V8 510",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9897,7 +9897,7 @@
   "codigo": "A5373",
   "codigo_fab": "A5373",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS ADM 6-354/3 GNC",
+  "aplicacion": "PERKINS ADM 6-354/3 GNC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9916,7 +9916,7 @@
   "codigo": "F IY 5022",
   "codigo_fab": "A5022",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6354 ADM . 6-354/4-236/6-35, 26-354,4 ASP NORMAL Y TURBO",
+  "aplicacion": "PERKINS 6354 ADM . 6-354/4-236/6-35, 26-354,4 ASP NORMAL Y TURBO",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9948,7 +9948,7 @@
   "codigo": "A5413",
   "codigo_fab": "A5413",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS ADM 6-354. 4-236/48 Q20B4 (D10/20 - AGCO EST)",
+  "aplicacion": "PERKINS ADM 6-354. 4-236/48 Q20B4 (D10/20 - AGCO EST)",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -9967,7 +9967,7 @@
   "codigo": "A5448",
   "codigo_fab": "A5448",
   "marca": "INDY",
-  "aplicacion": "PERKINS ASIENTO VALV. PERKINS 6357 ADM",
+  "aplicacion": "PERKINS 6357 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10005,7 +10005,7 @@
   "codigo": "F IY 5210",
   "codigo_fab": "A5210",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 1600 ESC 404, 504 Motor XM, KF5, KF6, XM7, XNA 1,6/1,8",
+  "aplicacion": "PEUGEOT 1600 ESC 404, 504 Motor XM, KF5, KF6, XM7, XNA 1,6/1,8",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10045,7 +10045,7 @@
   "codigo": "A5294",
   "codigo_fab": "A5294",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT XD2 FASE 4",
+  "aplicacion": "PEUGEOT XD2 FASE 4",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10064,7 +10064,7 @@
   "codigo": "A9094D",
   "codigo_fab": "A9094D",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT PEUGEOT - 504 GNC",
+  "aplicacion": "PEUGEOT - 504 GNC",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -10083,7 +10083,7 @@
   "codigo": "A9102",
   "codigo_fab": "A9102",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT PEUGEOT - 405 GLD/GRD/1.9 Diesel/306 XRD",
+  "aplicacion": "PEUGEOT - 405 GLD/GRD/1.9 Diesel/306 XRD",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10102,7 +10102,7 @@
   "codigo": "A9140",
   "codigo_fab": "A9140",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT PEUGEOT - INDENOR XD3 TURBO DIESEL",
+  "aplicacion": "PEUGEOT - INDENOR XD3 TURBO DIESEL",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10121,7 +10121,7 @@
   "codigo": "F IY 5207",
   "codigo_fab": "A5207",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALVULA PEUGEOT 2000 ADM 504 GL/TL/GR/SR-2000 GNC",
+  "aplicacion": "PEUGEOT 2000 ADM 504 GL/TL/GR/SR-2000 GNC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10161,7 +10161,7 @@
   "codigo": "F IY 5209",
   "codigo_fab": "A5209",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALVULA PEUGEOT 1600 ADM 404, 504 Motor XM, KF5, KF6, XM7, XNA 1,6/1,8",
+  "aplicacion": "PEUGEOT 1600 ADM 404, 504 Motor XM, KF5, KF6, XM7, XNA 1,6/1,8",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10201,7 +10201,7 @@
   "codigo": "A5515D",
   "codigo_fab": "A5515D",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 205 GT XS 1,4 ESC 205,305 GT,XS 106 Motor TU3 1,4 Nafta",
+  "aplicacion": "PEUGEOT 205 GT XS 1,4 ESC 205,305 GT,XS 106 Motor TU3 1,4 Nafta",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10220,7 +10220,7 @@
   "codigo": "A5524D",
   "codigo_fab": "A5524D",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 406/306/605 ESC 406 Motor XU7JP4 1,8 406,306,605 Motor XU10JUR 2,0 16V Nafta",
+  "aplicacion": "PEUGEOT 406/306/605 ESC 406 Motor XU7JP4 1,8 406,306,605 Motor XU10JUR 2,0 16V Nafta",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10239,7 +10239,7 @@
   "codigo": "F IY 5303",
   "codigo_fab": "A5303",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 106/205 ESC 1.4 I.,206N Motor TU5JP 1,4/1,6 I",
+  "aplicacion": "PEUGEOT 106/205 ESC 1.4 I.,206N Motor TU5JP 1,4/1,6 I",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10271,7 +10271,7 @@
   "codigo": "F IY 5190",
   "codigo_fab": "A5190",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 405 TURBO ESC 405 GLD/GRD 1,9 TURBO, 306 XRD",
+  "aplicacion": "PEUGEOT 405 TURBO ESC 405 GLD/GRD 1,9 TURBO, 306 XRD",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10307,7 +10307,7 @@
   "codigo": "F IY 5352",
   "codigo_fab": "A5352",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT VALVE SEAT PEUGEOT 9456079980",
+  "aplicacion": "PEUGEOT 9456079980",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -10335,7 +10335,7 @@
   "codigo": "A5354",
   "codigo_fab": "A5354",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT VALVE SEAT PEUGEOT 9456080580",
+  "aplicacion": "PEUGEOT 9456080580",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -10354,7 +10354,7 @@
   "codigo": "F IY 5326",
   "codigo_fab": "A5326",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 405 NAFTA ESC 205, 305, 405 Motor XU7-XU9 1905cc. - GNC",
+  "aplicacion": "PEUGEOT 405 NAFTA ESC 205, 305, 405 Motor XU7-XU9 1905cc. - GNC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10390,7 +10390,7 @@
   "codigo": "A5347D",
   "codigo_fab": "A5347D",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV,. PEUGEOT XU7 JPK GNC ESC Motor XU7JPK 206-Nafta",
+  "aplicacion": ",. PEUGEOT XU7 JPK GNC ESC Motor XU7JPK 206-Nafta",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10409,7 +10409,7 @@
   "codigo": "A5516D",
   "codigo_fab": "A5516D",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 406/306/605 ADM 406 Motor XU7JP4 1,8 406,306,605 Motor XU10JUR 2,0 16V Nafta",
+  "aplicacion": "PEUGEOT 406/306/605 ADM 406 Motor XU7JP4 1,8 406,306,605 Motor XU10JUR 2,0 16V Nafta",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10428,7 +10428,7 @@
   "codigo": "F IY 5208",
   "codigo_fab": "A5208",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 2000 ESC 504 GL/TL/GR/SR-2000 GNC",
+  "aplicacion": "PEUGEOT 2000 ESC 504 GL/TL/GR/SR-2000 GNC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10468,7 +10468,7 @@
   "codigo": "F IY 5362",
   "codigo_fab": "A5362",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 404/504 1,6 ESC",
+  "aplicacion": "PEUGEOT 404/504 1,6 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10496,7 +10496,7 @@
   "codigo": "F IY 5322",
   "codigo_fab": "A5322",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT -CITROEN",
+  "aplicacion": "PEUGEOT -CITROEN",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -10520,7 +10520,7 @@
   "codigo": "A5523D",
   "codigo_fab": "A5523D",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 205 GT XS 1.4 ADM 205,305 GT,XS 106 Motor TU3 1,4 Nafta",
+  "aplicacion": "PEUGEOT 205 GT XS 1.4 ADM 205,305 GT,XS 106 Motor TU3 1,4 Nafta",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10539,7 +10539,7 @@
   "codigo": "F IY 5189",
   "codigo_fab": "A5189",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 405 TURBO ADM 405 GLD/GRD 1,9 TURBO, 306 XRD",
+  "aplicacion": "PEUGEOT 405 TURBO ADM 405 GLD/GRD 1,9 TURBO, 306 XRD",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10575,7 +10575,7 @@
   "codigo": "F IY 5302",
   "codigo_fab": "A5302",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 106/205 ADM 1.4 I.,206N Motor TU5JP 1,4/1,6 I",
+  "aplicacion": "PEUGEOT 106/205 ADM 1.4 I.,206N Motor TU5JP 1,4/1,6 I",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10607,7 +10607,7 @@
   "codigo": "F IY 5351",
   "codigo_fab": "A5351",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 9456079680",
+  "aplicacion": "PEUGEOT 9456079680",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -10635,7 +10635,7 @@
   "codigo": "A5353",
   "codigo_fab": "A5353",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT VALVE SEAT PEUGEOT 9458080780",
+  "aplicacion": "PEUGEOT 9458080780",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -10654,7 +10654,7 @@
   "codigo": "A5346D",
   "codigo_fab": "A5346D",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALVULA PEUGEOT XU7 JPK GNC ADM",
+  "aplicacion": "PEUGEOT XU7 JPK GNC ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10673,7 +10673,7 @@
   "codigo": "A9121",
   "codigo_fab": "A9121",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT XD2 DIESEL ADM",
+  "aplicacion": "PEUGEOT XD2 DIESEL ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10692,7 +10692,7 @@
   "codigo": "F IY 5325",
   "codigo_fab": "A5325",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV. PEUGEOT 405 NAFTA ADM 205, 305, 405 Motor XU7-XU9 1905cc. - GNC",
+  "aplicacion": "PEUGEOT 405 NAFTA ADM 205, 305, 405 Motor XU7-XU9 1905cc. - GNC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10720,7 +10720,7 @@
   "codigo": "F IY 5367",
   "codigo_fab": "A5367",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV.PEUGEOT 404/504 1,6 ADM",
+  "aplicacion": "PEUGEOT 404/504 1,6 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10748,7 +10748,7 @@
   "codigo": "A6768",
   "codigo_fab": "A6768",
   "marca": "INDY",
-  "aplicacion": "PEUGEOT ASIENTO VALV.PEUGEOT 308 THP ESCAPE",
+  "aplicacion": "PEUGEOT 308 THP ESCAPE",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10767,7 +10767,7 @@
   "codigo": "A5627",
   "codigo_fab": "A5627",
   "marca": "INDY",
-  "aplicacion": "R.V.I ASIENTO VALVULA RVI EX",
+  "aplicacion": "R.V.I RVI EX",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10786,7 +10786,7 @@
   "codigo": "A5626",
   "codigo_fab": "A5626",
   "marca": "INDY",
-  "aplicacion": "R.V.I ASIENTO VALVULA RVI IN",
+  "aplicacion": "R.V.I RVI IN",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10805,7 +10805,7 @@
   "codigo": "A5269D",
   "codigo_fab": "A5269D",
   "marca": "INDY",
-  "aplicacion": "RENAULT Renault 18 MOTOR 1.8/2.0",
+  "aplicacion": "Renault 18 MOTOR 1.8/2.0",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10824,7 +10824,7 @@
   "codigo": "A5306D",
   "codigo_fab": "A5306D",
   "marca": "INDY",
-  "aplicacion": "RENAULT RENAULT R 11 1400cc GNC",
+  "aplicacion": "RENAULT R 11 1400cc GNC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10843,7 +10843,7 @@
   "codigo": "A5309D",
   "codigo_fab": "A5309D",
   "marca": "INDY",
-  "aplicacion": "RENAULT RENAULT 12 GNC",
+  "aplicacion": "RENAULT 12 GNC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -10881,7 +10881,7 @@
   "codigo": "A9077D",
   "codigo_fab": "A9077D",
   "marca": "INDY",
-  "aplicacion": "RENAULT Renault R12 GNC",
+  "aplicacion": "Renault R12 GNC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10900,7 +10900,7 @@
   "codigo": "A5113",
   "codigo_fab": "A5113",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV. RENAULT GORDINI ESC",
+  "aplicacion": "RENAULT GORDINI ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10919,7 +10919,7 @@
   "codigo": "A5518D",
   "codigo_fab": "A5518D",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV. RENAULT Scenic/Clio/Megane K4M 1.6 16V ESC",
+  "aplicacion": "RENAULT Scenic/Clio/Megane K4M 1.6 16V ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10938,7 +10938,7 @@
   "codigo": "F IY 5225",
   "codigo_fab": "A5225",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 11 1,6 ESC 1,6- R9/R11/R12",
+  "aplicacion": "RENAULT 11 1,6 ESC 1,6- R9/R11/R12",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -10978,7 +10978,7 @@
   "codigo": "F IY 5228",
   "codigo_fab": "A5228",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 9 ESC 1,6- R9/R11/R12 GNC",
+  "aplicacion": "RENAULT 9 ESC 1,6- R9/R11/R12 GNC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11018,7 +11018,7 @@
   "codigo": "A6746",
   "codigo_fab": "A6746",
   "marca": "INDY",
-  "aplicacion": "RENAULT RENAULT MASTER 2,5 DCI",
+  "aplicacion": "RENAULT MASTER 2,5 DCI",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11037,7 +11037,7 @@
   "codigo": "F IY 5214",
   "codigo_fab": "A5214",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 6/12 1,4 ESC",
+  "aplicacion": "RENAULT 6/12 1,4 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11077,7 +11077,7 @@
   "codigo": "F IY 5112",
   "codigo_fab": "A5112",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV. RENAULT GORDINI ADM",
+  "aplicacion": "RENAULT GORDINI ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11117,7 +11117,7 @@
   "codigo": "A6747",
   "codigo_fab": "A6747",
   "marca": "INDY",
-  "aplicacion": "RENAULT RENAULT MASTER 2,5 DCI",
+  "aplicacion": "RENAULT MASTER 2,5 DCI",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11136,7 +11136,7 @@
   "codigo": "F IY 5267",
   "codigo_fab": "A5267",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 19 CLIO EXPRESS ESC 1,9D- R19 Clio/Express/Kangoo F8Q",
+  "aplicacion": "RENAULT 19 CLIO EXPRESS ESC 1,9D- R19 Clio/Express/Kangoo F8Q",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11172,7 +11172,7 @@
   "codigo": "A5517D",
   "codigo_fab": "A5517D",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV. RENAULT Scenic/Clio/Megane K4M 1.6 16V ADM 1,6- Senic/Megane/Clio K4M 16Valv",
+  "aplicacion": "RENAULT Scenic/Clio/Megane K4M 1.6 16V ADM 1,6- Senic/Megane/Clio K4M 16Valv",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11191,7 +11191,7 @@
   "codigo": "F IY 5398",
   "codigo_fab": "A5398",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT LAGUNA/MEGANE ESC 1,9TDI- Laguna/Megane D /Turbo Diesel F9Q 1.9 Lts / Clio II",
+  "aplicacion": "RENAULT LAGUNA/MEGANE ESC 1,9TDI- Laguna/Megane D /Turbo Diesel F9Q 1.9 Lts / Clio II",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11223,7 +11223,7 @@
   "codigo": "F IY 5396",
   "codigo_fab": "A5396",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 18/21 ESC 2,1- R18 / R21 Trafic Diesel J8",
+  "aplicacion": "RENAULT 18/21 ESC 2,1- R18 / R21 Trafic Diesel J8",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11259,7 +11259,7 @@
   "codigo": "F IY 5213",
   "codigo_fab": "A5213",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 6/12 1,4 ADM. 1,4- R6/12 GNC",
+  "aplicacion": "RENAULT 6/12 1,4 ADM. 1,4- R6/12 GNC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11299,7 +11299,7 @@
   "codigo": "F IY 5526",
   "codigo_fab": "A5526",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT CLIO/MEGANE/KANGOO K7M 1,6 NAFTA/GNC ESC Clio Motor E7J 1400 Frances, Megane, Kango Motor K7M 1,6 Nafta/Gnc",
+  "aplicacion": "RENAULT CLIO/MEGANE/KANGOO K7M 1,6 NAFTA/GNC ESC Clio Motor E7J 1400 Frances, Megane, Kango Motor K7M 1,6 Nafta/Gnc",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11327,7 +11327,7 @@
   "codigo": "F IY 5224",
   "codigo_fab": "A5224",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 11 1,6 ADM. 1,6- R9/R11/R12",
+  "aplicacion": "RENAULT 11 1,6 ADM. 1,6- R9/R11/R12",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11367,7 +11367,7 @@
   "codigo": "F IY 5227",
   "codigo_fab": "A5227",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV. RENAULT 9 ADM. 1,6- R9/R11/R12 GNC",
+  "aplicacion": "RENAULT 9 ADM. 1,6- R9/R11/R12 GNC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11407,7 +11407,7 @@
   "codigo": "F IY 5397",
   "codigo_fab": "A5397",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT LAGUNA/MEGANE ADM 1,9TDI- Laguna/Megane D /Turbo Diesel F9Q 1.9 Lts / Clio II",
+  "aplicacion": "RENAULT LAGUNA/MEGANE ADM 1,9TDI- Laguna/Megane D /Turbo Diesel F9Q 1.9 Lts / Clio II",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11439,7 +11439,7 @@
   "codigo": "F IY 5268",
   "codigo_fab": "A5268",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 19 CLIO EXPR. 1,9D- R19 Clio/Express/Kangoo F8Q",
+  "aplicacion": "RENAULT 19 CLIO EXPR. 1,9D- R19 Clio/Express/Kangoo F8Q",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11475,7 +11475,7 @@
   "codigo": "F IY 5656",
   "codigo_fab": "A5656",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 2,5 CDI G9U MASTER 754 16VALV.ESC",
+  "aplicacion": "RENAULT 2,5 CDI G9U MASTER 754 16VALV.ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11503,7 +11503,7 @@
   "codigo": "A5525",
   "codigo_fab": "A5525",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT CLIO/MEGANE/KANGOO K7M 1,6 NAFTA/GNC ADM Clio Motor E7J 1400 Frances, Megane, Kango Motor K7M 1,6 Nafta/Gnc",
+  "aplicacion": "RENAULT CLIO/MEGANE/KANGOO K7M 1,6 NAFTA/GNC ADM Clio Motor E7J 1400 Frances, Megane, Kango Motor K7M 1,6 Nafta/Gnc",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11522,7 +11522,7 @@
   "codigo": "F IY 5226",
   "codigo_fab": "A5226",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 18 2,0 ESC",
+  "aplicacion": "RENAULT 18 2,0 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11562,7 +11562,7 @@
   "codigo": "A5630",
   "codigo_fab": "A5630",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 19 CHAMADE 1,7 GNC",
+  "aplicacion": "RENAULT 19 CHAMADE 1,7 GNC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11581,7 +11581,7 @@
   "codigo": "F IY 5395",
   "codigo_fab": "A5395",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV. RENAULT 18/21 ADM 2,1- R18 / R21 Trafic Diesel J8",
+  "aplicacion": "RENAULT 18/21 ADM 2,1- R18 / R21 Trafic Diesel J8",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11613,7 +11613,7 @@
   "codigo": "F IY 5655",
   "codigo_fab": "A5655",
   "marca": "INDY",
-  "aplicacion": "RENAULT ASIENTO VALV.RENAULT 2,5 cc. CDI G9U Master 754 16Valv.",
+  "aplicacion": "RENAULT 2,5 cc. CDI G9U Master 754 16Valv.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11679,7 +11679,7 @@
   "codigo": "A9147D",
   "codigo_fab": "A9147D",
   "marca": "INDY",
-  "aplicacion": "SCANIA SCANIA mot. DC11(New) /DN12/DS12/DSC12 MODELO 104",
+  "aplicacion": "SCANIA mot. DC11(New) /DN12/DS12/DSC12 MODELO 104",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11698,7 +11698,7 @@
   "codigo": "A9103",
   "codigo_fab": "A9103",
   "marca": "INDY",
-  "aplicacion": "SCANIA ASIENTO VALV. SCANIA 111-112-113 ESC VABIS D11 / D10 / D510 / Turbo DS11 / Turbo L111",
+  "aplicacion": "SCANIA 111-112-113 ESC VABIS D11 / D10 / D510 / Turbo DS11 / Turbo L111",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11717,7 +11717,7 @@
   "codigo": "A9100D",
   "codigo_fab": "A9100D",
   "marca": "INDY",
-  "aplicacion": "SCANIA ASIENTO VALV. SCANIA ESC VABIS mot. DC11(New) /DN12/DS12/DSC12 MODELO 104",
+  "aplicacion": "SCANIA ESC VABIS mot. DC11(New) /DN12/DS12/DSC12 MODELO 104",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11736,7 +11736,7 @@
   "codigo": "A5727",
   "codigo_fab": "A5727",
   "marca": "INDY",
-  "aplicacion": "SCANIA ASIENTO VALV. SCANIA DC 9, DC 9 EURO 2/3 // DC 13, EURO 3 a 6, 6 CYL. (1999 A 2005)",
+  "aplicacion": "SCANIA DC 9, DC 9 EURO 2/3 // DC 13, EURO 3 a 6, 6 CYL. (1999 A 2005)",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11755,7 +11755,7 @@
   "codigo": "A5726",
   "codigo_fab": "A5726",
   "marca": "INDY",
-  "aplicacion": "SCANIA ASIENTO SCANIA",
+  "aplicacion": "SCANIA",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11774,7 +11774,7 @@
   "codigo": "A9112",
   "codigo_fab": "A9112",
   "marca": "INDY",
-  "aplicacion": "SCANIA ASIENTO VALV. SCANIA 112-113 ADM VABIS MOTOR D11/10/510-TURBO DS11/L111",
+  "aplicacion": "SCANIA 112-113 ADM VABIS MOTOR D11/10/510-TURBO DS11/L111",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11793,7 +11793,7 @@
   "codigo": "A5333D",
   "codigo_fab": "A5333D",
   "marca": "INDY",
-  "aplicacion": "SCANIA ASIENTO VALV. SCANIA ADM",
+  "aplicacion": "SCANIA ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -11812,7 +11812,7 @@
   "codigo": "F IY 5334D",
   "codigo_fab": "A5334D",
   "marca": "INDY",
-  "aplicacion": "SCANIA AS.DE VAL.SCANIA ESC.",
+  "aplicacion": "AS.DE VAL.SCANIA ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11836,7 +11836,7 @@
   "codigo": "F IY 5053",
   "codigo_fab": "A5053",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV. SCANIA 111-112-113 ESC DS 11 DSC 11/14 112, 113, 114, 143, 144",
+  "aplicacion": "SCANIA VABIS SCANIA 111-112-113 ESC DS 11 DSC 11/14 112, 113, 114, 143, 144",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11876,7 +11876,7 @@
   "codigo": "A5293",
   "codigo_fab": "A5293",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV.SCANIA 113 ESC DS 11 DSC 11/14 112, 113, 114, 143, 144",
+  "aplicacion": "SCANIA VABIS SCANIA 113 ESC DS 11 DSC 11/14 112, 113, 114, 143, 144",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11895,7 +11895,7 @@
   "codigo": "A5117",
   "codigo_fab": "A5117",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV. SCANIA L 90 ESC L 80 TURBO",
+  "aplicacion": "SCANIA VABIS SCANIA L 90 ESC L 80 TURBO",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11914,7 +11914,7 @@
   "codigo": "A5625",
   "codigo_fab": "A5625",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV. SCANIA ESC L 80",
+  "aplicacion": "SCANIA VABIS SCANIA ESC L 80",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11933,7 +11933,7 @@
   "codigo": "F IY 5601",
   "codigo_fab": "A5601",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV. SCANIA DS9/DSC9/ TURBO ESC",
+  "aplicacion": "SCANIA VABIS SCANIA DS9/DSC9/ TURBO ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11965,7 +11965,7 @@
   "codigo": "A5051",
   "codigo_fab": "A5051",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV.SCANIA DS 14 ESC, D 11 DS 11 11000CC",
+  "aplicacion": "SCANIA VABIS SCANIA DS 14 ESC, D 11 DS 11 11000CC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -11984,7 +11984,7 @@
   "codigo": "A5134",
   "codigo_fab": "A5134",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV.SCANIA D 11 DS 11 ESC D 11 DS 11 11000CC",
+  "aplicacion": "SCANIA VABIS SCANIA D 11 DS 11 ESC D 11 DS 11 11000CC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12003,7 +12003,7 @@
   "codigo": "F IY 5602",
   "codigo_fab": "A5602",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV.SCANIA DS9/DSC9 TURBO ADM",
+  "aplicacion": "SCANIA VABIS SCANIA DS9/DSC9 TURBO ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12035,7 +12035,7 @@
   "codigo": "F IY 5114",
   "codigo_fab": "A5114",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV.SCANIA L 80 ADM",
+  "aplicacion": "SCANIA VABIS SCANIA L 80 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12059,7 +12059,7 @@
   "codigo": "F IY 5640",
   "codigo_fab": "A5640",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV.SCANIA D10/DN11/L111",
+  "aplicacion": "SCANIA VABIS SCANIA D10/DN11/L111",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12091,7 +12091,7 @@
   "codigo": "F IY 5052",
   "codigo_fab": "A5052",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV. SCANIA 112-113 ADM DS 11 DSC 11/14 112, 113, 114, 143, 144",
+  "aplicacion": "SCANIA VABIS SCANIA 112-113 ADM DS 11 DSC 11/14 112, 113, 114, 143, 144",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12127,7 +12127,7 @@
   "codigo": "A5050",
   "codigo_fab": "A5050",
   "marca": "INDY",
-  "aplicacion": "SCANIA VABIS ASIENTO VALV. SCANIA DS 14 ADM D 11 DS 11 11000CC",
+  "aplicacion": "SCANIA VABIS SCANIA DS 14 ADM D 11 DS 11 11000CC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12146,7 +12146,7 @@
   "codigo": "F IY 5400",
   "codigo_fab": "A5400",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VAL.TOYOTA COROLLA IC 1.8 / 2C 2.0 DIESEL",
+  "aplicacion": "VAL.TOYOTA COROLLA IC 1.8 / 2C 2.0 DIESEL",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12174,7 +12174,7 @@
   "codigo": "A5547",
   "codigo_fab": "A5547",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV. TOYOTA C3-TE ESC",
+  "aplicacion": "TOYOTA C3-TE ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12193,7 +12193,7 @@
   "codigo": "A5328",
   "codigo_fab": "A5328",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV.TOYOTA ESC,",
+  "aplicacion": "TOYOTA ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12212,7 +12212,7 @@
   "codigo": "A5332",
   "codigo_fab": "A5332",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV.TOYOTA HILUX ESC",
+  "aplicacion": "TOYOTA HILUX ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12231,7 +12231,7 @@
   "codigo": "F IY 5402",
   "codigo_fab": "A5402",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV.TOYOTA HILUX 2,0-2,5 ESC HILUX 2L-2.5 Lts / 3L 2.8L Diesel 5L",
+  "aplicacion": "TOYOTA HILUX 2,0-2,5 ESC HILUX 2L-2.5 Lts / 3L 2.8L Diesel 5L",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12278,7 +12278,7 @@
   "codigo": "A5235",
   "codigo_fab": "A5235",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV. TOYOTA T 22 ESC",
+  "aplicacion": "TOYOTA T 22 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12297,7 +12297,7 @@
   "codigo": "A5546",
   "codigo_fab": "A5546",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV. TOYOTA C3 ADM",
+  "aplicacion": "TOYOTA C3 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12316,7 +12316,7 @@
   "codigo": "F IY 5399",
   "codigo_fab": "A5399",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV. TOYOTA ADM. Corolla 1C 1.8 / 2C 2.0Lts Diesel",
+  "aplicacion": "TOYOTA ADM. Corolla 1C 1.8 / 2C 2.0Lts Diesel",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12363,7 +12363,7 @@
   "codigo": "F IY 5401",
   "codigo_fab": "A5401",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV. TOYOTA HILUX 2,0-2,5 ADM HILUX 2L-2.5 Lts / 3L 2.8L Diesel 5L",
+  "aplicacion": "TOYOTA HILUX 2,0-2,5 ADM HILUX 2L-2.5 Lts / 3L 2.8L Diesel 5L",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12391,7 +12391,7 @@
   "codigo": "F IY 5331",
   "codigo_fab": "A5331",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV. TOYOTA HILUX ADM",
+  "aplicacion": "TOYOTA HILUX ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12419,7 +12419,7 @@
   "codigo": "A6003",
   "codigo_fab": "A6003",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV.TOYOTA 2D EX",
+  "aplicacion": "TOYOTA 2D EX",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12438,7 +12438,7 @@
   "codigo": "F IY 5234",
   "codigo_fab": "A5234",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV.TOYOTA T 22 ADM.",
+  "aplicacion": "TOYOTA T 22 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12462,7 +12462,7 @@
   "codigo": "A6004",
   "codigo_fab": "A6004",
   "marca": "INDY",
-  "aplicacion": "TOYOTA ASIENTO VALV. TOYOTA 2D IN",
+  "aplicacion": "TOYOTA 2D IN",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12481,7 +12481,7 @@
   "codigo": "A5458",
   "codigo_fab": "A5458",
   "marca": "INDY",
-  "aplicacion": "VILLA ASIENTO VALV. VILLA ESC OM 400/1",
+  "aplicacion": "VILLA ESC OM 400/1",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12500,7 +12500,7 @@
   "codigo": "A5144",
   "codigo_fab": "A5144",
   "marca": "INDY",
-  "aplicacion": "VILLA ASIENTO VALV. VILLA ESC",
+  "aplicacion": "VILLA ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12519,7 +12519,7 @@
   "codigo": "A5145",
   "codigo_fab": "A5145",
   "marca": "INDY",
-  "aplicacion": "VILLA ASIENTO VALV. VILLA ADM",
+  "aplicacion": "VILLA ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12538,7 +12538,7 @@
   "codigo": "A5453",
   "codigo_fab": "A5453",
   "marca": "INDY",
-  "aplicacion": "VILLA ASIENTO VILLA A 4100088",
+  "aplicacion": "VILLA A 4100088",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12576,7 +12576,7 @@
   "codigo": "F IY 9284",
   "codigo_fab": "A9284",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. ADAPT.AMAROK 2,0 TD 16V ESC",
+  "aplicacion": "VOLKSWAGEN ADAPT.AMAROK 2,0 TD 16V ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12604,7 +12604,7 @@
   "codigo": "F IY 5682",
   "codigo_fab": "A5682",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW GOL TREND/SURAN/FOX 1,6 ESC",
+  "aplicacion": "VOLKSWAGEN VW GOL TREND/SURAN/FOX 1,6 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12632,7 +12632,7 @@
   "codigo": "F IY 9285",
   "codigo_fab": "A9285",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. ADAPT. AMAROK 2,0 TD 16V ADM",
+  "aplicacion": "VOLKSWAGEN ADAPT. AMAROK 2,0 TD 16V ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12660,7 +12660,7 @@
   "codigo": "A5490",
   "codigo_fab": "A5490",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW KOMBI 1200/1300 AIRE",
+  "aplicacion": "VOLKSWAGEN VW KOMBI 1200/1300 AIRE",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12679,7 +12679,7 @@
   "codigo": "F IY 5087",
   "codigo_fab": "A5087",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW SENDA ESC SENDA-GOLF 1,6D / POLO - GOLF 1,9D",
+  "aplicacion": "VOLKSWAGEN VW SENDA ESC SENDA-GOLF 1,6D / POLO - GOLF 1,9D",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12719,7 +12719,7 @@
   "codigo": "A9098",
   "codigo_fab": "A9098",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW SENDA ESC",
+  "aplicacion": "VOLKSWAGEN VW SENDA ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12738,7 +12738,7 @@
   "codigo": "A5428",
   "codigo_fab": "A5428",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW MOTOR AP 1600 (1,6) , 8v, L4 SOHC, ESCAPE",
+  "aplicacion": "VOLKSWAGEN VW MOTOR AP 1600 (1,6) , 8v, L4 SOHC, ESCAPE",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12757,7 +12757,7 @@
   "codigo": "F IY 5218",
   "codigo_fab": "A5218",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW GACEL 1,8 ESC,",
+  "aplicacion": "VOLKSWAGEN VW GACEL 1,8 ESC,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12801,7 +12801,7 @@
   "codigo": "F IY 5130",
   "codigo_fab": "A5130",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW SANTANA 1,8-2,0 ESC",
+  "aplicacion": "VOLKSWAGEN VW SANTANA 1,8-2,0 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12841,7 +12841,7 @@
   "codigo": "A5430",
   "codigo_fab": "A5430",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW 1500/1600 ESC",
+  "aplicacion": "VOLKSWAGEN VW 1500/1600 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12860,7 +12860,7 @@
   "codigo": "F IY 5297",
   "codigo_fab": "A5297",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW KOMBI BUS ESC",
+  "aplicacion": "VOLKSWAGEN VW KOMBI BUS ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -12896,7 +12896,7 @@
   "codigo": "F IY 5086",
   "codigo_fab": "A5086",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW SENDA/ GACEL/ SAVEIRO /GOLF 1,6 D ADM.",
+  "aplicacion": "VOLKSWAGEN VW SENDA/ GACEL/ SAVEIRO /GOLF 1,6 D ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12936,7 +12936,7 @@
   "codigo": "A5431",
   "codigo_fab": "A5431",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW GOL, MOTOR AP 1600 (1,6), 8V, L4, SOHC, ADM",
+  "aplicacion": "VOLKSWAGEN VW GOL, MOTOR AP 1600 (1,6), 8V, L4, SOHC, ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12955,7 +12955,7 @@
   "codigo": "F IY 5708",
   "codigo_fab": "A5708",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VOLKSWAGEN GOL TREND 1,6 8V ADM SURAN/FOX Motor EA111 1,6 8 valv",
+  "aplicacion": "VOLKSWAGEN GOL TREND 1,6 8V ADM SURAN/FOX Motor EA111 1,6 8 valv",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -12983,7 +12983,7 @@
   "codigo": "F IY 5220",
   "codigo_fab": "A5220",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW GACEL 1,6 ESC.",
+  "aplicacion": "VOLKSWAGEN VW GACEL 1,6 ESC.",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13023,7 +13023,7 @@
   "codigo": "F IY 5095",
   "codigo_fab": "A5095",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW POLO 1,9 ADM. VW GACEL 1.6 GNC",
+  "aplicacion": "VOLKSWAGEN VW POLO 1,9 ADM. VW GACEL 1.6 GNC",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13086,7 +13086,7 @@
   "codigo": "A5429",
   "codigo_fab": "A5429",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW UP 1,6 ADM",
+  "aplicacion": "VOLKSWAGEN VW UP 1,6 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13105,7 +13105,7 @@
   "codigo": "F IY 5296",
   "codigo_fab": "A5296",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW KOMBI BUS ADM",
+  "aplicacion": "VOLKSWAGEN VW KOMBI BUS ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13141,7 +13141,7 @@
   "codigo": "F IY 5219",
   "codigo_fab": "A5219",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW GACEL 1,6 ADM.",
+  "aplicacion": "VOLKSWAGEN VW GACEL 1,6 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13181,7 +13181,7 @@
   "codigo": "F IY 5217",
   "codigo_fab": "A5217",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. VW GACEL 1,8 ADM",
+  "aplicacion": "VOLKSWAGEN VW GACEL 1,8 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13221,7 +13221,7 @@
   "codigo": "F IY 5427",
   "codigo_fab": "A5427",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALVULA VW VW SANTANA 1,8/2,0",
+  "aplicacion": "VOLKSWAGEN VW VW SANTANA 1,8/2,0",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13253,7 +13253,7 @@
   "codigo": "F IY 6767",
   "codigo_fab": "A6767",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. MAN D0834/ 836- VW 17.280 (4.6, 16v, L4 y 6.9, 24v, L6) ESC",
+  "aplicacion": "VOLKSWAGEN MAN D0834/ 836- VW 17.280 (4.6, 16v, L4 y 6.9, 24v, L6) ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13281,7 +13281,7 @@
   "codigo": "F IY 6766",
   "codigo_fab": "A6766",
   "marca": "INDY",
-  "aplicacion": "VOLKSWAGEN ASIENTO VALV. MAN D0834/ 836- VW 17.280 (4.6, 16v, L4 y 6.9, 24v, L6) ADM",
+  "aplicacion": "VOLKSWAGEN MAN D0834/ 836- VW 17.280 (4.6, 16v, L4 y 6.9, 24v, L6) ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13328,7 +13328,7 @@
   "codigo": "A5651",
   "codigo_fab": "A5651",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO",
+  "aplicacion": "VOLVO",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -13347,7 +13347,7 @@
   "codigo": "A5476",
   "codigo_fab": "A5476",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO TD 162 ESC",
+  "aplicacion": "VOLVO TD 162 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13366,7 +13366,7 @@
   "codigo": "A5474",
   "codigo_fab": "A5474",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO TD 60 ESC D 60A 5,5D (88KW) F609/611 TD61F",
+  "aplicacion": "VOLVO TD 60 ESC D 60A 5,5D (88KW) F609/611 TD61F",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13385,7 +13385,7 @@
   "codigo": "A5652",
   "codigo_fab": "A5652",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO",
+  "aplicacion": "VOLVO",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -13404,7 +13404,7 @@
   "codigo": "F IY 5450",
   "codigo_fab": "A5450",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO FA12/NH12 ESC FH 12 / NH12 / FM D12A / 340/380/420 F12 380/420",
+  "aplicacion": "VOLVO FA12/NH12 ESC FH 12 / NH12 / FM D12A / 340/380/420 F12 380/420",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13432,7 +13432,7 @@
   "codigo": "A5632",
   "codigo_fab": "A5632",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO",
+  "aplicacion": "VOLVO",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13451,7 +13451,7 @@
   "codigo": "F IY 5645",
   "codigo_fab": "A5645",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VOLVO D13 / MACK MP8; L6, 780 CI (12,8L) MP8 DIESEL, 50 HC, 24V, TURBO, ESC",
+  "aplicacion": "VOLVO D13 / MACK MP8; L6, 780 CI (12,8L) MP8 DIESEL, 50 HC, 24V, TURBO, ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13475,7 +13475,7 @@
   "codigo": "F IY 5414",
   "codigo_fab": "A5414",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO FH12 ESC FH 12 / NH12 / FM D12A 340/380/420 F12 380/420",
+  "aplicacion": "VOLVO FH12 ESC FH 12 / NH12 / FM D12A 340/380/420 F12 380/420",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13503,7 +13503,7 @@
   "codigo": "A5631",
   "codigo_fab": "A5631",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO ESC.",
+  "aplicacion": "VOLVO ESC.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13522,7 +13522,7 @@
   "codigo": "A5706D",
   "codigo_fab": "A5706D",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO DH 12E ADM",
+  "aplicacion": "VOLVO DH 12E ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13541,7 +13541,7 @@
   "codigo": "A5581",
   "codigo_fab": "A5581",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO FA12/NH12 ADM.",
+  "aplicacion": "VOLVO FA12/NH12 ADM.",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13560,7 +13560,7 @@
   "codigo": "A5582",
   "codigo_fab": "A5582",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO FH12 ESC",
+  "aplicacion": "VOLVO FH12 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13579,7 +13579,7 @@
   "codigo": "A5650",
   "codigo_fab": "A5650",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO",
+  "aplicacion": "VOLVO",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -13598,7 +13598,7 @@
   "codigo": "A5501",
   "codigo_fab": "A5501",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO D 70 ESC",
+  "aplicacion": "VOLVO D 70 ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13617,7 +13617,7 @@
   "codigo": "A5707",
   "codigo_fab": "A5707",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO DH 12E ESC TD 70 6,7D F, N86 A, B, C, F, FS",
+  "aplicacion": "VOLVO DH 12E ESC TD 70 6,7D F, N86 A, B, C, F, FS",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13636,7 +13636,7 @@
   "codigo": "F IY 5646",
   "codigo_fab": "A5646",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VOLVO D13 / MACK MP8; L6, 780, CI (12,8L), DIESEL, SOHC, 24V, TURBO ADM",
+  "aplicacion": "VOLVO D13 / MACK MP8; L6, 780, CI (12,8L), DIESEL, SOHC, 24V, TURBO ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13664,7 +13664,7 @@
   "codigo": "A9391",
   "codigo_fab": "A9391",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VOLVO D13 / MACK MP8; L4, 780 , CI (12,8l), DIESEL, SOHC, 24V, TURBO ADM",
+  "aplicacion": "VOLVO D13 / MACK MP8; L4, 780 , CI (12,8l), DIESEL, SOHC, 24V, TURBO ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13683,7 +13683,7 @@
   "codigo": "A9392",
   "codigo_fab": "A9392",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VOLVO D13 / MACK MP8; L4, 780 , CI (12,8l), DIESEL, SOHC, 24V, TURBO ESC",
+  "aplicacion": "VOLVO D13 / MACK MP8; L4, 780 , CI (12,8l), DIESEL, SOHC, 24V, TURBO ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13702,7 +13702,7 @@
   "codigo": "A5500",
   "codigo_fab": "A5500",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO D 70 ADM TD 70 6,7D F, N86 A, B, C, F, FS",
+  "aplicacion": "VOLVO D 70 ADM TD 70 6,7D F, N86 A, B, C, F, FS",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13721,7 +13721,7 @@
   "codigo": "F IY 5494",
   "codigo_fab": "A5494",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV.VOLVO 688 NL10 ESC TURBO TD 100 BF B 8 NL10",
+  "aplicacion": "VOLVO 688 NL10 ESC TURBO TD 100 BF B 8 NL10",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13749,7 +13749,7 @@
   "codigo": "F IY 5158",
   "codigo_fab": "A5158",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV.VOLVO TD 100 ESC TD 100B-T F, FB, FL 88",
+  "aplicacion": "VOLVO TD 100 ESC TD 100B-T F, FB, FL 88",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13777,7 +13777,7 @@
   "codigo": "A5475",
   "codigo_fab": "A5475",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO TD 162 ADM",
+  "aplicacion": "VOLVO TD 162 ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13796,7 +13796,7 @@
   "codigo": "F IY 5083",
   "codigo_fab": "A5083",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV.VOLVO TD 110 ESC TD 100 A/B/G F10, F80,",
+  "aplicacion": "VOLVO TD 110 ESC TD 100 A/B/G F10, F80,",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13820,7 +13820,7 @@
   "codigo": "F IY 5159",
   "codigo_fab": "A5159",
   "marca": "INDY",
-  "aplicacion": "VOLVO AS. VOLVO TD 100 ADM Nº467474 TD 100B-T F, FB, FL 88",
+  "aplicacion": "AS. VOLVO TD 100 ADM Nº467474 TD 100B-T F, FB, FL 88",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13844,7 +13844,7 @@
   "codigo": "F IY 5082",
   "codigo_fab": "A5082",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO TD 110 ADM TD 100 A/B/G F10, F80, NL 10",
+  "aplicacion": "VOLVO TD 110 ADM TD 100 A/B/G F10, F80, NL 10",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13868,7 +13868,7 @@
   "codigo": "F IY 5081",
   "codigo_fab": "A5081",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO N88 ESC D 120 TD 120/121 F 80, F 12",
+  "aplicacion": "VOLVO N88 ESC D 120 TD 120/121 F 80, F 12",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13900,7 +13900,7 @@
   "codigo": "A5480",
   "codigo_fab": "A5480",
   "marca": "INDY",
-  "aplicacion": "VOLVO VALVE SEATS",
+  "aplicacion": "VOLVO",
   "descripcion": null,
   "tipo": null,
   "medidas": {
@@ -13919,7 +13919,7 @@
   "codigo": "F IY 5080",
   "codigo_fab": "A5080",
   "marca": "INDY",
-  "aplicacion": "VOLVO ASIENTO VALV. VOLVO N88 ADM D 120 TD 120/121 F 80, F 12",
+  "aplicacion": "VOLVO N88 ADM D 120 TD 120/121 F 80, F 12",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -13947,7 +13947,7 @@
   "codigo": "F IY 5085",
   "codigo_fab": "A5085",
   "marca": "INDY",
-  "aplicacion": "WAUKESHA ASIENTO VALV. WAUKESHA ESC",
+  "aplicacion": "WAUKESHA ESC",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -13971,7 +13971,7 @@
   "codigo": "A5084",
   "codigo_fab": "A5084",
   "marca": "INDY",
-  "aplicacion": "WAUKESHA ASIENTO VALV. WAUKESHA ADM",
+  "aplicacion": "WAUKESHA ADM",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -16294,7 +16294,7 @@
   "codigo": "C405",
   "codigo_fab": "C405",
   "marca": "NUBO",
-  "aplicacion": "FORD FORDSON",
+  "aplicacion": "FORDSON",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -16313,7 +16313,7 @@
   "codigo": "C407",
   "codigo_fab": "C407",
   "marca": "NUBO",
-  "aplicacion": "FORD FORDSON",
+  "aplicacion": "FORDSON",
   "descripcion": null,
   "tipo": "E",
   "medidas": {
@@ -23796,7 +23796,7 @@
   "codigo": "770",
   "codigo_fab": "770",
   "marca": "RYC",
-  "aplicacion": "PEUGEOT PEUGEOT 205 / 305 MOT. TU3 1.4",
+  "aplicacion": "PEUGEOT 205 / 305 MOT. TU3 1.4",
   "descripcion": null,
   "tipo": "A",
   "medidas": {
@@ -23815,7 +23815,7 @@
   "codigo": "771",
   "codigo_fab": "771",
   "marca": "RYC",
-  "aplicacion": "PEUGEOT PEUGEOT 205 / 305 MOT. TU3 1.4",
+  "aplicacion": "PEUGEOT 205 / 305 MOT. TU3 1.4",
   "descripcion": null,
   "tipo": "E",
   "medidas": {

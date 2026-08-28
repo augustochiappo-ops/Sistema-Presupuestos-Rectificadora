@@ -129,8 +129,10 @@ def texto(valor: str):
 
 def juntar(*partes) -> str:
     """
-    Marca del vehículo y modelo en una sola línea, sin repetir la marca cuando
-    el catálogo ya la escribió adentro del modelo ("ASIENTO VALV. AUDI ESC…").
+    Marca del vehículo y modelo en una sola línea, sin repetir lo que ya está
+    escrito: el catálogo de Indy pone la marca también adentro de la descripción
+    ("ALCO" + "ALCO ADM 251-16V" es "ALCO ADM 251-16V", no las dos cosas). Se
+    descarta lo que ya esté contenido, mire para donde mire la repetición.
     """
     salida: list[str] = []
     for parte in partes:
@@ -139,8 +141,20 @@ def juntar(*partes) -> str:
             continue
         if any(limpio.upper() in y.upper() for y in salida):
             continue
+        salida = [y for y in salida if y.upper() not in limpio.upper()]
         salida.append(limpio)
     return " ".join(salida)
+
+
+# "ASIENTO VALV.", "ASIENTO VALVULA", "VALVE SEAT": la muletilla con la que Indy
+# empieza 477 de sus 559 descripciones. No dice nada —toda la pestaña son
+# asientos de válvula— y se come el ancho de la columna, así que se saca y queda
+# el motor, que es lo que se lee.
+MULETILLA = re.compile(r"^(ASIENTOS?\s*(DE\s*)?(VALV\w*)?\.?|VALVE\s*SEATS?)[\s.\-]*", re.IGNORECASE)
+
+
+def sin_muletilla(valor: str) -> str:
+    return MULETILLA.sub("", re.sub(r"\s+", " ", (valor or "")).strip())
 
 
 TIPOS = {
@@ -206,8 +220,17 @@ def indice_ryc() -> dict[str, str]:
     mapa = {}
     for base in PROVEEDOR:
         m = re.match(r"^F R (\d+)[A-Z]*$", base)
-        if m:
-            mapa[m.group(1)] = base
+        if not m:
+            continue
+        # Hoy no pasa (los dieciséis códigos RYC del proveedor tienen números
+        # distintos), pero si algún día el mismo número apareciera con dos
+        # letras serían dos productos y el cruce por número dejaría de servir:
+        # mejor enterarse acá que ver un precio equivocado en pantalla.
+        if m.group(1) in mapa:
+            print(f"  ⚠ el número {m.group(1)} de RYC está dos veces en la lista "
+                  f"del proveedor ({mapa[m.group(1)]} y {base}): se cruza el primero")
+            continue
+        mapa[m.group(1)] = base
     return mapa
 
 
@@ -254,7 +277,7 @@ def indy() -> list[dict]:
         fichas.append(ficha(
             codigo_fab=codigo,
             marca="INDY",
-            aplicacion=juntar(celda(fila, 0), celda(fila, 1)),
+            aplicacion=juntar(celda(fila, 0), sin_muletilla(celda(fila, 1))),
             tipo_val=tipo(celda(fila, 4)),
             diam_ext=numero(celda(fila, 5)),
             diam_int=numero(celda(fila, 6)),
