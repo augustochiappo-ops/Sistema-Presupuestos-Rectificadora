@@ -31,7 +31,7 @@ function partir(tolerancia) {
   return { signo, magnitud: signo ? texto.slice(1) : texto }
 }
 
-export function CampoMedida({ label, valor, tolerancia, onValor, onTolerancia, ancho = 250 }) {
+export function CampoMedida({ label, valor, tolerancia, onValor, onTolerancia, ancho = 250, unidad = 'mm' }) {
   const { signo, magnitud } = partir(tolerancia)
   const modo = MODOS.find((m) => m.signo === signo) || MODOS[0]
 
@@ -93,7 +93,9 @@ export function CampoMedida({ label, valor, tolerancia, onValor, onTolerancia, a
           aria-label={`Tolerancia de ${label}`}
           style={{ width: 72, flex: '0 0 72px', textAlign: 'right' }}
         />
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)' }}>mm</span>
+        {/* Casi todas las medidas son milímetros; el ángulo del asiento son
+            grados, y decir "mm" ahí sería mentir. */}
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', color: 'var(--text-faint)' }}>{unidad}</span>
       </div>
     </label>
   )

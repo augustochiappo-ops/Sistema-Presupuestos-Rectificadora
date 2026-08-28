@@ -5,9 +5,10 @@ descripción, que es lo que ya hace `crac.py`.
 
 De dónde salen: de los catálogos de cada fabricante, convertidos a
 `CRAC/tecnicos/*.json` por los scripts de `scripts/` (`convertir_tecnicos.js`
-para guías y subconjuntos, `convertir_camisas_fadecya.py` para camisas). Son
-1.500 fichas que cambian solo cuando se procesa un catálogo nuevo (unas pocas
-veces al año), así que viven en git y se cargan en memoria — no van a SQLite.
+para guías y subconjuntos, `convertir_camisas_fadecya.py` para camisas,
+`convertir_asientos.py` para los asientos de válvulas). Son 2.700 fichas que
+cambian solo cuando se procesa un catálogo nuevo (unas pocas veces al año), así
+que viven en git y se cargan en memoria — no van a SQLite.
 Sin tabla no hay migración, ni paso de importación, ni riesgo de que un deploy
 deje producción con el buscador vacío: alcanza con el `git pull`.
 
@@ -68,6 +69,17 @@ ESPEC = {
         # que es lo que distingue una guía recta de una con pestaña. Los
         # detalles numerados afinan demasiado para ser un filtro.
         "forma": True,
+    },
+    # Los tres catálogos de asientos (Indy, Nubo y RYC) en una sola lista, igual
+    # que las guías. El ángulo entra como una medida más —con su tolerancia— y
+    # no como una lista de valores fijos: la mayoría son de 30º o 45º, pero el
+    # catálogo tiene diez asientos de 7º, 44,3º o 50º que una lista cerrada
+    # dejaría afuera del buscador para siempre.
+    "asientos": {
+        "label": "Asientos de válvulas",
+        "medidas": ["diam_ext", "diam_int", "altura", "angulo"],
+        "tipo": True,
+        "filtro_proveedor": True,
     },
     "subconjuntos": {
         "label": "Subconjuntos",

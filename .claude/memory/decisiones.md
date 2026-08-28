@@ -584,3 +584,63 @@ verificando el catálogo, no si la pieza se consigue.
 que las muestra. Un filtro activado por defecto que no avisa lo que esconde es
 una trampa: alguien busca una camisa que sabe que existe, no la encuentra y
 concluye que el sistema está incompleto.
+
+## Asientos de válvulas: tres catálogos en una familia, y el ángulo como medida (2026-08-28)
+
+**Contexto.** El dueño pasó tres catálogos de asientos —Indy (hoja
+`Asientos-Seats - casquillos`), Nubo (hoja `ASIENTOS`) y RYC (un Excel entero de
+asientos)— y pidió una categoría nueva en la búsqueda por medidas con seis
+datos: tipo (admisión / escape), Ø exterior, Ø interior, altura, ángulo y
+cantidad por juego.
+
+**Una sola familia con los tres catálogos, y la marca dice de cuál salió.** Es
+lo mismo que ya se había hecho con las guías (RYC + Indy + Nubo juntas). La
+columna **Marca** dice INDY, NUBO o RYC —que es como los nombró el dueño ("ese
+dato solamente te lo da Indy, para las otras marcas poné un guión")— y la marca
+del vehículo (CHEVROLET, CATERPILLAR) va adentro de "Motor / aplicación", que es
+donde se la busca.
+
+**La cantidad por juego solo la publica Indy.** Pedido textual: en Nubo y RYC va
+un **guión**, no un número copiado del catálogo vecino. En el JSON es `null`, y
+la pantalla ya muestra "—" para cualquier campo vacío. El **0** de la columna de
+Indy (51 filas) se trata igual que un vacío: un juego de cero piezas no existe,
+es un dato que falta.
+
+**El ángulo es una medida con tolerancia, no una lista de valores.** La
+tentación era un desplegable con 30º / 45º, que es el 76 % del catálogo. No se
+hizo: hay diez asientos de 7º, 11º, 44,3º, 46º y 50º —así los escribe el
+catálogo de Indy— y una lista cerrada los dejaría fuera del buscador para
+siempre. Entra como una medida más (`medidas.angulo`), con el mismo casillero de
+valor + tolerancia que las otras, y el casillero dice **º** en vez de mm: para
+eso `CampoMedida` y el tag de arriba de la tabla aceptan ahora una `unidad`, que
+por defecto sigue siendo mm.
+
+**El cruce con la lista del proveedor: cada catálogo escribe su código distinto.**
+La categoría del proveedor es la **F** (asientos / casquillos) y adentro hay tres
+marcas: `IY` (Indy), `NB` (Nubo) y `R` (RYC).
+
+| Catálogo | Código | Código del proveedor | Cómo se cruza |
+|---|---|---|---|
+| Indy | `A5177` | `F IY 5177` | se le saca la "A" del frente |
+| Nubo | `C105` (tipo A) | `F NB 105A` | número + la letra del tipo pegada |
+| RYC | `523` | `F R 523T` | por el número: la letra final es del proveedor, no del catálogo |
+
+Cruzan **326 de las 1.108 fichas** (258 Indy, 55 Nubo, 13 RYC), y del lado del
+proveedor quedan sin ficha 41 códigos Indy, 4 Nubo y 3 RYC — son piezas de
+ediciones viejas de los catálogos. Los 55 cruces de Nubo y los 13 de RYC se
+revisaron **uno por uno** contra la descripción del proveedor antes de darlos por
+buenos. Como en subconjuntos y bujes, un código base tiene una fila por
+sobremedida (STD, 003, 005, 010…) y se guardan todas: el precio que se muestra
+es el de la que tiene stock, y la columna "Precio de" dice cuál es.
+
+**Las filas sin código no entran.** Nubo tiene siete filas con medidas pero sin
+código (productos que todavía no numeró) y RYC tres semiterminados sin tipo. Sin
+código no hay nada que pedir, así que las de Nubo se saltean; los semiterminados
+de RYC sí entran, porque tienen código y medidas y el tipo vacío se muestra como
+un guión.
+
+**Las fuentes se commitean como volcado CSV de la hoja, no como el Excel.** El
+Excel de Nubo pesa 7,5 MB y trae quince hojas de las que se usa una: los tres
+volcados juntos pesan 78 KB, se leen en un diff y alcanzan para regenerar el
+JSON. El encabezado de `scripts/convertir_asientos.py` dice qué hoja de qué
+archivo es cada uno y con qué tres líneas se rehace el volcado.

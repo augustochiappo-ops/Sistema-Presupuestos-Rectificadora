@@ -61,9 +61,10 @@ await esperar(900)
 check('se entra a la pantalla', page.url().includes('busqueda-medidas'), page.url())
 
 console.log('\n=== Estado inicial ===')
-check('las cinco familias con su total',
+check('las seis familias con su total',
   (await page.locator('button', { hasText: /^Camisas\s*396$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Guías de válvulas\s*915$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Asientos de válvulas\s*1108$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Subconjuntos\s*201$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Pistones\s*35$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Bujes de biela\s*190$/ }).count()) === 1)
@@ -178,6 +179,52 @@ check('camisas conserva su búsqueda', await page.locator('text=/Motor \\/ aplic
 await page.locator('button', { hasText: 'Guías de válvulas' }).click()
 await esperar(900)
 check('y guías la suya', await page.inputValue('input[placeholder="Código…"]') === 'iy1171')
+
+console.log('\n=== Asientos de válvulas: los tres catálogos en una lista ===')
+await page.locator('button', { hasText: 'Asientos de válvulas' }).click()
+await esperar(500)
+// Las columnas: 0 código, 1 marca, 2 aplicación, 3 tipo, 4 Ø ext, 5 Ø int,
+// 6 altura, 7 ángulo, 8 cantidad por juego, 9 precio de, 10 precio, 11 stock.
+const celdas = (i = 0) => filas().nth(i).evaluateAll(
+  (trs) => (trs[0] ? [...trs[0].children].map((td) => td.textContent.trim()) : []),
+)
+await page.fill('input[placeholder="Código…"]', 'A5001')
+await esperar(1300)
+const indy = await celdas()
+check('un asiento Indy sale con el código del proveedor', indy[0] === 'F IY 5001', indy)
+check('con tipo, medidas y ángulo',
+  indy[3] === 'Admisión' && indy[4] === '45,07' && indy[5] === '37' && indy[6] === '8,2' && indy[7] === '30º',
+  indy)
+check('la cantidad por juego, que solo publica ese catálogo', indy[8] === '6', indy)
+check('y precio y stock de la base', /\$\s?[\d.]+/.test(indy[10]) && /Sí|No/.test(indy[11]), indy)
+
+await page.fill('input[placeholder="Código…"]', 'C105')
+await esperar(1300)
+const nubo = await celdas()
+check('un asiento Nubo se cruza con la lista del proveedor', nubo[0] === 'F NB 105A' && nubo[1] === 'NUBO', nubo)
+// Lo que pidió el dueño: la cantidad por juego solo la da un catálogo, y en los
+// otros va un guión — no un número copiado del vecino.
+check('y su cantidad por juego es un guión, no un número inventado', nubo[8] === '—', nubo)
+
+console.log('\n=== Asientos: el ángulo se filtra en grados, no en milímetros ===')
+await page.fill('input[placeholder="Código…"]', '')
+await esperar(400)
+const anguloUI = page.locator('label', { hasText: 'ÁNGULO' })
+check('el casillero dice grados y no mm', (await anguloUI.textContent()).includes('º'), await anguloUI.textContent())
+await anguloUI.locator('input').nth(0).fill('30')
+await page.locator('label', { hasText: 'Ø EXTERIOR' }).locator('input').nth(0).fill('45')
+await esperar(1400)
+const angulos = await filas().evaluateAll((trs) => trs.map((tr) => tr.children[7].textContent.trim()))
+check('filtra por ángulo', angulos.length > 0 && angulos.every((a) => a === '30º'), angulos)
+check('con su tag en grados', await page.locator('text=/Ángulo: 30 ± 0,5 º/').count() === 1)
+
+await page.locator('select[aria-label="Tipo"]').selectOption('E')
+await esperar(1400)
+const tipos = await filas().evaluateAll((trs) => trs.map((tr) => tr.children[3].textContent.trim()))
+check('y el tipo separa admisión de escape', tipos.length > 0 && tipos.every((t) => t === 'Escape'), tipos)
+await page.screenshot({ path: path.join(SHOT, 'medidas-asientos.png'), fullPage: true })
+await page.locator('button', { hasText: 'Limpiar filtros' }).click()
+await esperar(400)
 
 console.log('\n=== Subconjuntos: el precio es el de una sobremedida ===')
 await page.locator('button', { hasText: 'Subconjuntos' }).click()

@@ -172,6 +172,10 @@ function contenidoCelda(col, fila, acciones) {
       return <StatusBadge status={valor ? 'active' : 'expired'}>{valor ? 'Sí' : 'No'}</StatusBadge>
     case 'tipo':
       return TIPO_GUIA[valor] || valor || '—'
+    // El ángulo del asiento va con su "º": un 45 pelado, en una tabla donde
+    // todo lo demás son milímetros, se lee como una medida más.
+    case 'grados':
+      return valor === null || valor === undefined || valor === '' ? '—' : `${formatMm(valor, col.decimales)}º`
     case 'sobremedidas':
       return celdaSobremedidas(fila)
     // De qué sobremedida es el precio que se está mostrando.
@@ -193,17 +197,17 @@ function contenidoCelda(col, fila, acciones) {
  * signo la tolerancia es de un solo lado, así que la etiqueta lo dice con
  * palabras: "40 mm o más" en vez de un "± +" que no significa nada.
  */
-function etiquetaMedida(valor, tolerancia) {
+function etiquetaMedida(valor, tolerancia, unidad = 'mm') {
   const texto = (tolerancia ?? '').toString().trim()
   const signo = texto.startsWith('+') ? '+' : texto.startsWith('-') ? '-' : ''
   const magnitud = (signo ? texto.slice(1) : texto).trim()
-  if (!signo) return `${valor} ± ${magnitud || '0,5'} mm`
-  if (!magnitud) return `${valor} mm o ${signo === '+' ? 'más' : 'menos'}`
+  if (!signo) return `${valor} ± ${magnitud || '0,5'} ${unidad}`
+  if (!magnitud) return `${valor} ${unidad} o ${signo === '+' ? 'más' : 'menos'}`
   const desde = Number(valor.replace(',', '.'))
   const salto = Number(magnitud.replace(',', '.'))
-  if (Number.isNaN(desde) || Number.isNaN(salto)) return `${valor} ${signo}${magnitud} mm`
+  if (Number.isNaN(desde) || Number.isNaN(salto)) return `${valor} ${signo}${magnitud} ${unidad}`
   const [a, b] = signo === '+' ? [desde, desde + salto] : [desde - salto, desde]
-  return `${formatMm(a)} a ${formatMm(b)} mm`
+  return `${formatMm(a)} a ${formatMm(b)} ${unidad}`
 }
 
 function comparar(a, b, key) {
@@ -351,7 +355,7 @@ export default function BusquedaMedidasScreen() {
     for (const m of familia.medidas || []) {
       const valor = (filtros[m.campo] ?? '').toString().trim()
       if (!valor) continue
-      puestas.push(`${m.label}: ${etiquetaMedida(valor, filtros[`tol_${m.campo}`])}`)
+      puestas.push(`${m.label}: ${etiquetaMedida(valor, filtros[`tol_${m.campo}`], m.unidad)}`)
     }
     for (const t of familia.textos || []) {
       const valor = (filtros[t.campo] ?? '').toString().trim()
@@ -419,6 +423,7 @@ export default function BusquedaMedidasScreen() {
               key={m.campo}
               ancho={250}
               label={m.label}
+              unidad={m.unidad}
               valor={filtros[m.campo] ?? ''}
               tolerancia={filtros[`tol_${m.campo}`] ?? ''}
               onValor={(v) => setFiltro(m.campo, v)}

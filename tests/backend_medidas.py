@@ -1,8 +1,8 @@
 """
 Suite de verificación de la búsqueda por medidas (`app/tecnicos.py`), contra los
-catálogos técnicos del repo (396 camisas, 915 guías, 201 subconjuntos, 35
-pistones y 190 bujes de biela) y los 64.250 repuestos del proveedor ya
-importados en la base.
+catálogos técnicos del repo (396 camisas, 915 guías, 1.108 asientos de válvulas,
+201 subconjuntos, 35 pistones y 190 bujes de biela) y los 64.250 repuestos del
+proveedor ya importados en la base.
 
 Cómo se corre: ver tests/README.md. Resumen:
 
@@ -47,12 +47,14 @@ def codigos(resultado):
 print("\n=== 0. Catálogos cargados ===")
 db.init_db()
 familias = {f["id"]: f for f in tecnicos.get_familias()}
-check("están las cinco familias",
-      sorted(familias) == ["bujes_biela", "camisas", "guias", "pistones", "subconjuntos"],
+check("están las seis familias",
+      sorted(familias) == ["asientos", "bujes_biela", "camisas", "guias", "pistones", "subconjuntos"],
       list(familias))
 check("396 camisas (secas y húmedas)",
       familias.get("camisas", {}).get("total") == 396, familias.get("camisas"))
 check("915 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") == 915, familias.get("guias"))
+check("1.108 asientos de válvulas (Indy + Nubo + RYC)",
+      familias.get("asientos", {}).get("total") == 1108, familias.get("asientos"))
 check("201 subconjuntos", familias.get("subconjuntos", {}).get("total") == 201, familias.get("subconjuntos"))
 check("35 pistones (Persan)", familias.get("pistones", {}).get("total") == 35, familias.get("pistones"))
 check("190 bujes de biela (Indubrón)",
@@ -63,7 +65,7 @@ check("el catálogo del proveedor está importado", crac.get_info_catalogo()["to
 # pedir, pero la ficha de Mahle se consulta igual aunque no se pueda pedir.
 check("ofrecen el filtro del proveedor todas menos subconjuntos",
       {k for k, v in familias.items() if v["filtro_proveedor"]}
-      == {"camisas", "guias", "pistones", "bujes_biela"},
+      == {"camisas", "guias", "asientos", "pistones", "bujes_biela"},
       {k: v.get("filtro_proveedor") for k, v in familias.items()})
 for id_familia in familias:
     con = tecnicos.buscar(id_familia, {"aplicacion": "a"})
@@ -222,6 +224,64 @@ check("se busca por marca y modelo juntos", "I-115" in codigos(r), codigos(r))
 trap = tecnicos.buscar("bujes_biela", {"codigo": "I-143X", "solo_crac": "0"})["resultados"][0]
 check("el trapezoidal no se lleva el código del recto",
       trap["codigo_crac"] is None and trap["precio"] is None, trap["codigo_crac"])
+
+print("\n=== 5 quinquies. Asientos de válvulas (Indy + Nubo + RYC) ===")
+por_marca = {}
+for f in tecnicos._catalogo("asientos"):
+    por_marca[f["marca"]] = por_marca.get(f["marca"], 0) + 1
+check("los tres catálogos, cada uno con sus fichas",
+      por_marca == {"INDY": 559, "NUBO": 277, "RYC": 272}, por_marca)
+check("326 asientos se pueden pedir hoy",
+      sum(1 for f in tecnicos._catalogo("asientos") if f["codigos_crac"]) == 326)
+
+# La cantidad por juego la publica UN catálogo: en los otros dos es un dato que
+# falta (null → guión en pantalla), nunca un número copiado del vecino.
+check("la cantidad por juego solo la traen los Indy",
+      {f["extra"]["cant_juego"] for f in tecnicos._catalogo("asientos") if f["marca"] != "INDY"} == {None})
+check("y ningún Indy la trae en 0",
+      all(f["extra"]["cant_juego"] != "0" for f in tecnicos._catalogo("asientos")))
+
+
+# El código del catálogo se cruza con el del proveedor, que es el que se pide.
+def asiento(codigo):
+    r = tecnicos.buscar("asientos", {"codigo": codigo, "solo_crac": "0"})
+    iguales = [x for x in r["resultados"] if x["codigo_fab"] == codigo]
+    return iguales[0] if iguales else None
+
+
+indy = asiento("A5000")
+check("un asiento Indy se muestra con el código del proveedor",
+      indy["codigo"] == "F IY 5000" and indy["codigo_crac"] == "F IY 5000", indy["codigo_crac"])
+check("con las cuatro medidas del catálogo",
+      indy["medidas"] == {"diam_ext": 45.07, "diam_int": 37.0, "altura": 8.3, "angulo": 45.0},
+      indy["medidas"])
+check("y con precio y stock de la base", indy["precio"] is not None and indy["stock"] is True, indy["precio"])
+
+nubo = asiento("C105")
+check("un Nubo se cruza por número y letra del tipo",
+      nubo["codigo"] == "F NB 105A" and nubo["precio"] is not None, nubo["codigo_crac"])
+ryc = asiento("523")
+check("y un RYC por el número, que el proveedor escribe con una letra al final",
+      ryc["codigo"] == "F R 523T" and ryc["codigo_crac"] == "F R 523T   STD", ryc["codigo_crac"])
+check("la sobremedida del precio que se muestra va dicha", ryc["medida_crac"] == "STD", ryc["medida_crac"])
+
+sin_cruce = asiento("A5232")
+check("el que no está en la lista queda con su código de catálogo y sin precio",
+      sin_cruce["codigo"] == "A5232" and sin_cruce["precio"] is None, sin_cruce)
+
+# El ángulo es una medida más, con tolerancia, y no una lista de valores fijos:
+# el catálogo tiene diez asientos de ángulos raros que una lista dejaría afuera.
+r = tecnicos.buscar("asientos", {"angulo": "45", "tol_angulo": "0"})
+check("el ángulo filtra", r["total"] > 0 and all(x["medidas"]["angulo"] == 45 for x in r["resultados"]))
+r = tecnicos.buscar("asientos", {"angulo": "44.3", "tol_angulo": "0"})
+check("y llega hasta los ángulos raros", codigos(r) == ["F IY 5139"], codigos(r))
+
+r = tecnicos.buscar("asientos", {"aplicacion": "corsa", "tipo": "E"})
+check("el tipo separa admisión de escape",
+      r["total"] > 0 and all(x["tipo"] == "E" for x in r["resultados"]), codigos(r))
+r = tecnicos.buscar("asientos", {"diam_ext": "45", "tol_diam_ext": "0.5", "angulo": "30"})
+check("las medidas y el ángulo se acumulan",
+      r["total"] > 0 and all(x["medidas"]["angulo"] == 30 for x in r["resultados"]), codigos(r))
 
 print("\n=== 5 quater. Tolerancia con signo: ese valor o más / o menos ===")
 # Lo que pidió el dueño: una guía de 40 de largo entra donde va una de 50, así
@@ -382,7 +442,7 @@ cliente = app.test_client()
 check("sin sesión no se entra", cliente.get("/api/tecnicos/familias").status_code == 401)
 cliente.post("/api/auth/login", json={"usuario": os.environ["APP_USERNAME"], "password": CLAVE})
 resp = cliente.get("/api/tecnicos/familias")
-check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 5, resp.get_json())
+check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 6, resp.get_json())
 resp = cliente.get("/api/tecnicos/buscar?familia=camisas&diam_int=56.5&tol_diam_int=0")
 datos = resp.get_json()
 check("y la búsqueda", resp.status_code == 200 and "UC 2112" in [r["codigo"] for r in datos["resultados"]], datos)

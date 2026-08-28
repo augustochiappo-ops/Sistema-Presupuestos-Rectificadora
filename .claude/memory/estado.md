@@ -1144,10 +1144,75 @@ catálogo, el script es el único lugar donde hay que tocar.
 `tests/ui_medidas.mjs` (dos bloques nuevos), las dos suites en verde, y el
 deploy a producción confirmado.
 
+## Sesión 2026-08-28 — Asientos de válvulas: la sexta familia del buscador
+
+El dueño pasó **tres catálogos de asientos** (Indy 2024, Nubo 2025 y el Excel de
+asientos de RYC) y pidió una categoría nueva en la búsqueda por medidas, con
+seis datos y ninguno más: **tipo** (admisión / escape), **Ø exterior**,
+**Ø interior**, **altura**, **ángulo** y **cantidad por juego** —esta última la
+publica solo Indy, y en las otras dos marcas pidió expresamente **un guión**.
+Más el cruce con los códigos del proveedor, como en las otras cinco familias.
+
+**Lo que quedó:**
+
+- **`CRAC/tecnicos/asientos.json`** — **1.108 fichas**: 559 de Indy, 277 de Nubo
+  y 272 de RYC. **326 se pueden pedir hoy** (tienen código del proveedor: 258
+  Indy, 55 Nubo, 13 RYC).
+- **`scripts/convertir_asientos.py`** (nuevo) lo genera desde tres volcados CSV
+  de la hoja de cada Excel, commiteados en `CRAC/tecnicos/fuentes/`
+  (`asientos_indy_2024.csv`, `asientos_nubo_2025.csv`, `asientos_ryc.csv`, 78 KB
+  entre los tres). El encabezado del script dice de qué hoja de qué archivo sale
+  cada uno y cómo rehacer el volcado cuando llegue un catálogo nuevo.
+- **Backend**: una entrada más en `ESPEC` de `app/tecnicos.py` y nada más — la
+  pantalla, el filtro del proveedor, el tope de 100 y el cruce de precios ya
+  eran genéricos.
+- **Frontend**: la familia en `familias.js` con sus doce columnas, y dos
+  agregados chicos y generales — el tipo de celda **`grados`** (el ángulo se
+  muestra "45º", no "45", que en una tabla de milímetros se leería como una
+  medida más) y la **unidad** del casillero de tolerancia, que por defecto sigue
+  siendo mm.
+
+**Tres decisiones que vale la pena recordar** (el detalle está en
+`decisiones.md`): el **ángulo entra como medida con tolerancia** y no como
+desplegable de 30º/45º, porque el catálogo tiene diez asientos de 7º, 44,3º o
+50º que una lista cerrada dejaría afuera para siempre; la **cantidad por juego**
+de Indy en 0 se trata como dato faltante y no como cero; y el **cruce de códigos**
+es distinto en cada catálogo (`A5177` → `F IY 5177`, `C105` + tipo A →
+`F NB 105A`, `523` → `F R 523T`), con los 68 cruces de Nubo y RYC revisados uno
+por uno contra la descripción del proveedor.
+
+**Lo que el catálogo no dice, no se inventó.** Las siete filas de Nubo con
+medidas pero sin código quedaron afuera (sin código no hay nada que pedir); los
+44 asientos sin tipo cargado y los 211 sin ángulo se muestran con un guión; y los
+ángulos raros de Indy (7º, 46º, 50º) se cargaron tal cual figuran.
+
+**Verificado:** `tests/backend_medidas.py` con un bloque nuevo ("5 quinquies.
+Asientos de válvulas") — 114 verificaciones en verde — y `tests/ui_medidas.mjs`
+con dos bloques nuevos — **90 verificaciones en verde**, incluida la fila de Nubo
+mostrando el guión en "Cant. por juego" y el tag del ángulo diciendo "30 ± 0,5 º"
+y no milímetros. Las dos suites de grupos también corrieron, para descartar
+regresiones.
+
 ## Próximo paso
 
-**Producción y `master` están sincronizados en `ab35c9d`** (2026-08-22: camisas
-de Fadecya rehechas + el filtro del proveedor), deployado y verificado por HTTP:
+**`master` quedó ADELANTE de producción: falta correr el deploy** de la tanda
+del 2026-08-28 (asientos de válvulas, la sexta familia del buscador por
+medidas). No se corrió porque el dueño no pasó el `DEPLOY_SECRET` en esa
+sesión —vive solo en la cabeza del dueño y se pide en cada sesión— y Claude no
+lo reusa de una vieja ni lo inventa. Con el secreto a mano es un solo comando:
+
+```bash
+curl -X POST https://chiapppo.pythonanywhere.com/api/deploy -H "X-Deploy-Secret: <el secreto>"
+```
+
+El cambio es **solo agregado** (una familia nueva en el buscador; ninguna
+pantalla vieja cambia de comportamiento), así que producción sigue sirviendo
+bien lo de siempre hasta que se corra — lo único que le falta es la pestaña
+"Asientos de válvulas".
+
+Antes de eso, **producción y `master` estaban sincronizados en `ab35c9d`**
+(2026-08-22: camisas de Fadecya rehechas + el filtro del proveedor), deployado y
+verificado por HTTP:
 el JS que sirve producción es el commiteado (`index-CQb1Nz4r.js`, 485.191
 bytes), la raíz responde 200 y `/api/tecnicos/familias` responde 401 sin sesión.
 Los tres commits de la tanda son `4a7e103` (el catálogo de camisas rehecho y la

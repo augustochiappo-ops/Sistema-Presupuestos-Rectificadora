@@ -112,6 +112,58 @@ export const FAMILIAS = [
     ],
   },
   {
+    id: 'asientos',
+    label: 'Asientos de válvulas',
+    // Las cuatro medidas que pidió el dueño, en el orden en que las lee el
+    // catálogo. El ángulo va con su unidad: el casillero de tolerancia dice
+    // "mm" en las demás familias y acá son grados.
+    medidas: [
+      { campo: 'diam_ext', label: 'Ø exterior' },
+      { campo: 'diam_int', label: 'Ø interior' },
+      { campo: 'altura', label: 'Altura' },
+      { campo: 'angulo', label: 'Ángulo', unidad: 'º' },
+    ],
+    textos: [
+      { campo: 'codigo', label: 'Código', ancho: 200, icono: 'tag' },
+      { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
+    ],
+    opciones: [
+      {
+        campo: 'tipo',
+        label: 'Tipo',
+        valores: [
+          { valor: '', label: 'Admisión y escape' },
+          { valor: 'A', label: 'Admisión' },
+          { valor: 'E', label: 'Escape' },
+          { valor: 'AE', label: 'Indistinta (A/E)' },
+        ],
+      },
+    ],
+    columnas: [
+      { key: 'codigo', header: 'Código', width: 125, strong: true, wrap: true },
+      // Indy, Nubo o RYC: los tres catálogos van en la misma lista y la marca
+      // es lo que dice de cuál salió la ficha.
+      { key: 'marca', header: 'Marca', width: 85 },
+      { key: 'aplicacion', header: 'Motor / aplicación', wrap: true, minWidth: 210 },
+      { key: 'tipo', header: 'Tipo', width: 95, tipo: 'tipo' },
+      { key: 'diam_ext', header: 'Ø ext.', width: 90, align: 'right', tipo: 'mm' },
+      { key: 'diam_int', header: 'Ø int.', width: 90, align: 'right', tipo: 'mm' },
+      { key: 'altura', header: 'Altura', width: 85, align: 'right', tipo: 'mm' },
+      { key: 'angulo', header: 'Ángulo', width: 85, align: 'right', tipo: 'grados' },
+      // La cantidad por juego la publica un solo catálogo (Indy). En los otros
+      // dos va un guión: es un dato que no tenemos, no un cero.
+      { key: 'cant_juego', header: 'Cant. por juego', width: 125, align: 'right' },
+      { key: 'medida_crac', header: 'Precio de', width: 90, tipo: 'medida' },
+      { key: 'precio', header: 'Precio', width: 110, align: 'right', tipo: 'precio' },
+      { key: 'stock', header: 'Stock', width: 80, align: 'center', tipo: 'stock' },
+    ],
+    ejemplos: [
+      { label: 'Ø exterior 45 mm', filtros: { diam_ext: '45', tol_diam_ext: '0.5' } },
+      { label: 'Ø exterior 35 y ángulo 45º', filtros: { diam_ext: '35', tol_diam_ext: '0.5', angulo: '45' } },
+      { label: 'Motor: Corsa', filtros: { aplicacion: 'corsa' } },
+    ],
+  },
+  {
     id: 'subconjuntos',
     label: 'Subconjuntos',
     medidas: [
