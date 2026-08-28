@@ -25,9 +25,11 @@ y del mismo ancho— y tirar todo lo demás. En orden:
   2. Etiqueta lo que queda en pedazos conectados y descarta los que son pura
      recta (corchetes de cota, restos de grilla): un corchete es 100 % recta,
      una circunferencia o un corte rayado casi nada.
-  3. Arranca del pedazo con más tinta —siempre una de las dos vistas— y le suma
-     los que estén alineados con él, midan lo mismo de ancho y no estén más
-     lejos que un Ø de pistón. Un número suelto no pasa ninguna de las tres.
+  3. Arranca del CÍRCULO más grande de la fila —la vista de abajo del pistón,
+     lo único redondo que hay— y le suma los pedazos que estén alineados con
+     él, midan lo mismo de ancho y no estén más lejos que un Ø de pistón. Un
+     número suelto no pasa ninguna de las tres. Ver `_arranque`: ahí está por
+     qué no gana la camisa de la fila, que tiene bastante más tinta.
   4. Lleva el trazo a negro pleno estirando el contraste de esa imagen: hay
      páginas del catálogo dibujadas en gris clarito y así todas se ven igual de
      firmes en pantalla.
@@ -62,6 +64,8 @@ MANIFIESTO = os.path.join(
 
 TINTA = 235.0        # más claro que esto es papel (alto a propósito: hay
                      # dibujos del catálogo en gris muy clarito)
+COLOR = 40           # diferencia entre canales a partir de la cual el pixel
+                     # está pintado de color y no es tinta del dibujo
 MARGEN = 5           # px de aire alrededor del dibujo
 # La proporción del cuadro final (ancho : alto), la típica del dibujo — el
 # corte y el círculo, uno sobre el otro. Va como PAR DE ENTEROS y no como
@@ -102,11 +106,41 @@ class Pedazo:
 
 
 def _a_gris(path):
-    """La imagen en gris, con lo transparente tomado como papel blanco."""
+    """
+    La imagen en gris, con lo transparente tomado como papel blanco y lo que
+    está PINTADO DE COLOR tomado como papel también.
+
+    El catálogo resalta en celeste la celda del código de subconjunto, y en
+    varias fotos de esta tanda ese rectángulo lleno entra entero al recorte. Un
+    bloque macizo tiene más tinta que cualquier dibujo de línea, así que si se
+    lo deja se convierte en el pedazo más grande de la imagen y se lleva puesto
+    el recorte. El dibujo es siempre gris neutro (R = G = B), así que alcanza
+    con tirar lo que tenga color: se van con él la celda celeste y los textos
+    en naranja de la tabla.
+    """
     im = Image.open(path).convert("RGBA")
     fondo = Image.new("RGB", im.size, "white")
     fondo.paste(im, mask=im.split()[3])
-    return np.asarray(fondo.convert("L")).astype(np.float32)
+    rgb = np.asarray(fondo).astype(np.int16)
+    color = (rgb.max(2) - rgb.min(2)) > COLOR
+    gris = np.asarray(fondo.convert("L")).astype(np.float32)
+    gris[color] = 255.0
+    return gris, _celda_resaltada(color)
+
+
+def _celda_resaltada(color):
+    """
+    La caja de la celda celeste, o None si la foto no la trae. Es el bloque de
+    color más grande y macizo: el texto naranja de la tabla no llega ni al
+    tamaño ni al relleno.
+
+    Sirve de referencia de DÓNDE EMPIEZA LA FILA que se está recortando. Ver
+    `encontrar_dibujo`.
+    """
+    _, pedazos = _pedazos(color)
+    llenos = [p for p in pedazos.values()
+              if p.area >= 600 and p.tinta / p.area >= 0.6]
+    return max(llenos, key=lambda p: p.area) if llenos else None
 
 
 def _corridas(fila):
@@ -222,13 +256,82 @@ def _parte_recta(mascara):
     return recta / total
 
 
+def _arranque(cajas, etiquetas, resaltado):
+    """
+    Con qué pedazo empieza el grupo. Tiene que ser una de las dos vistas del
+    pistón: de ahí para adelante el grupo crece por alineación, y arrancar mal
+    es recortar otra cosa.
+
+    Se elige el CÍRCULO más grande —la vista de abajo del pistón— porque es lo
+    único de la fila que es redondo. Antes se arrancaba del pedazo con más
+    tinta, y alcanzaba mientras las fotos venían recortadas cerca del pistón;
+    las de la fila entera del catálogo traen cosas con más tinta que el pistón,
+    y la que más engaña es la camisa de la columna "C": un rectángulo rayado,
+    el doble de alto que el pistón. Redonda no es.
+
+    Dos salvedades, las dos aprendidas de esta tanda:
+
+    - **Los iconitos del encabezado** (el pistón en perspectiva de la columna
+      "KH", el bloque de motor, los aros) también son redondos, y en las fotos
+      que se llevaron puesto el encabezado de la página son más grandes que el
+      dibujo de la fila, que a veces sale chiquito. Por eso no se miran los
+      pedazos que quedan enteros ARRIBA de la celda resaltada: esa celda es el
+      código que se está recortando, o sea que marca dónde empieza la fila, y
+      el dibujo siempre cae debajo de la primera línea de texto de su fila.
+    - **Los redondelitos de adentro del dibujo** (el agujero del perno, las
+      marcas del centro) son círculos perfectos y chicos. Se saltean los que
+      caen dentro de la caja de otro candidato más grande: son un detalle de
+      esa vista, no la vista.
+    """
+    forma = {e: etiquetas[p.y0:p.y1 + 1, p.x0:p.x1 + 1] == e for e, p in cajas.items()}
+    debajo = {e: p for e, p in cajas.items()
+              if resaltado is None or p.y1 > resaltado.y0}
+    grandes = [e for e, p in debajo.items()
+               if p.alto >= 25 and p.ancho >= 25 and not _es_rectangulo(forma[e])]
+
+    def adentro_de_otro(e):
+        p = cajas[e]
+        return any(o != e and cajas[o].area > p.area
+                   and cajas[o].y0 <= p.y0 and cajas[o].y1 >= p.y1
+                   and cajas[o].x0 <= p.x0 and cajas[o].x1 >= p.x1
+                   for o in grandes)
+
+    redondos = [e for e in grandes
+                if 0.75 <= cajas[e].ancho / cajas[e].alto <= 1.35
+                and not adentro_de_otro(e)]
+    if redondos:
+        return max(redondos, key=lambda e: cajas[e].area)
+    if grandes:
+        return max(grandes, key=lambda e: cajas[e].area)
+    return max(debajo or cajas, key=lambda e: cajas[e].tinta)
+
+
+def _es_rectangulo(mascara):
+    """
+    Si el pedazo tiene los lados rectos: casi todas sus filas miden lo mismo de
+    ancho. Así es la camisa de la columna "C", que es un tubo —ancho parejo de
+    una tapa a la otra— y así es una vista de corte sola.
+
+    El pistón no. Entre el corte y el círculo el ancho sube y baja, y arriba y
+    abajo del círculo ninguna fila llega a medir lo que la del medio. Medido
+    sobre las fotos de esta tanda, las camisas dan de 0,67 para arriba y los
+    dibujos de pistón, de 0,46 para abajo.
+    """
+    anchos = np.zeros(mascara.shape[0])
+    for y in range(mascara.shape[0]):
+        xs = np.flatnonzero(mascara[y])
+        if len(xs):
+            anchos[y] = xs[-1] - xs[0] + 1
+    return bool((anchos >= 0.9 * anchos.max()).mean() >= 0.6)
+
+
 def encontrar_dibujo(path):
     """
     Devuelve (gris, máscara del dibujo, caja) o None si no se encontró tinta.
     La máscara deja afuera todo lo que no sea el pistón: números, cotas y
     rayas desaparecen aunque hayan quedado dentro de la caja.
     """
-    gris = _a_gris(path)
+    gris, resaltado = _a_gris(path)
     alto, ancho = gris.shape
     etiquetas, cajas = _pedazos(_sacar_reglas(gris < TINTA))
     cajas = {e: p for e, p in cajas.items() if p.tinta > 4 and not _es_raya(p, alto, ancho)}
@@ -241,7 +344,7 @@ def encontrar_dibujo(path):
     if not cajas:
         return None
 
-    ancla_id = max(cajas, key=lambda e: cajas[e].tinta)
+    ancla_id = _arranque(cajas, etiquetas, resaltado)
     ancla = cajas[ancla_id]
     grupo, caja = {ancla_id}, ancla
 
