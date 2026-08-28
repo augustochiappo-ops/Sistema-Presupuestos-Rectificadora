@@ -1202,20 +1202,46 @@ regresiones.
 
 ## Próximo paso
 
-**`master` quedó ADELANTE de producción: falta correr el deploy** de la tanda
-del 2026-08-28 (asientos de válvulas, la sexta familia del buscador por
-medidas). No se corrió porque el dueño no pasó el `DEPLOY_SECRET` en esa
-sesión —vive solo en la cabeza del dueño y se pide en cada sesión— y Claude no
-lo reusa de una vieja ni lo inventa. Con el secreto a mano es un solo comando:
+**`master` quedó ADELANTE de producción, y el deploy NO se pudo correr porque
+producción está caída** (2026-08-28). El dueño pasó el `DEPLOY_SECRET` y el
+comando de siempre devolvió **404 con la página "Coming Soon" de
+PythonAnywhere**:
+
+```
+$ curl -X POST https://chiapppo.pythonanywhere.com/api/deploy -H "X-Deploy-Secret: …"
+HTTP/1.1 404 Not Found
+Server: PythonAnywhere        ← la página "Coming Soon", no la app
+```
+
+**No es el secreto ni el código.** La misma respuesta da la raíz del sitio
+(`https://chiapppo.pythonanywhere.com/` → 404, 2.957 bytes, esa misma página) y
+cualquier endpoint de la API: la petición llega a PythonAnywhere pero **no hay
+web app sirviendo ese dominio**, así que el `/api/deploy` ni siquiera llega a
+mirar el header. La app estuvo bien el 2026-08-22 (deploy corrido y verificado
+por HTTP en esa sesión), así que se cayó en algún momento de esos seis días —
+lo más probable en un plan gratuito es que **la web app se haya vencido** (hay
+que renovarla cada tres meses desde la pestaña *Web*).
+
+**Lo que tiene que hacer el dueño**, entrando a pythonanywhere.com con su
+cuenta:
+
+1. Pestaña **Web**. Si aparece un cartel de vencimiento con un botón tipo *"Run
+   until 3 months from today"*, tocarlo.
+2. Botón verde **Reload chiapppo.pythonanywhere.com**.
+3. Probar `https://chiapppo.pythonanywhere.com/` en el navegador: tiene que
+   aparecer el login del sistema, no la página "Coming Soon".
+
+Con el sitio de nuevo arriba, el deploy es un solo comando (Claude lo corre si
+el dueño le pasa el secreto en esa sesión):
 
 ```bash
 curl -X POST https://chiapppo.pythonanywhere.com/api/deploy -H "X-Deploy-Secret: <el secreto>"
 ```
 
-El cambio es **solo agregado** (una familia nueva en el buscador; ninguna
-pantalla vieja cambia de comportamiento), así que producción sigue sirviendo
-bien lo de siempre hasta que se corra — lo único que le falta es la pestaña
-"Asientos de válvulas".
+Lo que falta deployar es la tanda del 2026-08-28 (asientos de válvulas, la sexta
+familia del buscador por medidas, commits `85971df` y `cfa4ab5`). Es **solo
+agregado**: ninguna pantalla vieja cambia de comportamiento, así que apenas
+vuelva a levantar y se corra el deploy, producción queda al día.
 
 Antes de eso, **producción y `master` estaban sincronizados en `ab35c9d`**
 (2026-08-22: camisas de Fadecya rehechas + el filtro del proveedor), deployado y
