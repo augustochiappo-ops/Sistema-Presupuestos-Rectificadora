@@ -1202,46 +1202,26 @@ regresiones.
 
 ## Próximo paso
 
-**`master` quedó ADELANTE de producción, y el deploy NO se pudo correr porque
-producción está caída** (2026-08-28). El dueño pasó el `DEPLOY_SECRET` y el
-comando de siempre devolvió **404 con la página "Coming Soon" de
-PythonAnywhere**:
+**Producción y `master` están sincronizados en `31fc874`** (2026-08-28: asientos
+de válvulas, la sexta familia del buscador por medidas), deployado y verificado
+por HTTP: el `git pull` del deploy hizo el fast-forward `1a0ce15..31fc874`, la
+raíz responde 200, el **JS que sirve producción es byte a byte el commiteado**
+(`index-DwjzSQfF.js`, 486.827 bytes, mismo md5) y adentro está la pestaña
+"Asientos de válvulas"; `/api/tecnicos/familias` responde 401 sin sesión, o sea
+que la API sigue montada. Los commits de la tanda son `85971df` (la familia
+nueva), `cfa4ab5` (la columna del motor sin la muletilla de Indy) y `31fc874`
+(memoria).
 
-```
-$ curl -X POST https://chiapppo.pythonanywhere.com/api/deploy -H "X-Deploy-Secret: …"
-HTTP/1.1 404 Not Found
-Server: PythonAnywhere        ← la página "Coming Soon", no la app
-```
-
-**No es el secreto ni el código.** La misma respuesta da la raíz del sitio
-(`https://chiapppo.pythonanywhere.com/` → 404, 2.957 bytes, esa misma página) y
-cualquier endpoint de la API: la petición llega a PythonAnywhere pero **no hay
-web app sirviendo ese dominio**, así que el `/api/deploy` ni siquiera llega a
-mirar el header. La app estuvo bien el 2026-08-22 (deploy corrido y verificado
-por HTTP en esa sesión), así que se cayó en algún momento de esos seis días —
-lo más probable en un plan gratuito es que **la web app se haya vencido** (hay
-que renovarla cada tres meses desde la pestaña *Web*).
-
-**Lo que tiene que hacer el dueño**, entrando a pythonanywhere.com con su
-cuenta:
-
-1. Pestaña **Web**. Si aparece un cartel de vencimiento con un botón tipo *"Run
-   until 3 months from today"*, tocarlo.
-2. Botón verde **Reload chiapppo.pythonanywhere.com**.
-3. Probar `https://chiapppo.pythonanywhere.com/` en el navegador: tiene que
-   aparecer el login del sistema, no la página "Coming Soon".
-
-Con el sitio de nuevo arriba, el deploy es un solo comando (Claude lo corre si
-el dueño le pasa el secreto en esa sesión):
-
-```bash
-curl -X POST https://chiapppo.pythonanywhere.com/api/deploy -H "X-Deploy-Secret: <el secreto>"
-```
-
-Lo que falta deployar es la tanda del 2026-08-28 (asientos de válvulas, la sexta
-familia del buscador por medidas, commits `85971df` y `cfa4ab5`). Es **solo
-agregado**: ninguna pantalla vieja cambia de comportamiento, así que apenas
-vuelva a levantar y se corra el deploy, producción queda al día.
+> **Ojo, pasó una vez y puede repetirse: producción se cayó sola.** Al ir a
+> deployar, el 2026-08-28, `chiapppo.pythonanywhere.com` devolvía **404 con la
+> página "Coming Soon" de PythonAnywhere** —en la raíz y en toda la API—, o sea
+> que no había web app sirviendo el dominio: la petición ni llegaba a mirar el
+> `X-Deploy-Secret`. No era el secreto ni el código. Lo arregló el dueño en dos
+> minutos desde la pestaña **Web** de pythonanywhere.com (revisar el cartel de
+> vencimiento y apretar **Reload**). Si vuelve a aparecer esa página, ese es el
+> camino, y recién después se corre el deploy. Después del reload el sitio da
+> **502 unos segundos** mientras la app arranca: eso es normal, se espera a que
+> la raíz devuelva 200 antes de dar el deploy por bueno.
 
 Antes de eso, **producción y `master` estaban sincronizados en `ab35c9d`**
 (2026-08-22: camisas de Fadecya rehechas + el filtro del proveedor), deployado y
