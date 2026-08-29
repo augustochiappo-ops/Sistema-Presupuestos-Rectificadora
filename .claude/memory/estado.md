@@ -1249,14 +1249,64 @@ grilla adentro.
 **Verificado:** `tests/ui_medidas.mjs` **entera y en verde** ("TODO OK"),
 corrida en segundo plano mientras se deployaba.
 
+## Sesión 2026-08-29 (segunda tanda de fotos) — 54 dibujos más: van 181 de 192
+
+El dueño mandó `Tanda_2.rar` con **58 fotos**. Salieron **54 dibujos nuevos**
+(181 en total, sobre 192 códigos de `subconjuntos.json`): tres códigos vinieron
+con dos recortes cada uno —el script se queda con el dibujo más grande, como
+siempre— y uno quedó afuera.
+
+**Los tres arreglos del recorte de la primera tanda alcanzaron**: estas fotos
+vienen igual de anchas (fila entera del catálogo, a veces con encabezado) y no
+hubo que tocar nada de la búsqueda del dibujo. Lo único que se cambió es de
+dónde sale el código.
+
+**El número del código ahora se lee de la "S" del nombre**, no del primer número
+del archivo. Esta tanda trajo tres pares numerados por delante
+(`1_S0591230.png` / `2_S0591230.png`, ídem `S48301` y `S48950`), que con la
+regla vieja se leían como los códigos **1** y **2**. Hoy esos números no existen
+en las fichas y el script los habría salteado avisando, pero un `3_` el día que
+exista una ficha con ese número **le pondría al pistón el dibujo de otro, en
+silencio**. Para los 135 nombres que ya estaban, la regla nueva da exactamente
+el mismo número que la vieja (se comprobó uno por uno antes de cambiarla).
+
+**El único aviso: `S26510` no está en `subconjuntos.json`.** Es el FORD CARGO
+6.6 L; el catálogo del proveedor lista el **S BE26500** de la fila de arriba
+pero no el 26510. La foto se dejó en `fuentes/pistones/` a propósito: el script
+va a seguir avisando en cada corrida, y si el código aparece en una importación
+futura del catálogo el dibujo entra solo, sin que haya que buscar la foto de
+nuevo.
+
+**Cinco recortes que se veían raros en la lámina y NO son un error del script**
+—se miraron contra la foto original y el catálogo los dibuja así—: `SBE18693` y
+`SBE44060` (pistones bajos, el corte es una línea fina y parece un corchete de
+cota), `SBE18810` (el escaneo del catálogo tiene el corte hecho un borrón),
+`SBE26500` (la foto es de baja resolución: el dibujo sale de 91 × 140 px, pero
+completo y limpio) y `SBE48330` (en el catálogo el corte está sombreado en gris
+en vez de rayado).
+
+**Quedan 11 subconjuntos sin dibujo**, la lista completa: `S BE 48030`,
+`S BE 48415`, `S BE 48416`, `S BE 48520`, `S BE 48530`, `S BE 57120`,
+`S BE 57450`, `S BE14185`, `S BE21190`, `S BE25127`, `S BE591015`. Se le pasaron
+al dueño para que saque esas fotos cuando pueda.
+
+**Verificado:** los 127 dibujos de las tandas anteriores salen **byte a byte
+iguales**, `tests/ui_medidas.mjs` entera en verde, y producción sirve el JS
+commiteado byte a byte más los dibujos nuevos con su tamaño exacto.
+
 ## Próximo paso
 
-**Producción y `master` están sincronizados en `6d49558`** (2026-08-29: los 79
-dibujos de pistón de la segunda tanda), deployado y verificado por HTTP: la raíz
-responde 200, el **JS que sirve producción es byte a byte el commiteado**
-(`index-BnBaa6NH.js`, 487.554 bytes) y los dibujos nuevos responden con su
-tamaño exacto (`/pistones/SBE94230.png`, 6.627 bytes; `/pistones/SBE48570.png`,
-7.113 bytes).
+**Producción y `master` están sincronizados en `14a04ee`** (2026-08-29: los 54
+dibujos de pistón de la segunda tanda de fotos, 181 en total), deployado y
+verificado por HTTP: la raíz responde 200, el **JS que sirve producción es byte
+a byte el commiteado** (`index-Bud3VqgY.js`, 488.041 bytes) y los dibujos nuevos
+responden con su tamaño exacto (`/pistones/SBE591230.png`, 16.215 bytes;
+`/pistones/SBE26500.png`, 3.034 bytes).
+
+Antes de eso, `6d49558` (los 79 dibujos de la primera tanda de fotos de ese
+mismo día), también deployado y verificado: el JS servido era el commiteado
+(`index-BnBaa6NH.js`, 487.554 bytes) y `/pistones/SBE94230.png` respondía con
+sus 6.627 bytes.
 
 Antes de eso, `31fc874` (2026-08-28: asientos de válvulas, la sexta familia del
 buscador por medidas), también deployado y verificado por HTTP —el `git pull`

@@ -663,3 +663,14 @@ archivo es cada uno y con qué tres líneas se rehace el volcado.
 **Cómo se verificó:** la lámina de control (`--hoja`) con los 127, mirada de a cuatro pedazos, más una segunda lámina de los 79 nuevos a 380 px por celda para poder ver si se coló un número o una cota. Los 48 de la primera tanda salen **byte a byte iguales** que antes del cambio — es la prueba de que las reglas nuevas no rompieron nada viejo, y conviene repetirla (`git status` sobre `public/pistones/`) cada vez que se toque el script.
 
 **Fecha:** 2026-08-29
+
+## El número del código sale de la "S" del nombre del archivo (2026-08-29)
+**Decisión:** `_numero_del_nombre()` busca los dígitos pegados a la **"S"** del código (`S48301`, `1_S48950` → 48950) y recién si no hay ninguna S cae al primer número del nombre, que es como se llamaban las fotos de la primera tanda (`14040.png`).
+**Por qué:** la segunda tanda trajo tres códigos con **dos recortes cada uno**, numerados por delante (`1_S0591230.png`, `2_S0591230.png`). Con el primer número a secas esas fotos se leen como el código **1** y el **2**. Hoy ningún subconjunto tiene esos números y el script las saltearía avisando —molesto pero inofensivo—, pero el día que exista una ficha con el número 3 un `3_` le pondría al pistón **el dibujo de otro, sin avisar**. Un error silencioso en un dato que el dueño usa para elegir un repuesto es exactamente lo que no puede pasar.
+**Cómo se comprobó que no rompe lo viejo:** la regla nueva se corrió contra los 135 nombres que ya estaban en la carpeta y da **el mismo número que la vieja en los 135**, antes de tocar el script.
+**Fecha:** 2026-08-29
+
+## Una foto cuyo código no está en el catálogo se queda en `fuentes/` (2026-08-29)
+**Decisión:** cuando el número de una foto no cruza con ningún código de `subconjuntos.json` (le pasó a `S26510.png`, el FORD CARGO 6.6 L: el proveedor lista el `S BE26500` de la fila de arriba pero no el 26510), la foto **no se borra**. Queda en `CRAC/tecnicos/fuentes/pistones/` y el script avisa en cada corrida.
+**Por qué:** el catálogo del proveedor se reimporta cada tanto y los códigos aparecen y desaparecen. Si la foto se queda, el día que el código entre el dibujo se carga solo con la próxima corrida; si se borra, hay que acordarse de que existía y volver a recortarla del PDF. El aviso repetido es el precio, y es barato: son dos líneas por corrida y dicen algo cierto.
+**Fecha:** 2026-08-29
