@@ -1,5 +1,33 @@
 # Decisiones técnicas y de diseño
 
+## Reimportar FACRA reconcilia por identidad y preserva el `id`, no borra y recrea (2026-08-29)
+**Decisión:** `importar_nomenclador` e `importar_lista_orientadora` (`facra.py`)
+ya **no** hacen `DELETE FROM … ` + reinsert. Ahora reconcilian: la fila que ya
+existe se **actualiza en su lugar (mismo `id`)** y solo las nuevas se insertan.
+Identidad = **texto del motor** (motores) y **`(item_num, descripcion)`**
+(servicios). Una fila que sale de la lista se borra solo si nada la referencia;
+con presupuesto, ficha o papelera se conserva. Se activó además
+**`PRAGMA foreign_keys = ON`** en `db.get_connection()`.
+**Por qué:** el presupuesto guarda `motor_id`/`servicio_id` por `id`, y la ficha
+de repuestos guarda `motor_id`. Con el borrado-y-recreado, los `id` cambiaban
+por AUTOINCREMENT en cada reimport, y como la pantalla "Actualizar Excel" invita
+a reimportar FACRA seguido (la Cámara actualiza cada 1–2 semanas), el primer
+refresco habría dejado los presupuestos guardados sin nombre de motor y sin
+descripción de mano de obra, y las fichas huérfanas. La plata grabada
+sobrevivía, pero las etiquetas y los vínculos se rompían (y en la edición los
+renglones sin descripción se descartaban, recalculando el total de menos).
+**Por qué la identidad no es el `indice`/`item_num`:** en el nomenclador hay 4
+índices repetidos (motores distintos que comparten índice) y en la lista 1
+`item_num` repetido con dos descripciones — así que esas columnas solas
+colapsarían filas legítimas. El texto del motor es único (491/491) y el par
+`(item_num, descripcion)` también (235/235).
+**Por qué `foreign_keys = ON`:** venía apagado (default de SQLite), así que los
+`ON DELETE CASCADE` del esquema nunca se ejecutaban. Es red de seguridad: si un
+borrado mal hecho intentara sacar una fila referenciada, ahora salta el error en
+vez de dejar filas colgadas en silencio. No revalida datos viejos (solo enforcea
+operaciones nuevas), así que encender no rompe una base con orfandades previas.
+**Fecha:** 2026-08-29
+
 ## Borrar un cliente se bloquea si tiene presupuestos, no se borra en cascada (2026-08-11)
 **Decisión:** `DELETE /api/clientes/<id>` devuelve **409** si el cliente aparece en algún presupuesto —como principal **o como contraparte**— e informa cuántos son. Solo se borra el cliente que no aparece en ninguno.
 **Por qué:** un presupuesto es plata cotizada y su PDF ya puede estar en manos del cliente; que se borre de rebote por limpiar una ficha de cliente sería un daño mucho mayor que el que se quería reparar. El camino queda explícito: primero se borran los presupuestos (uno por uno, con su propia confirmación) y recién ahí el cliente. La contraparte cuenta porque, si se borrara, el presupuesto perdería el nombre del mecánico que trajo el trabajo.

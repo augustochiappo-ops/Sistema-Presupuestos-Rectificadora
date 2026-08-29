@@ -17,6 +17,12 @@ def get_connection() -> sqlite3.Connection:
     os.makedirs(os.path.dirname(config.DB_PATH), exist_ok=True)
     conn = sqlite3.connect(config.DB_PATH)
     conn.row_factory = sqlite3.Row
+    # Que SQLite haga valer las FK del esquema (viene apagado por defecto). Sin
+    # esto, los ON DELETE CASCADE eran letra muerta y un borrado mal hecho podía
+    # dejar filas colgadas. Es red de seguridad: la reimportación de FACRA ya no
+    # borra motores/servicios referenciados (ver facra.py), pero si algo lo
+    # intentara, acá salta el error en vez de corromper en silencio.
+    conn.execute("PRAGMA foreign_keys = ON")
     # norm(): la misma normalización de búsqueda que usa el frontend (sin
     # acentos, sin mayúsculas). Permite escribir "norm(c.nombre) LIKE ?" en
     # tablas chicas —clientes, motores, presupuestos— sin tener que guardar una

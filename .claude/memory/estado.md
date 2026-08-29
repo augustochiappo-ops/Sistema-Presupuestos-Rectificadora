@@ -1296,12 +1296,53 @@ commiteado byte a byte más los dibujos nuevos con su tamaño exacto.
 
 ## Próximo paso
 
-**Producción y `master` están sincronizados en `14a04ee`** (2026-08-29: los 54
+**Análisis completo del sistema + arreglo de la reimportación de FACRA
+(2026-08-29, tercera sesión del día).** El dueño pidió "un análisis completo
+del sistema para ver si su funcionamiento es correcto". Se corrieron las cuatro
+suites (237 + 79 backend, 301 UI: todo verde), se comparó el build contra
+producción (idéntico) y se revisó backend y frontend a mano. **El sistema anda
+bien en todo el flujo normal.** Se encontró y arregló **un bug real y latente**:
+
+> **Reimportar FACRA desde "Actualizar Excel" corrompía los presupuestos ya
+> guardados.** Los dos importadores (`facra.py`) hacían `DELETE FROM …` + reinsert
+> con AUTOINCREMENT, así que los `id` de motores y servicios cambiaban en cada
+> reimport. Como el presupuesto guarda `motor_id` y `servicio_id` por id —y las
+> fichas de repuestos guardan `motor_id`—, después de una reimportación esos
+> vínculos quedaban colgados: el presupuesto perdía el nombre del motor (salía
+> `None` en el detalle y en el PDF regenerado), los renglones de mano de obra
+> perdían su descripción (y en la edición se **descartaban**, recalculando el
+> total sin ellos), y las fichas quedaban huérfanas (el motor reimportado
+> aparecía con la ficha vacía). La plata grabada (`total`, `precio_aplicado`)
+> sobrevivía; lo que se rompía eran las etiquetas y los vínculos. Reproducido en
+> base descartable antes y después del arreglo.
+>
+> **El arreglo** (`facra.py` + `db.py`): la reimportación ahora **reconcilia en
+> vez de borrar y recrear** — el motor/servicio que ya existe se **actualiza en
+> su lugar (mismo id)** y solo los nuevos se insertan. La identidad es el **texto
+> del motor** (único, 491/491) y **(item_num, descripcion)** para servicios
+> (único, 235/235; ni el `indice` ni el `item_num` solos sirven de clave: hay 4
+> índices y 1 item_num repetidos). Un motor/servicio que sale de la lista se
+> borra solo si nada lo usa; si tiene presupuesto, ficha o papelera se conserva.
+> Además se activó **`PRAGMA foreign_keys = ON`** en `get_connection()` (venía
+> apagado, así que los `ON DELETE CASCADE` del esquema eran letra muerta): es la
+> red de seguridad para que un borrado mal hecho salte en vez de corromper en
+> silencio. Verificado: tras reimportar, el nombre del motor, la descripción de
+> mano de obra y la ficha quedan intactos, los precios sí se refrescan, y los
+> totales no se duplican.
+
+**Menor, para verificar (no bloqueante):** `SECRET_KEY` en producción — si no
+está seteada como variable de entorno en PythonAnywhere, cae al default
+`"dev-only-change-me"` y las cookies de sesión se firman con una clave conocida.
+No se pudo comprobar desde afuera. Conviene confirmar que en el servidor está
+definida. App interna de un solo usuario, riesgo bajo.
+
+**Producción y `master` estaban sincronizados en `14a04ee`** (2026-08-29: los 54
 dibujos de pistón de la segunda tanda de fotos, 181 en total), deployado y
 verificado por HTTP: la raíz responde 200, el **JS que sirve producción es byte
 a byte el commiteado** (`index-Bud3VqgY.js`, 488.041 bytes) y los dibujos nuevos
 responden con su tamaño exacto (`/pistones/SBE591230.png`, 16.215 bytes;
-`/pistones/SBE26500.png`, 3.034 bytes).
+`/pistones/SBE26500.png`, 3.034 bytes). El arreglo de FACRA es solo backend
+(`facra.py`, `db.py`), no toca el frontend, así que el JS servido no cambia.
 
 Antes de eso, `6d49558` (los 79 dibujos de la primera tanda de fotos de ese
 mismo día), también deployado y verificado: el JS servido era el commiteado

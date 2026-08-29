@@ -74,7 +74,20 @@ def importar_nomenclador(path: str) -> tuple[int, str]:
         )
 
         with get_connection() as conn:
-            conn.execute("DELETE FROM motores WHERE origen = 'facra'")
+            # Reimportar SIN romper lo que ya apunta a un motor. Un presupuesto y
+            # la ficha de repuestos guardan el motor por su id; si borráramos y
+            # recreáramos los motores (ids nuevos por AUTOINCREMENT), esos
+            # vínculos quedarían colgados: el presupuesto perdería el nombre del
+            # motor y la ficha quedaría huérfana. Por eso se reconcilia — el motor
+            # que ya existe se ACTUALIZA en su lugar (mismo id) y solo los nuevos
+            # se insertan. La identidad es el texto del motor, único en el
+            # nomenclador; el 'indice' no sirve de clave (hay cuatro repetidos).
+            existentes = {
+                motor: mid for mid, motor in conn.execute(
+                    "SELECT id, motor FROM motores WHERE origen = 'facra'"
+                )
+            }
+            vistos: set[int] = set()
 
             count = 0
             for _, row in motores_df.iterrows():
@@ -86,25 +99,50 @@ def importar_nomenclador(path: str) -> tuple[int, str]:
                 except (ValueError, TypeError):
                     lista_num = None
 
-                conn.execute(
-                    """
-                    INSERT INTO motores
-                        (indice, motor, marca, lista_num, cilindros, tipo,
-                         cilindrada, diametro, origen)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'facra')
-                    """,
-                    (
-                        str(row["indice"]).strip(),
-                        desc,
-                        row["marca"],
-                        lista_num,
-                        detalles["cilindros"],
-                        detalles["tipo"],
-                        detalles["cilindrada"],
-                        detalles["diametro"],
-                    ),
-                )
+                indice = str(row["indice"]).strip()
+                mid = existentes.get(desc)
+                if mid is not None:
+                    conn.execute(
+                        """
+                        UPDATE motores
+                           SET indice = ?, marca = ?, lista_num = ?, cilindros = ?,
+                               tipo = ?, cilindrada = ?, diametro = ?, origen = 'facra'
+                         WHERE id = ?
+                        """,
+                        (indice, row["marca"], lista_num, detalles["cilindros"],
+                         detalles["tipo"], detalles["cilindrada"], detalles["diametro"], mid),
+                    )
+                else:
+                    cur = conn.execute(
+                        """
+                        INSERT INTO motores
+                            (indice, motor, marca, lista_num, cilindros, tipo,
+                             cilindrada, diametro, origen)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'facra')
+                        """,
+                        (indice, desc, row["marca"], lista_num, detalles["cilindros"],
+                         detalles["tipo"], detalles["cilindrada"], detalles["diametro"]),
+                    )
+                    mid = cur.lastrowid
+                vistos.add(mid)
                 count += 1
+
+            # Motores que estaban y ya no vienen en el nomenclador. Se borran solo
+            # si nada los usa: uno con presupuesto, ficha o papelera se conserva
+            # aunque salga de la lista, porque perderlo rompería ese trabajo (y
+            # con las FK activas su borrado arrastraría la ficha en cascada).
+            for mid in [m for m in existentes.values() if m not in vistos]:
+                usado = conn.execute(
+                    """
+                    SELECT 1 FROM presupuestos            WHERE motor_id = ?
+                    UNION ALL SELECT 1 FROM motor_repuesto_grupos  WHERE motor_id = ?
+                    UNION ALL SELECT 1 FROM repuestos_ocultos_motor WHERE motor_id = ?
+                    LIMIT 1
+                    """,
+                    (mid, mid, mid),
+                ).fetchone()
+                if not usado:
+                    conn.execute("DELETE FROM motores WHERE id = ?", (mid,))
 
         return count, f"{count} motores importados correctamente"
 
@@ -124,7 +162,17 @@ def importar_lista_orientadora(path: str) -> tuple[int, str]:
         servicios_df = servicios_df.dropna(subset=[0])
 
         with get_connection() as conn:
-            conn.execute("DELETE FROM servicios")
+            # Igual que con los motores: un presupuesto guarda el servicio por su
+            # id, así que se reconcilia en vez de borrar y recrear. La identidad
+            # es (item_num, descripcion), única en la lista; el item_num solo no
+            # alcanza (hay uno repetido con dos descripciones distintas).
+            existentes = {
+                (item_num, descripcion): sid
+                for sid, item_num, descripcion in conn.execute(
+                    "SELECT id, item_num, descripcion FROM servicios"
+                )
+            }
+            vistos: set[int] = set()
 
             count = 0
             for _, row in servicios_df.iterrows():
@@ -143,16 +191,40 @@ def importar_lista_orientadora(path: str) -> tuple[int, str]:
                         val = None
                     precios.append(val)
 
-                conn.execute(
-                    """
-                    INSERT INTO servicios
-                        (item_num, descripcion, l1, l2, l3, l4, l5, l6, l7,
-                         l8, l9, l10, l11, l12, l13)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """,
-                    (item_num, descripcion, *precios),
-                )
+                sid = existentes.get((item_num, descripcion))
+                if sid is not None:
+                    conn.execute(
+                        """
+                        UPDATE servicios
+                           SET l1=?, l2=?, l3=?, l4=?, l5=?, l6=?, l7=?,
+                               l8=?, l9=?, l10=?, l11=?, l12=?, l13=?
+                         WHERE id = ?
+                        """,
+                        (*precios, sid),
+                    )
+                else:
+                    cur = conn.execute(
+                        """
+                        INSERT INTO servicios
+                            (item_num, descripcion, l1, l2, l3, l4, l5, l6, l7,
+                             l8, l9, l10, l11, l12, l13)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """,
+                        (item_num, descripcion, *precios),
+                    )
+                    sid = cur.lastrowid
+                vistos.add(sid)
                 count += 1
+
+            # Servicios que ya no vienen en la lista: se borran salvo que algún
+            # presupuesto los use (ahí se conservan para no perder el renglón de
+            # mano de obra que ya quedó cotizado).
+            for sid in [s for s in existentes.values() if s not in vistos]:
+                usado = conn.execute(
+                    "SELECT 1 FROM presupuesto_items WHERE servicio_id = ? LIMIT 1", (sid,)
+                ).fetchone()
+                if not usado:
+                    conn.execute("DELETE FROM servicios WHERE id = ?", (sid,))
 
         return count, f"{count} servicios importados correctamente"
 
