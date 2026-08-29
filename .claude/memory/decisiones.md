@@ -482,11 +482,11 @@
 ## El dibujo del pistón se recorta solo, y todos salen del mismo tamaño
 **Decisión:** los subconjuntos Mahle muestran el **dibujo del pistón** del catálogo en una columna propia de la búsqueda por medidas (miniatura de 56 px; un clic la abre en grande al lado de la descripción). Los archivos los genera `scripts/recortar_pistones_mahle.py` desde las fotos crudas de `CRAC/tecnicos/fuentes/pistones/`, y salen a `webapp/frontend/public/pistones/<código sin espacios>.png`.
 **Por qué un recorte automático y no a mano:** las fotos llegan como rectángulos sacados a ojo del PDF, con lo que haya alrededor adentro — números de la fila, rayas de la grilla, barras negras, medio pistón del vecino. Recortarlas a mano son 48 recortes hoy y 153 más cuando aparezcan; el script las deja limpias todas juntas y vuelve a correr cuando caen fotos nuevas. Las cajas escritas a mano de `recortar_formas_ryc.py` funcionan porque ahí la lámina es **una sola imagen fija**; acá cada foto viene distinta.
-**Cómo encuentra el dibujo:** un pistón son **dos vistas, una sobre la otra y del mismo ancho** (el corte y el círculo). El script borra las rayas que cruzan la imagen, descarta los pedazos que son pura recta (corchetes de cota), arranca del pedazo con más tinta y le suma los que estén alineados, midan lo mismo de ancho y no estén más lejos que un Ø. Un número suelto no pasa ninguna de las tres.
+**Cómo encuentra el dibujo:** un pistón son **dos vistas, una sobre la otra y del mismo ancho** (el corte y el círculo). El script borra las rayas que cruzan la imagen, descarta los pedazos que son pura recta (corchetes de cota), arranca de una de las dos vistas y le suma los que estén alineados, midan lo mismo de ancho y no estén más lejos que un Ø. Un número suelto no pasa ninguna de las tres. (De qué pedazo arranca cambió el 2026-08-29, cuando llegaron fotos con la fila entera del catálogo adentro: ver la sección de más abajo.)
 **Por qué el trazo se lleva a negro pleno:** hay páginas del catálogo dibujadas en gris clarito y otras casi en negro. El contraste se estira contra los valores de cada imagen, así ninguna se ve desteñida al lado de las otras.
 **Todos del mismo tamaño (pedido del dueño), sin reescalar:** el recorte queda en su resolución original y se **rellena con transparente** hasta una proporción fija de 13:20. Como los dos lados salen de multiplicar ese par de enteros, la proporción es exactamente la misma en los 48 archivos y a una altura fija miden todos lo mismo **al pixel** — con un 0,65 decimal, el redondeo dejaba a unos un pixel más anchos. Reescalar el dibujo para igualar pixeles no habría agregado nitidez, la habría sacado.
 **Qué código le toca a cada foto:** el número que trae el nombre del archivo, cruzado contra los códigos de `subconjuntos.json` (que el catálogo escribe "S BE14040" y "S BE 14040" indistinto). Si un código tiene dos fotos gana la del dibujo más grande. El script avisa de lo que no pudo cruzar en vez de saltearlo en silencio.
-**Cuáles tienen dibujo lo dice un manifiesto generado** (`dibujos-pistones.js`), no una prueba de carga: pedir un PNG que no está deja un cuadrito roto en la tabla y un 404 por fila. Los 153 subconjuntos sin foto van con un guión.
+**Cuáles tienen dibujo lo dice un manifiesto generado** (`dibujos-pistones.js`), no una prueba de carga: pedir un PNG que no está deja un cuadrito roto en la tabla y un 404 por fila. Los subconjuntos sin foto van con un guión (eran 144 el 2026-08-21; con la segunda tanda quedaron 65).
 **Fecha:** 2026-08-21
 
 ## La forma se normaliza al cargar el catálogo, no en el JSON
@@ -644,3 +644,22 @@ Excel de Nubo pesa 7,5 MB y trae quince hojas de las que se usa una: los tres
 volcados juntos pesan 78 KB, se leen en un diff y alcanzan para regenerar el
 JSON. El encabezado de `scripts/convertir_asientos.py` dice qué hoja de qué
 archivo es cada uno y con qué tres líneas se rehace el volcado.
+
+---
+
+## Lo que engaña al recorte de pistones cuando la foto trae la fila entera (2026-08-29)
+**El caso:** la segunda tanda de fotos (79, contra las 48 de la primera) vino recortada mucho más ancha: cada foto trae la **fila completa del catálogo** —todas sus columnas— y varias se llevaron puesto el **encabezado de la página**. El script salía con la camisa de la columna "C", con un iconito del encabezado o con el bloque de texto del código, en 30 de las 79.
+
+**Decisión:** tres reglas nuevas en `scripts/recortar_pistones_mahle.py`, todas apoyadas en algo que el dibujo del pistón tiene y los intrusos no:
+
+1. **Lo pintado de color es papel.** El catálogo resalta en celeste la celda del código de subconjunto. Un rectángulo macizo tiene más tinta que cualquier dibujo de línea, así que ganaba siempre. El dibujo es gris neutro (R = G = B): alcanza con tirar todo pixel cuyos canales difieran en más de 40. Se van con él los textos naranjas de la tabla, que tampoco hacen falta.
+2. **El arranque es el círculo, no el pedazo con más tinta.** La columna "C" de la fila dibuja la **camisa**: un tubo rayado, el doble de alto que el pistón y con bastante más tinta. Redonda no es. Lo único redondo de la fila es la vista de abajo del pistón, así que se arranca de ahí. Y para que un círculo no se confunda con la camisa se mide **si tiene los lados rectos**: la parte de las filas del pedazo que miden lo mismo de ancho que la más ancha. Medido sobre estas fotos, las camisas dan de 0,67 para arriba y los pistones de 0,46 para abajo; el corte está en 0,6.
+3. **Arriba de la celda resaltada no se mira.** Los iconitos del encabezado (el pistón en perspectiva de la columna "KH", el bloque de motor, los aros) también son redondos, y cuando el dibujo de la fila salió chico son más grandes que él. La celda resaltada **es el código que se está recortando**, así que marca dónde empieza la fila, y el dibujo cae siempre debajo de la primera línea de texto de su fila. Las fotos de la primera tanda no traen celda resaltada: sin ella la regla no se aplica y todo sigue como estaba.
+
+**Por qué medir la forma y no la posición:** la tentación era cortar por altura ("el encabezado son los primeros 200 px"), pero cada foto viene recortada distinta y hay fotos donde el dibujo está arriba de todo. Las tres reglas de arriba se apoyan en algo que no depende de cómo se recortó la foto.
+
+**Un detalle que se cuela solo:** los redondelitos de adentro del dibujo (el agujero del perno, las marcas del centro) son círculos perfectos y chicos. Se saltean los que caen dentro de la caja de otro candidato más grande: son un detalle de la vista, no la vista.
+
+**Cómo se verificó:** la lámina de control (`--hoja`) con los 127, mirada de a cuatro pedazos, más una segunda lámina de los 79 nuevos a 380 px por celda para poder ver si se coló un número o una cota. Los 48 de la primera tanda salen **byte a byte iguales** que antes del cambio — es la prueba de que las reglas nuevas no rompieron nada viejo, y conviene repetirla (`git status` sobre `public/pistones/`) cada vez que se toque el script.
+
+**Fecha:** 2026-08-29

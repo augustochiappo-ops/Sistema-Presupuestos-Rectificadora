@@ -1200,17 +1200,71 @@ mostrando el guión en "Cant. por juego" y el tag del ángulo diciendo "30 ± 0,
 y no milímetros. Las dos suites de grupos también corrieron, para descartar
 regresiones.
 
+## Sesión 2026-08-29 — Segunda tanda de pistones Mahle: 79 dibujos más
+
+El dueño mandó **79 fotos nuevas** de subconjuntos Mahle (`Tanda_1.rar`,
+recortadas a ojo del catálogo, el código en el nombre del archivo). El pipeline
+del 2026-08-21 ya estaba hecho, así que la sesión fue: copiar las fotos a
+`CRAC/tecnicos/fuentes/pistones/`, correr el script, **mirar la lámina de
+control** y arreglar lo que salió mal. Quedaron **127 dibujos** (48 + 79).
+
+**Los .rar se abren con `unrar`** (`apt-get install -y unrar`); `7z` los lista
+pero no los descomprime. Los nombres de esta tanda vinieron limpios, sin
+espacios de más.
+
+**Las fotos nuevas vienen recortadas mucho más anchas que las de la primera
+tanda**: cada una trae la **fila entera del catálogo** —todas las columnas— y
+varias, además, el **encabezado de la página**. Con el script como estaba,
+**30 de las 79 salieron mal**: en vez del pistón salía la camisa de la columna
+"C", un iconito del encabezado, o el bloque de texto del código. Los tres
+arreglos están explicados en `decisiones.md` (sección del 2026-08-29); en
+corto: lo pintado de color se toma por papel, el grupo arranca del **círculo**
+(lo único redondo de la fila) y no del pedazo con más tinta, y **no se miran
+los pedazos que quedan enteros arriba de la celda resaltada**, que es el código
+que se está recortando y por lo tanto marca dónde empieza la fila.
+
+**El script no imprimió un solo aviso**: los 79 códigos cruzaron contra
+`subconjuntos.json` y de las 79 fotos salió dibujo. Los 127 archivos quedaron
+en la proporción 13:20 exacta, como pidió el dueño, así que a una altura fija
+se ven todos del mismo tamaño al pixel.
+
+**Con esta tanda la cuenta va 127 subconjuntos con dibujo y 65 sin**, sobre 192
+códigos distintos de `subconjuntos.json` (eran 48 y 144). Los que no tienen foto
+siguen mostrando un guión, y ningún dibujo quedó huérfano —no hay PNG que no
+corresponda a una ficha—.
+
+**Cómo se verificó que el cambio no rompió lo viejo:** los **48 dibujos de la
+primera tanda salen byte a byte iguales** (`git status` sobre
+`public/pistones/` no los marca como modificados). Conviene repetir esa
+comprobación cada vez que se toque el script — es gratis y es la única que
+avisa de una regresión en los que ya estaban bien.
+
+**Mirar la lámina de a pedazos.** `/tmp/pistones-recortados.png` sale de 1600 ×
+3456 px con celdas de 200: a esa escala no se ve si se coló un número. Lo que
+sirvió fue partirla en cuatro y, además, armar una segunda lámina solo con los
+79 nuevos a **380 px por celda**. Con eso se confirmó lo que pedía el dueño:
+las dos vistas en cada recorte, y ni un número, corchete de cota o raya de
+grilla adentro.
+
+**Verificado:** `tests/ui_medidas.mjs` **entera y en verde** ("TODO OK"),
+corrida en segundo plano mientras se deployaba.
+
 ## Próximo paso
 
-**Producción y `master` están sincronizados en `31fc874`** (2026-08-28: asientos
-de válvulas, la sexta familia del buscador por medidas), deployado y verificado
-por HTTP: el `git pull` del deploy hizo el fast-forward `1a0ce15..31fc874`, la
-raíz responde 200, el **JS que sirve producción es byte a byte el commiteado**
-(`index-DwjzSQfF.js`, 486.827 bytes, mismo md5) y adentro está la pestaña
-"Asientos de válvulas"; `/api/tecnicos/familias` responde 401 sin sesión, o sea
-que la API sigue montada. Los commits de la tanda son `85971df` (la familia
-nueva), `cfa4ab5` (la columna del motor sin la muletilla de Indy) y `31fc874`
-(memoria).
+**Producción y `master` están sincronizados en `6d49558`** (2026-08-29: los 79
+dibujos de pistón de la segunda tanda), deployado y verificado por HTTP: la raíz
+responde 200, el **JS que sirve producción es byte a byte el commiteado**
+(`index-BnBaa6NH.js`, 487.554 bytes) y los dibujos nuevos responden con su
+tamaño exacto (`/pistones/SBE94230.png`, 6.627 bytes; `/pistones/SBE48570.png`,
+7.113 bytes).
+
+Antes de eso, `31fc874` (2026-08-28: asientos de válvulas, la sexta familia del
+buscador por medidas), también deployado y verificado por HTTP —el `git pull`
+del deploy hizo el fast-forward `1a0ce15..31fc874`, el JS servido era el
+commiteado (`index-DwjzSQfF.js`, 486.827 bytes, mismo md5) y adentro estaba la
+pestaña "Asientos de válvulas"—. Los commits de esa tanda son `85971df` (la
+familia nueva), `cfa4ab5` (la columna del motor sin la muletilla de Indy) y
+`31fc874` (memoria).
 
 > **Ojo, pasó una vez y puede repetirse: producción se cayó sola.** Al ir a
 > deployar, el 2026-08-28, `chiapppo.pythonanywhere.com` devolvía **404 con la
