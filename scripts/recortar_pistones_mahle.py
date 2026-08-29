@@ -13,7 +13,8 @@ DE DÓNDE SALEN LAS FUENTES. Del PDF del catálogo Mahle, recortadas a ojo: un
 rectángulo alrededor del pistón que se lleva puesto lo que haya cerca — números
 de la fila, rayas de la grilla, la barra negra de un encabezado, a veces medio
 dibujo del pistón de al lado. El nombre del archivo trae el código ("S14275",
-"S0010110", a veces sin la S), y de ahí sale contra qué ficha se cruza.
+"S0010110", a veces sin la S, a veces numeradas por delante cuando son dos
+recortes del mismo código), y de ahí sale contra qué ficha se cruza.
 
 QUÉ HACE ESTE SCRIPT. Encontrar, dentro de ese rectángulo sucio, las DOS VISTAS
 del pistón —el corte de arriba y el círculo de abajo, siempre una sobre la otra
@@ -437,6 +438,22 @@ def clave(codigo):
     return re.sub(r"\s+", "", codigo)
 
 
+def _numero_del_nombre(nombre):
+    """
+    El número de código que trae el nombre del archivo: los dígitos que van
+    pegados a la "S" del código ("S48301", "1_S48950" → 48950). Si no hay
+    ninguna S, el primer número del nombre, que es como se llamaban las fotos
+    de la primera tanda ("14040.png").
+
+    La S manda porque las fotos vienen a veces numeradas por delante, cuando
+    son dos recortes del mismo código ("1_S0591230", "2_S0591230"). Con el
+    primer número a secas esas dos se leerían como el código 1 y el 2 — hoy no
+    existen y el script las saltearía avisando, pero un "3_" el día que exista
+    una ficha con ese número le pondría al pistón el dibujo de otro.
+    """
+    return re.search(r"[Ss]\s*_?(\d+)", nombre) or re.search(r"(\d+)", nombre)
+
+
 def codigos_por_numero():
     """{número → código} de las fichas de subconjuntos."""
     with open(FICHAS, encoding="utf-8") as f:
@@ -464,7 +481,7 @@ def main():
     for nombre in sorted(os.listdir(FUENTES)):
         if not nombre.lower().endswith((".png", ".jpg", ".jpeg")):
             continue
-        m = re.search(r"(\d+)", nombre)
+        m = _numero_del_nombre(nombre)
         if not m:
             avisos.append(f"{nombre}: el nombre no tiene número de código, se saltea")
             continue
