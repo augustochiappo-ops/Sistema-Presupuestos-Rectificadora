@@ -1,5 +1,116 @@
 # Decisiones técnicas y de diseño
 
+## Precios propios de mano de obra: una capa sobre la lista de la Cámara (2026-08-30)
+**Decisión:** la pantalla "Editar Precios" se implementó como una **capa
+superpuesta** (`precios_mano_obra`, clave `(servicio_id, lista_num)`) que se
+aplica al leer, en `facra.get_servicios_para_lista()`. La lista de FACRA
+(`servicios.l1..l13`) **no se toca nunca**.
+**Por qué así:** FACRA se reimporta cada una o dos semanas y pisaría cualquier
+cosa que escribiéramos en sus columnas. La capa aparte sobrevive a la
+reimportación, y permite mostrar los dos números a la vez —el de la Cámara y el
+del taller— que es lo que deja explicar de dónde sale un precio.
+**Por qué el enganche va ahí y no en cada consumidor:** `get_servicios_para_lista`
+es el **único** lugar del backend donde se lee un precio de mano de obra. Sus
+tres llamadores (`routes/motores.py:38`, y `_resolver_items` y la recotización en
+`routes/presupuestos.py`) quedan cubiertos sin tocarlos, y no hay forma de que
+mañana alguien agregue una pantalla que se saltee la capa. Si se hubiera
+parcheado consumidor por consumidor, el sistema terminaría cotizando con dos
+precios distintos según de dónde vengas.
+**Alcance:** solo mano de obra, por pedido explícito del dueño. Los repuestos
+siguen igual (precio del proveedor, editable dentro del presupuesto, sin
+persistir): el CSV del proveedor se reemplaza entero a diario y necesita otro
+diseño (un precio fijo se pudre y puede quedar por debajo del costo; ahí iría un
+margen por categoría). Queda como pendiente si el dueño lo pide.
+
+## Por qué el precio propio se guarda por (servicio, lista) y se propaga por proporción (2026-08-30)
+**Decisión:** un precio propio se guarda **por lista**. Al editarlo, la pantalla
+**ofrece** llevarlo a las trece manteniendo la curva de FACRA de ese servicio
+(`precio_n = precio × l_n / l_k`), con los trece montos a la vista antes de
+confirmar. No es automático.
+**Por qué por lista:** un servicio no tiene un precio, tiene trece (una por lista
+de la Cámara, elegida por `motores.lista_num` según el tamaño del motor). Cobrar
+el planeado de tapa $X en un motor chico no dice nada de lo que se cobra en uno
+grande.
+**Por qué la proporción del ítem y no un factor global:** se midió sobre los
+datos reales y **cada servicio escala distinto** entre listas — el ratio l8/l1 va
+de 1,0 a 4,2 según el trabajo. No existe una escala única. Respetar la curva del
+propio servicio conserva la lógica de tamaño de motor que la Cámara ya pensó.
+**Casos borde:** si la lista de referencia no tiene precio en FACRA no hay ratio
+posible; esas listas quedan sin tocar y la vista previa las muestra con "—". El
+sistema no inventa un número (hay 5 de 235 servicios sin las trece cargadas).
+**Por qué con vista previa y no directo:** un click cambia lo que se cobra en 491
+motores. Tiene que poder mirarse la columna y decir "sí, es eso".
+
+## Los dos porcentajes sobre mano de obra, y cuál gana (2026-08-30)
+Conviven **dos** porcentajes sobre la misma mano de obra, y confundirlos cotiza
+mal. Quedaron con nombres distintos en pantalla, a propósito:
+- **"Aumento general sobre la lista de la Cámara"** (`app_meta.ajuste_mano_obra_pct`,
+  pantalla Editar Precios): persistente, parte de la tarifa. **No pisa un precio
+  propio** — es el atajo para todo lo que el dueño no tarifó a mano. Si lo pisara,
+  mover el % le cambiaría en silencio justo los precios que decidió fijar.
+- **"Ajuste de este presupuesto"** (`presupuestos.ajuste_pct`, wizard): la palanca
+  de UNA cotización ("a este cliente −10%"). **Sí se aplica sobre un precio
+  propio**, porque un precio propio *es la lista del taller*: si no lo alcanzara,
+  un descuento dejaría afuera justo los renglones que el dueño tarifó.
+El wizard avisa *"tu lista ya tiene +25%"* al lado de su campo cuando el general
+está puesto: sumar 25 sobre un 25 ya aplicado y cotizar 56% más caro sin querer
+era el error más fácil de cometer acá.
+**Lo que NO cambió:** un precio pisado a mano **dentro** de un presupuesto sigue
+sin recibir el ajuste (regla del 2026-08-18, `_resolver_items`). La regla completa
+queda simétrica y explicable: precio de lista (de la Cámara o propio) → recibe el
+ajuste del presupuesto; número escrito a mano en ese presupuesto → no.
+
+## Guardar un precio es siempre explícito, nunca automático (2026-08-30)
+**Decisión:** editar un precio en el wizard **no** lo guarda como tarifa. Hay dos
+vías explícitas: el botón ⤓ de cada línea (paso Servicios) y el resumen tildable
+del paso de Revisión, que lista las líneas con su precio viejo y el nuevo.
+**Por qué:** un descuento puntual a un cliente y una decisión de tarifa son cosas
+distintas. Si cada edición inline se guardara sola, el precio especial de hoy
+sería el precio de la casa mañana, sin que nadie se entere.
+**Por qué el resumen lista los montos y no es un tilde ciego:** la diferencia
+entre las dos cosas está justo en esos números; hay que poder verlos para decidir.
+**Detalle de implementación:** el resumen **sube las líneas exactas** a guardar
+(no un booleano) y el wizard las manda tal cual. Si el wizard volviera a filtrar
+por su cuenta podría guardar algo distinto de lo que el dueño vio listado. Un
+`useEffect` las mantiene al día si se vuelve atrás a corregir un precio después
+de tildar. Y no se ofrece guardar un precio que ya es la tarifa vigente: sería
+una escritura que no cambia nada y un renglón de historial vacío de contenido.
+**Se guarda al confirmar**, con `origen='presupuesto'` y el `presupuesto_id`, así
+"Mis precios" puede decir de qué presupuesto salió cada uno y enlazarlo. Si ese
+guardado falla no se avisa con banner: el presupuesto ya se emitió bien y es lo
+que importa.
+
+## "Mis precios" es lo que hace segura toda la feature (2026-08-30)
+**Decisión:** el segundo apartado de la pantalla lista **todo** lo tarifado, con
+el precio de la Cámara de hoy al lado, la fecha, de dónde salió (esta pantalla o
+un presupuesto, enlazado) y su ↺. Más una tabla de historial
+(`precios_mano_obra_historial`) con un renglón por cambio.
+**Por qué:** un precio se puede guardar al pasar, desde el wizard — y eso es
+justamente lo cómodo. Sin una vista que junte esos cambios, serían cambios
+invisibles: dentro de seis meses nadie podría decir por qué un trabajo cuesta lo
+que cuesta. Es la contraparte necesaria de la comodidad.
+**El flag `desfasado`:** compara `precio_facra_al_fijar` contra el de hoy y marca
+lo que se fijó cuando la Cámara cobraba otra cosa. Es lo que hay que repasar cada
+vez que llega lista nueva. El precio propio **no cambia solo**: solo se avisa.
+
+## Reimportar FACRA no puede llevarse puesto un precio del taller (2026-08-30)
+**Decisión:** `importar_lista_orientadora` ya no borra un servicio que salió de la
+lista si tiene precio propio (antes solo miraba si algún presupuesto lo usaba).
+**Por qué:** `precios_mano_obra` cuelga de `servicio_id` con `ON DELETE CASCADE` y
+las FK están activas desde el 2026-08-29. Sin ese chequeo, un servicio que la
+Cámara saca de la lista se llevaba el precio del dueño, en silencio y en medio de
+una importación de rutina.
+**Bug encontrado al hacerlo:** dentro de `importar_lista_orientadora` hay una
+variable local `precios` (los trece precios de la fila) que **tapaba al módulo**
+`app/precios.py`. El `AttributeError` quedaba tragado por el `try/except` de la
+función, que devolvía "Error al importar" y **hacía fallar la importación
+entera**. Por eso `facra.py` importa las funciones por nombre
+(`from .precios import aplicar_precios_propios, tiene_precio_propio`) y no el
+módulo. Lo cazó el check del caso negativo ("sin precio propio, el servicio
+huérfano se borra como siempre"), no el positivo: el positivo pasaba por el
+motivo equivocado, porque el servicio sobrevivía gracias a que la importación
+fallaba y hacía rollback.
+
 ## Reimportar FACRA reconcilia por identidad y preserva el `id`, no borra y recrea (2026-08-29)
 **Decisión:** `importar_nomenclador` e `importar_lista_orientadora` (`facra.py`)
 ya **no** hacen `DELETE FROM … ` + reinsert. Ahora reconcilian: la fila que ya

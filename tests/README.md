@@ -1,18 +1,21 @@
 # Verificaciones
 
-Cuatro suites. Dos cubren el bloque de **grupos de repuestos** (qué cotiza cada
+Seis suites. Dos cubren el bloque de **grupos de repuestos** (qué cotiza cada
 categoría, opcionales, ficha del motor, pedido, medidas automáticas), escritas el
-2026-08-10 junto con la feature; las otras dos cubren la **búsqueda por
+2026-08-10 junto con la feature; dos cubren la **búsqueda por
 medidas** (los catálogos técnicos de camisas, guías, asientos de válvulas,
 subconjuntos, pistones y bujes de biela), escritas el 2026-08-19 junto con esa
-pantalla. Sirven para no romperlas al tocar repuestos
+pantalla; y las dos últimas cubren los **precios propios de mano de obra** (la
+pantalla "Editar Precios" y el guardado desde el wizard), escritas el 2026-08-30
+junto con esa feature. Sirven para no romperlas al tocar repuestos o precios
 más adelante.
 
 No son tests unitarios ni usan pytest: son scripts que corren de punta a punta
 contra los **datos reales del repo** y contra la app de verdad. Imprimen una
 línea por verificación y salen con código 1 si falla alguna.
 
-> **Regla no negociable:** las dos suites de grupos **crean y borran datos**. La
+> **Regla no negociable:** las dos suites de grupos y las dos de precios **crean
+> y borran datos**. La
 > de backend termina vaciando presupuestos y clientes. Corrélas siempre contra un
 > `DATA_DIR` descartable, **nunca** contra `webapp/backend/data/` si ahí vive la
 > base que te importa, y **nunca** contra producción. Las dos de búsqueda por
@@ -248,3 +251,61 @@ verificación en sí pase.
   levantó el backend (lo deja puesto `source /tmp/rect-corrida/entorno.sh`).
 - **`config` del backend lee el entorno al importarse**, así que `APP_USERNAME` y
   `APP_PASSWORD_HASH` tienen que estar seteados antes de importar `app`.
+
+
+---
+
+## 5. Backend — `backend_precios.py`
+
+Los **precios propios de mano de obra**: la capa del taller sobre la lista de la
+Cámara (`app/precios.py`).
+
+```bash
+source /tmp/rect-corrida/entorno.sh
+$VENV/bin/python tests/backend_precios.py
+```
+
+Crea precios propios y un presupuesto de prueba, y los borra al terminar.
+
+| Bloque | Qué verifica |
+|---|---|
+| Sin configurar | Manda la Cámara, `es_propio` en False y `precio_facra` viaja junto al precio |
+| Precio propio | Pisa a la Cámara, se sigue viendo el de ella, y no se filtra a otra lista |
+| Los dos porcentajes | El **aumento general no pisa** un precio propio pero sí aplica donde no lo hay; el **ajuste del presupuesto sí** se aplica sobre un precio propio, y un precio pisado dentro de ese presupuesto lo ignora |
+| Propagación | Los trece montos mantienen la proporción de la Cámara **para ese servicio**; la vista previa no escribe; sin precio de referencia no se inventa un número |
+| Presupuesto emitido | Conserva su total exacto aunque después cambien la tarifa y el aumento general |
+| Reimportar FACRA | Un servicio con precio propio **sobrevive**; sin precio propio ni presupuesto se borra como siempre; los precios propios no se pierden |
+| Desfasaje | Se marca cuando la Cámara se movió, y el precio propio **no cambia solo** |
+| Historial | Un renglón por cambio; el alta con `precio_antes` NULL y el ↺ con `precio_despues` NULL |
+| HTTP | 401 sin sesión, 400 de lista/precio/% inválidos, 404 de servicio inexistente, el lote que rechaza la tanda entera si un renglón está mal |
+
+## 6. UI — `ui_precios.mjs`
+
+La pantalla **Editar Precios** y el guardado desde el wizard.
+
+```bash
+source /tmp/rect-corrida/entorno.sh
+node tests/ui_precios.mjs
+```
+
+| Bloque | Qué verifica |
+|---|---|
+| La pantalla | Ya no está el placeholder, trae los 235 trabajos y las trece listas |
+| Campo vacío | Un trabajo sin tarifar muestra "—" y no el precio de la Cámara (si no, las 235 filas se leen como si estuvieran todas tarifadas) |
+| Editar | Enter guarda, el monto queda formateado y la solapa "Mis precios" lo cuenta |
+| Propagar | La vista previa muestra los trece montos y aplicarla deja las trece guardadas |
+| Mis precios | Cada fila dice **de dónde salió** el precio y **cuándo** se fijó; el ↺ lo devuelve a la Cámara |
+| Aumento general | Cambia lo no tarifado y **no pisa** un precio propio |
+| Wizard | El ajuste se llama "de este presupuesto" y avisa si la lista ya tiene aumento general; el botón ⤓ guarda el precio como tarifa y deja su acuse |
+| Revisión | El resumen **no** ofrece guardar un precio que ya es la tarifa, y vuelve a ofrecerlo al editarlo de nuevo, con el precio viejo y el nuevo a la vista |
+
+### Detalles que hacen falta para tocarla
+
+- **El selector de precio de una fila** es el primer `input` de la fila; el valor
+  en reposo va formateado (`$ 280.000`) y al enfocarlo pasa a número pelado.
+- **Los botones de la fila** se buscan por `title`: `*="trece listas"` para
+  propagar y `*="Volver"` para el ↺.
+- **El botón de guardar del wizard** es `button[title*="como tu precio"]`, y el
+  acuse posterior `span[title*="Guardado como tu precio"]`.
+- **El botón ⤓ no aparece si el precio tipeado es igual a la tarifa vigente**:
+  guardar ahí sería una escritura que no cambia nada.

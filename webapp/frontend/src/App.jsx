@@ -10,7 +10,7 @@ import HistorialPresupuestos from './screens/Presupuestos/Historial'
 import WizardPresupuesto from './screens/Presupuestos/Wizard/WizardPresupuesto'
 import DetallePresupuesto from './screens/Presupuestos/Detalle'
 import PedidoRepuestos from './screens/Presupuestos/Pedido'
-import PreciosPlaceholder from './screens/Precios/PlaceholderScreen'
+import PreciosScreen from './screens/Precios/PreciosScreen'
 import RepuestosScreen from './screens/Repuestos/RepuestosScreen'
 import BusquedaMedidasScreen from './screens/BusquedaMedidas/BusquedaMedidasScreen'
 
@@ -51,7 +51,7 @@ function App() {
         <Route path="presupuestos/nuevo" element={<WizardPresupuesto />} />
         <Route path="presupuestos/:id" element={<DetallePresupuesto />} />
         <Route path="presupuestos/:id/pedido" element={<PedidoRepuestos />} />
-        <Route path="precios" element={<PreciosPlaceholder />} />
+        <Route path="precios" element={<PreciosScreen />} />
         <Route path="repuestos" element={<RepuestosScreen />} />
         <Route path="busqueda-medidas" element={<BusquedaMedidasScreen />} />
         <Route path="*" element={<Navigate to="/motores" replace />} />

@@ -50,6 +50,11 @@ export default function WizardPresupuesto() {
   const [cantidadPorGrupo, setCantidadPorGrupo] = React.useState({})
   const [error, setError] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
+  // Las líneas de mano de obra que pasan a ser la tarifa del taller, o null si
+  // el tilde del paso de Revisión está sin marcar. Las arma ese paso, que es el
+  // que las muestra; acá se guardan tal cual, al confirmar, para poder dejar
+  // registrado de qué presupuesto salió cada una.
+  const [guardarPrecios, setGuardarPrecios] = React.useState(null)
   /*
    * La ficha del motor (qué repuestos sirven para este motor) y los tildes viven
    * acá y no en el paso Repuestos, porque el paso se desmonta al ir y volver
@@ -228,6 +233,23 @@ export default function WizardPresupuesto() {
         ficha_tildes: tildes.tildesParaPayload(repuestos),
         ajuste_pct: ajustePct || 0,
       })
+      // Los precios editados pasan a ser tarifa, si se tildó. Va DESPUÉS de
+      // crear el presupuesto para poder guardar de cuál salió cada uno (queda
+      // enlazado en "Mis precios"), y en su propio try: que falle guardar la
+      // tarifa no puede tirar abajo un presupuesto que ya se emitió bien.
+      if (guardarPrecios?.length && motor?.lista_num) {
+        try {
+          await api.post('/precios/mano-obra/lote', {
+            lista_num: motor.lista_num,
+            precios: guardarPrecios,
+            origen: 'presupuesto',
+            presupuesto_id: presupuesto.id,
+          })
+        } catch {
+          // Sin banner: el presupuesto salió bien y es lo que importa. Los
+          // precios se pueden cargar después desde Editar Precios.
+        }
+      }
       if (pdfTab) pdfTab.location.href = `/api/presupuestos/${presupuesto.id}/pdf/1`
       navigate('/presupuestos')
     } catch (err) {
@@ -346,6 +368,8 @@ export default function WizardPresupuesto() {
           onMoverRepuesto={moverRepuestoOpcional}
           onEditarServicio={editarServicio}
           onEditarRepuesto={editarRepuesto}
+          guardarPrecios={guardarPrecios}
+          onGuardarPreciosChange={setGuardarPrecios}
           onConfirmar={finalizar}
           guardando={guardando}
         />

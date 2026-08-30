@@ -13,6 +13,7 @@ import { formatPrecioARS } from '../../../utils/format'
 import { lineasServicios, totalLineas, hayPreciosInvalidos } from '../../../utils/servicios'
 import { textoSubtotal } from '../../../utils/precios'
 import { subtotalDe } from '../../../utils/grupos'
+import { ResumenPreciosEditados } from './ResumenPreciosEditados'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
 const TIPO_OPUESTO = { mecanico: 'dueno', dueno: 'mecanico' }
@@ -65,7 +66,7 @@ function Campo({ label, valor }) {
 export function PasoRevision({
   cliente, motor, serviciosSel, ajustePct, repuestos,
   onMoverServicio, onMoverRepuesto, onEditarServicio, onEditarRepuesto,
-  onConfirmar, guardando,
+  onConfirmar, guardando, guardarPrecios, onGuardarPreciosChange,
 }) {
   const [servicios, setServicios] = React.useState([])
 
@@ -312,7 +313,7 @@ export function PasoRevision({
         )}
         <Campo label="Motor" valor={motor.motor} />
         {ajustePct !== 0 && (
-          <Campo label="Ajuste mano de obra" valor={`${ajustePct > 0 ? '+' : ''}${ajustePct}%`} />
+          <Campo label="Ajuste de este presupuesto" valor={`${ajustePct > 0 ? '+' : ''}${ajustePct}%`} />
         )}
       </div>
 
@@ -349,6 +350,20 @@ export function PasoRevision({
             getRowProps={(fila) => propsFila(fila.clave)}
             reorderKey="revision-servicios"
             emptyMessage="Este presupuesto no lleva mano de obra."
+          />
+
+          {/* Va pegado a la tabla y no al pie de la pantalla: las líneas que
+              ofrece guardar son las que acaban de verse acá arriba, con su chip
+              de "precio editado". Al pie quedaría lejos de lo que explica, y
+              además el botón de confirmar está arriba de todo. */}
+          {/* filasServicios y no serviciosCotizan: un trabajo que quedó como
+              opcional se cobra igual si el cliente lo acepta, así que su precio
+              es tarifa lo mismo que el de una línea que suma al total. */}
+          <ResumenPreciosEditados
+            lineas={filasServicios}
+            listaNum={motor?.lista_num}
+            marcado={Boolean(guardarPrecios)}
+            onMarcar={onGuardarPreciosChange}
           />
         </div>
 

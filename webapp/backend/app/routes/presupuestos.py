@@ -607,9 +607,13 @@ def _revalidacion(presupuesto_id, detalle):
     subtotal_mo_antes = subtotal_mo_ahora = 0.0
 
     factor_ajuste = 1 + (float(detalle.get("ajuste_pct") or 0) / 100)
-    precios_lista = {
-        s["id"]: s["precio"] for s in facra.get_servicios_para_lista(detalle.get("lista_num"))
+    # La fila entera y no solo el precio: hace falta `es_propio` para poder decir
+    # en la pantalla si el precio de hoy sale de la lista de la Cámara o es el que
+    # fijó el taller. Un número sin origen no se puede evaluar.
+    servicios_hoy = {
+        s["id"]: s for s in facra.get_servicios_para_lista(detalle.get("lista_num"))
     }
+    precios_lista = {sid: s["precio"] for sid, s in servicios_hoy.items()}
 
     for it in db.get_presupuesto_items_full(presupuesto_id):
         if it["tipo"] == "repuesto":
@@ -680,6 +684,10 @@ def _revalidacion(presupuesto_id, detalle):
                 "precio_antes": unitario,
                 "precio_ahora": precio_hoy,
                 "diferencia": pesos(precio_hoy * cantidad) - pesos((unitario or 0) * cantidad),
+                # De dónde sale el precio de hoy: la lista de la Cámara, o el
+                # precio propio del taller. La pantalla lo dice con todas las
+                # letras en vez de llamarle "precio de lista" a los dos.
+                "es_propio": bool(servicios_hoy[it["servicio_id"]].get("es_propio")),
             })
 
     total_antes = pesos(detalle.get("total") or 0)

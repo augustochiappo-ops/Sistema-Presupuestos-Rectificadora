@@ -62,7 +62,10 @@ def _snapshot_db_bytes() -> bytes:
 
 
 def _resumen_contenidos(conn: sqlite3.Connection) -> dict:
-    tablas = ["motores", "servicios", "clientes", "presupuestos", "crac_repuestos"]
+    tablas = ["motores", "servicios", "clientes", "presupuestos", "crac_repuestos",
+              # Los precios propios de mano de obra: es lo que el dueño mira al
+              # restaurar para confirmar que su tarifa volvió con la copia.
+              "precios_mano_obra"]
     resumen = {}
     for tabla in tablas:
         try:

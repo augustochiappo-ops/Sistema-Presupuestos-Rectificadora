@@ -105,7 +105,7 @@
 - [x] **DB**: tabla `favoritos_servicios` + migración automática (CREATE IF NOT EXISTS) + `toggle_favorito_servicio()` + `get_favoritos_ids()`.
 
 ## Pendiente (app de escritorio)
-- [ ] Módulo Editar Precios (factor de ajuste sobre lista FACRA)
+- [x] ~~Módulo Editar Precios (factor de ajuste sobre lista FACRA)~~ → **hecho el 2026-08-30**, en la app web y bastante más grande de lo anotado acá: además del % general hay precio propio por trabajo y por lista, propagación a las trece, y guardado desde el wizard. Ver la sección de esa sesión en "Próximo paso".
 - [ ] Botón "+" para crear motor manual si no está en FACRA
 - [ ] CRUD de clientes (editar nombre, teléfono, notas)
 
@@ -1295,6 +1295,49 @@ iguales**, `tests/ui_medidas.mjs` entera en verde, y producción sirve el JS
 commiteado byte a byte más los dibujos nuevos con su tamaño exacto.
 
 ## Próximo paso
+
+**Editar Precios: la tarifa de mano de obra del taller (2026-08-30).** El dueño
+pidió habilitar la pestaña que estaba como placeholder desde el scaffold, y
+aclaró el alcance: **solo mano de obra** (los repuestos quedan como están). Lo
+que pidió no era "poder editar" —los precios ya se editaban dentro del
+presupuesto— sino **que lo editado se quede**: hasta ahora la corrección se
+congelaba en `presupuesto_items` y el presupuesto siguiente volvía a arrancar de
+FACRA, así que reescribía los mismos precios en cada cotización.
+
+**Qué quedó hecho.** Las decisiones y su porqué están en `decisiones.md`
+(seis entradas del 2026-08-30); acá va el mapa de lo construido:
+
+- **Backend.** Tablas `precios_mano_obra` (clave `servicio_id` + `lista_num`) y
+  `precios_mano_obra_historial`, más `app_meta.ajuste_mano_obra_pct`. Módulo
+  nuevo `app/precios.py` con toda la lógica, enganchado en un solo punto:
+  `facra.get_servicios_para_lista()`, que es el único lugar del backend donde se
+  lee un precio de mano de obra. Blueprint `app/routes/precios.py`.
+- **Pantalla** (`screens/Precios/`, cinco componentes). Dos apartados: la lista
+  de los 235 trabajos editable por lista 1–13 (con cuántos motores tiene cada
+  una), el aumento general, y "Mis precios" con el origen, la fecha, el enlace al
+  presupuesto del que salió y el ↺. Modal de propagación a las trece listas con
+  los trece montos a la vista.
+- **Wizard.** Botón ⤓ por línea en el paso Servicios y resumen tildable en
+  Revisión, los dos explícitos. El ajuste pasó a llamarse "Ajuste de este
+  presupuesto" y avisa cuando la lista ya tiene el aumento general.
+- **Dos arreglos que salieron de esto:** la reimportación de FACRA ya no borra un
+  servicio que tiene precio propio, y la recotización informa si el precio de hoy
+  es de la Cámara o del taller. El segundo evita que marque como "cambió" cada
+  línea tarifada.
+- **Suites nuevas:** `tests/backend_precios.py` (63 verificaciones) y
+  `tests/ui_precios.mjs`, documentadas en `tests/README.md`.
+
+**Un bug latente encontrado y corregido en el camino:** dentro de
+`importar_lista_orientadora` hay una variable local `precios` que **tapaba** al
+módulo `app/precios.py`; el `AttributeError` quedaba tragado por el `try/except`
+de la función y **hacía fallar la reimportación entera**. Lo cazó el check del
+caso negativo, no el positivo — el positivo pasaba por el motivo equivocado. Ver
+`decisiones.md`.
+
+**Lo que NO entró, a propósito:** precios propios de repuestos. El CSV del
+proveedor se reemplaza entero a diario, así que un precio fijo se pudre y puede
+quedar por debajo del costo; ahí correspondería un **margen por categoría**, que
+es otro diseño. Queda anotado por si el dueño lo pide.
 
 **Análisis completo del sistema + arreglo de la reimportación de FACRA
 (2026-08-29, tercera sesión del día).** El dueño pidió "un análisis completo

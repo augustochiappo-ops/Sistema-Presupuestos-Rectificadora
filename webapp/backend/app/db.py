@@ -122,6 +122,58 @@ def init_db():
                 cat_prefijo TEXT PRIMARY KEY
             );
 
+            -- Precios propios de mano de obra: lo que cobra EL TALLER, por
+            -- encima de la lista de la Cámara. La lista de FACRA no se toca
+            -- nunca (se reimporta cada 1-2 semanas y pisaría cualquier cosa que
+            -- escribiéramos ahí); esto es una capa aparte que se superpone al
+            -- leer, en facra.get_servicios_para_lista.
+            --
+            -- La clave es (servicio_id, lista_num) y no servicio_id solo porque
+            -- un servicio no tiene UN precio: tiene trece, uno por lista de la
+            -- Cámara (l1..l13, elegida por motores.lista_num según el tamaño
+            -- del motor). Cobrar el planeado de tapa $X en un motor chico no
+            -- dice nada de lo que se cobra en uno grande.
+            --
+            -- servicio_id es estable entre reimportaciones desde el 2026-08-29
+            -- (facra.importar_lista_orientadora reconcilia por identidad y
+            -- preserva el id), que es lo que hace que esta tabla se pueda colgar
+            -- de él. Mismo patrón que favoritos_servicios.
+            --
+            -- precio_facra_al_fijar guarda cuánto valía en la Cámara el día que
+            -- se fijó el precio propio: comparándolo con el de hoy se detecta
+            -- que la lista se movió y el precio propio quedó desfasado.
+            CREATE TABLE IF NOT EXISTS precios_mano_obra (
+                servicio_id    INTEGER NOT NULL REFERENCES servicios(id) ON DELETE CASCADE,
+                lista_num      INTEGER NOT NULL,   -- 1..13
+                precio         REAL NOT NULL,
+                precio_facra_al_fijar REAL,
+                origen         TEXT,               -- 'pantalla' | 'presupuesto'
+                presupuesto_id INTEGER REFERENCES presupuestos(id) ON DELETE SET NULL,
+                actualizado_en TEXT NOT NULL,
+                PRIMARY KEY (servicio_id, lista_num)
+            );
+
+            -- Toda modificación de un precio propio queda registrada acá. Sin
+            -- esto no habría forma de saber qué se cambió ni desde dónde: un
+            -- precio guardado desde el wizard es un cambio hecho al pasar, y
+            -- seis meses después nadie se acuerda.
+            --   precio_antes  NULL = antes no había precio propio (era FACRA)
+            --   precio_despues NULL = se volvió a FACRA (el ↺)
+            -- No lleva FK a servicios a propósito: es registro histórico y tiene
+            -- que sobrevivir aunque el servicio desaparezca de la lista.
+            CREATE TABLE IF NOT EXISTS precios_mano_obra_historial (
+                id             INTEGER PRIMARY KEY AUTOINCREMENT,
+                servicio_id    INTEGER NOT NULL,
+                lista_num      INTEGER NOT NULL,
+                precio_antes   REAL,
+                precio_despues REAL,
+                origen         TEXT,
+                presupuesto_id INTEGER,
+                fecha          TEXT NOT NULL
+            );
+            CREATE INDEX IF NOT EXISTS idx_pmo_hist_servicio
+                ON precios_mano_obra_historial(servicio_id, lista_num);
+
             -- Repuestos sugeridos (usados antes en presupuestos de este motor) que
             -- el usuario ocultó a mano desde "Listado de Motores". No borra el
             -- historial: solo deja de sugerirse en cualquier pantalla del sistema.

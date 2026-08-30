@@ -7,6 +7,12 @@ import re
 import pandas as pd
 from . import texto
 from .db import get_connection
+# Importadas por nombre y no como módulo (`from . import precios`) a propósito:
+# importar_lista_orientadora tiene una variable local `precios` —los trece
+# precios de la fila que está leyendo— que taparía al módulo. Ya pasó: el
+# AttributeError quedaba tapado por el try/except de la importación y la
+# reimportación fallaba entera devolviendo solo un mensaje de error.
+from .precios import aplicar_precios_propios, tiene_precio_propio
 
 BRAND_ALIASES = {
     "CATERPILAR":      "CATERPILLAR",
@@ -218,12 +224,16 @@ def importar_lista_orientadora(path: str) -> tuple[int, str]:
 
             # Servicios que ya no vienen en la lista: se borran salvo que algún
             # presupuesto los use (ahí se conservan para no perder el renglón de
-            # mano de obra que ya quedó cotizado).
+            # mano de obra que ya quedó cotizado) o que el taller les haya fijado
+            # un precio propio. Lo segundo importa porque precios_mano_obra cuelga
+            # de servicio_id con ON DELETE CASCADE: sin este chequeo, un servicio
+            # que la Cámara saca de la lista se llevaría puesto el precio del
+            # dueño, en silencio y en medio de una importación de rutina.
             for sid in [s for s in existentes.values() if s not in vistos]:
                 usado = conn.execute(
                     "SELECT 1 FROM presupuesto_items WHERE servicio_id = ? LIMIT 1", (sid,)
                 ).fetchone()
-                if not usado:
+                if not usado and not tiene_precio_propio(conn, sid):
                     conn.execute("DELETE FROM servicios WHERE id = ?", (sid,))
 
         return count, f"{count} servicios importados correctamente"
@@ -241,15 +251,30 @@ def get_marcas() -> list[str]:
 
 
 def get_servicios_para_lista(lista_num: int | None) -> list[dict]:
+    """
+    Los servicios de mano de obra con el precio que rige HOY para el taller.
+
+    Es el único lugar del backend donde se lee un precio de mano de obra, así que
+    es acá donde se superpone la capa de precios propios (app/precios.py): el
+    precio de la Cámara es el punto de partida, y arriba van el ajuste general y
+    el precio que el taller haya fijado para ese servicio en esta lista. Sus tres
+    llamadores —los servicios de un motor, el armado del presupuesto y la
+    recotización— quedan cubiertos sin tocarlos.
+
+    Cada fila trae, además de `precio` (el vigente), `precio_facra`, `es_propio` y
+    `desfasado`, para que la pantalla pueda explicar de dónde sale el número en
+    vez de mostrar un monto sin origen.
+    """
     col = f"l{lista_num}" if lista_num and 1 <= lista_num <= 13 else "NULL"
     with get_connection() as conn:
         cur = conn.execute(
             f"SELECT id, item_num, descripcion, {col} AS precio FROM servicios ORDER BY item_num"
         )
-        return [
+        filas = [
             {"id": r[0], "item_num": r[1], "descripcion": r[2], "precio": r[3]}
             for r in cur.fetchall()
         ]
+    return aplicar_precios_propios(filas, lista_num)
 
 
 def get_motores(marca: str | None = None, busqueda: str | None = None) -> list[dict]:

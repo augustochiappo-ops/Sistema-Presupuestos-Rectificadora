@@ -74,6 +74,15 @@ export function lineasServicios(servicios, seleccion, ajustePct) {
         descripcion: s.descripcion,
         cantidad,
         precioUnitario,
+        // Lo que valdría sin pisarlo: la tarifa vigente del taller (la lista de
+        // la Cámara, o el precio propio si lo hay) con el ajuste del
+        // presupuesto. Es contra esto que se compara un precio editado, y es lo
+        // que muestra el resumen de Revisión al ofrecer guardarlo como tarifa.
+        precioLista: precioAjustado(s.precio, ajustePct),
+        // ¿El precio vigente ya es uno fijado por el taller? Distinto de
+        // `pisado`, que es "lo cambié en ESTE presupuesto".
+        esPropio: Boolean(s.es_propio),
+        precioFacra: s.precio_facra,
         subtotal: precioUnitario === null ? null : precioUnitario * cantidad,
         // El texto del recuadro editable: lo tipeado si lo pisaron, y si no el
         // precio de lista ya formateado.

@@ -53,6 +53,15 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   const [nuevoCustomDesc, setNuevoCustomDesc] = React.useState('')
   const [nuevoCustomPrecio, setNuevoCustomPrecio] = React.useState('')
   const [ajusteTexto, setAjusteTexto] = React.useState(ajustePct ? String(ajustePct) : '')
+  // % persistente sobre la lista de la Cámara, configurado en "Editar Precios".
+  // Se lee solo para avisarlo al lado del ajuste de ESTE presupuesto: son dos
+  // porcentajes distintos sobre la misma mano de obra, y aplicar uno sin saber
+  // del otro es el error más fácil de cometer.
+  const [ajusteGeneral, setAjusteGeneral] = React.useState(0)
+  // Servicios cuyo precio pisado ya se guardó como precio propio del taller,
+  // para mostrar el acuse y no ofrecer guardar dos veces lo mismo.
+  const [preciosGuardados, setPreciosGuardados] = React.useState({})
+  const [guardandoPrecio, setGuardandoPrecio] = React.useState(null)
   const { avisarBorrado } = useUndo()
 
   const cantidades = value.cantidades
@@ -62,7 +71,39 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   React.useEffect(() => {
     api.get(`/motores/${motor.id}/servicios`).then(setServicios)
     api.get('/servicios/favoritos').then((ids) => setFavoritos(new Set(ids)))
+    // Si falla no pasa nada: el aviso del ajuste general es informativo y su
+    // ausencia no puede romper el armado de un presupuesto.
+    api.get('/precios/ajuste-general').then((d) => setAjusteGeneral(d.pct)).catch(() => {})
   }, [motor.id])
+
+  /*
+   * Guardar un precio pisado como precio propio del taller.
+   *
+   * Es explícito y de a una línea a propósito: un precio especial para un
+   * cliente y una decisión de tarifa son cosas distintas. Si cada edición se
+   * guardara sola, el descuento de hoy sería el precio de la casa mañana, sin
+   * que nadie se enterara. Queda además el resumen del paso de Revisión, para
+   * el que prefiere decidirlo todo junto al final.
+   */
+  const guardarPrecioPropio = async (fila) => {
+    if (!motor?.lista_num || fila.esManual || fila.precioUnitario == null) return
+    setGuardandoPrecio(fila.servicioId)
+    try {
+      await api.post('/precios/mano-obra', {
+        servicio_id: fila.servicioId,
+        lista_num: motor.lista_num,
+        precio: fila.precioUnitario,
+        origen: 'presupuesto',
+      })
+      setPreciosGuardados((g) => ({ ...g, [fila.servicioId]: fila.precioUnitario }))
+    } catch {
+      // El precio del presupuesto no se toca: guardarlo en la tarifa es un
+      // extra, y que falle no puede frenar la cotización que se está armando.
+      setPreciosGuardados((g) => ({ ...g, [fila.servicioId]: 'error' }))
+    } finally {
+      setGuardandoPrecio(null)
+    }
+  }
 
   const toggleFavorito = async (id) => {
     const data = await api.post(`/servicios/${id}/favorito`)
@@ -246,6 +287,32 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
                 ? 'var(--status-expired-fg)' : undefined,
             }}
           />
+          {/* Guardar este precio como el del taller, para que salga así en los
+              próximos presupuestos. Explícito y de a uno: ver guardarPrecioPropio. */}
+          {/* La última condición evita ofrecer guardar un precio que ya es la
+              tarifa: sería una escritura que no cambia nada y un renglón de
+              historial que no registra ningún cambio. */}
+          {fila.pisado && !fila.esManual && motor?.lista_num
+            && fila.precioUnitario !== fila.precioLista && (
+            preciosGuardados[fila.servicioId] === fila.precioUnitario ? (
+              <span
+                style={{ display: 'flex', color: 'var(--status-active-fg)', padding: 2 }}
+                title="Guardado como tu precio: desde ahora sale así. Se puede deshacer en Editar Precios."
+              >
+                <Icon n="check" s={14} />
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={() => guardarPrecioPropio(fila)}
+                disabled={guardandoPrecio === fila.servicioId || fila.precioUnitario == null}
+                title={`Guardar ${formatPrecioARS(fila.precioUnitario)} como tu precio para este trabajo (lista ${motor.lista_num}). Se usa en los próximos presupuestos; este no cambia.`}
+                style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex', padding: 2 }}
+              >
+                <Icon n="save" s={14} />
+              </button>
+            )
+          )}
           {/* El ↺ solo tiene sentido con un precio de lista atrás: un ítem
               manual no tiene a dónde volver. */}
           {fila.pisado && (
@@ -343,8 +410,13 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, padding: '16px 20px', background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            {/* "De este presupuesto" y no "mano de obra" a secas: desde que
+                existe el aumento general de la pantalla Editar Precios hay dos
+                porcentajes sobre la misma mano de obra, y el nombre tiene que
+                decir cuál es cuál. Éste es la palanca de UNA cotización ("a este
+                cliente -10%"); el otro es parte de la tarifa y vale para todos. */}
             <label style={{ fontFamily: 'var(--font-body)', fontSize: 10, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,.65)' }}>
-              Ajuste mano de obra
+              Ajuste de este presupuesto
             </label>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <input
@@ -353,7 +425,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
                 placeholder="0"
                 value={ajusteTexto}
                 onChange={(e) => aplicarAjusteTexto(e.target.value)}
-                title="Porcentaje de aumento (positivo) o descuento (negativo) sobre la mano de obra"
+                title="Porcentaje de aumento (positivo) o descuento (negativo) sobre la mano de obra, solo para este presupuesto"
                 style={{
                   width: 64, height: 34, textAlign: 'center', borderRadius: 8,
                   border: `2px solid ${colorAjuste}`, background: '#fff', color: 'var(--text-strong)',
@@ -362,6 +434,16 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
               />
               <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>%</span>
             </div>
+            {/* Sin este aviso es fácil sumar 25 acá encima de un 25 que ya está
+                puesto en la tarifa y cotizar un 56% más caro sin querer. */}
+            {ajusteGeneral !== 0 && (
+              <span
+                style={{ fontFamily: 'var(--font-body)', fontSize: 10, color: 'rgba(255,255,255,.6)' }}
+                title="Configurado en Editar Precios. Ya viene aplicado en los precios de esta pantalla."
+              >
+                tu lista ya tiene {ajusteGeneral > 0 ? '+' : ''}{ajusteGeneral}%
+              </span>
+            )}
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
             <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total servicios</span>

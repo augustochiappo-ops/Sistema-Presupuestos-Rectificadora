@@ -10,6 +10,7 @@ from .routes.servicios import bp as servicios_bp
 from .routes.excel import bp as excel_bp
 from .routes.clientes import bp as clientes_bp
 from .routes.presupuestos import bp as presupuestos_bp
+from .routes.precios import bp as precios_bp
 from .routes.repuestos import bp as repuestos_bp
 from .routes.tecnicos import bp as tecnicos_bp
 from .routes.deploy import bp as deploy_bp
@@ -42,6 +43,7 @@ def create_app():
     app.register_blueprint(excel_bp)
     app.register_blueprint(clientes_bp)
     app.register_blueprint(presupuestos_bp)
+    app.register_blueprint(precios_bp)
     app.register_blueprint(repuestos_bp)
     app.register_blueprint(tecnicos_bp)
     app.register_blueprint(deploy_bp)
