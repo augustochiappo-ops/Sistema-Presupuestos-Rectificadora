@@ -1334,6 +1334,26 @@ de la función y **hacía fallar la reimportación entera**. Lo cazó el check d
 caso negativo, no el positivo — el positivo pasaba por el motivo equivocado. Ver
 `decisiones.md`.
 
+**Deployado y verificado por HTTP el 2026-08-30.** `master` y produccion en
+`85a4d48`: el JS que sirve produccion es byte a byte el commiteado
+(`index-B6wZ8Uzk.js`, 511.908 bytes) y las cuatro rutas de `/api/precios/*`
+responden **401** sin sesion — o sea que el blueprint esta montado. El control
+importa: una ruta inexistente bajo `/api/` devuelve **200** (cae en el catch-all
+del SPA), asi que el 401 es lo que prueba que la ruta existe de verdad.
+
+**Las seis suites, verdes:** `backend_precios` (63 checks nuevos),
+`backend_grupos`, `backend_medidas`, `ui_precios`, `ui_grupos` y `ui_medidas`.
+Las dos ultimas se corrieron con la capa de precios puesta, para confirmar que no
+rompio nada de lo que ya andaba.
+
+**Un hueco de diseño que encontró la suite de UI** (commit `85a4d48`): con el
+aumento general en +25%, la tabla no mostraba ningun cambio — la columna "Camara"
+lleva el precio de FACRA sin ajustar y "Mi precio" queda vacio mientras el
+trabajo no este tarifado, asi que el precio que efectivamente rige no aparecia en
+ningun lado. Ahora la fila muestra "+25% → $ 296.709" debajo del de la Camara.
+Vale como recordatorio de por que la suite de UI se corre igual cuando "ya se
+probo a mano": lo que fallo no era un bug de codigo sino algo que no se veia.
+
 **Lo que NO entró, a propósito:** precios propios de repuestos. El CSV del
 proveedor se reemplaza entero a diario, así que un precio fijo se pudre y puede
 quedar por debajo del costo; ahí correspondería un **margen por categoría**, que
