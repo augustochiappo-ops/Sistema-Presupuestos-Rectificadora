@@ -28,7 +28,9 @@ import { ModalPropagar } from './ModalPropagar'
  * El ↺ devuelve el trabajo al precio de la Cámara. Todo lo que se hace acá es
  * reversible, que es lo que permite tocar sin miedo.
  */
-export function ListaManoObra({ servicios, listaNum, cargando, hayBusqueda, onCambio, onError }) {
+export function ListaManoObra({
+  servicios, listaNum, ajusteGeneralPct = 0, cargando, hayBusqueda, onCambio, onError,
+}) {
   // Lo tipeado por fila mientras se edita. Se guarda el texto tal cual se
   // escribe (no el número) para no pelearle al cursor, igual que en el wizard.
   const [borradores, setBorradores] = React.useState({})
@@ -129,9 +131,26 @@ export function ListaManoObra({ servicios, listaNum, cargando, hayBusqueda, onCa
       key: 'precio_facra',
       header: 'Cámara',
       align: 'right',
-      width: 130,
-      render: (v) => (
-        <span style={{ color: 'var(--text-faint)' }}>{formatPrecioARS(v)}</span>
+      width: 168,
+      wrap: true,
+      /*
+       * Con aumento general puesto, el precio de la Cámara ya no es lo que se
+       * cobra. Mostrar solo ése dejaba el precio vigente sin aparecer en ningún
+       * lado: se ponía "+25%" y la tabla no cambiaba nada. Así que debajo va lo
+       * que rige hoy, y arriba de dónde salió.
+       *
+       * En una fila ya tarifada no se muestra: ahí el aumento general no se
+       * aplica (manda el precio propio, que está en la columna de al lado).
+       */
+      render: (v, s) => (
+        <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-end', gap: 1 }}>
+          <span style={{ color: 'var(--text-faint)' }}>{formatPrecioARS(v)}</span>
+          {ajusteGeneralPct !== 0 && !s.es_propio && s.precio != null && (
+            <span style={{ fontSize: 11, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+              {ajusteGeneralPct > 0 ? '+' : ''}{ajusteGeneralPct}% → <strong style={{ color: 'var(--text-strong)' }}>{formatPrecioARS(s.precio)}</strong>
+            </span>
+          )}
+        </span>
       ),
     },
     {
@@ -244,6 +263,13 @@ export function ListaManoObra({ servicios, listaNum, cargando, hayBusqueda, onCa
         el ↺ lo devuelve al precio de ella. Borrar el campo hace lo mismo que el ↺.
         <br />
         Los presupuestos ya emitidos no cambian: sus precios quedaron congelados el día que se cotizaron.
+        {ajusteGeneralPct !== 0 && (
+          <>
+            <br />
+            La columna de la Cámara muestra también lo que sale hoy con tu aumento general
+            del {ajusteGeneralPct > 0 ? '+' : ''}{ajusteGeneralPct}%. Donde pusiste tu precio, el aumento no se aplica.
+          </>
+        )}
       </div>
 
       <ModalPropagar

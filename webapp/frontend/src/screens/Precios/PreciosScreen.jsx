@@ -175,6 +175,7 @@ export default function PreciosScreen() {
           <ListaManoObra
             servicios={serviciosFiltrados}
             listaNum={listaNum}
+            ajusteGeneralPct={datos?.ajuste_general_pct ?? 0}
             cargando={cargando}
             hayBusqueda={Boolean(busqueda.trim())}
             onCambio={recargar}

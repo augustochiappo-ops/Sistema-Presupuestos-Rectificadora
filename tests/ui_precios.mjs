@@ -121,12 +121,19 @@ await page.locator('button', { hasText: /Lista de mano de obra/ }).click()
 await esperar(900)
 const filaLibre = filas().nth(1)               // una sin precio propio
 const antesDelAjuste = (await filaLibre.textContent()) || ''
+check('sin aumento general, la fila no habla de porcentajes',
+      !/%/.test(antesDelAjuste), antesDelAjuste)
 await page.locator('input[title*="Porcentaje sobre la lista"]').fill('25')
 await page.locator('button', { hasText: 'Aplicar' }).click()
 await esperar(1400)
 const despuesDelAjuste = (await filaLibre.textContent()) || ''
-check('el aumento general cambia lo que no está tarifado',
-      antesDelAjuste !== despuesDelAjuste, `${antesDelAjuste} vs ${despuesDelAjuste}`)
+// Lo que importa no es que cambie el texto: es que el precio que RIGE se vea.
+// Sin esto, poner +25% no cambiaba nada en pantalla (fallo de la primera corrida).
+check('el aumento general muestra el precio vigente en la fila',
+      /\+25% →/.test(despuesDelAjuste), despuesDelAjuste)
+check('y el precio de la Cámara se sigue viendo al lado',
+      despuesDelAjuste.includes(antesDelAjuste.replace(/\s+/g, ' ').split('$')[1]?.trim().split(' ')[0] || '$'),
+      despuesDelAjuste)
 check('pero NO pisa un precio propio',
       (await filas().first().locator('input').first().inputValue()) === '$ 280.000',
       await filas().first().locator('input').first().inputValue())
@@ -183,8 +190,10 @@ await unitario.blur()
 await esperar(900)
 check('al editar de nuevo, el resumen vuelve a ofrecerlo',
       await page.getByText(/como mi tarifa/).count() === 1)
-check('y muestra el precio viejo y el nuevo',
-      /\$ 1\.234\.000/.test((await page.getByText(/como mi tarifa/).locator('..').locator('..').textContent()) || ''))
+// El monto formateado solo aparece en el resumen: el campo editable lo muestra
+// crudo (1234000), así que encontrarlo con puntos es prueba de que está en la caja.
+check('y muestra el precio nuevo, formateado',
+      await page.getByText('$ 1.234.000').count() > 0)
 
 console.log('\n=== Limpieza ===')
 // Se deshace todo lo que creó la suite, para no dejarle datos a la siguiente.
