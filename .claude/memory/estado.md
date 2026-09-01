@@ -1369,6 +1369,21 @@ el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 
 ## Próximo paso
 
+**Los datos técnicos de los 113 conjuntos que faltan (2026-09-01).** La pestaña
+**Conjuntos** ya está en producción con las 128 fichas que trabaja el proveedor
+—código del proveedor y de Mahle, precio, stock, columna Oring— pero **113
+todavía no tienen medidas**: se completan leyendo el catálogo de Mahle. El dueño
+va a abrir **otra sesión con el PDF a mano**; el procedimiento entero (qué falta,
+cómo se cruzan los códigos, el formato exacto de la ficha, los dibujos y el
+circuito hasta el deploy) está en **`CRAC/tecnicos/CARGA-CONJUNTOS.md`**, que se
+escribió justo para eso. Acá no hay nada pendiente de código.
+
+Lo único que quedó sin confirmar es un detalle de nomenclatura: si el par
+`C/L` / `C/C` de los conjuntos Cummins se lee "con lomo / con cavidad". Hoy se
+cargan como dos fichas distintas, que es lo que son en la lista del proveedor.
+
+---
+
 **Editar Precios: la tarifa de mano de obra del taller (2026-08-30).** El dueño
 pidió habilitar la pestaña que estaba como placeholder desde el scaffold, y
 aclaró el alcance: **solo mano de obra** (los repuestos quedan como están). Lo
