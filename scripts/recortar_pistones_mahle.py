@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Recorta los dibujos de pistón del catálogo Mahle, uno por código, para que la
-búsqueda por medidas pueda mostrarlos al lado del subconjunto.
+Recorta los dibujos de pistón del catálogo Mahle, uno por pistón, para que la
+búsqueda por medidas pueda mostrarlos al lado del subconjunto y del conjunto.
 
     python3 scripts/recortar_pistones_mahle.py            # recorta y avisa
     python3 scripts/recortar_pistones_mahle.py --hoja     # + lámina de control
@@ -13,8 +13,10 @@ DE DÓNDE SALEN LAS FUENTES. Del PDF del catálogo Mahle, recortadas a ojo: un
 rectángulo alrededor del pistón que se lleva puesto lo que haya cerca — números
 de la fila, rayas de la grilla, la barra negra de un encabezado, a veces medio
 dibujo del pistón de al lado. El nombre del archivo trae el código ("S14275",
-"S0010110", a veces sin la S, a veces numeradas por delante cuando son dos
-recortes del mismo código), y de ahí sale contra qué ficha se cruza.
+"S0010110", "E14040", a veces sin la letra, a veces numeradas por delante
+cuando son dos recortes del mismo código), y de ahí sale contra qué ficha se
+cruza: lo que manda es el NÚMERO, porque el conjunto y el subconjunto que lo
+comparten son el mismo pistón y se dibujan una sola vez.
 
 QUÉ HACE ESTE SCRIPT. Encontrar, dentro de ese rectángulo sucio, las DOS VISTAS
 del pistón —el corte de arriba y el círculo de abajo, siempre una sobre la otra
@@ -58,7 +60,15 @@ from PIL import Image
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FUENTES = os.path.join(RAIZ, "CRAC", "tecnicos", "fuentes", "pistones")
-FICHAS = os.path.join(RAIZ, "CRAC", "tecnicos", "subconjuntos.json")
+# Las dos familias que salen del catálogo de Mahle. Un conjunto ("E BE14040") y
+# el subconjunto de su mismo número ("S BE14040") son EL MISMO PISTÓN dibujado
+# una sola vez en el catálogo: el conjunto es el juego del motor entero y el
+# subconjunto es esa misma pieza de a una. Por eso las fotos se cruzan contra
+# los dos JSON y el dibujo se guarda UNA VEZ, con los dos códigos apuntándole.
+FICHAS = {
+    "subconjuntos": os.path.join(RAIZ, "CRAC", "tecnicos", "subconjuntos.json"),
+    "conjuntos": os.path.join(RAIZ, "CRAC", "tecnicos", "conjuntos.json"),
+}
 SALIDA = os.path.join(RAIZ, "webapp", "frontend", "public", "pistones")
 MANIFIESTO = os.path.join(
     RAIZ, "webapp", "frontend", "src", "screens", "BusquedaMedidas", "dibujos-pistones.js")
@@ -441,28 +451,38 @@ def clave(codigo):
 def _numero_del_nombre(nombre):
     """
     El número de código que trae el nombre del archivo: los dígitos que van
-    pegados a la "S" del código ("S48301", "1_S48950" → 48950). Si no hay
-    ninguna S, el primer número del nombre, que es como se llamaban las fotos
-    de la primera tanda ("14040.png").
+    pegados a la "S" del subconjunto o a la "E" del conjunto ("S48301",
+    "1_S48950", "E14040" → 48950, 14040). Si no hay ninguna de las dos, el
+    primer número del nombre, que es como se llamaban las fotos de la primera
+    tanda ("14040.png").
 
-    La S manda porque las fotos vienen a veces numeradas por delante, cuando
+    La letra manda porque las fotos vienen a veces numeradas por delante, cuando
     son dos recortes del mismo código ("1_S0591230", "2_S0591230"). Con el
     primer número a secas esas dos se leerían como el código 1 y el 2 — hoy no
     existen y el script las saltearía avisando, pero un "3_" el día que exista
     una ficha con ese número le pondría al pistón el dibujo de otro.
     """
-    return re.search(r"[Ss]\s*_?(\d+)", nombre) or re.search(r"(\d+)", nombre)
+    return re.search(r"[SsEe]\s*_?(\d+)", nombre) or re.search(r"(\d+)", nombre)
 
 
 def codigos_por_numero():
-    """{número → código} de las fichas de subconjuntos."""
-    with open(FICHAS, encoding="utf-8") as f:
-        fichas = json.load(f)
+    """
+    {número → {familia: [códigos]}} de los dos catálogos de Mahle.
+
+    El mismo número cae en las dos familias cuando el catálogo publica el
+    pistón suelto y el juego del motor, que es lo normal: son la misma foto.
+    """
     por_numero = {}
-    for ficha in fichas:
-        m = re.search(r"(\d+)", ficha["codigo"])
-        if m:
-            por_numero.setdefault(int(m.group(1)), []).append(ficha["codigo"])
+    for familia, path in FICHAS.items():
+        if not os.path.exists(path):
+            continue
+        with open(path, encoding="utf-8") as f:
+            fichas = json.load(f)
+        for ficha in fichas:
+            m = re.search(r"(\d+)", ficha["codigo"])
+            if m:
+                por_numero.setdefault(int(m.group(1)), {}).setdefault(familia, []).append(
+                    ficha["codigo"])
     return por_numero
 
 
@@ -485,12 +505,16 @@ def main():
         if not m:
             avisos.append(f"{nombre}: el nombre no tiene número de código, se saltea")
             continue
-        codigos = por_numero.get(int(m.group(1)))
-        if not codigos:
-            avisos.append(f"{nombre}: el código {m.group(1)} no está en subconjuntos.json, se saltea")
+        por_familia = por_numero.get(int(m.group(1)))
+        if not por_familia:
+            avisos.append(f"{nombre}: el código {m.group(1)} no está en los catálogos, se saltea")
             continue
-        if len({clave(c) for c in codigos}) > 1:
-            avisos.append(f"{nombre}: el número {m.group(1)} cae en {codigos}, se saltea")
+        # Que el número caiga en las dos familias es lo normal (el pistón suelto
+        # y el juego del motor). Que caiga en dos códigos DE LA MISMA familia,
+        # no: ahí no se sabe cuál es y se saltea, como siempre.
+        ambigua = {f: cs for f, cs in por_familia.items() if len({clave(c) for c in cs}) > 1}
+        if ambigua:
+            avisos.append(f"{nombre}: el número {m.group(1)} cae en {ambigua}, se saltea")
             continue
 
         hallazgo = encontrar_dibujo(os.path.join(FUENTES, nombre))
@@ -498,38 +522,56 @@ def main():
             avisos.append(f"{nombre}: no se encontró dibujo adentro")
             continue
         dibujo = recortar(*hallazgo)
-        anterior = elegidos.get(clave(codigos[0]))
+        # El archivo se llama como el SUBCONJUNTO cuando existe: es el código con
+        # el que se venían nombrando los 181 dibujos que ya están, y así ninguno
+        # cambia de nombre al sumar los conjuntos. El conjunto del mismo número
+        # apunta a ese mismo archivo — el dibujo no se guarda dos veces.
+        claves = sorted({clave(c) for cs in por_familia.values() for c in cs})
+        archivo = clave(por_familia.get("subconjuntos", [claves[0]])[0])
+        anterior = elegidos.get(archivo)
         # Dos fotos del mismo código: gana la que traiga el dibujo más grande,
         # que es la que se va a ver mejor ampliada.
         if anterior and anterior[1].size[0] * anterior[1].size[1] >= dibujo.size[0] * dibujo.size[1]:
             continue
-        elegidos[clave(codigos[0])] = (nombre, dibujo)
+        elegidos[archivo] = (nombre, dibujo, claves)
 
     if not elegidos:
         raise SystemExit("No salió ningún dibujo: revisá la carpeta de fuentes")
 
     os.makedirs(SALIDA, exist_ok=True)
     viejos = {f for f in os.listdir(SALIDA) if f.endswith(".png")}
-    for codigo, (_, dibujo) in sorted(elegidos.items()):
-        encuadrar(dibujo).save(os.path.join(SALIDA, f"{codigo}.png"))
-        viejos.discard(f"{codigo}.png")
+    for archivo, (_, dibujo, _claves) in sorted(elegidos.items()):
+        encuadrar(dibujo).save(os.path.join(SALIDA, f"{archivo}.png"))
+        viejos.discard(f"{archivo}.png")
     for sobrante in sorted(viejos):
         # Un dibujo que ya no tiene fuente: si se queda, el manifiesto no lo
         # nombra y el archivo queda de adorno en el build.
         os.remove(os.path.join(SALIDA, sobrante))
         avisos.append(f"{sobrante}: ya no tiene foto de origen, se borró")
 
+    # {código sin espacios → archivo de /pistones/}. Es un mapa y no una lista
+    # porque el conjunto y el subconjunto del mismo número comparten el dibujo:
+    # los dos códigos apuntan al mismo PNG, guardado una sola vez.
+    manifiesto = {}
+    for archivo, (_, _dibujo, claves) in elegidos.items():
+        for c in claves:
+            manifiesto[c] = archivo
+
     with open(MANIFIESTO, "w", encoding="utf-8") as f:
         f.write("/* Generado por scripts/recortar_pistones_mahle.py — no editar a mano.\n"
                 " *\n"
-                " * Los códigos de subconjunto que tienen dibujo, sin espacios (que es como\n"
-                " * se llama cada archivo de /pistones/). La lista se arma acá y no se sale a\n"
-                " * probar si el PNG existe: pedir una imagen que no está deja un cuadrito\n"
-                " * roto en la tabla y un 404 en la consola por cada fila. */\n")
-        f.write("export const CON_DIBUJO = new Set([\n")
-        for codigo in sorted(elegidos):
-            f.write(f"  '{codigo}',\n")
-        f.write("])\n")
+                " * Qué dibujo le toca a cada código de subconjunto o conjunto: la clave es\n"
+                " * el código sin espacios y el valor, el archivo de /pistones/. El conjunto\n"
+                " * y el subconjunto del mismo número son el mismo pistón, así que apuntan\n"
+                " * los dos al mismo PNG.\n"
+                " *\n"
+                " * El mapa se arma acá y no se sale a probar si el PNG existe: pedir una\n"
+                " * imagen que no está deja un cuadrito roto en la tabla y un 404 en la\n"
+                " * consola por cada fila. */\n")
+        f.write("export const DIBUJOS = {\n")
+        for codigo in sorted(manifiesto):
+            f.write(f"  '{codigo}': '{manifiesto[codigo]}',\n")
+        f.write("}\n")
 
     total = sum(os.path.getsize(os.path.join(SALIDA, f"{c}.png")) for c in elegidos)
     print(f"✓ {len(elegidos)} dibujos → {os.path.relpath(SALIDA, RAIZ)} ({total // 1024} KB en total)")
@@ -554,7 +596,7 @@ def _lamina(elegidos, celda=200, columnas=8):
     filas = (len(items) + columnas - 1) // columnas
     hoja = Image.new("RGB", (columnas * celda, filas * (celda + 16)), "white")
     lapiz = ImageDraw.Draw(hoja)
-    for i, (codigo, (nombre, dibujo)) in enumerate(items):
+    for i, (codigo, (nombre, dibujo, _claves)) in enumerate(items):
         fondo = Image.new("RGB", dibujo.size, "white")
         fondo.paste(dibujo, mask=dibujo.split()[3])
         fondo.thumbnail((celda - 8, celda - 8))

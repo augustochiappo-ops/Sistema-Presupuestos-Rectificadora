@@ -1,9 +1,9 @@
 import React from 'react'
 import { Modal } from '../../components/Modal'
-import { CON_DIBUJO } from './dibujos-pistones'
+import { DIBUJOS } from './dibujos-pistones'
 
 /*
- * El dibujo del pistón de un subconjunto.
+ * El dibujo del pistón de un subconjunto o de un conjunto.
  *
  * El catálogo Mahle trae, al lado de cada código, el corte del pistón y su
  * vista de abajo. Es lo que se mira para saber de una si el pistón que se está
@@ -11,21 +11,25 @@ import { CON_DIBUJO } from './dibujos-pistones'
  * las válvulas, la forma de la falda. Las medidas de la fila dicen cuánto mide;
  * el dibujo dice qué es.
  *
- * Los archivos salen de scripts/recortar_pistones_mahle.py, uno por código, en
- * /pistones/<código sin espacios>.png. Todos vienen con la MISMA PROPORCIÓN de
- * cuadro, así que pedidos con una altura fija se ven todos del mismo tamaño y
- * ninguno empuja el alto de la fila.
+ * Los archivos salen de scripts/recortar_pistones_mahle.py, uno por pistón, en
+ * /pistones/<archivo>.png. Todos vienen con la MISMA PROPORCIÓN de cuadro, así
+ * que pedidos con una altura fija se ven todos del mismo tamaño y ninguno
+ * empuja el alto de la fila.
  *
- * No todos los subconjuntos tienen foto —se van agregando a medida que se
- * recortan del catálogo—, así que `CON_DIBUJO` (generado por el script) dice
- * cuáles sí. Salir a pedir el PNG para ver si está deja un cuadrito roto en la
- * tabla y un 404 por fila.
+ * No todos los códigos tienen foto —se van agregando a medida que se recortan
+ * del catálogo—, así que `DIBUJOS` (generado por el script) dice cuáles sí y
+ * con qué archivo: el conjunto "E BE14040" y el subconjunto "S BE14040" son el
+ * mismo pistón y comparten el PNG. Salir a pedir la imagen para ver si está
+ * deja un cuadrito roto en la tabla y un 404 por fila.
  */
 
-/** El código como se llama el archivo: "S BE 14040" y "S BE14040" son el mismo. */
+/** El código como se busca en el mapa: "S BE 14040" y "S BE14040" son el mismo. */
 export const claveDe = (codigo) => (codigo || '').replace(/\s+/g, '')
 
-export const tieneDibujo = (codigo) => CON_DIBUJO.has(claveDe(codigo))
+/** El archivo que le toca a este código, o null si todavía no se recortó. */
+export const archivoDibujo = (codigo) => DIBUJOS[claveDe(codigo)] || null
+
+export const tieneDibujo = (codigo) => Boolean(archivoDibujo(codigo))
 
 // 56 px y no los 38 de las formas de guía: el dibujo del pistón son dos vistas
 // una sobre la otra, y a la altura de una letra no se distingue la cabeza de la
@@ -34,7 +38,7 @@ export function DibujoPiston({ codigo, alto = 56, style }) {
   if (!tieneDibujo(codigo)) return null
   return (
     <img
-      src={`/pistones/${claveDe(codigo)}.png`}
+      src={`/pistones/${archivoDibujo(codigo)}.png`}
       alt={`Dibujo del pistón ${codigo}`}
       style={{ height: alto, width: 'auto', display: 'block', flexShrink: 0, ...style }}
     />
@@ -59,7 +63,7 @@ export function CeldaDibujo({ fila, onVer }) {
   )
 }
 
-/** El dibujo en grande, con la ficha del subconjunto al lado. */
+/** El dibujo en grande, con la ficha de la pieza al lado. */
 export function ModalDibujo({ fila, onClose }) {
   return (
     <Modal open={Boolean(fila)} title={fila ? fila.codigo : ''} onClose={onClose} maxWidth={620}>

@@ -47,10 +47,11 @@ TOLERANCIA_DEFECTO = 0.5
 # defecto: los catálogos técnicos son los del fabricante y siempre traen más
 # piezas de las que el proveedor vende, así que la búsqueda arranca mostrando lo
 # que se puede pedir hoy y la casilla abre el catálogo entero cuando hace falta
-# saber qué existe. Va en todas MENOS subconjuntos (pedido del dueño,
-# 2026-08-22): ahí el catálogo de Mahle se usa para leer la ficha del pistón
-# —medidas, dibujo, código de aros— aunque el subconjunto no se pueda pedir,
-# así que esconder la mitad de las fichas por defecto estorba.
+# saber qué existe. Va en todas MENOS las dos familias que salen del catálogo de
+# Mahle —subconjuntos y conjuntos— (pedido del dueño, 2026-08-22): ahí el
+# catálogo se usa para leer la ficha del pistón —medidas, dibujo, código de
+# aros— aunque la pieza no se pueda pedir, así que esconder la mitad de las
+# fichas por defecto estorba.
 ESPEC = {
     "camisas": {
         "label": "Camisas",
@@ -83,6 +84,22 @@ ESPEC = {
     },
     "subconjuntos": {
         "label": "Subconjuntos",
+        "medidas": ["diam_piston", "alt_piston", "diam_perno"],
+        "descripcion": True,
+    },
+    # El conjunto es el JUEGO COMPLETO del motor (los pistones de todos los
+    # cilindros con sus aros y pernos); el subconjunto es la misma pieza pero de
+    # a uno. En el catálogo de Mahle van en la misma fila y con el mismo número
+    # —"E BE14040" y "S BE14040" son el mismo pistón—, así que la ficha trae los
+    # mismos datos y se busca igual: por Ø de pistón, alto y perno.
+    #
+    # Sin `filtro_proveedor`, por lo mismo que subconjuntos y un motivo más: hoy
+    # la lista del proveedor no trae NI UN código "E BE", así que la casilla
+    # tildada por defecto dejaría la pestaña vacía siempre. La ficha se consulta
+    # igual —medidas, dibujo, código de aros— y el precio del juego se pide
+    # aparte.
+    "conjuntos": {
+        "label": "Conjuntos",
         "medidas": ["diam_piston", "alt_piston", "diam_perno"],
         "descripcion": True,
     },
