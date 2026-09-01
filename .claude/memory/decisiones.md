@@ -836,3 +836,14 @@ archivo es cada uno y con qué tres líneas se rehace el volcado.
 **Por qué el archivo conserva el nombre del subconjunto:** los 181 que ya estaban no cambian de nombre, así que el cambio se verifica con `git status` sobre `public/pistones/` — si aparece un solo PNG modificado, algo se rompió. Salieron los 181 byte a byte iguales.
 **El control de ambigüedad que hubo que afinar:** el script salteaba una foto cuyo número cayera en dos códigos de la misma familia. Con los conjuntos eso pasa de verdad y es inofensivo: `T BEK76560` y `T BEK76560WS` son el mismo motor. Ahora se compara la **base** del código (hasta el último dígito): misma base = variante, y el dibujo va a las dos; bases distintas (`S BE1010` y `S BE01010`) = ambigüedad real, y se saltea como antes.
 **Fecha:** 2026-09-01
+
+## Qué significa el sufijo "WS" de un conjunto, y cómo se averiguó sin el catálogo (2026-09-01)
+**La pregunta:** 22 de los 128 conjuntos terminan en `WS` (`T BEK76560WS`) y el catálogo no estaba a mano para preguntarle. El dueño sospechó "trae orings".
+**La respuesta, y es esa:** el `WS` es **el mismo juego con los orings de camisa incluidos**.
+**Cómo se comprobó, con la lista del proveedor sola:**
+1. **La aritmética del único par completo.** `T BEK76560` sale $493.641 y `T BEK76560WS`, $543.849: **$50.208** de diferencia. En la misma lista, el juego de orings de camisa de ese motor (`OCBEU76060`, categoría *Oring Camisa*, marca Mahle) sale **$45.177**, y la camisa (`C BE76570`) sale **$280.448**. La diferencia es un juego de orings; de camisas no alcanza ni para una quinta parte.
+2. **Quiénes lo llevan.** Los 22 son **todos** motores de camisa húmeda —Scania, Volvo, M.Benz OM457/OM460, John Deere PowerTech y el Renault Midlum, que es el DXi de Volvo—. Ningún motor chico de camisa seca (Peugeot 205, VW Kombi, Renault 12), que están en la lista, lo lleva.
+3. **La numeración de Mahle.** El oring lleva el número del conjunto: `OCBEU48990` es el del `T BEK48990` y `OCBEU76570` el del `T BEK76570`. Y la descripción de uno lo dice entera: *"(UN)(LAM+2 ORINES)"*.
+**Qué se hizo con eso:** columna **Oring (Sí/No)** en la pestaña. El dato lo pone `scripts/conjuntos_desde_proveedor.py` en `extra.oring` leyendo el sufijo del código, **no se carga a mano**: si mañana el proveedor suma un `WS` nuevo, la columna lo dice sola en la próxima corrida. Se muestra con palabras y no con un tilde, porque en una tabla llena de guiones un "No" se lee y un tilde ausente se confunde con un dato que falta.
+**Lo que queda por confirmar contra el catálogo:** nada de esto sale del PDF de Mahle, sale de cruzar precios. Si el catálogo lo dice con otras palabras, gana el catálogo.
+**Fecha:** 2026-09-01

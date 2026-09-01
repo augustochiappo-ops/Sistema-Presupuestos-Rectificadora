@@ -178,6 +178,13 @@ function contenidoCelda(col, fila, acciones) {
       return valor === null || valor === undefined || valor === '' ? '—' : `${formatMm(valor, col.decimales)}º`
     case 'sobremedidas':
       return celdaSobremedidas(fila)
+    // Un sí o un no de la ficha (hoy: si el conjunto trae los orings de
+    // camisa). Con palabras y no con un tilde: en una tabla llena de guiones,
+    // un "No" se lee y un tilde ausente se confunde con un dato que falta.
+    case 'si_no':
+      if (valor === true) return 'Sí'
+      if (valor === false) return 'No'
+      return <span style={{ color: 'var(--text-faint)' }}>—</span>
     // De qué sobremedida es el precio que se está mostrando.
     case 'medida':
       return valor ? formatEtiqueta(valor) : '—'

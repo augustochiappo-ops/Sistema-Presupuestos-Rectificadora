@@ -171,6 +171,14 @@ if conj["total"]:
           juego["medidas"].get("diam_piston") == 114, juego["medidas"])
     check("y diciendo de qué ficha salieron",
           juego["extra"].get("ficha_de") == "S BE21540", juego["extra"].get("ficha_de"))
+    # El juego con orings de camisa se reconoce por el sufijo "WS" del código
+    # del proveedor, y el dato viaja en la ficha para que la tabla lo muestre.
+    check("y sin orings de camisa, que este código no los trae",
+          juego["extra"].get("oring") is False, juego["extra"].get("oring"))
+con_oring = tecnicos.buscar("conjuntos", {"codigo": "T BEK76560WS"})
+check("el código con WS sí los trae",
+      con_oring["total"] == 1 and con_oring["resultados"][0]["extra"].get("oring") is True,
+      codigos(con_oring))
 # Un conjunto sin medidas todavía no se encuentra por medida —no tiene con qué
 # matchear— pero sí por el motor, que es como se lo busca mientras tanto.
 por_motor = tecnicos.buscar("conjuntos", {"descripcion": "scania 113h"})

@@ -1346,10 +1346,26 @@ nuevos, los 181 dibujos byte a byte iguales, y la pantalla mirada de verdad: la
 fila del `T BEK21540` con sus dos códigos, el dibujo heredado, Ø 114, alto
 115,6, perno ∅45,00 × 91,00, aros A21550 y $ 319.153 con stock.
 
+**El sufijo `WS` = el juego con los orings de camisa** (lo sospechó el dueño y
+la lista lo confirma). Tres cosas apuntan a lo mismo:
+
+1. El único par completo, `T BEK76560` ($493.641) y `T BEK76560WS` ($543.849),
+   se lleva **$50.208** de diferencia, que es lo que sale el juego de orings de
+   ese motor (`OCBEU76060`, $45.177) y **no** lo que sale una camisa
+   (`C BE76570`, $280.448).
+2. Los 22 códigos `WS` son **todos** motores de camisa húmeda (Scania, Volvo,
+   OM457/OM460, John Deere, Midlum). Ningún motor chico de camisa seca lo lleva.
+3. Mahle numera el oring igual que el conjunto: `OCBEU48990` es el del
+   `T BEK48990`, y su descripción lo dice entera — "(UN)(LAM+2 ORINES)".
+
+Se agregó por eso la columna **Oring (Sí/No)** a la tabla, que sale del sufijo
+del código y la pone el generador: si mañana aparece un `WS` nuevo, la columna
+lo dice sola en la próxima corrida.
+
 **Lo que quedó abierto:** las 113 fichas sin medidas, que se completan con las
-capturas del catálogo, y dos preguntas para el dueño: qué distingue a un código
-`WS` de su par sin sufijo (`T BEK76560` a $493.641 y `T BEK76560WS` a $543.849,
-mismo motor), y si el par `C/L` / `C/C` (con lomo / con cavidad) se lee así.
+capturas del catálogo (la sesión que tenga el PDF tiene el procedimiento entero
+en `CRAC/tecnicos/CARGA-CONJUNTOS.md`), y una pregunta chica para el dueño: si
+el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 
 ## Próximo paso
 

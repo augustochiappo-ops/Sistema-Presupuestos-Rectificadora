@@ -6,7 +6,9 @@
   "aplicacion": null,
   "descripcion": "FIAT DUCATO 2.8TDi B/TRAP. C/CAN.94,4 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK01050",
@@ -44,7 +46,8 @@
    "sobremedidas": [
     "STD"
    ],
-   "ficha_de": "S BE01060"
+   "ficha_de": "S BE01060",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -60,7 +63,9 @@
   "aplicacion": null,
   "descripcion": "IVECO CURSOR 13 24V (UN) 135 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK01210",
@@ -75,7 +80,9 @@
   "aplicacion": null,
   "descripcion": "IVECO EUROTRAKKER 380 P.72 (1 CIL) 137mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK01410",
@@ -90,7 +97,9 @@
   "aplicacion": null,
   "descripcion": "IVECO CURSOR 8 F2BE E3 Pz.84/62(UN) 115m",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK10330",
@@ -105,7 +114,9 @@
   "aplicacion": null,
   "descripcion": "IVECO CURSOR 13 24V E5 (UN) 135 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK10530",
@@ -120,7 +131,9 @@
   "aplicacion": null,
   "descripcion": "CATERPILLAR 3114-3116 (UN) 105 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK11440",
@@ -135,7 +148,9 @@
   "aplicacion": null,
   "descripcion": "CATERPILLAR 3304T-06T I/IN.C/VALV.4.3/4\"\"",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK11500",
@@ -150,7 +165,9 @@
   "aplicacion": null,
   "descripcion": "CATERPILLAR 3304-3306 INY.DIR.P.43 4.3/4",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK11570",
@@ -165,7 +182,9 @@
   "aplicacion": null,
   "descripcion": "CATERPILLAR 3304-3306 2 APA INY.IN4.3/4\"\"",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK11829",
@@ -180,7 +199,9 @@
   "aplicacion": null,
   "descripcion": "MWM 4.12TCE-6.12TCE E5 (Pz.DOBLE) 105 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK130030",
@@ -195,7 +216,9 @@
   "aplicacion": null,
   "descripcion": "MWM D226 P.32 A.C. 59,80 (2 CIL) 105 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13250",
@@ -210,7 +233,9 @@
   "aplicacion": null,
   "descripcion": "MWM 229 (UN) 102 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13603",
@@ -225,7 +250,9 @@
   "aplicacion": null,
   "descripcion": "MWM 229TD P.35 PZ.52,4 102 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13800",
@@ -240,7 +267,9 @@
   "aplicacion": null,
   "descripcion": "MWM 4.12TCE-6.12TCE (UN) S/C Pz.61 105mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13860",
@@ -255,7 +284,9 @@
   "aplicacion": null,
   "descripcion": "MWM 4.12TCE-6.12TCE (1 CIL) 105 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13885",
@@ -270,7 +301,9 @@
   "aplicacion": null,
   "descripcion": "MWM 4.12TCE E3 (1 CIL)(105L80A1+2)105 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13897",
@@ -285,7 +318,9 @@
   "aplicacion": null,
   "descripcion": "MWM 4.12TCE-6.12TCE E3 (1 CIL) 105 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13905",
@@ -300,7 +335,9 @@
   "aplicacion": null,
   "descripcion": "MWM 4.10-6.10 (1 CIL)(103L20A1) 103 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13910",
@@ -315,7 +352,9 @@
   "aplicacion": null,
   "descripcion": "MWM 6.10-6.10TCA (1 CIL) (103L02) 103 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13920",
@@ -330,7 +369,9 @@
   "aplicacion": null,
   "descripcion": "MWM 4.10TCA-6.10TCA (2 CIL)(103L18A1)103",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13930",
@@ -345,7 +386,9 @@
   "aplicacion": null,
   "descripcion": "MWM 4.10TCA-6.10TCA (1 CIL)(103L11)103mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13940",
@@ -383,7 +426,8 @@
    "sobremedidas": [
     "STD"
    ],
-   "ficha_de": "S BE13965"
+   "ficha_de": "S BE13965",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -399,7 +443,9 @@
   "aplicacion": null,
   "descripcion": "MWM 4.07TCE (2 CIL) (NIS)(93L45A1) 93 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK13966",
@@ -437,7 +483,8 @@
    "sobremedidas": [
     "STD"
    ],
-   "ficha_de": "S BE13970"
+   "ficha_de": "S BE13970",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -453,7 +500,9 @@
   "aplicacion": null,
   "descripcion": "RENAULT 18 1.4 Jrs 76 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK18510",
@@ -468,7 +517,9 @@
   "aplicacion": null,
   "descripcion": "RENAULT 12 1.3 A/C 73 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK18730",
@@ -483,7 +534,9 @@
   "aplicacion": null,
   "descripcion": "RENAULT CLIO 1.4 75,80 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK18750",
@@ -498,7 +551,9 @@
   "aplicacion": null,
   "descripcion": "RENAULT 9 1600 CC 77 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK18771",
@@ -513,7 +568,9 @@
   "aplicacion": null,
   "descripcion": "RENAULT TRAFIC 2.1D 86 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK18860",
@@ -528,7 +585,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS ISLe 330 CV (UN) 114 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK211000",
@@ -567,7 +626,8 @@
     "STD",
     "0,50"
    ],
-   "ficha_de": "S BE211010"
+   "ficha_de": "S BE211010",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -606,7 +666,8 @@
    "sobremedidas": [
     "STD"
    ],
-   "ficha_de": "S BE211020"
+   "ficha_de": "S BE211020",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -622,7 +683,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS N855C (1 CIL) 139,70 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21150",
@@ -637,7 +700,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS NT-NTA855G-NT855C (1 CIL) 139,70",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21160",
@@ -652,7 +717,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS NT855C-NT855P (1 CIL) 139,70 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21170",
@@ -667,7 +734,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS NT-NT855M-NTA855 (1 CIL) 139,70",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21180",
@@ -682,7 +751,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS N 15,0:1 (1 CIL) 139,70 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21350",
@@ -697,7 +768,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS 6CTAA (63,30) (1 CIL) C/L 114 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21510",
@@ -712,7 +785,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS 6CTAA (63,30) (1 CIL) C/C 114 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21515",
@@ -750,7 +825,8 @@
    "sobremedidas": [
     "STD"
    ],
-   "ficha_de": "S BE21540"
+   "ficha_de": "S BE21540",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -789,7 +865,8 @@
    "sobremedidas": [
     "STD"
    ],
-   "ficha_de": "S BE21610"
+   "ficha_de": "S BE21610",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -828,7 +905,8 @@
    "sobremedidas": [
     "STD"
    ],
-   "ficha_de": "S BE21630"
+   "ficha_de": "S BE21630",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -844,7 +922,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS 6CTAA (66,20) (1 CIL) C/C 114 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21635",
@@ -859,7 +939,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS 88NT (1 CIL) 139,70 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21700",
@@ -874,7 +956,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS NTA855 (1 CIL) 139,70 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21710",
@@ -889,7 +973,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS N855 (1 CIL) 139,70 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21730",
@@ -927,7 +1013,8 @@
    "sobremedidas": [
     "STD"
    ],
-   "ficha_de": "S BE21850"
+   "ficha_de": "S BE21850",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -943,7 +1030,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS 6CTAA (56 mm) (1 CIL) C/C 114 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21860",
@@ -981,7 +1070,8 @@
    "sobremedidas": [
     "STD"
    ],
-   "ficha_de": "S BE21940"
+   "ficha_de": "S BE21940",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -997,7 +1087,9 @@
   "aplicacion": null,
   "descripcion": "CUMMINS 6CTA (56,75) (1 CIL) C/C 114 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK21950",
@@ -1012,7 +1104,9 @@
   "aplicacion": null,
   "descripcion": "FORD CARGO 4600-5600 (NEW HOL) 111,80 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK26040",
@@ -1027,7 +1121,9 @@
   "aplicacion": null,
   "descripcion": "FORD CARGO 5600-5610 (NEW HOL) 111,80 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK26060",
@@ -1042,7 +1138,9 @@
   "aplicacion": null,
   "descripcion": "FORD CARGO 4610-6610 (1 CIL) 111,80 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK26070",
@@ -1057,7 +1155,9 @@
   "aplicacion": null,
   "descripcion": "NEW HOLLAND 8030 P.38 PZ.62 A/C 73 111.8",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK26610",
@@ -1072,7 +1172,9 @@
   "aplicacion": null,
   "descripcion": "NEW HOLLAND 8030 (P.41)(1 CIL) 111,80 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK26620",
@@ -1087,7 +1189,9 @@
   "aplicacion": null,
   "descripcion": "VALTRA 420-620 TURBO PZ.70 P.40 108 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK31150",
@@ -1102,7 +1206,9 @@
   "aplicacion": null,
   "descripcion": "J.DEERE 6068HBM P.41 Pz.78 (UN) 106,5 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK430375WS",
@@ -1117,7 +1223,9 @@
   "aplicacion": null,
   "descripcion": "J.DEERE 4045HBM P.35 Pz.58 106,5 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK430425WS",
@@ -1132,7 +1240,9 @@
   "aplicacion": null,
   "descripcion": "J.DEERE 4045H-6068H (UN) 106,5 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK430450WS",
@@ -1147,7 +1257,9 @@
   "aplicacion": null,
   "descripcion": "J.DEERE 4045T/H-6068T/H (UN) 106,5 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK430520WS",
@@ -1162,7 +1274,9 @@
   "aplicacion": null,
   "descripcion": "J.DEERE 4045T/H-6068T/H (UN) 106,5 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK430685WS",
@@ -1177,7 +1291,9 @@
   "aplicacion": null,
   "descripcion": "PEUGEOT TU4 1.5 8V P.18 75 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK440045",
@@ -1216,7 +1332,8 @@
     "STD",
     "0,50"
    ],
-   "ficha_de": "S BE44060"
+   "ficha_de": "S BE44060",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -1232,7 +1349,9 @@
   "aplicacion": null,
   "descripcion": "PEUGEOT 504 2.0 8,8:1 (<86) 88 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK44165",
@@ -1247,7 +1366,9 @@
   "aplicacion": null,
   "descripcion": "PEUGEOT XU7JPZ 1762 CC 83 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK44700",
@@ -1286,7 +1407,8 @@
     "STD",
     "0,50"
    ],
-   "ficha_de": "S BE 460100"
+   "ficha_de": "S BE 460100",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -1302,7 +1424,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM442LA (1 CIL) 128 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK48170",
@@ -1317,7 +1441,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM457LA E3 (1 CIL) 128 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK482020WS",
@@ -1332,7 +1458,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM457LA E3/E5 (1 CIL)S/BUJE 128mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK482030WS",
@@ -1347,7 +1475,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM457LA E5 (1 CIL) C/BUJE 128 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK482040WS",
@@ -1362,7 +1492,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM501-502-542 Pz.93 (UN) 130 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK482080",
@@ -1377,7 +1509,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM924LA-OM926LA E5 (2 CIL) 106 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK48320",
@@ -1417,7 +1551,8 @@
     "0,30",
     "0,60"
    ],
-   "ficha_de": "S BE 48690"
+   "ficha_de": "S BE 48690",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -1433,7 +1568,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM447A-449LA ->95 (1 CIL) 128 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK48930",
@@ -1448,7 +1585,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM447A-449LA ->95 (-0,3) 128 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK48933",
@@ -1463,7 +1602,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM447A-449LA 95-> (1 CIL) 128 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK48940",
@@ -1478,7 +1619,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM447A-449LA 95-> (-0,3) 128 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK48943",
@@ -1493,7 +1636,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM457LA INY.EL. EURO2/3 128 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK48964",
@@ -1508,7 +1653,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM457LA EURO V (1 CIL) 128 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK48967WS",
@@ -1523,7 +1670,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM460LA",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK48979WS",
@@ -1564,7 +1713,8 @@
     "0,60",
     "0,90"
    ],
-   "ficha_de": "S BE 48980"
+   "ficha_de": "S BE 48980",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -1580,7 +1730,9 @@
   "aplicacion": null,
   "descripcion": "M.BENZ OM457LA INY.EL.Pz.90 P.52 128 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK48990",
@@ -1595,7 +1747,9 @@
   "aplicacion": null,
   "descripcion": "DEUTZ 913 ECOL.3R C/C Pz.54,5 124*102mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK50135",
@@ -1635,7 +1789,8 @@
     "0,50",
     "1,00"
    ],
-   "ficha_de": "S BE50160"
+   "ficha_de": "S BE50160",
+   "oring": false
   },
   "codigos_crac": [
    {
@@ -1651,7 +1806,9 @@
   "aplicacion": null,
   "descripcion": "DEUTZ 913 ECOL.3R P.35 Pz.45 120 102 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK50181",
@@ -1666,7 +1823,9 @@
   "aplicacion": null,
   "descripcion": "DEUTZ 1013 (TETON CHATO)(1 CIL) 108 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK50240",
@@ -1681,7 +1840,9 @@
   "aplicacion": null,
   "descripcion": "HONDA BIZ 125 (1 CIL) CARBURADO 52,40 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK51200",
@@ -1696,7 +1857,9 @@
   "aplicacion": null,
   "descripcion": "FORD ESCORT 1.6 CHT 77 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK59201",
@@ -1711,7 +1874,9 @@
   "aplicacion": null,
   "descripcion": "VW KOMBI 1.3 77 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK70022",
@@ -1726,7 +1891,9 @@
   "aplicacion": null,
   "descripcion": "VW KOMBI 1600 85,5 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK70150",
@@ -1741,7 +1908,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO NL10-310 TD102FT (1 CIL) 4.3/4\"\"",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71030",
@@ -1756,7 +1925,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO NL10-320 TD10-A (1 CIL) 4.3/4\"\"",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71050",
@@ -1771,7 +1942,9 @@
   "aplicacion": null,
   "descripcion": "RENAULT MIDLUM 320 DXi7 P.45 (UN) 108 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK710510WS",
@@ -1786,7 +1959,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO DH10A (1 CIL) 4.3/4\"\"",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71055",
@@ -1801,7 +1976,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO MD13 E5-D13A E4/E5 (1 CIL) 131 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK710710WS",
@@ -1816,7 +1993,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO D13C 131 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK710800WS",
@@ -1831,7 +2010,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO D12C-D12D-NH12-FH12 (1 CIL) 131 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71120",
@@ -1846,7 +2027,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO D7A (1 CIL) 104,77 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71220WS",
@@ -1861,7 +2044,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO TD123EDC ARTIC. (1 CIL) 130,18 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71240WS",
@@ -1876,7 +2061,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO NL10-280 TD100G-TD101 (1 CIL)4.3/4",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71400",
@@ -1891,7 +2078,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO B58-B10M THD100E-THD 101 (1 CIL)",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71420",
@@ -1906,7 +2095,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO NL10-340 TD102FS ART.(1 CIL) 4.3/4",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71430WS",
@@ -1921,7 +2112,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO TD120C (1 CIL) 130,18 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71440",
@@ -1936,7 +2129,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO TD120A*(1 CIL) 4.3/4\"\"",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71450",
@@ -1951,7 +2146,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO NL12-400 TD122F/FS (1 CIL) 130,18m",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71500",
@@ -1966,7 +2163,9 @@
   "aplicacion": null,
   "descripcion": "VOLVO D13A 400-440 (1 CIL) 131 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK71860 WS",
@@ -1981,7 +2180,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DC12 380 S5 ARTIC.(1 CIL) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK760300",
@@ -1996,7 +2197,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DSC14 P.50 Pz.75 (UN) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76061",
@@ -2011,7 +2214,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DC13 E5 5/6 CIL. (UN) 130 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK760730",
@@ -2026,7 +2231,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DC9 20V E5 P.58 A/C 92,04 130 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK760820",
@@ -2041,7 +2248,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DSC9 P94 (1 CIL) 115 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76200",
@@ -2056,7 +2265,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA 110 S/TURBO (1 CIL) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76520",
@@ -2071,7 +2282,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DS11 (1 CIL) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76540WS",
@@ -2086,7 +2299,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA 112T 1§T (1 CIL) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76550",
@@ -2101,7 +2316,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA 112T 1§T (1 CIL)(A.C.-0,4) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76551",
@@ -2116,7 +2333,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA 113H (DSC11) 93/95 (UN) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76560",
@@ -2131,7 +2350,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA 113H (DSC11) 93/95 (UN) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76560WS",
@@ -2146,7 +2367,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA 113H (DSC11) 93/95(-0,4)(UN) 127",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76564",
@@ -2161,7 +2384,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA 113 (DSC11) 95--> A/C 100 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76570",
@@ -2176,7 +2401,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA 113 (DSC11) 95--> (-0,4) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76574",
@@ -2191,7 +2418,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DC11 360CV CAM.150 (UN) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76590WS",
@@ -2206,7 +2435,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DC11 EVO 5 CAM.151 (UN) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76595",
@@ -2221,7 +2452,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DSC12 S4 360CV (1 CIL) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76650",
@@ -2236,7 +2469,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DSC12 S4 400CV (1 CIL) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76655",
@@ -2251,7 +2486,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DSC12 S4 420CV ARTIC.(1 CIL)127mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": false
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76670",
@@ -2266,7 +2503,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DC12 S4 420 CV (ARTIC) 127 mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76675WS",
@@ -2281,7 +2520,9 @@
   "aplicacion": null,
   "descripcion": "SCANIA DC9-DC11 CAM.151 P/EMB.(UN) 127mm",
   "medidas": {},
-  "extra": {},
+  "extra": {
+   "oring": true
+  },
   "codigos_crac": [
    {
     "codigo": "T BEK76680WS",

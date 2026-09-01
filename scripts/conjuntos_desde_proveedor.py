@@ -13,9 +13,9 @@ convertir, así que la ficha ARRANCA por la lista del proveedor y las medidas se
 completan después, leyéndolas del catálogo de Mahle.
 
 POR QUÉ UN SCRIPT Y NO EDITAR EL JSON A MANO. Porque hay dos fuentes y se
-mueven a distinto ritmo: el código, la descripción y el precio son del
-proveedor y cambian todos los días; las medidas y el dibujo son del catálogo de
-Mahle y se cargan una vez. Este script MEZCLA: refresca lo del proveedor y no
+mueven a distinto ritmo: el código, la descripción, el precio y si el juego trae
+los orings de camisa son del proveedor y cambian todos los días; las medidas y
+el dibujo son del catálogo de Mahle y se cargan una vez. Este script MEZCLA: refresca lo del proveedor y no
 toca nada de lo que ya se cargó del catálogo. Correrlo dos veces no pisa
 trabajo hecho.
 
@@ -81,6 +81,17 @@ def refrescar():
         if ficha is None:
             nuevas.append(codigo)
             ficha = {"aplicacion": None, "medidas": {}, "extra": {}}
+        # Si el juego viene con los orings de camisa: lo dice el sufijo "WS" del
+        # código del proveedor. Los 22 que lo llevan son todos motores de camisa
+        # húmeda (Scania, Volvo, OM457/OM460, John Deere, Midlum) y el precio lo
+        # confirma: el par "T BEK76560" / "T BEK76560WS" se lleva $50.208 de
+        # diferencia, que es lo que sale el juego de orings de ese motor
+        # (OCBEU76060, $45.177) y no lo que sale una camisa ($280.448).
+        #
+        # Va en `extra` pero lo pone el script y no el catálogo, porque sale del
+        # código del proveedor: si mañana aparece un código WS nuevo, la columna
+        # lo dice sola en la próxima corrida.
+        ficha.setdefault("extra", {})["oring"] = codigo.replace(" ", "").upper().endswith("WS")
         ficha.update({
             "codigo": codigo,
             # El código como lo escribe el catálogo de Mahle: sin la categoría

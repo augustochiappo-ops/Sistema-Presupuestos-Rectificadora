@@ -311,6 +311,16 @@ check('trae el dibujo del subconjunto del mismo número', await dibujoConj.count
 check('y el archivo es el del subconjunto',
   (await dibujoConj.getAttribute('src') || '').includes('SBE21540'),
   await dibujoConj.getAttribute('src'))
+// La columna Oring: los códigos "WS" traen los orings de camisa y los demás
+// no. Es lo que decide si hay que pedirlos aparte.
+check('la columna Oring está', await page.locator('th', { hasText: 'Oring' }).count() === 1)
+// Se mira la celda de la columna, no el texto de la fila entera: un "Sí"
+// suelto también lo pone la columna Stock.
+const celdaOring = () => filas().nth(0).locator('td').nth(10).textContent()
+check('y este conjunto dice que no los trae', (await celdaOring()).trim() === 'No', await celdaOring())
+await page.fill('input[placeholder="Código…"]', 'T BEK76560WS')
+await esperar(1300)
+check('el código con WS dice que sí', (await celdaOring()).trim() === 'Sí', await textoDeFila(0))
 await page.screenshot({ path: path.join(SHOT, 'medidas-conjuntos.png'), fullPage: true })
 
 // Los que todavía esperan el catálogo se buscan por el motor y muestran su

@@ -34,6 +34,13 @@ pistón, un juego completo de motor en un caso y una pieza suelta en el otro. As
 que para llenar la ficha de un conjunto se busca en el PDF **la fila de su
 número**, exactamente como se hace con los subconjuntos.
 
+**El sufijo `WS`** (22 códigos) quiere decir que el juego **viene con los orings
+de camisa**: son todos motores de camisa húmeda, y la diferencia de precio
+contra el mismo código sin sufijo es justo lo que sale el juego de orings de ese
+motor. No hace falta cargarlo a mano — lo pone
+`scripts/conjuntos_desde_proveedor.py` en `extra.oring` y la tabla lo muestra en
+su columna.
+
 Ojo con la "E": el catálogo Mahle también nombra conjuntos con `E#####`, pero el
 proveedor **no usa esa letra** (para él la E es "Conjuntos de Embrague"). Lo que
 figura en la lista es `T BEK…` y nada más.

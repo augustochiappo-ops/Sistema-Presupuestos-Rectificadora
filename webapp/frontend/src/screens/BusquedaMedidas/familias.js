@@ -230,17 +230,22 @@ export const FAMILIAS = [
       // 150 y no menos: el código más largo del proveedor es "T BEK482020WS" y
       // partido en dos renglones no se lee de un vistazo.
       { key: 'codigo', header: 'Código', width: 150, strong: true, wrap: true },
-      { key: 'codigo_fab', header: 'Cód. Mahle', width: 100 },
+      { key: 'codigo_fab', header: 'Cód. Mahle', width: 110 },
       // El dibujo del pistón sale del mismo recorte del catálogo que el del
       // subconjunto del mismo número: es el mismo pistón dibujado una sola vez.
-      { key: 'dibujo', header: 'Dibujo', width: 80, tipo: 'dibujo' },
-      { key: 'descripcion', header: 'Descripción', wrap: true, minWidth: 175 },
+      { key: 'dibujo', header: 'Dibujo', width: 70, tipo: 'dibujo' },
+      { key: 'descripcion', header: 'Descripción', wrap: true, minWidth: 130 },
       { key: 'nro_cil', header: 'Nº cil.', width: 70, align: 'right' },
       { key: 'diam_piston', header: 'Ø pistón', width: 95, align: 'right', tipo: 'mm' },
       { key: 'alt_piston', header: 'Alto total', width: 95, align: 'right', tipo: 'mm' },
-      { key: 'perno_str', header: 'Perno', width: 130 },
-      { key: 'diams_dispon', header: 'Sobremedidas', width: 130 },
-      { key: 'codigo_aros', header: 'Cód. aros', width: 100 },
+      { key: 'perno_str', header: 'Perno', width: 125 },
+      { key: 'diams_dispon', header: 'Sobremedidas', width: 125 },
+      { key: 'codigo_aros', header: 'Cód. aros', width: 95 },
+      // Si el juego trae los orings de camisa: son los códigos que terminan en
+      // "WS" y son 22, todos de motores de camisa húmeda. Cambia el precio y
+      // cambia lo que hay que pedir aparte, así que va en la tabla y no
+      // escondido en el código.
+      { key: 'oring', header: 'Oring', width: 70, align: 'center', tipo: 'si_no' },
       // Sin columna "Precio de" y sin "Marca", al revés que en subconjuntos: el
       // conjunto tiene UN código con UN precio (no se pide por sobremedida) y
       // son todos Mahle, así que una columna con el mismo texto 128 veces solo
