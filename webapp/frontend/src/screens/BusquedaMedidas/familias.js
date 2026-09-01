@@ -220,26 +220,38 @@ export const FAMILIAS = [
       { campo: 'descripcion', label: 'Descripción', ancho: 280, icono: 'search' },
     ],
     columnas: [
-      { key: 'codigo', header: 'Código', width: 130, strong: true, wrap: true },
+      // Los dos códigos a la vista, y por qué: el de la izquierda es el que se
+      // pide (el de la lista del proveedor) y el de al lado es el del catálogo
+      // de Mahle, que es con el que se busca el motor en el PDF. Los dos se
+      // pueden escribir en el filtro "Código".
+      // Los anchos son ajustados a propósito: con el precio y el stock a la
+      // derecha, la tabla tiene que entrar en pantalla sin dejarlos afuera del
+      // borde — que es justamente lo que se viene a mirar de un conjunto.
+      // 150 y no menos: el código más largo del proveedor es "T BEK482020WS" y
+      // partido en dos renglones no se lee de un vistazo.
+      { key: 'codigo', header: 'Código', width: 150, strong: true, wrap: true },
+      { key: 'codigo_fab', header: 'Cód. Mahle', width: 100 },
       // El dibujo del pistón sale del mismo recorte del catálogo que el del
       // subconjunto del mismo número: es el mismo pistón dibujado una sola vez.
       { key: 'dibujo', header: 'Dibujo', width: 80, tipo: 'dibujo' },
-      { key: 'marca', header: 'Marca', width: 100 },
-      { key: 'descripcion', header: 'Descripción', wrap: true, minWidth: 220 },
-      { key: 'nro_cil', header: 'Nº cil.', width: 80, align: 'right' },
-      { key: 'diam_piston', header: 'Ø pistón', width: 100, align: 'right', tipo: 'mm' },
-      { key: 'alt_piston', header: 'Alto total', width: 100, align: 'right', tipo: 'mm' },
-      { key: 'perno_str', header: 'Perno', width: 150 },
-      { key: 'diams_dispon', header: 'Sobremedidas', width: 150 },
-      { key: 'medida_crac', header: 'Precio de', width: 100 },
-      { key: 'codigo_aros', header: 'Cód. aros', width: 110 },
-      { key: 'precio', header: 'Precio', width: 120, align: 'right', tipo: 'precio' },
-      { key: 'stock', header: 'Stock', width: 90, align: 'center', tipo: 'stock' },
+      { key: 'descripcion', header: 'Descripción', wrap: true, minWidth: 175 },
+      { key: 'nro_cil', header: 'Nº cil.', width: 70, align: 'right' },
+      { key: 'diam_piston', header: 'Ø pistón', width: 95, align: 'right', tipo: 'mm' },
+      { key: 'alt_piston', header: 'Alto total', width: 95, align: 'right', tipo: 'mm' },
+      { key: 'perno_str', header: 'Perno', width: 130 },
+      { key: 'diams_dispon', header: 'Sobremedidas', width: 130 },
+      { key: 'codigo_aros', header: 'Cód. aros', width: 100 },
+      // Sin columna "Precio de" y sin "Marca", al revés que en subconjuntos: el
+      // conjunto tiene UN código con UN precio (no se pide por sobremedida) y
+      // son todos Mahle, así que una columna con el mismo texto 128 veces solo
+      // le saca ancho a la descripción.
+      { key: 'precio', header: 'Precio', width: 110, align: 'right', tipo: 'precio' },
+      { key: 'stock', header: 'Stock', width: 80, align: 'center', tipo: 'stock' },
     ],
     ejemplos: [
-      { label: 'Ø pistón 102 mm', filtros: { diam_piston: '102', tol_diam_piston: '0.1' } },
-      { label: 'Ø perno 36 mm', filtros: { diam_perno: '36', tol_diam_perno: '0.1' } },
-      { label: 'Motor: Palio', filtros: { aplicacion: 'palio' } },
+      { label: 'Ø pistón 114 mm', filtros: { diam_piston: '114', tol_diam_piston: '0.1' } },
+      { label: 'Motor: Cummins', filtros: { descripcion: 'cummins' } },
+      { label: 'Motor: Scania', filtros: { descripcion: 'scania' } },
     ],
   },
   {

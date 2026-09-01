@@ -286,6 +286,51 @@ check('y se cierra tocando afuera', await page.locator('[data-dibujo-piston]').c
 await page.fill('input[placeholder="Descripción…"]', '')
 await esperar(600)
 
+console.log('\n=== Conjuntos: el juego del motor, con los dos códigos ===')
+// La pestaña sale de la lista del proveedor (los "T BEK…"), así que trae precio
+// y stock desde el día uno; las medidas se van cargando del catálogo de Mahle.
+await page.fill('input[placeholder="Código…"]', '')
+// La pestaña de conjuntos se pide con ^ y .first(): "Conjuntos" a secas también
+// matchea "Subconjuntos", que es la pestaña de al lado.
+await page.locator('button', { hasText: /^Conjuntos/ }).first().click()
+await esperar(500)
+check('la pestaña dice cuántos conjuntos hay',
+  (await page.locator('button', { hasText: /^Conjuntos/ }).first().textContent() || '').includes('128'),
+  await page.locator('button', { hasText: /^Conjuntos/ }).first().textContent())
+await page.fill('input[placeholder="Código…"]', 'T BEK21540')
+await esperar(1300)
+const conj = await textoDeFila(0)
+check('se encuentra por el código del proveedor', conj.includes('T BEK21540'), conj)
+check('y muestra al lado el código de Mahle', conj.includes('K21540'), conj)
+check('con las medidas del pistón', conj.includes('114') && conj.includes('115,6'), conj)
+check('y con precio y stock de la lista', /\$\s?[\d.]+/.test(conj) && conj.includes('Sí'), conj)
+// El conjunto y el subconjunto del mismo número son el mismo pistón: el dibujo
+// es uno solo y lo comparten, sin guardar el PNG dos veces.
+const dibujoConj = filas().nth(0).locator('img')
+check('trae el dibujo del subconjunto del mismo número', await dibujoConj.count() === 1)
+check('y el archivo es el del subconjunto',
+  (await dibujoConj.getAttribute('src') || '').includes('SBE21540'),
+  await dibujoConj.getAttribute('src'))
+await page.screenshot({ path: path.join(SHOT, 'medidas-conjuntos.png'), fullPage: true })
+
+// Los que todavía esperan el catálogo se buscan por el motor y muestran su
+// precio: sin medidas cargadas, la fila va con guiones, nunca con un número
+// inventado.
+await page.fill('input[placeholder="Código…"]', '')
+await page.fill('input[placeholder="Descripción…"]', 'scania 113h')
+await esperar(1300)
+const scania = await filas().allTextContents()
+check('los que esperan medidas se encuentran por el motor', scania.length === 3, scania.length)
+check('y van con guiones en las medidas, no con números inventados',
+  scania.every((f) => f.includes('—')) && scania.every((f) => /\$\s?[\d.]+/.test(f)), scania)
+// Las dos variantes del mismo número (con y sin "WS") son dos fichas, cada una
+// con su precio: si se pisaran, una de las dos desaparecería de la lista.
+check('las dos variantes del mismo número conviven',
+  scania.some((f) => f.includes('T BEK76560WS')) && scania.some((f) => /T BEK76560[^W]/.test(f)),
+  scania)
+await page.fill('input[placeholder="Descripción…"]', '')
+await esperar(500)
+
 console.log('\n=== Pistones: el catálogo Persan, con lo que no se pudo leer marcado ===')
 await page.fill('input[placeholder="Código…"]', '')
 await page.locator('button', { hasText: 'Pistones' }).click()

@@ -1294,6 +1294,63 @@ al dueño para que saque esas fotos cuando pueda.
 iguales**, `tests/ui_medidas.mjs` entera en verde, y producción sirve el JS
 commiteado byte a byte más los dibujos nuevos con su tamaño exacto.
 
+## Sesión 2026-09-01 — Conjuntos: la séptima familia del buscador por medidas
+
+**Lo que pidió el dueño:** sumar al buscador por medidas una categoría nueva,
+**Conjuntos**, sacada del catálogo de Mahle, con los mismos datos que
+subconjuntos y con el dibujo del pistón recortado como se venía haciendo.
+
+**Dónde estaban los conjuntos del proveedor (el hallazgo de la sesión).** La
+primera búsqueda fue por `E BE…`, que es como el catálogo de Mahle nombra al
+conjunto (`E70870`), y en la lista del proveedor **no hay ninguno**. Están bajo
+otro prefijo:
+
+    T BEK21540
+    │  │ └── el código de KIT del catálogo de Mahle (K21540)
+    │  └──── marca BE = Mahle
+    └─────── categoría T = "Conjuntos" (la "E" del proveedor es Conjuntos de
+             Embrague, otra cosa)
+
+**Son 128, 117 con stock.** O sea que la pestaña muestra precio y stock desde el
+día uno: no queda todo en "Consultar", como se había supuesto al empezar.
+
+**Decisión del dueño (2026-09-01):** se cargan **solo los 128 que trabaja el
+proveedor** (no la sección entera del catálogo), y en la tabla van **los dos
+códigos**: el del proveedor —el que se pide— y el de Mahle —el que se busca en
+el PDF—. Los dos entran por el mismo casillero "Código".
+
+**Qué se hizo:**
+- `CRAC/tecnicos/conjuntos.json` — 128 fichas, generadas por
+  `scripts/conjuntos_desde_proveedor.py`. El script **mezcla**: refresca código,
+  descripción y precio (que son del proveedor y cambian seguido) y no toca las
+  medidas ni el `extra` (que son del catálogo y se cargan una vez). Correrlo dos
+  veces no pisa trabajo hecho.
+- `--desde-subconjuntos` rellenó **15** fichas con las medidas del subconjunto
+  del mismo número: es el mismo pistón, leído de la misma fila del catálogo.
+  Queda anotado en `extra.ficha_de` de dónde salió el dato. Las otras 113
+  esperan las capturas del catálogo.
+- Pestaña **Conjuntos** en `app/tecnicos.py` (ESPEC) y en `familias.js`, con los
+  mismos tres filtros que subconjuntos y sin la casilla del proveedor (las 128
+  salen de su lista: la casilla no filtraría nada).
+- **El dibujo no se guarda dos veces.** `dibujos-pistones.js` pasó de ser una
+  lista de códigos con foto a un **mapa código → archivo**: `TBEK21540` apunta
+  al PNG de `SBE21540`. Los 181 PNG quedaron byte a byte iguales.
+- El script de recorte cruza las fotos contra los **dos** catálogos y aprendió a
+  distinguir una variante (`T BEK76560` / `T BEK76560WS`, mismo motor, mismo
+  dibujo) de una ambigüedad real (dos códigos con bases distintas que se leen
+  con el mismo número, que se sigue salteando).
+
+**Verificado:** `tests/backend_medidas.py` entera en verde (incluye ocho checks
+nuevos de conjuntos), `tests/ui_medidas.mjs` entera en verde con diez checks
+nuevos, los 181 dibujos byte a byte iguales, y la pantalla mirada de verdad: la
+fila del `T BEK21540` con sus dos códigos, el dibujo heredado, Ø 114, alto
+115,6, perno ∅45,00 × 91,00, aros A21550 y $ 319.153 con stock.
+
+**Lo que quedó abierto:** las 113 fichas sin medidas, que se completan con las
+capturas del catálogo, y dos preguntas para el dueño: qué distingue a un código
+`WS` de su par sin sufijo (`T BEK76560` a $493.641 y `T BEK76560WS` a $543.849,
+mismo motor), y si el par `C/L` / `C/C` (con lomo / con cavidad) se lee así.
+
 ## Próximo paso
 
 **Editar Precios: la tarifa de mano de obra del taller (2026-08-30).** El dueño

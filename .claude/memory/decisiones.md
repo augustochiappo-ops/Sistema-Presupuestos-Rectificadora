@@ -813,3 +813,26 @@ archivo es cada uno y con qué tres líneas se rehace el volcado.
 **Decisión:** cuando el número de una foto no cruza con ningún código de `subconjuntos.json` (le pasó a `S26510.png`, el FORD CARGO 6.6 L: el proveedor lista el `S BE26500` de la fila de arriba pero no el 26510), la foto **no se borra**. Queda en `CRAC/tecnicos/fuentes/pistones/` y el script avisa en cada corrida.
 **Por qué:** el catálogo del proveedor se reimporta cada tanto y los códigos aparecen y desaparecen. Si la foto se queda, el día que el código entre el dibujo se carga solo con la próxima corrida; si se borra, hay que acordarse de que existía y volver a recortarla del PDF. El aviso repetido es el precio, y es barato: son dos líneas por corrida y dicen algo cierto.
 **Fecha:** 2026-08-29
+
+---
+
+## Los conjuntos del proveedor no son "E BE" sino "T BEK" (2026-09-01)
+**El caso:** el catálogo de Mahle nombra al conjunto con una **E** (`E70870`) y así lo dice la skill `mahle-proveedor-match`. Con esa idea se buscó `E BE…` en `CRAC/precio-stock.csv` y no apareció **ninguno**, así que la primera lectura fue "el proveedor no trabaja conjuntos" — y era falsa.
+**Lo que hay de verdad:** 128 códigos `T BEK#####`. La categoría del proveedor es **T = "Conjuntos"** (la **E** es *Conjuntos de Embrague*, otra cosa), la marca es **BE = Mahle** y lo que sigue es el **código de kit** del catálogo, `K21540` — el mismo número que el subconjunto `S BE21540`.
+**Cómo se encontró:** en vez de buscar el prefijo supuesto, se listaron **todas** las categorías que aparecen con la marca BE y se cruzaron con los nombres de `prefijos_crac.csv`. Ahí saltó `T` con 128 códigos.
+**La lección, que vale para el próximo catálogo:** cuando una búsqueda por prefijo da cero, el prefijo es sospechoso antes que el dato. La lista del proveedor tiene su propia nomenclatura y **no** la del fabricante; `prefijos_crac.csv` es el diccionario y está en el repo.
+**Fecha:** 2026-09-01
+
+## La ficha del conjunto arranca en la lista del proveedor, no en el catálogo (2026-09-01)
+**Decisión:** `CRAC/tecnicos/conjuntos.json` lo genera `scripts/conjuntos_desde_proveedor.py` a partir de los `T BEK…` de `precio-stock.csv`, y las medidas se cargan después, leyéndolas del catálogo de Mahle.
+**Por qué al revés que las otras familias** (camisas, guías, asientos y subconjuntos salen de un catálogo técnico convertido): de conjuntos no hay catálogo técnico que convertir. Empezar por la lista del proveedor da las 128 fichas **hoy**, con precio, stock, motor y los dos códigos, buscables por motor; las medidas van entrando de a una. La alternativa era una pestaña vacía hasta terminar 128 capturas.
+**Cómo se evita que las dos fuentes se pisen:** el script **mezcla** en vez de reescribir. Refresca lo del proveedor (código, descripción, `codigos_crac`), que cambia seguido, y no toca `medidas`, `aplicacion` ni `extra`, que son del catálogo y se cargan una vez. Es idempotente: correrlo dos veces no pierde trabajo. Un código que el proveedor deja de listar se saca **avisando**, no en silencio.
+**El atajo que se aprovechó:** `--desde-subconjuntos` completó 15 fichas con las medidas del subconjunto del mismo número —`T BEK21540` y `S BE21540` son el mismo pistón, misma fila del catálogo— y deja anotado en `extra.ficha_de` de dónde salió el dato, para no confundirlo con uno leído para ese conjunto. Solo completa fichas vacías: nunca pisa una medida cargada.
+**Fecha:** 2026-09-01
+
+## Un dibujo, dos códigos: el manifiesto pasa a ser un mapa (2026-09-01)
+**Decisión:** `dibujos-pistones.js` deja de ser `CON_DIBUJO = new Set([...])` y pasa a ser `DIBUJOS = { código: archivo }`. El conjunto y el subconjunto del mismo número apuntan al **mismo PNG**, que se sigue llamando como el subconjunto.
+**Por qué no duplicar el archivo:** el catálogo dibuja el pistón **una vez** por fila y esa fila trae los dos códigos. Copiar el PNG con otro nombre sería meter en git 181 imágenes repetidas para no cambiar una línea de código, y el día que se recorte de nuevo un dibujo habría que acordarse de actualizar las dos copias.
+**Por qué el archivo conserva el nombre del subconjunto:** los 181 que ya estaban no cambian de nombre, así que el cambio se verifica con `git status` sobre `public/pistones/` — si aparece un solo PNG modificado, algo se rompió. Salieron los 181 byte a byte iguales.
+**El control de ambigüedad que hubo que afinar:** el script salteaba una foto cuyo número cayera en dos códigos de la misma familia. Con los conjuntos eso pasa de verdad y es inofensivo: `T BEK76560` y `T BEK76560WS` son el mismo motor. Ahora se compara la **base** del código (hasta el último dígito): misma base = variante, y el dibujo va a las dos; bases distintas (`S BE1010` y `S BE01010`) = ambigüedad real, y se saltea como antes.
+**Fecha:** 2026-09-01

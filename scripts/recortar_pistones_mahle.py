@@ -448,6 +448,17 @@ def clave(codigo):
     return re.sub(r"\s+", "", codigo)
 
 
+def _base(codigo):
+    """
+    El código hasta el final de sus dígitos, sin el sufijo de variante:
+    "T BEK76560WS" y "T BEK76560" tienen la misma base. Es lo que decide si dos
+    códigos de la misma familia son el mismo motor o dos distintos.
+    """
+    c = clave(codigo)
+    m = re.match(r"^(.*\d)", c)
+    return m.group(1) if m else c
+
+
 def _numero_del_nombre(nombre):
     """
     El número de código que trae el nombre del archivo: los dígitos que van
@@ -510,9 +521,16 @@ def main():
             avisos.append(f"{nombre}: el código {m.group(1)} no está en los catálogos, se saltea")
             continue
         # Que el número caiga en las dos familias es lo normal (el pistón suelto
-        # y el juego del motor). Que caiga en dos códigos DE LA MISMA familia,
-        # no: ahí no se sabe cuál es y se saltea, como siempre.
-        ambigua = {f: cs for f, cs in por_familia.items() if len({clave(c) for c in cs}) > 1}
+        # y el juego del motor). Dentro de una familia puede caer en dos códigos
+        # y hay que distinguir dos casos:
+        #
+        #   "T BEK76560" y "T BEK76560WS" — la MISMA base con un sufijo: son dos
+        #   variantes del mismo motor, mismo pistón, mismo dibujo. Va a las dos.
+        #
+        #   "S BE1010" y "S BE01010" — bases distintas que se leen con el mismo
+        #   número: ahí no se sabe de cuál es la foto y se saltea, que es la
+        #   ambigüedad contra la que estaba puesto este control.
+        ambigua = {f: cs for f, cs in por_familia.items() if len({_base(c) for c in cs}) > 1}
         if ambigua:
             avisos.append(f"{nombre}: el número {m.group(1)} cae en {ambigua}, se saltea")
             continue

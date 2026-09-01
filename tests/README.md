@@ -155,12 +155,13 @@ $VENV/bin/python tests/backend_medidas.py
 
 | Bloque | Qué verifica |
 |---|---|
-| Catálogos | Las seis familias cargadas con sus totales exactos (396 camisas, 915 guías, 1.108 asientos, 201 subconjuntos, 35 pistones, 190 bujes de biela), y el filtro "solo las que tiene el proveedor" en todas menos subconjuntos, filtrando de verdad donde está |
+| Catálogos | Las siete familias cargadas con sus totales exactos (396 camisas, 915 guías, 1.108 asientos, 201 subconjuntos, 128 conjuntos, 35 pistones, 190 bujes de biela), y el filtro "solo las que tiene el proveedor" en todas menos las dos de Mahle (subconjuntos y conjuntos), filtrando de verdad donde está |
 | Sin filtros | No devuelve el catálogo entero, y una familia inexistente no explota |
 | Valor ± tolerancia | Encuentra con el valor exacto y con ±0,5, deja de encontrar con ±0,1, usa ±0,5 si no se escribe tolerancia, y acepta la coma decimal |
 | Acumulación | Sumar un segundo filtro achica el resultado y no pierde la pieza buscada |
 | Precio y stock | Salen de `crac_repuestos` (no del catálogo técnico), el código del proveedor es el exacto (con su relleno de alineación) y una ficha sin equivalencia viene con `precio: null` en vez de con un precio inventado |
 | Subconjuntos | Un código Mahle tiene un código del proveedor **por sobremedida**: se elige el que tiene stock y precio, y se informa cuál |
+| Conjuntos | El juego del motor: se encuentra por el código del proveedor (`T BEK21540`) y por el de Mahle (`K21540`), trae los dos, tiene **un solo** precio (sin medida de sobremedida), y las medidas que salieron de la ficha del subconjunto del mismo número dicen de dónde vinieron. Los que todavía esperan el catálogo se encuentran por el motor |
 | Camisas | Las etiquetas de sobremedida son las del catálogo (las de pulgadas como pulgadas y las métricas como milímetros, que era el error viejo); el alto de pestaña sale del Excel y no del 4,00 de la página; el que también dice 4,00 en el Excel queda marcado para revisar; están las camisas húmedas; y el filtro del proveedor viene activado, se puede destildar y avisa cuántas quedaron afuera |
 | Asientos de válvulas | Los tres catálogos (559 Indy, 277 Nubo, 272 RYC) en una sola familia, 326 con código del proveedor; la cantidad por juego solo la traen los Indy y en los otros dos es `null`; el cruce de cada catálogo con la lista del proveedor (Indy por número, Nubo por número+letra del tipo, RYC por número); el ángulo como medida con tolerancia, que llega hasta los ángulos raros del catálogo (44,3º) |
 | Bujes de biela | El mismo código bajo dos marcas son dos fichas; el Ø exterior encuentra por cualquier sobremedida y dice cuál matcheó; un buje escalonado aparece por sus **dos** anchos y no por el promedio; el trapezoidal (I-143X) no se lleva el precio del recto (I-143) |
@@ -172,20 +173,23 @@ $VENV/bin/python tests/backend_medidas.py
 
 ## 4. UI — `ui_medidas.mjs`
 
-Noventa verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
+Cien verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
 
 ```bash
 source /tmp/rect-corrida/entorno.sh
 node tests/ui_medidas.mjs
 ```
 
-Qué cubre: la sección en el menú lateral · las seis pestañas con su total ·
+Qué cubre: la sección en el menú lateral · las siete pestañas con su total ·
 estado inicial sin resultados y con **ejemplos clicables** · buscar por medida y
 que **todas** las filas caigan dentro del rango pedido · achicar la tolerancia y
 ver menos filas · el tag del filtro activo · **ordenar** haciendo clic en
 cualquier parte del encabezado · guías por código con su precio y su stock ·
 **los filtros se guardan por familia** (cambiar de pestaña y volver no borra lo
-escrito) · subconjuntos mostrando de qué sobremedida es el precio · una camisa
+escrito) · subconjuntos mostrando de qué sobremedida es el precio · **conjuntos**
+con los dos códigos (el del proveedor y el de Mahle), precio y stock, el dibujo
+compartido con el subconjunto del mismo número, y las dos variantes del mismo
+número (con y sin "WS") conviviendo como dos fichas · una camisa
 sin equivalencia diciendo "Consultar" en vez de un precio · la **forma** con su
 dibujo en la tabla de guías, el filtro de nueve formas (que cargan de verdad, y
 la "N" sin dibujo prestado) y la **lámina** completa con el nombre de cada

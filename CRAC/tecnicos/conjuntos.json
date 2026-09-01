@@ -1,1 +1,2292 @@
-[]
+[
+ {
+  "codigo": "T BEK01050",
+  "codigo_fab": "K01050",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "FIAT DUCATO 2.8TDi B/TRAP. C/CAN.94,4 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK01050",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK01060",
+  "codigo_fab": "K01060",
+  "marca": "MAHLE",
+  "aplicacion": "DUCATO 2.8 E3 — INYECCIÓN ELECTRÓNICA",
+  "descripcion": "FIAT DUCATO 2.8TDi 94,4 mm",
+  "medidas": {
+   "diam_piston": 94.4,
+   "alt_piston": 87.6,
+   "diam_perno": 32
+  },
+  "extra": {
+   "fabricante": "FIAT",
+   "motor": "DUCATO 2.8L Euro 3",
+   "nro_cil": 4,
+   "diam_cilindro": "94,40 / 100,00",
+   "alt_compresion": 58.75,
+   "prof_rebaje": 21.35,
+   "diams_dispon": "STD",
+   "largo_perno": 72,
+   "perno_str": "∅32,00 × 72,00",
+   "juego_montaje": 0.087,
+   "codigo_aros": "A01100",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=97,56 / B=92,65 / C=100,93 / L=167,20",
+   "codigo_camisa": "C01050",
+   "sobremedidas": [
+    "STD"
+   ],
+   "ficha_de": "S BE01060"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK01060",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK01210",
+  "codigo_fab": "K01210",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "IVECO CURSOR 13 24V (UN) 135 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK01210",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK01410",
+  "codigo_fab": "K01410",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "IVECO EUROTRAKKER 380 P.72 (1 CIL) 137mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK01410",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK10330",
+  "codigo_fab": "K10330",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "IVECO CURSOR 8 F2BE E3 Pz.84/62(UN) 115m",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK10330",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK10530",
+  "codigo_fab": "K10530",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "IVECO CURSOR 13 24V E5 (UN) 135 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK10530",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK11440",
+  "codigo_fab": "K11440",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CATERPILLAR 3114-3116 (UN) 105 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK11440",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK11500",
+  "codigo_fab": "K11500",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CATERPILLAR 3304T-06T I/IN.C/VALV.4.3/4\"\"",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK11500",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK11570",
+  "codigo_fab": "K11570",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CATERPILLAR 3304-3306 INY.DIR.P.43 4.3/4",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK11570",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK11829",
+  "codigo_fab": "K11829",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CATERPILLAR 3304-3306 2 APA INY.IN4.3/4\"\"",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK11829",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK130030",
+  "codigo_fab": "K130030",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 4.12TCE-6.12TCE E5 (Pz.DOBLE) 105 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK130030",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13250",
+  "codigo_fab": "K13250",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM D226 P.32 A.C. 59,80 (2 CIL) 105 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13250",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13603",
+  "codigo_fab": "K13603",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 229 (UN) 102 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13603",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13800",
+  "codigo_fab": "K13800",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 229TD P.35 PZ.52,4 102 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13800",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13860",
+  "codigo_fab": "K13860",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 4.12TCE-6.12TCE (UN) S/C Pz.61 105mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13860",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13885",
+  "codigo_fab": "K13885",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 4.12TCE-6.12TCE (1 CIL) 105 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13885",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13897",
+  "codigo_fab": "K13897",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 4.12TCE E3 (1 CIL)(105L80A1+2)105 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13897",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13905",
+  "codigo_fab": "K13905",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 4.12TCE-6.12TCE E3 (1 CIL) 105 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13905",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13910",
+  "codigo_fab": "K13910",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 4.10-6.10 (1 CIL)(103L20A1) 103 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13910",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13920",
+  "codigo_fab": "K13920",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 6.10-6.10TCA (1 CIL) (103L02) 103 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13920",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13930",
+  "codigo_fab": "K13930",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 4.10TCA-6.10TCA (2 CIL)(103L18A1)103",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13930",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13940",
+  "codigo_fab": "K13940",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 4.10TCA-6.10TCA (1 CIL)(103L11)103mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13940",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13965",
+  "codigo_fab": "K13965",
+  "marca": "MAHLE",
+  "aplicacion": "S10 / BLAZER — 2800 CC",
+  "descripcion": "MWM 4.07TCE (2 CIL) (GM) (93L31A4) 93 mm",
+  "medidas": {
+   "diam_piston": 93,
+   "alt_piston": 86.2,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "MWM",
+   "motor": "MOTOR 4.07 TCE EURO III",
+   "nro_cil": 4,
+   "diam_cilindro": "93,00 / 103,00",
+   "alt_compresion": 56.15,
+   "prof_rebaje": 18.5,
+   "diams_dispon": "STD",
+   "largo_perno": 77,
+   "perno_str": "∅35,00 × 77,00",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13500",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": "S/SA",
+   "dim_camisa": "A=96,00 / B=92,50 / C=102,50 / L=182,00",
+   "codigo_camisa": "C13965",
+   "sobremedidas": [
+    "STD"
+   ],
+   "ficha_de": "S BE13965"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13965",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13966",
+  "codigo_fab": "K13966",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "MWM 4.07TCE (2 CIL) (NIS)(93L45A1) 93 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13966",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK13970",
+  "codigo_fab": "K13970",
+  "marca": "MAHLE",
+  "aplicacion": "FRONTIER / XTERRA — 4.07TCW MARÍTIMO PARCIAL — 2800 CC",
+  "descripcion": "MWM 4.07TCA (2 CIL) (NIS)(93L31A4) 93 mm",
+  "medidas": {
+   "diam_piston": 93,
+   "alt_piston": 86.2,
+   "diam_perno": 35
+  },
+  "extra": {
+   "fabricante": "MWM",
+   "motor": "MOTOR SPRINT 4.07TCA / 4.07TCW",
+   "nro_cil": 4,
+   "diam_cilindro": "93,00 / 103,00",
+   "alt_compresion": 56.2,
+   "prof_rebaje": "1,50 / 1,50 / 20,70",
+   "diams_dispon": "STD",
+   "largo_perno": 77,
+   "perno_str": "∅35,00 × 77,00",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13500",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=96,07 / B=92,00 / C=102,50 / L=183,00",
+   "codigo_camisa": "C13500",
+   "sobremedidas": [
+    "STD"
+   ],
+   "ficha_de": "S BE13970"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK13970",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK18510",
+  "codigo_fab": "K18510",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "RENAULT 18 1.4 Jrs 76 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK18510",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK18730",
+  "codigo_fab": "K18730",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "RENAULT 12 1.3 A/C 73 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK18730",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK18750",
+  "codigo_fab": "K18750",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "RENAULT CLIO 1.4 75,80 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK18750",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK18771",
+  "codigo_fab": "K18771",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "RENAULT 9 1600 CC 77 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK18771",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK18860",
+  "codigo_fab": "K18860",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "RENAULT TRAFIC 2.1D 86 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK18860",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK211000",
+  "codigo_fab": "K211000",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS ISLe 330 CV (UN) 114 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK211000",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK211010",
+  "codigo_fab": "K211010",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS ISF 3.8 (UN) 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 108.89,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR ISF 3.8L",
+   "nro_cil": 4,
+   "diam_cilindro": "102,00",
+   "alt_compresion": 73.89,
+   "prof_rebaje": 18.025,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 82.8,
+   "perno_str": "∅40,00 × 82,80",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21540",
+   "medida_aros": "1-3,00T / 1-2,385 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,56 / B=101,40 / L=199,49",
+   "codigo_camisa": "C0211010",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ],
+   "ficha_de": "S BE211010"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK211010",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK211020",
+  "codigo_fab": "K211020",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS QSB 4.5-6.7 PZ.DOB. 73/61 107mm",
+  "medidas": {
+   "diam_piston": 107,
+   "alt_piston": 103.185,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR ISB 6.7L 12V / 4.5 16V",
+   "nro_cil": "4/6",
+   "diam_cilindro": "107,00",
+   "alt_compresion": 69.385,
+   "prof_rebaje": 18.3,
+   "diams_dispon": "STD",
+   "largo_perno": 90.2,
+   "perno_str": "∅40,00 × 90,20",
+   "juego_montaje": 0.115,
+   "codigo_aros": "A0210570",
+   "medida_aros": "1-2,97 / 1-2,545 / 1-3,54",
+   "tipo_camisa": null,
+   "dim_camisa": null,
+   "codigo_camisa": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "ficha_de": "S BE211020"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK211020",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21150",
+  "codigo_fab": "K21150",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS N855C (1 CIL) 139,70 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21150",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21160",
+  "codigo_fab": "K21160",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS NT-NTA855G-NT855C (1 CIL) 139,70",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21160",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21170",
+  "codigo_fab": "K21170",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS NT855C-NT855P (1 CIL) 139,70 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21170",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21180",
+  "codigo_fab": "K21180",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS NT-NT855M-NTA855 (1 CIL) 139,70",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21180",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21350",
+  "codigo_fab": "K21350",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS N 15,0:1 (1 CIL) 139,70 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21350",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21510",
+  "codigo_fab": "K21510",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTAA (63,30) (1 CIL) C/L 114 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21510",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21515",
+  "codigo_fab": "K21515",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTAA (63,30) (1 CIL) C/C 114 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21515",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21540",
+  "codigo_fab": "K21540",
+  "marca": "MAHLE",
+  "aplicacion": "VW 19-320 TITAN CONSTELLATION / CARGO 4532 E / VW 19-320 CNC CONSTELLATION",
+  "descripcion": "CUMMINS 6CTE ISCE CAM.81mm P.14,25 114mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 115.6,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR ISC-E",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 79,
+   "prof_rebaje": 14.45,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21550",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=234,12",
+   "codigo_camisa": "C21900",
+   "sobremedidas": [
+    "STD"
+   ],
+   "ficha_de": "S BE21540"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21540",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21610",
+  "codigo_fab": "K21610",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTA (66,45) (1 CIL) C/L 114 mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 120.32,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR CT 8,3L HASTA 1991",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 78.82,
+   "prof_rebaje": 21.27,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21510",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=122,94 / B=114,02 / C=132,95 / L=237,12",
+   "codigo_camisa": "C21500",
+   "sobremedidas": [
+    "STD"
+   ],
+   "ficha_de": "S BE21610"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21610",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21630",
+  "codigo_fab": "K21630",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTAA (66,20) (1 CIL) C/L 114 mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 120.52,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR 8,3L CT / 6CTAA HASTA 1991",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 79.02,
+   "prof_rebaje": 21.27,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21510",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=122,94 / B=114,02 / C=132,95 / L=237,12",
+   "codigo_camisa": "C21500",
+   "sobremedidas": [
+    "STD"
+   ],
+   "ficha_de": "S BE21630"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21630",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21635",
+  "codigo_fab": "K21635",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTAA (66,20) (1 CIL) C/C 114 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21635",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21700",
+  "codigo_fab": "K21700",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 88NT (1 CIL) 139,70 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21700",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21710",
+  "codigo_fab": "K21710",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS NTA855 (1 CIL) 139,70 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21710",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21730",
+  "codigo_fab": "K21730",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS N855 (1 CIL) 139,70 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21730",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21850",
+  "codigo_fab": "K21850",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTAA (56 mm) (1 CIL) C/L 114 mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 120.52,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR 8,3L CT / SERIE C (→2.000)",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 79.02,
+   "prof_rebaje": 25,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21510",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=237,12",
+   "codigo_camisa": "C21510",
+   "sobremedidas": [
+    "STD"
+   ],
+   "ficha_de": "S BE21850"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21850",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21860",
+  "codigo_fab": "K21860",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTAA (56 mm) (1 CIL) C/C 114 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21860",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21940",
+  "codigo_fab": "K21940",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTA (56,75) (1 CIL) C/L 114 mm",
+  "medidas": {
+   "diam_piston": 114,
+   "alt_piston": 120.425,
+   "diam_perno": 45
+  },
+  "extra": {
+   "fabricante": "CUMMINS",
+   "motor": "MOTOR SERIE C / CTA 8.3 1991→2000",
+   "nro_cil": 6,
+   "diam_cilindro": "114,00",
+   "alt_compresion": 78.925,
+   "prof_rebaje": 24,
+   "diams_dispon": "STD",
+   "largo_perno": 91,
+   "perno_str": "∅45,00 × 91,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A21510",
+   "medida_aros": "1-3,5T / 1-3T / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=237,12",
+   "codigo_camisa": "C21510",
+   "sobremedidas": [
+    "STD"
+   ],
+   "ficha_de": "S BE21940"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21940",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK21950",
+  "codigo_fab": "K21950",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "CUMMINS 6CTA (56,75) (1 CIL) C/C 114 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK21950",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK26040",
+  "codigo_fab": "K26040",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "FORD CARGO 4600-5600 (NEW HOL) 111,80 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK26040",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK26060",
+  "codigo_fab": "K26060",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "FORD CARGO 5600-5610 (NEW HOL) 111,80 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK26060",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK26070",
+  "codigo_fab": "K26070",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "FORD CARGO 4610-6610 (1 CIL) 111,80 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK26070",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK26610",
+  "codigo_fab": "K26610",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "NEW HOLLAND 8030 P.38 PZ.62 A/C 73 111.8",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK26610",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK26620",
+  "codigo_fab": "K26620",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "NEW HOLLAND 8030 (P.41)(1 CIL) 111,80 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK26620",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK31150",
+  "codigo_fab": "K31150",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VALTRA 420-620 TURBO PZ.70 P.40 108 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK31150",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK430375WS",
+  "codigo_fab": "K430375WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "J.DEERE 6068HBM P.41 Pz.78 (UN) 106,5 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK430375WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK430425WS",
+  "codigo_fab": "K430425WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "J.DEERE 4045HBM P.35 Pz.58 106,5 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK430425WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK430450WS",
+  "codigo_fab": "K430450WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "J.DEERE 4045H-6068H (UN) 106,5 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK430450WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK430520WS",
+  "codigo_fab": "K430520WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "J.DEERE 4045T/H-6068T/H (UN) 106,5 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK430520WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK430685WS",
+  "codigo_fab": "K430685WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "J.DEERE 4045T/H-6068T/H (UN) 106,5 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK430685WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK440045",
+  "codigo_fab": "K440045",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "PEUGEOT TU4 1.5 8V P.18 75 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK440045",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK44060",
+  "codigo_fab": "K44060",
+  "marca": "MAHLE",
+  "aplicacion": "PEUGEOT 206 / CITROËN C3 — 1400 CC",
+  "descripcion": "PEUGEOT 205 1.4 TU3 C/LOMO P.18 75 mm",
+  "medidas": {
+   "diam_piston": 75,
+   "alt_piston": 49.93,
+   "diam_perno": 17.97
+  },
+  "extra": {
+   "fabricante": "PEUGEOT",
+   "motor": "MOTOR TU3 1.4L 8V GAS./FLEX",
+   "nro_cil": 4,
+   "diam_cilindro": "75,00 / 77,00",
+   "alt_compresion": 27.75,
+   "prof_rebaje": 0.18,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 55,
+   "perno_str": "∅17,97 × 55,00",
+   "juego_montaje": 0.05,
+   "codigo_aros": "A44060",
+   "medida_aros": "1-1,50 / 1-1,50 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=79,30 / B=75,00 / C=89,20 / L=134,50",
+   "codigo_camisa": "C44060",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ],
+   "ficha_de": "S BE44060"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK44060",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK44165",
+  "codigo_fab": "K44165",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "PEUGEOT 504 2.0 8,8:1 (<86) 88 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK44165",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK44700",
+  "codigo_fab": "K44700",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "PEUGEOT XU7JPZ 1762 CC 83 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK44700",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK460100",
+  "codigo_fab": "K460100",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR MAN D08.34 / D08.36 EURO V",
+  "descripcion": "MAN D08 (2 UN) 108 mm",
+  "medidas": {
+   "diam_piston": 108,
+   "alt_piston": 103,
+   "diam_perno": 44
+  },
+  "extra": {
+   "fabricante": "MAN",
+   "motor": "MOTOR MAN D08.34 / D08.36 EURO V",
+   "nro_cil": "4/6",
+   "diam_cilindro": "108,00",
+   "alt_compresion": 63.9,
+   "prof_rebaje": 18.47,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 88,
+   "perno_str": "∅44,00 × 88,00",
+   "juego_montaje": 0.14,
+   "codigo_aros": "A0460040",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=111,31 / B=107,00 / C=— / L=217,00",
+   "codigo_camisa": "C0460100",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ],
+   "ficha_de": "S BE 460100"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK460100",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48170",
+  "codigo_fab": "K48170",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM442LA (1 CIL) 128 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48170",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK482020WS",
+  "codigo_fab": "K482020WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM457LA E3 (1 CIL) 128 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK482020WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK482030WS",
+  "codigo_fab": "K482030WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM457LA E3/E5 (1 CIL)S/BUJE 128mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK482030WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK482040WS",
+  "codigo_fab": "K482040WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM457LA E5 (1 CIL) C/BUJE 128 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK482040WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK482080",
+  "codigo_fab": "K482080",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM501-502-542 Pz.93 (UN) 130 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK482080",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48320",
+  "codigo_fab": "K48320",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM924LA-OM926LA E5 (2 CIL) 106 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48320",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48690",
+  "codigo_fab": "K48690",
+  "marca": "MAHLE",
+  "aplicacion": "AXOR 1933 Y 2533, ÓMNIBUS O500; 4800/7200 cc",
+  "descripcion": "M.BENZ OM924LA-OM926LA P.80 (2 CIL)106mm",
+  "medidas": {
+   "diam_piston": 106,
+   "alt_piston": 98.4,
+   "diam_perno": 42
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 924/926 [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "106,00 / 136,00",
+   "alt_compresion": 61.4,
+   "prof_rebaje": 12.56,
+   "diams_dispon": "STD / 0,30 / 0,60",
+   "largo_perno": 80,
+   "perno_str": "∅42,00 × 80,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48690",
+   "medida_aros": "1-3,00 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=110,00 / B=104,50 / C=— / L=220,00",
+   "codigo_camisa": "C0480690",
+   "sobremedidas": [
+    "STD",
+    "0,30",
+    "0,60"
+   ],
+   "ficha_de": "S BE 48690"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48690",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48930",
+  "codigo_fab": "K48930",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM447A-449LA ->95 (1 CIL) 128 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48930",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48933",
+  "codigo_fab": "K48933",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM447A-449LA ->95 (-0,3) 128 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48933",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48940",
+  "codigo_fab": "K48940",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM447A-449LA 95-> (1 CIL) 128 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48940",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48943",
+  "codigo_fab": "K48943",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM447A-449LA 95-> (-0,3) 128 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48943",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48964",
+  "codigo_fab": "K48964",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM457LA INY.EL. EURO2/3 128 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48964",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48967WS",
+  "codigo_fab": "K48967WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM457LA EURO V (1 CIL) 128 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48967WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48979WS",
+  "codigo_fab": "K48979WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM460LA",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48979WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48980",
+  "codigo_fab": "K48980",
+  "marca": "MAHLE",
+  "aplicacion": "4250/6400 cc; 17,4:1",
+  "descripcion": "M.BENZ OM904LA-OM906LA P.42 (2 CIL)102mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 101.2,
+   "diam_perno": 42
+  },
+  "extra": {
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 904/906 LA P.42 [STD]",
+   "nro_cil": "4/6",
+   "diam_cilindro": "102,00 / 130,00",
+   "alt_compresion": 64.4,
+   "prof_rebaje": 13.9,
+   "diams_dispon": "STD / 0,30 / 0,60 / 0,90",
+   "largo_perno": 80,
+   "perno_str": "∅42,00 × 80,00",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48940",
+   "medida_aros": "1-3,00 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=106,00 / B=100,50 / C=109,50 / L=220,00",
+   "codigo_camisa": "C48950",
+   "sobremedidas": [
+    "STD",
+    "0,30",
+    "0,60",
+    "0,90"
+   ],
+   "ficha_de": "S BE 48980"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48980",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK48990",
+  "codigo_fab": "K48990",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "M.BENZ OM457LA INY.EL.Pz.90 P.52 128 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK48990",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK50135",
+  "codigo_fab": "K50135",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "DEUTZ 913 ECOL.3R C/C Pz.54,5 124*102mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK50135",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK50160",
+  "codigo_fab": "K50160",
+  "marca": "MAHLE",
+  "aplicacion": "BFL913C TURBO",
+  "descripcion": "DEUTZ 913 TURBO APA 3R Pz.58 120 102 mm",
+  "medidas": {
+   "diam_piston": 102,
+   "alt_piston": 123.6,
+   "diam_perno": 40
+  },
+  "extra": {
+   "fabricante": "DEUTZ",
+   "motor": "MOTOR DIESEL BFL913C TURBO",
+   "nro_cil": 6,
+   "diam_cilindro": "102,00 / 125,00",
+   "alt_compresion": 69.1,
+   "prof_rebaje": "+6,00 / -17,60",
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 80,
+   "perno_str": "∅40,00 × 80,00",
+   "juego_montaje": 0.11,
+   "codigo_aros": "A50160",
+   "medida_aros": "1-3,00T / 1-3,00T / 1-3,50R",
+   "tipo_camisa": null,
+   "dim_camisa": "A=109,85 / B=102,00 / C=119,90 / L=222,60",
+   "codigo_camisa": "C50110",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ],
+   "ficha_de": "S BE50160"
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T BEK50160",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK50181",
+  "codigo_fab": "K50181",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "DEUTZ 913 ECOL.3R P.35 Pz.45 120 102 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK50181",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK50240",
+  "codigo_fab": "K50240",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "DEUTZ 1013 (TETON CHATO)(1 CIL) 108 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK50240",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK51200",
+  "codigo_fab": "K51200",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "HONDA BIZ 125 (1 CIL) CARBURADO 52,40 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK51200",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK59201",
+  "codigo_fab": "K59201",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "FORD ESCORT 1.6 CHT 77 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK59201",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK70022",
+  "codigo_fab": "K70022",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VW KOMBI 1.3 77 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK70022",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK70150",
+  "codigo_fab": "K70150",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VW KOMBI 1600 85,5 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK70150",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71030",
+  "codigo_fab": "K71030",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO NL10-310 TD102FT (1 CIL) 4.3/4\"\"",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71030",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71050",
+  "codigo_fab": "K71050",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO NL10-320 TD10-A (1 CIL) 4.3/4\"\"",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71050",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK710510WS",
+  "codigo_fab": "K710510WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "RENAULT MIDLUM 320 DXi7 P.45 (UN) 108 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK710510WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71055",
+  "codigo_fab": "K71055",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO DH10A (1 CIL) 4.3/4\"\"",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71055",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK710710WS",
+  "codigo_fab": "K710710WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO MD13 E5-D13A E4/E5 (1 CIL) 131 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK710710WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK710800WS",
+  "codigo_fab": "K710800WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO D13C 131 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK710800WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71120",
+  "codigo_fab": "K71120",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO D12C-D12D-NH12-FH12 (1 CIL) 131 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71120",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71220WS",
+  "codigo_fab": "K71220WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO D7A (1 CIL) 104,77 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71220WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71240WS",
+  "codigo_fab": "K71240WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO TD123EDC ARTIC. (1 CIL) 130,18 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71240WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71400",
+  "codigo_fab": "K71400",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO NL10-280 TD100G-TD101 (1 CIL)4.3/4",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71400",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71420",
+  "codigo_fab": "K71420",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO B58-B10M THD100E-THD 101 (1 CIL)",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71420",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71430WS",
+  "codigo_fab": "K71430WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO NL10-340 TD102FS ART.(1 CIL) 4.3/4",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71430WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71440",
+  "codigo_fab": "K71440",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO TD120C (1 CIL) 130,18 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71440",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71450",
+  "codigo_fab": "K71450",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO TD120A*(1 CIL) 4.3/4\"\"",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71450",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71500",
+  "codigo_fab": "K71500",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO NL12-400 TD122F/FS (1 CIL) 130,18m",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71500",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK71860 WS",
+  "codigo_fab": "K71860 WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "VOLVO D13A 400-440 (1 CIL) 131 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK71860 WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK760300",
+  "codigo_fab": "K760300",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DC12 380 S5 ARTIC.(1 CIL) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK760300",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76061",
+  "codigo_fab": "K76061",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DSC14 P.50 Pz.75 (UN) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76061",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK760730",
+  "codigo_fab": "K760730",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DC13 E5 5/6 CIL. (UN) 130 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK760730",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK760820",
+  "codigo_fab": "K760820",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DC9 20V E5 P.58 A/C 92,04 130 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK760820",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76200",
+  "codigo_fab": "K76200",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DSC9 P94 (1 CIL) 115 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76200",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76520",
+  "codigo_fab": "K76520",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA 110 S/TURBO (1 CIL) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76520",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76540WS",
+  "codigo_fab": "K76540WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DS11 (1 CIL) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76540WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76550",
+  "codigo_fab": "K76550",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA 112T 1§T (1 CIL) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76550",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76551",
+  "codigo_fab": "K76551",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA 112T 1§T (1 CIL)(A.C.-0,4) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76551",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76560",
+  "codigo_fab": "K76560",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA 113H (DSC11) 93/95 (UN) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76560",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76560WS",
+  "codigo_fab": "K76560WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA 113H (DSC11) 93/95 (UN) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76560WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76564",
+  "codigo_fab": "K76564",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA 113H (DSC11) 93/95(-0,4)(UN) 127",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76564",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76570",
+  "codigo_fab": "K76570",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA 113 (DSC11) 95--> A/C 100 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76570",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76574",
+  "codigo_fab": "K76574",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA 113 (DSC11) 95--> (-0,4) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76574",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76590WS",
+  "codigo_fab": "K76590WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DC11 360CV CAM.150 (UN) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76590WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76595",
+  "codigo_fab": "K76595",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DC11 EVO 5 CAM.151 (UN) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76595",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76650",
+  "codigo_fab": "K76650",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DSC12 S4 360CV (1 CIL) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76650",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76655",
+  "codigo_fab": "K76655",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DSC12 S4 400CV (1 CIL) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76655",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76670",
+  "codigo_fab": "K76670",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DSC12 S4 420CV ARTIC.(1 CIL)127mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76670",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76675WS",
+  "codigo_fab": "K76675WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DC12 S4 420 CV (ARTIC) 127 mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76675WS",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T BEK76680WS",
+  "codigo_fab": "K76680WS",
+  "marca": "MAHLE",
+  "aplicacion": null,
+  "descripcion": "SCANIA DC9-DC11 CAM.151 P/EMB.(UN) 127mm",
+  "medidas": {},
+  "extra": {},
+  "codigos_crac": [
+   {
+    "codigo": "T BEK76680WS",
+    "medida": null
+   }
+  ]
+ }
+]

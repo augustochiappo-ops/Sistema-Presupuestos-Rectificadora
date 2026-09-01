@@ -1,8 +1,8 @@
 """
 Suite de verificación de la búsqueda por medidas (`app/tecnicos.py`), contra los
 catálogos técnicos del repo (396 camisas, 915 guías, 1.108 asientos de válvulas,
-201 subconjuntos, 35 pistones y 190 bujes de biela) y los 64.250 repuestos del
-proveedor ya importados en la base.
+201 subconjuntos, 128 conjuntos, 35 pistones y 190 bujes de biela) y los 64.250
+repuestos del proveedor ya importados en la base.
 
 Cómo se corre: ver tests/README.md. Resumen:
 
@@ -47,8 +47,9 @@ def codigos(resultado):
 print("\n=== 0. Catálogos cargados ===")
 db.init_db()
 familias = {f["id"]: f for f in tecnicos.get_familias()}
-check("están las seis familias",
-      sorted(familias) == ["asientos", "bujes_biela", "camisas", "guias", "pistones", "subconjuntos"],
+check("están las siete familias",
+      sorted(familias) == ["asientos", "bujes_biela", "camisas", "conjuntos", "guias", "pistones",
+                           "subconjuntos"],
       list(familias))
 check("396 camisas (secas y húmedas)",
       familias.get("camisas", {}).get("total") == 396, familias.get("camisas"))
@@ -56,14 +57,20 @@ check("915 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") =
 check("1.108 asientos de válvulas (Indy + Nubo + RYC)",
       familias.get("asientos", {}).get("total") == 1108, familias.get("asientos"))
 check("201 subconjuntos", familias.get("subconjuntos", {}).get("total") == 201, familias.get("subconjuntos"))
+# Los conjuntos son los juegos de motor que trabaja el proveedor ("T BEK…"), y
+# la ficha se arma desde su lista: hay uno por código, ni más ni menos.
+check("128 conjuntos (los que trabaja el proveedor)",
+      familias.get("conjuntos", {}).get("total") == 128, familias.get("conjuntos"))
 check("35 pistones (Persan)", familias.get("pistones", {}).get("total") == 35, familias.get("pistones"))
 check("190 bujes de biela (Indubrón)",
       familias.get("bujes_biela", {}).get("total") == 190, familias.get("bujes_biela"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
-# La casilla "Solo las que tiene el proveedor" va en todas menos subconjuntos:
-# los catálogos técnicos son los del fabricante y traen más de lo que se puede
-# pedir, pero la ficha de Mahle se consulta igual aunque no se pueda pedir.
-check("ofrecen el filtro del proveedor todas menos subconjuntos",
+# La casilla "Solo las que tiene el proveedor" va en todas menos las dos
+# familias de Mahle: los catálogos técnicos son los del fabricante y traen más
+# de lo que se puede pedir, pero la ficha de Mahle se consulta igual aunque la
+# pieza no se pueda pedir. En conjuntos la casilla además no filtraría nada:
+# las 128 fichas salen de la lista del proveedor.
+check("ofrecen el filtro del proveedor todas menos las dos de Mahle",
       {k for k, v in familias.items() if v["filtro_proveedor"]}
       == {"camisas", "guias", "asientos", "pistones", "bujes_biela"},
       {k: v.get("filtro_proveedor") for k, v in familias.items()})
@@ -144,6 +151,31 @@ if sub["total"]:
     check("se muestra una sobremedida con stock", elegido["stock"] is True, elegido)
     check("y se dice cuál es", elegido["medida_crac"] == "STD", elegido["medida_crac"])
     check("el precio no es None", elegido["precio"] is not None, elegido["precio"])
+
+print("\n=== 5 ter. Un conjunto es el juego del motor ===")
+# El conjunto tiene UN código y UN precio, y se encuentra tanto por el código
+# del proveedor como por el de Mahle: los dos van al mismo campo de búsqueda.
+conj = tecnicos.buscar("conjuntos", {"codigo": "T BEK21540"})
+check("se encuentra por el código del proveedor", codigos(conj) == ["T BEK21540"], codigos(conj))
+por_mahle = tecnicos.buscar("conjuntos", {"codigo": "K21540"})
+check("y por el código de Mahle", codigos(por_mahle) == ["T BEK21540"], codigos(por_mahle))
+if conj["total"]:
+    juego = conj["resultados"][0]
+    check("trae el código de Mahle aparte", juego["codigo_fab"] == "K21540", juego["codigo_fab"])
+    check("con precio de la lista del proveedor", juego["precio"] is not None, juego["precio"])
+    check("y sin medida de sobremedida, porque tiene un solo código",
+          juego["medida_crac"] is None, juego["medida_crac"])
+    # Las medidas de este conjunto salieron de la ficha del subconjunto del
+    # mismo número: es el mismo pistón, leído de la misma fila del catálogo.
+    check("con las medidas del pistón cargadas",
+          juego["medidas"].get("diam_piston") == 114, juego["medidas"])
+    check("y diciendo de qué ficha salieron",
+          juego["extra"].get("ficha_de") == "S BE21540", juego["extra"].get("ficha_de"))
+# Un conjunto sin medidas todavía no se encuentra por medida —no tiene con qué
+# matchear— pero sí por el motor, que es como se lo busca mientras tanto.
+por_motor = tecnicos.buscar("conjuntos", {"descripcion": "scania 113h"})
+check("los que esperan el catálogo se encuentran por el motor",
+      len(por_motor["resultados"]) >= 2, codigos(por_motor))
 
 print("\n=== 5 bis. Pistones ===")
 # Los mismos tres filtros que subconjuntos, sobre el catálogo Persan.
@@ -442,7 +474,7 @@ cliente = app.test_client()
 check("sin sesión no se entra", cliente.get("/api/tecnicos/familias").status_code == 401)
 cliente.post("/api/auth/login", json={"usuario": os.environ["APP_USERNAME"], "password": CLAVE})
 resp = cliente.get("/api/tecnicos/familias")
-check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 6, resp.get_json())
+check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 7, resp.get_json())
 resp = cliente.get("/api/tecnicos/buscar?familia=camisas&diam_int=56.5&tol_diam_int=0")
 datos = resp.get_json()
 check("y la búsqueda", resp.status_code == 200 and "UC 2112" in [r["codigo"] for r in datos["resultados"]], datos)
