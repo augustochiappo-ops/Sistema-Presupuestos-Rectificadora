@@ -1428,13 +1428,19 @@ etiqueta y **sin Ø** —la palabra "altura" en su lugar, y la explicación en e
 tooltip—, y quedan fuera del filtro de Ø de vástago, donde antes aparecían como
 si fueran un diámetro distinto. Son 91 códigos con "+08" y 15 con "+04".
 
-**Producción y `master` quedaron sincronizados en `f7ea8c2`**, deployado y
-verificado por HTTP: el `git pull` del deploy hizo el fast-forward
-`c074bc0..f7ea8c2`, la raíz responde 200, `/api/tecnicos/familias` responde 401
+**Producción y `master` quedaron sincronizados en `8928168`**, deployado y
+verificado por HTTP: la raíz responde 200, `/api/tecnicos/familias` responde 401
 sin sesión y el **JS que sirve producción es byte a byte el commiteado**
-(`index-BFDh-Sbo.js`, 517.647 bytes, mismo md5). Los tres commits de la tanda
-son `29fd871` (los catálogos y el conversor), `36374d7` (la pestaña) y `f7ea8c2`
-(memoria).
+(`index-BvIJl8qQ.js`, mismo md5). Los commits de la tanda son `29fd871` (los
+catálogos y el conversor), `36374d7` (la pestaña), `f7ea8c2` + `b43d0cc`
+(memoria) y `8928168` (el "+08" como sobremedida de altura de cabeza).
+
+> **Ojo con el 502 después del deploy.** Al verificar esta tanda, la raíz
+> devolvió **502 unos segundos** mientras PythonAnywhere reiniciaba la app —y el
+> JS bajó con un md5 distinto en ese momento—. No es un deploy fallado: se
+> espera a que la raíz devuelva 200 y recién ahí se comparan los md5. Ya estaba
+> anotado más abajo para el reload manual; pasa igual con el reload que dispara
+> el endpoint de deploy.
 
 **Lo que conviene mirar la próxima**: las **126 fichas sin catálogo**. Son
 válvulas que el proveedor vende y las marcas ya no publican; si el dueño tiene
