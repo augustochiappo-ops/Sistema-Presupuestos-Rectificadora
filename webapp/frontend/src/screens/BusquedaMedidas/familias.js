@@ -246,6 +246,13 @@ export const FAMILIAS = [
       // cambia lo que hay que pedir aparte, así que va en la tabla y no
       // escondido en el código.
       { key: 'oring', header: 'Oring', width: 70, align: 'center', tipo: 'si_no' },
+      // Si una persona ya cruzó la ficha contra el catálogo. Las medidas de la
+      // mayoría se leyeron del PDF con un extractor: pasan las verificaciones
+      // automáticas (el Ø contra la descripción del proveedor, GL > KH, el
+      // perno coherente) pero eso no es lo mismo que haberlas mirado. Va a la
+      // vista y no escondido en el dato, porque quien cotiza tiene derecho a
+      // saber de dónde sale el número que está por usar.
+      { key: 'verificado', header: 'Verif.', width: 75, align: 'center', tipo: 'si_no' },
       // Sin columna "Precio de" y sin "Marca", al revés que en subconjuntos: el
       // conjunto tiene UN código con UN precio (no se pide por sobremedida) y
       // son todos Mahle, así que una columna con el mismo texto 128 veces solo

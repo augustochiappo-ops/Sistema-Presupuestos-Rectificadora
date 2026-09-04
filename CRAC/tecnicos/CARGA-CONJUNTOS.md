@@ -9,10 +9,20 @@ cargado sin romper nada.
 ## Dónde estamos
 
 `conjuntos.json` ya tiene **las 128 fichas** que trabaja el proveedor, con
-código, descripción, precio y stock. **29 tienen las medidas cargadas** (las 15
-que comparten número con un subconjunto nuestro más los 14 Cummins leídos del
-Clevite el 2026-09-04) y **99 están esperando el catálogo**: son las que tienen
-`"medidas": {}` y `"extra": {}`.
+código, descripción, precio y stock. Al 2026-09-04 hay **67 con medidas** y
+**61 esperando el catálogo** (las que tienen `"medidas": {}`).
+
+De las 67, **15 están verificadas** (salieron de un subconjunto ya corroborado,
+lo dice `extra.ficha_de`) y **52 están pendientes de verificación**: se leyeron
+del PDF con el extractor y pasan los controles automáticos, pero nadie las
+cruzó a mano contra el catálogo. Lo dice `extra.verificado` y se ve en la
+columna **Verif.** de la pantalla.
+
+Ver qué falta y en qué orden:
+
+```bash
+python3 scripts/leer_conjuntos_mahle.py --listar
+```
 
 Ver cuáles faltan:
 
@@ -159,6 +169,51 @@ El dibujo del pistón se comparte con el subconjunto del mismo número, así que
    lámina de control sale en `/tmp/pistones-recortados.png` y conviene mirarla).
 4. **Control**: `git status webapp/frontend/public/pistones/` tiene que mostrar
    solo los PNG nuevos. Si aparece uno viejo modificado, algo se rompió.
+
+## El extractor: `scripts/leer_conjuntos_mahle.py`
+
+Leer estas tablas a ojo del texto plano no funciona —`pdftotext -layout`
+intercala los valores de las celdas apiladas con los de las columnas vecinas—,
+así que el trabajo pesado lo hace un script que va por **coordenadas**
+(`pdfplumber`; hace falta `pip install pdfplumber`, y `pypdfium2` si además se
+quiere rasterizar una página para mirarla).
+
+```bash
+# qué conjuntos esperan el catálogo, en orden
+python3 scripts/leer_conjuntos_mahle.py --listar
+
+# leer las filas de los primeros 50
+python3 scripts/leer_conjuntos_mahle.py     --pdf-2019    "…/Mahle-Pistones, Camisas, Cojinetes 2019 web.pdf"     --pdf-clevite "…/Mahle-Clevite 2020-21.pdf"     --desde 1 --hasta 50 --salida /tmp/filas.json
+```
+
+Deja un JSON con la fila cruda de cada código, celda por celda. **No escribe
+`conjuntos.json`**: armar la ficha y mirarla contra el PDF sigue siendo trabajo
+de la sesión.
+
+### Los controles que hay que correr sobre lo leído
+
+Ninguno reemplaza mirar la página, pero los tres juntos atajan lo que más se
+rompe:
+
+1. **El Ø del catálogo contra el de la descripción del proveedor** (va al final,
+   "… 114 mm"). Ojo con los que vienen en pulgadas: `4.3/4"` son 120,65 mm.
+2. **GL > KH.** Si no se cumple, casi siempre se leyó como altura total el
+   segundo rebaje de un pistón con dos fresados (ver abajo).
+3. **El Ø del perno contra el del pistón.** Un perno de más de la mitad del
+   diámetro del pistón es una columna corrida.
+
+### Lo que hay que mirar a ojo igual
+
+- **Pistones con dos fresados.** El catálogo escribe `73,91 -6,68 -` y sigue
+  `14,22` en el renglón de abajo, justo donde suele ir GL. Van como texto:
+  `"6,68 / 14,22"`.
+- **Variantes dentro de una misma fila.** `K48930` y `K48933` comparten fila:
+  el segundo es la variante "STD c/ KH−0,30" y tiene **su propio KH y su propio
+  GL** (89,65 / 139,70 contra 89,95 / 140,00). La descripción del proveedor lo
+  canta: dice `(-0,3)`. El extractor no las separa solo.
+- **Filas que apilan varios motores.** En la página 58 un solo juego
+  (`E26040`/`K26040`) cubre el OHV 3201, el 4256 y el 4269, y repite el Nº de
+  cilindros. El `diam_cilindro` queda con todos los valores de la celda.
 
 ## El circuito completo, en orden
 

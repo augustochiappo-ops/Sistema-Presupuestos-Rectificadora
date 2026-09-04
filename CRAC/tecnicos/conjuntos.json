@@ -5,9 +5,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "FIAT DUCATO 2.8TDi B/TRAP. C/CAN.94,4 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 94.4,
+   "alt_piston": 87.6,
+   "diam_perno": 32.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "FIAT",
+   "motor": "DUCATO 2.8L TURBO COM INTERCOOLER 2800 19,0:1 INJEÇÃO MECÂNICA - BIELA TRAPEZOIDAL",
+   "nro_cil": 4,
+   "diam_cilindro": "94,40 / 100,00",
+   "alt_compresion": 58.75,
+   "prof_rebaje": 19.45,
+   "diams_dispon": "STD",
+   "largo_perno": 72.0,
+   "perno_str": "∅32,00 × 72,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.087,
+   "codigo_aros": "A01100",
+   "codigo_aros_tolerancia": "DC.8299",
+   "medida_aros": "1-2,50 / 1-2,00 / 1-2,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=97,56 / B=92,65 / C=100,93 / L=167,20",
+   "codigo_camisa": "C01050",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 77,
+   "codigo_catalogo": "K01050",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -47,7 +75,8 @@
     "STD"
    ],
    "ficha_de": "S BE01060",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -62,9 +91,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "IVECO CURSOR 13 24V (UN) 135 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 135.0,
+   "alt_piston": 142.4,
+   "diam_perno": 54.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "IVECO",
+   "motor": "FPT - Motor F3BE0681 CUR- SOR 13 24v EURO III 12800 STRALIS NR (RODOVIÁRIO EXTRA PESADOS) -> 490S38T, 570S38T / TRAKKER",
+   "nro_cil": 6,
+   "diam_cilindro": "135,00 / 150,00",
+   "alt_compresion": 90.4,
+   "prof_rebaje": 23.1,
+   "diams_dispon": "STD",
+   "largo_perno": 107.5,
+   "perno_str": "∅54,00 × 107,50",
+   "tipo_perno": null,
+   "juego_montaje": 0.113,
+   "codigo_aros": "A01210",
+   "codigo_aros_tolerancia": "DC.8689",
+   "medida_aros": "1-4,00 / 1-3,00 / 1-5,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=151,00 / B=135,00 / C=161,60 / L=255,20",
+   "codigo_camisa": "C01210",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 78,
+   "codigo_catalogo": "K01210",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -79,9 +136,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "IVECO EUROTRAKKER 380 P.72 (1 CIL) 137mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 137.0,
+   "alt_piston": 157.0,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "IVECO",
+   "motor": "MOTOR 8210.42.K 13798 16,5:1 EuroTrakker / EuroTech (00- >05)",
+   "nro_cil": 6,
+   "diam_cilindro": "137,00",
+   "alt_compresion": 92.0,
+   "prof_rebaje": 25.5,
+   "diams_dispon": "STD",
+   "largo_perno": 115.0,
+   "perno_str": "∅50,00 × 115,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.18,
+   "codigo_aros": "A01410",
+   "codigo_aros_tolerancia": "DC.8604",
+   "medida_aros": "1-4,00T / 1-3,00 / 1-5,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=142,80 / B=137,02 / C=149,00 / L=282,00",
+   "codigo_camisa": "C01410",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 78,
+   "codigo_catalogo": "K01410",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -130,9 +215,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "CATERPILLAR 3114-3116 (UN) 105 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 105.0,
+   "alt_piston": 93.42,
+   "diam_perno": 40.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "CATERPILLAR",
+   "motor": "MOTOR 3114/ 3116 E= 17,0:1",
+   "nro_cil": 4,
+   "diam_cilindro": "105,00",
+   "alt_compresion": 59.12,
+   "prof_rebaje": 14.03,
+   "diams_dispon": "STD",
+   "largo_perno": 85.0,
+   "perno_str": "∅40,00 × 85,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.131,
+   "codigo_aros": "A11400",
+   "codigo_aros_tolerancia": null,
+   "medida_aros": "1-3 / 1-3 / 1-4",
+   "tipo_camisa": null,
+   "dim_camisa": "A=109,82 / B=104,20 / L=197,00",
+   "codigo_camisa": "C11440",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle Clevite",
+   "pagina_catalogo": 6,
+   "codigo_catalogo": "K11440",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -147,9 +260,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "CATERPILLAR 3304T-06T I/IN.C/VALV.4.3/4\"\"",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 120.65,
+   "alt_piston": 115.06,
+   "diam_perno": 43.18
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "CATERPILLAR",
+   "motor": "MOTOR D333 SÉRIE 67D 334/ D330 SERIE 4B",
+   "nro_cil": 4,
+   "diam_cilindro": "120,65",
+   "alt_compresion": 73.91,
+   "prof_rebaje": "6,68 / 14,22",
+   "diams_dispon": "STD",
+   "largo_perno": 94.9,
+   "perno_str": "∅43,18 × 94,90",
+   "tipo_perno": null,
+   "juego_montaje": 0.139,
+   "codigo_aros": "A11010",
+   "codigo_aros_tolerancia": null,
+   "medida_aros": "1-1/8\" / 1-3/32\" / 1-7/32\"",
+   "tipo_camisa": null,
+   "dim_camisa": "A=134,35 / B=120,675 / C=142,88 / L=254,90",
+   "codigo_camisa": "C11200",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle Clevite",
+   "pagina_catalogo": 10,
+   "codigo_catalogo": "K11500",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -164,9 +305,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "CATERPILLAR 3304-3306 INY.DIR.P.43 4.3/4",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 120.65,
+   "alt_piston": 129.91,
+   "diam_perno": 43.18
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "CATERPILLAR",
+   "motor": "MOTOR 3304 / 3306",
+   "nro_cil": 4,
+   "diam_cilindro": "120,65",
+   "alt_compresion": 73.91,
+   "prof_rebaje": "2,03 / 19,77",
+   "diams_dispon": "STD",
+   "largo_perno": 94.87,
+   "perno_str": "∅43,18 × 94,87",
+   "tipo_perno": null,
+   "juego_montaje": 0.11,
+   "codigo_aros": "A11570",
+   "codigo_aros_tolerancia": null,
+   "medida_aros": "1-3,16 / 1-2,38 / 1-3,16",
+   "tipo_camisa": null,
+   "dim_camisa": "A=134,35 / B=120,675 / C=142,88 / L=254,90",
+   "codigo_camisa": "C11200",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle Clevite",
+   "pagina_catalogo": 11,
+   "codigo_catalogo": "K11570",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -181,9 +350,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "CATERPILLAR 3304-3306 2 APA INY.IN4.3/4\"\"",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 120.65,
+   "alt_piston": 115.06,
+   "diam_perno": 38.11
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "CATERPILLAR",
+   "motor": "MOTOR 3304 / 3306 TRATOR, MOTONIVELADORA, PÁ CARREGADEIRA",
+   "nro_cil": 4,
+   "diam_cilindro": "120,65",
+   "alt_compresion": 73.91,
+   "prof_rebaje": "6,68 / 14,22",
+   "diams_dispon": "STD",
+   "largo_perno": 94.87,
+   "perno_str": "∅38,11 × 94,87",
+   "tipo_perno": null,
+   "juego_montaje": 0.139,
+   "codigo_aros": "A11010",
+   "codigo_aros_tolerancia": null,
+   "medida_aros": "1-1/8\" / 1-3/32\" / 1-7/32\"",
+   "tipo_camisa": null,
+   "dim_camisa": "A=134,35 / B=120,675 / C=142,88 / L=254,90",
+   "codigo_camisa": "C11200",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle Clevite",
+   "pagina_catalogo": 12,
+   "codigo_catalogo": "K11829",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -198,9 +395,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 4.12TCE-6.12TCE E5 (Pz.DOBLE) 105 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 105.0,
+   "alt_piston": 96.5,
+   "diam_perno": 38.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR ACTEON EURO V 16,8:1 MaxxForce 7.2H (7.2L)-> VOL- VO VM // MaxxForce 4.8H (4.8L) -> AGRALE",
+   "nro_cil": 4,
+   "diam_cilindro": "105,00",
+   "alt_compresion": 60.5,
+   "prof_rebaje": 19.75,
+   "diams_dispon": "STD",
+   "largo_perno": 88.0,
+   "perno_str": "∅38,00 × 88,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.09,
+   "codigo_aros": "A13870",
+   "codigo_aros_tolerancia": "DH.9105",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=115,90 / B=105,00 / C=124,985 / L=207,00",
+   "codigo_camisa": "C0130030",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 99,
+   "codigo_catalogo": "K0130030",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -215,9 +440,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM D226 P.32 A.C. 59,80 (2 CIL) 105 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 105.0,
+   "alt_piston": 101.8,
+   "diam_perno": 32.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR D226/4 17,8:1",
+   "nro_cil": 4,
+   "diam_cilindro": "105,00 / 120,00",
+   "alt_compresion": 59.8,
+   "prof_rebaje": 19.3,
+   "diams_dispon": "STD",
+   "largo_perno": 82.0,
+   "perno_str": "∅32,00 × 82,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.09,
+   "codigo_aros": "A13250",
+   "codigo_aros_tolerancia": "DC.6221",
+   "medida_aros": "1-3,00T / 1-2,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=108,00 / B=104,00 / C=111,80 / L=214,00",
+   "codigo_camisa": "C13200",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 57,
+   "codigo_catalogo": "K13250",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -232,9 +485,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 229 (UN) 102 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 102.4,
+   "diam_perno": 32.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR D229/3 CAMINHÃO TX 1600 MOTOR MWM D229/4 CAMINHÃO 1800D",
+   "nro_cil": 4,
+   "diam_cilindro": "102,00 / 120,00",
+   "alt_compresion": 60.4,
+   "prof_rebaje": 21.2,
+   "diams_dispon": "STD",
+   "largo_perno": 82.0,
+   "perno_str": "∅32,00 × 82,00",
+   "tipo_perno": "F",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13850",
+   "codigo_aros_tolerancia": null,
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=113,00 / B=102,00 / C=119,00 / L=213,00",
+   "codigo_camisa": "C13700",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 35,
+   "codigo_catalogo": "K13603",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -249,9 +530,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 229TD P.35 PZ.52,4 102 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 102.4,
+   "diam_perno": 35.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR TD229-EC 5900 15,9:1 CÂMARA DESCENTRALIZADA APLICAÇÃO TD229-EC A PAR- TIR DE ABRIL DE 92 SÉRIE No",
+   "nro_cil": 4,
+   "diam_cilindro": "102,00 / 120,00",
+   "alt_compresion": 60.4,
+   "prof_rebaje": 24.0,
+   "diams_dispon": "STD",
+   "largo_perno": 88.0,
+   "perno_str": "∅35,00 × 88,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13850",
+   "codigo_aros_tolerancia": "DC.6897",
+   "medida_aros": "1-3,00T",
+   "tipo_camisa": null,
+   "dim_camisa": "A=113,00 / B=102,00 / C=119,00 / L=213,00",
+   "codigo_camisa": "C13700",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 98,
+   "codigo_catalogo": "K13800",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -266,9 +575,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 4.12TCE-6.12TCE (UN) S/C Pz.61 105mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 105.0,
+   "alt_piston": 96.5,
+   "diam_perno": 38.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR 4.12 TCAE 4800 ACTEON EURO 3 VWC- DELI- VERY",
+   "nro_cil": 4,
+   "diam_cilindro": "105,00 / 137,00",
+   "alt_compresion": 60.5,
+   "prof_rebaje": 19.76,
+   "diams_dispon": "STD",
+   "largo_perno": 88.0,
+   "perno_str": "∅38,00 × 88,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13860",
+   "codigo_aros_tolerancia": "DC.8373",
+   "medida_aros": "1-3,00 / 1-2,50 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=117,20 / B=105,00 / C=124,00 / L=208,00",
+   "codigo_camisa": "C13880",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 98,
+   "codigo_catalogo": "K13860",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -283,9 +620,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 4.12TCE-6.12TCE (1 CIL) 105 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 105.0,
+   "alt_piston": 96.5,
+   "diam_perno": 38.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR 4.12 TCE / 6.12 TCE EURO III AGRALE - MA 7.5, MA 8.2, MA 8.5, VOLARE W8 e W9, CAMI- NHÃO 8500 e 9200D / VW - CAMINHÃO 8.150, 9.150 /",
+   "nro_cil": 4,
+   "diam_cilindro": "105,00 / 137,00",
+   "alt_compresion": 60.5,
+   "prof_rebaje": 19.67,
+   "diams_dispon": "STD",
+   "largo_perno": 88.0,
+   "perno_str": "∅38,00 × 88,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.2,
+   "codigo_aros": "A13860",
+   "codigo_aros_tolerancia": "DC.8373",
+   "medida_aros": "1-3,00 / 1-2,50 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=117,20 / B=105,00 / C=124,00 / L=208,00",
+   "codigo_camisa": "C13880",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 99,
+   "codigo_catalogo": "K13885",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -300,9 +665,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 4.12TCE E3 (1 CIL)(105L80A1+2)105 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 105.0,
+   "alt_piston": 96.5,
+   "diam_perno": 38.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR 4.12 TCE / 6.12 TCE 4800 17,0:1 AGRALE - MA12 TA, MA12 180cv / INTERNATIONAL - ÔNIBUS FCB / VW - CAMI-",
+   "nro_cil": 4,
+   "diam_cilindro": "105,00 / 137,00",
+   "alt_compresion": 60.5,
+   "prof_rebaje": 19.61,
+   "diams_dispon": "STD",
+   "largo_perno": 88.0,
+   "perno_str": "∅38,00 × 88,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.2,
+   "codigo_aros": "A13860",
+   "codigo_aros_tolerancia": "DC.8373",
+   "medida_aros": "1-3,00 / 1-2,50 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=117,20 / B=105,00 / C=124,00 / L=208,00",
+   "codigo_camisa": "C13880",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 99,
+   "codigo_catalogo": "K13897",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -317,9 +710,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 4.12TCE-6.12TCE E3 (1 CIL) 105 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 105.0,
+   "alt_piston": 96.5,
+   "diam_perno": 38.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR 4.12 TCE / 6.12 TCE 4800/7200 4.12 - VOLVO VM21 (206cv) / 6.12 - VOLVO VM31 (310cv)",
+   "nro_cil": 4,
+   "diam_cilindro": "105,00 / 137,00",
+   "alt_compresion": 60.5,
+   "prof_rebaje": 19.61,
+   "diams_dispon": "STD",
+   "largo_perno": 88.0,
+   "perno_str": "∅38,00 × 88,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.2,
+   "codigo_aros": "A13860",
+   "codigo_aros_tolerancia": "DC.8373",
+   "medida_aros": "1-3,00 / 1-2,50 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=117,20 / B=105,00 / C=124,00 / L=208,00",
+   "codigo_camisa": "C13880",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 99,
+   "codigo_catalogo": "K13905",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -334,9 +755,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 4.10-6.10 (1 CIL)(103L20A1) 103 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 103.0,
+   "alt_piston": 104.5,
+   "diam_perno": 38.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR MWM 4.10 NA 16,9:1 CAMINHÃO AGRALE 4500/5000/7000",
+   "nro_cil": 4,
+   "diam_cilindro": "103,00 / 129,00",
+   "alt_compresion": 64.5,
+   "prof_rebaje": 23.75,
+   "diams_dispon": "STD",
+   "largo_perno": 87.0,
+   "perno_str": "∅38,00 × 87,00",
+   "tipo_perno": "F",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13900",
+   "codigo_aros_tolerancia": "DC.7013",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=113,95 / B=103,00 / C=123,50 / L=213,00",
+   "codigo_camisa": "C13940",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 35,
+   "codigo_catalogo": "K13910",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -351,9 +800,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 6.10-6.10TCA (1 CIL) (103L02) 103 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 103.0,
+   "alt_piston": 104.5,
+   "diam_perno": 38.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR 6.10 TCW 6000 16,0:1 INDUSTRIAL, MARÍTIMO",
+   "nro_cil": 6,
+   "diam_cilindro": "103,00 / 129,00",
+   "alt_compresion": 64.5,
+   "prof_rebaje": 24.5,
+   "diams_dispon": "STD",
+   "largo_perno": 87.0,
+   "perno_str": "∅38,00 × 87,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13900",
+   "codigo_aros_tolerancia": "DC.7013",
+   "medida_aros": "1-3,00T / 1-2,58 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=113,95 / B=103,00 / C=123,50 / L=213,00",
+   "codigo_camisa": "C13940",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 98,
+   "codigo_catalogo": "K13920",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -368,9 +845,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 4.10TCA-6.10TCA (2 CIL)(103L18A1)103",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 103.0,
+   "alt_piston": 103.2,
+   "diam_perno": 38.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR 4.10T 16,0:1 VWC 8140/12140, FORD F1000/F4000, MICRO ÔNIBUS VOLLARE A8 MOTOR 4.10 TCA MODELO 7.5T/8.5T/MA92",
+   "nro_cil": 4,
+   "diam_cilindro": "103,00 / 129,00",
+   "alt_compresion": 64.5,
+   "prof_rebaje": 24.5,
+   "diams_dispon": "STD",
+   "largo_perno": 87.0,
+   "perno_str": "∅38,00 × 87,00",
+   "tipo_perno": "F",
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13900",
+   "codigo_aros_tolerancia": "DC.7013",
+   "medida_aros": "1-3,00T / 1-2,58 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=113,95 / B=103,00 / C=123,50 / L=213,00",
+   "codigo_camisa": "C13940",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 35,
+   "codigo_catalogo": "K13930",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -385,9 +890,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 4.10TCA-6.10TCA (1 CIL)(103L11)103mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 103.0,
+   "alt_piston": 100.5,
+   "diam_perno": 38.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR 6.10 TCA EURO II 6000 18,0:1 MODELO 17240 PROTHEUS - 240CV",
+   "nro_cil": 6,
+   "diam_cilindro": "103,00 / 129,00",
+   "alt_compresion": 64.5,
+   "prof_rebaje": 24.0,
+   "diams_dispon": "STD",
+   "largo_perno": 88.0,
+   "perno_str": "∅38,00 × 88,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13900",
+   "codigo_aros_tolerancia": "DC.7013",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=113,95 / B=103,00 / C=123,50 / L=213,00",
+   "codigo_camisa": "C13940",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 98,
+   "codigo_catalogo": "K13940",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -427,7 +960,8 @@
     "STD"
    ],
    "ficha_de": "S BE13965",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -442,9 +976,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "MWM 4.07TCE (2 CIL) (NIS)(93L45A1) 93 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 93.0,
+   "alt_piston": 87.2,
+   "diam_perno": 35.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MWM",
+   "motor": "MOTOR SPRINT 4.07TCE VOLARE A6 / FURGOVAN 6000 / JEEP MARRUÁ (132cv)",
+   "nro_cil": 4,
+   "diam_cilindro": "93,00 / 103,00",
+   "alt_compresion": 56.2,
+   "prof_rebaje": 18.5,
+   "diams_dispon": "STD",
+   "largo_perno": 77.0,
+   "perno_str": "∅35,00 × 77,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.1,
+   "codigo_aros": "A13500",
+   "codigo_aros_tolerancia": "DC.7359",
+   "medida_aros": "1-2,50T / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=96,07 / B=92,00 / C=102,50 / L=183,00",
+   "codigo_camisa": "C13500",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 35,
+   "codigo_catalogo": "K13966",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -484,7 +1046,8 @@
     "STD"
    ],
    "ficha_de": "S BE13970",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -499,9 +1062,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "RENAULT 18 1.4 Jrs 76 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 76.0,
+   "alt_piston": 64.0,
+   "diam_perno": 20.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "RENAULT",
+   "motor": "MOTOR 1400 1400 R9 /R18 FUEGO /EXPRESS",
+   "nro_cil": 4,
+   "diam_cilindro": "76,00 / 77,00",
+   "alt_compresion": 37.5,
+   "prof_rebaje": null,
+   "diams_dispon": "STD",
+   "largo_perno": 65.0,
+   "perno_str": "∅20,00 × 65,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.04,
+   "codigo_aros": "A18760",
+   "codigo_aros_tolerancia": "DA.2516",
+   "medida_aros": "1-1,75 / 1-2,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=80,18 / B=76,00 / C=90,09 / L=133,68",
+   "codigo_camisa": "C18760",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 110,
+   "codigo_catalogo": "K18510",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -516,9 +1107,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "RENAULT 12 1.3 A/C 73 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 73.0,
+   "alt_piston": 62.5,
+   "diam_perno": 20.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "RENAULT",
+   "motor": "MOTOR 1300 L 1300 R12 /R15",
+   "nro_cil": 4,
+   "diam_cilindro": "73,00 / 77,00",
+   "alt_compresion": 37.5,
+   "prof_rebaje": null,
+   "diams_dispon": "STD",
+   "largo_perno": 62.0,
+   "perno_str": "∅20,00 × 62,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.03,
+   "codigo_aros": "A18730",
+   "codigo_aros_tolerancia": "DA.2612",
+   "medida_aros": "1-1,75 / 1-2,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=78,00 / B=73,00 / C=87,78 / L=134,00",
+   "codigo_camisa": "C18730",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 110,
+   "codigo_catalogo": "K18730",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -533,9 +1152,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "RENAULT CLIO 1.4 75,80 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 75.8,
+   "alt_piston": 53.7,
+   "diam_perno": 19.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "RENAULT",
+   "motor": "MOTOR 1400 L 1400 MOTORES E6J/E7J GAS.",
+   "nro_cil": 4,
+   "diam_cilindro": "75,80 / 77,00",
+   "alt_compresion": 31.7,
+   "prof_rebaje": null,
+   "diams_dispon": "STD",
+   "largo_perno": 60.0,
+   "perno_str": "∅19,00 × 60,00",
+   "tipo_perno": "O",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A18500",
+   "codigo_aros_tolerancia": "DD.7186",
+   "medida_aros": "1-1,50 / 1-1,75 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=75,80 / B=80,56 / C=90,00 / L=130,00",
+   "codigo_camisa": "C18750",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 110,
+   "codigo_catalogo": "K18750",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -550,9 +1197,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "RENAULT 9 1600 CC 77 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 77.0,
+   "alt_piston": 60.5,
+   "diam_perno": 20.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "RENAULT",
+   "motor": "MOTOR 1600 1600 9:1 R12-72-> R15TS/TL R16L/TA/ TL/TS 70-> R17 TA/TL/TS R18- 68-> R1152/3/5/7",
+   "nro_cil": 4,
+   "diam_cilindro": "77,00 / 84,00",
+   "alt_compresion": 34.0,
+   "prof_rebaje": 1.95,
+   "diams_dispon": "STD",
+   "largo_perno": 64.0,
+   "perno_str": "∅20,00 × 64,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.04,
+   "codigo_aros": "A59109",
+   "codigo_aros_tolerancia": "DA.2506",
+   "medida_aros": "1-1,75 / 1-2,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=81,00 / B=77,00 / C=90,20 / L=134,00",
+   "codigo_camisa": "C18771",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 110,
+   "codigo_catalogo": "K18771",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -567,9 +1242,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "RENAULT TRAFIC 2.1D 86 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 86.0,
+   "alt_piston": 92.9,
+   "diam_perno": 28.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "RENAULT",
+   "motor": "MOTOR 2068CC TRAFFIC DIESEL J8S 330 / J8S 304 / R18/R20/R21/R25",
+   "nro_cil": 4,
+   "diam_cilindro": "86,00",
+   "alt_compresion": 51.0,
+   "prof_rebaje": "2,20 / 3,80",
+   "diams_dispon": "STD",
+   "largo_perno": 75.0,
+   "perno_str": "∅28,00 × 75,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.1,
+   "codigo_aros": "A18110",
+   "codigo_aros_tolerancia": "DD.6653",
+   "medida_aros": "1-2,00 / 1-2,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=104,50 / B=86,00 / C=119,00 / L=167,50",
+   "codigo_camisa": "C9161",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 111,
+   "codigo_catalogo": "K18860",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -603,14 +1306,25 @@
    "tipo_perno": null,
    "juego_montaje": 0.12,
    "codigo_aros": "A0210880",
+   "codigo_aros_clevite": null,
+   "codigo_aros_oem": "5367501",
    "medida_aros": "1-3,50 / 1-3,00 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=234,12",
    "codigo_camisa": "C21900",
+   "codigo_camisa_clevite": "226-4566",
+   "codigo_camisa_oem": "3948095",
    "sobremedidas": [],
    "revisar": {
     "diams_dispon": "la fila del catálogo no trae la línea STD"
-   }
+   },
+   "codigo_conjunto": "E0211000",
+   "codigo_conjunto_clevite": null,
+   "codigo_conjunto_oem": "5367509",
+   "codigo_subconjunto": "S0211000",
+   "codigo_kit_clevite": null,
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -651,7 +1365,8 @@
     "0,50"
    ],
    "ficha_de": "S BE211010",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -691,7 +1406,8 @@
     "STD"
    ],
    "ficha_de": "S BE211020",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -725,13 +1441,24 @@
    "tipo_perno": null,
    "juego_montaje": 0.343,
    "codigo_aros": "A21151",
+   "codigo_aros_clevite": "S41889",
+   "codigo_aros_oem": "4089811",
    "medida_aros": "1-3,944T / 1-3,174T / 1-3,151T / 1-4,813",
    "tipo_camisa": null,
    "dim_camisa": null,
    "codigo_camisa": null,
+   "codigo_camisa_clevite": null,
+   "codigo_camisa_oem": null,
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21150",
+   "codigo_conjunto_clevite": null,
+   "codigo_conjunto_oem": "198660",
+   "codigo_subconjunto": "S21150",
+   "codigo_kit_clevite": null,
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -765,13 +1492,24 @@
    "tipo_perno": null,
    "juego_montaje": null,
    "codigo_aros": "A21151",
+   "codigo_aros_clevite": "S41889",
+   "codigo_aros_oem": "4089811",
    "medida_aros": "1-3,944T / 1-3,174T / 1-3,151T / 1-4,813",
    "tipo_camisa": null,
    "dim_camisa": null,
    "codigo_camisa": null,
+   "codigo_camisa_clevite": null,
+   "codigo_camisa_oem": null,
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21160",
+   "codigo_conjunto_clevite": null,
+   "codigo_conjunto_oem": "3354829",
+   "codigo_subconjunto": "S21160",
+   "codigo_kit_clevite": null,
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -805,13 +1543,24 @@
    "tipo_perno": null,
    "juego_montaje": null,
    "codigo_aros": "A21151",
+   "codigo_aros_clevite": "S41889",
+   "codigo_aros_oem": "4089811",
    "medida_aros": "1-3,944T / 1-3,174T / 1-3,151T / 1-4,813",
    "tipo_camisa": null,
    "dim_camisa": "A=152,53 / B=139,71 / C=166,75 / L=286,39",
    "codigo_camisa": "C21150",
+   "codigo_camisa_clevite": "226-4414",
+   "codigo_camisa_oem": "3055099",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21170",
+   "codigo_conjunto_clevite": null,
+   "codigo_conjunto_oem": "3354828",
+   "codigo_subconjunto": "S21170",
+   "codigo_kit_clevite": null,
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -845,13 +1594,24 @@
    "tipo_perno": null,
    "juego_montaje": null,
    "codigo_aros": "A21151",
+   "codigo_aros_clevite": "S41889",
+   "codigo_aros_oem": "4089811",
    "medida_aros": "1-3,944T / 1-3,174T / 1-3,151T / 1-4,813",
    "tipo_camisa": null,
    "dim_camisa": "A=152,53 / B=139,71 / C=166,75 / L=286,39",
    "codigo_camisa": "C21150",
+   "codigo_camisa_clevite": "226-4414",
+   "codigo_camisa_oem": "3055099",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21180",
+   "codigo_conjunto_clevite": "224-2144",
+   "codigo_conjunto_oem": "3017349",
+   "codigo_subconjunto": "S21180",
+   "codigo_kit_clevite": "226-1646",
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -885,13 +1645,24 @@
    "tipo_perno": null,
    "juego_montaje": 0.227,
    "codigo_aros": "A21151",
+   "codigo_aros_clevite": "S41889",
+   "codigo_aros_oem": "4089811",
    "medida_aros": "1-3,944T / 1-3,174T / 1-3,151T / 1-4,813",
    "tipo_camisa": null,
    "dim_camisa": "A=152,53 / B=139,71 / C=166,75 / L=286,39",
    "codigo_camisa": "C21150",
+   "codigo_camisa_clevite": "226-4414",
+   "codigo_camisa_oem": "3055099",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21350",
+   "codigo_conjunto_clevite": "224-2340",
+   "codigo_conjunto_oem": "3051554",
+   "codigo_subconjunto": "S21350",
+   "codigo_kit_clevite": "226-1750",
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -925,13 +1696,24 @@
    "tipo_perno": null,
    "juego_montaje": 0.13,
    "codigo_aros": "A21510",
+   "codigo_aros_clevite": null,
+   "codigo_aros_oem": null,
    "medida_aros": "1-3,5T / 1-3T / 1-4",
    "tipo_camisa": null,
    "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=237,12",
    "codigo_camisa": "C21510",
+   "codigo_camisa_clevite": "226-4547",
+   "codigo_camisa_oem": "3919937",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21500",
+   "codigo_conjunto_clevite": null,
+   "codigo_conjunto_oem": "3919564",
+   "codigo_subconjunto": "S21500",
+   "codigo_kit_clevite": null,
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -965,13 +1747,24 @@
    "tipo_perno": null,
    "juego_montaje": 0.13,
    "codigo_aros": "A21510",
+   "codigo_aros_clevite": null,
+   "codigo_aros_oem": null,
    "medida_aros": "1-3,5T / 1-3T / 1-4",
    "tipo_camisa": null,
    "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=234,12",
    "codigo_camisa": "C21900",
+   "codigo_camisa_clevite": "226-4566",
+   "codigo_camisa_oem": "3948095",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21500",
+   "codigo_conjunto_clevite": null,
+   "codigo_conjunto_oem": "3919564",
+   "codigo_subconjunto": "S21500",
+   "codigo_kit_clevite": "226-1948",
+   "codigo_kit_oem": "3802279",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1011,7 +1804,8 @@
     "STD"
    ],
    "ficha_de": "S BE21540",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1051,7 +1845,8 @@
     "STD"
    ],
    "ficha_de": "S BE21610",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1091,7 +1886,8 @@
     "STD"
    ],
    "ficha_de": "S BE21630",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1125,13 +1921,24 @@
    "tipo_perno": null,
    "juego_montaje": 0.13,
    "codigo_aros": "A21510",
+   "codigo_aros_clevite": null,
+   "codigo_aros_oem": null,
    "medida_aros": "1-3,5T / 1-3T / 1-4",
    "tipo_camisa": null,
    "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=234,12",
    "codigo_camisa": "C21900",
+   "codigo_camisa_clevite": "226-4566",
+   "codigo_camisa_oem": "3948095",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21630",
+   "codigo_conjunto_clevite": "224-3329",
+   "codigo_conjunto_oem": "3919247",
+   "codigo_subconjunto": "S21630",
+   "codigo_kit_clevite": null,
+   "codigo_kit_oem": "3802344",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1165,13 +1972,24 @@
    "tipo_perno": null,
    "juego_montaje": 0.24,
    "codigo_aros": "A21151",
+   "codigo_aros_clevite": "S41889",
+   "codigo_aros_oem": "4089811",
    "medida_aros": "1-3,944T / 1-3,174T / 1-3,151T / 1-4,813",
    "tipo_camisa": null,
    "dim_camisa": "A=152,53 / B=139,71 / C=166,75 / L=286,39",
    "codigo_camisa": "C21150",
+   "codigo_camisa_clevite": "226-4414",
+   "codigo_camisa_oem": "3055099",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21700",
+   "codigo_conjunto_clevite": "224-2821",
+   "codigo_conjunto_oem": "3048808",
+   "codigo_subconjunto": "S21700",
+   "codigo_kit_clevite": "226-1835",
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1205,13 +2023,24 @@
    "tipo_perno": null,
    "juego_montaje": 0.27,
    "codigo_aros": "A21151",
+   "codigo_aros_clevite": "S41889",
+   "codigo_aros_oem": "4089811",
    "medida_aros": "1-3,944T / 1-3,174T / 1-3,151T / 1-4,813",
    "tipo_camisa": null,
    "dim_camisa": "A=152,53 / B=139,71 / C=166,75 / L=286,39",
    "codigo_camisa": "C21150",
+   "codigo_camisa_clevite": "226-4414",
+   "codigo_camisa_oem": "3055099",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21710",
+   "codigo_conjunto_clevite": "224-2339",
+   "codigo_conjunto_oem": "3051555",
+   "codigo_subconjunto": null,
+   "codigo_kit_clevite": "226-1749",
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1245,13 +2074,24 @@
    "tipo_perno": null,
    "juego_montaje": 0.27,
    "codigo_aros": "A21151",
+   "codigo_aros_clevite": "S41889",
+   "codigo_aros_oem": "4089811",
    "medida_aros": "1-3,944T / 1-3,174T / 1-3,151T / 1-4,813",
    "tipo_camisa": null,
    "dim_camisa": "A=152,53 / B=139,71 / C=166,75 / L=286,39",
    "codigo_camisa": "C21150",
+   "codigo_camisa_clevite": "226-4414",
+   "codigo_camisa_oem": "3055099",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21730",
+   "codigo_conjunto_clevite": "224-2344",
+   "codigo_conjunto_oem": "3051556",
+   "codigo_subconjunto": "S21730",
+   "codigo_kit_clevite": "226-1745",
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1291,7 +2131,8 @@
     "STD"
    ],
    "ficha_de": "S BE21850",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1325,13 +2166,24 @@
    "tipo_perno": "F",
    "juego_montaje": 0.13,
    "codigo_aros": "A21510",
+   "codigo_aros_clevite": "S41677",
+   "codigo_aros_oem": "3802429",
    "medida_aros": "1-3,5T / 1-3T / 1-4",
    "tipo_camisa": null,
    "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=234,12",
    "codigo_camisa": "C21900",
+   "codigo_camisa_clevite": "226-4566",
+   "codigo_camisa_oem": "3948095",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21850",
+   "codigo_conjunto_clevite": "224-3012",
+   "codigo_conjunto_oem": "3917707",
+   "codigo_subconjunto": "S21850",
+   "codigo_kit_clevite": null,
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1371,7 +2223,8 @@
     "STD"
    ],
    "ficha_de": "S BE21940",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1405,13 +2258,24 @@
    "tipo_perno": null,
    "juego_montaje": 0.13,
    "codigo_aros": "A21510",
+   "codigo_aros_clevite": "S41677",
+   "codigo_aros_oem": "3802429",
    "medida_aros": "1-3,5T / 1-3T / 1-4",
    "tipo_camisa": null,
    "dim_camisa": "A=124,47 / B=114,02 / C=130,95 / L=234,12",
    "codigo_camisa": "C21900",
+   "codigo_camisa_clevite": "226-4566",
+   "codigo_camisa_oem": "3948095",
    "sobremedidas": [
     "STD"
-   ]
+   ],
+   "codigo_conjunto": "E21940",
+   "codigo_conjunto_clevite": "224-3330",
+   "codigo_conjunto_oem": "3925878",
+   "codigo_subconjunto": "S21940",
+   "codigo_kit_clevite": null,
+   "codigo_kit_oem": null,
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1426,9 +2290,39 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "FORD CARGO 4600-5600 (NEW HOL) 111,80 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 111.76,
+   "alt_piston": 126.9,
+   "diam_perno": 38.09
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "FORD",
+   "motor": "FORD TRATOR MOTOR OHV 3201 3.3 L TRATOR 4600 /4610 FORD TRATOR MOTOR OHV 4256 4.2 L TRATOR 5600 /5610",
+   "nro_cil": 3,
+   "diam_cilindro": "111,76 / 111,80 / 106,70 / 111,80",
+   "alt_compresion": 68.02,
+   "prof_rebaje": 19.51,
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 89.15,
+   "perno_str": "∅38,09 × 89,15",
+   "tipo_perno": "F",
+   "juego_montaje": 0.142,
+   "codigo_aros": "A26049",
+   "codigo_aros_tolerancia": "SDC.2606",
+   "medida_aros": "3-2,38 / 1-4,76",
+   "tipo_camisa": null,
+   "dim_camisa": "A=114,44 / B=111,27 / C=120,42 / L=208,30",
+   "codigo_camisa": "C26040",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 58,
+   "codigo_catalogo": "K26040",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1443,9 +2337,38 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "FORD CARGO 5600-5610 (NEW HOL) 111,80 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 111.76,
+   "alt_piston": 129.5,
+   "diam_perno": 38.09
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "FORD",
+   "motor": "FORD TRATOR MOTOR FNH 256 NA 16,3:1 CURSO CURTO TRATOR 5600 /5610",
+   "nro_cil": 4,
+   "diam_cilindro": "111,76 / 106,70",
+   "alt_compresion": 70.57,
+   "prof_rebaje": 18.55,
+   "diams_dispon": "STD / 0,50",
+   "largo_perno": 89.15,
+   "perno_str": "∅38,09 × 89,15",
+   "tipo_perno": null,
+   "juego_montaje": 0.141,
+   "codigo_aros": "A26042",
+   "codigo_aros_tolerancia": "DC.2606",
+   "medida_aros": "3-2,38 / 1-4,76",
+   "tipo_camisa": null,
+   "dim_camisa": "A=114,44 / B=111,27 / C=120,42 / L=208,30",
+   "codigo_camisa": "C26040",
+   "sobremedidas": [
+    "STD",
+    "0,50"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 58,
+   "codigo_catalogo": "K26060",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1460,9 +2383,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "FORD CARGO 4610-6610 (1 CIL) 111,80 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 111.8,
+   "alt_piston": 126.9,
+   "diam_perno": 38.1
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "FORD",
+   "motor": "FNH 268 NA 4.4 L TRATOR 6610 16,3:1 FNH 201 NA 3.3 L TRATOR 4610",
+   "nro_cil": 4,
+   "diam_cilindro": "111,80 / 111,80",
+   "alt_compresion": 68.02,
+   "prof_rebaje": 19.25,
+   "diams_dispon": "STD",
+   "largo_perno": 89.15,
+   "perno_str": "∅38,10 × 89,15",
+   "tipo_perno": "F",
+   "juego_montaje": 0.192,
+   "codigo_aros": "A26049",
+   "codigo_aros_tolerancia": null,
+   "medida_aros": "3-2,38 / 1-4,76",
+   "tipo_camisa": null,
+   "dim_camisa": "A=114,44 / B=111,27 / C=120,42 / L=208,30",
+   "codigo_camisa": "C26040",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 58,
+   "codigo_catalogo": "K26070",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1477,9 +2428,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "NEW HOLLAND 8030 P.38 PZ.62 A/C 73 111.8",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 111.78,
+   "alt_piston": 126.6,
+   "diam_perno": 38.1
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "NEW",
+   "motor": "MOTOR 6630 / 8030 ASPIRA- DO TRATOR 6630 / 8030",
+   "nro_cil": 6,
+   "diam_cilindro": "111,78 / 102,25",
+   "alt_compresion": 73.2,
+   "prof_rebaje": 21.67,
+   "diams_dispon": "STD",
+   "largo_perno": 89.15,
+   "perno_str": "∅38,10 × 89,15",
+   "tipo_perno": null,
+   "juego_montaje": 0.178,
+   "codigo_aros": "A26300",
+   "codigo_aros_tolerancia": "DC.7885",
+   "medida_aros": "1-2,39 / 1-2,38 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=114,445 / B=110,450 / L=205,485",
+   "codigo_camisa": "C26610",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 58,
+   "codigo_catalogo": "K26610",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1494,9 +2473,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "NEW HOLLAND 8030 (P.41)(1 CIL) 111,80 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 111.78,
+   "alt_piston": 126.29,
+   "diam_perno": 41.275
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "NEW",
+   "motor": "MOTOR 7630 TURBO TRATOR 7630 TURBO",
+   "nro_cil": 6,
+   "diam_cilindro": "111,78 / 129,60",
+   "alt_compresion": 72.9,
+   "prof_rebaje": 19.86,
+   "diams_dispon": "STD",
+   "largo_perno": 94.49,
+   "perno_str": "∅41,27 × 94,49",
+   "tipo_perno": null,
+   "juego_montaje": 0.203,
+   "codigo_aros": "A26050",
+   "codigo_aros_tolerancia": "DC.8027",
+   "medida_aros": "1-3,19 / 1-2,38 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=114,445 / B=110,450 / L=205,485",
+   "codigo_camisa": "C26610",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 58,
+   "codigo_catalogo": "K26620",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1511,9 +2518,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "VALTRA 420-620 TURBO PZ.70 P.40 108 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 108.0,
+   "alt_piston": 106.65,
+   "diam_perno": 40.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VALTRA",
+   "motor": "MOTOR SÉRIE 20 NA / TURBO DS420 / DS620",
+   "nro_cil": 4,
+   "diam_cilindro": "108,00",
+   "alt_compresion": 70.65,
+   "prof_rebaje": 19.06,
+   "diams_dispon": "STD",
+   "largo_perno": 89.0,
+   "perno_str": "∅40,00 × 89,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.11,
+   "codigo_aros": "A31150",
+   "codigo_aros_tolerancia": "LC.7235",
+   "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=117,00 / B=108,00 / C=131,70 / L=218,00",
+   "codigo_camisa": "C31000",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 118,
+   "codigo_catalogo": "K31150",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1613,9 +2648,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "PEUGEOT TU4 1.5 8V P.18 75 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 75.0,
+   "alt_piston": 37.9,
+   "diam_perno": 18.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "PEUGEOT",
+   "motor": "MOTOR TU4M 1.5L GASOLINA",
+   "nro_cil": 4,
+   "diam_cilindro": "75,00",
+   "alt_compresion": 23.4,
+   "prof_rebaje": null,
+   "diams_dispon": "STD",
+   "largo_perno": 53.0,
+   "perno_str": "∅18,00 × 53,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.055,
+   "codigo_aros": "A0440670",
+   "codigo_aros_tolerancia": "TA.8883",
+   "medida_aros": "1-1,00 / 1-1,00 / 1-1,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=79,30 / B=75,00 / C=89,20 / L=135,40",
+   "codigo_camisa": "C0440040",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 107,
+   "codigo_catalogo": "K0440045",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1656,7 +2719,8 @@
     "0,50"
    ],
    "ficha_de": "S BE44060",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1731,7 +2795,8 @@
     "0,50"
    ],
    "ficha_de": "S BE 460100",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1763,9 +2828,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "M.BENZ OM457LA E3 (1 CIL) 128 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 140.05,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "M.BENZ",
+   "motor": "MOTOR OM 457LA Euro III 17,75:1 Axor / O500 / 1634 até Motor FZ943.132",
+   "nro_cil": 6,
+   "diam_cilindro": "128,00 / 155,00",
+   "alt_compresion": 90.05,
+   "prof_rebaje": 15.85,
+   "diams_dispon": "STD",
+   "largo_perno": 103.0,
+   "perno_str": "∅52,00 × 103,00",
+   "tipo_perno": "F",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48460",
+   "codigo_aros_tolerancia": "PI.8834",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": "A/M",
+   "dim_camisa": "A=144,50 / B=128,00 / C=155,50 / L=266,00",
+   "codigo_camisa": "C0482020",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 94,
+   "codigo_catalogo": "K0482020",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1780,9 +2873,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "M.BENZ OM457LA E3/E5 (1 CIL)S/BUJE 128mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 140.05,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "M.BENZ",
+   "motor": "MOTOR OM 457LA Euro V Motor 457.914/915/916/918/927 a partir do Motor FZ 949.133",
+   "nro_cil": 6,
+   "diam_cilindro": "128,00 / 155,00",
+   "alt_compresion": 90.05,
+   "prof_rebaje": 15.85,
+   "diams_dispon": "STD",
+   "largo_perno": 103.0,
+   "perno_str": "∅52,00 × 103,00",
+   "tipo_perno": "F",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48460",
+   "codigo_aros_tolerancia": "PI.8834",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": "A/M",
+   "dim_camisa": "A=144,50 / B=128,00 / C=155,50 / L=266,00",
+   "codigo_camisa": "C0482030",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 94,
+   "codigo_catalogo": "K0482030",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1797,9 +2918,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "M.BENZ OM457LA E5 (1 CIL) C/BUJE 128 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 135.05,
+   "diam_perno": 51.998
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "M.BENZ",
+   "motor": "MOTOR OM 457LA Euro V 3340 / 3340S/K / 3344 / 3344S/ K / 4140 / 4144 (Camisa com Anel de Fogo)",
+   "nro_cil": 6,
+   "diam_cilindro": "128,00",
+   "alt_compresion": 85.05,
+   "prof_rebaje": 17.71,
+   "diams_dispon": "STD",
+   "largo_perno": 103.0,
+   "perno_str": "∅52,00 × 103,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48460",
+   "codigo_aros_tolerancia": "PI.8834",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": "A/M",
+   "dim_camisa": "A=144,50 / B=128,00 / C=155,50 / L=266,00",
+   "codigo_camisa": "C0482040",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 94,
+   "codigo_catalogo": "K0482040",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1875,7 +3024,8 @@
     "0,60"
    ],
    "ficha_de": "S BE 48690",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1890,9 +3040,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "M.BENZ OM447A-449LA ->95 (1 CIL) 128 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 140.0,
+   "diam_perno": 46.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "M.BENZ",
+   "motor": "MOTOR OM 447LA 16:25:1 CAMINHÃO LS1935 /LS1941/ Nº BLOCOS: 476.980/ 476.981/ 4 7 6 .9 8 3 O B S .: C O M T O P B R A K E B I E L A T R A P E ZO IDAL",
+   "nro_cil": 6,
+   "diam_cilindro": "128,00 / 155,00",
+   "alt_compresion": 89.95,
+   "prof_rebaje": 26.5,
+   "diams_dispon": "STD - 0 , 3 0 89,6 5 - 2 6 ,50 139,70",
+   "largo_perno": 105.0,
+   "perno_str": "∅46,00 × 105,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.16,
+   "codigo_aros": "A48930",
+   "codigo_aros_tolerancia": "GC.6926",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=144,50 / B=128,00 / C=153,80 / L=270,00",
+   "codigo_camisa": "C48930",
+   "sobremedidas": [
+    "STD - 0 , 3 0 89,6 5 - 2 6 ,50 139,70"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 93,
+   "codigo_catalogo": "K48930",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1907,9 +3085,37 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "M.BENZ OM447A-449LA ->95 (-0,3) 128 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 139.7,
+   "diam_perno": 46.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "M.BENZ",
+   "motor": "MOTOR OM 447LA 16:25:1 CAMINHÃO LS1935 /LS1941/ Nº BLOCOS: 476.980/ 476.981/ 4 7 6 .9 8 3 O B S .: C O M T O P B R A K E B I E L A T R A P E ZO IDAL",
+   "nro_cil": 6,
+   "diam_cilindro": "128,00 / 155,00",
+   "alt_compresion": 89.65,
+   "prof_rebaje": 26.5,
+   "diams_dispon": "STD - 0 , 3 0 89,6 5 - 2 6 ,50 139,70",
+   "largo_perno": 105.0,
+   "perno_str": "∅46,00 × 105,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.16,
+   "codigo_aros": "A48930",
+   "codigo_aros_tolerancia": "GC.6926",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=144,50 / B=128,00 / C=153,80 / L=270,00",
+   "codigo_camisa": "C48930",
+   "sobremedidas": [
+    "STD - 0 , 3 0 89,6 5 - 2 6 ,50 139,70"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 93,
+   "codigo_catalogo": "K48933",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -1924,9 +3130,41 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "M.BENZ OM447A-449LA 95-> (1 CIL) 128 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 140.0,
+   "diam_perno": 46.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "M.BENZ",
+   "motor": "MOTOR OM 447LA USA /OM 449LA-475.989 /OM 447LA-476.977 APOS 1995 O B S . :C O M T O P B R A K E / M O T O R N o 4 7 6 . 9 7 9 / 4 7 5 974/ 47 5 9 7 8 / 4 7 5 9 7 9/ 4 7 6 9 7 1 /",
+   "nro_cil": 6,
+   "diam_cilindro": "128,00 / 155,00",
+   "alt_compresion": 89.95,
+   "prof_rebaje": 24.0,
+   "diams_dispon": "STD / 0,25 / 0,5 0 / 0 , 75 / 1 , 0 0 -0,30 89,65 -24,00 139,70",
+   "largo_perno": 105.0,
+   "perno_str": "∅46,00 × 105,00",
+   "tipo_perno": "F",
+   "juego_montaje": 0.16,
+   "codigo_aros": "A48930",
+   "codigo_aros_tolerancia": "GC.6926",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=144,50 / B=128,00 / C=153,80 / L=270,00",
+   "codigo_camisa": "C48930",
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,5 0",
+    "0 , 75",
+    "1 , 0 0 -0,30 89,65 -24,00 139,70"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 93,
+   "codigo_catalogo": "K48940",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -2037,7 +3275,8 @@
     "0,90"
    ],
    "ficha_de": "S BE 48980",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -2113,7 +3352,8 @@
     "1,00"
    ],
    "ficha_de": "S BE50160",
-   "oring": false
+   "oring": false,
+   "verificado": true
   },
   "codigos_crac": [
    {
