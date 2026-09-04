@@ -61,6 +61,25 @@ ESPEC = {
         "sobremedidas": True,
         "filtro_proveedor": True,
     },
+    # Las válvulas de 3B y de Mahle que trabaja el proveedor. Es la única
+    # familia cuyo universo NO es el catálogo del fabricante sino la lista del
+    # proveedor (pedido del dueño, 2026-09-04: "cargá solamente las válvulas
+    # que trabaja el proveedor en esas dos marcas"), y por eso es la única
+    # familia con código del proveedor que NO lleva `filtro_proveedor`: todas
+    # las fichas lo tienen, así que la casilla no filtraría nada.
+    #
+    # El Ø de vástago aparece dos veces a propósito. `diam_vastago` es el de la
+    # medida STD, que es con el que la válvula se identifica; el de la lista de
+    # sobremedidas —el filtro `diam_sobremedida`, mismo mecanismo que el Ø
+    # exterior de camisas— busca contra TODAS las medidas que existen de esa
+    # válvula, que es lo que hace falta cuando lo que se midió es un vástago ya
+    # rectificado a la sobremedida.
+    "valvulas": {
+        "label": "Válvulas",
+        "medidas": ["diam_cabeza", "diam_vastago", "largo", "angulo"],
+        "tipo": True,
+        "sobremedidas": True,
+    },
     "guias": {
         "label": "Guías de válvulas",
         "medidas": ["diam_vastago", "diam_ext", "largo"],

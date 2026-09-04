@@ -57,6 +57,78 @@ export const FAMILIAS = [
     ],
   },
   {
+    id: 'valvulas',
+    label: 'Válvulas',
+    // Las cuatro medidas con las que se identifica una válvula, en el orden en
+    // que las lee el catálogo: la cabeza (lo primero que se mide), el vástago,
+    // el largo y el ángulo del asiento.
+    //
+    // El Ø de vástago va dos veces y no es un error: el de arriba es el de la
+    // medida STD y el de abajo busca contra TODAS las sobremedidas de la
+    // válvula (mismo mecanismo que el "Ø exterior" de camisas). El segundo es
+    // el que sirve cuando lo que se midió es un vástago ya rectificado.
+    medidas: [
+      { campo: 'diam_cabeza', label: 'Ø cabeza' },
+      { campo: 'diam_vastago', label: 'Ø vástago (STD)' },
+      { campo: 'largo', label: 'Largo total' },
+      { campo: 'angulo', label: 'Ángulo', unidad: 'º' },
+      { campo: 'diam_sobremedida', label: 'Ø vástago c/ sobremedida' },
+    ],
+    textos: [
+      { campo: 'codigo', label: 'Código', ancho: 200, icono: 'tag' },
+      { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
+    ],
+    opciones: [
+      {
+        campo: 'tipo',
+        label: 'Tipo',
+        valores: [
+          { valor: '', label: 'Admisión y escape' },
+          { valor: 'A', label: 'Admisión' },
+          { valor: 'E', label: 'Escape' },
+          { valor: 'AE', label: 'Indistinta (A/E)' },
+        ],
+      },
+    ],
+    columnas: [
+      { key: 'codigo', header: 'Código', width: 125, strong: true, wrap: true },
+      // El número del catálogo al lado del que se pide: es con el que se busca
+      // la válvula en el PDF de la marca, y también se puede escribir en el
+      // filtro "Código".
+      { key: 'codigo_fab', header: 'Nº catálogo', width: 115 },
+      { key: 'marca', header: 'Marca', width: 80 },
+      { key: 'aplicacion', header: 'Motor / aplicación', wrap: true, minWidth: 200, tipo: 'aplicacion' },
+      { key: 'tipo', header: 'Tipo', width: 90, tipo: 'tipo' },
+      { key: 'diam_cabeza', header: 'Ø cabeza', width: 95, align: 'right', tipo: 'mm' },
+      // Tres decimales: el catálogo de 3B publica el vástago así (7,912 la STD
+      // y 7,988 la de tres milésimas) y redondeado a dos las dos se leen casi
+      // igual, que es justo lo que hay que distinguir para pedir bien.
+      { key: 'diam_vastago', header: 'Ø vást.', width: 95, align: 'right', tipo: 'mm', decimales: 3 },
+      { key: 'largo', header: 'Largo', width: 85, align: 'right', tipo: 'mm' },
+      { key: 'angulo', header: 'Ángulo', width: 85, align: 'right', tipo: 'grados' },
+      // Cada sobremedida con su Ø de vástago: es lo que se pide cuando la guía
+      // se rectifica en vez de cambiarse, y sin la etiqueta a la vista los
+      // números no dicen cuál.
+      { key: 'sobremedidas', header: 'Sobremedidas y Ø vást.', minWidth: 190, tipo: 'sobremedidas', decimales: 3 },
+      // Bimetálica, estelitada, vástago cromado: lo publica Mahle y decide si
+      // una válvula aguanta el motor. En las de 3B va un guión.
+      { key: 'material', header: 'Material', width: 105 },
+      // Qué válvula de la otra marca reemplaza a ésta. Es lo que permite
+      // entrar con un número que no es del catálogo que uno tiene a mano.
+      { key: 'equivalencias', header: 'Equivalencias', minWidth: 150, wrap: true },
+      // Una válvula tiene un precio por sobremedida: esta columna dice de cuál
+      // es el que se está mostrando (igual que en camisas y subconjuntos).
+      { key: 'medida_crac', header: 'Precio de', width: 105, tipo: 'medida' },
+      { key: 'precio', header: 'Precio', width: 105, align: 'right', tipo: 'precio' },
+      { key: 'stock', header: 'Stock', width: 75, align: 'center', tipo: 'stock' },
+    ],
+    ejemplos: [
+      { label: 'Ø cabeza 35 mm', filtros: { diam_cabeza: '35', tol_diam_cabeza: '0.5' } },
+      { label: 'Ø vástago 8 y largo 121', filtros: { diam_vastago: '8', tol_diam_vastago: '0.1', largo: '121', tol_largo: '1' } },
+      { label: 'Motor: Corsa', filtros: { aplicacion: 'corsa' } },
+    ],
+  },
+  {
     id: 'guias',
     label: 'Guías de válvulas',
     medidas: [

@@ -22,7 +22,12 @@ function formatMm(valor, decimales = 0) {
   if (Array.isArray(valor)) return valor.map((v) => formatMm(v, decimales)).join(' / ')
   const n = Number(valor)
   if (Number.isNaN(n)) return String(valor)
-  return n.toLocaleString('es-AR', { minimumFractionDigits: decimales, maximumFractionDigits: 2 })
+  // Dos decimales alcanzan para casi todo, pero el Ø de vástago de una válvula
+  // se publica con tres (7,912 y 7,988 son dos sobremedidas distintas y
+  // redondeadas quedan en 7,91 y 7,99): una columna que pide tres los muestra.
+  return n.toLocaleString('es-AR', {
+    minimumFractionDigits: decimales, maximumFractionDigits: Math.max(2, decimales),
+  })
 }
 
 /*
@@ -44,8 +49,12 @@ function aFila(ficha, i) {
 function formatEtiqueta(label) {
   const mm = /^([+-])(\d+(?:[.,]\d+)?)\s*MM$/i.exec(String(label || '').trim())
   if (!mm) return label || ''
+  // Hasta tres decimales, no dos: las sobremedidas de vástago de Mahle son de
+  // 0,076 y 0,127 mm, y redondeadas a dos se convierten las dos en 0,08 / 0,13
+  // y dejan de distinguirse. Las de medio milímetro de camisas siguen
+  // escribiéndose "+0,50 mm" igual que antes.
   return `${mm[1]}${Number(mm[2].replace(',', '.')).toLocaleString('es-AR', {
-    minimumFractionDigits: 2, maximumFractionDigits: 2,
+    minimumFractionDigits: 2, maximumFractionDigits: 3,
   })} mm`
 }
 
@@ -54,7 +63,7 @@ function formatEtiqueta(label) {
  * escondida en el tooltip: el número solo no dice si esa camisa es la STD, la
  * de 30 o la de medio milímetro, que es justamente lo que hay que pedir.
  */
-function celdaSobremedidas(fila) {
+function celdaSobremedidas(fila, decimales) {
   const lista = Array.isArray(fila.sobremedidas) ? fila.sobremedidas : []
   if (!lista.length) return '—'
   const matcheadas = new Set((fila.sobremedidas_match || []).map((s) => s.label))
@@ -83,7 +92,7 @@ function celdaSobremedidas(fila) {
                 fontWeight: resaltada ? 'var(--weight-semibold)' : 'var(--weight-regular)',
               }}
             >
-              {s.texto || formatMm(s.valor)}
+              {s.texto || formatMm(s.valor, decimales)}
             </span>
           </span>
         )
@@ -177,7 +186,7 @@ function contenidoCelda(col, fila, acciones) {
     case 'grados':
       return valor === null || valor === undefined || valor === '' ? '—' : `${formatMm(valor, col.decimales)}º`
     case 'sobremedidas':
-      return celdaSobremedidas(fila)
+      return celdaSobremedidas(fila, col.decimales)
     // Un sí o un no de la ficha (hoy: si el conjunto trae los orings de
     // camisa). Con palabras y no con un tilde: en una tabla llena de guiones,
     // un "No" se lee y un tilde ausente se confunde con un dato que falta.
