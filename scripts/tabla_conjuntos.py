@@ -60,8 +60,11 @@ COLUMNAS = [
     ("Aplicación", lambda x: x.get("aplicacion")),
     ("Fabricante", campo("fabricante")),
     ("Nº cil.", campo("nro_cil")),
-    ("Ø cilindro", campo("diam_cilindro")),
     ("Ø pistón", medida("diam_piston")),
+    # El segundo número de la celda del catálogo es la CARRERA, no otro
+    # diámetro. Se leyó como "Ø cilindro" hasta que el dueño lo corrigió
+    # (2026-09-04): en K01050, "94,40 / 100,00" es Ø 94,40 y carrera 100,00.
+    ("Carrera", campo("carrera")),
     ("KH alt. compresión", campo("alt_compresion")),
     ("GL alt. total", medida("alt_piston")),
     ("Prof. rebaje válv.", campo("prof_rebaje")),

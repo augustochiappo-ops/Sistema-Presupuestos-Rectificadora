@@ -115,7 +115,7 @@ lista del proveedor. Lo que se carga del catálogo es `aplicacion`, `medidas` y
   "fabricante": "CUMMINS",
   "motor": "MOTOR ISC-E",
   "nro_cil": 6,
-  "diam_cilindro": "114,00",
+  "carrera": null,
   "alt_compresion": 79,
   "prof_rebaje": 14.45,
   "diams_dispon": "STD",
@@ -137,7 +137,8 @@ Qué es cada cosa, en los términos del catálogo:
 
 | Campo | En el catálogo | Nota |
 |---|---|---|
-| `medidas.diam_piston` | Ø del pistón | el que se cruza con la descripción del proveedor |
+| `medidas.diam_piston` | Ø del pistón (primer valor de la celda) | el que se cruza con la descripción del proveedor |
+| `extra.carrera` | **carrera** (segundo valor de la misma celda) | Ojo: NO es otro diámetro. En `K01050` la celda dice `94,40 / 100,00` → Ø 94,40 y carrera 100,00. Si la celda trae un solo valor, no hay carrera y va `null` |
 | `medidas.alt_piston` | **GL** (altura total) | |
 | `medidas.diam_perno` | Ø del perno | |
 | `extra.alt_compresion` | **KH** | |
@@ -256,7 +257,8 @@ rompe:
   canta: dice `(-0,3)`. El extractor no las separa solo.
 - **Filas que apilan varios motores.** En la página 58 un solo juego
   (`E26040`/`K26040`) cubre el OHV 3201, el 4256 y el 4269, y repite el Nº de
-  cilindros. El `diam_cilindro` queda con todos los valores de la celda.
+  cilindros. Se carga la primera variante y el resto queda anotado en
+  `revisar.carrera`.
 
 ## El circuito completo, en orden
 
