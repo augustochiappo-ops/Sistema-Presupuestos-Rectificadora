@@ -1369,18 +1369,38 @@ el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 
 ## Próximo paso
 
-**Los datos técnicos de los 113 conjuntos que faltan (2026-09-01).** La pestaña
-**Conjuntos** ya está en producción con las 128 fichas que trabaja el proveedor
-—código del proveedor y de Mahle, precio, stock, columna Oring— pero **113
-todavía no tienen medidas**: se completan leyendo el catálogo de Mahle. El dueño
-va a abrir **otra sesión con el PDF a mano**; el procedimiento entero (qué falta,
-cómo se cruzan los códigos, el formato exacto de la ficha, los dibujos y el
-circuito hasta el deploy) está en **`CRAC/tecnicos/CARGA-CONJUNTOS.md`**, que se
-escribió justo para eso. Acá no hay nada pendiente de código.
+**Los 99 conjuntos que todavía esperan el catálogo (2026-09-04).** De los 113 que
+faltaban se cargaron **los 14 Cummins**; quedan 99. El procedimiento sigue en
+**`CRAC/tecnicos/CARGA-CONJUNTOS.md`**, ahora con la sección nueva sobre el
+catálogo Clevite. No hay nada pendiente de código.
 
-Lo único que quedó sin confirmar es un detalle de nomenclatura: si el par
-`C/L` / `C/C` de los conjuntos Cummins se lee "con lomo / con cavidad". Hoy se
-cargan como dos fichas distintas, que es lo que son en la lista del proveedor.
+**Dos cosas para confirmar con el dueño antes de seguir:**
+
+1. **`C/L` / `C/C` de los Cummins.** Venía anotado como "con lomo / con cavidad",
+   sin confirmar. El catálogo apunta a otra lectura: `K21510` (C/L) y `K21515`
+   (C/C) son **el mismo pistón** (los dos llevan `S21500`, con KH, GL, rebaje,
+   perno, juego y aros idénticos) y lo único que cambia es la camisa —
+   `C21510` con `L=237,12` contra `C21900` con `L=234,12`. Es decir, **camisa
+   larga / camisa corta**. Falta que el dueño lo confirme.
+2. **Las 14 fichas Cummins están sin revisar por el dueño.** Se pushearon a
+   `master` (commit `db97b16`) pero **no se deployaron**: él pidió mirarlas antes
+   de que entren a producción.
+
+**Lo que se aprendió leyendo el catálogo (2026-09-04), que vale para las 99 que
+faltan:** los Cummins (y los Caterpillar) **no están en el Mahle 2019** sino en el
+**Mahle Clevite 2019/2020**, y ahí **el número no es la llave**: cada columna de la
+fila lleva su propio código (`A21510` · `E21450` · `S21450` · `C21510` · `K21450`
+conviven en la misma fila). Hay que buscar el `K#####` en la columna del kit. Dos
+trampas concretas: `T BEK211000` es `K0211000` en el catálogo (con cero adelante,
+así que el `codigo_fab` que arma el script no matchea), y dos kits distintos
+pueden compartir pistón y diferir solo en la camisa. Todo esto quedó escrito en
+`CARGA-CONJUNTOS.md`.
+
+**Herramientas:** en la máquina local **no hay poppler** (`pdftoppm` no existe y el
+`pdftotext` de Xpdf no soporta `-bbox`), así que la lectura se hizo con
+**`pdfplumber`** para las coordenadas y **`pypdfium2`** para rasterizar la página y
+mirarla. Las dos se instalan con `pip` y resolvieron el problema de las celdas con
+dos valores apilados, que es donde el texto plano miente.
 
 ---
 

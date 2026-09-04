@@ -1,15 +1,18 @@
 # Cómo cargar los datos técnicos de los CONJUNTOS
 
-Este documento es para la sesión que tenga a mano el **PDF del catálogo Mahle
-2019** ("Mahle - Pistones, Camisas, Cojinetes 2019 web.pdf"). Explica qué falta,
-de dónde sale cada dato y cómo dejarlo cargado sin romper nada.
+Este documento es para la sesión que tenga a mano los PDF de Mahle: el
+**catálogo 2019** ("Mahle - Pistones, Camisas, Cojinetes 2019 web.pdf") y el
+**Clevite 2019/2020** ("Mahle-Clevite 2020-21.pdf"), que es el que trae
+Caterpillar y Cummins. Explica qué falta, de dónde sale cada dato y cómo dejarlo
+cargado sin romper nada.
 
 ## Dónde estamos
 
 `conjuntos.json` ya tiene **las 128 fichas** que trabaja el proveedor, con
-código, descripción, precio y stock. **15 tienen las medidas cargadas**
-(las que comparten número con un subconjunto nuestro) y **113 están esperando el
-catálogo**: son las que tienen `"medidas": {}` y `"extra": {}`.
+código, descripción, precio y stock. **29 tienen las medidas cargadas** (las 15
+que comparten número con un subconjunto nuestro más los 14 Cummins leídos del
+Clevite el 2026-09-04) y **99 están esperando el catálogo**: son las que tienen
+`"medidas": {}` y `"extra": {}`.
 
 Ver cuáles faltan:
 
@@ -44,6 +47,38 @@ su columna.
 Ojo con la "E": el catálogo Mahle también nombra conjuntos con `E#####`, pero el
 proveedor **no usa esa letra** (para él la E es "Conjuntos de Embrague"). Lo que
 figura en la lista es `T BEK…` y nada más.
+
+### Caterpillar y Cummins van en OTRO catálogo, y ahí la llave es otra
+
+Lo de arriba vale para el **Mahle 2019**. Los motores **Caterpillar y Cummins no
+están ahí**: están en el **Mahle Clevite 2019/2020** ("Mahle-Clevite 2020-21.pdf"),
+que es el catálogo que cubre esas dos marcas. Ahí las páginas del PDF coinciden
+con las impresas y no hay que convertir nada.
+
+Y **en el Clevite el número NO es la llave**: cada columna de la fila lleva su
+propio código. Una fila real de la página 24:
+
+    aros A21510 · conjunto E21450 · subconjunto S21450 · camisa C21510 · kit K21450
+
+Cinco números distintos en la misma fila. Así que para un `T BEK…` hay que buscar
+el código **en la columna del kit** (la última, "Códigos MAHLE Clevite EO"), no el
+número suelto. Buscar "21510" en esa página trae los aros y la camisa de una fila
+que **no es** la del kit K21510.
+
+Dos consecuencias que ya mordieron:
+
+- **`T BEK211000` es `K0211000` en el catálogo**, con un cero adelante. El
+  `codigo_fab` que arma el script dice `K211000` y no matchea: hay que buscar las
+  dos formas.
+- **`K21510` y `K21515` son el mismo pistón** (los dos llevan `S21500`) con dos
+  camisas distintas: `C21510` con `L=237,12` y `C21900` con `L=234,12`. Eso es lo
+  que el proveedor distingue con **`C/L` y `C/C`** al final de la descripción.
+
+La regla del Ø sigue valiendo igual, y hay una verificación mejor cuando se puede:
+si la fila trae un `S#####` que ya tenemos cargado como subconjunto, **el pistón
+tiene que coincidir en todo** (KH, GL, rebaje, perno, juego, aros). Lo único que
+puede cambiar es la camisa — que es justo lo que el conjunto agrega. Se cruzaron
+así las cuatro fichas `S21500`, `S21630`, `S21850` y `S21940`, y dieron exactas.
 
 **Regla de verificación obligatoria** (viene de la skill `datos-mahle-016`,
 caso documentado S BE70870): antes de copiar los datos de una fila, confirmar
