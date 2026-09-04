@@ -82,7 +82,10 @@ Dos consecuencias que ya mordieron:
   dos formas.
 - **`K21510` y `K21515` son el mismo pistón** (los dos llevan `S21500`) con dos
   camisas distintas: `C21510` con `L=237,12` y `C21900` con `L=234,12`. Eso es lo
-  que el proveedor distingue con **`C/L` y `C/C`** al final de la descripción.
+  que el proveedor distingue con **`C/L` y `C/C`** al final de la descripción:
+  **camisa larga** y **camisa corta** (confirmado por el dueño el 2026-09-04).
+  O sea que dos conjuntos con el mismo pistón y distinta camisa son dos fichas
+  distintas, no un duplicado a limpiar.
 
 La regla del Ø sigue valiendo igual, y hay una verificación mejor cuando se puede:
 si la fila trae un `S#####` que ya tenemos cargado como subconjunto, **el pistón

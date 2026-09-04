@@ -1366,6 +1366,7 @@ lo dice sola en la próxima corrida.
 capturas del catálogo (la sesión que tenga el PDF tiene el procedimiento entero
 en `CRAC/tecnicos/CARGA-CONJUNTOS.md`), y una pregunta chica para el dueño: si
 el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
+(Resuelto el 2026-09-04: es camisa larga / camisa corta. Ver "Próximo paso".)
 
 ## Próximo paso
 
@@ -1396,9 +1397,15 @@ cosas que hay que mirar a ojo igual) y el extractor en
 `scripts/leer_conjuntos_mahle.py`. Ahí está todo lo necesario para seguir con
 los 61 sin volver a descubrirlo.
 
-**Sin confirmar todavía:** si el par `C/L` / `C/C` de los Cummins se lee camisa
-larga / camisa corta. Los datos apuntan a eso — `K21510` y `K21515` son el mismo
-pistón (`S21500`) y solo cambia la camisa, `L=237,12` contra `L=234,12`.
+**`C/L` y `C/C`: confirmado por el dueño el 2026-09-04.** Son **camisa larga** y
+**camisa corta**. Venía anotado como "con lomo / con cavidad", que era una
+suposición y estaba mal. Los datos ya lo mostraban: `K21510` (C/L) y `K21515`
+(C/C) son el mismo pistón —los dos llevan `S21500`, con KH, GL, rebaje, perno,
+juego y aros idénticos— y lo único que cambia es la camisa, `C21510` con
+`L=237,12` contra `C21900` con `L=234,12`.
+
+No hace falta un campo nuevo: el `C/L` / `C/C` ya viene en la descripción del
+proveedor y la descripción se busca por texto en la pantalla.
 
 ---
 
