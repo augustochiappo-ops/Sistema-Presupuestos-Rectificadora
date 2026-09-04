@@ -66611,11 +66611,15 @@
     },
     {
      "label": "+04",
-     "valor": 10.99
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 10.99
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -70675,11 +70679,15 @@
     },
     {
      "label": "+04",
-     "valor": 10.99
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 10.99
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -70733,7 +70741,9 @@
     },
     {
      "label": "+04",
-     "valor": 7.99
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -70783,7 +70793,9 @@
     },
     {
      "label": "+04",
-     "valor": 7.99
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -71463,7 +71475,9 @@
     },
     {
      "label": "+08",
-     "valor": 10.98
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -71513,7 +71527,9 @@
     },
     {
      "label": "+08",
-     "valor": 10.98
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -71563,7 +71579,9 @@
     },
     {
      "label": "+08",
-     "valor": 10.99
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -71613,7 +71631,9 @@
     },
     {
      "label": "+08",
-     "valor": 10.99
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -72041,7 +72061,9 @@
     },
     {
      "label": "+08",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -72091,7 +72113,9 @@
     },
     {
      "label": "+08",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -72141,7 +72165,9 @@
     },
     {
      "label": "+08",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -72191,7 +72217,9 @@
     },
     {
      "label": "+08",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -73163,7 +73191,9 @@
     },
     {
      "label": "+08",
-     "valor": 9.45
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+0,076 mm",
@@ -73171,7 +73201,8 @@
     },
     {
      "label": "+0,076 mm +08",
-     "valor": 9.52
+     "valor": 9.52,
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+0,127 mm",
@@ -73179,7 +73210,8 @@
     },
     {
      "label": "+0,127 mm +08",
-     "valor": 9.57
+     "valor": 9.57,
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+0,254 mm",
@@ -73187,7 +73219,8 @@
     },
     {
      "label": "+0,254 mm +08",
-     "valor": 9.7
+     "valor": 9.7,
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+0,381 mm",
@@ -73195,7 +73228,8 @@
     },
     {
      "label": "+0,381 mm +08",
-     "valor": 9.83
+     "valor": 9.83,
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -73277,7 +73311,9 @@
     },
     {
      "label": "+08",
-     "valor": 9.45
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+0,076 mm",
@@ -73285,7 +73321,8 @@
     },
     {
      "label": "+0,076 mm +08",
-     "valor": 9.52
+     "valor": 9.52,
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+0,127 mm",
@@ -73293,7 +73330,8 @@
     },
     {
      "label": "+0,127 mm +08",
-     "valor": 9.57
+     "valor": 9.57,
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+0,254 mm",
@@ -73301,7 +73339,8 @@
     },
     {
      "label": "+0,254 mm +08",
-     "valor": 9.7
+     "valor": 9.7,
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+0,381 mm",
@@ -73309,7 +73348,8 @@
     },
     {
      "label": "+0,381 mm +08",
-     "valor": 9.83
+     "valor": 9.83,
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -73441,7 +73481,9 @@
     },
     {
      "label": "+08",
-     "valor": 12.61
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -73491,7 +73533,9 @@
     },
     {
      "label": "+08",
-     "valor": 12.61
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -73901,11 +73945,15 @@
     },
     {
      "label": "+04",
-     "valor": 8.48
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 8.48
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -74077,11 +74125,15 @@
     },
     {
      "label": "+04",
-     "valor": 8.46
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 8.46
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -74967,11 +75019,15 @@
     },
     {
      "label": "+04",
-     "valor": 9.93
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 9.93
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -75025,11 +75081,15 @@
     },
     {
      "label": "+04",
-     "valor": 8.94
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 8.94
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -75503,11 +75563,15 @@
     },
     {
      "label": "+04",
-     "valor": 8.94
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 8.94
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -75553,11 +75617,15 @@
     },
     {
      "label": "+04",
-     "valor": 9.93
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 9.93
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -75611,11 +75679,15 @@
     },
     {
      "label": "+04",
-     "valor": 8.94
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 8.94
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76131,7 +76203,9 @@
     },
     {
      "label": "+08",
-     "valor": 9.86
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76181,11 +76255,15 @@
     },
     {
      "label": "+04",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76239,11 +76317,15 @@
     },
     {
      "label": "+04",
-     "valor": 7.93
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 7.93
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76297,11 +76379,15 @@
     },
     {
      "label": "+04",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76355,11 +76441,15 @@
     },
     {
      "label": "+04",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76413,11 +76503,15 @@
     },
     {
      "label": "+04",
-     "valor": 7.93
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 7.93
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76513,11 +76607,15 @@
     },
     {
      "label": "+04",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 7.95
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76693,7 +76791,9 @@
     },
     {
      "label": "+08",
-     "valor": 9.89
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76743,7 +76843,9 @@
     },
     {
      "label": "+08",
-     "valor": 9.89
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76793,7 +76895,9 @@
     },
     {
      "label": "+08",
-     "valor": 9.93
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -76977,11 +77081,15 @@
     },
     {
      "label": "+04",
-     "valor": 7.9
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 7.9
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -77287,11 +77395,15 @@
     },
     {
      "label": "+04",
-     "valor": 9.47
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 9.47
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -77341,11 +77453,15 @@
     },
     {
      "label": "+04",
-     "valor": 9.46
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 9.46
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -77399,11 +77515,15 @@
     },
     {
      "label": "+04",
-     "valor": 7.91
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 7.91
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -77457,11 +77577,15 @@
     },
     {
      "label": "+04",
-     "valor": 7.91
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 7.91
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",
@@ -77515,11 +77639,15 @@
     },
     {
      "label": "+04",
-     "valor": 7.9
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     },
     {
      "label": "+08",
-     "valor": 7.9
+     "valor": null,
+     "texto": "altura",
+     "nota": "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de cabeza ni el de vástago"
     }
    ],
    "catalogo": "Mahle 2019/2020",

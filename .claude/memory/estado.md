@@ -1416,12 +1416,17 @@ originales no se versionan (viven en el escritorio del dueño): lo versionado so
 los volcados a CSV, como con asientos.
 
 **Las cuatro dudas de esta sesión y cómo se resolvieron** están en
-`decisiones.md`. La única que quedó **sin respuesta del catálogo** es qué
-cambian las sobremedidas **"+04", "+08" y "+1"** de Mahle: repiten las mismas
-tres medidas que la STD tanto en el Excel como en el PDF. Se guardan con la
-etiqueta tal cual y con las medidas de la STD, sin inventarles un Ø. **Si el
-dueño sabe qué son, conviene anotarlo** — son 91 códigos con "+08" y 15 con
-"+04" en la lista del proveedor.
+`decisiones.md`. La cuarta —qué cambian las sobremedidas **"+04", "+08" y "+1"**
+de Mahle, que repiten las mismas tres medidas que la STD— **la contestó el
+dueño en la misma sesión: son sobremedidas de la ALTURA DE LA CABEZA**, no de
+ningún diámetro. En un diesel tiene que haber una distancia entre la base de la
+válvula y la base de la tapa de cilindros, y esa distancia se regula con estas
+sobremedidas. No cambian el Ø de cabeza ni el de vástago; cambiarían el largo,
+pero el catálogo no lo publica y **el dueño pidió expresamente no ponerlo**:
+alcanza con que la tabla diga que esas sobremedidas existen. Por eso van con la
+etiqueta y **sin Ø** —la palabra "altura" en su lugar, y la explicación en el
+tooltip—, y quedan fuera del filtro de Ø de vástago, donde antes aparecían como
+si fueran un diámetro distinto. Son 91 códigos con "+08" y 15 con "+04".
 
 **Producción y `master` quedaron sincronizados en `f7ea8c2`**, deployado y
 verificado por HTTP: el `git pull` del deploy hizo el fast-forward

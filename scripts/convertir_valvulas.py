@@ -94,10 +94,19 @@ SEIS COSAS QUE ESTE SCRIPT RESUELVE, Y POR ESO EXISTE
    una línea armada ("Mahle VA0250168 · Edival 1144 A") que va a la tabla: es
    lo que permite entrar con un número que no es del catálogo que uno tiene.
 
-UNA DUDA QUE EL CATÁLOGO NO CONTESTA: las sobremedidas "+04", "+08" y "+1" de
-Mahle repiten las mismas tres medidas que la STD, tanto en el Excel como en el
-PDF. O sea que cambian algo que el catálogo no publica. Se guardan con la
-etiqueta tal cual vino y con las medidas de la STD, sin inventarles un Ø.
+QUÉ SON LAS SOBREMEDIDAS "+04", "+08" Y "+1" DE MAHLE: son sobremedidas de la
+ALTURA DE LA CABEZA, no de ningún diámetro. Lo explicó el dueño (2026-09-04) y
+es lo que faltaba para entender por qué repiten las mismas tres medidas que la
+STD, tanto en el Excel como en el PDF. En un motor diesel tiene que haber una
+distancia entre la base de la válvula y la base de la tapa de cilindros, y esa
+distancia se regula con estas sobremedidas: no cambian el Ø de cabeza ni el de
+vástago. Cambiarían el largo, pero el catálogo no lo publica y no se inventa.
+
+Por eso entran a la ficha con la etiqueta y **sin Ø** (`valor` en null y el
+texto "altura"): repetir el Ø de la STD debajo de "+08" hacía leer dos medidas
+donde hay una sola, y dejaba a esa fila apareciendo en el filtro de Ø de vástago
+como si fuera un diámetro distinto. La etiqueta sola alcanza — quien cotiza ve
+que esa válvula viene también en +08 y sabe para qué es.
 
 NO se copia ningún precio: el precio y el stock los pone la base local, que se
 actualiza todos los días con el Excel del proveedor.
@@ -130,6 +139,16 @@ MEDIDA_EN_PULGADAS = {
     "+3": '+.003"', "+5": '+.005"', "+10": '+.010"',
     "+15": '+.015"', "+20": '+.020"', "+30": '+.030"',
 }
+
+# Las sobremedidas de Mahle que son de ALTURA DE CABEZA y no de diámetro:
+# "+04", "+08", "+1" (ver el encabezado). Se reconocen por la forma —un más y
+# dígitos pelados, sin coma ni "mm" ni comillas— y van sin Ø.
+RE_ALTURA_CABEZA = re.compile(r"^\+\d+$")
+NOTA_ALTURA_CABEZA = (
+    "Sobremedida de altura de cabeza, no de diámetro: regula la distancia entre "
+    "la base de la válvula y la base de la tapa de cilindros. No cambia el Ø de "
+    "cabeza ni el de vástago"
+)
 
 
 # ── Utilidades ───────────────────────────────────────────────────────────────
@@ -554,6 +573,24 @@ def buscar_ficha(catalogo: dict, clave: tuple):
         None, objetivo, "".join(partes(f["codigo_fab"]))).ratio())
 
 
+def _sobremedida(s: dict) -> dict:
+    """
+    Una sobremedida como la lee la pantalla. Las de altura de cabeza van sin Ø
+    —la palabra "altura" en su lugar— porque el suyo es el mismo que el de la
+    STD: repetirlo hacía leer dos medidas donde hay una sola, y las metía en el
+    filtro de Ø de vástago como si fueran un diámetro distinto.
+    """
+    if RE_ALTURA_CABEZA.match(s["label"]):
+        return {"label": s["label"], "valor": None,
+                "texto": "altura", "nota": NOTA_ALTURA_CABEZA}
+    salida = {"label": s["label"], "valor": s["valor"]}
+    # La sobremedida que trae las dos cosas (vástago y altura de cabeza) sí
+    # lleva su Ø, y la aclaración al lado.
+    if re.search(r"\+\d+$", s["label"]):
+        salida["nota"] = NOTA_ALTURA_CABEZA
+    return salida
+
+
 def main() -> int:
     basso, mahle = leer_basso(), leer_mahle()
     equiv_3b, equiv_mahle = leer_equivalencias()
@@ -638,8 +675,7 @@ def main() -> int:
                 # la del catálogo, en chico: son dos formas de nombrar el mismo
                 # motor y a veces una dice lo que la otra se calla.
                 "notas": [grupo["descripcion"]] if aplicacion and grupo["descripcion"] else [],
-                "sobremedidas": [{"label": s["label"], "valor": s["valor"]}
-                                 for s in sobremedidas],
+                "sobremedidas": [_sobremedida(s) for s in sobremedidas],
                 "catalogo": "3B 2025" if es_3b else "Mahle 2019/2020",
                 "revisar": {
                     campo: SIN_FICHA

@@ -74,7 +74,13 @@ function celdaSobremedidas(fila, decimales) {
         return (
           <span
             key={`${s.label}-${i}`}
-            style={{ display: 'inline-flex', flexDirection: 'column', lineHeight: 1.2 }}
+            // La aclaración de la sobremedida, si la tiene: hoy son las de
+            // altura de cabeza de las válvulas, que no cambian ningún Ø.
+            title={s.nota || undefined}
+            style={{
+              display: 'inline-flex', flexDirection: 'column', lineHeight: 1.2,
+              cursor: s.nota ? 'help' : undefined,
+            }}
           >
             <span
               style={{

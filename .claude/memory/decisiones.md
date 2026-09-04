@@ -900,10 +900,21 @@ hace que `20226AC30` caiga en la de 30º.
    de 147 casos), para que la columna "Precio de" y la de sobremedidas no digan
    dos cosas distintas de la misma medida. Lo que no se puede traducir se deja
    tal cual: nunca se inventa una sobremedida que el catálogo no publica.
-4. **Qué son las sobremedidas "+04", "+08" y "+1" de Mahle.** *Sin resolver.*
-   Repiten las mismas tres medidas que la STD, en el Excel y en el PDF, así que
-   cambian algo que el catálogo no publica. Quedan con la etiqueta tal cual y
-   las medidas de la STD. Hay que preguntárselo al dueño.
+4. **Qué son las sobremedidas "+04", "+08" y "+1" de Mahle.** **Resueltas por
+   el dueño el mismo día:** son sobremedidas de la **altura de la cabeza**, no
+   de ningún diámetro. En un motor diesel tiene que haber una distancia entre la
+   base de la válvula y la base de la tapa de cilindros, y con estas
+   sobremedidas se regula. Eso explica por qué el catálogo repite las mismas
+   tres medidas: el Ø de cabeza y el de vástago no cambian. Lo que sí cambiaría
+   es el largo, pero el catálogo no lo publica y **el dueño pidió no ponerlo**
+   ("especificá solamente que vienen esas sobremedidas en la tabla y el usuario
+   se da cuenta").
+   **Cómo quedó:** la sobremedida entra con su etiqueta y **sin Ø** — la palabra
+   "altura" en la celda y la explicación en el tooltip. Dos razones: repetir el
+   Ø de la STD debajo de "+08" hacía leer dos medidas donde hay una sola, y con
+   un Ø cargado esa entrada aparecía en el filtro "Ø vástago c/ sobremedida"
+   como si fuera un diámetro distinto. Las combinadas ("+0,076 mm +08") sí
+   llevan su Ø, porque esas cambian las dos cosas.
 
 **Un efecto lateral que vale anotar:** las válvulas se publican con **tres**
 decimales (7,912 y 7,988 son dos sobremedidas distintas de vástago) y la
