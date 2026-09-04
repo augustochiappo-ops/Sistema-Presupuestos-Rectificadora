@@ -196,11 +196,42 @@
   "codigo": "T BEK10530",
   "codigo_fab": "K10530",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "STRALIS / TRAKKER — DIESEL",
   "descripcion": "IVECO CURSOR 13 24V E5 (UN) 135 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 135.0,
+   "alt_piston": 142.4,
+   "diam_perno": 54.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "IVECO",
+   "motor": "Motor Cursor 13 12.9 24v Euro 5",
+   "nro_cil": 6,
+   "carrera": null,
+   "alt_compresion": 90.4,
+   "prof_rebaje": "23,10",
+   "diams_dispon": "STD",
+   "largo_perno": 107.5,
+   "perno_str": "∅54,00 × 107,50",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A0010580",
+   "codigo_metal_leve": "DC.9016",
+   "medida_aros": "1-3,00 / 1-3,00 / 1-5,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=151,00 / B=135,00 / C=161,60 / L=255,20",
+   "codigo_camisa": "C01210",
+   "codigo_conjunto": "E0010530",
+   "codigo_conjunto_metal_leve": "P9860",
+   "codigo_subconjunto": "S0010530",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 78,
+   "codigo_catalogo": "K0010530",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3020,11 +3051,47 @@
   "codigo": "T BEK48320",
   "codigo_fab": "K48320",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "MOTOR OM 924/926 EURO V",
   "descripcion": "M.BENZ OM924LA-OM926LA E5 (2 CIL) 106 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 106.0,
+   "alt_piston": 98.4,
+   "diam_perno": 44.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 924/926 EURO V",
+   "nro_cil": "4/6",
+   "carrera": null,
+   "alt_compresion": 61.4,
+   "prof_rebaje": "15,67",
+   "diams_dispon": "STD / 0,30 / 0,60",
+   "largo_perno": 85.0,
+   "perno_str": "∅44,00 × 85,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.13,
+   "codigo_aros": "A0481040",
+   "codigo_metal_leve": "DH.9124",
+   "medida_aros": "1-3,50 / 1-2,50 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=110,00 / B=104,50 / C=— / L=220,00",
+   "codigo_camisa": "C0480690",
+   "codigo_conjunto": "E0480320",
+   "codigo_conjunto_metal_leve": "P9787",
+   "codigo_subconjunto": "S0480320",
+   "sobremedidas": [
+    "STD",
+    "0,30",
+    "0,60"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 91,
+   "codigo_catalogo": "K0480320",
+   "verificado": false,
+   "revisar": {
+    "codigo_catalogo": "el proveedor lo llama K48320 y en el catálogo es K0480320; la fila coincide palabra por palabra con el subconjunto S BE 480320, ya verificado"
+   }
   },
   "codigos_crac": [
    {
@@ -3219,11 +3286,47 @@
   "codigo": "T BEK48943",
   "codigo_fab": "K48943",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "OBS.: CON TOP BRAKE / MOTOR Nº 476.979 / 475.974 / 475.978 / 475.979 / 476.971 / 476.972 / 476.977",
   "descripcion": "M.BENZ OM447A-449LA 95-> (-0,3) 128 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 139.7,
+   "diam_perno": 46.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 447LA USA / OM 449LA-475.989 / OM 447LA-476.977 DESPUÉS DE 1995",
+   "nro_cil": 6,
+   "carrera": "155,00",
+   "alt_compresion": 89.65,
+   "prof_rebaje": "24,00",
+   "diams_dispon": "STD / 0,25 / 0,50 / 0,75 / 1,00",
+   "largo_perno": 105.0,
+   "perno_str": "∅46,00 × 105,00",
+   "tipo_perno": "F",
+   "juego_montaje": 0.16,
+   "codigo_aros": "A48930",
+   "codigo_metal_leve": "GC.6926",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=144,50 / B=128,00 / C=153,80 / L=270,00",
+   "codigo_camisa": "C48930",
+   "codigo_conjunto": "E48943",
+   "codigo_conjunto_metal_leve": "P2095",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50",
+    "0,75",
+    "1,00"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 93,
+   "codigo_catalogo": "K48943",
+   "verificado": false,
+   "nota": "variante «STD c/ KH-0,30» de la fila E48940: KH 89,65 y GL 139,70 son los de esa variante"
   },
   "codigos_crac": [
    {
@@ -3236,11 +3339,42 @@
   "codigo": "T BEK48964",
   "codigo_fab": "K48964",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "LS1938 / LS2638 / 1938S — A PARTIR DEL FZ MOTOR 758.190",
   "descripcion": "M.BENZ OM457LA INY.EL. EURO2/3 128 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 140.05,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 457LA Euro III 17,75:1",
+   "nro_cil": 6,
+   "carrera": "155,00",
+   "alt_compresion": 90.05,
+   "prof_rebaje": "15,85",
+   "diams_dispon": "STD",
+   "largo_perno": 103.0,
+   "perno_str": "∅52,00 × 103,00",
+   "tipo_perno": "F",
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48460",
+   "codigo_metal_leve": "PI.8834",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=144,50 / B=128,00 / C=155,50 / L=266,00",
+   "codigo_camisa": "C48240",
+   "codigo_conjunto": "E48964",
+   "codigo_conjunto_metal_leve": "P9272",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 93,
+   "codigo_catalogo": "K48964",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3255,9 +3389,40 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "M.BENZ OM457LA EURO V (1 CIL) 128 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 135.05,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 457LA Euro V",
+   "nro_cil": 6,
+   "carrera": "155,00",
+   "alt_compresion": 85.05,
+   "prof_rebaje": "17,71",
+   "diams_dispon": "STD",
+   "largo_perno": 103.0,
+   "perno_str": "∅52,00 × 103,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48460",
+   "codigo_metal_leve": "PI.8834",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=144,50 / B=128,00 / C=155,50 / L=266,00",
+   "codigo_camisa": "C48240",
+   "codigo_conjunto": "E48967",
+   "codigo_conjunto_metal_leve": "P9645",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 93,
+   "codigo_catalogo": "K48967",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3272,9 +3437,41 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "M.BENZ OM460LA",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 126.55,
+   "diam_perno": 51.998
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 460LA (EPA 04)",
+   "nro_cil": 6,
+   "carrera": "166,00",
+   "alt_compresion": 79.55,
+   "prof_rebaje": "17,70",
+   "diams_dispon": "STD",
+   "largo_perno": 103.0,
+   "perno_str": "∅51,998 × 103,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.13,
+   "codigo_aros": "A48460",
+   "codigo_metal_leve": "PI.8834",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=144,50 / B=128,00 / C=155,50 / L=266,00",
+   "codigo_camisa": "C48240",
+   "codigo_conjunto": "E48979",
+   "codigo_conjunto_metal_leve": null,
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 92,
+   "codigo_catalogo": "K48979",
+   "verificado": false,
+   "nota": "cabeza del pistón anodizada (el catálogo lo anota en la columna del juego)"
   },
   "codigos_crac": [
    {
@@ -3331,11 +3528,42 @@
   "codigo": "T BEK48990",
   "codigo_fab": "K48990",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "L1938 / LS1938 / L2638 / LK2638 / LS2638",
   "descripcion": "M.BENZ OM457LA INY.EL.Pz.90 P.52 128 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 128.0,
+   "alt_piston": 140.05,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "MERCEDES-BENZ",
+   "motor": "MOTOR OM 457LA 17,25:1 INYECCIÓN ELECTRÓNICA",
+   "nro_cil": 6,
+   "carrera": "155,00",
+   "alt_compresion": 90.05,
+   "prof_rebaje": "18,00",
+   "diams_dispon": "STD",
+   "largo_perno": 103.0,
+   "perno_str": "∅52,00 × 103,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A48460",
+   "codigo_metal_leve": "PI.8834",
+   "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
+   "tipo_camisa": "A/M",
+   "dim_camisa": "A=144,50 / B=128,00 / C=155,20 / L=270,00",
+   "codigo_camisa": "C48990",
+   "codigo_conjunto": "E48990",
+   "codigo_conjunto_metal_leve": "P2395",
+   "codigo_subconjunto": "S48990",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 93,
+   "codigo_catalogo": "K48990",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3350,9 +3578,40 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "DEUTZ 913 ECOL.3R C/C Pz.54,5 124*102mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 123.6,
+   "diam_perno": 35.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "DEUTZ",
+   "motor": "MOTOR BF 4L913",
+   "nro_cil": 4,
+   "carrera": null,
+   "alt_compresion": 69.1,
+   "prof_rebaje": "1,00 / 20,76",
+   "diams_dispon": "STD",
+   "largo_perno": 80.0,
+   "perno_str": "∅35,00 × 80,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.11,
+   "codigo_aros": "A50220",
+   "codigo_metal_leve": "DC.7479",
+   "medida_aros": "1-3,00 / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=108,70 / B=102,00 / C=124,36 / L=219,74",
+   "codigo_camisa": "C50180",
+   "codigo_conjunto": "E50135",
+   "codigo_conjunto_metal_leve": "P9067",
+   "codigo_subconjunto": "S50135",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 82,
+   "codigo_catalogo": "K50135",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3410,9 +3669,41 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "DEUTZ 913 ECOL.3R P.35 Pz.45 120 102 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 123.7,
+   "diam_perno": 35.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "DEUTZ",
+   "motor": "MOTOR DIESEL FL913 ESTACIONARIO / AGRÍCOLA / GRUPO GENERADOR — VOL. DE LA CÁMARA 47,1 +/-0,5 CM3",
+   "nro_cil": null,
+   "carrera": null,
+   "alt_compresion": 69.21,
+   "prof_rebaje": "+4,45 / -22,75",
+   "diams_dispon": "STD",
+   "largo_perno": 80.0,
+   "perno_str": "∅35,00 × 80,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.11,
+   "codigo_aros": "A50220",
+   "codigo_metal_leve": "DC.7479",
+   "medida_aros": "1-3,00T / 1-2,00 / 1-3,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=108,70 / B=102,00 / C=124,36 / L=219,74",
+   "codigo_camisa": "C50180",
+   "codigo_conjunto": "E50181",
+   "codigo_conjunto_metal_leve": "P9039",
+   "codigo_subconjunto": "S50181",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 81,
+   "codigo_catalogo": "K50181",
+   "verificado": false,
+   "nota": "la fila no trae Nº de cilindros"
   },
   "codigos_crac": [
    {
@@ -3442,11 +3733,50 @@
   "codigo": "T BEK51200",
   "codigo_fab": "K51200",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "BIZ 125 KS, BIZ 125 ES y BIZ 125 + DE 2006 A 2008 (CARBURADO)",
   "descripcion": "HONDA BIZ 125 (1 CIL) CARBURADO 52,40 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 52.4,
+   "alt_piston": 38.9,
+   "diam_perno": 13.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "HONDA",
+   "motor": "MOTOR 125CC",
+   "nro_cil": 1,
+   "carrera": "57,90",
+   "alt_compresion": 19.9,
+   "prof_rebaje": "1,90",
+   "diams_dispon": "STD / 0,25 / 0,50 / 0,75 / 1,00",
+   "largo_perno": 38.5,
+   "perno_str": "∅13,00 × 38,50",
+   "tipo_perno": null,
+   "juego_montaje": 0.03,
+   "codigo_aros": null,
+   "codigo_metal_leve": "TA.8656",
+   "medida_aros": "1-0,80 / 1-0,80 / 1-1,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=58,50 / B=52,40 / L=100,00",
+   "codigo_camisa": "C9294",
+   "codigo_conjunto": "E51200",
+   "codigo_conjunto_metal_leve": "P9294",
+   "codigo_subconjunto": "S51200",
+   "sobremedidas": [
+    "STD",
+    "0,25",
+    "0,50",
+    "0,75",
+    "1,00"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 72,
+   "codigo_catalogo": "E51200",
+   "verificado": false,
+   "revisar": {
+    "codigo_catalogo": "el catálogo no imprime ningún K51200: la fila lleva E51200 / S51200 y los kits K9294, K9294 c/junta y SK9294. La ficha sale de la fila del número 51200, que es la regla del repo",
+    "codigo_camisa": "la fila sólo trae el código Metal Leve de la camisa (C9294), sin código Mahle"
+   }
   },
   "codigos_crac": [
    {
@@ -3459,11 +3789,45 @@
   "codigo": "T BEK59201",
   "codigo_fab": "K59201",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "ESCORT / CORCEL II / BELINA II / DEL REY / PAMPA / SCALA — DE 07/83 HASTA 05/86",
   "descripcion": "FORD ESCORT 1.6 CHT 77 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 77.0,
+   "alt_piston": 66.5,
+   "diam_perno": 20.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "FORD",
+   "motor": "MOTOR 1.6 CHT GAS. 1600 9,0:1",
+   "nro_cil": 4,
+   "carrera": "83,50",
+   "alt_compresion": 34.0,
+   "prof_rebaje": "5,00",
+   "diams_dispon": "STD / 0,50 / 0,75 / 1,00",
+   "largo_perno": 62.0,
+   "perno_str": "∅20,00 × 62,00",
+   "tipo_perno": "O",
+   "juego_montaje": 0.04,
+   "codigo_aros": "A59100",
+   "codigo_metal_leve": "DA.2506",
+   "medida_aros": "1-1,75 / 1-2,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=81,00 / B=77,00 / C=89,22 / L=134,00",
+   "codigo_camisa": "C59100",
+   "codigo_conjunto": "E59201",
+   "codigo_conjunto_metal_leve": "P1632",
+   "codigo_subconjunto": "S59201",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "0,75",
+    "1,00"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 51,
+   "codigo_catalogo": "K59201",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3476,11 +3840,45 @@
   "codigo": "T BEK70022",
   "codigo_fab": "K70022",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "REFRIGERADO A AIRE",
   "descripcion": "VW KOMBI 1.3 77 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 77.0,
+   "alt_piston": 80.0,
+   "diam_perno": 22.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR AR 1.3L GAS. 1300 6,8:1",
+   "nro_cil": 4,
+   "carrera": "69,00",
+   "alt_compresion": 40.0,
+   "prof_rebaje": "4,00",
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 63.0,
+   "perno_str": "∅22,00 × 63,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.05,
+   "codigo_aros": "A70022",
+   "codigo_metal_leve": "NA.2343",
+   "medida_aros": "1-2,00 / 1-2,00 / 1-4,00",
+   "tipo_camisa": null,
+   "dim_camisa": "A=82,00 / B=77,00 / C=89,80 / L=136,70",
+   "codigo_camisa": "C70020",
+   "codigo_conjunto": "E70020",
+   "codigo_conjunto_metal_leve": "P1083",
+   "codigo_subconjunto": "S70020",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 121,
+   "codigo_catalogo": "K70022",
+   "verificado": false,
+   "nota": "K70022 es la versión PLUS del juego K70020 de esa fila"
   },
   "codigos_crac": [
    {
@@ -3493,11 +3891,44 @@
   "codigo": "T BEK70150",
   "codigo_fab": "K70150",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "REFRIGERADO A AIRE HASTA 84 — SEDAN / KOMBI / GOL",
   "descripcion": "VW KOMBI 1600 85,5 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 85.5,
+   "alt_piston": 71.4,
+   "diam_perno": 22.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLKSWAGEN",
+   "motor": "MOTOR AR 1.6L GAS. 1600 7,2:1",
+   "nro_cil": 4,
+   "carrera": "69,00",
+   "alt_compresion": 39.4,
+   "prof_rebaje": "4,00",
+   "diams_dispon": "STD / 0,50 / 1,00",
+   "largo_perno": 72.0,
+   "perno_str": "∅22,00 × 72,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.05,
+   "codigo_aros": "A70150",
+   "codigo_metal_leve": "FA.2297",
+   "medida_aros": "1-2,00R / 1-2,00M / 1-5,003S",
+   "tipo_camisa": "A",
+   "dim_camisa": "A=90,00 / B=85,50 / C=93,81 / L=136,70",
+   "codigo_camisa": "C70150",
+   "codigo_conjunto": "E70150",
+   "codigo_conjunto_metal_leve": "P888",
+   "codigo_subconjunto": "S70150",
+   "sobremedidas": [
+    "STD",
+    "0,50",
+    "1,00"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 127,
+   "codigo_catalogo": "K70150",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3510,11 +3941,45 @@
   "codigo": "T BEK71030",
   "codigo_fab": "K71030",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN NL10310",
   "descripcion": "VOLVO NL10-310 TD102FT (1 CIL) 4.3/4\"\"",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 120.65,
+   "alt_piston": 157.4,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR TD 102 FT 9600 14,3:1",
+   "nro_cil": 6,
+   "carrera": "140,00",
+   "alt_compresion": 109.4,
+   "prof_rebaje": "1,90 / 1,90 / 23,15",
+   "diams_dispon": "STD",
+   "largo_perno": 60.0,
+   "perno_str": "∅52,00 × 60,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.13,
+   "codigo_aros": "A71430",
+   "codigo_metal_leve": "LC.6976",
+   "medida_aros": "1-3,00 / 1-3,16 / 1-4,74",
+   "tipo_camisa": null,
+   "dim_camisa": "A=134,00 / B=120,65 / C=147,00 / L=287,00",
+   "codigo_camisa": "C71030",
+   "codigo_conjunto": "E71030",
+   "codigo_conjunto_metal_leve": "P9079",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 131,
+   "codigo_catalogo": "K71030",
+   "verificado": false,
+   "revisar": {
+    "largo_perno": "el catálogo imprime 60,00 mm y los demás pistones de la familia TD10x llevan de 98 a 106 mm; se transcribió lo impreso"
+   }
   },
   "codigos_crac": [
    {
@@ -3527,11 +3992,42 @@
   "codigo": "T BEK71050",
   "codigo_fab": "K71050",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "NL10320 EDC",
   "descripcion": "VOLVO NL10-320 TD10-A (1 CIL) 4.3/4\"\"",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 120.65,
+   "alt_piston": 137.6,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR TD 10-A 9600",
+   "nro_cil": 6,
+   "carrera": "140,00",
+   "alt_compresion": 92.6,
+   "prof_rebaje": "22,50",
+   "diams_dispon": "STD",
+   "largo_perno": 98.0,
+   "perno_str": "∅52,00 × 98,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.12,
+   "codigo_aros": "A71050",
+   "codigo_metal_leve": "LC.8125",
+   "medida_aros": "1-4,00T / 1-3,16 / 1-4,74",
+   "tipo_camisa": null,
+   "dim_camisa": "A=138,20 / B=120,65 / C=147,01 / L=287,50",
+   "codigo_camisa": "C71055",
+   "codigo_conjunto": "E71050",
+   "codigo_conjunto_metal_leve": "P9128",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 130,
+   "codigo_catalogo": "K71050",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3563,9 +4059,40 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "VOLVO DH10A (1 CIL) 4.3/4\"\"",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 120.65,
+   "alt_piston": 137.5,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR DH 10A 9600",
+   "nro_cil": 6,
+   "carrera": "140,00",
+   "alt_compresion": 92.5,
+   "prof_rebaje": "2,00 / 2,50 / 20,50",
+   "diams_dispon": "STD",
+   "largo_perno": 98.0,
+   "perno_str": "∅52,00 × 98,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.12,
+   "codigo_aros": "A71050",
+   "codigo_metal_leve": "LC.8125",
+   "medida_aros": "1-4,00 / 1-3,16 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=138,20 / B=120,65 / C=147,01 / L=287,50",
+   "codigo_camisa": "C71055",
+   "codigo_conjunto": "E71055",
+   "codigo_conjunto_metal_leve": "P9129",
+   "codigo_subconjunto": "S71055",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 131,
+   "codigo_catalogo": "K71055",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3612,11 +4139,42 @@
   "codigo": "T BEK71120",
   "codigo_fab": "K71120",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "NH12 380/420CV 99 ->, FH12 380CV 03 -> (ARTICULADO)",
   "descripcion": "VOLVO D12C-D12D-NH12-FH12 (1 CIL) 131 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 131.0,
+   "alt_piston": 129.4,
+   "diam_perno": 55.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR D12 B/C/D (99 -> 05) 18,5:1",
+   "nro_cil": 6,
+   "carrera": null,
+   "alt_compresion": 87.4,
+   "prof_rebaje": "17,14",
+   "diams_dispon": "STD",
+   "largo_perno": 107.0,
+   "perno_str": "∅55,00 × 107,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.06,
+   "codigo_aros": "A71120",
+   "codigo_metal_leve": "LC.8326",
+   "medida_aros": "1-4,00 / 1-3,00 / 1-4,00",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=144,00 / B=131,00 / C=159,60 / L=272,80",
+   "codigo_camisa": "C71120",
+   "codigo_conjunto": "E71120",
+   "codigo_conjunto_metal_leve": "P9144",
+   "codigo_subconjunto": "S71120",
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 132,
+   "codigo_catalogo": "K71120",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3646,11 +4204,42 @@
   "codigo": "T BEK71240WS",
   "codigo_fab": "K71240WS",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "360/410CV — NL12 TD 123 360cv EDC DIESEL",
   "descripcion": "VOLVO TD123EDC ARTIC. (1 CIL) 130,18 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 130.18,
+   "alt_piston": 159.6,
+   "diam_perno": 55.0
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR TD 123 EDC 12000 17,8:1",
+   "nro_cil": 6,
+   "carrera": "150,00",
+   "alt_compresion": 114.55,
+   "prof_rebaje": "21,04",
+   "diams_dispon": "STD",
+   "largo_perno": 105.0,
+   "perno_str": "∅55,00 × 105,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.08,
+   "codigo_aros": "A71700",
+   "codigo_metal_leve": "LC.7845",
+   "medida_aros": "1-3,50 / 1-3,16 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=147,00 / B=130,18 / C=157,60 / L=313,50",
+   "codigo_camisa": "C71240",
+   "codigo_conjunto": "E71240",
+   "codigo_conjunto_metal_leve": "P9112",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 131,
+   "codigo_catalogo": "K71240",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3663,11 +4252,42 @@
   "codigo": "T BEK71400",
   "codigo_fab": "K71400",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "ÓMNIBUS B-58 TURBO INTERCOOLER TD 100G (TC = 15,0:1)",
   "descripcion": "VOLVO NL10-280 TD100G-TD101 (1 CIL)4.3/4",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 120.65,
+   "alt_piston": 166.4,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR TD 101 F/G / TD101G-F10 / N10 280cv (81/86) / TD101F-F10 / N10 (86/06.86) / N10 300cv — 9600 14,3:1",
+   "nro_cil": 6,
+   "carrera": "140,00",
+   "alt_compresion": 109.45,
+   "prof_rebaje": "1,90 / 1,90 / 23,15",
+   "diams_dispon": "STD",
+   "largo_perno": 106.0,
+   "perno_str": "∅52,00 × 106,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.13,
+   "codigo_aros": "A71300",
+   "codigo_metal_leve": "LC.6962",
+   "medida_aros": "1-2,38R / 1-3,16R / 1-4,75DSF",
+   "tipo_camisa": null,
+   "dim_camisa": "A=134,00 / B=120,65 / C=147,00 / L=296,00",
+   "codigo_camisa": "C71040",
+   "codigo_conjunto": "E71000",
+   "codigo_conjunto_metal_leve": "P1730",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 130,
+   "codigo_catalogo": "K71400",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3680,11 +4300,42 @@
   "codigo": "T BEK71420",
   "codigo_fab": "K71420",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "ÓMNIBUS B10M INTERCOOLER — MOTOR THD100E/EC/ED — ÓMNIBUS B58E — MOTOR THD101KC/GB/GC/GD — ÓMNIBUS B10M INTERCOOLER",
   "descripcion": "VOLVO B58-B10M THD100E-THD 101 (1 CIL)",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 120.65,
+   "alt_piston": 166.4,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR THD 100 EB / THD 100 EC / THD 101 KC — 9600 15:1",
+   "nro_cil": 6,
+   "carrera": "140,00",
+   "alt_compresion": 109.45,
+   "prof_rebaje": "1,90 / 1,90 / 22,20",
+   "diams_dispon": "STD",
+   "largo_perno": 106.0,
+   "perno_str": "∅52,00 × 106,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.13,
+   "codigo_aros": "A71300",
+   "codigo_metal_leve": "LC.6962",
+   "medida_aros": "1-2,38 / 1-3,16 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=134,00 / B=120,65 / C=147,00 / L=296,00",
+   "codigo_camisa": "C71040",
+   "codigo_conjunto": "E71020",
+   "codigo_conjunto_metal_leve": "P1731",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 130,
+   "codigo_catalogo": "K71420",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3697,11 +4348,42 @@
   "codigo": "T BEK71430WS",
   "codigo_fab": "K71430WS",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN NL10340 ARTICULADO",
   "descripcion": "VOLVO NL10-340 TD102FS ART.(1 CIL) 4.3/4",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 120.65,
+   "alt_piston": 131.55,
+   "diam_perno": 52.0
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR TD 102 FS 9600 15:1",
+   "nro_cil": 6,
+   "carrera": "140,00",
+   "alt_compresion": 92.55,
+   "prof_rebaje": "1,95 / 1,95 / 22,20",
+   "diams_dispon": "STD",
+   "largo_perno": 98.0,
+   "perno_str": "∅52,00 × 98,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.08,
+   "codigo_aros": "A71430",
+   "codigo_metal_leve": "LC.6976",
+   "medida_aros": "1-3,00 / 1-3,16 / 1-4,74",
+   "tipo_camisa": null,
+   "dim_camisa": "A=133,84 / B=120,65 / C=147,00 / L=287,30",
+   "codigo_camisa": "C71430",
+   "codigo_conjunto": "E71430",
+   "codigo_conjunto_metal_leve": "P2067",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 130,
+   "codigo_catalogo": "K71430",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3714,11 +4396,42 @@
   "codigo": "T BEK71440",
   "codigo_fab": "K71440",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "TAMD 121",
   "descripcion": "VOLVO TD120C (1 CIL) 130,18 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 130.18,
+   "alt_piston": 175.2,
+   "diam_perno": 55.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR TD 120C 12000",
+   "nro_cil": 6,
+   "carrera": "150,00",
+   "alt_compresion": 114.2,
+   "prof_rebaje": "27,62",
+   "diams_dispon": "STD",
+   "largo_perno": 114.0,
+   "perno_str": "∅55,00 × 114,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.13,
+   "codigo_aros": "A71450",
+   "codigo_metal_leve": "LC.6975",
+   "medida_aros": "1-2,385 / 1-3,160 / 1-4,747",
+   "tipo_camisa": null,
+   "dim_camisa": "A=144,00 / B=130,18 / C=157,60 / L=311,00",
+   "codigo_camisa": "C71060",
+   "codigo_conjunto": "E71440",
+   "codigo_conjunto_metal_leve": null,
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 131,
+   "codigo_catalogo": "K71440",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3731,11 +4444,45 @@
   "codigo": "T BEK71450",
   "codigo_fab": "K71450",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "TMD 120A",
   "descripcion": "VOLVO TD120A*(1 CIL) 4.3/4\"\"",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 130.18,
+   "alt_piston": 175.2,
+   "diam_perno": 55.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR TD 120A 12000",
+   "nro_cil": 6,
+   "carrera": "150,00",
+   "alt_compresion": 114.2,
+   "prof_rebaje": "1,90 / 2,10 / 31,55",
+   "diams_dispon": "STD",
+   "largo_perno": 114.0,
+   "perno_str": "∅55,00 × 114,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.16,
+   "codigo_aros": "A71450",
+   "codigo_metal_leve": "LC.6975",
+   "medida_aros": "1-2,38 / 1-3,16 / 1-4,74",
+   "tipo_camisa": null,
+   "dim_camisa": "A=144,00 / B=130,18 / C=157,60 / L=311,00",
+   "codigo_camisa": "C71060",
+   "codigo_conjunto": "E71062",
+   "codigo_conjunto_metal_leve": "P9029",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 131,
+   "codigo_catalogo": "K71450",
+   "verificado": false,
+   "revisar": {
+    "diam_piston": "el proveedor lo describe con 4.3/4\" (120,65 mm) y el catálogo da 130,18 mm para el TD 120A; el propio proveedor pone 130,18 en el TD 120C (T BEK71440), así que la pulgada de la descripción parece el error"
+   }
   },
   "codigos_crac": [
    {
@@ -3748,11 +4495,42 @@
   "codigo": "T BEK71500",
   "codigo_fab": "K71500",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN NL12360 / NL12400 / NL12410 DESPUÉS DE 1990",
   "descripcion": "VOLVO NL12-400 TD122F/FS (1 CIL) 130,18m",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 130.18,
+   "alt_piston": 175.2,
+   "diam_perno": 55.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "VOLVO",
+   "motor": "MOTOR TD 122 F / FS / FR — 12000 15:1",
+   "nro_cil": 6,
+   "carrera": "150,00",
+   "alt_compresion": 114.2,
+   "prof_rebaje": "2,60 / 2,60 / 25,40",
+   "diams_dispon": "STD",
+   "largo_perno": 114.0,
+   "perno_str": "∅55,00 × 114,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A71450",
+   "codigo_metal_leve": "LC.6975",
+   "medida_aros": "1-2,38 / 1-3,16 / 1-4,74",
+   "tipo_camisa": null,
+   "dim_camisa": "A=143,90 / B=130,18 / C=157,60 / L=313,50",
+   "codigo_camisa": "C71050",
+   "codigo_conjunto": "E71063",
+   "codigo_conjunto_metal_leve": "P1860",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 131,
+   "codigo_catalogo": "K71500",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3799,11 +4577,42 @@
   "codigo": "T BEK76061",
   "codigo_fab": "K76061",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN T142H / T142HS / R142 / R142HS / 142HW / 143H HASTA 92",
   "descripcion": "SCANIA DSC14 P.50 Pz.75 (UN) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 146.67,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSC14 / DS14 14000 16:1",
+   "nro_cil": 8,
+   "carrera": "145,00",
+   "alt_compresion": 94.67,
+   "prof_rebaje": "2,92 / 2,92 / 24,00",
+   "diams_dispon": "STD",
+   "largo_perno": 108.0,
+   "perno_str": "∅50,00 × 108,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76060",
+   "codigo_metal_leve": "DC.6978",
+   "medida_aros": "1-3,50T / 1-2,38 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=140,00 / B=127,00 / C=156,00 / L=276,00",
+   "codigo_camisa": "C76061",
+   "codigo_conjunto": "E76060",
+   "codigo_conjunto_metal_leve": "P9022",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 113,
+   "codigo_catalogo": "K76061",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3816,11 +4625,43 @@
   "codigo": "T BEK760730",
   "codigo_fab": "K760730",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN P360, G360, G400, G440, G480, R400, R440, R480 (CAMISA CON ANILLO DE FUEGO — PISTÓN MONOTÉRMICO)",
   "descripcion": "SCANIA DC13 E5 5/6 CIL. (UN) 130 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 130.0,
+   "alt_piston": 118.2,
+   "diam_perno": 58.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DC13 EURO V",
+   "nro_cil": 6,
+   "carrera": null,
+   "alt_compresion": 82.21,
+   "prof_rebaje": "23,10",
+   "diams_dispon": "STD",
+   "largo_perno": 84.0,
+   "perno_str": "∅58,00 × 84,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.07,
+   "codigo_aros": "A76830",
+   "codigo_metal_leve": "AC.8953",
+   "medida_aros": "1-3,50 / 1-3,00 / 1-4,00",
+   "tipo_camisa": "A",
+   "dim_camisa": "A=139,40 / B=130,00 / C=151,00 / L=270,47",
+   "codigo_camisa": "C0760730",
+   "codigo_conjunto": "E0760730",
+   "codigo_conjunto_metal_leve": "P9720",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 115,
+   "codigo_catalogo": "K0760730",
+   "verificado": false,
+   "nota": "el catálogo dice 6 cilindros; el proveedor lo ofrece para 5 y 6"
   },
   "codigos_crac": [
    {
@@ -3850,11 +4691,42 @@
   "codigo": "T BEK76200",
   "codigo_fab": "K76200",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "SCANIA 9L, ÓMNIBUS, CAMIÓN",
   "descripcion": "SCANIA DSC9 P94 (1 CIL) 115 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 115.0,
+   "alt_piston": 131.4,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSC9, DC9 01/02/03/04/05/06 — 9000",
+   "nro_cil": 6,
+   "carrera": null,
+   "alt_compresion": 83.4,
+   "prof_rebaje": "20,50",
+   "diams_dispon": "STD",
+   "largo_perno": 92.0,
+   "perno_str": "∅50,00 × 92,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.12,
+   "codigo_aros": "A76120",
+   "codigo_metal_leve": "DC.8447",
+   "medida_aros": "1-3,16 / 1-2,39 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=128,00 / B=115,00 / C=140,72 / L=257,50",
+   "codigo_camisa": "C76200",
+   "codigo_conjunto": "E76200",
+   "codigo_conjunto_metal_leve": "P9227",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 112,
+   "codigo_catalogo": "K76200",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3867,11 +4739,45 @@
   "codigo": "T BEK76520",
   "codigo_fab": "K76520",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "(L / LK / T112E / T112H / T112MA) 203cv VEHICULAR / MARÍTIMO / INDUSTRIAL",
   "descripcion": "SCANIA 110 S/TURBO (1 CIL) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 156.26,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR D11 / DN11 11000 16:1",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 98.76,
+   "prof_rebaje": "0,50 / 0,50 / 27,06",
+   "diams_dispon": "STD",
+   "largo_perno": 108.0,
+   "perno_str": "∅50,00 × 108,00",
+   "tipo_perno": "F",
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76020",
+   "codigo_metal_leve": "MCS.6462",
+   "medida_aros": "1-2,38 / 1-2,38 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=140,00 / B=127,00 / C=153,80 / L=291,00",
+   "codigo_camisa": "C76010",
+   "codigo_conjunto": "E76020",
+   "codigo_conjunto_metal_leve": "P1303",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 113,
+   "codigo_catalogo": "K76520",
+   "verificado": false,
+   "revisar": {
+    "codigo_camisa": "la fila lista dos camisas (C76010, con las medidas de arriba, y C76050 sin medidas) y dos kits (K76120 hasta 05/76, K76520 después de 06/76); el catálogo no dice cuál camisa va con cuál kit"
+   }
   },
   "codigos_crac": [
    {
@@ -3884,11 +4790,46 @@
   "codigo": "T BEK76540WS",
   "codigo_fab": "K76540WS",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN L / LK111 / T112E / H / MA / R112E / H / MA — ÓMNIBUS — VEHICULAR / MARÍTIMO R112 / T112 / L111 / LS111 / LT111 / LK111 / B111 / S112 / K112 / T112 / H / MD / R112E / H / MD",
   "descripcion": "SCANIA DS11 (1 CIL) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 156.26,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DS11 11000 15:1",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 98.76,
+   "prof_rebaje": "2,96 / 2,96 / 27,06",
+   "diams_dispon": "STD",
+   "largo_perno": 108.0,
+   "perno_str": "∅50,00 × 108,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76020",
+   "codigo_metal_leve": "MCS.6462",
+   "medida_aros": "1-2,38 / 1-2,38 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=140,00 / B=127,00 / C=153,80 / L=291,00",
+   "codigo_camisa": "C76010",
+   "codigo_conjunto": "E76040",
+   "codigo_conjunto_metal_leve": "P1253",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 113,
+   "codigo_catalogo": "K76540",
+   "verificado": false,
+   "nota": "K76540 es la variante «después de 05/82» de la fila E76040",
+   "revisar": {
+    "codigo_camisa": "la fila lista C76010 (con medidas) y C76050 (sin medidas); el catálogo no dice cuál va con el kit K76540"
+   }
   },
   "codigos_crac": [
    {
@@ -3901,11 +4842,42 @@
   "codigo": "T BEK76550",
   "codigo_fab": "K76550",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "VEHICULAR / MARÍTIMO / ESTACIONARIO — MOTORES SERIE 113 DE 1990 HASTA 1993",
   "descripcion": "SCANIA 112T 1§T (1 CIL) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 156.26,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSI11 / DSC11 11000 16:1",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 98.76,
+   "prof_rebaje": "2,96 / 2,96 / 24,50",
+   "diams_dispon": "STD",
+   "largo_perno": 108.0,
+   "perno_str": "∅50,00 × 108,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.12,
+   "codigo_aros": "A76060",
+   "codigo_metal_leve": "DC.6978",
+   "medida_aros": "1-3,50T / 1-2,38 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=140,00 / B=127,00 / C=153,80 / L=291,00",
+   "codigo_camisa": "C76070",
+   "codigo_conjunto": "E76050",
+   "codigo_conjunto_metal_leve": "P1800",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 113,
+   "codigo_catalogo": "K76550",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3918,11 +4890,43 @@
   "codigo": "T BEK76551",
   "codigo_fab": "K76551",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "VEHICULAR / MARÍTIMO / ESTACIONARIO — MOTORES SERIE 113 DE 1990 HASTA 1993",
   "descripcion": "SCANIA 112T 1§T (1 CIL)(A.C.-0,4) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 155.86,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSI11 / DSC11 11000 16:1",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 98.36,
+   "prof_rebaje": "2,96 / 2,96 / 24,50",
+   "diams_dispon": "STD",
+   "largo_perno": 108.0,
+   "perno_str": "∅50,00 × 108,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.12,
+   "codigo_aros": "A76060",
+   "codigo_metal_leve": "DC.6978",
+   "medida_aros": "1-3,50T / 1-2,38 / 1-4,75",
+   "tipo_camisa": null,
+   "dim_camisa": "A=140,00 / B=127,00 / C=153,80 / L=291,00",
+   "codigo_camisa": "C76070",
+   "codigo_conjunto": "E76051",
+   "codigo_conjunto_metal_leve": "P1800",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 113,
+   "codigo_catalogo": "K76551",
+   "verificado": false,
+   "nota": "variante «STD c/ KH -0,40» de la fila E76050: KH 98,36 y GL 155,86 en vez de 98,76 y 156,26 — coincide con el «(A.C.-0,4)» de la descripción del proveedor"
   },
   "codigos_crac": [
    {
@@ -3935,11 +4939,42 @@
   "codigo": "T BEK76560",
   "codigo_fab": "K76560",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN 113-H DE 1993 A 1995 (2 ANILLOS DE SELLADO DE CAMISA CIRCULARES)",
   "descripcion": "SCANIA 113H (DSC11) 93/95 (UN) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 156.26,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSC11 11000 16,0:1",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 98.76,
+   "prof_rebaje": "2,96 / 2,96 / 16,52",
+   "diams_dispon": "STD",
+   "largo_perno": 108.0,
+   "perno_str": "∅50,00 × 108,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76060",
+   "codigo_metal_leve": "DC.6978",
+   "medida_aros": "1-3,50T / 1-2,38 / 1-4,75",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=140,00 / B=127,00 / C=153,80 / L=291,00",
+   "codigo_camisa": "C76056",
+   "codigo_conjunto": "E76560",
+   "codigo_conjunto_metal_leve": "P2137",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 113,
+   "codigo_catalogo": "K76560",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3952,11 +4987,42 @@
   "codigo": "T BEK76560WS",
   "codigo_fab": "K76560WS",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN 113-H DE 1993 A 1995 (2 ANILLOS DE SELLADO DE CAMISA CIRCULARES)",
   "descripcion": "SCANIA 113H (DSC11) 93/95 (UN) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 156.26,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSC11 11000 16,0:1",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 98.76,
+   "prof_rebaje": "2,96 / 2,96 / 16,52",
+   "diams_dispon": "STD",
+   "largo_perno": 108.0,
+   "perno_str": "∅50,00 × 108,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76060",
+   "codigo_metal_leve": "DC.6978",
+   "medida_aros": "1-3,50T / 1-2,38 / 1-4,75",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=140,00 / B=127,00 / C=153,80 / L=291,00",
+   "codigo_camisa": "C76056",
+   "codigo_conjunto": "E76560",
+   "codigo_conjunto_metal_leve": "P2137",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 113,
+   "codigo_catalogo": "K76560",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -3969,11 +5035,43 @@
   "codigo": "T BEK76564",
   "codigo_fab": "K76564",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN 113-H DE 1993 A 1995 (2 ANILLOS DE SELLADO DE CAMISA CIRCULARES)",
   "descripcion": "SCANIA 113H (DSC11) 93/95(-0,4)(UN) 127",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 155.86,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSC11 11000 16,0:1",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 98.36,
+   "prof_rebaje": "2,96 / 2,96 / 16,52",
+   "diams_dispon": "STD",
+   "largo_perno": 108.0,
+   "perno_str": "∅50,00 × 108,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76060",
+   "codigo_metal_leve": "DC.6978",
+   "medida_aros": "1-3,50T / 1-2,38 / 1-4,75",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=140,00 / B=127,00 / C=153,80 / L=291,00",
+   "codigo_camisa": "C76056",
+   "codigo_conjunto": "E76560",
+   "codigo_conjunto_metal_leve": "P2137",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 113,
+   "codigo_catalogo": "K76564",
+   "verificado": false,
+   "nota": "variante «STD c/ KH -0,40» de la fila E76560: KH 98,36 y GL 155,86 — coincide con el «(-0,4)» de la descripción del proveedor"
   },
   "codigos_crac": [
    {
@@ -3986,11 +5084,42 @@
   "codigo": "T BEK76570",
   "codigo_fab": "K76570",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN 113-H A PARTIR DE 1995 (2 ANILLOS DE SELLADO DE CAMISA CIRCULARES Y 1 ANILLO PLANO)",
   "descripcion": "SCANIA 113 (DSC11) 95--> A/C 100 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 156.26,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSC11 11000 16:1",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 98.76,
+   "prof_rebaje": "2,96 / 2,96 / 16,52",
+   "diams_dispon": "STD",
+   "largo_perno": 108.0,
+   "perno_str": "∅50,00 × 108,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76060",
+   "codigo_metal_leve": "DC.6978",
+   "medida_aros": "1-3,50T / 1-2,38 / 1-4,75",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=140,00 / B=127,00 / C=153,80 / L=291,00",
+   "codigo_camisa": "C76570",
+   "codigo_conjunto": "E76570",
+   "codigo_conjunto_metal_leve": "P9043",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 113,
+   "codigo_catalogo": "K76570",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -4003,11 +5132,43 @@
   "codigo": "T BEK76574",
   "codigo_fab": "K76574",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "CAMIÓN 113-H A PARTIR DE 1995 (2 ANILLOS DE SELLADO DE CAMISA CIRCULARES Y 1 ANILLO PLANO)",
   "descripcion": "SCANIA 113 (DSC11) 95--> (-0,4) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 155.86,
+   "diam_perno": 50.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSC11 11000 16:1",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 98.36,
+   "prof_rebaje": "2,96 / 2,96 / 16,52",
+   "diams_dispon": "STD",
+   "largo_perno": 108.0,
+   "perno_str": "∅50,00 × 108,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76060",
+   "codigo_metal_leve": "DC.6978",
+   "medida_aros": "1-3,50T / 1-2,38 / 1-4,75",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=140,00 / B=127,00 / C=153,80 / L=291,00",
+   "codigo_camisa": "C76570",
+   "codigo_conjunto": "E76570",
+   "codigo_conjunto_metal_leve": "P9043",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 113,
+   "codigo_catalogo": "K76574",
+   "verificado": false,
+   "nota": "variante «STD c/ KH -0,40» de la fila E76570: KH 98,36 y GL 155,86 — coincide con el «(-0,4)» de la descripción del proveedor"
   },
   "codigos_crac": [
    {
@@ -4020,11 +5181,42 @@
   "codigo": "T BEK76590WS",
   "codigo_fab": "K76590WS",
   "marca": "MAHLE",
-  "aplicacion": null,
+  "aplicacion": "SERIE 114 330 Y 360CV BOMBA MECÁNICA (HASTA EL 1er SEMESTRE DE 2009)",
   "descripcion": "SCANIA DC11 360CV CAM.150 (UN) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 136.04,
+   "diam_perno": 54.0
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DC11 / DSC11 11000",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 92.04,
+   "prof_rebaje": "21,15",
+   "diams_dispon": "STD",
+   "largo_perno": 106.0,
+   "perno_str": "∅54,00 × 106,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76680",
+   "codigo_metal_leve": "DC.8779",
+   "medida_aros": "1-3,50 / 1-2,385 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=138,50 / B=127,00 / C=150,00 / L=271,12",
+   "codigo_camisa": "C76650",
+   "codigo_conjunto": "E76590",
+   "codigo_conjunto_metal_leve": "P9196",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 114,
+   "codigo_catalogo": "K76590",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -4039,9 +5231,40 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "SCANIA DC11 EVO 5 CAM.151 (UN) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 136.04,
+   "diam_perno": 54.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DC11 SERIE 4 114 EVOLUTION 5 (2do SEMESTRE DE 2009 =>)",
+   "nro_cil": 6,
+   "carrera": "145,00",
+   "alt_compresion": 92.04,
+   "prof_rebaje": "21,15",
+   "diams_dispon": "STD",
+   "largo_perno": 106.0,
+   "perno_str": "∅54,00 × 106,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76680",
+   "codigo_metal_leve": "DC.8779",
+   "medida_aros": "1-3,50 / 1-2,385 / 1-3,50",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=139,40 / B=127,00 / C=151,00 / L=271,12",
+   "codigo_camisa": "C76655",
+   "codigo_conjunto": "E76590",
+   "codigo_conjunto_metal_leve": "P9196",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 114,
+   "codigo_catalogo": "K76595",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -4056,9 +5279,41 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "SCANIA DSC12 S4 360CV (1 CIL) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 129.0,
+   "diam_perno": 54.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSC12 SERIE 4 360CV (1998 -> 2002)",
+   "nro_cil": 6,
+   "carrera": null,
+   "alt_compresion": 85.0,
+   "prof_rebaje": "22,15",
+   "diams_dispon": "STD",
+   "largo_perno": 106.0,
+   "perno_str": "∅54,00 × 106,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76680",
+   "codigo_metal_leve": "DC.8779",
+   "medida_aros": "1-3,50 / 1-2,385 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=138,50 / B=127,00 / C=150,00 / L=271,12",
+   "codigo_camisa": "C76650",
+   "codigo_conjunto": "E76650",
+   "codigo_conjunto_metal_leve": "P9113",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 114,
+   "codigo_catalogo": "K76650",
+   "verificado": false,
+   "nota": "falda grafitada (el catálogo lo anota en la columna del juego)"
   },
   "codigos_crac": [
    {
@@ -4073,9 +5328,41 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "SCANIA DSC12 S4 400CV (1 CIL) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 129.0,
+   "diam_perno": 54.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DC12 SERIE 4 EVOLUTION 5 360cv (2do SEMESTRE 2009 =>)",
+   "nro_cil": 6,
+   "carrera": null,
+   "alt_compresion": 85.0,
+   "prof_rebaje": "22,15",
+   "diams_dispon": "STD",
+   "largo_perno": 106.0,
+   "perno_str": "∅54,00 × 106,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76680",
+   "codigo_metal_leve": "DC.8779",
+   "medida_aros": "1-3,50 / 1-2,385 / 1-3,50",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=139,40 / B=127,00 / C=151,00 / L=271,12",
+   "codigo_camisa": "C76655",
+   "codigo_conjunto": "E76650",
+   "codigo_conjunto_metal_leve": "P9113",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 114,
+   "codigo_catalogo": "K76655",
+   "verificado": false,
+   "nota": "falda grafitada (el catálogo lo anota en la columna del juego)"
   },
   "codigos_crac": [
    {
@@ -4090,9 +5377,40 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "SCANIA DSC12 S4 420CV ARTIC.(1 CIL)127mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 125.21,
+   "diam_perno": 54.0
+  },
   "extra": {
-   "oring": false
+   "oring": false,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DSC12 SERIE 4 400/420cv PISTÓN ARTICULADO (HASTA EL 1er SEMESTRE DE 2009)",
+   "nro_cil": 6,
+   "carrera": null,
+   "alt_compresion": 85.21,
+   "prof_rebaje": "22,15",
+   "diams_dispon": "STD",
+   "largo_perno": 106.0,
+   "perno_str": "∅54,00 × 106,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.06,
+   "codigo_aros": "A76680",
+   "codigo_metal_leve": "DC.8779",
+   "medida_aros": "1-3,50 / 1-2,385 / 1-3,50",
+   "tipo_camisa": null,
+   "dim_camisa": "A=138,50 / B=127,00 / C=150,00 / L=271,12",
+   "codigo_camisa": "C76650",
+   "codigo_conjunto": "E76670",
+   "codigo_conjunto_metal_leve": "P9119",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 114,
+   "codigo_catalogo": "K76670",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -4107,9 +5425,40 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "SCANIA DC12 S4 420 CV (ARTIC) 127 mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 125.21,
+   "diam_perno": 54.0
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DC12 SERIE 4 EVOLUTION 5 380/400/420cv PISTÓN ARTICULADO (2do SEMESTRE DE 2009 =>)",
+   "nro_cil": 6,
+   "carrera": null,
+   "alt_compresion": 85.21,
+   "prof_rebaje": "22,15",
+   "diams_dispon": "STD",
+   "largo_perno": 106.0,
+   "perno_str": "∅54,00 × 106,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.06,
+   "codigo_aros": "A76680",
+   "codigo_metal_leve": "DC.8779",
+   "medida_aros": "1-3,50 / 1-2,385 / 1-3,50",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=139,40 / B=127,00 / C=151,00 / L=271,12",
+   "codigo_camisa": "C76655",
+   "codigo_conjunto": "E76670",
+   "codigo_conjunto_metal_leve": "P9119",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 115,
+   "codigo_catalogo": "K76675",
+   "verificado": false
   },
   "codigos_crac": [
    {
@@ -4124,9 +5473,40 @@
   "marca": "MAHLE",
   "aplicacion": null,
   "descripcion": "SCANIA DC9-DC11 CAM.151 P/EMB.(UN) 127mm",
-  "medidas": {},
+  "medidas": {
+   "diam_piston": 127.0,
+   "alt_piston": 136.04,
+   "diam_perno": 54.0
+  },
   "extra": {
-   "oring": true
+   "oring": true,
+   "fabricante": "SCANIA",
+   "motor": "MOTOR DC9.12 (270cv) / DC9.11 (310CV) / DC11.08 (340cv) (08/09 ->)",
+   "nro_cil": "5/6",
+   "carrera": null,
+   "alt_compresion": 92.04,
+   "prof_rebaje": "21,15",
+   "diams_dispon": "STD",
+   "largo_perno": 106.0,
+   "perno_str": "∅54,00 × 106,00",
+   "tipo_perno": null,
+   "juego_montaje": 0.14,
+   "codigo_aros": "A76680",
+   "codigo_metal_leve": "DC.8779",
+   "medida_aros": "1-3,50T / 1-2,385 / 1-3,50",
+   "tipo_camisa": "M",
+   "dim_camisa": "A=139,40 / B=127,00 / C=151,00 / L=271,12",
+   "codigo_camisa": "C76655",
+   "codigo_conjunto": "E76680",
+   "codigo_conjunto_metal_leve": "P9313",
+   "codigo_subconjunto": null,
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 114,
+   "codigo_catalogo": "K76680",
+   "verificado": false
   },
   "codigos_crac": [
    {

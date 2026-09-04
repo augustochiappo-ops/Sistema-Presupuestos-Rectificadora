@@ -1370,6 +1370,39 @@ el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 
 ## Próximo paso
 
+**Conjuntos Mahle: la segunda tanda, 43 fichas nuevas (2026-09-04, tercera
+sesión).** `conjuntos.json` pasó de **67 a 110 fichas con medidas** sobre 128.
+Las 43 nuevas salieron del **Mahle 2019** y entran con `verificado: false`: el
+dueño las revisa con el CSV de `scripts/tabla_conjuntos.py --sin-verificar`
+(42 columnas, se le mandó como archivo). Son 19 Scania, 11 Volvo, 6
+Mercedes-Benz, 2 Deutz, 2 Volkswagen, y una de Ford, Honda e Iveco.
+
+**Los 18 que quedan sin medidas NO son trabajo pendiente de leer: no están en
+los dos PDF.** Se buscaron por número suelto, por número con el cero adelante y
+por nombre de motor sobre el texto completo de las 242 páginas del 2019 y las
+66 del Clevite. La lista, con el motivo de cada uno, está en
+`CRAC/tecnicos/CARGA-CONJUNTOS.md`, sección *Los 18 que el catálogo 2019 no
+trae*. Tres de ellos (`T BEK710710WS`, `T BEK710800WS`, `T BEK71860 WS`, los
+Volvo D13) **sí tienen fila en el catálogo pero con otro código** (`K71710 WS`
+y `K0710910 WS`): se destraban con una respuesta del dueño, no con más lectura.
+
+Dos cosas que costaron encontrar y quedaron escritas en `CARGA-CONJUNTOS.md`:
+las **páginas 123-133 del 2019 no tienen capa de texto** (están vectorizadas, y
+ahí vive toda la sección Volvo — hay que rasterizarlas con `pypdfium2` y
+mirarlas), y en la descripción del proveedor **`Pz.` es el Ø del pozo, no la
+altura de compresión** (`P.` sí es el Ø del perno, y `A/C` sí es la altura de
+compresión).
+
+`tests/backend_medidas.py` tiene **dos fallas que ya venían de antes** de esta
+sesión (verificado con `git stash`): la del check *"están las siete familias"*,
+que quedó viejo porque ahora son ocho (entró `valvulas`), y la del catálogo del
+proveedor, que sólo pasa con la base importada por `tests/preparar.sh`.
+
+---
+
+## Antes de esto
+
+
 **Válvulas: la séptima familia del buscador por medidas (2026-09-04, segunda
 sesión).** El dueño pasó los catálogos de **3B (Basso 2025)** y **MAHLE
 (Válvulas, guías y asientos 2019/2020)**, cada uno en PDF y en Excel, y pidió

@@ -9,11 +9,14 @@ cargado sin romper nada.
 ## Dónde estamos
 
 `conjuntos.json` ya tiene **las 128 fichas** que trabaja el proveedor, con
-código, descripción, precio y stock. Al 2026-09-04 hay **67 con medidas** y
-**61 esperando el catálogo** (las que tienen `"medidas": {}`).
+código, descripción, precio y stock. Al 2026-09-04, después de la segunda
+tanda, hay **110 con medidas** y **18 que no están en ninguno de los dos
+catálogos** (las que siguen con `"medidas": {}` — la lista y el porqué, más
+abajo en "Los 18 que el catálogo 2019 no trae").
 
-Las 67 están **verificadas**: el dueño las cruzó contra el catálogo el
-2026-09-04. Lo dice `extra.verificado` y se ve en la columna **Verif.** de la
+De las 110, **67 están verificadas** (el dueño las cruzó contra el catálogo el
+2026-09-04) y **43 entraron en la segunda tanda del 2026-09-04 y esperan que
+las mire**. Lo dice `extra.verificado` y se ve en la columna **Verif.** de la
 pantalla. Una ficha nueva entra con `verificado: false` hasta que él la mire.
 
 Ver qué falta y en qué orden:
@@ -147,6 +150,8 @@ Qué es cada cosa, en los términos del catálogo:
 | `extra.diams_dispon` / `sobremedidas` | medidas disponibles | `"STD / 0,50"` y `["STD","0,50"]` |
 | `extra.codigo_aros`, `medida_aros` | C. aros y sus medidas | |
 | `extra.codigo_metal_leve` | el código de arriba de la celda de aros | Es el de **Metal Leve** (la marca de Mahle en Brasil), no una tolerancia |
+| `extra.codigo_conjunto` / `codigo_subconjunto` | los códigos `E#####` y `S#####` de la fila | La celda del conjunto también tiene dos líneas |
+| `extra.codigo_conjunto_metal_leve` | el código de arriba de la celda del conjunto (`P####`) | Es el conjunto en numeración Metal Leve; sirve para cruzar con las páginas de referencia cruzada (136-140) |
 | `extra.codigo_camisa`, `dim_camisa`, `tipo_camisa` | C. camisa y dimensiones | `null` si la fila no la trae |
 | `aplicacion` | los vehículos de la fila | texto libre, puede venir en dos renglones |
 
@@ -226,6 +231,49 @@ Y cinco códigos (`K13250`, `K13910`, `K13930`, `K13966`, más el ya citado
 `K13603`) aparecían en varias páginas: se compararon una por una y **las medidas
 son idénticas en todas**. Es el mismo motor listado en distintas secciones del
 catálogo, solo cambia el texto de aplicación. No hay que elegir página.
+
+## Los 18 que el catálogo 2019 no trae
+
+Se buscaron los 61 códigos que faltaban de las tres formas posibles —el número
+suelto, el número con el cero adelante (`K48320` → `K0480320`) y el motor por
+nombre— sobre el **texto completo de las 242 páginas** del 2019 y las 66 del
+Clevite. Estos 18 **no aparecen de ninguna manera**: son piezas más nuevas que
+la edición 2019/2020, o renumeradas después. No se inventó nada: siguen con
+`"medidas": {}`.
+
+| Código | Motor | Qué se encontró |
+|---|---|---|
+| `T BEK10330` | IVECO Cursor 8 F2BE E3, 115 mm | nada; la sección Iveco (págs. 77-78) llega hasta el Cursor 13 |
+| `T BEK430375WS` `T BEK430425WS` `T BEK430450WS` `T BEK430520WS` `T BEK430685WS` | J.Deere 4045/6068 PowerTech, 106,5 mm | la pág. 79 trae **una sola** fila PowerTech (`E0430380`, sin código de kit) y no alcanza para cinco variantes distintas de perno |
+| `T BEK44165` `T BEK44700` | Peugeot 504 2.0 y XU7JPZ | la sección Peugeot (págs. 107-110) no los lista |
+| `T BEK48170` `T BEK482080` | M.Benz OM442LA y OM501-502-542 | están `K0482020/30/40/60` pero no el `080`, y ningún OM442 |
+| `T BEK50240` | Deutz 1013 | la sección Deutz llega hasta la serie 913/1013 sin este código |
+| `T BEK710510WS` | Renault Midlum 320 DXi7 | nada, ni en Renault ni en Volvo |
+| `T BEK71220WS` | Volvo D7A 104,77 mm | la sección Volvo (págs. 130-132) no lo trae |
+| `T BEK760300` `T BEK760820` | Scania DC12 380 S5 y DC9 20V E5 | nada; sí están el DC12 420 y el DC9/DC11 |
+| `T BEK710710WS` `T BEK710800WS` `T BEK71860 WS` | Volvo D13A / MD13 / D13C, 131 mm | **hay fila para esos motores, con otro código**: `K71710 WS` (MD13 Euro V / D13A Euro IV y V, 400/440/480/520cv, pág. 132) y `K0710910 WS` (D13C 460/540cv, pág. 132). No se cargaron porque los códigos no coinciden y **tres códigos del proveedor compiten por dos filas** |
+
+Los tres últimos son los únicos que se pueden destrabar preguntando: si el dueño
+confirma que `T BEK710710WS` es la fila `K71710` y `T BEK710800WS` la
+`K0710910`, se cargan en un minuto.
+
+## Dos cosas de la segunda tanda que conviene no volver a descubrir
+
+1. **Las páginas 123 a 133 del 2019 no tienen capa de texto.** El texto está
+   convertido a curvas: `pdftotext` y `pdfplumber` devuelven 90 caracteres por
+   página (sólo el pie) y el extractor las salta sin avisar. Ahí viven
+   **Volkswagen (págs. 123-129), Volkswagen Camiones, VOLVO (130-132),
+   Westinghouse/Wabco y Yamaha (133)** — o sea toda la sección Volvo. Se leen
+   rasterizando con `pypdfium2` (`pdf[n-1].render(scale=2.4)`, media hoja por
+   imagen) y mirándolas. Así salieron las 11 fichas Volvo y la del Kombi 1600.
+2. **En la descripción del proveedor, `P.` y `Pz.` no son lo mismo.** `P.` es el
+   **Ø del perno** y cierra siempre contra el catálogo (`P.52` → ∅52,00). `Pz.`
+   es el **Ø del pozo** (la cámara en la cabeza del pistón), que el catálogo no
+   publica: **no sirve para verificar y no hay que forzarlo contra KH**. En
+   `T BEK48990` (`Pz.90 P.52`) el 90 coincidía con KH 90,05 de casualidad y eso
+   mandó a revisar tres fichas de más. Lo que sí verifica es `A/C` (altura de
+   compresión, `T BEK760820` dice `A/C 92,04` y el catálogo da KH 92,04) y
+   `CAM.` (la cota C de la camisa: `CAM.151` → `C=151,00`).
 
 ## El extractor: `scripts/leer_conjuntos_mahle.py`
 

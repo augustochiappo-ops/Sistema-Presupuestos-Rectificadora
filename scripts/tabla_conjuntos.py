@@ -87,6 +87,9 @@ COLUMNAS = [
     ("Tipo camisa", campo("tipo_camisa")),
     ("Dimensiones camisa", campo("dim_camisa")),
     ("Cód. conjunto (E)", campo("codigo_conjunto")),
+    # En el 2019 la celda del conjunto trae dos líneas: arriba el código Metal
+    # Leve del pistón (P####) y abajo el de Mahle (E#####).
+    ("Conjunto Metal Leve", campo("codigo_conjunto_metal_leve")),
     ("Conjunto Clevite", campo("codigo_conjunto_clevite")),
     ("Conjunto original", campo("codigo_conjunto_oem")),
     ("Cód. subconjunto (S)", campo("codigo_subconjunto")),
