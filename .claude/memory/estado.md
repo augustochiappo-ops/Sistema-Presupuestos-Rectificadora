@@ -1423,6 +1423,14 @@ etiqueta tal cual y con las medidas de la STD, sin inventarles un Ø. **Si el
 dueño sabe qué son, conviene anotarlo** — son 91 códigos con "+08" y 15 con
 "+04" en la lista del proveedor.
 
+**Producción y `master` quedaron sincronizados en `f7ea8c2`**, deployado y
+verificado por HTTP: el `git pull` del deploy hizo el fast-forward
+`c074bc0..f7ea8c2`, la raíz responde 200, `/api/tecnicos/familias` responde 401
+sin sesión y el **JS que sirve producción es byte a byte el commiteado**
+(`index-BFDh-Sbo.js`, 517.647 bytes, mismo md5). Los tres commits de la tanda
+son `29fd871` (los catálogos y el conversor), `36374d7` (la pestaña) y `f7ea8c2`
+(memoria).
+
 **Lo que conviene mirar la próxima**: las **126 fichas sin catálogo**. Son
 válvulas que el proveedor vende y las marcas ya no publican; si el dueño tiene
 un catálogo viejo de 3B (las de `0110-A`, `0112-A`, `0125-A`… son de Citroën 2CV,
