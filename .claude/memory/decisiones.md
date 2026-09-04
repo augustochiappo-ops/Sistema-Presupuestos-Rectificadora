@@ -847,3 +847,69 @@ archivo es cada uno y con qué tres líneas se rehace el volcado.
 **Qué se hizo con eso:** columna **Oring (Sí/No)** en la pestaña. El dato lo pone `scripts/conjuntos_desde_proveedor.py` en `extra.oring` leyendo el sufijo del código, **no se carga a mano**: si mañana el proveedor suma un `WS` nuevo, la columna lo dice sola en la próxima corrida. Se muestra con palabras y no con un tilde, porque en una tabla llena de guiones un "No" se lee y un tilde ausente se confunde con un dato que falta.
 **Lo que queda por confirmar contra el catálogo:** nada de esto sale del PDF de Mahle, sale de cruzar precios. Si el catálogo lo dice con otras palabras, gana el catálogo.
 **Fecha:** 2026-09-01
+
+## Válvulas: el universo es la lista del proveedor, no el catálogo (2026-09-04)
+**Decisión:** la familia `valvulas` del buscador por medidas se cargó al revés
+que las otras seis: se parte de los códigos de válvula que **vende el
+proveedor** en 3B y Mahle (categoría `V`, marcas `3B` y `BE`) y a cada uno se le
+pega la ficha del catálogo, en vez de cargar el catálogo entero y filtrar
+después.
+**Por qué:** pedido explícito del dueño ("cargá solamente las válvulas que
+trabaja el proveedor en las marcas Mahle y 3B"). Los dos catálogos juntos son
+~5.400 filas contra 1.782 fichas cargadas: cargarlos enteros habría triplicado
+el archivo con piezas que no se pueden pedir.
+**Consecuencia de diseño:** es la única familia con código del proveedor que
+**no** lleva `filtro_proveedor` (la casilla "Solo las que tiene el proveedor").
+Todas sus fichas lo tienen, así que la casilla no filtraría nada y solo sería
+una casilla más para entender. Si algún día se carga el catálogo completo, hay
+que volver a ponerla.
+
+## Cómo se cruza el código del proveedor con el del catálogo de válvulas (2026-09-04)
+**Decisión:** el match es por **número + letra de función** (A de admisión, E de
+escape, C/AE de indistinta). Primero se prueba el código entero normalizado y,
+si no está, el número con esa letra sola.
+**Por qué el fallback:** el proveedor y el catálogo no siempre coinciden en el
+sufijo de variante — el proveedor dice `0137-AC` donde el catálogo dice `137-A`,
+`1104-ES` donde dice `1104-EP`. Sin el fallback quedaban 330 códigos sin ficha;
+con él quedan 126. Son las letras de material y revestimiento, que cambian entre
+ediciones del catálogo.
+**Por qué la letra de función NO se afloja nunca:** `0804-A` y `0804-E` existen
+los dos en la lista del proveedor y en el catálogo solo está `804-AN`. Aflojando
+la letra, la de escape habría heredado las medidas de la de admisión —el error
+que sí importa, porque se pediría la válvula equivocada—. Con la regla puesta,
+`0804-A` matchea y `0804-E` queda con "?".
+**Con dos candidatas** (15 casos, del tipo `20226-ACB 30º` contra
+`20226-ACB 45º`) gana la de código más parecido por `difflib`, que es lo que
+hace que `20226AC30` caiga en la de 30º.
+
+## Las cuatro dudas de la carga de válvulas y cómo se resolvieron (2026-09-04)
+1. **De los dos formatos (PDF y Excel), cuál usar.** Los dos Excel. Traen las
+   mismas filas que el PDF ya en columnas; leer la tabla del PDF solo habría
+   sumado los errores de lectura que costaron 10 fichas con Persan. El PDF sí se
+   leyó para entender el formato: la leyenda de la página 24 del de Mahle es la
+   que dice qué es cada columna, y es donde se confirmó que el código del
+   proveedor sale del número de Mahle (`VA0010211` → `V BE010211A`).
+2. **Qué hacer con los códigos que el catálogo no tiene.** Entran igual, con las
+   medidas en blanco y un "?" con el motivo — la regla de Persan. Son 126 y el
+   proveedor las vende: dejarlas afuera habría escondido plata que se puede
+   pedir, y ponerles medidas inventadas es peor que no tenerlas.
+3. **Cómo escribir las sobremedidas, que vienen en dos sistemas.** El catálogo
+   de 3B las publica en milésimas de pulgada (`.015`) y Mahle en milímetros
+   (`0,076`); el proveedor escribe `+15` y `+08`. Se traduce el rótulo del
+   proveedor al del catálogo **solo cuando esa etiqueta existe en la ficha** (95
+   de 147 casos), para que la columna "Precio de" y la de sobremedidas no digan
+   dos cosas distintas de la misma medida. Lo que no se puede traducir se deja
+   tal cual: nunca se inventa una sobremedida que el catálogo no publica.
+4. **Qué son las sobremedidas "+04", "+08" y "+1" de Mahle.** *Sin resolver.*
+   Repiten las mismas tres medidas que la STD, en el Excel y en el PDF, así que
+   cambian algo que el catálogo no publica. Quedan con la etiqueta tal cual y
+   las medidas de la STD. Hay que preguntárselo al dueño.
+
+**Un efecto lateral que vale anotar:** las válvulas se publican con **tres**
+decimales (7,912 y 7,988 son dos sobremedidas distintas de vástago) y la
+pantalla redondeaba a dos. Se agregó `decimales: 3` como opción de columna
+—`formatMm` ahora usa `Math.max(2, decimales)` como máximo— y se subió a tres el
+máximo de `formatEtiqueta`, que redondeaba `+0,076 mm` y `+0,127 mm` a `+0,08` y
+`+0,13`. **Las otras familias no cambian**: los tres decimales salen solo si la
+columna los pide.
+**Fecha:** 2026-09-04

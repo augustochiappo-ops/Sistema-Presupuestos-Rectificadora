@@ -1370,6 +1370,68 @@ el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 
 ## Próximo paso
 
+**Válvulas: la séptima familia del buscador por medidas (2026-09-04, segunda
+sesión).** El dueño pasó los catálogos de **3B (Basso 2025)** y **MAHLE
+(Válvulas, guías y asientos 2019/2020)**, cada uno en PDF y en Excel, y pidió
+cargar **solo las válvulas que trabaja el proveedor en esas dos marcas**. Eso
+invierte la regla de las otras familias: acá el universo NO es el catálogo del
+fabricante sino la lista del proveedor, y por eso **esta pestaña no lleva la
+casilla "Solo las que tiene el proveedor"** (todas las fichas la cumplen, así
+que la casilla no filtraría nada).
+
+Quedaron **1.782 fichas** (3B 1.464, Mahle 318) sobre **2.114 códigos** del
+proveedor —los códigos de más son las sobremedidas, que se agrupan en la ficha
+de su válvula—. **1.656 (93%) con ficha del catálogo**; las otras **126** son
+referencias que las marcas ya no publican y entran con las cuatro medidas en
+blanco, un **"?"** y el motivo en el tooltip (misma regla que los pistones de
+Persan). De esas 126, 118 son de 3B y 8 de Mahle.
+
+Se busca por **Ø de cabeza, Ø de vástago, largo total y ángulo del asiento**,
+más el filtro de tipo (admisión / escape / indistinta) que ya tienen guías y
+asientos. Hay un quinto filtro, **"Ø vástago c/ sobremedida"**, que busca contra
+todas las medidas que existen de esa válvula y no solo la STD: es el mismo
+mecanismo que el "Ø exterior" de camisas, y sirve cuando lo que se midió es un
+vástago ya rectificado. La pestaña va **entre Camisas y Guías de válvulas**,
+para que el tren de válvulas quede junto.
+
+La tabla trae además, aprovechando lo que publican los catálogos: el **Nº de
+catálogo** al lado del código que se pide, el **material** (bimetálica,
+estelitada, vástago cromado — lo publica Mahle), y las **equivalencias** entre
+marcas ("Mahle VA0250168 · Edival 1144 A"), que salen de las hojas de
+referencias cruzadas del Excel de Mahle y son lo que permite entrar con un
+número que no es del catálogo que uno tiene a mano.
+
+**Los datos se rehacen con `scripts/convertir_valvulas.py`**, que lee cuatro
+volcados en `CRAC/tecnicos/fuentes/` (`valvulas_3b_2025.csv`,
+`valvulas_mahle.csv` y los dos de equivalencias). El encabezado del script tiene
+las seis cosas que hubo que resolver; la más importante es que **el código del
+proveedor no es el del catálogo** y hay que traducirlo (`0101-A` → `101-A`,
+`010211A` → `VA0010211`), cruzando por número + letra de función y **nunca**
+mezclando una de admisión con una de escape.
+
+**Los PDF no se usaron para extraer datos**, solo para entender el formato: los
+dos Excel traen las mismas filas ya en columnas, y leer la tabla del PDF habría
+sumado los errores de lectura que ya costaron caro con Persan. Los Excel
+originales no se versionan (viven en el escritorio del dueño): lo versionado son
+los volcados a CSV, como con asientos.
+
+**Las cuatro dudas de esta sesión y cómo se resolvieron** están en
+`decisiones.md`. La única que quedó **sin respuesta del catálogo** es qué
+cambian las sobremedidas **"+04", "+08" y "+1"** de Mahle: repiten las mismas
+tres medidas que la STD tanto en el Excel como en el PDF. Se guardan con la
+etiqueta tal cual y con las medidas de la STD, sin inventarles un Ø. **Si el
+dueño sabe qué son, conviene anotarlo** — son 91 códigos con "+08" y 15 con
+"+04" en la lista del proveedor.
+
+**Lo que conviene mirar la próxima**: las **126 fichas sin catálogo**. Son
+válvulas que el proveedor vende y las marcas ya no publican; si el dueño tiene
+un catálogo viejo de 3B (las de `0110-A`, `0112-A`, `0125-A`… son de Citroën 2CV,
+Chevrolet de los 30, Fiat 750) se completan con la misma corrida del script. Y
+las **dos semiterminadas** (`V 3BST-0764` "7/16x2.1/4x8" y `V 3BST-1705`
+"7,5 X 32 X 130") traen las medidas escritas en la descripción del proveedor,
+pero son solo dos y no se adivinó el orden de los tres números.
+
+
 **Los 61 conjuntos que todavía esperan el catálogo (2026-09-04).** Los 67
 cargados quedaron **todos verificados**: el dueño los cruzó contra el catálogo y
 los dio por buenos. Lo dice `extra.verificado` y se ve en la columna **Verif.**
