@@ -12,11 +12,9 @@ cargado sin romper nada.
 código, descripción, precio y stock. Al 2026-09-04 hay **67 con medidas** y
 **61 esperando el catálogo** (las que tienen `"medidas": {}`).
 
-De las 67, **15 están verificadas** (salieron de un subconjunto ya corroborado,
-lo dice `extra.ficha_de`) y **52 están pendientes de verificación**: se leyeron
-del PDF con el extractor y pasan los controles automáticos, pero nadie las
-cruzó a mano contra el catálogo. Lo dice `extra.verificado` y se ve en la
-columna **Verif.** de la pantalla.
+Las 67 están **verificadas**: el dueño las cruzó contra el catálogo el
+2026-09-04. Lo dice `extra.verificado` y se ve en la columna **Verif.** de la
+pantalla. Una ficha nueva entra con `verificado: false` hasta que él la mire.
 
 Ver qué falta y en qué orden:
 
@@ -147,6 +145,7 @@ Qué es cada cosa, en los términos del catálogo:
 | `extra.largo_perno` / `perno_str` | perno | `perno_str` se escribe `∅45,00 × 91,00` |
 | `extra.diams_dispon` / `sobremedidas` | medidas disponibles | `"STD / 0,50"` y `["STD","0,50"]` |
 | `extra.codigo_aros`, `medida_aros` | C. aros y sus medidas | |
+| `extra.codigo_metal_leve` | el código de arriba de la celda de aros | Es el de **Metal Leve** (la marca de Mahle en Brasil), no una tolerancia |
 | `extra.codigo_camisa`, `dim_camisa`, `tipo_camisa` | C. camisa y dimensiones | `null` si la fila no la trae |
 | `aplicacion` | los vehículos de la fila | texto libre, puede venir en dos renglones |
 
@@ -172,6 +171,47 @@ El dibujo del pistón se comparte con el subconjunto del mismo número, así que
    lámina de control sale en `/tmp/pistones-recortados.png` y conviene mirarla).
 4. **Control**: `git status webapp/frontend/public/pistones/` tiene que mostrar
    solo los PNG nuevos. Si aparece uno viejo modificado, algo se rompió.
+
+## Cómo se entrega una tanda nueva: la tabla
+
+**Cada tanda de códigos que se cargue se entrega como un CSV con todas las
+columnas**, el que arma `scripts/tabla_conjuntos.py`. Es la tabla definitiva y
+no se recorta:
+
+```bash
+python3 scripts/tabla_conjuntos.py --sin-verificar --salida /tmp/tanda.csv
+```
+
+Son 41 columnas: los códigos (proveedor, Mahle, catálogo, Metal Leve, Clevite,
+original del fabricante, E, S, kit), el pistón entero, los aros con sus medidas,
+la camisa con sus dimensiones, y de qué página del catálogo salió cada ficha.
+Va con `;` y UTF-8 con BOM —Excel lo abre sin pelear— y con dos columnas vacías
+al final para marcar mientras se verifica.
+
+El dueño verifica con esa tabla al lado del PDF, de una sentada. Por eso no se
+entrega un resumen: una tabla a la que le falta una columna lo obliga a volver
+al JSON, y ahí se pierde el hilo.
+
+## Las dudas se avisan, no se resuelven en silencio
+
+Dos reglas que puso el dueño el 2026-09-04, y que valen para toda la carga:
+
+1. **Si hay un ítem del que no se está seguro, se le avisa.** Por código, con el
+   motivo concreto: la fila apareció en dos páginas, el Ø no cierra con la
+   descripción, la celda venía cortada, el número de cilindros no se distingue.
+   Él lo mira individualmente. Es mucho más barato preguntar por tres códigos
+   que cargar 38 y que uno esté mal sin que nadie lo sepa.
+2. **Ante la duda, mirar los códigos ya verificados y decidir con eso.** Las
+   fichas verificadas son el patrón: si no se sabe si un número es KH o GL, o
+   cómo se escribe una medida de aros, o si una camisa va `null`, se busca una
+   ficha parecida ya verificada y se hace igual. Así cada tanda se apoya en la
+   anterior en vez de volver a empezar. Lo que **no** se hace es inventar un
+   número para llenar el campo: eso va `null`.
+
+Un ejemplo de las dos reglas juntas, de la primera tanda: `K13603` aparece en
+cuatro páginas (35, 49, 98 y 117) con **las mismas medidas** pero distinto
+número de cilindros (D229/3, /4 y /6). Las medidas se cargaron —coinciden en las
+cuatro— y el número de cilindros se avisó como dudoso en vez de elegir uno.
 
 ## El extractor: `scripts/leer_conjuntos_mahle.py`
 

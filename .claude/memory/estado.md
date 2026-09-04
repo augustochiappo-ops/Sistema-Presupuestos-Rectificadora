@@ -1370,45 +1370,39 @@ el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 
 ## Próximo paso
 
-**Los 61 conjuntos que todavía esperan el catálogo (2026-09-04).** De los 113
-que faltaban se cargaron 67 en total: los 14 Cummins leídos del Clevite y otros
-38 leídos del 2019, más los 15 que ya venían de subconjuntos corroborados.
+**Los 61 conjuntos que todavía esperan el catálogo (2026-09-04).** Los 67
+cargados quedaron **todos verificados**: el dueño los cruzó contra el catálogo y
+los dio por buenos. Lo dice `extra.verificado` y se ve en la columna **Verif.**
+de la pantalla.
 
-**Estado de verificación** (`extra.verificado`, columna **Verif.** en pantalla):
+**Cómo se sigue** (está todo en `CRAC/tecnicos/CARGA-CONJUNTOS.md`):
 
-- **15 verificados** — salieron de un subconjunto ya corroborado (`ficha_de`).
-- **52 pendientes** — se leyeron del PDF con `scripts/leer_conjuntos_mahle.py`.
-  Pasan los tres controles automáticos (Ø contra la descripción del proveedor,
-  GL > KH, perno coherente) pero **el dueño todavía no los cruzó a mano**. Es lo
-  que pidió expresamente: cargarlos marcados como pendientes.
-- **61 sin medidas.**
+1. `scripts/leer_conjuntos_mahle.py` lee las filas del PDF por coordenadas.
+2. Se cargan con `verificado: false`.
+3. **La tanda se entrega como CSV completo**, el de `scripts/tabla_conjuntos.py`
+   —41 columnas, ni una menos—. Es la tabla definitiva: el dueño verifica con
+   ella al lado del PDF, de una sentada, y un resumen recortado lo obliga a
+   volver al JSON.
+4. **Las dudas se avisan por código, no se resuelven en silencio.** Y ante la
+   duda, se mira una ficha ya verificada parecida y se decide con ese patrón,
+   así cada tanda se apoya en la anterior. Lo que no se hace nunca es inventar
+   un número: eso va `null`.
 
-**12 de los primeros 50 no están en ninguno de los dos catálogos**, así que no
-se pudieron cargar: `T BEK10330`, `T BEK10530`, los cinco John Deere
-(`T BEK430375WS`, `430425WS`, `430450WS`, `430520WS`, `430685WS`), `T BEK44165`,
-`T BEK44700`, `T BEK48170`, `T BEK482080` y `T BEK48320`. Buscados por el código
-del kit, por el número con cero adelante y sin el sufijo WS. Puede ser que estén
-en una edición distinta del catálogo o que Mahle los publique solo como
-subconjunto; hay que verlo con el dueño.
+**12 de los primeros 50 no están en ninguno de los dos catálogos** y quedaron
+sin cargar: `T BEK10330`, `T BEK10530`, los cinco John Deere (`430375WS`,
+`430425WS`, `430450WS`, `430520WS`, `430685WS`), `T BEK44165`, `T BEK44700`,
+`T BEK48170`, `T BEK482080` y `T BEK48320`. Buscados por el código del kit, por
+el número con cero adelante y sin el sufijo WS. Hay que verlo con el dueño.
 
-**El procedimiento entero quedó escrito** en `CRAC/tecnicos/CARGA-CONJUNTOS.md`
-(qué catálogo mirar, por qué el número no es la llave, los controles y las tres
-cosas que hay que mirar a ojo igual) y el extractor en
-`scripts/leer_conjuntos_mahle.py`. Ahí está todo lo necesario para seguir con
-los 61 sin volver a descubrirlo.
+Los 49 restantes son Scania, Volvo, M.Benz y MWM.
 
-**`C/L` y `C/C`: confirmado por el dueño el 2026-09-04.** Son **camisa larga** y
-**camisa corta**. Venía anotado como "con lomo / con cavidad", que era una
-suposición y estaba mal. Los datos ya lo mostraban: `K21510` (C/L) y `K21515`
-(C/C) son el mismo pistón —los dos llevan `S21500`, con KH, GL, rebaje, perno,
-juego y aros idénticos— y lo único que cambia es la camisa, `C21510` con
-`L=237,12` contra `C21900` con `L=234,12`.
-
-No hace falta un campo nuevo: el `C/L` / `C/C` ya viene en la descripción del
-proveedor y la descripción se busca por texto en la pantalla.
+**Lo que quedó dudoso de la primera tanda y el dueño va a mirar aparte:**
+`K13603` (aparece en cuatro páginas con las mismas medidas pero distinto número
+de cilindros), `K26070` (el texto del motor mezcló dos bloques de la misma fila)
+y `K26040` (Ø 111,76 en el catálogo contra 111,80 en la descripción del
+proveedor).
 
 ---
-
 
 **Editar Precios: la tarifa de mano de obra del taller (2026-08-30).** El dueño
 pidió habilitar la pestaña que estaba como placeholder desde el scaffold, y

@@ -24,7 +24,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.087,
    "codigo_aros": "A01100",
-   "codigo_aros_tolerancia": "DC.8299",
+   "codigo_metal_leve": "DC.8299",
    "medida_aros": "1-2,50 / 1-2,00 / 1-2,50",
    "tipo_camisa": null,
    "dim_camisa": "A=97,56 / B=92,65 / C=100,93 / L=167,20",
@@ -35,7 +35,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 77,
    "codigo_catalogo": "K01050",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -110,7 +110,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.113,
    "codigo_aros": "A01210",
-   "codigo_aros_tolerancia": "DC.8689",
+   "codigo_metal_leve": "DC.8689",
    "medida_aros": "1-4,00 / 1-3,00 / 1-5,00",
    "tipo_camisa": null,
    "dim_camisa": "A=151,00 / B=135,00 / C=161,60 / L=255,20",
@@ -121,7 +121,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 78,
    "codigo_catalogo": "K01210",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -155,7 +155,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.18,
    "codigo_aros": "A01410",
-   "codigo_aros_tolerancia": "DC.8604",
+   "codigo_metal_leve": "DC.8604",
    "medida_aros": "1-4,00T / 1-3,00 / 1-5,50",
    "tipo_camisa": null,
    "dim_camisa": "A=142,80 / B=137,02 / C=149,00 / L=282,00",
@@ -166,7 +166,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 78,
    "codigo_catalogo": "K01410",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -234,7 +234,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.131,
    "codigo_aros": "A11400",
-   "codigo_aros_tolerancia": null,
+   "codigo_metal_leve": null,
    "medida_aros": "1-3 / 1-3 / 1-4",
    "tipo_camisa": null,
    "dim_camisa": "A=109,82 / B=104,20 / L=197,00",
@@ -245,7 +245,7 @@
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 6,
    "codigo_catalogo": "K11440",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -279,7 +279,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.139,
    "codigo_aros": "A11010",
-   "codigo_aros_tolerancia": null,
+   "codigo_metal_leve": null,
    "medida_aros": "1-1/8\" / 1-3/32\" / 1-7/32\"",
    "tipo_camisa": null,
    "dim_camisa": "A=134,35 / B=120,675 / C=142,88 / L=254,90",
@@ -290,7 +290,7 @@
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 10,
    "codigo_catalogo": "K11500",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -324,7 +324,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.11,
    "codigo_aros": "A11570",
-   "codigo_aros_tolerancia": null,
+   "codigo_metal_leve": null,
    "medida_aros": "1-3,16 / 1-2,38 / 1-3,16",
    "tipo_camisa": null,
    "dim_camisa": "A=134,35 / B=120,675 / C=142,88 / L=254,90",
@@ -335,7 +335,7 @@
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 11,
    "codigo_catalogo": "K11570",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -369,7 +369,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.139,
    "codigo_aros": "A11010",
-   "codigo_aros_tolerancia": null,
+   "codigo_metal_leve": null,
    "medida_aros": "1-1/8\" / 1-3/32\" / 1-7/32\"",
    "tipo_camisa": null,
    "dim_camisa": "A=134,35 / B=120,675 / C=142,88 / L=254,90",
@@ -380,7 +380,7 @@
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 12,
    "codigo_catalogo": "K11829",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -414,7 +414,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.09,
    "codigo_aros": "A13870",
-   "codigo_aros_tolerancia": "DH.9105",
+   "codigo_metal_leve": "DH.9105",
    "medida_aros": "1-3,00T / 1-2,50 / 1-3,50",
    "tipo_camisa": null,
    "dim_camisa": "A=115,90 / B=105,00 / C=124,985 / L=207,00",
@@ -425,7 +425,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 99,
    "codigo_catalogo": "K0130030",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -459,7 +459,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.09,
    "codigo_aros": "A13250",
-   "codigo_aros_tolerancia": "DC.6221",
+   "codigo_metal_leve": "DC.6221",
    "medida_aros": "1-3,00T / 1-2,00 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=108,00 / B=104,00 / C=111,80 / L=214,00",
@@ -470,7 +470,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 57,
    "codigo_catalogo": "K13250",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -504,7 +504,7 @@
    "tipo_perno": "F",
    "juego_montaje": 0.1,
    "codigo_aros": "A13850",
-   "codigo_aros_tolerancia": "DCS6897",
+   "codigo_metal_leve": "DCS6897",
    "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=113,00 / B=102,00 / C=119,00 / L=213,00",
@@ -515,7 +515,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 35,
    "codigo_catalogo": "K13603",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -549,7 +549,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.1,
    "codigo_aros": "A13850",
-   "codigo_aros_tolerancia": "DC.6897",
+   "codigo_metal_leve": "DC.6897",
    "medida_aros": "1-3,00T / 1-2,50M / 1-4,00DSF",
    "tipo_camisa": null,
    "dim_camisa": "A=113,00 / B=102,00 / C=119,00 / L=213,00",
@@ -560,7 +560,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 98,
    "codigo_catalogo": "K13800",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -594,7 +594,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.1,
    "codigo_aros": "A13860",
-   "codigo_aros_tolerancia": "DC.8373",
+   "codigo_metal_leve": "DC.8373",
    "medida_aros": "1-3,00 / 1-2,50 / 1-3,50",
    "tipo_camisa": null,
    "dim_camisa": "A=117,20 / B=105,00 / C=124,00 / L=208,00",
@@ -605,7 +605,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 98,
    "codigo_catalogo": "K13860",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -639,7 +639,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.2,
    "codigo_aros": "A13860",
-   "codigo_aros_tolerancia": "DC.8373",
+   "codigo_metal_leve": "DC.8373",
    "medida_aros": "1-3,00 / 1-2,50 / 1-3,50",
    "tipo_camisa": null,
    "dim_camisa": "A=117,20 / B=105,00 / C=124,00 / L=208,00",
@@ -650,7 +650,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 99,
    "codigo_catalogo": "K13885",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -684,7 +684,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.2,
    "codigo_aros": "A13860",
-   "codigo_aros_tolerancia": "DC.8373",
+   "codigo_metal_leve": "DC.8373",
    "medida_aros": "1-3,00 / 1-2,50 / 1-3,50",
    "tipo_camisa": null,
    "dim_camisa": "A=117,20 / B=105,00 / C=124,00 / L=208,00",
@@ -695,7 +695,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 99,
    "codigo_catalogo": "K13897",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -729,7 +729,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.2,
    "codigo_aros": "A13860",
-   "codigo_aros_tolerancia": "DC.8373",
+   "codigo_metal_leve": "DC.8373",
    "medida_aros": "1-3,00 / 1-2,50 / 1-3,50",
    "tipo_camisa": null,
    "dim_camisa": "A=117,20 / B=105,00 / C=124,00 / L=208,00",
@@ -740,7 +740,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 99,
    "codigo_catalogo": "K13905",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -774,7 +774,7 @@
    "tipo_perno": "F",
    "juego_montaje": 0.1,
    "codigo_aros": "A13900",
-   "codigo_aros_tolerancia": "DC.7013",
+   "codigo_metal_leve": "DC.7013",
    "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=113,95 / B=103,00 / C=123,50 / L=213,00",
@@ -785,7 +785,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 35,
    "codigo_catalogo": "K13910",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -819,7 +819,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.1,
    "codigo_aros": "A13900",
-   "codigo_aros_tolerancia": "DC.7013",
+   "codigo_metal_leve": "DC.7013",
    "medida_aros": "1-3,00T / 1-2,58 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=113,95 / B=103,00 / C=123,50 / L=213,00",
@@ -830,7 +830,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 98,
    "codigo_catalogo": "K13920",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -864,7 +864,7 @@
    "tipo_perno": "F",
    "juego_montaje": 0.1,
    "codigo_aros": "A13900",
-   "codigo_aros_tolerancia": "DC.7013",
+   "codigo_metal_leve": "DC.7013",
    "medida_aros": "1-3,00T / 1-2,58 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=113,95 / B=103,00 / C=123,50 / L=213,00",
@@ -875,7 +875,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 35,
    "codigo_catalogo": "K13930",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -909,7 +909,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.1,
    "codigo_aros": "A13900",
-   "codigo_aros_tolerancia": "DC.7013",
+   "codigo_metal_leve": "DC.7013",
    "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=113,95 / B=103,00 / C=123,50 / L=213,00",
@@ -920,7 +920,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 98,
    "codigo_catalogo": "K13940",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -995,7 +995,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.1,
    "codigo_aros": "A13500",
-   "codigo_aros_tolerancia": "DC.7359",
+   "codigo_metal_leve": "DC.7359",
    "medida_aros": "1-2,50T / 1-2,00 / 1-3,00",
    "tipo_camisa": null,
    "dim_camisa": "A=96,07 / B=92,00 / C=102,50 / L=183,00",
@@ -1006,7 +1006,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 35,
    "codigo_catalogo": "K13966",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1081,7 +1081,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.04,
    "codigo_aros": "A18760",
-   "codigo_aros_tolerancia": "DA.2516",
+   "codigo_metal_leve": "DA.2516",
    "medida_aros": "1-1,75 / 1-2,00 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=80,18 / B=76,00 / C=90,09 / L=133,68",
@@ -1092,7 +1092,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 110,
    "codigo_catalogo": "K18510",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1126,7 +1126,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.03,
    "codigo_aros": "A18730",
-   "codigo_aros_tolerancia": "DA.2612",
+   "codigo_metal_leve": "DA.2612",
    "medida_aros": "1-1,75 / 1-2,00 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=78,00 / B=73,00 / C=87,78 / L=134,00",
@@ -1137,7 +1137,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 110,
    "codigo_catalogo": "K18730",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1171,7 +1171,7 @@
    "tipo_perno": "O",
    "juego_montaje": 0.04,
    "codigo_aros": "A18500",
-   "codigo_aros_tolerancia": "DD.7186",
+   "codigo_metal_leve": "DD.7186",
    "medida_aros": "1-1,50 / 1-1,75 / 1-3,00",
    "tipo_camisa": null,
    "dim_camisa": "A=75,80 / B=80,56 / C=90,00 / L=130,00",
@@ -1182,7 +1182,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 110,
    "codigo_catalogo": "K18750",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1216,7 +1216,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.04,
    "codigo_aros": "A59109",
-   "codigo_aros_tolerancia": "DA.2506",
+   "codigo_metal_leve": "DA.2506",
    "medida_aros": "1-1,75 / 1-2,00 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=81,00 / B=77,00 / C=90,20 / L=134,00",
@@ -1227,7 +1227,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 110,
    "codigo_catalogo": "K18771",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1261,7 +1261,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.1,
    "codigo_aros": "A18110",
-   "codigo_aros_tolerancia": "DD.6653",
+   "codigo_metal_leve": "DD.6653",
    "medida_aros": "1-2,00 / 1-2,00 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=104,50 / B=86,00 / C=119,00 / L=167,50",
@@ -1272,7 +1272,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 111,
    "codigo_catalogo": "K18860",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -1324,7 +1324,7 @@
    "codigo_subconjunto": "S0211000",
    "codigo_kit_clevite": null,
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 31,
    "codigo_catalogo": "K0211000"
@@ -1461,7 +1461,7 @@
    "codigo_subconjunto": "S21150",
    "codigo_kit_clevite": null,
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 32,
    "codigo_catalogo": "K21150"
@@ -1515,7 +1515,7 @@
    "codigo_subconjunto": "S21160",
    "codigo_kit_clevite": null,
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 33,
    "codigo_catalogo": "K21160"
@@ -1569,7 +1569,7 @@
    "codigo_subconjunto": "S21170",
    "codigo_kit_clevite": null,
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 33,
    "codigo_catalogo": "K21170"
@@ -1623,7 +1623,7 @@
    "codigo_subconjunto": "S21180",
    "codigo_kit_clevite": "226-1646",
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 33,
    "codigo_catalogo": "K21180"
@@ -1677,7 +1677,7 @@
    "codigo_subconjunto": "S21350",
    "codigo_kit_clevite": "226-1750",
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 34,
    "codigo_catalogo": "K21350"
@@ -1731,7 +1731,7 @@
    "codigo_subconjunto": "S21500",
    "codigo_kit_clevite": null,
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 25,
    "codigo_catalogo": "K21510"
@@ -1785,7 +1785,7 @@
    "codigo_subconjunto": "S21500",
    "codigo_kit_clevite": "226-1948",
    "codigo_kit_oem": "3802279",
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 25,
    "codigo_catalogo": "K21515"
@@ -1962,7 +1962,7 @@
    "codigo_subconjunto": "S21630",
    "codigo_kit_clevite": null,
    "codigo_kit_oem": "3802344",
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 28,
    "codigo_catalogo": "K21635"
@@ -2016,7 +2016,7 @@
    "codigo_subconjunto": "S21700",
    "codigo_kit_clevite": "226-1835",
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 34,
    "codigo_catalogo": "K21700"
@@ -2070,7 +2070,7 @@
    "codigo_subconjunto": null,
    "codigo_kit_clevite": "226-1749",
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 35,
    "codigo_catalogo": "K21710"
@@ -2124,7 +2124,7 @@
    "codigo_subconjunto": "S21730",
    "codigo_kit_clevite": "226-1745",
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 35,
    "codigo_catalogo": "K21730"
@@ -2219,7 +2219,7 @@
    "codigo_subconjunto": "S21850",
    "codigo_kit_clevite": null,
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 30,
    "codigo_catalogo": "K21860"
@@ -2314,7 +2314,7 @@
    "codigo_subconjunto": "S21940",
    "codigo_kit_clevite": null,
    "codigo_kit_oem": null,
-   "verificado": false,
+   "verificado": true,
    "catalogo": "Mahle Clevite",
    "pagina_catalogo": 30,
    "codigo_catalogo": "K21950"
@@ -2351,7 +2351,7 @@
    "tipo_perno": "F",
    "juego_montaje": 0.142,
    "codigo_aros": "A26049",
-   "codigo_aros_tolerancia": "SDC.2606",
+   "codigo_metal_leve": "SDC.2606",
    "medida_aros": "3-2,38 / 1-4,76",
    "tipo_camisa": null,
    "dim_camisa": "A=114,44 / B=111,27 / C=120,42 / L=208,30",
@@ -2364,7 +2364,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 58,
    "codigo_catalogo": "K26040",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -2398,7 +2398,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.141,
    "codigo_aros": "A26042",
-   "codigo_aros_tolerancia": "DC.2606",
+   "codigo_metal_leve": "DC.2606",
    "medida_aros": "3-2,38 / 1-4,76",
    "tipo_camisa": null,
    "dim_camisa": "A=114,44 / B=111,27 / C=120,42 / L=208,30",
@@ -2410,7 +2410,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 58,
    "codigo_catalogo": "K26060",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -2444,7 +2444,7 @@
    "tipo_perno": "F",
    "juego_montaje": 0.192,
    "codigo_aros": "A26049",
-   "codigo_aros_tolerancia": "SDC2606",
+   "codigo_metal_leve": "SDC2606",
    "medida_aros": "3-2,38 / 1-4,76",
    "tipo_camisa": null,
    "dim_camisa": "A=114,44 / B=111,27 / C=120,42 / L=208,30",
@@ -2455,7 +2455,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 58,
    "codigo_catalogo": "K26070",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -2489,7 +2489,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.178,
    "codigo_aros": "A26300",
-   "codigo_aros_tolerancia": "DC.7885",
+   "codigo_metal_leve": "DC.7885",
    "medida_aros": "1-2,39 / 1-2,38 / 1-4,75",
    "tipo_camisa": null,
    "dim_camisa": "A=114,445 / B=110,450 / L=205,485",
@@ -2500,7 +2500,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 58,
    "codigo_catalogo": "K26610",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -2534,7 +2534,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.203,
    "codigo_aros": "A26050",
-   "codigo_aros_tolerancia": "DC.8027",
+   "codigo_metal_leve": "DC.8027",
    "medida_aros": "1-3,19 / 1-2,38 / 1-4,75",
    "tipo_camisa": null,
    "dim_camisa": "A=114,445 / B=110,450 / L=205,485",
@@ -2545,7 +2545,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 58,
    "codigo_catalogo": "K26620",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -2579,7 +2579,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.11,
    "codigo_aros": "A31150",
-   "codigo_aros_tolerancia": "LC.7235",
+   "codigo_metal_leve": "LC.7235",
    "medida_aros": "1-3,00T / 1-2,50 / 1-4,00",
    "tipo_camisa": "M",
    "dim_camisa": "A=117,00 / B=108,00 / C=131,70 / L=218,00",
@@ -2590,7 +2590,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 118,
    "codigo_catalogo": "K31150",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -2709,7 +2709,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.055,
    "codigo_aros": "A0440670",
-   "codigo_aros_tolerancia": "TA.8883",
+   "codigo_metal_leve": "TA.8883",
    "medida_aros": "1-1,00 / 1-1,00 / 1-1,50",
    "tipo_camisa": null,
    "dim_camisa": "A=79,30 / B=75,00 / C=89,20 / L=135,40",
@@ -2720,7 +2720,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 107,
    "codigo_catalogo": "K0440045",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -2889,7 +2889,7 @@
    "tipo_perno": "F",
    "juego_montaje": 0.13,
    "codigo_aros": "A48460",
-   "codigo_aros_tolerancia": "PI.8834",
+   "codigo_metal_leve": "PI.8834",
    "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
    "tipo_camisa": "A/M",
    "dim_camisa": "A=144,50 / B=128,00 / C=155,50 / L=266,00",
@@ -2900,7 +2900,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 94,
    "codigo_catalogo": "K0482020",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -2934,7 +2934,7 @@
    "tipo_perno": "F",
    "juego_montaje": 0.13,
    "codigo_aros": "A48460",
-   "codigo_aros_tolerancia": "PI.8834",
+   "codigo_metal_leve": "PI.8834",
    "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
    "tipo_camisa": "A/M",
    "dim_camisa": "A=144,50 / B=128,00 / C=155,50 / L=266,00",
@@ -2945,7 +2945,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 94,
    "codigo_catalogo": "K0482030",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -2979,7 +2979,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.13,
    "codigo_aros": "A48460",
-   "codigo_aros_tolerancia": "PI.8834",
+   "codigo_metal_leve": "PI.8834",
    "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
    "tipo_camisa": "A/M",
    "dim_camisa": "A=144,50 / B=128,00 / C=155,50 / L=266,00",
@@ -2990,7 +2990,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 94,
    "codigo_catalogo": "K0482040",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -3101,7 +3101,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.16,
    "codigo_aros": "A48930",
-   "codigo_aros_tolerancia": "GC.6926",
+   "codigo_metal_leve": "GC.6926",
    "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=144,50 / B=128,00 / C=153,80 / L=270,00",
@@ -3112,7 +3112,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 93,
    "codigo_catalogo": "K48930",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -3146,7 +3146,7 @@
    "tipo_perno": null,
    "juego_montaje": 0.16,
    "codigo_aros": "A48930",
-   "codigo_aros_tolerancia": "GC.6926",
+   "codigo_metal_leve": "GC.6926",
    "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=144,50 / B=128,00 / C=153,80 / L=270,00",
@@ -3157,7 +3157,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 93,
    "codigo_catalogo": "K48933",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
@@ -3191,7 +3191,7 @@
    "tipo_perno": "F",
    "juego_montaje": 0.16,
    "codigo_aros": "A48930",
-   "codigo_aros_tolerancia": "GC.6926",
+   "codigo_metal_leve": "GC.6926",
    "medida_aros": "1-3,00T / 1-3,00 / 1-4,00",
    "tipo_camisa": null,
    "dim_camisa": "A=144,50 / B=128,00 / C=153,80 / L=270,00",
@@ -3206,7 +3206,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 93,
    "codigo_catalogo": "K48940",
-   "verificado": false
+   "verificado": true
   },
   "codigos_crac": [
    {
