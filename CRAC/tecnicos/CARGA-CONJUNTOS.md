@@ -209,10 +209,23 @@ Dos reglas que puso el dueño el 2026-09-04, y que valen para toda la carga:
    anterior en vez de volver a empezar. Lo que **no** se hace es inventar un
    número para llenar el campo: eso va `null`.
 
-Un ejemplo de las dos reglas juntas, de la primera tanda: `K13603` aparece en
-cuatro páginas (35, 49, 98 y 117) con **las mismas medidas** pero distinto
-número de cilindros (D229/3, /4 y /6). Las medidas se cargaron —coinciden en las
-cuatro— y el número de cilindros se avisó como dudoso en vez de elegir uno.
+### Los cuatro casos de la primera tanda, ya resueltos
+
+Se avisaron como dudosos, el dueño los miró el 2026-09-04 y **confirmó las
+cuatro lecturas**. Quedan acá como precedente: si vuelve a aparecer algo así, se
+resuelve igual y no hace falta preguntar de nuevo.
+
+| Caso | Qué pasaba | Cómo se resolvió |
+|---|---|---|
+| `K13603` | Aparece en cuatro páginas (35, 49, 98, 117) con **las mismas medidas** pero distinto Nº de cilindros (D229/3, /4 y /6) | Se cargan las medidas —coinciden en las cuatro— y el Nº de cilindros se toma de la primera página. El proveedor lo vende "(UN)", un pistón para las tres |
+| `K26040` | Su fila **apila tres variantes de motor** y la celda del Ø trae cuatro números: `111,76 / 111,80 / 106,70 / 111,80` | **Va la primera variante**: Ø 111,76 × carrera 111,80. Es la regla general para las filas que apilan variantes |
+| `K26070` | El texto del motor arrastró dos bloques de la misma fila (`FNH 268` + `FNH 201`) | Se deja como está: los dos bloques son de esa fila, y el campo `motor` es texto libre que sirve para buscar |
+| `K18510` | El kit es `K18510` pero los aros son `A18760` y la camisa `C18760` | Correcto. Es lo mismo que pasa en el Clevite: **los números no coinciden entre columnas**. Manda el Ø contra la descripción del proveedor, que acá cierra en 76 mm |
+
+Y cinco códigos (`K13250`, `K13910`, `K13930`, `K13966`, más el ya citado
+`K13603`) aparecían en varias páginas: se compararon una por una y **las medidas
+son idénticas en todas**. Es el mismo motor listado en distintas secciones del
+catálogo, solo cambia el texto de aplicación. No hay que elegir página.
 
 ## El extractor: `scripts/leer_conjuntos_mahle.py`
 

@@ -2364,10 +2364,7 @@
    "catalogo": "Mahle 2019",
    "pagina_catalogo": 58,
    "codigo_catalogo": "K26040",
-   "verificado": true,
-   "revisar": {
-    "carrera": "la fila apila varias variantes; la celda dice 111,76 / 111,80 / 106,70 / 111,80"
-   }
+   "verificado": true
   },
   "codigos_crac": [
    {

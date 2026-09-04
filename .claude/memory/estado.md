@@ -1396,11 +1396,13 @@ el número con cero adelante y sin el sufijo WS. Hay que verlo con el dueño.
 
 Los 49 restantes son Scania, Volvo, M.Benz y MWM.
 
-**Lo que quedó dudoso de la primera tanda y el dueño va a mirar aparte:**
-`K13603` (aparece en cuatro páginas con las mismas medidas pero distinto número
-de cilindros), `K26070` (el texto del motor mezcló dos bloques de la misma fila)
-y `K26040` (Ø 111,76 en el catálogo contra 111,80 en la descripción del
-proveedor).
+**Las dudas de la primera tanda quedaron resueltas.** Se avisaron cuatro
+(`K13603`, `K26040`, `K26070`, `K18510`), el dueño las miró el 2026-09-04 y
+confirmó las cuatro lecturas. Están en `CARGA-CONJUNTOS.md` como precedente, con
+la regla que salió de `K26040`: **de una fila que apila varias variantes de
+motor va la primera**. Ninguna ficha quedó con marca de revisar salvo
+`T BEK211000`, y esa no es una duda de lectura sino que el catálogo no publica
+el dato (la fila no trae la línea STD).
 
 ---
 
