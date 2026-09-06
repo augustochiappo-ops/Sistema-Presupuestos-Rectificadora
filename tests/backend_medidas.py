@@ -44,13 +44,19 @@ def codigos(resultado):
     return [r["codigo"] for r in resultado["resultados"]]
 
 
+def _lista(valor):
+    return valor if isinstance(valor, list) else [valor]
+
+
 print("\n=== 0. Catálogos cargados ===")
 db.init_db()
 familias = {f["id"]: f for f in tecnicos.get_familias()}
-check("están las siete familias",
-      sorted(familias) == ["asientos", "bujes_biela", "camisas", "conjuntos", "guias", "pistones",
-                           "subconjuntos"],
+check("están las nueve familias",
+      sorted(familias) == ["asientos", "bujes_biela", "camisas", "cojinetes_biela", "conjuntos",
+                           "guias", "pistones", "subconjuntos", "valvulas"],
       list(familias))
+check("1.782 válvulas (3B + Mahle)",
+      familias.get("valvulas", {}).get("total") == 1782, familias.get("valvulas"))
 check("396 camisas (secas y húmedas)",
       familias.get("camisas", {}).get("total") == 396, familias.get("camisas"))
 check("915 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") == 915, familias.get("guias"))
@@ -64,13 +70,18 @@ check("128 conjuntos (los que trabaja el proveedor)",
 check("35 pistones (Persan)", familias.get("pistones", {}).get("total") == 35, familias.get("pistones"))
 check("190 bujes de biela (Indubrón)",
       familias.get("bujes_biela", {}).get("total") == 190, familias.get("bujes_biela"))
+# Los cojinetes de biela salen de la lista del proveedor —Mahle, Federal Mogul y
+# los Glyco que están adentro del catálogo de Federal Mogul—, así que hay uno
+# por código, tenga o no ficha en el catálogo del fabricante.
+check("279 cojinetes de biela (Mahle + Federal Mogul + Glyco)",
+      familias.get("cojinetes_biela", {}).get("total") == 279, familias.get("cojinetes_biela"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
 # La casilla "Solo las que tiene el proveedor" va en todas menos las dos
 # familias de Mahle: los catálogos técnicos son los del fabricante y traen más
 # de lo que se puede pedir, pero la ficha de Mahle se consulta igual aunque la
 # pieza no se pueda pedir. En conjuntos la casilla además no filtraría nada:
 # las 128 fichas salen de la lista del proveedor.
-check("ofrecen el filtro del proveedor todas menos las dos de Mahle",
+check("ofrecen el filtro del proveedor todas menos las que salen del proveedor",
       {k for k, v in familias.items() if v["filtro_proveedor"]}
       == {"camisas", "guias", "asientos", "pistones", "bujes_biela"},
       {k: v.get("filtro_proveedor") for k, v in familias.items()})
@@ -471,6 +482,66 @@ faltan += [f"{d}.png" for d in ("detalle-1-2", "detalle-3-6", "detalle-7", "deta
            if not os.path.exists(os.path.join(FORMAS_DIR, f"{d}.png"))]
 check("están los trece dibujos de la lámina", not faltan, faltan)
 
+print("\n=== 7 bis. Cojinetes de biela ===")
+# El Ø del muñón es el campo con el que se busca: es lo único que se puede medir
+# con el motor desarmado. CAF 1490 (Chevrolet Monza) tiene el muñón en
+# 48,971/48,987 según la página 26 del catálogo de Federal Mogul.
+r = tecnicos.buscar("cojinetes_biela", {"diam_munon": "48.98", "tol_diam_munon": "0.02"})
+check("por Ø de muñón sale el juego del Monza", "CAF 1490" in codigos(r), codigos(r))
+monza = [x for x in r["resultados"] if x["codigo"] == "CAF 1490"][0]
+check("con las cuatro medidas del catálogo",
+      monza["medidas"] == {"diam_munon": [48.971, 48.987], "diam_alojamiento": [52.0, 52.012],
+                           "ancho": 19.3, "espesor": 1.497}, monza["medidas"])
+check("y la luz de aceite aparte, que no es una medida buscable",
+      monza["extra"]["luz_aceite"] == [0.019, 0.063]
+      and "luz" not in tecnicos.ESPEC["cojinetes_biela"]["medidas"], monza["extra"]["luz_aceite"])
+check("con precio y stock del proveedor",
+      monza["precio"] is not None and monza["codigo_crac"].startswith("CAF 1490"), monza["codigo_crac"])
+
+# La ficha de Mahle sale del catálogo 2019, y la de Caterpillar del Clevite 2014:
+# son dos catálogos distintos en la misma familia.
+r = tecnicos.buscar("cojinetes_biela", {"codigo": "CABE01472"})
+iveco = r["resultados"][0]
+check("el Iveco Daily 2.8 sale del Mahle 2019, página 342",
+      iveco["extra"]["catalogo"] == "Mahle 2019" and iveco["extra"]["pagina_catalogo"] == 342,
+      (iveco["extra"]["catalogo"], iveco["extra"]["pagina_catalogo"]))
+check("con el muñón y el alojamiento del catálogo",
+      iveco["medidas"]["diam_munon"] == [56.52, 56.535]
+      and iveco["medidas"]["diam_alojamiento"] == [60.333, 60.345], iveco["medidas"])
+
+# La bajomedida guarda el Ø QUE LE QUEDA AL MUÑÓN rectificado, no la bajomedida
+# en sí: es lo que hace que se pueda buscar un cigüeñal ya rectificado.
+r = tecnicos.buscar("cojinetes_biela", {"diam_sobremedida": "48.72", "tol_diam_sobremedida": "0.02"})
+check("un muñón rectificado a 48,72 encuentra la de 0,25 del Monza",
+      "CAF 1490" in codigos(r), codigos(r))
+monza = [x for x in r["resultados"] if x["codigo"] == "CAF 1490"][0]
+check("y la pantalla sabe cuál de las bajomedidas fue",
+      [s["label"] for s in monza["sobremedidas_match"]] == ["-0,25 mm"], monza["sobremedidas_match"])
+check("el STD del Monza no matchea ese Ø",
+      all(s["label"] != "STD" for s in monza["sobremedidas_match"]))
+
+# Los códigos que el proveedor vende y ningún catálogo trae entran igual, con la
+# aplicación y el precio, pero NUNCA pueden aparecer en una búsqueda por medidas.
+r = tecnicos.buscar("cojinetes_biela", {"codigo": "CABE01672"})
+huerfano = r["resultados"][0]
+check("un código sin catálogo se encuentra por código",
+      huerfano["medidas"]["diam_munon"] is None and huerfano["precio"] is not None, huerfano["medidas"])
+check("y dice por qué no tiene medidas",
+      "no está en ninguno de los catálogos" in (huerfano["extra"]["revisar"] or {}).get("diam_munon", ""),
+      huerfano["extra"]["revisar"])
+sin_medidas = {f["codigo"] for f in tecnicos._catalogo("cojinetes_biela")
+               if f["medidas"]["diam_munon"] is None}
+r = tecnicos.buscar("cojinetes_biela", {"diam_munon": "50", "tol_diam_munon": "+"})
+check("y no aparece nunca en una búsqueda por medidas",
+      not (sin_medidas & set(codigos(r))), sorted(sin_medidas & set(codigos(r)))[:5])
+
+# El alojamiento abraza al muñón: si alguna ficha lo tiene más chico, hay una
+# columna leída de la columna equivocada.
+malas = [f["codigo"] for f in tecnicos._catalogo("cojinetes_biela")
+         if f["medidas"]["diam_munon"] and f["medidas"]["diam_alojamiento"]
+         and max(_lista(f["medidas"]["diam_alojamiento"])) <= min(_lista(f["medidas"]["diam_munon"]))]
+check("en todas las fichas el alojamiento es mayor que el muñón", not malas, malas[:5])
+
 print("\n=== 8. El tope de 100 se avisa ===")
 r = tecnicos.buscar("guias", {"aplicacion": "guia"})
 check("se devuelven 100 como mucho", r["total"] == 100, r["total"])
@@ -482,7 +553,7 @@ cliente = app.test_client()
 check("sin sesión no se entra", cliente.get("/api/tecnicos/familias").status_code == 401)
 cliente.post("/api/auth/login", json={"usuario": os.environ["APP_USERNAME"], "password": CLAVE})
 resp = cliente.get("/api/tecnicos/familias")
-check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 7, resp.get_json())
+check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 9, resp.get_json())
 resp = cliente.get("/api/tecnicos/buscar?familia=camisas&diam_int=56.5&tol_diam_int=0")
 datos = resp.get_json()
 check("y la búsqueda", resp.status_code == 200 and "UC 2112" in [r["codigo"] for r in datos["resultados"]], datos)

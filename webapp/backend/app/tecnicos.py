@@ -130,6 +130,30 @@ ESPEC = {
         "descripcion": True,
         "filtro_proveedor": True,
     },
+    # El cojinete de biela se busca por lo que se mide con el micrómetro sobre el
+    # cigüeñal: el Ø del muñón. Los otros tres campos son para desempatar cuando
+    # ese Ø da varios candidatos, que es lo normal (medio parque automotor usa
+    # muñones de 50 mm).
+    #
+    # La LUZ DE ACEITE no entra como medida a propósito. Es un valor de control
+    # —se verifica con plastigage DESPUÉS de armar, con el cojinete ya puesto— y
+    # no algo que se mida para elegir la pieza. Va en `extra` y se muestra.
+    #
+    # Sin `filtro_proveedor`, por lo mismo que válvulas: el universo de la
+    # familia ES la lista del proveedor (se cargaron los cojinetes que trabaja,
+    # no el catálogo entero de cada marca), así que todas las fichas tienen
+    # código del proveedor y la casilla no filtraría nada.
+    #
+    # Las bajomedidas van como `sobremedidas`, con el mismo mecanismo que
+    # camisas y bujes, y el valor de cada una es el Ø QUE LE QUEDA AL MUÑÓN
+    # rectificado a esa medida. Así el filtro de Ø de sobremedida contesta la
+    # pregunta del taller: el muñón ya está rectificado y mide 48,72 — ¿qué
+    # cojinete le va? (la de 0,25 del juego cuyo STD es 48,97).
+    "cojinetes_biela": {
+        "label": "Cojinetes de biela",
+        "medidas": ["diam_munon", "diam_alojamiento", "ancho", "espesor"],
+        "sobremedidas": True,
+    },
     "bujes_biela": {
         "label": "Bujes de biela",
         "medidas": ["diam_perno", "diam_int", "ancho"],

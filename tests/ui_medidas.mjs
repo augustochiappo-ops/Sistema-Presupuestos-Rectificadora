@@ -61,12 +61,15 @@ await esperar(900)
 check('se entra a la pantalla', page.url().includes('busqueda-medidas'), page.url())
 
 console.log('\n=== Estado inicial ===')
-check('las seis familias con su total',
+check('las nueve familias con su total',
   (await page.locator('button', { hasText: /^Camisas\s*396$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Válvulas\s*1782$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Guías de válvulas\s*915$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Asientos de válvulas\s*1108$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Subconjuntos\s*201$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Conjuntos\s*128$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Pistones\s*35$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Cojinetes de biela\s*279$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Bujes de biela\s*190$/ }).count()) === 1)
 check('en camisas el filtro se llama Ø exterior',
   await page.locator('label', { hasText: 'Ø EXTERIOR' }).count() === 1
@@ -445,6 +448,52 @@ check('el Ø exterior STD conserva su banda', buje.includes('28,15/18'), buje)
 check('y las siete sobremedidas', buje.includes('28,26') && buje.includes('29,14'), buje)
 check('con precio de la base', /\$\s?[\d.]+/.test(buje), buje)
 await page.screenshot({ path: path.join(SHOT, 'medidas-bujes.png'), fullPage: true })
+
+console.log('\n=== Cojinetes de biela: el muñón del cigüeñal ===')
+await page.fill('input[placeholder="Código…"]', '')
+await page.locator('button', { hasText: 'Cojinetes de biela' }).click()
+await esperar(500)
+check('arranca con los ejemplos de la familia',
+  await page.locator('button', { hasText: 'Ø muñón 50 mm' }).count() === 1)
+// El caso del taller: el cigüeñal ya viene de una rectificación y lo que se
+// mide no es el STD. Buscar por "Ø muñón rectificado" tiene que encontrar el
+// juego cuyo STD es 48,97 — el del Monza — por su bajomedida de 0,25.
+await page.locator('button', { hasText: 'Muñón rectificado 48,72' }).click()
+await esperar(1400)
+const cojinetes = await Promise.all(
+  (await filas().all()).map((f) => f.innerText()))
+check('un muñón rectificado a 48,72 encuentra el juego del Monza',
+  cojinetes.some((f) => f.includes('CAF 1490')), cojinetes.slice(0, 3))
+const monza = cojinetes.find((f) => f.includes('CAF 1490')) || ''
+check('con el Ø del muñón STD y el del alojamiento',
+  monza.includes('48,97') && monza.includes('52'), monza)
+check('el espesor con tres decimales, que es donde se distinguen',
+  monza.includes('1,497'), monza)
+check('la luz de aceite se muestra pero no se filtra',
+  await page.locator('th', { hasText: 'Luz de aceite' }).count() === 1
+  && await page.locator('label', { hasText: 'LUZ DE ACEITE' }).count() === 0)
+check('las bajomedidas se leen con su etiqueta',
+  monza.includes('-0,25 mm') && monza.includes('48,72'), monza)
+check('con precio y stock del proveedor', /\$\s?[\d.]+/.test(monza), monza)
+await page.screenshot({ path: path.join(SHOT, 'medidas-cojinetes.png'), fullPage: true })
+
+console.log('\n=== Cojinetes: los que el catálogo no trae van con "?" ===')
+await page.locator('button', { hasText: 'Limpiar filtros' }).click()
+await esperar(600)
+await page.fill('input[placeholder="Código…"]', 'CABE01672')
+await esperar(1300)
+const huerfano = await textoDeFila(0)
+check('el código sin catálogo se encuentra igual', huerfano.includes('CABE01672'), huerfano)
+check('y muestra el precio del proveedor', /\$\s?[\d.]+/.test(huerfano), huerfano)
+check('las medidas van con el signo de pregunta', (huerfano.match(/\?/g) || []).length >= 3, huerfano)
+check('y la explicación está a mano',
+  (await page.locator('[title*="no está en ninguno de los catálogos"]').count()) > 0)
+await page.fill('input[placeholder="Código…"]', '')
+await esperar(600)
+// El bloque que sigue prueba el botón de signo sobre el Ø de perno, que es de
+// bujes: hay que volver a esa pestaña antes de salir de acá.
+await page.locator('button', { hasText: 'Bujes de biela' }).click()
+await esperar(600)
 
 console.log('\n=== Tolerancia con signo: ese valor o más / o menos ===')
 // Vaciar el código ya deja la pantalla sin filtros; el botón "Limpiar filtros"

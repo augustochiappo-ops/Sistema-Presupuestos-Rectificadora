@@ -381,6 +381,56 @@ export const FAMILIAS = [
     ],
   },
   {
+    id: 'cojinetes_biela',
+    label: 'Cojinetes de biela',
+    // El Ø del muñón es el campo principal: es lo único que se puede medir con
+    // el motor desarmado sobre la mesa. Los otros tres desempatan, porque medio
+    // parque automotor usa muñones de 50 mm.
+    //
+    // El "Ø de sobremedida" busca contra el muñón YA RECTIFICADO: si el
+    // cigüeñal viene de una rectificación anterior, lo que se mide no es el
+    // STD sino 0,25 o 0,50 menos, y buscar por el STD no lo encuentra.
+    medidas: [
+      { campo: 'diam_munon', label: 'Ø muñón (STD)' },
+      { campo: 'diam_sobremedida', label: 'Ø muñón rectificado' },
+      { campo: 'diam_alojamiento', label: 'Ø alojamiento' },
+      { campo: 'ancho', label: 'Ancho' },
+      { campo: 'espesor', label: 'Espesor' },
+    ],
+    textos: [
+      { campo: 'codigo', label: 'Código', ancho: 200, icono: 'tag' },
+      { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
+    ],
+    columnas: [
+      { key: 'codigo', header: 'Código', width: 110, strong: true, wrap: true },
+      { key: 'marca', header: 'Marca', width: 125 },
+      { key: 'descripcion', header: 'Motor / aplicación', wrap: true, minWidth: 170, tipo: 'aplicacion' },
+      { key: 'nro_cil', header: 'Cil.', width: 55, align: 'center' },
+      { key: 'diam_munon', header: 'Ø muñón', width: 95, align: 'right', tipo: 'mm' },
+      { key: 'diam_alojamiento', header: 'Ø aloj.', width: 90, align: 'right', tipo: 'mm' },
+      { key: 'ancho', header: 'Ancho', width: 80, align: 'right', tipo: 'mm' },
+      // Con tres decimales: el espesor de un cojinete de biela vive entre 1,4 y
+      // 2,5 mm, y redondeado a dos deja de distinguir 1,873 de 1,885.
+      { key: 'espesor', header: 'Espesor', width: 85, align: 'right', tipo: 'mm', decimales: 3 },
+      // La luz de aceite no es un filtro (no se mide para elegir la pieza) pero
+      // sí se muestra: es el número con el que se controla el armado.
+      { key: 'luz_aceite', header: 'Luz de aceite', width: 110, align: 'right', tipo: 'mm', decimales: 3 },
+      // Cada bajomedida con su etiqueta arriba del Ø que le queda al muñón:
+      // sin la etiqueta a la vista, cinco números seguidos no dicen cuál pedir.
+      { key: 'sobremedidas', header: 'Bajomedidas y Ø del muñón', minWidth: 230, tipo: 'sobremedidas' },
+      // Un cojinete tiene un precio por bajomedida: esta columna dice de cuál
+      // es el que se está mostrando (igual que en camisas y bujes).
+      { key: 'medida_crac', header: 'Precio de', width: 85, tipo: 'medida' },
+      { key: 'precio', header: 'Precio', width: 105, align: 'right', tipo: 'precio' },
+      { key: 'stock', header: 'Stock', width: 70, align: 'center', tipo: 'stock' },
+    ],
+    ejemplos: [
+      { label: 'Ø muñón 50 mm', filtros: { diam_munon: '50', tol_diam_munon: '0.1' } },
+      { label: 'Muñón rectificado 48,72', filtros: { diam_sobremedida: '48.72', tol_diam_sobremedida: '0.05' } },
+      { label: 'Motor: Iveco', filtros: { aplicacion: 'iveco' } },
+    ],
+  },
+  {
     id: 'bujes_biela',
     label: 'Bujes de biela',
     // El Ø exterior no está acá sino con las sobremedidas: un buje tiene el

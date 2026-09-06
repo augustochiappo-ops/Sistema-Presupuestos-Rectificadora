@@ -1398,6 +1398,49 @@ sesión (verificado con `git stash`): la del check *"están las siete familias"*
 que quedó viejo porque ahora son ocho (entró `valvulas`), y la del catálogo del
 proveedor, que sólo pasa con la base importada por `tests/preparar.sh`.
 
+**Cojinetes de biela: la novena familia del buscador por medidas (2026-09-05).**
+El dueño pasó tres catálogos —**Mahle 2019** (la sección de cojinetes, 98 hojas),
+**Mahle Clevite 2014** y **Federal Mogul**— y pidió cargar **solo los cojinetes
+de biela que vende el proveedor**, más un documento de cómo se leen esos
+catálogos, porque después hay que hacer lo mismo con los de **bancada**.
+
+Quedaron **279 fichas** sobre los códigos de la categoría `CA` del proveedor:
+**145 Mahle** (116 con medidas), **122 Federal Mogul** (82 con medidas) y **12
+Glyco**. Las **64 sin medidas** entran igual, con la aplicación y el precio del
+proveedor y las cuatro medidas en blanco con el **"?"** y el motivo en el
+tooltip (misma regla que válvulas y los pistones de Persan): se las encuentra
+por código o por aplicación, nunca en una búsqueda por medidas.
+
+Se busca por **Ø del muñón, Ø del alojamiento, ancho y espesor**, más un quinto
+filtro, **"Ø muñón rectificado"**, que busca contra el Ø que le queda al muñón
+en cada bajomedida — el caso real del taller, cuando el cigüeñal ya viene de una
+rectificación anterior. La **luz de aceite** se guarda y se muestra pero **no es
+un filtro**: es un valor de control que se verifica con plastigage después de
+armar, no algo que se mida para elegir la pieza.
+
+**El documento es `CRAC/tecnicos/CARGA-COJINETES.md`** y es la mitad del
+trabajo: explica el código de 14 caracteres del proveedor, las once columnas del
+Mahle 2019 con la tabla de prefijos (`B`/`SB` biela, `M`/`SM` bancada, `L`
+arandela, `H` buje de levas, `G` buje de biela), las columnas A–I del Federal
+Mogul, y **qué hay que cambiar para hacer bancada**. Lo que más va a costar en
+bancada: el juego trae **una fila por posición de muñón**, así que una ficha
+necesita juntar varias filas.
+
+**El cuarto PDF, el Mahle Clevite 2019/2020, se descartó**: sus tablas de
+bronzinas usan fuentes que no declaran a qué carácter corresponde cada símbolo,
+así que el PDF dibuja los dígitos pero no dice cuáles son. No se pierde nada: el
+Clevite 2014 cubre los mismos motores (Caterpillar y Cummins) y sí se lee.
+
+**Glyco entró de rebote.** Las últimas páginas del catálogo de Federal Mogul
+usan numeración Glyco (`01-3841`, `71-3728/4`), que es la misma que usa el
+proveedor: son 12 códigos gratis. Los otros 75 esperan el catálogo de Glyco y no
+se cargaron ni como ficha vacía.
+
+**De paso se arreglaron las dos fallas viejas de `tests/backend_medidas.py`**
+(el check de "las siete familias" y el del total de familias del endpoint, que
+habían quedado atrás cuando entró `valvulas`). La suite de backend quedó entera
+en verde.
+
 ---
 
 ## Antes de esto

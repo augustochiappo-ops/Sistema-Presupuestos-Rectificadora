@@ -924,3 +924,108 @@ máximo de `formatEtiqueta`, que redondeaba `+0,076 mm` y `+0,127 mm` a `+0,08` 
 `+0,13`. **Las otras familias no cambian**: los tres decimales salen solo si la
 columna los pide.
 **Fecha:** 2026-09-04
+
+---
+
+## Cojinetes de biela: cómo se decidió leer los catálogos
+
+**Contexto:** el dueño pasó tres catálogos de cojinetes y pidió cargar solo los
+que vende el proveedor, tomando las decisiones que hicieran falta y anotándolas
+para revisarlas juntos. Éstas son.
+
+### Qué es una medida y qué no
+
+**Las cuatro que se buscan son Ø del muñón, Ø del alojamiento, ancho y espesor.
+La luz de aceite queda afuera de los filtros a propósito.** No es una medida de
+la pieza: es el huelgo que queda entre el eje y el cojinete ya montado, se
+verifica con plastigage **después** de armar y ningún rectificador la mide para
+decidir qué cojinete comprar. Se guarda en `extra.luz_aceite` y se muestra en la
+tabla, que es donde sirve.
+
+### Las bajomedidas guardan el Ø del muñón, no la bajomedida
+
+Cada entrada de `extra.sobremedidas` lleva como valor **el Ø que le queda al
+muñón rectificado a esa medida** (`Ø STD − bajomedida`), no los 0,25 mm. Así el
+filtro "Ø muñón rectificado" contesta la pregunta real del taller —*el cigüeñal
+ya viene rectificado y mide 48,72, ¿qué cojinete le va?*— con el mismo mecanismo
+que el "Ø exterior" de camisas y bujes. Buscar por el STD no lo encontraría.
+
+### Un "030" del proveedor puede ser 0,30 mm o 0,762 mm
+
+El sufijo de medida del proveedor es ambiguo mirándolo solo: `030` pueden ser 30
+centésimas de milímetro o 30 milésimas de pulgada. **Se resuelve contra el
+catálogo**: se calculan las dos lecturas y se elige la que cae sobre una
+bajomedida que el catálogo declara para ESE juego.
+
+La tolerancia de esa comparación es **0,02 mm, a propósito**: 0,25 mm y `.010"`
+son 0,250 y 0,254, y en el taller son la misma pieza (lo mismo 0,50 con `.020"` y
+0,75 con `.030"`). Con una tolerancia más fina, medio catálogo de Caterpillar
+quedaba sin resolver.
+
+Cuando el proveedor vende una medida que el catálogo no lista —pasa seguido: el
+catálogo llega hasta 0,75 y el proveedor tiene también la de 1,00— se la
+interpreta con el sistema de ese catálogo y **la ficha queda marcada** en
+`extra.revisar`. Son 62 fichas.
+
+### Cómo se sabe qué columna quedó vacía
+
+Los tres catálogos traen las mismas cinco columnas de medida **en distinto
+orden** (Mahle pone ancho y espesor donde Federal Mogul pone la luz de aceite), y
+una fila puede tener columnas en blanco sin que el texto del PDF diga cuál falta.
+
+Se resuelve en dos pasos: **primero por posición** —en la mayoría de las páginas
+cada columna llega con su coordenada y no hay nada que adivinar—, y donde el PDF
+manda las cinco pegadas, **por tamaño**: se prueban las combinaciones que
+respetan el orden del catálogo y se descartan las que dan valores imposibles (un
+espesor de cojinete de biela no mide 50 mm ni una luz de aceite mide 20). Si
+queda más de una combinación posible, se toma la que llena las columnas de más a
+la izquierda y la ficha sale marcada. Hoy es **una sola ficha**.
+
+El control que cierra todo: **el alojamiento siempre es mayor que el muñón**. Hay
+un test que lo verifica sobre las 279 fichas — si alguna vez falla, hay una
+columna leída de la columna equivocada.
+
+### El filtro se hace sobre la composición, no sobre el código
+
+En los catálogos de Mahle la letra del código dice qué pieza es (`B`/`SB` biela,
+`M`/`SM` bancada), pero **el código va sólo en el primer renglón de cada juego**
+y un juego puede ocupar varios: el semicojinete inferior y el superior, o —en
+bancada— una posición por muñón. El filtro se hace sobre la **columna de
+composición** (`BB`/`SBB` contra `BC`/`SBC`), que sí está en todos los renglones.
+Esto es lo que más va a importar cuando se haga bancada.
+
+### Cuando el mismo juego trae dos repartos de medidas
+
+Un juego aparece muchas veces, una por cada motor que lo usa, casi siempre con
+las mismas medidas. Cuando no: el semicojinete inferior y el superior a veces
+tienen espesores distintos (1,87 y 1,90). El proveedor vende el juego completo,
+así que **se toma el reparto más repetido** y la ficha queda marcada. Son 15.
+
+### Federal Mogul no se lee por posición
+
+A diferencia de los de Mahle, en este catálogo **el margen izquierdo se corre de
+una página a otra** (76 pt en unas, 45 en otras) y la columna de medidas con él.
+Con una `x` fija, la mitad de las filas caía en la columna equivocada. Se lee por
+contenido: se junta el renglón entero y se lo parte por lo que dice.
+
+Dos trampas del mismo catálogo: **el dígito adelante del número son los pares de
+semicojinetes** (`4-1490` son cuatro pares, el proveedor vende `F 1490`), y
+**debajo de cada fila hay otra en pulgadas** con los mismos valores, que se tira
+entera.
+
+### Glyco entró de rebote y el resto espera
+
+Las últimas páginas del catálogo de Federal Mogul usan numeración Glyco, que es
+la misma que usa el proveedor. Se los distingue del número de juego porque **la
+cantidad de pares no pasa de 12 y no se escribe con cero adelante**. Salen 12 de
+los 87 códigos Glyco del proveedor; los otros 75 **no se cargaron ni como ficha
+vacía**, porque cargarlos antes de tener el catálogo sería ruido.
+
+### El Clevite 2019/2020 no se puede leer
+
+Sus tablas de bronzinas usan fuentes cuyo `ToUnicode` sólo mapea el espacio y el
+guión: el PDF dibuja los dígitos pero no declara cuáles son, así que ninguna
+herramienta de texto los recupera. Haría falta OCR. No se hizo porque el **Clevite
+2014 cubre los mismos motores** (Caterpillar y Cummins) y sí se lee.
+
+**Fecha:** 2026-09-05
