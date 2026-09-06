@@ -1441,6 +1441,36 @@ se cargaron ni como ficha vacía.
 habían quedado atrás cuando entró `valvulas`). La suite de backend quedó entera
 en verde.
 
+**Ninguna celda de la tabla queda cortada (2026-09-06).** El dueño avisó que en
+cojinetes el Ø del alojamiento y la luz de aceite salían con puntos suspensivos
+("51,59 / 5…"). La causa: la tabla usa `tableLayout: fixed`, así que una columna
+más angosta que su contenido **lo tapa sin avisar** — no hay forma de darse
+cuenta mirando, salvo que falte justo el dato que se necesita.
+
+Se arregló en dos partes:
+
+1. **Los rangos van apilados**, el mínimo arriba del máximo (`celdaMm` en
+   `BusquedaMedidasScreen.jsx`). En cojinetes casi toda medida es un rango, y
+   de a uno por renglón cada columna pedía 130 px: cinco así hacían una tabla de
+   1.700 px que obligaba a barrer de costado hasta el precio. Apiladas piden la
+   mitad y **la fila no crece de alto**, porque la columna de bajomedidas ya
+   ocupaba dos renglones. Cada número va en un span que no se parte: la celda
+   puede envolver entre el mínimo y el máximo, nunca en la mitad de un número.
+   Lo eligió el dueño entre esa opción y ensanchar las columnas.
+2. **Se midió el recorte en el navegador, familia por familia**, y aparecieron
+   recortes viejos en casi todas: la marca de camisas ("CASE / INTERNATIONAL"),
+   el material de guías ("Fundición Fosforoso"), el "Admisión" del tipo en tres
+   familias, el perno y el código de aros de subconjuntos y conjuntos, la marca
+   de pistones ("GENERAL MOTORS"), el encabezado de sobremedidas de válvulas y
+   **el badge de stock**, que no entraba en 70 px en ninguna. Se corrigieron
+   todas, con `wrap` donde el texto es largo de verdad (marca de camisas, lista
+   de sobremedidas) y ensanchando donde alcanzaba.
+
+**Y quedó un test que lo mide**, para que no vuelva: recorre las nueve pestañas,
+aplica un filtro de ejemplo en cada una y compara `scrollWidth` contra
+`clientWidth` en cada celda y cada encabezado. Son diez checks nuevos (la suite de UI
+pasó de 114 a 124 verificaciones).
+
 ---
 
 ## Antes de esto

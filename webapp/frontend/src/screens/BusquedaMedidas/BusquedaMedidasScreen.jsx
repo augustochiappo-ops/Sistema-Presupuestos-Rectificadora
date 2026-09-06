@@ -31,6 +31,33 @@ function formatMm(valor, decimales = 0) {
 }
 
 /*
+ * Una medida que es un rango va con el mínimo arriba y el máximo abajo, no en
+ * un renglón solo.
+ *
+ * En cojinetes de biela CASI TODAS las medidas son rangos (el Ø del muñón, el
+ * del alojamiento, el ancho, el espesor y la luz de aceite), y "103,83 / 103,85"
+ * en un renglón pide 130 px de columna: cinco columnas así hacen una tabla de
+ * 1.700 px que obliga a barrer de costado hasta el precio. Apiladas piden la
+ * mitad y la fila no crece de alto, porque la columna de bajomedidas ya ocupa
+ * dos renglones.
+ *
+ * Cada número va en un span que no se parte: la celda puede envolver entre el
+ * mínimo y el máximo, nunca en la mitad de un número.
+ */
+function celdaMm(valor, decimales) {
+  if (!Array.isArray(valor)) return formatMm(valor, decimales)
+  return (
+    <span style={{ display: 'inline-flex', flexDirection: 'column', lineHeight: 1.25 }}>
+      {valor.map((v, i) => (
+        <span key={i} style={{ whiteSpace: 'nowrap' }}>
+          {formatMm(v, decimales)}{i < valor.length - 1 ? ' /' : ''}
+        </span>
+      ))}
+    </span>
+  )
+}
+
+/*
  * La ficha viene con las medidas y los datos sueltos en dos objetos anidados
  * (`medidas` y `extra`). Se aplanan acá y no en el backend porque el que los
  * separa es el catálogo de origen: cada familia tiene los suyos, y la tabla
@@ -96,6 +123,7 @@ function celdaSobremedidas(fila, decimales) {
               style={{
                 color: resaltada ? 'var(--text-strong)' : 'var(--text-body)',
                 fontWeight: resaltada ? 'var(--weight-semibold)' : 'var(--weight-regular)',
+                whiteSpace: 'nowrap',
               }}
             >
               {s.texto || formatMm(s.valor, decimales)}
@@ -134,7 +162,10 @@ function celdaAplicacion(fila, key) {
  */
 function conReparo(contenido, motivo) {
   return (
-    <span title={motivo} style={{ cursor: 'help', whiteSpace: 'nowrap' }}>
+    <span
+      title={motivo}
+      style={{ cursor: 'help', display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap' }}
+    >
       {contenido}
       <span
         style={{
@@ -174,7 +205,7 @@ function contenidoCelda(col, fila, acciones) {
 
   switch (col.tipo) {
     case 'mm':
-      return formatMm(valor, col.decimales)
+      return celdaMm(valor, col.decimales)
     case 'precio':
       // Sin código del proveedor no hay precio que mostrar, y poner "—" haría
       // pensar que la pieza no se consigue: lo que pasa es que no la tenemos

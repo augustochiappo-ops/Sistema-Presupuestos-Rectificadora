@@ -29,12 +29,12 @@ export const FAMILIAS = [
       // Los anchos son ajustados a propósito: con la columna de sobremedidas
       // sumada, la tabla tiene que entrar en pantalla sin empujar el precio y
       // el stock fuera del borde derecho.
-      { key: 'codigo', header: 'Código', width: 110, strong: true, wrap: true },
-      { key: 'marca', header: 'Marca', width: 105 },
+      { key: 'codigo', header: 'Código', width: 130, strong: true, wrap: true },
+      { key: 'marca', header: 'Marca', width: 160, wrap: true },
       { key: 'aplicacion', header: 'Motor / aplicación', wrap: true, minWidth: 170, tipo: 'aplicacion' },
       // Seca o húmeda: no son la misma pieza ni se montan igual, y ahora que el
       // catálogo trae las dos hay que poder distinguirlas de un vistazo.
-      { key: 'tipo_camisa', header: 'Tipo', width: 75 },
+      { key: 'tipo_camisa', header: 'Tipo', width: 90 },
       { key: 'diam_int', header: 'Ø int.', width: 80, align: 'right', tipo: 'mm' },
       { key: 'diam_ext_cil', header: 'Ø pest.', width: 85, align: 'right', tipo: 'mm' },
       // Con dos decimales siempre: en esta columna la diferencia entre 4,00 y
@@ -43,12 +43,12 @@ export const FAMILIAS = [
       { key: 'largo', header: 'Largo', width: 75, align: 'right', tipo: 'mm' },
       // Cada sobremedida con su etiqueta arriba del Ø: sin la etiqueta a la
       // vista, cinco números seguidos no dicen cuál pedir.
-      { key: 'sobremedidas', header: 'Sobremedidas y Ø ext.', minWidth: 200, tipo: 'sobremedidas' },
+      { key: 'sobremedidas', header: 'Sobremedidas y Ø ext.', minWidth: 230, tipo: 'sobremedidas' },
       // Una camisa tiene un precio por sobremedida: esta columna dice de cuál
       // es el que se está mostrando (igual que en subconjuntos y bujes).
       { key: 'medida_crac', header: 'Precio de', width: 85, tipo: 'medida' },
       { key: 'precio', header: 'Precio', width: 105, align: 'right', tipo: 'precio' },
-      { key: 'stock', header: 'Stock', width: 70, align: 'center', tipo: 'stock' },
+      { key: 'stock', header: 'Stock', width: 85, align: 'center', tipo: 'stock' },
     ],
     ejemplos: [
       { label: 'Ø interior 98,42 mm', filtros: { diam_int: '98.42' } },
@@ -98,7 +98,7 @@ export const FAMILIAS = [
       { key: 'codigo_fab', header: 'Nº catálogo', width: 115 },
       { key: 'marca', header: 'Marca', width: 80 },
       { key: 'aplicacion', header: 'Motor / aplicación', wrap: true, minWidth: 200, tipo: 'aplicacion' },
-      { key: 'tipo', header: 'Tipo', width: 90, tipo: 'tipo' },
+      { key: 'tipo', header: 'Tipo', width: 105, tipo: 'tipo' },
       { key: 'diam_cabeza', header: 'Ø cabeza', width: 95, align: 'right', tipo: 'mm' },
       // Tres decimales: el catálogo de 3B publica el vástago así (7,912 la STD
       // y 7,988 la de tres milésimas) y redondeado a dos las dos se leen casi
@@ -109,10 +109,10 @@ export const FAMILIAS = [
       // Cada sobremedida con su Ø de vástago: es lo que se pide cuando la guía
       // se rectifica en vez de cambiarse, y sin la etiqueta a la vista los
       // números no dicen cuál.
-      { key: 'sobremedidas', header: 'Sobremedidas y Ø vást.', minWidth: 190, tipo: 'sobremedidas', decimales: 3 },
+      { key: 'sobremedidas', header: 'Sobremedidas y Ø vást.', minWidth: 215, tipo: 'sobremedidas', decimales: 3 },
       // Bimetálica, estelitada, vástago cromado: lo publica Mahle y decide si
       // una válvula aguanta el motor. En las de 3B va un guión.
-      { key: 'material', header: 'Material', width: 105 },
+      { key: 'material', header: 'Material', width: 130 },
       // Qué válvula de la otra marca reemplaza a ésta. Es lo que permite
       // entrar con un número que no es del catálogo que uno tiene a mano.
       { key: 'equivalencias', header: 'Equivalencias', minWidth: 150, wrap: true },
@@ -120,7 +120,7 @@ export const FAMILIAS = [
       // es el que se está mostrando (igual que en camisas y subconjuntos).
       { key: 'medida_crac', header: 'Precio de', width: 105, tipo: 'medida' },
       { key: 'precio', header: 'Precio', width: 105, align: 'right', tipo: 'precio' },
-      { key: 'stock', header: 'Stock', width: 75, align: 'center', tipo: 'stock' },
+      { key: 'stock', header: 'Stock', width: 85, align: 'center', tipo: 'stock' },
     ],
     ejemplos: [
       { label: 'Ø cabeza 35 mm', filtros: { diam_cabeza: '35', tol_diam_cabeza: '0.5' } },
@@ -164,7 +164,7 @@ export const FAMILIAS = [
       { key: 'codigo', header: 'Código', width: 150, strong: true, wrap: true },
       { key: 'marca', header: 'Marca', width: 100 },
       { key: 'aplicacion', header: 'Motor / aplicación', wrap: true, minWidth: 220 },
-      { key: 'tipo', header: 'Tipo', width: 80, tipo: 'tipo' },
+      { key: 'tipo', header: 'Tipo', width: 105, tipo: 'tipo' },
       { key: 'diam_vastago', header: 'Ø vást.', width: 90, align: 'right', tipo: 'mm' },
       { key: 'diam_ext', header: 'Ø ext.', width: 90, align: 'right', tipo: 'mm' },
       { key: 'largo', header: 'Largo', width: 90, align: 'right', tipo: 'mm' },
@@ -173,7 +173,7 @@ export const FAMILIAS = [
       // reemplaza a otra, y va con su dibujo porque la letra sola no se
       // acuerda nadie.
       { key: 'forma', header: 'Forma', width: 130, tipo: 'forma' },
-      { key: 'material', header: 'Material', width: 130 },
+      { key: 'material', header: 'Material', width: 165 },
       { key: 'precio', header: 'Precio', width: 120, align: 'right', tipo: 'precio' },
       { key: 'stock', header: 'Stock', width: 90, align: 'center', tipo: 'stock' },
     ],
@@ -217,7 +217,7 @@ export const FAMILIAS = [
       // es lo que dice de cuál salió la ficha.
       { key: 'marca', header: 'Marca', width: 85 },
       { key: 'aplicacion', header: 'Motor / aplicación', wrap: true, minWidth: 210 },
-      { key: 'tipo', header: 'Tipo', width: 95, tipo: 'tipo' },
+      { key: 'tipo', header: 'Tipo', width: 105, tipo: 'tipo' },
       { key: 'diam_ext', header: 'Ø ext.', width: 90, align: 'right', tipo: 'mm' },
       { key: 'diam_int', header: 'Ø int.', width: 90, align: 'right', tipo: 'mm' },
       { key: 'altura', header: 'Altura', width: 85, align: 'right', tipo: 'mm' },
@@ -259,12 +259,12 @@ export const FAMILIAS = [
       { key: 'nro_cil', header: 'Nº cil.', width: 80, align: 'right' },
       { key: 'diam_piston', header: 'Ø pistón', width: 100, align: 'right', tipo: 'mm' },
       { key: 'alt_piston', header: 'Alto total', width: 100, align: 'right', tipo: 'mm' },
-      { key: 'perno_str', header: 'Perno', width: 150 },
-      { key: 'diams_dispon', header: 'Sobremedidas', width: 150 },
+      { key: 'perno_str', header: 'Perno', width: 165 },
+      { key: 'diams_dispon', header: 'Sobremedidas', width: 150, wrap: true },
       // Un subconjunto tiene un precio por sobremedida: esta columna dice de
       // cuál es el que se está mostrando.
       { key: 'medida_crac', header: 'Precio de', width: 100 },
-      { key: 'codigo_aros', header: 'Cód. aros', width: 110 },
+      { key: 'codigo_aros', header: 'Cód. aros', width: 155 },
       { key: 'precio', header: 'Precio', width: 120, align: 'right', tipo: 'precio' },
       { key: 'stock', header: 'Stock', width: 90, align: 'center', tipo: 'stock' },
     ],
@@ -310,9 +310,9 @@ export const FAMILIAS = [
       { key: 'nro_cil', header: 'Nº cil.', width: 70, align: 'right' },
       { key: 'diam_piston', header: 'Ø pistón', width: 95, align: 'right', tipo: 'mm' },
       { key: 'alt_piston', header: 'Alto total', width: 95, align: 'right', tipo: 'mm' },
-      { key: 'perno_str', header: 'Perno', width: 125 },
-      { key: 'diams_dispon', header: 'Sobremedidas', width: 125 },
-      { key: 'codigo_aros', header: 'Cód. aros', width: 95 },
+      { key: 'perno_str', header: 'Perno', width: 165 },
+      { key: 'diams_dispon', header: 'Sobremedidas', width: 125, wrap: true },
+      { key: 'codigo_aros', header: 'Cód. aros', width: 155 },
       // Si el juego trae los orings de camisa: son los códigos que terminan en
       // "WS" y son 22, todos de motores de camisa húmeda. Cambia el precio y
       // cambia lo que hay que pedir aparte, así que va en la tabla y no
@@ -356,7 +356,7 @@ export const FAMILIAS = [
     ],
     columnas: [
       { key: 'codigo', header: 'Código', width: 130, strong: true, wrap: true },
-      { key: 'marca', header: 'Marca', width: 120 },
+      { key: 'marca', header: 'Marca', width: 155 },
       // Una sola columna que envuelve, como en subconjuntos: con dos, la tabla
       // se pasa del ancho de la pantalla y las aplasta a cero. El motor y la
       // aplicación se siguen buscando por su filtro, no hace falta la columna.
@@ -365,7 +365,7 @@ export const FAMILIAS = [
       { key: 'nro_cil', header: 'Nº cil.', width: 80, align: 'right' },
       { key: 'diam_piston', header: 'Ø pistón', width: 100, align: 'right', tipo: 'mm' },
       { key: 'alt_piston', header: 'Alto total', width: 100, align: 'right', tipo: 'mm' },
-      { key: 'perno_str', header: 'Perno', width: 140 },
+      { key: 'perno_str', header: 'Perno', width: 165 },
       { key: 'aros', header: 'Aros', width: 150, wrap: true },
       { key: 'medidas_dispon', header: 'Sobremedidas', width: 200, wrap: true },
       // Un pistón tiene un precio por sobremedida: esta columna dice de cuál es
@@ -402,27 +402,38 @@ export const FAMILIAS = [
       { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
     ],
     columnas: [
-      { key: 'codigo', header: 'Código', width: 110, strong: true, wrap: true },
-      { key: 'marca', header: 'Marca', width: 125 },
+      { key: 'codigo', header: 'Código', width: 130, strong: true, wrap: true },
+      // 145 y no menos: "FEDERAL MOGUL" son trece letras en mayúscula y con
+      // menos ancho la marca sale cortada con puntos suspensivos.
+      { key: 'marca', header: 'Marca', width: 145 },
       { key: 'descripcion', header: 'Motor / aplicación', wrap: true, minWidth: 170, tipo: 'aplicacion' },
       { key: 'nro_cil', header: 'Cil.', width: 55, align: 'center' },
-      { key: 'diam_munon', header: 'Ø muñón', width: 95, align: 'right', tipo: 'mm' },
-      { key: 'diam_alojamiento', header: 'Ø aloj.', width: 90, align: 'right', tipo: 'mm' },
-      { key: 'ancho', header: 'Ancho', width: 80, align: 'right', tipo: 'mm' },
+      // Las cinco columnas de medida son casi todas RANGOS ("48,97 / 48,99"), y
+      // van apiladas: el mínimo arriba del máximo. El ancho de cada una es el
+      // de UN número —no el de los dos con la barra en el medio—, más lo que
+      // pide su encabezado con la flechita de ordenar. Y `wrap` para que, si
+      // algún día aparece un número más largo, la celda lo muestre igual en vez
+      // de cortarlo con puntos suspensivos.
+      { key: 'diam_munon', header: 'Ø muñón', width: 105, align: 'right', tipo: 'mm', wrap: true },
+      { key: 'diam_alojamiento', header: 'Ø aloj.', width: 100, align: 'right', tipo: 'mm', wrap: true },
+      { key: 'ancho', header: 'Ancho', width: 90, align: 'right', tipo: 'mm', wrap: true },
       // Con tres decimales: el espesor de un cojinete de biela vive entre 1,4 y
       // 2,5 mm, y redondeado a dos deja de distinguir 1,873 de 1,885.
-      { key: 'espesor', header: 'Espesor', width: 85, align: 'right', tipo: 'mm', decimales: 3 },
+      { key: 'espesor', header: 'Espesor', width: 100, align: 'right', tipo: 'mm', decimales: 3, wrap: true },
       // La luz de aceite no es un filtro (no se mide para elegir la pieza) pero
-      // sí se muestra: es el número con el que se controla el armado.
-      { key: 'luz_aceite', header: 'Luz de aceite', width: 110, align: 'right', tipo: 'mm', decimales: 3 },
+      // sí se muestra: es el número con el que se controla el armado. Acá manda
+      // el encabezado, que es más largo que los números.
+      { key: 'luz_aceite', header: 'Luz de aceite', width: 130, align: 'right', tipo: 'mm', decimales: 3, wrap: true },
       // Cada bajomedida con su etiqueta arriba del Ø que le queda al muñón:
       // sin la etiqueta a la vista, cinco números seguidos no dicen cuál pedir.
-      { key: 'sobremedidas', header: 'Bajomedidas y Ø del muñón', minWidth: 230, tipo: 'sobremedidas' },
+      // Son hasta seis por juego y cada una ocupa "48,97 / 48,99", así que la
+      // celda envuelve en dos o tres renglones en vez de cortarse.
+      { key: 'sobremedidas', header: 'Bajomedidas y Ø del muñón', minWidth: 275, tipo: 'sobremedidas', wrap: true },
       // Un cojinete tiene un precio por bajomedida: esta columna dice de cuál
       // es el que se está mostrando (igual que en camisas y bujes).
       { key: 'medida_crac', header: 'Precio de', width: 85, tipo: 'medida' },
       { key: 'precio', header: 'Precio', width: 105, align: 'right', tipo: 'precio' },
-      { key: 'stock', header: 'Stock', width: 70, align: 'center', tipo: 'stock' },
+      { key: 'stock', header: 'Stock', width: 85, align: 'center', tipo: 'stock' },
     ],
     ejemplos: [
       { label: 'Ø muñón 50 mm', filtros: { diam_munon: '50', tol_diam_munon: '0.1' } },
@@ -447,7 +458,7 @@ export const FAMILIAS = [
       { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
     ],
     columnas: [
-      { key: 'codigo', header: 'Código', width: 100, strong: true },
+      { key: 'codigo', header: 'Código', width: 120, strong: true },
       // 150 y no menos: la marca más larga del catálogo es "MERCEDES BENZ" y
       // cortada en "MERCEDES …" no se distingue de "MERCEDES ..." de nada.
       { key: 'marca', header: 'Marca', width: 150 },

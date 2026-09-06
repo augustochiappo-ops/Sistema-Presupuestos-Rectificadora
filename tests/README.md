@@ -175,7 +175,7 @@ $VENV/bin/python tests/backend_medidas.py
 
 ## 4. UI — `ui_medidas.mjs`
 
-Ciento diecisiete verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
+Ciento veinticuatro verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
 
 ```bash
 source /tmp/rect-corrida/entorno.sh
@@ -200,7 +200,11 @@ detalle · bujes de biela con su banda de tolerancia y sus siete
 sobremedidas · **cojinetes de biela** buscados por el Ø del muñón ya
 rectificado, con la luz de aceite en la tabla y no en los filtros, las
 bajomedidas legibles con su etiqueta, y los códigos sin catálogo mostrando "?"
-en las medidas con la explicación a mano · **asientos de válvulas** con las columnas que pidió el dueño (tipo,
+en las medidas con la explicación a mano · **que ninguna celda de ninguna de
+las nueve familias quede cortada** (se mide en el navegador, `scrollWidth`
+contra `clientWidth`, celda por celda y encabezado por encabezado: la tabla usa
+`tableLayout: fixed`, así que una columna más angosta que su contenido lo tapa
+sin avisar) · **asientos de válvulas** con las columnas que pidió el dueño (tipo,
 Ø exterior, Ø interior, altura, ángulo y cantidad por juego), el código del
 proveedor cuando se puede pedir, el guión de la cantidad en los catálogos que no
 la publican, y el ángulo filtrando en grados y no en milímetros · el **botón de

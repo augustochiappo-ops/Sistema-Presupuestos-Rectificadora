@@ -474,6 +474,12 @@ check('la luz de aceite se muestra pero no se filtra',
   && await page.locator('label', { hasText: 'LUZ DE ACEITE' }).count() === 0)
 check('las bajomedidas se leen con su etiqueta',
   monza.includes('-0,25 mm') && monza.includes('48,72'), monza)
+// Los rangos van apilados —el mínimo arriba del máximo— y no en un renglón
+// solo: en esta familia casi toda medida es un rango, y de a uno por renglón la
+// tabla no entra en pantalla y los números terminaban cortados con puntos
+// suspensivos (lo que reportó el dueño el 2026-09-06).
+check('el Ø del muñón va con el mínimo arriba del máximo',
+  /48,97\s*\/\s*\n?\s*48,99/.test(monza), monza)
 check('con precio y stock del proveedor', /\$\s?[\d.]+/.test(monza), monza)
 await page.screenshot({ path: path.join(SHOT, 'medidas-cojinetes.png'), fullPage: true })
 
@@ -490,10 +496,57 @@ check('y la explicación está a mano',
   (await page.locator('[title*="no está en ninguno de los catálogos"]').count()) > 0)
 await page.fill('input[placeholder="Código…"]', '')
 await esperar(600)
+console.log('\n=== Ninguna celda de la tabla queda cortada ===')
+// El dueño reportó (2026-09-06) que en cojinetes el Ø del alojamiento y la luz
+// de aceite salían con puntos suspensivos. La tabla usa `tableLayout: fixed`,
+// así que una columna más angosta que su contenido lo TAPA sin avisar: no hay
+// forma de darse cuenta mirando, salvo que falte el dato justo que se necesita.
+// Este check lo mide en el navegador —scrollWidth contra clientWidth, celda por
+// celda— en las nueve familias, para que un dato nuevo más largo que su columna
+// se note acá y no en el taller.
+const cortadas = () => page.evaluate(() => {
+  const encabezados = [...document.querySelectorAll('table thead th')].map((th) => th.innerText.trim())
+  const fuera = []
+  const revisar = (el, ci) => {
+    if (el.scrollWidth > el.clientWidth + 1) {
+      fuera.push(`${encabezados[ci] || ci}: «${el.innerText.replace(/\n/g, ' ⏎ ').slice(0, 40)}»`)
+    }
+  }
+  document.querySelectorAll('table thead th').forEach(revisar)
+  document.querySelectorAll('table tbody tr').forEach((tr) => [...tr.children].forEach(revisar))
+  return [...new Set(fuera)]
+})
+
+for (const [pestana, ejemplo] of [
+  ['Camisas', 'Ø interior 98,42 mm'],
+  ['Válvulas', null],
+  ['Guías de válvulas', null],
+  ['Asientos de válvulas', null],
+  ['Subconjuntos', null],
+  ['Conjuntos', null],
+  ['Pistones', null],
+  ['Cojinetes de biela', 'Ø muñón 50 mm'],
+  ['Bujes de biela', null],
+]) {
+  await page.locator('button', { hasText: new RegExp(`^${pestana}\\s*\\d`) }).click()
+  await esperar(500)
+  const limpiar = page.locator('button', { hasText: 'Limpiar filtros' })
+  if (await limpiar.count()) { await limpiar.click(); await esperar(400) }
+  const chip = ejemplo
+    ? page.locator('button', { hasText: ejemplo })
+    : page.locator('button').filter({ hasText: /^(Ø|Motor|Alto|Muñón|Código)/ }).first()
+  await chip.click()
+  await esperar(1400)
+  const fuera = await cortadas()
+  check(`en ${pestana} ninguna celda queda cortada`,
+    (await filas().count()) > 0 && fuera.length === 0, fuera)
+}
+
 // El bloque que sigue prueba el botón de signo sobre el Ø de perno, que es de
-// bujes: hay que volver a esa pestaña antes de salir de acá.
-await page.locator('button', { hasText: 'Bujes de biela' }).click()
-await esperar(600)
+// bujes, y arranca de cero: el recorrido de arriba terminó en esa pestaña con
+// el filtro de ejemplo puesto, así que hay que sacarlo.
+await page.locator('button', { hasText: 'Limpiar filtros' }).click()
+await esperar(500)
 
 console.log('\n=== Tolerancia con signo: ese valor o más / o menos ===')
 // Vaciar el código ya deja la pantalla sin filtros; el botón "Limpiar filtros"

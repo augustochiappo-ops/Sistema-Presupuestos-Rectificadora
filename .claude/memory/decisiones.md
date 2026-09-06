@@ -1029,3 +1029,48 @@ herramienta de texto los recupera. Haría falta OCR. No se hizo porque el **Clev
 2014 cubre los mismos motores** (Caterpillar y Cummins) y sí se lee.
 
 **Fecha:** 2026-09-05
+
+---
+
+## Una tabla con `tableLayout: fixed` tapa lo que no entra, sin avisar
+
+**Contexto:** el dueño reportó (2026-09-06) que en cojinetes de biela el Ø del
+alojamiento y la luz de aceite salían con puntos suspensivos.
+
+`DataTable` usa `tableLayout: fixed` con un ancho declarado por columna, y las
+celdas van con `overflow: hidden` + `textOverflow: ellipsis`. Eso significa que
+**una columna más angosta que su contenido lo esconde y no hay manera de
+notarlo**, salvo que falte justo el dato que se necesita. No es un problema de
+una familia: al medirlo aparecieron recortes en siete de las nueve.
+
+### Los rangos se apilan, no se ensanchan las columnas
+
+Un rango ("48,97 / 48,99") pide unos 130 px de columna. En cojinetes casi toda
+medida es un rango —Ø del muñón, Ø del alojamiento, ancho, espesor y luz de
+aceite—, así que cinco columnas así hacían una tabla de 1.700 px: para llegar al
+precio había que barrer de costado.
+
+**Se apilan: el mínimo arriba y el máximo abajo.** Cada columna pide entonces el
+ancho de UN número, la mitad, y **la fila no crece de alto** porque la columna de
+bajomedidas ya ocupaba dos renglones. Lo eligió el dueño entre esa opción y
+ensanchar las columnas.
+
+El detalle que lo hace seguro: cada número va en un span con `white-space:
+nowrap`. La celda puede envolver entre el mínimo y el máximo, **nunca en la
+mitad de un número** — que es lo que haría el `overflow-wrap: anywhere` que
+`wrap: true` le pone a la celda.
+
+### El recorte se mide, no se estima
+
+Calcular el ancho de un texto a ojo ("trece caracteres a 13 px son unos 95 px")
+falla: hay que contar el padding, el peso de la fuente, la flechita de ordenar
+del encabezado y la pastilla del "?". Se midió en el navegador, celda por celda,
+comparando `scrollWidth` con `clientWidth`.
+
+Ese mismo chequeo **quedó como test** (`tests/ui_medidas.mjs`, bloque *Ninguna
+celda de la tabla queda cortada*): recorre las nueve pestañas, aplica un filtro
+de ejemplo en cada una y verifica que ninguna celda ni ningún encabezado tape
+contenido. Es la única forma de que un dato nuevo más largo que su columna se
+note acá y no en el taller.
+
+**Fecha:** 2026-09-06
