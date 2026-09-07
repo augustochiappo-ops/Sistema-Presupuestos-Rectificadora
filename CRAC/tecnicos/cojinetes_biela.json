@@ -15678,7 +15678,7 @@
   "codigo": "CABE01536",
   "codigo_fab": "B01536",
   "marca": "MAHLE",
-  "aplicacion": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACION–- RIO / MARITÍMO",
+  "aplicacion": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACIONÁ- RIO / MARITÍMO",
   "descripcion": "IVECO CURSOR NEF N34 (E3 y E5)  69mm",
   "medidas": {
    "diam_munon": [
@@ -15700,7 +15700,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACION–- RIO / MARITÍMO",
+   "motor": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACIONÁ- RIO / MARITÍMO",
    "nro_cil": "4",
    "diam_x_carrera": "102,00x120,00",
    "cilindrada": null,
@@ -15796,7 +15796,7 @@
   "codigo": "CABE01540",
   "codigo_fab": "B01540",
   "marca": "MAHLE",
-  "aplicacion": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACION–- RIO / MARITÍMO",
+  "aplicacion": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACIONÁ- RIO / MARITÍMO",
   "descripcion": "IVECO CURSOR NEF III N40 (E3 y E5) 5.9L",
   "medidas": {
    "diam_munon": [
@@ -15818,7 +15818,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACION–- RIO / MARITÍMO",
+   "motor": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACIONÁ- RIO / MARITÍMO",
    "nro_cil": "4",
    "diam_x_carrera": "102,00x120,00",
    "cilindrada": null,
@@ -16466,7 +16466,7 @@
   "codigo": "CABE0700725",
   "codigo_fab": "B0700725",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR EA211 1.6L 16V MSI / MOTOR EA211 1.4 TSI 1.6 MSI -> CrossFox, Fox, Gol, Saveiro, SpaceFox (2014->) / 1.4 TSI -> Gol– (2014->)",
+  "aplicacion": "MOTOR EA211 1.6L 16V MSI / MOTOR EA211 1.4 TSI 1.6 MSI -> CrossFox, Fox, Gol, Saveiro, SpaceFox (2014->) / 1.4 TSI -> Golf (2014->)",
   "descripcion": "VW EA211 1.4-1.6 4 CIL.",
   "medidas": {
    "diam_munon": [
@@ -16488,7 +16488,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR EA211 1.6L 16V MSI / MOTOR EA211 1.4 TSI 1.6 MSI -> CrossFox, Fox, Gol, Saveiro, SpaceFox (2014->) / 1.4 TSI -> Gol– (2014->)",
+   "motor": "MOTOR EA211 1.6L 16V MSI / MOTOR EA211 1.4 TSI 1.6 MSI -> CrossFox, Fox, Gol, Saveiro, SpaceFox (2014->) / 1.4 TSI -> Golf (2014->)",
    "nro_cil": "4",
    "diam_x_carrera": "76,50",
    "cilindrada": null,
@@ -17006,7 +17006,7 @@
   "codigo": "CABE131090",
   "codigo_fab": "B131090",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR 4.12 TCAE ACTEON EURO 3, VWC - DELIVER– - MOTORES DE 150-180cv MOTOR ACTEON X12 (Trapezoidal)",
+  "aplicacion": "MOTOR 4.12 TCAE ACTEON EURO 3, VWC - DELIVERY - MOTORES DE 150-180cv MOTOR ACTEON X12 (Trapezoidal)",
   "descripcion": "MWM 4.12TCE-6.12TCE (UN)",
   "medidas": {
    "diam_munon": [
@@ -17028,7 +17028,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR 4.12 TCAE ACTEON EURO 3, VWC - DELIVER– - MOTORES DE 150-180cv MOTOR ACTEON X12 (Trapezoidal)",
+   "motor": "MOTOR 4.12 TCAE ACTEON EURO 3, VWC - DELIVERY - MOTORES DE 150-180cv MOTOR ACTEON X12 (Trapezoidal)",
    "nro_cil": "4",
    "diam_x_carrera": "105,00",
    "cilindrada": null,
@@ -22115,7 +22115,7 @@
   "codigo": "CABE48295",
   "codigo_fab": "B48295",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR OM 449 A (252 CV - L/LS - 1625) * Itens sob cons–lta",
+  "aplicacion": "MOTOR OM 449 A (252 CV - L/LS - 1625)",
   "descripcion": "M.BENZ OM449",
   "medidas": {
    "diam_munon": [
@@ -22134,7 +22134,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR OM 449 A (252 CV - L/LS - 1625) * Itens sob cons–lta",
+   "motor": "MOTOR OM 449 A (252 CV - L/LS - 1625)",
    "nro_cil": "5",
    "diam_x_carrera": "128,00x155,00",
    "cilindrada": null,
@@ -23958,7 +23958,7 @@
   "codigo": "CABE590717",
   "codigo_fab": "B0590717",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR SIGMA 1.6L 16V FLEX New Fiesta, Fo–us, E–oS- port (2010->) * Itens sob –onsulta",
+  "aplicacion": "MOTOR SIGMA 1.6L 16V FLEX New Fiesta, Focus, EcoS- port (2010->)",
   "descripcion": "FORD SIGMA 1.6 16V FYDA",
   "medidas": {
    "diam_munon": [
@@ -23980,7 +23980,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR SIGMA 1.6L 16V FLEX New Fiesta, Fo–us, E–oS- port (2010->) * Itens sob –onsulta",
+   "motor": "MOTOR SIGMA 1.6L 16V FLEX New Fiesta, Focus, EcoS- port (2010->)",
    "nro_cil": "4",
    "diam_x_carrera": "79,01",
    "cilindrada": null,
@@ -25579,7 +25579,7 @@
   "codigo": "CABE701035",
   "codigo_fab": "SB701035",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR AT / POWER 1.0L 8V e 16V 1000 10,5:1 GASOLI–A/ALCOOL/FLEX (até 03/2008)",
+  "aplicacion": "MOTOR AT / POWER 1.0L 8V e 16V 1000 10,5:1 GASOLINA/ALCOOL/FLEX (até 03/2008)",
   "descripcion": "VW GOL 1.0 8V-16V",
   "medidas": {
    "diam_munon": [
@@ -25598,7 +25598,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR AT / POWER 1.0L 8V e 16V 1000 10,5:1 GASOLI–A/ALCOOL/FLEX (até 03/2008)",
+   "motor": "MOTOR AT / POWER 1.0L 8V e 16V 1000 10,5:1 GASOLINA/ALCOOL/FLEX (até 03/2008)",
    "nro_cil": "4",
    "diam_x_carrera": "67,11x70,60",
    "cilindrada": null,
@@ -25846,7 +25846,7 @@
   "codigo": "CABE70390",
   "codigo_fab": "SB70390",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR 1.8 AP 1781CC 8,5:1 Gasolina 12,3:1 Álcool ESCORT L, GL, GL–, GUARUJA, GHIA, –R3 / VERONA L–, GL– / VER- SAILLES GL / ROYALE GL / PAMPA L, GL, S.",
+  "aplicacion": "MOTOR 1.8 AP 1781CC 8,5:1 Gasolina 12,3:1 Álcool ESCORT L, GL, GLX, GUARUJA, GHIA, XR3 / VERONA LX, GLX / VER- SAILLES GL / ROYALE GL / PAMPA L, GL, S.",
   "descripcion": "VW AUDI 1.6-1.8-2.0-SENDA 1.6D S/AGUJ.",
   "medidas": {
    "diam_munon": [
@@ -25868,7 +25868,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR 1.8 AP 1781CC 8,5:1 Gasolina 12,3:1 Álcool ESCORT L, GL, GL–, GUARUJA, GHIA, –R3 / VERONA L–, GL– / VER- SAILLES GL / ROYALE GL / PAMPA L, GL, S.",
+   "motor": "MOTOR 1.8 AP 1781CC 8,5:1 Gasolina 12,3:1 Álcool ESCORT L, GL, GLX, GUARUJA, GHIA, XR3 / VERONA LX, GLX / VER- SAILLES GL / ROYALE GL / PAMPA L, GL, S.",
    "nro_cil": "4",
    "diam_x_carrera": "81,00x86,40",
    "cilindrada": null,

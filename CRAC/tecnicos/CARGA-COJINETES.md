@@ -8,17 +8,17 @@ la otra está todo junto arriba de todo, en la constante `PIEZAS`.
 | | Biela | Bancada |
 |---|---|---|
 | Categoría del proveedor | `CA` | `CB` |
-| Marcas que entran hoy | Mahle, Federal Mogul, Glyco | **sólo Glyco** |
-| Fichas | 354 (282 con medidas) | 75 (68 con medidas) |
+| Marcas que entran hoy | Mahle, Federal Mogul, Glyco | Mahle, Federal Mogul, Glyco |
+| Fichas | 354 (282 con medidas) | 345 (256 con medidas) |
 | Cómo la marca Mahle | composición `BB`/`SBB` | composición `BC`/`SBC` |
 | Cómo la marca Federal Mogul | etiqueta `Bielas` | etiqueta `Bancadas` |
 | Cómo la marca Glyco | `BE/PL` | `MB/HL` |
 
-**Bancada es sólo de Glyco a pedido del dueño** (2026-09-07). Los lectores de
-Mahle y Federal Mogul ya saben leerla —está probado el mismo día: Mahle resuelve
-110 de sus 136 códigos y Federal Mogul 63 de 134—, así que sumarlas es agregar
-las marcas en `PIEZAS` y volver a correr. Lo que falta hacer entonces no es la
-extracción sino lo de afuera: la pantalla, la suite y el conteo de fichas.
+**Bancada entró primero sólo con Glyco y el mismo día se le sumaron Mahle y
+Federal Mogul** (2026-09-07): los lectores de las dos ya sabían leerla, así que
+alcanzó con agregar las marcas en `PIEZAS` y volver a correr. Quedó en **345
+fichas**: 136 de Mahle (110 con medidas), 134 de Federal Mogul (78 con medidas)
+y 75 de Glyco (68 con medidas).
 
 El script que hace la extracción es
 [`scripts/convertir_cojinetes.py`](../../scripts/convertir_cojinetes.py). Se
@@ -416,20 +416,19 @@ le va?*
 
 ## 8. Lo que quedó pendiente
 
-* **Bancada de Mahle y de Federal Mogul.** La extracción está hecha y probada
-  (110 de 136 códigos Mahle, 63 de 134 de Federal Mogul); lo que falta es
-  decidir sumarlas: se agregan las marcas en `PIEZAS` y se vuelve a correr.
-  Después hay que ajustar la pantalla (la columna de marca de bancada está en
-  90 px porque hoy todo dice GLYCO; con `FEDERAL MOGUL` necesita 145, como la de
-  biela) y los conteos de las dos suites.
 * **Cojinetes axiales** (categoría `CF`, las semiarandelas de empuje): 120
   códigos del proveedor de las tres marcas que tenemos en catálogo (51 Mahle,
   42 Federal Mogul, 27 Glyco). Los cuatro catálogos las traen —Glyco las marca `TW/A`,
   Federal Mogul `Axial` y Mahle con los prefijos `L`/`SL`/`AE`/`SAE`— pero sus
   medidas no son las mismas cinco: se miden por Ø interior, Ø exterior y espesor,
   así que necesitan su propia familia en la pantalla, no sólo otra fila.
-* **7 códigos Glyco de bancada** que la edición 2023-2025 no lista (`72-3314`,
-  `72-3448`, `H705/7`, `H931/5`, `H938/7`, `H1098/5`, `H1225/5`).
+* **89 códigos de bancada sin medidas.** 83 no están en ninguno de los
+  catálogos que tenemos —7 de Glyco (`72-3314`, `72-3448`, `H705/7`, `H931/5`,
+  `H938/7`, `H1098/5`, `H1225/5`), 26 de Mahle y 50 de Federal Mogul— y otros 6
+  sí tienen ficha pero con la fila de medidas vacía (`CBF 4532`, `CBF 4923`,
+  `CBF 6408`, `CBF 6667`, `CBF 6828` y `CBBE11195`). Entran igual, con la
+  aplicación y el precio del proveedor, y nunca aparecen en una búsqueda por
+  medidas.
 * **4 códigos Glyco de biela** que ni la edición 2023-2025 ni el catálogo de Federal Mogul
   traen (`71-2404`, `71-3447`, `71-3951`, `713850A`): referencias viejas que
   Glyco discontinuó y el proveedor todavía vende. Están cargadas igual, con la

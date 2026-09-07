@@ -98,14 +98,12 @@ PIEZAS = {
         "categoria": "CB",
         "salida": "cojinetes_bancada.json",
         "titulo": "cojinetes de bancada",
-        # Por ahora sólo Glyco: es lo que pidió el dueño (2026-09-07). Los
-        # lectores de Mahle y Federal Mogul ya saben leer bancada —es la misma
-        # tabla cambiando la columna de composición y la palabra de la
-        # etiqueta—, así que sumarlas es agregarlas acá y volver a correr:
-        # medido el mismo día, Mahle resuelve 110 de sus 136 códigos y Federal
-        # Mogul 63 de 134. Lo que falta hacer entonces es la parte de afuera:
-        # la pantalla, la suite y este archivo pasan a tener 345 fichas.
-        "marcas": ("GL",),
+        # Las tres marcas, igual que biela (2026-09-07): entró primero sólo
+        # Glyco y el mismo día se sumaron Mahle y Federal Mogul, que ya se
+        # leían —es la misma tabla cambiando la columna de composición y la
+        # palabra de la etiqueta—. Mahle resuelve 110 de sus 136 códigos y
+        # Federal Mogul 63 de 134.
+        "marcas": ("BE", "F", "GL"),
         "mahle": ("BC", "SBC"),
         "fm": "bancada",
     },

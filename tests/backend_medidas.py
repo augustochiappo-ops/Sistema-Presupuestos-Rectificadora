@@ -77,11 +77,11 @@ check("190 bujes de biela (Indubrón)",
 # códigos de esa marca que estaban esperándolo.
 check("354 cojinetes de biela (Mahle + Federal Mogul + Glyco)",
       familias.get("cojinetes_biela", {}).get("total") == 354, familias.get("cojinetes_biela"))
-# La de bancada es hoy toda de Glyco: los 75 códigos de esa marca que vende el
-# proveedor. Mahle y Federal Mogul quedaron afuera a propósito (ver PIEZAS en
-# scripts/convertir_cojinetes.py).
-check("75 cojinetes de bancada (Glyco)",
-      familias.get("cojinetes_bancada", {}).get("total") == 75,
+# La de bancada tiene las mismas tres marcas desde el 2026-09-07: 136 Mahle,
+# 134 Federal Mogul y 75 Glyco. Entró primero sólo con Glyco y ese mismo día se
+# sumaron las otras dos, que ya se leían.
+check("345 cojinetes de bancada (Mahle + Federal Mogul + Glyco)",
+      familias.get("cojinetes_bancada", {}).get("total") == 345,
       familias.get("cojinetes_bancada"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
 # La casilla "Solo las que tiene el proveedor" va en todas menos las dos
@@ -583,11 +583,36 @@ check("y se lo encuentra midiendo el muñón", "CBGLH027/5" in codigos(r), codig
 # ese tamaño, que es justamente por qué son dos familias y no una.
 r = tecnicos.buscar("cojinetes_bancada", {"diam_munon": "88", "tol_diam_munon": "0.05"})
 check("un muñón de 88 mm encuentra el del OM366", "CBGLH048/7" in codigos(r), codigos(r)[:5])
-# Los siete que la edición 2023-2025 no lista entran igual, con la aplicación y
-# el precio, y nunca aparecen en una búsqueda por medidas.
+# Las otras dos marcas entran con las mismas cinco medidas y dicen de qué
+# catálogo salieron: el juego trasero de la Daily sale del Mahle 2019 y el de la
+# F100 V8, del Federal Mogul.
+r = tecnicos.buscar("cojinetes_bancada", {"codigo": "CBBE01678"})
+daily = r["resultados"][0]
+check("un juego de Mahle sale del Mahle 2019",
+      daily["extra"]["catalogo"] == "Mahle 2019"
+      and daily["medidas"]["diam_munon"] == [86.182, 86.208]
+      and daily["medidas"]["diam_alojamiento"] == [90.588, 90.614],
+      (daily["extra"]["catalogo"], daily["medidas"]))
+r = tecnicos.buscar("cojinetes_bancada", {"codigo": "CBF 0884"})
+f100 = r["resultados"][0]
+check("y uno de Federal Mogul, del catálogo de Federal Mogul",
+      f100["extra"]["catalogo"] == "Federal Mogul"
+      and f100["medidas"]["diam_munon"] == [63.449, 63.47]
+      and f100["medidas"]["espesor"] == 2.441,
+      (f100["extra"]["catalogo"], f100["medidas"]))
+# Mismo control que en biela: si el alojamiento no abraza al muñón, hay una
+# columna leída de la columna equivocada.
+malas_b = [f["codigo"] for f in tecnicos._catalogo("cojinetes_bancada")
+           if f["medidas"]["diam_munon"] and f["medidas"]["diam_alojamiento"]
+           and max(_lista(f["medidas"]["diam_alojamiento"])) <= min(_lista(f["medidas"]["diam_munon"]))]
+check("en todas las fichas el alojamiento es mayor que el muñón", not malas_b, malas_b[:5])
+# Los 89 sin medidas entran igual, con la aplicación y el precio, y nunca
+# aparecen en una búsqueda por medidas. Son 83 que ningún catálogo trae (7 de
+# Glyco, 26 de Mahle y 50 de Federal Mogul) más 6 que sí tienen ficha pero con
+# la fila de medidas vacía.
 sin_medidas = {f["codigo"] for f in tecnicos._catalogo("cojinetes_bancada")
                if f["medidas"]["diam_munon"] is None}
-check("siete códigos sin ficha en el catálogo", len(sin_medidas) == 7, sorted(sin_medidas))
+check("89 códigos sin medidas", len(sin_medidas) == 89, len(sin_medidas))
 r = tecnicos.buscar("cojinetes_bancada", {"diam_munon": "50", "tol_diam_munon": "+"})
 check("y ninguno aparece en una búsqueda por medidas",
       not (sin_medidas & set(codigos(r))), sorted(sin_medidas & set(codigos(r)))[:5])

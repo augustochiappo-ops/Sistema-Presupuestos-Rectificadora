@@ -70,7 +70,7 @@ check('las diez familias con su total',
   && (await page.locator('button', { hasText: /^Conjuntos\s*128$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Pistones\s*35$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes de biela\s*354$/ }).count()) === 1
-  && (await page.locator('button', { hasText: /^Cojinetes de bancada\s*75$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Cojinetes de bancada\s*345$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Bujes de biela\s*190$/ }).count()) === 1)
 check('en camisas el filtro se llama Ø exterior',
   await page.locator('label', { hasText: 'Ø EXTERIOR' }).count() === 1
@@ -485,9 +485,9 @@ check('con precio y stock del proveedor', /\$\s?[\d.]+/.test(monza), monza)
 await page.screenshot({ path: path.join(SHOT, 'medidas-cojinetes.png'), fullPage: true })
 
 console.log('\n=== Cojinetes de bancada: el otro muñón del mismo cigüeñal ===')
-// La familia nueva (2026-09-07), toda de Glyco. Es la misma pantalla que la de
-// biela sobre el otro muñón, así que lo que se prueba acá es que la pestaña
-// exista con sus datos, no de nuevo el mecanismo de búsqueda.
+// La familia nueva (2026-09-07), con las tres marcas. Es la misma pantalla que
+// la de biela sobre el otro muñón, así que lo que se prueba acá es que la
+// pestaña exista con sus datos, no de nuevo el mecanismo de búsqueda.
 //
 // Sin tocar los filtros de biela: se guardan por familia, así que cambiar de
 // pestaña ya deja la pantalla limpia, y el bloque de abajo cuenta con que los de
@@ -505,6 +505,24 @@ check('con el muñón de 88 y el alojamiento de 93',
 check('y las bajomedidas hasta 1,50 mm con su etiqueta',
   bancada.includes('-1,50 mm') && bancada.includes('86,49'), bancada)
 check('con precio y stock del proveedor', /\$\s?[\d.]+/.test(bancada), bancada)
+// Las otras dos marcas entraron el mismo día (2026-09-07): la de Federal Mogul
+// es la que obligó a ensanchar la columna, porque "FEDERAL MOGUL" son trece
+// letras y en los 90 px de antes salía cortada. Que el nombre esté entero lo
+// mide el check de celdas cortadas, más abajo; acá se verifica que las fichas
+// de las dos marcas nuevas estén y traigan sus medidas.
+await page.fill('input[placeholder="Código…"]', 'CBF 0884')
+await esperar(1300)
+const bancadaFm = await textoDeFila(0)
+// La tabla redondea a dos decimales: la ficha dice 63,449 y la pantalla, 63,45.
+check('la bancada de la F100 V8 es de Federal Mogul',
+  bancadaFm.includes('FEDERAL MOGUL') && bancadaFm.includes('63,45'), bancadaFm)
+await page.fill('input[placeholder="Código…"]', 'CBBE01678')
+await esperar(1300)
+const bancadaMahle = await textoDeFila(0)
+check('la trasera de la Daily 2.8TD es de Mahle',
+  bancadaMahle.includes('MAHLE') && bancadaMahle.includes('86,18'), bancadaMahle)
+await page.fill('input[placeholder="Código…"]', 'H048/7')
+await esperar(1300)
 await page.screenshot({ path: path.join(SHOT, 'medidas-cojinetes-bancada.png'), fullPage: true })
 await page.fill('input[placeholder="Código…"]', '')
 await esperar(400)

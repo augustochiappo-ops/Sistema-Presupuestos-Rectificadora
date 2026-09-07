@@ -446,8 +446,7 @@ export const FAMILIAS = [
     label: 'Cojinetes de bancada',
     // Misma pantalla que la de biela, y por la misma razón: el Ø del muñón es
     // lo único que se puede medir con el cigüeñal sobre la mesa. Lo que cambia
-    // es de qué muñón se habla —el de bancada, que es el más grande— y que hoy
-    // la familia es toda de Glyco.
+    // es de qué muñón se habla: el de bancada, que es el más grande.
     medidas: [
       { campo: 'diam_munon', label: 'Ø muñón (STD)' },
       { campo: 'diam_sobremedida', label: 'Ø muñón rectificado' },
@@ -461,10 +460,10 @@ export const FAMILIAS = [
     ],
     columnas: [
       { key: 'codigo', header: 'Código', width: 130, strong: true, wrap: true },
-      // Acá alcanza con 90: hoy la familia es toda GLYCO. Si algún día entran
-      // Mahle y Federal Mogul, esta columna necesita los 145 que tiene la de
-      // biela para que "FEDERAL MOGUL" no salga cortada.
-      { key: 'marca', header: 'Marca', width: 90 },
+      // 145, igual que la de biela: desde que entraron Mahle y Federal Mogul
+      // la marca más larga es "FEDERAL MOGUL", trece letras en mayúscula, y
+      // con menos ancho sale cortada con puntos suspensivos.
+      { key: 'marca', header: 'Marca', width: 145 },
       { key: 'descripcion', header: 'Motor / aplicación', wrap: true, minWidth: 170, tipo: 'aplicacion' },
       { key: 'nro_cil', header: 'Cil.', width: 55, align: 'center' },
       { key: 'diam_munon', header: 'Ø muñón', width: 105, align: 'right', tipo: 'mm', wrap: true },
