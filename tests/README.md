@@ -156,7 +156,7 @@ $VENV/bin/python tests/backend_medidas.py
 
 | Bloque | Qué verifica |
 |---|---|
-| Catálogos | Las **nueve** familias cargadas con sus totales exactos (396 camisas, 1.782 válvulas, 915 guías, 1.108 asientos, 201 subconjuntos, 128 conjuntos, 35 pistones, 279 cojinetes de biela, 190 bujes de biela), y el filtro "solo las que tiene el proveedor" en todas menos las que salen de la lista del proveedor (válvulas, subconjuntos, conjuntos y cojinetes de biela), filtrando de verdad donde está |
+| Catálogos | Las **diez** familias cargadas con sus totales exactos (396 camisas, 1.782 válvulas, 915 guías, 1.108 asientos, 201 subconjuntos, 128 conjuntos, 35 pistones, 354 cojinetes de biela, 75 cojinetes de bancada, 190 bujes de biela), y el filtro "solo las que tiene el proveedor" en todas menos las que salen de la lista del proveedor (válvulas, subconjuntos, conjuntos y las dos de cojinetes), filtrando de verdad donde está |
 | Sin filtros | No devuelve el catálogo entero, y una familia inexistente no explota |
 | Valor ± tolerancia | Encuentra con el valor exacto y con ±0,5, deja de encontrar con ±0,1, usa ±0,5 si no se escribe tolerancia, y acepta la coma decimal |
 | Acumulación | Sumar un segundo filtro achica el resultado y no pierde la pieza buscada |
@@ -165,7 +165,8 @@ $VENV/bin/python tests/backend_medidas.py
 | Conjuntos | El juego del motor: se encuentra por el código del proveedor (`T BEK21540`) y por el de Mahle (`K21540`), trae los dos, tiene **un solo** precio (sin medida de sobremedida), y las medidas que salieron de la ficha del subconjunto del mismo número dicen de dónde vinieron. El sí/no de los **orings de camisa** sale del sufijo `WS` del código. Los que todavía esperan el catálogo se encuentran por el motor |
 | Camisas | Las etiquetas de sobremedida son las del catálogo (las de pulgadas como pulgadas y las métricas como milímetros, que era el error viejo); el alto de pestaña sale del Excel y no del 4,00 de la página; el que también dice 4,00 en el Excel queda marcado para revisar; están las camisas húmedas; y el filtro del proveedor viene activado, se puede destildar y avisa cuántas quedaron afuera |
 | Asientos de válvulas | Los tres catálogos (559 Indy, 277 Nubo, 272 RYC) en una sola familia, 326 con código del proveedor; la cantidad por juego solo la traen los Indy y en los otros dos es `null`; el cruce de cada catálogo con la lista del proveedor (Indy por número, Nubo por número+letra del tipo, RYC por número); el ángulo como medida con tolerancia, que llega hasta los ángulos raros del catálogo (44,3º) |
-| Cojinetes de biela | El Ø del muñón encuentra el juego con las cuatro medidas del catálogo; la **luz de aceite** se guarda y se muestra pero no es una medida buscable; las fichas salen de tres catálogos (Mahle 2019, Clevite 2014 y Federal Mogul) y cada una dice de cuál y de qué página; un **muñón ya rectificado** a 48,72 encuentra la bajomedida de 0,25 del juego cuyo STD es 48,97 y la pantalla sabe cuál fue; los códigos que el proveedor vende y ningún catálogo trae se encuentran por código, dicen por qué no tienen medidas y **no aparecen nunca** en una búsqueda por medidas; en todas las fichas el alojamiento es mayor que el muñón (si no, hay una columna leída de la columna equivocada) |
+| Cojinetes de biela | El Ø del muñón encuentra el juego con las cuatro medidas del catálogo; la **luz de aceite** se guarda y se muestra pero no es una medida buscable; las fichas salen de cuatro catálogos (Mahle 2019, Clevite 2014, Federal Mogul y Glyco 2023-2025) y cada una dice de cuál y de qué página; un **muñón ya rectificado** a 48,72 encuentra la bajomedida de 0,25 del juego cuyo STD es 48,97 y la pantalla sabe cuál fue; los códigos que el proveedor vende y ningún catálogo trae se encuentran por código, dicen por qué no tienen medidas y **no aparecen nunca** en una búsqueda por medidas; en todas las fichas el alojamiento es mayor que el muñón (si no, hay una columna leída de la columna equivocada) |
+| Cojinetes de bancada | La familia nueva, toda de Glyco: el juego del Golf 1.9 TD sale del catálogo de Glyco con sus cuatro medidas y su luz de aceite, y se lo encuentra midiendo el muñón; un muñón de **88 mm** —que en biela no existe, y es por eso que son dos familias y no una— encuentra el del OM366; y los siete códigos que la edición 2023-2025 no lista entran con precio pero nunca en una búsqueda por medidas |
 | Bujes de biela | El mismo código bajo dos marcas son dos fichas; el Ø exterior encuentra por cualquier sobremedida y dice cuál matcheó; un buje escalonado aparece por sus **dos** anchos y no por el promedio; el trapezoidal (I-143X) no se lleva el precio del recto (I-143) |
 | Tolerancia con signo | `+` trae el valor y todo lo mayor, `−` el valor y todo lo menor, el valor exacto entra en los dos, `+2` acota de un solo lado, y el `+` **llega entero por la URL** (viaja como `%2B`) |
 | Forma de la guía | Las formas escritas sin guiones (`A1`) o con dos detalles pegados (`P36`) se normalizan al cargar el catálogo; se filtra por la letra del cuerpo y se combina con las medidas; están los **trece dibujos** que la pantalla va a pedir |
@@ -175,14 +176,14 @@ $VENV/bin/python tests/backend_medidas.py
 
 ## 4. UI — `ui_medidas.mjs`
 
-Ciento veinticuatro verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
+Ciento veintinueve verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
 
 ```bash
 source /tmp/rect-corrida/entorno.sh
 node tests/ui_medidas.mjs
 ```
 
-Qué cubre: la sección en el menú lateral · las **nueve** pestañas con su total ·
+Qué cubre: la sección en el menú lateral · las **diez** pestañas con su total ·
 estado inicial sin resultados y con **ejemplos clicables** · buscar por medida y
 que **todas** las filas caigan dentro del rango pedido · achicar la tolerancia y
 ver menos filas · el tag del filtro activo · **ordenar** haciendo clic en
@@ -200,8 +201,9 @@ detalle · bujes de biela con su banda de tolerancia y sus siete
 sobremedidas · **cojinetes de biela** buscados por el Ø del muñón ya
 rectificado, con la luz de aceite en la tabla y no en los filtros, las
 bajomedidas legibles con su etiqueta, y los códigos sin catálogo mostrando "?"
-en las medidas con la explicación a mano · **que ninguna celda de ninguna de
-las nueve familias quede cortada** (se mide en el navegador, `scrollWidth`
+en las medidas con la explicación a mano · **cojinetes de bancada** con el juego
+del OM366, su muñón de 88 mm y sus bajomedidas hasta 1,50 mm · **que ninguna
+celda de ninguna de las diez familias quede cortada** (se mide en el navegador, `scrollWidth`
 contra `clientWidth`, celda por celda y encabezado por encabezado: la tabla usa
 `tableLayout: fixed`, así que una columna más angosta que su contenido lo tapa
 sin avisar) · **asientos de válvulas** con las columnas que pidió el dueño (tipo,

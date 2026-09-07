@@ -445,9 +445,7 @@
      "valor": 44.502
     }
    ],
-   "revisar": {
-    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (40): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
-   }
+   "revisar": null
   },
   "codigos_crac": [
    {
@@ -480,7 +478,7 @@
   "codigo": "CAF 1750-6",
   "codigo_fab": "1750 RAA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Ika Bergantin, Jeep - 1956 / 1978, Motor Continental 4L-151 Tapa de cilindros 4.8/ 6.2 mkg s Cojinete con pestaña - Flanged bearing",
+  "aplicacion": "Ika Bergantin, Jeep - 1956 / 1978, Motor Continental 4L-151 s Cojinete con pestaña - Flanged bearing",
   "descripcion": "IKA CONTINENTAL 6 CIL.",
   "medidas": {
    "diam_munon": [
@@ -496,7 +494,7 @@
   },
   "extra": {
    "fabricante_motor": "Ika",
-   "motor": "Bergantin, Jeep - 1956 / 1978, Motor Continental 4L-151 Tapa de cilindros 4.8/ 6.2 mkg s Cojinete con pestaña - Flanged bearing",
+   "motor": "Bergantin, Jeep - 1956 / 1978, Motor Continental 4L-151 s Cojinete con pestaña - Flanged bearing",
    "nro_cil": "4",
    "diam_x_carrera": "84.14 x 111.13",
    "cilindrada": "2470",
@@ -1317,7 +1315,7 @@
   "codigo": "CAF 2130",
   "codigo_fab": "2130 CP",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Chrysler 318-V8, Coupe GTX - 1970/1978 Tapa de cilindros: 7 mkg final 11.7 mkg.",
+  "aplicacion": "Chrysler 318-V8, Coupe GTX - 1970/1978",
   "descripcion": "DODGE GTX V8",
   "medidas": {
    "diam_munon": [
@@ -1333,7 +1331,7 @@
   },
   "extra": {
    "fabricante_motor": "Chrysler",
-   "motor": "318-V8, Coupe GTX - 1970/1978 Tapa de cilindros: 7 mkg final 11.7 mkg.",
+   "motor": "318-V8, Coupe GTX - 1970/1978",
    "nro_cil": "8",
    "diam_x_carrera": "99.31 x84.15",
    "cilindrada": "5210",
@@ -1414,7 +1412,7 @@
   "codigo": "CAF 2375",
   "codigo_fab": "2375 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Chrysler Dodge D100, D200, D400, D500, Fargo D100, D400 - 1964/1980 Tapa de cilindros 9 mkg. s Cojinete con pestaña - Flanged bearing",
+  "aplicacion": "Chevrolet Chevy S. Sport, Malibu, Pick Up C10, C30, A-10/A-20/C-10, Opala, (continuación) Caravan, Veraneio, Bonanza - 1962/1978",
   "descripcion": "VALIANT",
   "medidas": {
    "diam_munon": [
@@ -1429,11 +1427,11 @@
    "espesor": 1.585
   },
   "extra": {
-   "fabricante_motor": "Chrysler",
-   "motor": "Dodge D100, D200, D400, D500, Fargo D100, D400 - 1964/1980 Tapa de cilindros 9 mkg. s Cojinete con pestaña - Flanged bearing",
+   "fabricante_motor": "Chevrolet",
+   "motor": "Chevy S. Sport, Malibu, Pick Up C10, C30, A-10/A-20/C-10, Opala, (continuación) Caravan, Veraneio, Bonanza - 1962/1978",
    "nro_cil": "6",
-   "diam_x_carrera": "86.36 x 79.37",
-   "cilindrada": "2788",
+   "diam_x_carrera": "90.49 x 82.55",
+   "cilindrada": "3185",
    "pares": "6",
    "tipo_material": "RA",
    "material": "respaldo de acero, revestimiento de aleación de aluminio con 20 % de estaño",
@@ -1639,7 +1637,7 @@
   "codigo": "CAF 2390",
   "codigo_fab": "2390 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Renault Dauphine, Gordini, 4L, 4F , 845 c.c. - 1960 / 1969 Tapa de cilindros 6 mkg",
+  "aplicacion": "Rastrojero NC62, NP66, P63, P64, C66,P67, D301 E1 - 1965 / 1971",
   "descripcion": "RENAULT GORDINI-4L",
   "medidas": {
    "diam_munon": [
@@ -1654,11 +1652,11 @@
    "espesor": 1.569
   },
   "extra": {
-   "fabricante_motor": "Renault",
-   "motor": "Dauphine, Gordini, 4L, 4F , 845 c.c. - 1960 / 1969 Tapa de cilindros 6 mkg",
+   "fabricante_motor": "Rastrojero",
+   "motor": "NC62, NP66, P63, P64, C66,P67, D301 E1 - 1965 / 1971",
    "nro_cil": "4",
-   "diam_x_carrera": "58 x 80",
-   "cilindrada": "845",
+   "diam_x_carrera": "78 x 94",
+   "cilindrada": "1797",
    "pares": "4",
    "tipo_material": "RA",
    "material": "respaldo de acero, revestimiento de aleación de aluminio con 20 % de estaño",
@@ -1795,7 +1793,7 @@
   "codigo": "CAF 2700",
   "codigo_fab": "2700 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Ika Rambler, Torino, Estanciera, Jeep BA-1N, Gladiator Jeep T80, Jeep 1000 - 1965 / 1975, OHC-181, OHC-230 Tapa de cilindros 13 mkg. s Cojinete con pestaña - Flanged bearing",
+  "aplicacion": "Ika Rambler, Torino, Estanciera, Jeep BA-1N, Gladiator Jeep T80, Jeep 1000 - 1965 / 1975, OHC-181, OHC-230",
   "descripcion": "IKA TORNADO 4B*",
   "medidas": {
    "diam_munon": [
@@ -1811,7 +1809,7 @@
   },
   "extra": {
    "fabricante_motor": "Ika",
-   "motor": "Rambler, Torino, Estanciera, Jeep BA-1N, Gladiator Jeep T80, Jeep 1000 - 1965 / 1975, OHC-181, OHC-230 Tapa de cilindros 13 mkg. s Cojinete con pestaña - Flanged bearing",
+   "motor": "Rambler, Torino, Estanciera, Jeep BA-1N, Gladiator Jeep T80, Jeep 1000 - 1965 / 1975, OHC-181, OHC-230",
    "nro_cil": "6",
    "diam_x_carrera": "84.94 x 87.31",
    "cilindrada": "2966",
@@ -1918,7 +1916,7 @@
   "codigo": "CAF 2815",
   "codigo_fab": "2815 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Fiat 1089 c.c., 1100 - 1953/1963 Tapa de cilindros 8 mkg",
+  "aplicacion": "Fiat 1089 c.c., 1100 - 1953/1963",
   "descripcion": "FIAT 1100",
   "medidas": {
    "diam_munon": [
@@ -1934,7 +1932,7 @@
   },
   "extra": {
    "fabricante_motor": "Fiat",
-   "motor": "1089 c.c., 1100 - 1953/1963 Tapa de cilindros 8 mkg",
+   "motor": "1089 c.c., 1100 - 1953/1963",
    "nro_cil": "4",
    "diam_x_carrera": "68 x 75",
    "cilindrada": "1089",
@@ -1982,7 +1980,7 @@
   "codigo": "CAF 2865",
   "codigo_fab": "2865 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Traba derecha Peugeot 404, 504, 505, XC7, XC6-A, XMA-7, XM7, XN1, XN1-TN - 1965 / MODELOS 404/504 A PARTIR DE 1975 APARTIR DEL MOTOR Nº 132000 Tapa de cilindros 7/8 mkg. Tapa de cilindros preaprieto 4 mkg, final 7 mkg. Tapa de cilindros preaprieto 5 mkg. final aflojar bulones y reapretar a 2 mkg + 90º",
+  "aplicacion": "Traba derecha Peugeot 404, 504, 505, XC7, XC6-A, XMA-7, XM7, XN1, XN1-TN - 1965 / MODELOS 404/504 A PARTIR DE 1975 APARTIR DEL MOTOR Nº 132000 Tapa de cilindros 7/8 mkg.",
   "descripcion": "PEUGEOT 404-504",
   "medidas": {
    "diam_munon": [
@@ -1998,7 +1996,7 @@
   },
   "extra": {
    "fabricante_motor": "Traba derecha",
-   "motor": "Peugeot 404, 504, 505, XC7, XC6-A, XMA-7, XM7, XN1, XN1-TN - 1965 / MODELOS 404/504 A PARTIR DE 1975 APARTIR DEL MOTOR Nº 132000 Tapa de cilindros 7/8 mkg. Tapa de cilindros preaprieto 4 mkg, final 7 mkg. Tapa de cilindros preaprieto 5 mkg. final aflojar bulones y reapretar a 2 mkg + 90º",
+   "motor": "Peugeot 404, 504, 505, XC7, XC6-A, XMA-7, XM7, XN1, XN1-TN - 1965 / MODELOS 404/504 A PARTIR DE 1975 APARTIR DEL MOTOR Nº 132000 Tapa de cilindros 7/8 mkg.",
    "nro_cil": "4",
    "diam_x_carrera": "84 x 73",
    "cilindrada": "1618",
@@ -2096,7 +2094,7 @@
   "codigo": "CAF 2870",
   "codigo_fab": "2870 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Ika Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Tapa de cilindros 11.7/ 13.1 mkg. Indenor - Peugeot Diesel XD 4.88 Tapa de cilindros 7 mkg. Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
+  "aplicacion": "Ika Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Indenor - Peugeot Diesel XD 4.88 Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
   "descripcion": "INDENOR XD4.88",
   "medidas": {
    "diam_munon": [
@@ -2112,7 +2110,7 @@
   },
   "extra": {
    "fabricante_motor": "Ika",
-   "motor": "Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Tapa de cilindros 11.7/ 13.1 mkg. Indenor - Peugeot Diesel XD 4.88 Tapa de cilindros 7 mkg. Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
+   "motor": "Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Indenor - Peugeot Diesel XD 4.88 Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
    "nro_cil": "6",
    "diam_x_carrera": "84.94 x 111.13",
    "cilindrada": "3770",
@@ -2582,7 +2580,7 @@
   "codigo": "CAF 3025",
   "codigo_fab": "3025 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Fiat 767 c.c., 797 c.c., 600 D, E, R, S - 1962 / 1977 Tapa de cilindros 2.8/ 3 mkg",
+  "aplicacion": "Fiat 767 c.c., 797 c.c., 600 D, E, R, S - 1962 / 1977",
   "descripcion": "FIAT 750-133*",
   "medidas": {
    "diam_munon": [
@@ -2598,7 +2596,7 @@
   },
   "extra": {
    "fabricante_motor": "Fiat",
-   "motor": "767 c.c., 797 c.c., 600 D, E, R, S - 1962 / 1977 Tapa de cilindros 2.8/ 3 mkg",
+   "motor": "767 c.c., 797 c.c., 600 D, E, R, S - 1962 / 1977",
    "nro_cil": "4",
    "diam_x_carrera": "62 x 63.5",
    "cilindrada": "767",
@@ -3058,7 +3056,7 @@
   "codigo": "CAF 3325",
   "codigo_fab": "3325 CP",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "John Deere 1420, 2330 - 1970 / 1980 Tapa de cilindros 15 mkg.",
+  "aplicacion": "John Deere 1420, 2330 - 1970 / 1980",
   "descripcion": "J.DEERE 1420-2330-2420-2530-2730-3420",
   "medidas": {
    "diam_munon": [
@@ -3074,7 +3072,7 @@
   },
   "extra": {
    "fabricante_motor": "John Deere",
-   "motor": "1420, 2330 - 1970 / 1980 Tapa de cilindros 15 mkg.",
+   "motor": "1420, 2330 - 1970 / 1980",
    "nro_cil": "3",
    "diam_x_carrera": "82 x 75",
    "cilindrada": "2696",
@@ -3252,7 +3250,7 @@
   "codigo": "CAF 3480",
   "codigo_fab": "3480 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Dodge 1498 c.c., 1500 - 1972/1981 Tapa de cilindros 7.74 mkg",
+  "aplicacion": "Dodge 1498 c.c., 1500 - 1972/1981",
   "descripcion": "DODGE 1500",
   "medidas": {
    "diam_munon": [
@@ -3268,7 +3266,7 @@
   },
   "extra": {
    "fabricante_motor": "Dodge",
-   "motor": "1498 c.c., 1500 - 1972/1981 Tapa de cilindros 7.74 mkg",
+   "motor": "1498 c.c., 1500 - 1972/1981",
    "nro_cil": "4",
    "diam_x_carrera": "86.1 x 64.3",
    "cilindrada": "1498",
@@ -5049,38 +5047,9 @@
    "codigo_metal_leve": null,
    "catalogo": "Federal Mogul",
    "pagina_catalogo": 58,
-   "sobremedidas": [
-    {
-     "label": "STD",
-     "valor": [
-      58.725,
-      58.744
-     ]
-    },
-    {
-     "label": "-0,25 mm",
-     "valor": [
-      58.475,
-      58.494
-     ]
-    },
-    {
-     "label": "-0,5 mm",
-     "valor": [
-      58.225,
-      58.244
-     ]
-    },
-    {
-     "label": "-0,75 mm",
-     "valor": [
-      57.975,
-      57.994
-     ]
-    }
-   ],
+   "sobremedidas": [],
    "revisar": {
-    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050, 075): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+    "sobremedidas": "el proveedor vende juegos combinados (025, 050, 075, STD), que traen dos bajomedidas a la vez: no se los puede apuntar a un solo Ø de muñón, así que se los lista sin Ø"
    }
   },
   "codigos_crac": [
@@ -5140,38 +5109,9 @@
    "codigo_metal_leve": null,
    "catalogo": "Federal Mogul",
    "pagina_catalogo": 58,
-   "sobremedidas": [
-    {
-     "label": "STD",
-     "valor": [
-      58.725,
-      58.744
-     ]
-    },
-    {
-     "label": "-0,25 mm",
-     "valor": [
-      58.475,
-      58.494
-     ]
-    },
-    {
-     "label": "-0,5 mm",
-     "valor": [
-      58.225,
-      58.244
-     ]
-    },
-    {
-     "label": "-0,75 mm",
-     "valor": [
-      57.975,
-      57.994
-     ]
-    }
-   ],
+   "sobremedidas": [],
    "revisar": {
-    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050, 075): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+    "sobremedidas": "el proveedor vende juegos combinados (025, 050, 075, STD), que traen dos bajomedidas a la vez: no se los puede apuntar a un solo Ø de muñón, así que se los lista sin Ø"
    }
   },
   "codigos_crac": [
@@ -5507,7 +5447,7 @@
   "codigo": "CAF 60080",
   "codigo_fab": "60080 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Fiat 1135 c.c., U-25, 211 R - 1957/1966 mkg (211-R). Tapa de cilindros 2.8/ 3 mkg",
+  "aplicacion": "Fiat 1135 c.c., U-25, 211 R - 1957/1966",
   "descripcion": "FIAT 411 *",
   "medidas": {
    "diam_munon": [
@@ -5523,7 +5463,7 @@
   },
   "extra": {
    "fabricante_motor": "Fiat",
-   "motor": "1135 c.c., U-25, 211 R - 1957/1966 mkg (211-R). Tapa de cilindros 2.8/ 3 mkg",
+   "motor": "1135 c.c., U-25, 211 R - 1957/1966",
    "nro_cil": "2",
    "diam_x_carrera": "85 x 100",
    "cilindrada": "1135",
@@ -5573,7 +5513,7 @@
   "codigo": "CAF 60085",
   "codigo_fab": "60085 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Fiat 55R, 60R, 780, 780R - 1955/1971 Tornillo Auto Bloc.21.5 mkg.. Tornillo NO Auto Bloc. 19/ 221 mkg Tapa de cilindros 30 mkg. (55/60R). 780R-780. Ver Nota.",
+  "aplicacion": "Equilibrador armónico (*) 7010 M STD-10-20-30 Tapa de cilindros 30 mkg. (55/60R). 780R-780. Ver Nota.",
   "descripcion": "FIAT 55R-60R-780R",
   "medidas": {
    "diam_munon": [
@@ -5588,10 +5528,10 @@
    "espesor": 2.038
   },
   "extra": {
-   "fabricante_motor": "Fiat",
-   "motor": "55R, 60R, 780, 780R  - 1955/1971 Tornillo Auto Bloc.21.5 mkg.. Tornillo NO Auto Bloc. 19/ 221 mkg Tapa de cilindros 30 mkg. (55/60R). 780R-780. Ver Nota.",
+   "fabricante_motor": "Equilibrador",
+   "motor": "armónico (*) 7010 M STD-10-20-30 Tapa de cilindros 30 mkg. (55/60R). 780R-780. Ver Nota.",
    "nro_cil": "4",
-   "diam_x_carrera": "122 x 140",
+   "diam_x_carrera": "16x 1.5",
    "cilindrada": "6546",
    "pares": "4",
    "tipo_material": "RA",
@@ -5756,36 +5696,78 @@
  },
  {
   "codigo": "CAF 60205",
-  "codigo_fab": null,
+  "codigo_fab": "60205 CP",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "M.BENZ OM312-OM321 (6 CIL) 5mm",
+  "aplicacion": "Mercedes Benz OM-312, OM-321, L3500, L4500, L3250, - 1949 / 1964 UÑA DE FIJACIÓN 6 MM DE ANCHO",
   "descripcion": "M.BENZ OM312-OM321 (6 CIL) 5mm",
   "medidas": {
-   "diam_munon": null,
-   "diam_alojamiento": null,
-   "ancho": null,
-   "espesor": null
+   "diam_munon": [
+    59.99,
+    60.015
+   ],
+   "diam_alojamiento": [
+    66.0,
+    66.019
+   ],
+   "ancho": 32.1,
+   "espesor": 2.972
   },
   "extra": {
-   "fabricante_motor": null,
-   "motor": null,
+   "fabricante_motor": "Mercedes Benz",
+   "motor": "OM-312, OM-321, L3500, L4500, L3250, - 1949 / 1964 UÑA DE FIJACIÓN 6 MM DE ANCHO",
    "nro_cil": null,
-   "diam_x_carrera": null,
-   "cilindrada": null,
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
-   "luz_aceite": null,
+   "diam_x_carrera": "90 x 120",
+   "cilindrada": "4580",
+   "pares": "6",
+   "tipo_material": "CP",
+   "material": "respaldo de acero, revestimiento de aleación cobre-plomo con película base plomo-estaño",
+   "luz_aceite": [
+    0.05,
+    0.1
+   ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": null,
-   "pagina_catalogo": null,
-   "sobremedidas": [],
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 61,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      59.99,
+      60.015
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      59.74,
+      59.765
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      59.49,
+      59.515
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      59.24,
+      59.265
+     ]
+    },
+    {
+     "label": "-1 mm",
+     "valor": [
+      58.99,
+      59.015
+     ]
+    }
+   ],
    "revisar": {
-    "diam_munon": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
-    "diam_alojamiento": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
-    "ancho": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
-    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor"
+    "sobremedidas": "el proveedor vende juegos combinados (S75), que traen dos bajomedidas a la vez: no se los puede apuntar a un solo Ø de muñón, así que se los lista sin Ø"
    }
   },
   "codigos_crac": [
@@ -5819,7 +5801,7 @@
   "codigo": "CAF 60275",
   "codigo_fab": "60275 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Rastrojero 42 HP , NP 6, D4M 1.8 - 1952 / 1966 Tapa de cilindros 6 y 10 mkg (en frío). Primeros 500 mkg 10 mkg",
+  "aplicacion": "Rastrojero 42 HP , NP 6, D4M 1.8 - 1952 / 1966",
   "descripcion": "RASTROJERO 42HP *",
   "medidas": {
    "diam_munon": [
@@ -5835,7 +5817,7 @@
   },
   "extra": {
    "fabricante_motor": "Rastrojero",
-   "motor": "42 HP , NP 6, D4M 1.8 - 1952 / 1966 Tapa de cilindros 6 y 10 mkg (en frío). Primeros 500 mkg 10 mkg",
+   "motor": "42 HP , NP 6, D4M 1.8 - 1952 / 1966",
    "nro_cil": "4",
    "diam_x_carrera": "78 x 92",
    "cilindrada": "1758",
@@ -5878,7 +5860,7 @@
   "codigo": "CAF 60545",
   "codigo_fab": "60545 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Mercedes Benz Compresores de Aire, OM-312, OM-314, OM-352, OM-321 Cilindro 3.5/ 4 mkg. Tapa de cilindro 2.5 mkg",
+  "aplicacion": "Mercedes Benz Compresores de Aire, OM-312, OM-314, OM-352, OM-321",
   "descripcion": "M.BENZ COMPRESOR ANGOSTO",
   "medidas": {
    "diam_munon": [
@@ -5894,7 +5876,7 @@
   },
   "extra": {
    "fabricante_motor": "Mercedes Benz",
-   "motor": "Compresores de Aire, OM-312, OM-314, OM-352, OM-321 Cilindro 3.5/ 4 mkg. Tapa de cilindro 2.5 mkg",
+   "motor": "Compresores de Aire, OM-312, OM-314, OM-352, OM-321",
    "nro_cil": "1",
    "diam_x_carrera": "77 x 30",
    "cilindrada": "140",
@@ -5996,7 +5978,7 @@
   "codigo": "CAF 60985",
   "codigo_fab": "60985 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Fiat Super Europa, 147L, Spazio TR/TR5, Brio, Duna S/SC - 1971/1990",
+  "aplicacion": "Fiat (continuación) 1481 c.c., 1500 Berlina, Familiar, Multicarga Coupe - 1963/1969",
   "descripcion": "FIAT 128 1100-1300-1301 CC",
   "medidas": {
    "diam_munon": [
@@ -6012,10 +5994,10 @@
   },
   "extra": {
    "fabricante_motor": "Fiat",
-   "motor": "Super Europa, 147L, Spazio TR/TR5, Brio, Duna S/SC  - 1971/1990",
+   "motor": "(continuación) 1481 c.c., 1500 Berlina, Familiar, Multicarga Coupe - 1963/1969",
    "nro_cil": "4",
-   "diam_x_carrera": "80 x 55.5",
-   "cilindrada": "1116",
+   "diam_x_carrera": "77 x 79.5",
+   "cilindrada": "1481",
    "pares": "4",
    "tipo_material": "RA",
    "material": "respaldo de acero, revestimiento de aleación de aluminio con 20 % de estaño",
@@ -6107,7 +6089,7 @@
   "codigo": "CAF 61645",
   "codigo_fab": "61645 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Fiat SL, Mirafiori - 1972/1981",
+  "aplicacion": "ó 4325 X Árbol Auxiliar",
   "descripcion": "FIAT 125",
   "medidas": {
    "diam_munon": [
@@ -6122,11 +6104,11 @@
    "espesor": 1.534
   },
   "extra": {
-   "fabricante_motor": "Fiat",
-   "motor": "SL, Mirafiori - 1972/1981",
+   "fabricante_motor": "ó 4325 X",
+   "motor": "Árbol Auxiliar",
    "nro_cil": "4",
    "diam_x_carrera": "80 x 80",
-   "cilindrada": "1608",
+   "cilindrada": "1290",
    "pares": "4",
    "tipo_material": "RA",
    "material": "respaldo de acero, revestimiento de aleación de aluminio con 20 % de estaño",
@@ -6210,7 +6192,7 @@
   "codigo": "CAF 61910",
   "codigo_fab": "61910 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Rastrojero NC62, NP66, P63, P64, C66,P67, D301 E1 - 1965 / 1971 Tapa de cilindros 6 y 10 mkg (en frío). Primeros 500 mkg 10 mkg",
+  "aplicacion": "Rastrojero NC62, NP66, P63, P64, C66,P67, D301 E1 - 1965 / 1971",
   "descripcion": "RASTROJERO 52HP.*65/71",
   "medidas": {
    "diam_munon": [
@@ -6226,7 +6208,7 @@
   },
   "extra": {
    "fabricante_motor": "Rastrojero",
-   "motor": "NC62, NP66, P63, P64, C66,P67, D301 E1 - 1965 / 1971 Tapa de cilindros 6 y 10 mkg (en frío). Primeros 500 mkg 10 mkg",
+   "motor": "NC62, NP66, P63, P64, C66,P67, D301 E1 - 1965 / 1971",
    "nro_cil": "4",
    "diam_x_carrera": "78 x 94",
    "cilindrada": "1797",
@@ -6290,7 +6272,7 @@
    "pagina_catalogo": 62,
    "sobremedidas": [],
    "revisar": {
-    "codigo": "el catálogo trae este juego con más de un reparto de medidas y no son iguales: ancho 32.1 contra 32.1 contra 29.1; diam_alojamiento 66.0/66.019 contra 60.0/65.019 contra 65.0/65.019; espesor 2.972 contra 2.472 contra 2.472; luz 0.05/0.1 contra 0.05/0.095 contra 0.05/0.095. Se tomó el primero, que es el que más se repite (1 filas del catálogo contra 1, 1)",
+    "codigo": "el catálogo trae este juego con más de un reparto de medidas y no son iguales: ancho 32.1 contra 29.1 contra 32.1 contra 29.1 contra 29.1; diam_alojamiento 66.0/66.019 contra 66.0/66.019 contra 60.0/65.019 contra 60.0/65.019 contra 65.0/65.019; espesor 2.972 contra 2.972 contra 2.472 contra 2.472 contra 2.472; luz 0.05/0.1 contra 0.05/0.1 contra 0.05/0.095 contra 0.05/0.095 contra 0.05/0.095. Se tomó el primero, que es el que más se repite (1 filas del catálogo contra 1, 1, 1, 1)",
     "sobremedidas": "el proveedor vende juegos combinados (S75), que traen dos bajomedidas a la vez: no se los puede apuntar a un solo Ø de muñón, así que se los lista sin Ø"
    }
   },
@@ -6346,7 +6328,7 @@
     }
    ],
    "revisar": {
-    "codigo": "el catálogo trae este juego con más de un reparto de medidas y no son iguales: ancho 32.1 contra 32.1 contra 29.1; diam_alojamiento 66.0/66.019 contra 60.0/65.019 contra 65.0/65.019; espesor 2.972 contra 2.472 contra 2.472; luz 0.05/0.1 contra 0.05/0.095 contra 0.05/0.095. Se tomó el primero, que es el que más se repite (1 filas del catálogo contra 1, 1)"
+    "codigo": "el catálogo trae este juego con más de un reparto de medidas y no son iguales: ancho 32.1 contra 29.1 contra 32.1 contra 29.1 contra 29.1; diam_alojamiento 66.0/66.019 contra 66.0/66.019 contra 60.0/65.019 contra 60.0/65.019 contra 65.0/65.019; espesor 2.972 contra 2.972 contra 2.472 contra 2.472 contra 2.472; luz 0.05/0.1 contra 0.05/0.1 contra 0.05/0.095 contra 0.05/0.095 contra 0.05/0.095. Se tomó el primero, que es el que más se repite (1 filas del catálogo contra 1, 1, 1, 1)"
    }
   },
   "codigos_crac": [
@@ -6577,7 +6559,7 @@
   "codigo": "CAF 62080",
   "codigo_fab": "62080 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Dodge 1798 c.c., 1500 1.8 - 1972/1981 Tapa de cilindros 7.74 mkg",
+  "aplicacion": "Dodge 1498 c.c., 1500 - 1972/1981",
   "descripcion": "DODGE 1800",
   "medidas": {
    "diam_munon": [
@@ -6593,10 +6575,10 @@
   },
   "extra": {
    "fabricante_motor": "Dodge",
-   "motor": "1798 c.c., 1500 1.8 - 1972/1981 Tapa de cilindros 7.74 mkg",
+   "motor": "1498 c.c., 1500 - 1972/1981",
    "nro_cil": "4",
-   "diam_x_carrera": "86.1 x 77.2",
-   "cilindrada": "1798",
+   "diam_x_carrera": "86.1 x 64.3",
+   "cilindrada": "1498",
    "pares": "4",
    "tipo_material": "RA",
    "material": "respaldo de acero, revestimiento de aleación de aluminio con 20 % de estaño",
@@ -6915,7 +6897,7 @@
   "codigo": "CAF 66240RA",
   "codigo_fab": "66240 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Fiat Tempra, 2.0 16V , Duna, Uno, Palio, Siena Diesel 1.7 Aspirado Tapa de cilindros 2.8/ 3 mkg",
+  "aplicacion": "Fiat Tempra, 2.0 16V , Duna, Uno, Palio, Siena Diesel 1.7 Aspirado",
   "descripcion": "FIAT DUNA 1.7D-REGATTA 2.0-TEMPRA 2.0",
   "medidas": {
    "diam_munon": [
@@ -6931,7 +6913,7 @@
   },
   "extra": {
    "fabricante_motor": "Fiat",
-   "motor": "Tempra, 2.0 16V , Duna, Uno, Palio, Siena Diesel 1.7 Aspirado Tapa de cilindros 2.8/ 3 mkg",
+   "motor": "Tempra, 2.0 16V , Duna, Uno, Palio, Siena Diesel 1.7 Aspirado",
    "nro_cil": "4",
    "diam_x_carrera": "84 x 90",
    "cilindrada": "1995",
@@ -7015,7 +6997,7 @@
   "codigo": "CAF 66295",
   "codigo_fab": "66295 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Fiat 1625 c.c., 1500 Familiar Multicarga, 1600 Berlina Sport - 1969/1972 Tapa de cilindros 9 mkg",
+  "aplicacion": "Fiat (continuación) 1481 c.c., 1500 Berlina, Familiar, Multicarga Coupe - 1963/1969",
   "descripcion": "FIAT 1600",
   "medidas": {
    "diam_munon": [
@@ -7031,10 +7013,10 @@
   },
   "extra": {
    "fabricante_motor": "Fiat",
-   "motor": "1625 c.c., 1500 Familiar Multicarga, 1600 Berlina Sport  - 1969/1972 Tapa de cilindros 9 mkg",
+   "motor": "(continuación) 1481 c.c., 1500 Berlina, Familiar, Multicarga Coupe - 1963/1969",
    "nro_cil": "4",
-   "diam_x_carrera": "78 x 85",
-   "cilindrada": "1625",
+   "diam_x_carrera": "77 x 79.5",
+   "cilindrada": "1481",
    "pares": "4",
    "tipo_material": "RA",
    "material": "respaldo de acero, revestimiento de aleación de aluminio con 20 % de estaño",
@@ -7332,7 +7314,7 @@
    ],
    "revisar": {
     "diam_munon": "la fila del catálogo trae esta columna vacía",
-    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050, 075, 100): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (075, 100): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
    }
   },
   "codigos_crac": [
@@ -7706,7 +7688,7 @@
   "codigo": "CAF 66690RA",
   "codigo_fab": "66690 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Ika Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Tapa de cilindros 11.7/ 13.1 mkg. Indenor - Peugeot Diesel XD 4.88 Tapa de cilindros 7 mkg. Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
+  "aplicacion": "Ika Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Indenor - Peugeot Diesel XD 4.88 Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
   "descripcion": "INDENOR XD2-XD3-XD3T",
   "medidas": {
    "diam_munon": [
@@ -7722,7 +7704,7 @@
   },
   "extra": {
    "fabricante_motor": "Ika",
-   "motor": "Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Tapa de cilindros 11.7/ 13.1 mkg. Indenor - Peugeot Diesel XD 4.88 Tapa de cilindros 7 mkg. Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
+   "motor": "Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Indenor - Peugeot Diesel XD 4.88 Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
    "nro_cil": "6",
    "diam_x_carrera": "84.94 x 111.13",
    "cilindrada": "3770",
@@ -7802,7 +7784,7 @@
   "codigo": "CAF 66725",
   "codigo_fab": "66725 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Citröen Xantia, Xsara, Berlingo D/TD, 1.9, XUD9",
+  "aplicacion": "Chrysler 318-V8, Coupe GTX - 1970/1978",
   "descripcion": "PEUGEOT 405 1.9D XUD9-1.7D XUD7-1.9D DW8",
   "medidas": {
    "diam_munon": [
@@ -7817,11 +7799,11 @@
    "espesor": 1.83
   },
   "extra": {
-   "fabricante_motor": "Citröen",
-   "motor": "Xantia, Xsara, Berlingo D/TD, 1.9, XUD9",
-   "nro_cil": "4",
-   "diam_x_carrera": "80 x 88",
-   "cilindrada": "1769",
+   "fabricante_motor": "Chrysler",
+   "motor": "318-V8, Coupe GTX - 1970/1978",
+   "nro_cil": "8",
+   "diam_x_carrera": "99.31 x84.15",
+   "cilindrada": "5210",
    "pares": "4",
    "tipo_material": "RA",
    "material": "respaldo de acero, revestimiento de aleación de aluminio con 20 % de estaño",
@@ -8457,7 +8439,7 @@
   "codigo": "CAF 67345IM",
   "codigo_fab": "67345 CP",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Honda Accord, Prelude, 1.6, 1.8, EK, EL, EP , EF Tapa de cilindros 6 mkg. s Cojinete con pestaña - Flanged bearing",
+  "aplicacion": "Honda Accord, Prelude, 1.6, 1.8, EK, EL, EP , EF",
   "descripcion": "HONDA ACCORD 1500-1600-1800",
   "medidas": {
    "diam_munon": [
@@ -8473,7 +8455,7 @@
   },
   "extra": {
    "fabricante_motor": "Honda",
-   "motor": "Accord, Prelude, 1.6, 1.8, EK, EL, EP , EF Tapa de cilindros 6 mkg. s Cojinete con pestaña - Flanged bearing",
+   "motor": "Accord, Prelude, 1.6, 1.8, EK, EL, EP , EF",
    "nro_cil": "4",
    "diam_x_carrera": "74 X 86.5",
    "cilindrada": "1488",
@@ -9062,7 +9044,7 @@
   "codigo": "CAF 68125",
   "codigo_fab": "68125 RA",
   "marca": "FEDERAL MOGUL",
-  "aplicacion": "Mercedes Benz Compresor aire OM -352, 352A, 364, 366, 366A",
+  "aplicacion": "Mercedes Benz Compresores de Aire, OM-312, OM-314, OM-352, OM-321",
   "descripcion": "M.BENZ COMPRESOR ANCHO",
   "medidas": {
    "diam_munon": null,
@@ -9072,10 +9054,10 @@
   },
   "extra": {
    "fabricante_motor": "Mercedes Benz",
-   "motor": "Compresor aire  OM -352, 352A, 364, 366, 366A",
+   "motor": "Compresores de Aire, OM-312, OM-314, OM-352, OM-321",
    "nro_cil": "1",
-   "diam_x_carrera": "94 x 30",
-   "cilindrada": "208",
+   "diam_x_carrera": "77 x 30",
+   "cilindrada": "140",
    "pares": "1",
    "tipo_material": "RA",
    "material": "respaldo de acero, revestimiento de aleación de aluminio con 20 % de estaño",

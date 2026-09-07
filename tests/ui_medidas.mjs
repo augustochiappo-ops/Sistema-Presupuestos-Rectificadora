@@ -61,7 +61,7 @@ await esperar(900)
 check('se entra a la pantalla', page.url().includes('busqueda-medidas'), page.url())
 
 console.log('\n=== Estado inicial ===')
-check('las nueve familias con su total',
+check('las diez familias con su total',
   (await page.locator('button', { hasText: /^Camisas\s*396$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Válvulas\s*1782$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Guías de válvulas\s*915$/ }).count()) === 1
@@ -69,7 +69,8 @@ check('las nueve familias con su total',
   && (await page.locator('button', { hasText: /^Subconjuntos\s*201$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Conjuntos\s*128$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Pistones\s*35$/ }).count()) === 1
-  && (await page.locator('button', { hasText: /^Cojinetes de biela\s*279$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Cojinetes de biela\s*354$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Cojinetes de bancada\s*75$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Bujes de biela\s*190$/ }).count()) === 1)
 check('en camisas el filtro se llama Ø exterior',
   await page.locator('label', { hasText: 'Ø EXTERIOR' }).count() === 1
@@ -483,6 +484,33 @@ check('el Ø del muñón va con el mínimo arriba del máximo',
 check('con precio y stock del proveedor', /\$\s?[\d.]+/.test(monza), monza)
 await page.screenshot({ path: path.join(SHOT, 'medidas-cojinetes.png'), fullPage: true })
 
+console.log('\n=== Cojinetes de bancada: el otro muñón del mismo cigüeñal ===')
+// La familia nueva (2026-09-07), toda de Glyco. Es la misma pantalla que la de
+// biela sobre el otro muñón, así que lo que se prueba acá es que la pestaña
+// exista con sus datos, no de nuevo el mecanismo de búsqueda.
+//
+// Sin tocar los filtros de biela: se guardan por familia, así que cambiar de
+// pestaña ya deja la pantalla limpia, y el bloque de abajo cuenta con que los de
+// biela sigan puestos (aprieta "Limpiar filtros", que sin filtros no existe).
+await page.locator('button', { hasText: 'Cojinetes de bancada' }).click()
+await esperar(500)
+await page.fill('input[placeholder="Código…"]', 'H048/7')
+await esperar(1300)
+const bancada = await textoDeFila(0)
+check('el juego de bancada del OM366 está', bancada.includes('H048/7'), bancada)
+check('con el muñón de 88 y el alojamiento de 93',
+  bancada.includes('87,99') && bancada.includes('93'), bancada)
+// La pantalla escribe las bajomedidas con dos decimales ("-1,50 mm"), aunque la
+// etiqueta del JSON venga sin el cero de atrás.
+check('y las bajomedidas hasta 1,50 mm con su etiqueta',
+  bancada.includes('-1,50 mm') && bancada.includes('86,49'), bancada)
+check('con precio y stock del proveedor', /\$\s?[\d.]+/.test(bancada), bancada)
+await page.screenshot({ path: path.join(SHOT, 'medidas-cojinetes-bancada.png'), fullPage: true })
+await page.fill('input[placeholder="Código…"]', '')
+await esperar(400)
+await page.locator('button', { hasText: 'Cojinetes de biela' }).click()
+await esperar(600)
+
 console.log('\n=== Cojinetes: los que el catálogo no trae van con "?" ===')
 await page.locator('button', { hasText: 'Limpiar filtros' }).click()
 await esperar(600)
@@ -502,8 +530,9 @@ console.log('\n=== Ninguna celda de la tabla queda cortada ===')
 // así que una columna más angosta que su contenido lo TAPA sin avisar: no hay
 // forma de darse cuenta mirando, salvo que falte el dato justo que se necesita.
 // Este check lo mide en el navegador —scrollWidth contra clientWidth, celda por
-// celda— en las nueve familias, para que un dato nuevo más largo que su columna
-// se note acá y no en el taller.
+// celda— en las diez familias, para que un dato nuevo más largo que su columna
+// se note acá y no en el taller. En bancada importa el doble: los muñones son
+// más grandes y los números, más largos.
 const cortadas = () => page.evaluate(() => {
   const encabezados = [...document.querySelectorAll('table thead th')].map((th) => th.innerText.trim())
   const fuera = []
@@ -526,6 +555,7 @@ for (const [pestana, ejemplo] of [
   ['Conjuntos', null],
   ['Pistones', null],
   ['Cojinetes de biela', 'Ø muñón 50 mm'],
+  ['Cojinetes de bancada', 'Ø muñón 54 mm'],
   ['Bujes de biela', null],
 ]) {
   await page.locator('button', { hasText: new RegExp(`^${pestana}\\s*\\d`) }).click()

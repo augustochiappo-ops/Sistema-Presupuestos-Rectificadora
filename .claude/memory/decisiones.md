@@ -1074,3 +1074,77 @@ contenido. Es la única forma de que un dato nuevo más largo que su columna se
 note acá y no en el taller.
 
 **Fecha:** 2026-09-06
+
+---
+
+## Cómo se le pasa a Claude un archivo grande (el catálogo de Glyco, 30 MB)
+
+**Contexto:** el dueño tenía el catálogo de cojinetes de Glyco abierto en Chrome
+y pidió que Claude lo leyera desde ahí. No se puede, y conviene tenerlo escrito
+porque va a volver a pasar con el próximo catálogo.
+
+**Lo que Claude no puede hacer, por más que parezca que sí:**
+
+* **Ver el Chrome del dueño ni usar su PC.** Claude corre en un contenedor
+  aislado en la nube: no hay pantalla, no hay acceso a la máquina. Lo que el
+  dueño había habilitado alguna vez —y recordaba como "el uso de la PC"— era
+  otra cosa: la whitelist de red hacia `chiapppo.pythonanywhere.com`, que sirve
+  para el deploy y nada más.
+* **Bajar el catálogo de internet.** Toda la salida está cerrada salvo esa
+  whitelist. `glyco.com` devuelve 403 del proxy de egress, y `WebFetch` sale por
+  el mismo proxy, así que tampoco.
+
+**Las vías que sí sirven, en orden:**
+
+1. **Un release de GitHub.** Es la que funcionó y la primera que hay que
+   proponer para cualquier archivo grande. Desde el navegador: repo → *Releases*
+   → *Create a new release* → tag `catalogos` → arrastrar el archivo a *Attach
+   binaries* → *Publish*. Claude lo baja con el token de la sesión (el comando
+   quedó en `CARGA-COJINETES.md`). **Aguanta 2 GB**, contra los 25 MB del botón
+   *Upload files* de siempre — que es justamente por lo que este PDF de 30 MB no
+   entraba por ahí. Y el archivo no queda dentro del repo, que se copia entero a
+   PythonAnywhere en cada deploy.
+2. **Google Drive**, para archivos chicos. El conector está conectado y Claude
+   busca y lee solo. El límite es que devuelve el archivo **pegado en la
+   respuesta del chat**: 30 MB en base64 son unos 40 MB de texto y no entran.
+   Para un Excel o un PDF de pocas páginas va bien.
+3. **Sumar el dominio a la whitelist del entorno**, como se hizo con
+   PythonAnywhere, si lo que hace falta es una web y no un archivo. No sirve si
+   está detrás de un login.
+
+**Y una que no:** el botón de adjuntar del chat. Al dueño no le funcionó y no se
+pudo diagnosticar desde acá.
+
+**Dónde queda el archivo.** En `CRAC/tecnicos/fuentes/`, como los otros
+catálogos, pero **en `.gitignore`**: 30 MB contra los 23 MB que pesa el repo
+entero, y producción tira de un `git pull`. El script avisa y sigue si no lo
+encuentra, así que el repo queda corriendo igual para el que no lo bajó.
+
+**Fecha:** 2026-09-07
+
+---
+
+## Biela y bancada: un solo script, una tabla de diferencias arriba
+
+**Contexto:** los cojinetes de bancada son la misma tabla de los mismos cuatro
+catálogos leyendo otra fila. La tentación era un segundo script copiado.
+
+**Se hizo con `PIEZAS`**, una constante arriba de
+`scripts/convertir_cojinetes.py` con lo único que cambia entre una familia y la
+otra: la categoría del proveedor (`CA`/`CB`), las marcas que entran, el JSON de
+salida y cómo dice cada catálogo "esta fila es de bancada" (en Mahle la columna
+de composición, `BB`/`SBB` contra `BC`/`SBC`; en Federal Mogul la palabra de la
+etiqueta; en Glyco el tipo de la fila, `BE/PL` contra `MB/HL`). El resto del
+script —el reparto de columnas, las bajomedidas, el cruce contra el proveedor,
+la ficha— es el mismo código para las dos.
+
+La prueba de que sirvió: cuando el dueño pidió a mitad de sesión que bancada
+fuera **sólo de Glyco**, el cambio fue una tupla de marcas en esa tabla.
+
+**Por qué bancada arrancó con una sola marca.** Lo pidió el dueño (2026-09-07).
+Los lectores de Mahle y Federal Mogul ya saben leer bancada, probado el mismo
+día: Mahle resuelve 110 de sus 136 códigos y Federal Mogul 63 de 134. Prenderlas
+es agregar las marcas en `PIEZAS`; lo que hay que acordarse de tocar después es
+lo de afuera —la pantalla y los conteos de las dos suites—, no la extracción.
+
+**Fecha:** 2026-09-07

@@ -1,25 +1,32 @@
 #!/usr/bin/env python3
 """
-Arma `CRAC/tecnicos/cojinetes_biela.json` leyendo los cuatro catálogos de cojinetes
-que hay en `CRAC/tecnicos/fuentes/` y cruzándolos contra la lista del proveedor.
+Arma `CRAC/tecnicos/cojinetes_biela.json` y `cojinetes_bancada.json` leyendo los
+cuatro catálogos de cojinetes que hay en `CRAC/tecnicos/fuentes/` y cruzándolos
+contra la lista del proveedor.
 
 POR QUÉ EXISTE
 --------------
-El proveedor vende 5.170 renglones de la categoría CA (cojinetes de biela) y de
-cada uno se sabe el precio y una descripción de una línea. Nada más. No hay forma
-de encontrar un cojinete midiendo el muñón del cigüeñal, que es exactamente lo
-que hace el rectificador cuando le entra un motor sin identificar.
+El proveedor vende 5.170 renglones de la categoría CA (biela) y 4.800 de la CB
+(bancada), y de cada uno se sabe el precio y una descripción de una línea. Nada
+más. No hay forma de encontrar un cojinete midiendo el muñón del cigüeñal, que es
+exactamente lo que hace el rectificador cuando le entra un motor sin
+identificar.
 
 Los catálogos de los fabricantes sí traen esas medidas. Este script las saca de
 los PDF y las pega al código del proveedor, que es el único que sirve para pedir
 la pieza. El universo de la familia es la lista del proveedor: si el proveedor no
 lo vende, no entra, por más que el catálogo lo traiga.
 
+LAS DOS FAMILIAS
+----------------
+Biela y bancada son la misma tabla del mismo catálogo leyendo otra fila. Todo lo
+que las diferencia está en `PIEZAS`, acá abajo: la categoría del proveedor, las
+marcas que entran y cómo dice cada catálogo "esta fila es de bancada". Hoy biela
+trae las tres marcas y bancada sólo Glyco, que es lo que pidió el dueño.
+
 CÓMO SE LEEN LOS CATÁLOGOS
 --------------------------
-Está explicado en `CRAC/tecnicos/CARGA-COJINETES.md`, incluido el detalle de cómo
-repetir esto para los cojinetes de BANCADA (son las mismas filas del mismo PDF,
-cambiando el prefijo del código y la categoría del proveedor).
+Está explicado en `CRAC/tecnicos/CARGA-COJINETES.md`, uno por uno.
 
 Lo que hay que saber para leer este archivo:
 
@@ -44,9 +51,10 @@ USO
 ---
     .venv/bin/python scripts/convertir_cojinetes.py
 
-No pisa nada más que `CRAC/tecnicos/cojinetes_biela.json`. Al final imprime el
+No pisa nada más que los dos JSON. Al final imprime, para cada familia, el
 resumen: cuántas fichas por marca, cuántas quedaron con datos en duda y qué
-códigos del proveedor no están en ningún catálogo.
+códigos del proveedor no están en ningún catálogo. Tarda unos cinco minutos: el
+catálogo de Glyco son 1.252 páginas y se lee dos veces, una por familia.
 """
 
 from __future__ import annotations
@@ -63,8 +71,45 @@ from pypdf import PdfReader
 
 RAIZ = Path(__file__).resolve().parent.parent
 FUENTES = RAIZ / "CRAC" / "tecnicos" / "fuentes"
-SALIDA = RAIZ / "CRAC" / "tecnicos" / "cojinetes_biela.json"
+TECNICOS = RAIZ / "CRAC" / "tecnicos"
 PRECIO_STOCK = RAIZ / "CRAC" / "precio-stock.csv"
+
+
+# ---------------------------------------------------------------------------
+# Las dos familias que salen de estos mismos cuatro PDF.
+#
+# Biela y bancada son la misma tabla del mismo catálogo leyendo otra fila: lo
+# único que cambia es cómo dice cada catálogo "esta fila es de bancada" y qué
+# categoría les pone el proveedor. Por eso está acá arriba en una sola tabla y
+# no desparramado en cuatro lectores.
+# ---------------------------------------------------------------------------
+PIEZAS = {
+    "biela": {
+        "categoria": "CA",
+        "salida": "cojinetes_biela.json",
+        "titulo": "cojinetes de biela",
+        "marcas": ("BE", "F", "GL"),
+        # Mahle no pone el tipo de pieza en la fila: lo dice la columna de
+        # composición, que sí está en todos los renglones del juego.
+        "mahle": ("BB", "SBB"),
+        "fm": "biela",
+    },
+    "bancada": {
+        "categoria": "CB",
+        "salida": "cojinetes_bancada.json",
+        "titulo": "cojinetes de bancada",
+        # Por ahora sólo Glyco: es lo que pidió el dueño (2026-09-07). Los
+        # lectores de Mahle y Federal Mogul ya saben leer bancada —es la misma
+        # tabla cambiando la columna de composición y la palabra de la
+        # etiqueta—, así que sumarlas es agregarlas acá y volver a correr:
+        # medido el mismo día, Mahle resuelve 110 de sus 136 códigos y Federal
+        # Mogul 63 de 134. Lo que falta hacer entonces es la parte de afuera:
+        # la pantalla, la suite y este archivo pasan a tener 345 fichas.
+        "marcas": ("GL",),
+        "mahle": ("BC", "SBC"),
+        "fm": "bancada",
+    },
+}
 
 
 # ---------------------------------------------------------------------------
@@ -493,18 +538,26 @@ def _fila_mahle(comp, cod, medidas, celdas, motor, hoja, catalogo):
 # Se lee por contenido: se junta el renglón entero y se lo parte por lo que dice.
 FM_ETIQUETA = re.compile(r"\b(?P<pieza>Bielas?|Bancadas?|Axial|Levas|Bujes?)\b", re.I)
 FM_JUEGO = re.compile(r"^(?P<pares>\d{1,2})-(?P<numero>\d{3,6})\s*(?P<sufijo>[A-Z]{1,3})?$")
+# El juego de bancada no lleva los pares adelante: se escribe "7108 M", donde la
+# "M" es lo que dice que es de bancada. El proveedor lo vende como "7108".
+FM_BANCADA = re.compile(r"^(?P<numero>\d{3,6})\s*(?P<sufijo>M)$")
+# Un renglón de medidas de verdad trae siempre un rango ("69.837/69.850"). Es lo
+# que lo distingue del Ø x carrera del motor ("98.43 x 82.55"), que también tiene
+# números con coma y se cuela cuando se busca la continuación de una fila.
+FM_RANGO = re.compile(r"\d+[.,]\d+\s*/\s*\d+[.,]\d+")
 FM_GLYCO = re.compile(r"^(?P<numero>\d{2}-\d{3,4}(?:/\d+)?)\s*(?P<sufijo>[A-Z]{1,3})?$")
 
 
-def leer_federal_mogul(pdf: Path) -> list[dict]:
+def leer_federal_mogul(pdf: Path, pieza: str) -> list[dict]:
     filas = []
     for hoja, renglones in enumerate(paginas(pdf), 1):
-        filas += _leer_pagina_fm(renglones, hoja)
+        filas += _leer_pagina_fm(renglones, hoja, pieza)
     return filas
 
 
-def _leer_pagina_fm(renglones, hoja):
+def _leer_pagina_fm(renglones, hoja, pieza):
     filas, motor, primera_del_grupo = [], _fm_motor_vacio(), False
+    cortada = ""
 
     for _y, celdas in renglones:
         texto = " ".join(t for x, t in celdas if x < 600).strip()
@@ -518,6 +571,27 @@ def _leer_pagina_fm(renglones, hoja):
 
         etiqueta = FM_ETIQUETA.search(texto)
         tiene_medida = corte_de_medidas(texto) < len(texto)
+
+        # El renglón del juego de bancada a veces trae sólo el número y las
+        # bajomedidas ("Bancadas 4124 M STD-10-20-30-40-50") y las medidas
+        # aparecen en el de abajo, con la posición del muñón adelante y sin
+        # etiqueta. Se guarda la cabeza y se le pega el renglón siguiente.
+        rango = FM_RANGO.search(texto) if cortada and not etiqueta else None
+        if rango:
+            # Del renglón de abajo sirve de la primera medida en adelante: lo que
+            # viene antes es la columna del motor ("98.43 x 82.55"), la posición
+            # del muñón y la referencia del componente, y si se pegan tal cual
+            # entran como si fueran columnas de medida.
+            texto = cortada + " " + texto[rango.start():]
+            etiqueta, cortada = FM_ETIQUETA.search(cortada), ""
+        elif cortada and not etiqueta:
+            continue                      # todavía no llegó el renglón bueno
+        elif etiqueta and not tiene_medida and _fm_es_la_pieza(etiqueta, pieza):
+            cortada = texto
+            primera_del_grupo = False
+            continue
+        elif etiqueta or tiene_medida:
+            cortada = ""
 
         if not etiqueta and not tiene_medida:
             if FM_DATOS_MOTOR.match(texto):
@@ -535,7 +609,7 @@ def _leer_pagina_fm(renglones, hoja):
             primera_del_grupo = True
             continue
 
-        fila = _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo)
+        fila = _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo, pieza)
         if fila is not None:
             filas.append(fila)
         primera_del_grupo = False
@@ -566,15 +640,51 @@ def _fm_datos_del_motor(texto, motor):
         motor["cilindrada"] = cilindrada.group(1)
 
 
-def _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo):
+def _fm_limpiar_cabecera(texto: str) -> str:
+    """
+    Deja sólo el número de juego y su sufijo.
+
+    El catálogo mete la cilindrada en el mismo renglón, y a veces de los dos
+    lados de la etiqueta ("2364 c.c. Bancadas 4222 M 2364 c.c STD-10-20-30-40"),
+    y le cuelga llamadas al pie ("Bancada (1) 4592 M"). Con eso pegado, el número
+    del juego no matchea y la fila se pierde entera.
+    """
+    texto = re.sub(r"\d+(?:[.,]\d+)?\s*c\.?\s?c\.?", " ", texto)
+    texto = re.sub(r"\(\d+\)", " ", texto)
+    texto = re.sub(r"\d+(?:[.,]\d+)?\s*[xX]\s*\d+(?:[.,]\d+)?", " ", texto)
+    return re.sub(r"\s+\d+\s*$", "", " ".join(texto.split())).strip()
+
+
+def _fm_solo_bajomedidas(texto: str) -> str:
+    """
+    La lista de bajomedidas termina donde aparece la primera palabra que no es
+    una: en bancada, después del "STD-10-20-30-40-50" viene la posición del muñón
+    y la referencia del componente ("1 62086 RA"), que no son bajomedidas.
+    """
+    partes = []
+    for parte in texto.replace("S T D", "STD").split():
+        # La lista viene pegada con guiones ("STD-10-20-30", "0.75-1.00"): un
+        # número suelto ya es la posición del muñón, no una bajomedida más.
+        if not re.fullmatch(r"STD[\d.,\-–]*|[\d.,]+[\-–][\d.,\-–]*", parte):
+            break
+        partes.append(parte)
+    return " ".join(partes)
+
+
+def _fm_es_la_pieza(etiqueta, pieza) -> bool:
+    return etiqueta.group("pieza").lower().startswith(PIEZAS[pieza]["fm"])
+
+
+def _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo, pieza):
     if etiqueta:
-        if not etiqueta.group("pieza").lower().startswith("biela"):
+        if not _fm_es_la_pieza(etiqueta, pieza):
             return None
         cabeza = texto[:etiqueta.start()]
         texto = texto[etiqueta.end():]
-    elif primera_del_grupo:
+    elif primera_del_grupo and pieza == "biela":
         # La primera fila del grupo siempre es la de biela, y hay páginas donde
-        # el catálogo no le pone la etiqueta.
+        # el catálogo no le pone la etiqueta. La de bancada nunca va sin
+        # etiqueta: siempre viene después de la de biela.
         cabeza, texto = "", texto
     else:
         return None
@@ -589,25 +699,38 @@ def _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo):
     cabecera, cola = texto[:corte], texto[corte:]
 
     # Lo que hay antes de las bajomedidas: número de cilindros, número de juego y
-    # sufijo de material.
-    cabecera = re.sub(r"^\s*(\d+)\s+(?=[\dA-Z])", "", cabecera, count=1)
+    # sufijo de material. El número de cilindros sólo hay que sacarlo cuando la
+    # fila viene sin etiqueta —si la tiene, los cilindros quedaron del otro lado,
+    # en `cabeza`—: si no, en bancada se come el número del juego, que es lo
+    # único que hay ahí ("7108 M").
+    if not etiqueta:
+        cabecera = re.sub(r"^\s*(\d+)\s+(?=[\dA-Z])", "", cabecera, count=1)
     medidas_txt = ""
     marcador = re.search(r"\bS\s?T\s?D\b|\bSTD\b", cabecera)
     if marcador:
         medidas_txt, cabecera = cabecera[marcador.start():], cabecera[:marcador.start()]
-    cabecera = re.sub(r"\s+\d+\s*$", "", cabecera).strip()
+        medidas_txt = _fm_solo_bajomedidas(medidas_txt)
+    cabecera = _fm_limpiar_cabecera(cabecera)
 
-    juego = FM_JUEGO.match(cabecera)
+    juego = FM_JUEGO.match(cabecera) or (
+        FM_BANCADA.match(cabecera) if pieza == "bancada" else None)
     glyco = FM_GLYCO.match(cabecera)
     # "01-3841/6" y "71-3728/4" son códigos GLYCO, no juegos de Federal Mogul.
     # Se los distingue porque el número de pares de un juego no pasa de 12 y no
     # se escribe con cero adelante.
     es_glyco = bool(glyco) and (
-        not juego or cabecera.startswith("0") or int(juego.group("pares")) > 12
+        not juego or cabecera.startswith("0")
+        or int(juego.groupdict().get("pares") or 0) > 12
     )
     juego = glyco if es_glyco else juego
-    if not juego or (juego.groupdict().get("sufijo") or "") == "M":
-        return None                        # "M" es juego de bancada o de levas
+    if not juego:
+        return None
+    # La "M" del final marca el juego de bancada o el de levas. En biela sobra;
+    # en bancada es justamente lo que hay que agarrar, y el proveedor no la
+    # escribe (vende "7108", no "7108 M"), así que tampoco es sufijo de material.
+    sufijo = juego.groupdict().get("sufijo") or ""
+    if sufijo == "M" and pieza != "bancada":
+        return None
 
     columnas, dudoso = asignar_columnas(numeros(cola), ORDEN_COLUMNAS["fm"])
     return {
@@ -617,9 +740,11 @@ def _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo):
         "codigo_fab": juego.group("numero") + (
             " " + juego.group("sufijo") if juego.groupdict().get("sufijo") else ""),
         "numero": juego.group("numero"),
-        "sufijo": juego.groupdict().get("sufijo"),
+        # La "M" de bancada no es sufijo de material ni desempata nada: el
+        # proveedor no la escribe y todos los juegos de bancada la llevan.
+        "sufijo": None if sufijo == "M" else (sufijo or None),
         "pares": juego.groupdict().get("pares"),
-        "tipo_material": juego.groupdict().get("sufijo"),
+        "tipo_material": None if sufijo == "M" else (sufijo or None),
         "medidas_txt": medidas_txt,
         "columnas": columnas,
         "dudoso": dudoso,
@@ -882,19 +1007,21 @@ def _glyco_pagina_impresa(renglones: list[str]) -> int | None:
 #      └───────────────────────── categoría: CA biela · CB bancada · CF axial
 #
 # De ahí sale la regla del universo: una ficha existe si el proveedor la vende.
-CATEGORIA_BIELA = "CA"
 MARCAS = {"BE": "MAHLE", "F": "FEDERAL MOGUL", "GL": "GLYCO"}
 
 
-def leer_proveedor() -> dict[tuple[str, str], dict]:
+def leer_proveedor(categoria: str, marcas: tuple[str, ...]) -> dict[tuple[str, str], dict]:
     """
-    Los cojinetes de biela que vende el proveedor, agrupados por (marca, código).
-    Cada entrada trae la descripción, el precio y la lista de medidas que hay.
+    Los cojinetes que vende el proveedor en esa categoría (`CA` biela, `CB`
+    bancada) y de esas marcas, agrupados por (marca, código). Cada entrada trae
+    la descripción, el precio y la lista de medidas que hay.
     """
     articulos: dict[tuple[str, str], dict] = {}
     with PRECIO_STOCK.open(encoding="latin-1", newline="") as archivo:
         for fila in csv.reader(archivo, delimiter=";"):
-            if len(fila) < 4 or not fila[0].startswith(CATEGORIA_BIELA):
+            if len(fila) < 4 or fila[0][:2] != categoria:
+                continue
+            if fila[0][2:4].strip() not in marcas:
                 continue
             marca = MARCAS.get(fila[0][2:4].strip())
             if not marca:
@@ -1186,7 +1313,8 @@ def material_fm(sufijo: str | None) -> str | None:
     return None
 
 
-def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None) -> dict:
+def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None,
+                categoria: str) -> dict:
     """
     Una ficha del catálogo técnico: lo que el proveedor vende, con las medidas
     que le puso el catálogo del fabricante.
@@ -1276,7 +1404,7 @@ def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None) -> dict:
     extra["revisar"] = revisar or None
 
     return {
-        "codigo": f"{CATEGORIA_BIELA}{_marca_crac(marca)}{articulo['codigo']}",
+        "codigo": f"{categoria}{_marca_crac(marca)}{articulo['codigo']}",
         "codigo_fab": codigo_fab,
         "marca": marca,
         "aplicacion": aplicacion,
@@ -1359,17 +1487,35 @@ def _restar(munon, bajada):
 # Main
 # ===========================================================================
 def main() -> int:
-    filas = (
-        leer_mahle(FUENTES / "mahle_cojinetes_2019.pdf", "Mahle 2019", dos_por_hoja=True)
-        + leer_mahle(FUENTES / "mahle_clevite_2014.pdf", "Mahle Clevite 2014",
-                     dos_por_hoja=False)
-        + leer_federal_mogul(FUENTES / "federal_mogul_cojinetes.pdf")
-        + leer_glyco(FUENTES / "glyco_cojinetes_2023.pdf", "biela")
-    )
+    for pieza in PIEZAS:
+        armar_familia(pieza)
+    return 0
+
+
+def armar_familia(pieza: str) -> None:
+    config = PIEZAS[pieza]
+    print(f"\n{'=' * 70}\n{config['titulo'].upper()}\n{'=' * 70}")
+
+    # Sólo se abren los PDF de las marcas que entran en la familia: leer los
+    # cuatro son cinco minutos, y para bancada hoy alcanza con el de Glyco.
+    filas = []
+    if "BE" in config["marcas"]:
+        filas += leer_mahle(FUENTES / "mahle_cojinetes_2019.pdf", "Mahle 2019",
+                            dos_por_hoja=True, piezas=config["mahle"])
+        filas += leer_mahle(FUENTES / "mahle_clevite_2014.pdf", "Mahle Clevite 2014",
+                            dos_por_hoja=False, piezas=config["mahle"])
+    if "F" in config["marcas"] or "GL" in config["marcas"]:
+        # Los códigos Glyco viejos sólo están adentro del catálogo de Federal
+        # Mogul, así que ese PDF hace falta también cuando la familia es
+        # solamente de Glyco.
+        filas += leer_federal_mogul(FUENTES / "federal_mogul_cojinetes.pdf", pieza)
+    if "GL" in config["marcas"]:
+        filas += leer_glyco(FUENTES / "glyco_cojinetes_2023.pdf", pieza)
+
     for fila in filas:
         fila.setdefault("marca", "MAHLE")
     indice = indexar(filas)
-    articulos = leer_proveedor()
+    articulos = leer_proveedor(config["categoria"], config["marcas"])
 
     fichas, sin_catalogo = [], []
     for (marca, codigo), articulo in sorted(articulos.items()):
@@ -1377,18 +1523,18 @@ def main() -> int:
         fila, aviso = elegir_fila(candidatas, codigo) if candidatas else (None, None)
         if fila is None:
             sin_catalogo.append(f"{marca} {codigo}")
-        fichas.append(armar_ficha(articulo, fila, aviso))
+        fichas.append(armar_ficha(articulo, fila, aviso, config["categoria"]))
 
     fichas.sort(key=lambda f: (f["marca"], f["codigo"]))
-    SALIDA.write_text(json.dumps(fichas, ensure_ascii=False, indent=1) + "\n",
+    salida = TECNICOS / config["salida"]
+    salida.write_text(json.dumps(fichas, ensure_ascii=False, indent=1) + "\n",
                       encoding="utf-8")
 
-    _resumen(fichas, filas, sin_catalogo)
-    return 0
+    _resumen(salida, fichas, filas, sin_catalogo)
 
 
-def _resumen(fichas, filas, sin_catalogo):
-    print(f"\n{SALIDA.relative_to(RAIZ)}: {len(fichas)} fichas\n")
+def _resumen(salida, fichas, filas, sin_catalogo):
+    print(f"\n{salida.relative_to(RAIZ)}: {len(fichas)} fichas\n")
     print(f"{'marca':16} {'fichas':>7} {'con medidas':>12} {'con dudas':>10}")
     for marca in sorted({f["marca"] for f in fichas}):
         propias = [f for f in fichas if f["marca"] == marca]

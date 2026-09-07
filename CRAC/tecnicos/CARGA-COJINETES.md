@@ -1,12 +1,28 @@
 # Cómo se leen los catálogos de cojinetes
 
-Este documento explica de dónde sale cada dato de `cojinetes_biela.json` y cómo
-repetir el trabajo para **cojinetes de bancada**, que es la misma tabla de los
-mismos PDF leyendo otra fila.
+Este documento explica de dónde sale cada dato de `cojinetes_biela.json` y de
+`cojinetes_bancada.json`. Son la misma tabla de los mismos PDF leyendo otra
+fila, y por eso las arma **un solo script**: lo que cambia entre una familia y
+la otra está todo junto arriba de todo, en la constante `PIEZAS`.
+
+| | Biela | Bancada |
+|---|---|---|
+| Categoría del proveedor | `CA` | `CB` |
+| Marcas que entran hoy | Mahle, Federal Mogul, Glyco | **sólo Glyco** |
+| Fichas | 354 (282 con medidas) | 75 (68 con medidas) |
+| Cómo la marca Mahle | composición `BB`/`SBB` | composición `BC`/`SBC` |
+| Cómo la marca Federal Mogul | etiqueta `Bielas` | etiqueta `Bancadas` |
+| Cómo la marca Glyco | `BE/PL` | `MB/HL` |
+
+**Bancada es sólo de Glyco a pedido del dueño** (2026-09-07). Los lectores de
+Mahle y Federal Mogul ya saben leerla —está probado el mismo día: Mahle resuelve
+110 de sus 136 códigos y Federal Mogul 63 de 134—, así que sumarlas es agregar
+las marcas en `PIEZAS` y volver a correr. Lo que falta hacer entonces no es la
+extracción sino lo de afuera: la pantalla, la suite y el conteo de fichas.
 
 El script que hace la extracción es
 [`scripts/convertir_cojinetes.py`](../../scripts/convertir_cojinetes.py). Se
-corre así, y no pisa nada más que el JSON:
+corre así, y no pisa nada más que los dos JSON:
 
 ```bash
 .venv/bin/python scripts/convertir_cojinetes.py
@@ -48,9 +64,9 @@ C A B E 0 1 4 7 2 _ _ 0 2 5
 
 | Categoría | Qué es |
 |---|---|
-| `CA` | Cojinetes de biela ← **lo que carga este JSON** |
-| `CB` | Cojinetes de bancada ← lo que falta |
-| `CF` | Cojinete axial (semiarandelas de empuje) |
+| `CA` | Cojinetes de biela |
+| `CB` | Cojinetes de bancada |
+| `CF` | Cojinete axial (semiarandelas de empuje) ← lo que falta |
 
 | Marca | Catálogo que la cubre |
 |---|---|
@@ -143,16 +159,16 @@ de uso:
 
 ### La letra del código dice qué pieza es
 
-Ésta es **la tabla que hace falta para bancada**. La publica el catálogo en su
-página de uso:
+Es lo que separa una familia de la otra en este catálogo. La publica el propio
+catálogo en su página de uso:
 
 | Prefijo | Pieza |
 |---|---|
-| `B` / `SB` | **Bronzina de biela** (MAHLE Original / SPA) ← lo que se cargó |
+| `B` / `SB` | **Bronzina de biela** (MAHLE Original / SPA) |
 | `BB` / `SBB` | Bronzina de biela (Metal Leve) |
-| `M` / `SM` | **Bronzina central = cojinete de bancada** ← lo que falta |
+| `M` / `SM` | **Bronzina central = cojinete de bancada** |
 | `BC` / `SBC` | Bronzina central (Metal Leve) |
-| `L` / `SL` / `AE` / `SAE` | Arruela de encosto = semiarandela de empuje (categoría `CF`) |
+| `L` / `SL` / `AE` / `SAE` | Arruela de encosto = semiarandela de empuje (categoría `CF`) ← lo que falta |
 | `H` / `SH` / `EC` / `SEC` | Bucha de eixo de comando = buje de árbol de levas |
 | `G` / `SG` / `BG` / `SBG` | Bucha de biela = buje de biela (ya cargado, otra familia) |
 
@@ -209,7 +225,7 @@ se lee, no vale la pena.
 
 ## 5. Federal Mogul — `federal_mogul_cojinetes.pdf`
 
-Resuelve **82 de los 122 códigos Federal Mogul** del proveedor, más 12 de Glyco
+Resuelve **83 de los 122 códigos Federal Mogul** del proveedor, más 12 de Glyco
 (ver abajo).
 
 Este catálogo **no se lee por posición**: el margen izquierdo se corre de una
@@ -400,8 +416,21 @@ le va?*
 
 ## 8. Lo que quedó pendiente
 
-* **Cojinetes de bancada** (categoría `CB`): es el motivo de este documento.
-* **4 códigos Glyco** que ni la edición 2023-2025 ni el catálogo de Federal Mogul
+* **Bancada de Mahle y de Federal Mogul.** La extracción está hecha y probada
+  (110 de 136 códigos Mahle, 63 de 134 de Federal Mogul); lo que falta es
+  decidir sumarlas: se agregan las marcas en `PIEZAS` y se vuelve a correr.
+  Después hay que ajustar la pantalla (la columna de marca de bancada está en
+  90 px porque hoy todo dice GLYCO; con `FEDERAL MOGUL` necesita 145, como la de
+  biela) y los conteos de las dos suites.
+* **Cojinetes axiales** (categoría `CF`, las semiarandelas de empuje): 120
+  códigos del proveedor de las tres marcas que tenemos en catálogo (51 Mahle,
+  42 Federal Mogul, 27 Glyco). Los cuatro catálogos las traen —Glyco las marca `TW/A`,
+  Federal Mogul `Axial` y Mahle con los prefijos `L`/`SL`/`AE`/`SAE`— pero sus
+  medidas no son las mismas cinco: se miden por Ø interior, Ø exterior y espesor,
+  así que necesitan su propia familia en la pantalla, no sólo otra fila.
+* **7 códigos Glyco de bancada** que la edición 2023-2025 no lista (`72-3314`,
+  `72-3448`, `H705/7`, `H931/5`, `H938/7`, `H1098/5`, `H1225/5`).
+* **4 códigos Glyco de biela** que ni la edición 2023-2025 ni el catálogo de Federal Mogul
   traen (`71-2404`, `71-3447`, `71-3951`, `713850A`): referencias viejas que
   Glyco discontinuó y el proveedor todavía vende. Están cargadas igual, con la
   aplicación y el precio, y las medidas vacías.

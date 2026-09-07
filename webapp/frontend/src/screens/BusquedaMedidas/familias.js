@@ -442,6 +442,50 @@ export const FAMILIAS = [
     ],
   },
   {
+    id: 'cojinetes_bancada',
+    label: 'Cojinetes de bancada',
+    // Misma pantalla que la de biela, y por la misma razón: el Ø del muñón es
+    // lo único que se puede medir con el cigüeñal sobre la mesa. Lo que cambia
+    // es de qué muñón se habla —el de bancada, que es el más grande— y que hoy
+    // la familia es toda de Glyco.
+    medidas: [
+      { campo: 'diam_munon', label: 'Ø muñón (STD)' },
+      { campo: 'diam_sobremedida', label: 'Ø muñón rectificado' },
+      { campo: 'diam_alojamiento', label: 'Ø alojamiento' },
+      { campo: 'ancho', label: 'Ancho' },
+      { campo: 'espesor', label: 'Espesor' },
+    ],
+    textos: [
+      { campo: 'codigo', label: 'Código', ancho: 200, icono: 'tag' },
+      { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
+    ],
+    columnas: [
+      { key: 'codigo', header: 'Código', width: 130, strong: true, wrap: true },
+      // Acá alcanza con 90: hoy la familia es toda GLYCO. Si algún día entran
+      // Mahle y Federal Mogul, esta columna necesita los 145 que tiene la de
+      // biela para que "FEDERAL MOGUL" no salga cortada.
+      { key: 'marca', header: 'Marca', width: 90 },
+      { key: 'descripcion', header: 'Motor / aplicación', wrap: true, minWidth: 170, tipo: 'aplicacion' },
+      { key: 'nro_cil', header: 'Cil.', width: 55, align: 'center' },
+      { key: 'diam_munon', header: 'Ø muñón', width: 105, align: 'right', tipo: 'mm', wrap: true },
+      { key: 'diam_alojamiento', header: 'Ø aloj.', width: 100, align: 'right', tipo: 'mm', wrap: true },
+      // El de bancada es más ancho que el de biela: el del OM366 mide 31,81 mm,
+      // y el de la posición con pestaña llega a 42.
+      { key: 'ancho', header: 'Ancho', width: 90, align: 'right', tipo: 'mm', wrap: true },
+      { key: 'espesor', header: 'Espesor', width: 100, align: 'right', tipo: 'mm', decimales: 3, wrap: true },
+      { key: 'luz_aceite', header: 'Luz de aceite', width: 130, align: 'right', tipo: 'mm', decimales: 3, wrap: true },
+      { key: 'sobremedidas', header: 'Bajomedidas y Ø del muñón', minWidth: 275, tipo: 'sobremedidas', wrap: true },
+      { key: 'medida_crac', header: 'Precio de', width: 85, tipo: 'medida' },
+      { key: 'precio', header: 'Precio', width: 105, align: 'right', tipo: 'precio' },
+      { key: 'stock', header: 'Stock', width: 85, align: 'center', tipo: 'stock' },
+    ],
+    ejemplos: [
+      { label: 'Ø muñón 54 mm', filtros: { diam_munon: '54', tol_diam_munon: '0.1' } },
+      { label: 'Muñón rectificado 53,71', filtros: { diam_sobremedida: '53.71', tol_diam_sobremedida: '0.05' } },
+      { label: 'Motor: Mercedes', filtros: { aplicacion: 'benz' } },
+    ],
+  },
+  {
     id: 'bujes_biela',
     label: 'Bujes de biela',
     // El Ø exterior no está acá sino con las sobremedidas: un buje tiene el

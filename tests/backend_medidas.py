@@ -51,9 +51,10 @@ def _lista(valor):
 print("\n=== 0. Catálogos cargados ===")
 db.init_db()
 familias = {f["id"]: f for f in tecnicos.get_familias()}
-check("están las nueve familias",
-      sorted(familias) == ["asientos", "bujes_biela", "camisas", "cojinetes_biela", "conjuntos",
-                           "guias", "pistones", "subconjuntos", "valvulas"],
+check("están las diez familias",
+      sorted(familias) == ["asientos", "bujes_biela", "camisas", "cojinetes_bancada",
+                           "cojinetes_biela", "conjuntos", "guias", "pistones",
+                           "subconjuntos", "valvulas"],
       list(familias))
 check("1.782 válvulas (3B + Mahle)",
       familias.get("valvulas", {}).get("total") == 1782, familias.get("valvulas"))
@@ -76,6 +77,12 @@ check("190 bujes de biela (Indubrón)",
 # códigos de esa marca que estaban esperándolo.
 check("354 cojinetes de biela (Mahle + Federal Mogul + Glyco)",
       familias.get("cojinetes_biela", {}).get("total") == 354, familias.get("cojinetes_biela"))
+# La de bancada es hoy toda de Glyco: los 75 códigos de esa marca que vende el
+# proveedor. Mahle y Federal Mogul quedaron afuera a propósito (ver PIEZAS en
+# scripts/convertir_cojinetes.py).
+check("75 cojinetes de bancada (Glyco)",
+      familias.get("cojinetes_bancada", {}).get("total") == 75,
+      familias.get("cojinetes_bancada"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
 # La casilla "Solo las que tiene el proveedor" va en todas menos las dos
 # familias de Mahle: los catálogos técnicos son los del fabricante y traen más
@@ -558,6 +565,33 @@ malas = [f["codigo"] for f in tecnicos._catalogo("cojinetes_biela")
          and max(_lista(f["medidas"]["diam_alojamiento"])) <= min(_lista(f["medidas"]["diam_munon"]))]
 check("en todas las fichas el alojamiento es mayor que el muñón", not malas, malas[:5])
 
+print("\n=== 7 quater. Cojinetes de bancada ===")
+# Misma pantalla que la de biela, otro muñón: el de bancada es más grande. El
+# H027/5 es el del Golf 1.9 TD, página 58 del catálogo de Glyco.
+r = tecnicos.buscar("cojinetes_bancada", {"codigo": "CBGLH027/5"})
+golf = r["resultados"][0]
+check("el Golf 1.9 TD sale del catálogo de Glyco",
+      golf["extra"]["catalogo"] == "Glyco 2023-2025", golf["extra"]["catalogo"])
+check("con las cuatro medidas y la luz de aceite",
+      golf["medidas"] == {"diam_munon": [53.958, 53.978],
+                          "diam_alojamiento": [59.0, 59.019],
+                          "ancho": 18.5, "espesor": 2.502}
+      and golf["extra"]["luz_aceite"] == [0.02, 0.082], golf["medidas"])
+r = tecnicos.buscar("cojinetes_bancada", {"diam_munon": "53.97", "tol_diam_munon": "0.02"})
+check("y se lo encuentra midiendo el muñón", "CBGLH027/5" in codigos(r), codigos(r)[:5])
+# El muñón de bancada del OM366 mide 88: en la familia de biela no hay nada de
+# ese tamaño, que es justamente por qué son dos familias y no una.
+r = tecnicos.buscar("cojinetes_bancada", {"diam_munon": "88", "tol_diam_munon": "0.05"})
+check("un muñón de 88 mm encuentra el del OM366", "CBGLH048/7" in codigos(r), codigos(r)[:5])
+# Los siete que la edición 2023-2025 no lista entran igual, con la aplicación y
+# el precio, y nunca aparecen en una búsqueda por medidas.
+sin_medidas = {f["codigo"] for f in tecnicos._catalogo("cojinetes_bancada")
+               if f["medidas"]["diam_munon"] is None}
+check("siete códigos sin ficha en el catálogo", len(sin_medidas) == 7, sorted(sin_medidas))
+r = tecnicos.buscar("cojinetes_bancada", {"diam_munon": "50", "tol_diam_munon": "+"})
+check("y ninguno aparece en una búsqueda por medidas",
+      not (sin_medidas & set(codigos(r))), sorted(sin_medidas & set(codigos(r)))[:5])
+
 print("\n=== 8. El tope de 100 se avisa ===")
 r = tecnicos.buscar("guias", {"aplicacion": "guia"})
 check("se devuelven 100 como mucho", r["total"] == 100, r["total"])
@@ -569,7 +603,7 @@ cliente = app.test_client()
 check("sin sesión no se entra", cliente.get("/api/tecnicos/familias").status_code == 401)
 cliente.post("/api/auth/login", json={"usuario": os.environ["APP_USERNAME"], "password": CLAVE})
 resp = cliente.get("/api/tecnicos/familias")
-check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 9, resp.get_json())
+check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 10, resp.get_json())
 resp = cliente.get("/api/tecnicos/buscar?familia=camisas&diam_int=56.5&tol_diam_int=0")
 datos = resp.get_json()
 check("y la búsqueda", resp.status_code == 200 and "UC 2112" in [r["codigo"] for r in datos["resultados"]], datos)

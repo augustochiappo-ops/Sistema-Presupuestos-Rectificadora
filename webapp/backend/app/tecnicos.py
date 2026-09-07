@@ -154,6 +154,14 @@ ESPEC = {
         "medidas": ["diam_munon", "diam_alojamiento", "ancho", "espesor"],
         "sobremedidas": True,
     },
+    # Las mismas cuatro medidas que la de biela, y por la misma razón: el muñón
+    # es lo único que se puede medir con el cigüeñal sobre la mesa. Lo que
+    # cambia es de qué muñón se habla, el de bancada en vez del de biela.
+    "cojinetes_bancada": {
+        "label": "Cojinetes de bancada",
+        "medidas": ["diam_munon", "diam_alojamiento", "ancho", "espesor"],
+        "sobremedidas": True,
+    },
     "bujes_biela": {
         "label": "Bujes de biela",
         "medidas": ["diam_perno", "diam_int", "ancho"],

@@ -1370,6 +1370,56 @@ el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 
 ## Próximo paso
 
+**Glyco entero, y la décima familia: cojinetes de bancada (2026-09-07).**
+
+Dos cosas en una sesión, las dos sobre el mismo catálogo nuevo.
+
+**1. Los 75 cojinetes de biela de Glyco que faltaban.** `cojinetes_biela.json`
+pasó de **279 a 354 fichas** (281 con medidas). Glyco estaba cargada a medias:
+de sus 87 códigos había 12, los únicos que aparecen dentro del catálogo de
+Federal Mogul. Ahora hay **83 con medidas**; los otros 4 (`71-2404`, `71-3447`,
+`71-3951`, `713850A`) son referencias que Glyco discontinuó y el proveedor
+todavía vende, y van cargadas con la aplicación y el precio, como los huérfanos
+de las otras marcas.
+
+**2. `cojinetes_bancada.json`, familia nueva: 75 fichas, 68 con medidas.**
+Sólo Glyco, que es lo que pidió el dueño a mitad de sesión. Los 7 sin medidas
+(`72-3314`, `72-3448`, `H705/7`, `H931/5`, `H938/7`, `H1098/5`, `H1225/5`) la
+edición 2023-2025 no los lista.
+
+**El catálogo de Glyco no está en el repo.** Pesa 30 MB, más que todos los otros
+PDF juntos, y el repo se copia entero a PythonAnywhere en cada deploy: vive en
+el **release `catalogos`** de GitHub y el `.gitignore` lo tiene. El script avisa
+y sigue si no está (Mahle y Federal Mogul se cargan igual). Cómo bajarlo está en
+`CARGA-COJINETES.md`, arriba de todo.
+
+**Cómo llegó el PDF hasta acá, que fue lo que más tardó.** El dueño lo tenía
+abierto en Chrome y pidió que Claude lo leyera desde ahí: no se puede, Claude
+corre en un contenedor aislado, sin pantalla ni acceso a la máquina, y la salida
+a internet está cerrada salvo `chiapppo.pythonanywhere.com`. El botón de
+adjuntar del chat tampoco le andaba. Lo que funcionó: **subirlo a un release de
+GitHub** (el subidor común corta en 25 MB; releases aguanta 2 GB) y bajarlo con
+el token de la sesión. Google Drive también sirve para archivos chicos —el
+conector está conectado— pero devuelve el archivo pegado en la respuesta del
+chat y 30 MB no entran. Queda anotado en `decisiones.md`.
+
+**Bancada de Mahle y de Federal Mogul está lista para prender.** Se escribió y
+se probó el mismo día: Mahle resuelve 110 de sus 136 códigos y Federal Mogul 63
+de 134. Quedó afuera porque el dueño pidió sólo Glyco. Para sumarlas: agregar
+las marcas en `PIEZAS` (arriba de `scripts/convertir_cojinetes.py`), volver a
+correr, y después ajustar lo de afuera — la columna de marca de bancada está en
+90 px porque hoy todo dice GLYCO y con `FEDERAL MOGUL` necesita 145, y los
+conteos de las dos suites pasan de 75 a 345.
+
+**Lo que sigue en esta familia**: los **cojinetes axiales** (categoría `CF`, las
+semiarandelas de empuje). Son 120 códigos de las tres marcas que tenemos en
+catálogo, y los cuatro PDF las traen, pero **no se miden con las mismas cinco
+columnas** —van por Ø interior, Ø exterior y espesor—, así que necesitan su
+propia familia en la pantalla, no sólo otra fila. Está anotado en
+`CARGA-COJINETES.md`, sección 8.
+
+---
+
 **Conjuntos Mahle: la segunda tanda, 43 fichas nuevas (2026-09-04, tercera
 sesión).** `conjuntos.json` pasó de **67 a 110 fichas con medidas** sobre 128.
 Las 43 nuevas salieron del **Mahle 2019** y entran con `verificado: false`: el
