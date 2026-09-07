@@ -1403,13 +1403,42 @@ el token de la sesión. Google Drive también sirve para archivos chicos —el
 conector está conectado— pero devuelve el archivo pegado en la respuesta del
 chat y 30 MB no entran. Queda anotado en `decisiones.md`.
 
-**Bancada de Mahle y de Federal Mogul está lista para prender.** Se escribió y
-se probó el mismo día: Mahle resuelve 110 de sus 136 códigos y Federal Mogul 63
-de 134. Quedó afuera porque el dueño pidió sólo Glyco. Para sumarlas: agregar
-las marcas en `PIEZAS` (arriba de `scripts/convertir_cojinetes.py`), volver a
-correr, y después ajustar lo de afuera — la columna de marca de bancada está en
-90 px porque hoy todo dice GLYCO y con `FEDERAL MOGUL` necesita 145, y los
-conteos de las dos suites pasan de 75 a 345.
+**Verificado:** las dos suites enteras (backend TODO OK; UI 129 verificaciones
+TODO OK, incluido que ninguna celda de ninguna de las diez familias quede
+cortada). **Producción quedó en `12d1b1f`**, deploy corrido y confirmado
+(HTTP 200, `git pull` fast-forward, reload agendado, la portada responde).
+
+### Lo que sigue: bancada de Mahle y de Federal Mogul
+
+**Está escrito y probado, sólo hay que prenderlo.** El mismo día se midió:
+Mahle resuelve 110 de sus 136 códigos y Federal Mogul 63 de 134. Quedó afuera
+porque el dueño pidió sólo Glyco.
+
+**No hace falta que el dueño consiga ni mande ningún PDF.** Los tres catálogos
+están versionados en el repo (`mahle_cojinetes_2019.pdf`,
+`mahle_clevite_2014.pdf`, `federal_mogul_cojinetes.pdf`). El único que no está
+es el de Glyco, y **hay que bajarlo del release `catalogos` antes de correr el
+script** — si no está, el script sigue igual pero regenera los dos JSON sin las
+fichas de Glyco: se perderían 83 de biela y las 68 de bancada. El comando está
+arriba de `CARGA-COJINETES.md`.
+
+Los pasos, en orden:
+
+1. Bajar el PDF de Glyco del release a `CRAC/tecnicos/fuentes/`.
+2. En `PIEZAS` (arriba de `scripts/convertir_cojinetes.py`), en `"bancada"`,
+   cambiar `"marcas": ("GL",)` por `("BE", "F", "GL")`.
+3. Correr `.venv/bin/python scripts/convertir_cojinetes.py` (~5 minutos, lee los
+   cuatro catálogos dos veces). Bancada pasa de **75 a 345 fichas**.
+4. Ajustar lo de afuera, que es lo único que no es automático:
+   * `familias.js`, familia `cojinetes_bancada`: la columna `marca` está en
+     **90 px** porque hoy todo dice GLYCO; con `FEDERAL MOGUL` necesita **145**,
+     como la de biela. Si no, sale cortada — y el check de celdas cortadas de la
+     suite de UI lo agarra.
+   * Los ejemplos de esa familia apuntan a piezas de Glyco; conviene revisarlos.
+   * Conteos: `tests/backend_medidas.py` (75 → 345) y `tests/ui_medidas.mjs`
+     (la pestaña `Cojinetes de bancada\s*75`).
+   * Los conteos de `CARGA-COJINETES.md` y de `tests/README.md`.
+5. `npm run build` + commitear `static_build/`, las dos suites, y el deploy.
 
 **Lo que sigue en esta familia**: los **cojinetes axiales** (categoría `CF`, las
 semiarandelas de empuje). Son 120 códigos de las tres marcas que tenemos en
