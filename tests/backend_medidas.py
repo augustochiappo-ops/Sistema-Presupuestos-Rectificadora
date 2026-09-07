@@ -71,10 +71,11 @@ check("35 pistones (Persan)", familias.get("pistones", {}).get("total") == 35, f
 check("190 bujes de biela (Indubrón)",
       familias.get("bujes_biela", {}).get("total") == 190, familias.get("bujes_biela"))
 # Los cojinetes de biela salen de la lista del proveedor —Mahle, Federal Mogul y
-# los Glyco que están adentro del catálogo de Federal Mogul—, así que hay uno
-# por código, tenga o no ficha en el catálogo del fabricante.
-check("279 cojinetes de biela (Mahle + Federal Mogul + Glyco)",
-      familias.get("cojinetes_biela", {}).get("total") == 279, familias.get("cojinetes_biela"))
+# Glyco—, así que hay uno por código, tenga o no ficha en el catálogo del
+# fabricante. Eran 279 hasta que entró el catálogo de Glyco, que sumó los 75
+# códigos de esa marca que estaban esperándolo.
+check("354 cojinetes de biela (Mahle + Federal Mogul + Glyco)",
+      familias.get("cojinetes_biela", {}).get("total") == 354, familias.get("cojinetes_biela"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
 # La casilla "Solo las que tiene el proveedor" va en todas menos las dos
 # familias de Mahle: los catálogos técnicos son los del fabricante y traen más
@@ -508,6 +509,21 @@ check("el Iveco Daily 2.8 sale del Mahle 2019, página 342",
 check("con el muñón y el alojamiento del catálogo",
       iveco["medidas"]["diam_munon"] == [56.52, 56.535]
       and iveco["medidas"]["diam_alojamiento"] == [60.333, 60.345], iveco["medidas"])
+
+# Y la de Glyco sale de su propio catálogo, que es el cuarto de la familia. El
+# 01-4116 es el Fiat Fire 1.0: el proveedor le corta el código a siete
+# caracteres y ahí pierde los pares ("01-4116/4" del catálogo es "01-4116").
+r = tecnicos.buscar("cojinetes_biela", {"codigo": "CAGL01-4116"})
+fire = r["resultados"][0]
+check("el Fiat Fire 1.0 sale del catálogo de Glyco, página 96",
+      fire["extra"]["catalogo"] == "Glyco 2023-2025"
+      and fire["extra"]["pagina_catalogo"] == 96,
+      (fire["extra"]["catalogo"], fire["extra"]["pagina_catalogo"]))
+check("con las cuatro medidas y la luz de aceite",
+      fire["medidas"] == {"diam_munon": [37.998, 38.008],
+                          "diam_alojamiento": [41.128, 41.14],
+                          "ancho": 19.0, "espesor": 1.549}
+      and fire["extra"]["luz_aceite"] == [0.022, 0.069], fire["medidas"])
 
 # La bajomedida guarda el Ø QUE LE QUEDA AL MUÑÓN rectificado, no la bajomedida
 # en sí: es lo que hace que se pueda buscar un cigüeñal ya rectificado.

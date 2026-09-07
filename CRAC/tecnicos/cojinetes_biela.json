@@ -9425,9 +9425,9 @@
  },
  {
   "codigo": "CAGL01-3841",
-  "codigo_fab": "01-3841/6",
+  "codigo_fab": "01-3841/8",
   "marca": "GLYCO",
-  "aplicacion": "Volkswagen Golf III/IV , Pasat, Sharan, Vento, Caravelle, Bora VR6 (AAA/AES) - 1991 /",
+  "aplicacion": "Audi V8 3.6 10/88–02/94",
   "descripcion": "VW PASSAT 2.8 V6",
   "medidas": {
    "diam_munon": [
@@ -9442,22 +9442,22 @@
    "espesor": 1.406
   },
   "extra": {
-   "fabricante_motor": "Volkswagen",
-   "motor": "Golf III/IV ,  Pasat, Sharan, Vento, Caravelle, Bora VR6 (AAA/AES) - 1991 /",
-   "nro_cil": "6",
-   "diam_x_carrera": "81 x 90.3",
-   "cilindrada": "2792",
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
+   "fabricante_motor": "Audi",
+   "motor": "V8 3.6 10/88–02/94",
+   "nro_cil": "8",
+   "diam_x_carrera": null,
+   "cilindrada": "3562",
+   "pares": "8",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
    "luz_aceite": [
     0.02,
     0.074
    ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": "Federal Mogul",
-   "pagina_catalogo": 86,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 81,
    "sobremedidas": [
     {
      "label": "STD",
@@ -9477,10 +9477,2097 @@
   ]
  },
  {
-  "codigo": "CAGL71-2185",
-  "codigo_fab": "71-2185/6",
+  "codigo": "CAGL01-3867",
+  "codigo_fab": "01-3867/4",
   "marca": "GLYCO",
-  "aplicacion": "Ford Explorer 4.0i V6 OHV, Explorer 4.0i V6 SOHC",
+  "aplicacion": "Audi A2 1.4 02/00–08/05",
+  "descripcion": "VW GOLF 1.6-GOL 1.4 EA111 S/TRABA",
+  "medidas": {
+   "diam_munon": [
+    47.763,
+    47.778
+   ],
+   "diam_alojamiento": [
+    50.6,
+    50.612
+   ],
+   "ancho": 18.5,
+   "espesor": 1.406
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": "A2 1.4 02/00–08/05",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1390",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.062
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 47,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.763,
+      47.778
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      47.513,
+      47.528
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      47.263,
+      47.278
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-3867025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-3867050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-3867STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-3977",
+  "codigo_fab": "01-3977/4",
+  "marca": "GLYCO",
+  "aplicacion": "Dacia LOGAN 1.0 01/11–10/12 SANDERO 1.0 01/11–12/12",
+  "descripcion": "RENAULT CLIO 1.0 D4D-D7D-1.2 D4F-D7F",
+  "medidas": {
+   "diam_munon": [
+    39.984,
+    40.0
+   ],
+   "diam_alojamiento": [
+    43.639,
+    43.65
+   ],
+   "ancho": 16.25,
+   "espesor": 1.81
+  },
+  "extra": {
+   "fabricante_motor": "Dacia",
+   "motor": "LOGAN 1.0 01/11–10/12 SANDERO 1.0 01/11–12/12",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "999",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.065
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 177,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      39.984,
+      40.0
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      39.734,
+      39.75
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      39.484,
+      39.5
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-3977025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-3977050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-3977STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4040",
+  "codigo_fab": "01-4040/4",
+  "marca": "GLYCO",
+  "aplicacion": "Ford",
+  "descripcion": "FORD SIGMA 1.6 16V FYDA-KUGA 1.6 16V",
+  "medidas": {
+   "diam_munon": [
+    43.985,
+    44.0
+   ],
+   "diam_alojamiento": [
+    47.035,
+    47.045
+   ],
+   "ancho": 15.27,
+   "espesor": 1.516
+  },
+  "extra": {
+   "fabricante_motor": "Ford",
+   "motor": null,
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1498",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.05
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 284,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      43.985,
+      44.0
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      43.735,
+      43.75
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      43.485,
+      43.5
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4040025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4040050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4040STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4116",
+  "codigo_fab": "01-4116/4",
+  "marca": "GLYCO",
+  "aplicacion": "Autobianchi Y10 1.0 03/85–10/95 Y10 1.0 Cat 10/87–10/95",
+  "descripcion": "FIAT FIRE 1.0 8V-1.0 16V 38 mm",
+  "medidas": {
+   "diam_munon": [
+    37.998,
+    38.008
+   ],
+   "diam_alojamiento": [
+    41.128,
+    41.14
+   ],
+   "ancho": 19.0,
+   "espesor": 1.549
+  },
+  "extra": {
+   "fabricante_motor": "Autobianchi",
+   "motor": "Y10 1.0 03/85–10/95 Y10 1.0 Cat 10/87–10/95",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "999",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.022,
+    0.069
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 96,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      37.998,
+      38.008
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      37.748,
+      37.758
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      37.498,
+      37.508
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      37.248,
+      37.258
+     ]
+    },
+    {
+     "label": "-1 mm",
+     "valor": [
+      36.998,
+      37.008
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (075, 100): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4116025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4116050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4116075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL01-4116100",
+    "medida": "100"
+   },
+   {
+    "codigo": "CAGL01-4116STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4131",
+  "codigo_fab": "01-4131/4",
+  "marca": "GLYCO",
+  "aplicacion": "Bedford BRAVA 2.5 D 02/90–07/90 KB 2.5 D 01/83–12/88",
+  "descripcion": "ISUZU 4JA1-4JB1-4JB1T-4JG2TD",
+  "medidas": {
+   "diam_munon": 52.92,
+   "diam_alojamiento": 56.0,
+   "ancho": 25.8,
+   "espesor": 1.513
+  },
+  "extra": {
+   "fabricante_motor": "Bedford",
+   "motor": "BRAVA 2.5 D 02/90–07/90 KB 2.5 D 01/83–12/88",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2500",
+   "pares": "8",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 101,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 52.92
+    },
+    {
+     "label": "-.025\"",
+     "valor": 52.285
+    },
+    {
+     "label": "-.050\"",
+     "valor": 51.65
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025, 050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4131025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4131050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4131STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4146",
+  "codigo_fab": "01-4146/4",
+  "marca": "GLYCO",
+  "aplicacion": "Toyota DYNA 2.4 D 08/77–05/95 KIJANG 2.4 D 01/95–12/00 DYNA 100 2.4 D 05/95–07/01 LAND CRUISER 2.4 D 11/84–10/85 DYNA 150 2.4 D 08/85–04/95 QUALIS 2.4 D 01/99–10/04",
+  "descripcion": "TOYOTA 3L-2LT-5L",
+  "medidas": {
+   "diam_munon": 54.98,
+   "diam_alojamiento": 58.02,
+   "ancho": 26.0,
+   "espesor": 1.486
+  },
+  "extra": {
+   "fabricante_motor": "Toyota",
+   "motor": "DYNA 2.4 D 08/77–05/95 KIJANG 2.4 D 01/95–12/00 DYNA 100 2.4 D 05/95–07/01 LAND CRUISER 2.4 D 11/84–10/85 DYNA 150 2.4 D 08/85–04/95 QUALIS 2.4 D 01/99–10/04",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "8",
+   "tipo_material": "AL",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 1009,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 54.98
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": 54.73
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": 54.48
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": 54.23
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050, 075): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4146025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4146050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4146075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL01-4146STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4147",
+  "codigo_fab": "01-4147/4",
+  "marca": "GLYCO",
+  "aplicacion": "Land Rover 88/109 MK III 2.3 D 11/71–12/86 110/127 2.3 D 06/84–08/87 88/109 MK IIA 2.3 D 09/63–10/71",
+  "descripcion": "ROVER 214-216-414-416",
+  "medidas": {
+   "diam_munon": [
+    43.0,
+    43.007
+   ],
+   "diam_alojamiento": [
+    46.666,
+    46.687
+   ],
+   "ancho": 21.61,
+   "espesor": 1.824
+  },
+  "extra": {
+   "fabricante_motor": "Land Rover",
+   "motor": "88/109 MK III 2.3 D 11/71–12/86 110/127 2.3 D 06/84–08/87 88/109 MK IIA 2.3 D 09/63–10/71",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2286",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.064
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 458,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      43.0,
+      43.007
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      42.75,
+      42.757
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4147025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4147STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4149",
+  "codigo_fab": "01-4149/4",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën EVASION 2.0 05/98–04/00 XM 2.0 i 05/89–06/94 EVASION 2.0 16V 05/98–04/00 XM 2.0 i 16V 05/94–10/00 XANTIA 2.0 03/93–05/95 XSARA 2.0 08/98–08/00",
+  "descripcion": "PEUGEOT 405 XU10 2.0 (ANCHO 22)",
+  "medidas": {
+   "diam_munon": [
+    49.984,
+    50.0
+   ],
+   "diam_alojamiento": [
+    53.695,
+    53.708
+   ],
+   "ancho": 21.95,
+   "espesor": 1.834
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "EVASION 2.0 05/98–04/00 XM 2.0 i 05/89–06/94 EVASION 2.0 16V 05/98–04/00 XM 2.0 i 16V 05/94–10/00 XANTIA 2.0 03/93–05/95 XSARA 2.0 08/98–08/00",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1998",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.027,
+    0.081
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 170,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      49.984,
+      50.0
+     ]
+    },
+    {
+     "label": "-0,3 mm",
+     "valor": [
+      49.684,
+      49.7
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4149030",
+    "medida": "030"
+   },
+   {
+    "codigo": "CAGL01-4149STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4154",
+  "codigo_fab": "01-4154/4",
+  "marca": "GLYCO",
+  "aplicacion": "Alfa Romeo GIULIETTA 1.4 04/11–12/20 MITO 1.4 MultiAir 09/09–10/18 GIULIETTA 1.4 TB 04/10–01/20 MITO 1.4 TB 12/13–10/18 MITO 1.4 08/08–10/18 MITO 1.4 Turbo MultiAir 10/09–10/18",
+  "descripcion": "FIAT FIRE 1.3-1.4 8V/16V 42 mm",
+  "medidas": {
+   "diam_munon": [
+    41.988,
+    42.008
+   ],
+   "diam_alojamiento": [
+    45.127,
+    45.14
+   ],
+   "ancho": 19.0,
+   "espesor": 1.548
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "GIULIETTA 1.4 04/11–12/20 MITO 1.4 MultiAir 09/09–10/18 GIULIETTA 1.4 TB 04/10–01/20 MITO 1.4 TB 12/13–10/18 MITO 1.4 08/08–10/18 MITO 1.4 Turbo MultiAir 10/09–10/18",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1368",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.023,
+    0.081
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 18,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      41.988,
+      42.008
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      41.738,
+      41.758
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      41.488,
+      41.508
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      41.238,
+      41.258
+     ]
+    },
+    {
+     "label": "-1 mm",
+     "valor": [
+      40.988,
+      41.008
+     ]
+    },
+    {
+     "label": "-1,25 mm",
+     "valor": [
+      40.738,
+      40.758
+     ]
+    },
+    {
+     "label": "-1,5 mm",
+     "valor": [
+      40.488,
+      40.508
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (075, 100, 125, 150): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4154025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4154050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4154075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL01-4154100",
+    "medida": "100"
+   },
+   {
+    "codigo": "CAGL01-4154125",
+    "medida": "125"
+   },
+   {
+    "codigo": "CAGL01-4154150",
+    "medida": "150"
+   },
+   {
+    "codigo": "CAGL01-4154STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4161",
+  "codigo_fab": "01-4161/4",
+  "marca": "GLYCO",
+  "aplicacion": "Nissan KUBISTAR 1.2 08/03–",
+  "descripcion": "RENAULT TWINGO 1.2 D4F-D7F C/TRABA",
+  "medidas": {
+   "diam_munon": [
+    39.984,
+    40.0
+   ],
+   "diam_alojamiento": [
+    43.639,
+    43.65
+   ],
+   "ancho": 16.25,
+   "espesor": 1.813
+  },
+  "extra": {
+   "fabricante_motor": "Nissan",
+   "motor": "KUBISTAR 1.2 08/03–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1149",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.07,
+    0.065
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 701,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      39.984,
+      40.0
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4161STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4162",
+  "codigo_fab": "01-4162/4",
+  "marca": "GLYCO",
+  "aplicacion": "Ford FIESTA IV 1.25 i 16V 08/95–01/02 FUSION 1.25 08/04–12/12 FIESTA V 1.25 16V 05/02–06/08",
+  "descripcion": "FORD ZETEC 1.4",
+  "medidas": {
+   "diam_munon": [
+    39.98,
+    40.0
+   ],
+   "diam_alojamiento": [
+    43.025,
+    43.045
+   ],
+   "ancho": 15.0,
+   "espesor": 1.506
+  },
+  "extra": {
+   "fabricante_motor": "Ford",
+   "motor": "FIESTA IV 1.25 i 16V 08/95–01/02 FUSION 1.25 08/04–12/12 FIESTA V 1.25 16V 05/02–06/08",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1242",
+   "pares": "4",
+   "tipo_material": "AL",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.052
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 277,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      39.98,
+      40.0
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      39.73,
+      39.75
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4162025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4162STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4163",
+  "codigo_fab": "01-4163/4",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën C2 1.4 09/03–12/09 C3 II 1.4 11/09–09/16 C2 1.4 16V 04/05–12/09 C3 II 1.4 LPG 07/10– C3 1.4 05/03– C4 1.4 16V 11/04–07/11",
+  "descripcion": "PEUGEOT TU3JP 1.4L/PARTNER 1.4L C/AGUJ*",
+  "medidas": {
+   "diam_munon": [
+    44.975,
+    44.991
+   ],
+   "diam_alojamiento": [
+    48.655,
+    48.671
+   ],
+   "ancho": 19.75,
+   "espesor": 1.82
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "C2 1.4 09/03–12/09 C3 II 1.4 11/09–09/16 C2 1.4 16V 04/05–12/09 C3 II 1.4 LPG 07/10– C3 1.4 05/03– C4 1.4 16V 11/04–07/11",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.08
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 156,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      44.975,
+      44.991
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      44.34,
+      44.356
+     ]
+    },
+    {
+     "label": "-.030\"",
+     "valor": [
+      44.213,
+      44.229
+     ]
+    },
+    {
+     "label": "-.050\"",
+     "valor": [
+      43.705,
+      43.721
+     ]
+    },
+    {
+     "label": "-.080\"",
+     "valor": [
+      42.943,
+      42.959
+     ]
+    },
+    {
+     "label": "-.100\"",
+     "valor": [
+      42.435,
+      42.451
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025, 030, 050, 080, 100): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4163025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4163030",
+    "medida": "030"
+   },
+   {
+    "codigo": "CAGL01-4163050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4163080",
+    "medida": "080"
+   },
+   {
+    "codigo": "CAGL01-4163100",
+    "medida": "100"
+   },
+   {
+    "codigo": "CAGL01-4163STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4173",
+  "codigo_fab": "01-4173/4",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën LNA 1.0 07/84–10/86 VISA 1.0 09/84–06/88",
+  "descripcion": "PEUGEOT 205 1.4 TU3-TU5 S/AGUJ.LUB.",
+  "medidas": {
+   "diam_munon": [
+    44.975,
+    44.991
+   ],
+   "diam_alojamiento": [
+    48.655,
+    48.671
+   ],
+   "ancho": 19.75,
+   "espesor": 1.82
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "LNA 1.0 07/84–10/86 VISA 1.0 09/84–06/88",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "954",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.024,
+    0.081
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 151,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      44.975,
+      44.991
+     ]
+    },
+    {
+     "label": "-0,3 mm",
+     "valor": [
+      44.675,
+      44.691
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      44.475,
+      44.491
+     ]
+    },
+    {
+     "label": "-0,8 mm",
+     "valor": [
+      44.175,
+      44.191
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (080): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4173030",
+    "medida": "030"
+   },
+   {
+    "codigo": "CAGL01-4173050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4173080",
+    "medida": "080"
+   },
+   {
+    "codigo": "CAGL01-4173STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4174",
+  "codigo_fab": "01-4174/4",
+  "marca": "GLYCO",
+  "aplicacion": "Rover",
+  "descripcion": "LAND ROVER DISCOVERY 2.5TD",
+  "medidas": {
+   "diam_munon": [
+    58.725,
+    58.744
+   ],
+   "diam_alojamiento": [
+    62.433,
+    62.446
+   ],
+   "ancho": 25.07,
+   "espesor": 1.83
+  },
+  "extra": {
+   "fabricante_motor": "Rover",
+   "motor": null,
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2250",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.029,
+    0.086
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 890,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      58.725,
+      58.744
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      58.475,
+      58.494
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      58.225,
+      58.244
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4174025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4174050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4174STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4175",
+  "codigo_fab": "01-4175/4",
+  "marca": "GLYCO",
+  "aplicacion": "Abarth RITMO 125 TC 2.0 11/81–12/87 RITMO 130 TC 2.0 04/83–12/87 –12/84 1 55-4193 SEMI 66649Y 21.539/21.641 25.000/25.021 25.100 BS",
+  "descripcion": "FIAT DUNA 1.7D*REGATTA 2.0 TEMPRA 2.0",
+  "medidas": {
+   "diam_munon": [
+    50.782,
+    50.802
+   ],
+   "diam_alojamiento": [
+    53.897,
+    53.913
+   ],
+   "ancho": 19.5,
+   "espesor": 1.537
+  },
+  "extra": {
+   "fabricante_motor": "Abarth",
+   "motor": "RITMO 125 TC 2.0 11/81–12/87 RITMO 130 TC 2.0 04/83–12/87 –12/84 1 55-4193 SEMI 66649Y 21.539/21.641 25.000/25.021 25.100 BS",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1995",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.021,
+    0.082
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 8,
+   "sobremedidas": [
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      50.532,
+      50.552
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      50.282,
+      50.302
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      50.032,
+      50.052
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4175025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4175050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4175075",
+    "medida": "075"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4176",
+  "codigo_fab": "01-4176/4",
+  "marca": "GLYCO",
+  "aplicacion": "Fiat 125 1.3 06/68–03/74 147 1.3 Rallye 07/80–07/83 131 1.3 Mirafiori 10/74–12/82 ELBA 1.3 04/86–12/93 131 1.3 Super Mirafiori 03/78–12/80 PREMIO 1.3 03/85–06/92",
+  "descripcion": "FIAT REGATTA 100",
+  "medidas": {
+   "diam_munon": [
+    48.224,
+    48.244
+   ],
+   "diam_alojamiento": [
+    51.33,
+    51.346
+   ],
+   "ancho": 19.5,
+   "espesor": 1.54
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "125 1.3 06/68–03/74 147 1.3 Rallye 07/80–07/83 131 1.3 Mirafiori 10/74–12/82 ELBA 1.3 04/86–12/93 131 1.3 Super Mirafiori 03/78–12/80 PREMIO 1.3 03/85–06/92",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1297",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.067
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 231,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      48.224,
+      48.244
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      47.589,
+      47.609
+     ]
+    },
+    {
+     "label": "-.050\"",
+     "valor": [
+      46.954,
+      46.974
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025, 050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4176025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4176050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4176STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4178",
+  "codigo_fab": "01-4178/4",
+  "marca": "GLYCO",
+  "aplicacion": "Alfa Romeo 33 1.2 06/83–09/92 ALFASUD 1.2 ti 11/73–09/84 ALFASUD 1.2 06/72–09/84 ARNA 1.2 03/83–12/86",
+  "descripcion": "ALFA ROMEO 1.2-1.3-1.5-33 1.7",
+  "medidas": {
+   "diam_munon": [
+    49.984,
+    50.0
+   ],
+   "diam_alojamiento": [
+    53.696,
+    53.708
+   ],
+   "ancho": 17.8,
+   "espesor": 1.836
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "33 1.2 06/83–09/92 ALFASUD 1.2 ti 11/73–09/84 ALFASUD 1.2 06/72–09/84 ARNA 1.2 03/83–12/86",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1186",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.024,
+    0.077
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 20,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      49.984,
+      50.0
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      49.349,
+      49.365
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4178025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4178STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4180",
+  "codigo_fab": "01-4180/4",
+  "marca": "GLYCO",
+  "aplicacion": "Lada SAMARA 1100 02/88–08/99",
+  "descripcion": "LADA 1200-1300-1500-1600 CC",
+  "medidas": {
+   "diam_munon": [
+    47.814,
+    47.834
+   ],
+   "diam_alojamiento": [
+    51.33,
+    51.346
+   ],
+   "ancho": 20.7,
+   "espesor": 1.73
+  },
+  "extra": {
+   "fabricante_motor": "Lada",
+   "motor": "SAMARA 1100 02/88–08/99",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1099",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.036,
+    0.097
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 430,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.814,
+      47.834
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4180STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4183",
+  "codigo_fab": "01-4183/4",
+  "marca": "GLYCO",
+  "aplicacion": "Ford TRANSIT 2.3 D FT 100 11/71–09/78 TRANSIT 2.4 D 11/77–10/86",
+  "descripcion": "FORD TRANSIT 2.5D",
+  "medidas": {
+   "diam_munon": [
+    59.98,
+    60.0
+   ],
+   "diam_alojamiento": [
+    63.506,
+    63.52
+   ],
+   "ancho": 26.11,
+   "espesor": 1.738
+  },
+  "extra": {
+   "fabricante_motor": "Ford",
+   "motor": "TRANSIT 2.3 D FT 100 11/71–09/78 TRANSIT 2.4 D 11/77–10/86",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2358",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.03,
+    0.089
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 310,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      59.98,
+      60.0
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      59.73,
+      59.75
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      59.48,
+      59.5
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4183025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4183050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL01-4183STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4199",
+  "codigo_fab": "01-4199/4",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën BX 15 01/87–05/92 BX 16 10/82–12/94",
+  "descripcion": "PEUGEOT 206 1.6 XU5",
+  "medidas": {
+   "diam_munon": [
+    44.975,
+    44.991
+   ],
+   "diam_alojamiento": [
+    48.655,
+    48.671
+   ],
+   "ancho": 20.25,
+   "espesor": 1.82
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "BX 15 01/87–05/92 BX 16 10/82–12/94",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1580",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.024,
+    0.081
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 162,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      44.975,
+      44.991
+     ]
+    },
+    {
+     "label": "-0,3 mm",
+     "valor": [
+      44.675,
+      44.691
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4199030",
+    "medida": "030"
+   },
+   {
+    "codigo": "CAGL01-4199STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4203",
+  "codigo_fab": "01-4203",
+  "marca": "GLYCO",
+  "aplicacion": "Bedford",
+  "descripcion": "SUZUKI F8A-F10A (UN)",
+  "medidas": {
+   "diam_munon": [
+    37.981,
+    37.991
+   ],
+   "diam_alojamiento": [
+    40.998,
+    41.021
+   ],
+   "ancho": 18.011,
+   "espesor": 1.491
+  },
+  "extra": {
+   "fabricante_motor": "Bedford",
+   "motor": null,
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "970",
+   "pares": "1",
+   "tipo_material": "AL",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.025,
+    0.083
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 100,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      37.981,
+      37.991
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      37.731,
+      37.741
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4203025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL01-4203STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4298",
+  "codigo_fab": "01-4298/4",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën EVASION 2.0 06/94–07/02 XSARA 2.0 i 16V 02/98–03/05 JUMPER 2.0 02/94–06/06 ZX 2.0 09/96–10/97 XM 2.0 08/94–07/99 ZX 2.0 i 16V 05/96–06/97",
+  "descripcion": "PEUGEOT 405 XU10 2.0",
+  "medidas": {
+   "diam_munon": [
+    49.984,
+    50.0
+   ],
+   "diam_alojamiento": [
+    53.695,
+    53.708
+   ],
+   "ancho": 20.25,
+   "espesor": 1.837
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "EVASION 2.0 06/94–07/02 XSARA 2.0 i 16V 02/98–03/05 JUMPER 2.0 02/94–06/06 ZX 2.0 09/96–10/97 XM 2.0 08/94–07/99 ZX 2.0 i 16V 05/96–06/97",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1998",
+   "pares": "4",
+   "tipo_material": "AL",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.021,
+    0.075
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 170,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      49.984,
+      50.0
+     ]
+    },
+    {
+     "label": "-0,3 mm",
+     "valor": [
+      49.684,
+      49.7
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4298030",
+    "medida": "030"
+   },
+   {
+    "codigo": "CAGL01-4298STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL01-4362",
+  "codigo_fab": "01-4362/4",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën AX 15 D 08/94–12/97 XSARA 1.5 D 04/97–09/00 SAXO 1.5 D 09/96–04/04 ZX 1.5 D 06/96–02/98",
+  "descripcion": "PEUGEOT 206 1.5 TUD5",
+  "medidas": {
+   "diam_munon": [
+    44.975,
+    44.991
+   ],
+   "diam_alojamiento": [
+    48.655,
+    48.671
+   ],
+   "ancho": 17.4,
+   "espesor": 1.82
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "AX 15 D 08/94–12/97 XSARA 1.5 D 04/97–09/00 SAXO 1.5 D 09/96–04/04 ZX 1.5 D 06/96–02/98",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1527",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.024,
+    0.081
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 160,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      44.975,
+      44.991
+     ]
+    },
+    {
+     "label": "-.030\"",
+     "valor": [
+      44.213,
+      44.229
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (030): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL01-4362030",
+    "medida": "030"
+   },
+   {
+    "codigo": "CAGL01-4362STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL2549/6",
+  "codigo_fab": "71-2549/6",
+  "marca": "GLYCO",
+  "aplicacion": "Mercedes-Benz HPN (LongNose) 01/76–12/83 T2/L 01/59–01/95",
+  "descripcion": "M.BENZ OM355-6",
+  "medidas": {
+   "diam_munon": [
+    77.98,
+    78.0
+   ],
+   "diam_alojamiento": [
+    83.0,
+    83.022
+   ],
+   "ancho": 41.75,
+   "espesor": 2.468
+  },
+  "extra": {
+   "fabricante_motor": "Mercedes-Benz",
+   "motor": "HPN (LongNose) 01/76–12/83 T2/L 01/59–01/95",
+   "nro_cil": "6",
+   "diam_x_carrera": null,
+   "cilindrada": "11581",
+   "pares": "6",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.064,
+    0.131
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 650,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      77.98,
+      78.0
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      77.73,
+      77.75
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      77.48,
+      77.5
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      77.23,
+      77.25
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL2549/6 025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL2549/6 050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL2549/6 075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL2549/6 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL2834/1",
+  "codigo_fab": "71-2834",
+  "marca": "GLYCO",
+  "aplicacion": "Deutz/Khd",
+  "descripcion": "DEUTZ 413-413F P/POSICION",
+  "medidas": {
+   "diam_munon": [
+    74.971,
+    74.99
+   ],
+   "diam_alojamiento": [
+    80.0,
+    80.019
+   ],
+   "ancho": 27.8,
+   "espesor": 2.475
+  },
+  "extra": {
+   "fabricante_motor": "Deutz/Khd",
+   "motor": null,
+   "nro_cil": "6",
+   "diam_x_carrera": null,
+   "cilindrada": "8482",
+   "pares": "1",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.06,
+    0.123
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 209,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      74.971,
+      74.99
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      74.721,
+      74.74
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL2834/1 025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL2834/1 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL3040/4",
+  "codigo_fab": "01-3040/4",
+  "marca": "GLYCO",
+  "aplicacion": "Mercedes-Benz /8 200 D 01/68–01/77 MB 2.0 D 04/88–04/96 123 200 D 07/76–11/85 1 H951/5 STD 0.25 02-3435 1,2,4,5 69.955/69.965 74.500/74.519 27.000 2.255 0.025/0.079 AL-LF",
+  "descripcion": "M.BENZ OM616",
+  "medidas": {
+   "diam_munon": [
+    51.955,
+    51.965
+   ],
+   "diam_alojamiento": [
+    55.6,
+    55.619
+   ],
+   "ancho": 26.0,
+   "espesor": 1.805
+  },
+  "extra": {
+   "fabricante_motor": "Mercedes-Benz",
+   "motor": "/8 200 D 01/68–01/77 MB 2.0 D 04/88–04/96 123 200 D 07/76–11/85 1 H951/5 STD 0.25 02-3435 1,2,4,5 69.955/69.965 74.500/74.519 27.000 2.255 0.025/0.079 AL-LF",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1988",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": [
+    0.025,
+    0.079
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 585,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      51.955,
+      51.965
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      51.705,
+      51.715
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      51.455,
+      51.465
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL3040/4 025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL3040/4 050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL3040/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL3442/4",
+  "codigo_fab": "71-3442/4",
+  "marca": "GLYCO",
+  "aplicacion": "Audi 80 B2 1.6 D 08/80–08/86 80 B3 1.6 D 02/87–07/89 80 B2 1.6 TD 08/81–05/86 90 B2 1.6 TD 10/85–01/87",
+  "descripcion": "VW GOLF 1.9SDi C/TRABA",
+  "medidas": {
+   "diam_munon": [
+    47.758,
+    47.778
+   ],
+   "diam_alojamiento": [
+    50.6,
+    50.619
+   ],
+   "ancho": 19.0,
+   "espesor": 1.406
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": "80 B2 1.6 D 08/80–08/86 80 B3 1.6 D 02/87–07/89 80 B2 1.6 TD 08/81–05/86 90 B2 1.6 TD 10/85–01/87",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1588",
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.02,
+    0.074
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 48,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.758,
+      47.778
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL3442/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL3572/4",
+  "codigo_fab": "71-3572/4",
+  "marca": "GLYCO",
+  "aplicacion": "Mercedes-Benz LO 09/73–01/87 T2/L L 408 DG 01/70–12/74 LP 09/63–12/90 T2/L L 508 DG 01/70–12/88 MB-TRAC 07/73–12/91 T2/L L 608 D 01/70–12/88",
+  "descripcion": "M.BENZ OM314-OM364",
+  "medidas": {
+   "diam_munon": [
+    59.99,
+    60.015
+   ],
+   "diam_alojamiento": [
+    65.0,
+    65.019
+   ],
+   "ancho": 29.4,
+   "espesor": 2.472
+  },
+  "extra": {
+   "fabricante_motor": "Mercedes-Benz",
+   "motor": "LO 09/73–01/87 T2/L L 408 DG 01/70–12/74 LP 09/63–12/90 T2/L L 508 DG 01/70–12/88 MB-TRAC 07/73–12/91 T2/L L 608 D 01/70–12/88",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "3784",
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.041,
+    0.11
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 614,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      59.99,
+      60.015
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      59.74,
+      59.765
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      59.49,
+      59.515
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      59.24,
+      59.265
+     ]
+    },
+    {
+     "label": "-1 mm",
+     "valor": [
+      58.99,
+      59.015
+     ]
+    },
+    {
+     "label": "-1,5 mm",
+     "valor": [
+      58.49,
+      58.515
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (075, 100, 150): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL3572/4 025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL3572/4 050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL3572/4 075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL3572/4 100",
+    "medida": "100"
+   },
+   {
+    "codigo": "CAGL3572/4 150",
+    "medida": "150"
+   },
+   {
+    "codigo": "CAGL3572/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-2185",
+  "codigo_fab": "71-2185",
+  "marca": "GLYCO",
+  "aplicacion": "Bedford",
   "descripcion": "FORD EXPLORER 4.0 V6",
   "medidas": {
    "diam_munon": [
@@ -9495,22 +11582,22 @@
    "espesor": 1.407
   },
   "extra": {
-   "fabricante_motor": "Ford",
-   "motor": "Explorer 4.0i V6 OHV, Explorer 4.0i V6 SOHC",
-   "nro_cil": null,
-   "diam_x_carrera": "100 x 84",
-   "cilindrada": "3958",
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
+   "fabricante_motor": "Bedford",
+   "motor": null,
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2522",
+   "pares": "1",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
    "luz_aceite": [
     0.02,
     0.071
    ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": "Federal Mogul",
-   "pagina_catalogo": 48,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 101,
    "sobremedidas": [
     {
      "label": "STD",
@@ -9533,7 +11620,7 @@
   "codigo": "CAGL71-2195",
   "codigo_fab": "71-2195/4",
   "marca": "GLYCO",
-  "aplicacion": "General Motors Corsa 1.0 OHV",
+  "aplicacion": "Opel CORSA A 1.0 09/82–03/93 KADETT A 1.0 S 09/62–08/65 CORSA A TR 1.0 09/82–09/92 KADETT C 1.0 01/74–07/79 KADETT A 1.0 09/62–08/65 KADETT C 1.0 S 09/73–08/75",
   "descripcion": "CHEVROLET CORSA 1.0 WIND",
   "medidas": {
    "diam_munon": [
@@ -9548,22 +11635,22 @@
    "espesor": 1.499
   },
   "extra": {
-   "fabricante_motor": "General Motors",
-   "motor": "Corsa 1.0 OHV",
+   "fabricante_motor": "Opel",
+   "motor": "CORSA A 1.0 09/82–03/93 KADETT A 1.0 S 09/62–08/65 CORSA A TR 1.0 09/82–09/92 KADETT C 1.0 01/74–07/79 KADETT A 1.0 09/62–08/65 KADETT C 1.0 S 09/73–08/75",
    "nro_cil": "4",
-   "diam_x_carrera": "72 x 61",
+   "diam_x_carrera": null,
    "cilindrada": "993",
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
    "luz_aceite": [
     0.02,
     0.068
    ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": "Federal Mogul",
-   "pagina_catalogo": 49,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 724,
    "sobremedidas": [
     {
      "label": "STD",
@@ -9587,7 +11674,9 @@
      ]
     }
    ],
-   "revisar": null
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
   },
   "codigos_crac": [
    {
@@ -9691,10 +11780,434 @@
   ]
  },
  {
+  "codigo": "CAGL71-2404",
+  "codigo_fab": null,
+  "marca": "GLYCO",
+  "aplicacion": "M.BENZ 250-S*SE-SL (47,95 mm)",
+  "descripcion": "M.BENZ 250-S*SE-SL (47,95 mm)",
+  "medidas": {
+   "diam_munon": null,
+   "diam_alojamiento": null,
+   "ancho": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_munon": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_alojamiento": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "ancho": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-2404025",
+    "medida": "025"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3084",
+  "codigo_fab": "71-3084",
+  "marca": "GLYCO",
+  "aplicacion": "Audi 80 B2 1.3 09/78–07/86 4 71-3694/4 STD 0.25 0.50 71-3694 47.758/47.778 50.600/50.612 19.000 1.406 0.020/0.067 EC",
+  "descripcion": "AUDI A6-A80 AAN-ABY (UN)",
+  "medidas": {
+   "diam_munon": [
+    45.95,
+    45.97
+   ],
+   "diam_alojamiento": [
+    49.0,
+    49.016
+   ],
+   "ancho": 19.0,
+   "espesor": 1.506
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": "80 B2 1.3 09/78–07/86 4 71-3694/4 STD 0.25 0.50 71-3694 47.758/47.778 50.600/50.612 19.000 1.406 0.020/0.067 EC",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1297",
+   "pares": "1",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.02,
+    0.078
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 45,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      45.95,
+      45.97
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      45.7,
+      45.72
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      45.45,
+      45.47
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      45.2,
+      45.22
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050, 075): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3084025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3084050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-3084075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-3084STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3442",
+  "codigo_fab": "71-3442/4",
+  "marca": "GLYCO",
+  "aplicacion": "Audi 80 B2 1.6 D 08/80–08/86 80 B3 1.6 D 02/87–07/89 80 B2 1.6 TD 08/81–05/86 90 B2 1.6 TD 10/85–01/87",
+  "descripcion": "VW TRANSPORTER 2.4TDi 5 CIL. C/TRABA",
+  "medidas": {
+   "diam_munon": [
+    47.758,
+    47.778
+   ],
+   "diam_alojamiento": [
+    50.6,
+    50.619
+   ],
+   "ancho": 19.0,
+   "espesor": 1.406
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": "80 B2 1.6 D 08/80–08/86 80 B3 1.6 D 02/87–07/89 80 B2 1.6 TD 08/81–05/86 90 B2 1.6 TD 10/85–01/87",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1588",
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.02,
+    0.074
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 48,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.758,
+      47.778
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      47.508,
+      47.528
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      47.258,
+      47.278
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3442025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3442050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-3442STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3447",
+  "codigo_fab": null,
+  "marca": "GLYCO",
+  "aplicacion": "MWM 229TD P/POSICION.",
+  "descripcion": "MWM 229TD P/POSICION.",
+  "medidas": {
+   "diam_munon": null,
+   "diam_alojamiento": null,
+   "ancho": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_munon": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_alojamiento": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "ancho": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3447025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3447050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-3447075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-3447100",
+    "medida": "100"
+   },
+   {
+    "codigo": "CAGL71-3447STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3561",
+  "codigo_fab": "71-3561/6",
+  "marca": "GLYCO",
+  "aplicacion": "Man SD 04/74–09/75",
+  "descripcion": "M.BENZ OM447 6 CIL.",
+  "medidas": {
+   "diam_munon": [
+    89.98,
+    90.0
+   ],
+   "diam_alojamiento": [
+    95.0,
+    95.022
+   ],
+   "ancho": 36.2,
+   "espesor": 2.476
+  },
+  "extra": {
+   "fabricante_motor": "Man",
+   "motor": "SD 04/74–09/75",
+   "nro_cil": "6",
+   "diam_x_carrera": null,
+   "cilindrada": "11045",
+   "pares": "6",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.048,
+    0.115
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 496,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      89.98,
+      90.0
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      89.73,
+      89.75
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      89.48,
+      89.5
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      89.23,
+      89.25
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3561025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3561050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-3561075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-3561STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3566",
+  "codigo_fab": "71-3566/4",
+  "marca": "GLYCO",
+  "aplicacion": "Audi 80 B2 1.6 08/78–03/87 –12/85 4 71-3694/4 STD 0.25 0.50 71-3694 47.758/47.778 50.600/50.612 19.000 1.406 0.020/0.067 EC",
+  "descripcion": "VW AUDI 1.6-1.8-2.0-SENDA 1.6D S/AGUJ.",
+  "medidas": {
+   "diam_munon": [
+    47.758,
+    47.778
+   ],
+   "diam_alojamiento": [
+    50.6,
+    50.619
+   ],
+   "ancho": 19.0,
+   "espesor": 1.406
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": "80 B2 1.6 08/78–03/87 –12/85 4 71-3694/4 STD 0.25 0.50 71-3694 47.758/47.778 50.600/50.612 19.000 1.406 0.020/0.067 EC",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1595",
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.02,
+    0.074
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 65,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.758,
+      47.778
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      47.123,
+      47.143
+     ]
+    },
+    {
+     "label": "-.050\"",
+     "valor": [
+      46.488,
+      46.508
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025, 050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3566025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3566050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-3566STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
   "codigo": "CAGL71-3572",
   "codigo_fab": "71-3572/4",
   "marca": "GLYCO",
-  "aplicacion": "Mercedes Benz * OM-364 A",
+  "aplicacion": "Mercedes-Benz LO 09/73–01/87 T2/L L 408 DG 01/70–12/74 LP 09/63–12/90 T2/L L 508 DG 01/70–12/88 MB-TRAC 07/73–12/91 T2/L L 608 D 01/70–12/88",
   "descripcion": "M.BENZ OM352-OM352A-OM366-OM366A",
   "medidas": {
    "diam_munon": [
@@ -9705,26 +12218,26 @@
     65.0,
     65.019
    ],
-   "ancho": 29.1,
+   "ancho": 29.4,
    "espesor": 2.472
   },
   "extra": {
-   "fabricante_motor": "Mercedes Benz *",
-   "motor": "OM-364 A",
+   "fabricante_motor": "Mercedes-Benz",
+   "motor": "LO 09/73–01/87 T2/L L 408 DG 01/70–12/74 LP 09/63–12/90 T2/L L 508 DG 01/70–12/88 MB-TRAC 07/73–12/91 T2/L L 608 D 01/70–12/88",
    "nro_cil": "4",
-   "diam_x_carrera": "97.50 x 133",
-   "cilindrada": "3971",
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
+   "diam_x_carrera": null,
+   "cilindrada": "3784",
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
    "luz_aceite": [
-    0.05,
-    0.095
+    0.041,
+    0.11
    ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": "Federal Mogul",
-   "pagina_catalogo": 63,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 614,
    "sobremedidas": [
     {
      "label": "STD",
@@ -9770,8 +12283,7 @@
     }
    ],
    "revisar": {
-    "codigo": "el catálogo trae este juego con más de un reparto de medidas y no son iguales: ancho 29.1 contra vacío; diam_alojamiento 65.0/65.019 contra vacío; diam_munon 59.99/60.015 contra 97.5; espesor 2.472 contra vacío; luz 0.05/0.095 contra vacío. Se tomó el primero, que es el que más se repite (1 filas del catálogo contra 1)",
-    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (150): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (075, 100, 150): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
    }
   },
   "codigos_crac": [
@@ -9805,11 +12317,11 @@
   "codigo": "CAGL71-3626",
   "codigo_fab": "71-3626/4",
   "marca": "GLYCO",
-  "aplicacion": "General Motors Calibra, Astra, Omega, Vectra 2.0i 16V Eng. X20 XEV (Ecotec) (Family II)",
+  "aplicacion": "Bedford ASTRAMAX 1.6 D 09/85–08/88 ASTRA VAN 1.6 D 07/82–08/89 09/85–",
   "descripcion": "CHEVROLET VECTRA 2.0i 16V",
   "medidas": {
    "diam_munon": [
-    48.917,
+    48.971,
     48.987
    ],
    "diam_alojamiento": [
@@ -9820,41 +12332,41 @@
    "espesor": 1.5
   },
   "extra": {
-   "fabricante_motor": "General Motors",
-   "motor": "Calibra, Astra, Omega,  Vectra 2.0i 16V Eng. X20 XEV (Ecotec) (Family II)",
-   "nro_cil": null,
-   "diam_x_carrera": "86 x 86",
-   "cilindrada": "1998",
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
+   "fabricante_motor": "Bedford",
+   "motor": "ASTRAMAX 1.6 D 09/85–08/88 ASTRA VAN 1.6 D 07/82–08/89 09/85–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1598",
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
    "luz_aceite": [
     0.02,
     0.066
    ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": "Federal Mogul",
-   "pagina_catalogo": 51,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 101,
    "sobremedidas": [
     {
      "label": "STD",
      "valor": [
-      48.917,
+      48.971,
       48.987
      ]
     },
     {
      "label": "-0,25 mm",
      "valor": [
-      48.667,
+      48.721,
       48.737
      ]
     },
     {
      "label": "-0,5 mm",
      "valor": [
-      48.417,
+      48.471,
       48.487
      ]
     }
@@ -9877,10 +12389,153 @@
   ]
  },
  {
+  "codigo": "CAGL71-3694",
+  "codigo_fab": "71-3694/5",
+  "marca": "GLYCO",
+  "aplicacion": "Audi QUATTRO 2.1 20V Turbo 05/84–07/87 01/86–",
+  "descripcion": "VW AUDI 1.6-1.8-2.0-SENDA 1.6D C/AGUJ.",
+  "medidas": {
+   "diam_munon": [
+    47.758,
+    47.778
+   ],
+   "diam_alojamiento": [
+    50.6,
+    50.612
+   ],
+   "ancho": 19.0,
+   "espesor": 1.406
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": "QUATTRO 2.1 20V Turbo 05/84–07/87 01/86–",
+   "nro_cil": "5",
+   "diam_x_carrera": null,
+   "cilindrada": "2133",
+   "pares": "5",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.02,
+    0.067
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 53,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.758,
+      47.778
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      47.123,
+      47.143
+     ]
+    },
+    {
+     "label": "-.050\"",
+     "valor": [
+      46.488,
+      46.508
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025, 050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3694025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3694050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-3694STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3704",
+  "codigo_fab": "71-3704/4",
+  "marca": "GLYCO",
+  "aplicacion": "Bmw 3 (E36) 318 tds 01/95–08/00",
+  "descripcion": "BMW 318TDs 1.7-M47-M51-M54-M57",
+  "medidas": {
+   "diam_munon": [
+    44.975,
+    44.991
+   ],
+   "diam_alojamiento": [
+    48.0,
+    48.016
+   ],
+   "ancho": 18.0,
+   "espesor": 1.497
+  },
+  "extra": {
+   "fabricante_motor": "Bmw",
+   "motor": "3 (E36) 318 tds 01/95–08/00",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1665",
+   "pares": "4",
+   "tipo_material": "SP",
+   "material": "respaldo de acero con bronce, capa sputter, trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.072
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 109,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      44.975,
+      44.991
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      44.34,
+      44.356
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3704025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3704STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
   "codigo": "CAGL71-3728",
   "codigo_fab": "71-3728/4",
   "marca": "GLYCO",
-  "aplicacion": "Volkswagen Golf III/IV, Golf Cabrio, Golf Variant, Polo Classic, Pasat, Sharan, Vento, Bora, Beetle, Caravelle, Transporter 1.9 TD/TDI Eng. AAZ/ABL/ADF/AFN/AHU/ARD/1Z Turbo Diesel - 1993 / Ranura de aceite de 360º",
+  "aplicacion": "Audi 80 B4 1.9 TD 09/91–12/94 A4 B5 1.9 TDI 01/95–09/01 80 B4 1.9 TDI 09/91–01/96 A6 C4 1.9 TDI 06/94–12/97 A3 1.9 TDI 09/96–07/01 CABRIOLET B3 1.9 TDI 06/95–08/00",
   "descripcion": "VW GOLF 1.9TD-TRANSPORTER 1.9TD C/TRAB",
   "medidas": {
    "diam_munon": [
@@ -9895,22 +12550,22 @@
    "espesor": 1.406
   },
   "extra": {
-   "fabricante_motor": "Volkswagen",
-   "motor": "Golf III/IV,  Golf Cabrio, Golf Variant, Polo Classic, Pasat, Sharan, Vento, Bora, Beetle, Caravelle, Transporter 1.9 TD/TDI Eng. AAZ/ABL/ADF/AFN/AHU/ARD/1Z Turbo Diesel - 1993 / Ranura de aceite de 360º",
+   "fabricante_motor": "Audi",
+   "motor": "80 B4 1.9 TD 09/91–12/94 A4 B5 1.9 TDI 01/95–09/01 80 B4 1.9 TDI 09/91–01/96 A6 C4 1.9 TDI 06/94–12/97 A3 1.9 TDI 09/96–07/01 CABRIOLET B3 1.9 TDI 06/95–08/00",
    "nro_cil": "4",
-   "diam_x_carrera": "79.5 x 95.6",
+   "diam_x_carrera": null,
    "cilindrada": "1896",
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
    "luz_aceite": [
     0.02,
     0.074
    ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": "Federal Mogul",
-   "pagina_catalogo": 86,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 58,
    "sobremedidas": [
     {
      "label": "STD",
@@ -9979,7 +12634,7 @@
   "codigo": "CAGL71-3730",
   "codigo_fab": "71-3730/4",
   "marca": "GLYCO",
-  "aplicacion": "Peugeot 205 D/DT, 309D, 405 TD, Partner, XUD7, 7A, 9A, 7TE, 7TEY",
+  "aplicacion": "Citroën BX TRD Turbo 03/88–12/94",
   "descripcion": "PEUGEOT 405 1.9TD",
   "medidas": {
    "diam_munon": [
@@ -9994,22 +12649,22 @@
    "espesor": 1.838
   },
   "extra": {
-   "fabricante_motor": "Peugeot",
-   "motor": "205 D/DT, 309D, 405 TD, Partner, XUD7, 7A, 9A, 7TE, 7TEY",
+   "fabricante_motor": "Citroën",
+   "motor": "BX TRD Turbo 03/88–12/94",
    "nro_cil": "4",
-   "diam_x_carrera": "80 x 88",
-   "cilindrada": "1796",
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
+   "diam_x_carrera": null,
+   "cilindrada": "1769",
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
    "luz_aceite": [
-    0.02,
-    0.075
+    0.039,
+    0.073
    ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": "Federal Mogul",
-   "pagina_catalogo": 75,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 161,
    "sobremedidas": [
     {
      "label": "STD",
@@ -10043,11 +12698,11 @@
   "codigo": "CAGL71-3754",
   "codigo_fab": "71-3754/4",
   "marca": "GLYCO",
-  "aplicacion": "Renault Laguna RXE 16V , Volvo N7Q",
+  "aplicacion": "Renault LAGUNA I 2.0 06/95–02/01 SAFRANE II 2.0 16V 07/96–12/00 LAGUNA I 2.0 16V 06/95–03/01",
   "descripcion": "RENAULT LAGUNA 2.0 16V N7Q",
   "medidas": {
    "diam_munon": [
-    48.984,
+    49.984,
     50.0
    ],
    "diam_alojamiento": [
@@ -10059,33 +12714,33 @@
   },
   "extra": {
    "fabricante_motor": "Renault",
-   "motor": "Laguna RXE 16V , Volvo N7Q",
+   "motor": "LAGUNA I 2.0 06/95–02/01 SAFRANE II 2.0 16V 07/96–12/00 LAGUNA I 2.0 16V 06/95–03/01",
    "nro_cil": "4",
-   "diam_x_carrera": "83 x 90",
+   "diam_x_carrera": null,
    "cilindrada": "1948",
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
    "luz_aceite": [
     0.02,
-    0.063
+    0.064
    ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": "Federal Mogul",
-   "pagina_catalogo": 81,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 856,
    "sobremedidas": [
     {
      "label": "STD",
      "valor": [
-      48.984,
+      49.984,
       50.0
      ]
     },
     {
      "label": "-0,25 mm",
      "valor": [
-      48.734,
+      49.734,
       49.75
      ]
     }
@@ -10099,6 +12754,138 @@
    },
    {
     "codigo": "CAGL71-3754STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3764",
+  "codigo_fab": "71-3764/4",
+  "marca": "GLYCO",
+  "aplicacion": "Chevrolet ASTRA 2.0 GLS 08/02–12/11 ZAFIRA 2.0 04/01–07/12",
+  "descripcion": "CHEVROLET ASTRA 2.0i16V X20XEV-C20XE",
+  "medidas": {
+   "diam_munon": [
+    48.971,
+    48.987
+   ],
+   "diam_alojamiento": [
+    52.0,
+    52.012
+   ],
+   "ancho": 20.3,
+   "espesor": 1.5
+  },
+  "extra": {
+   "fabricante_motor": "Chevrolet",
+   "motor": "ASTRA 2.0 GLS 08/02–12/11 ZAFIRA 2.0 04/01–07/12",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.02,
+    0.07
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 138,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      48.971,
+      48.987
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      48.336,
+      48.352
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3764025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3764STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3781",
+  "codigo_fab": "71-3781/4",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën JUMPER 2.5 D 03/94–04/02",
+  "descripcion": "PEUGEOT BOXER 2.5D DJ5",
+  "medidas": {
+   "diam_munon": [
+    53.981,
+    54.0
+   ],
+   "diam_alojamiento": [
+    57.675,
+    57.695
+   ],
+   "ancho": 22.65,
+   "espesor": 1.823
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "JUMPER 2.5 D 03/94–04/02",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2446",
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.03,
+    0.09
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 173,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      53.981,
+      54.0
+     ]
+    },
+    {
+     "label": "-.030\"",
+     "valor": [
+      53.219,
+      53.238
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (030): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3781030",
+    "medida": "030"
+   },
+   {
+    "codigo": "CAGL71-3781STD",
     "medida": "STD"
    }
   ]
@@ -10168,10 +12955,76 @@
   ]
  },
  {
-  "codigo": "CAGL71-3850",
-  "codigo_fab": "71-3850/4",
+  "codigo": "CAGL71-3847",
+  "codigo_fab": "71-3847/4",
   "marca": "GLYCO",
-  "aplicacion": "AEM92175 Mercedes Benz Eng. OM-904 LA 12V s Cojinete con pestaña - Flanged bearing",
+  "aplicacion": "Audi A4 B5 1.9 TDI 10/95–09/01 A6 C5 1.9 TDI 04/97–04/01",
+  "descripcion": "VW GOLF 1.9TD-TRANSP. 1.9TD C/TR. SPUT",
+  "medidas": {
+   "diam_munon": [
+    47.758,
+    47.778
+   ],
+   "diam_alojamiento": [
+    50.6,
+    50.612
+   ],
+   "ancho": 20.0,
+   "espesor": 1.406
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": "A4 B5 1.9 TDI 10/95–09/01 A6 C5 1.9 TDI 04/97–04/01",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1896",
+   "pares": "4",
+   "tipo_material": "SP",
+   "material": "respaldo de acero con bronce, capa sputter, trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.067
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 58,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.758,
+      47.778
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      47.123,
+      47.143
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3847025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3847STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3850",
+  "codigo_fab": "71-3850",
+  "marca": "GLYCO",
+  "aplicacion": "Mercedes-Benz OMC 02/06– VARIO Dump Truck 815 D, 816 D 09/96– UNIMOG 03/00– VARIO Dump Truck 815 DA, 816 DA 09/96–12/13 VARIO 613 D, 614 D 09/96– VARIO Dump Truck 818 D 09/06–",
   "descripcion": "M.BENZ OM904LA 170 CV< (SPUTTER)*(UN)",
   "medidas": {
    "diam_munon": [
@@ -10186,22 +13039,22 @@
    "espesor": 2.478
   },
   "extra": {
-   "fabricante_motor": "AEM92175",
-   "motor": "Mercedes Benz Eng. OM-904 LA 12V s Cojinete con pestaña - Flanged bearing",
-   "nro_cil": "4",
-   "diam_x_carrera": "102 x 130",
-   "cilindrada": "4247",
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
+   "fabricante_motor": "Mercedes-Benz",
+   "motor": "OMC 02/06– VARIO Dump Truck 815 D, 816 D 09/96– UNIMOG 03/00– VARIO Dump Truck 815 DA, 816 DA 09/96–12/13 VARIO 613 D, 614 D 09/96– VARIO Dump Truck 818 D 09/06–",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "1",
+   "tipo_material": "SP",
+   "material": "respaldo de acero con bronce, capa sputter, trimetálico",
    "luz_aceite": [
     0.029,
     0.093
    ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": "Federal Mogul",
-   "pagina_catalogo": 63,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 630,
    "sobremedidas": [
     {
      "label": "STD",
@@ -10211,29 +13064,29 @@
      ]
     },
     {
-     "label": "-.025\"",
+     "label": "-0,25 mm",
      "valor": [
-      69.36,
-      69.38
+      69.745,
+      69.765
      ]
     },
     {
-     "label": "-.050\"",
+     "label": "-0,5 mm",
      "valor": [
-      68.725,
-      68.745
+      69.495,
+      69.515
      ]
     },
     {
-     "label": "-.075\"",
+     "label": "-0,75 mm",
      "valor": [
-      68.09,
-      68.11
+      69.245,
+      69.265
      ]
     }
    ],
    "revisar": {
-    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025, 050, 075): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050, 075): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
    }
   },
   "codigos_crac": [
@@ -10256,10 +13109,254 @@
   ]
  },
  {
+  "codigo": "CAGL71-3876",
+  "codigo_fab": "71-3876",
+  "marca": "GLYCO",
+  "aplicacion": "Mercedes-Benz C-CLASS C 200 CDI 03/03–12/09 SPRINTER 5-t 515 CDI 06/06–12/09 C-CLASS C 220 CDI 02/03–11/08 SPRINTER CLASSIC 3,5-t 311 CDI 09/13– CLC-CLASS CLC 200 CDI 05/08–06/11 SPRINTER CLASSIC 3,5-t 313 CDI 01/17–",
+  "descripcion": "M.BENZ OM611 2.2CDi (POR POSICION)",
+  "medidas": {
+   "diam_munon": [
+    47.95,
+    47.965
+   ],
+   "diam_alojamiento": [
+    51.6,
+    51.619
+   ],
+   "ancho": 21.8,
+   "espesor": 1.812
+  },
+  "extra": {
+   "fabricante_motor": "Mercedes-Benz",
+   "motor": "C-CLASS C 200 CDI 03/03–12/09 SPRINTER 5-t 515 CDI 06/06–12/09 C-CLASS C 220 CDI 02/03–11/08 SPRINTER CLASSIC 3,5-t 311 CDI 09/13– CLC-CLASS CLC 200 CDI 05/08–06/11 SPRINTER CLASSIC 3,5-t 313 CDI 01/17–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2148",
+   "pares": "1",
+   "tipo_material": "SP",
+   "material": "respaldo de acero con bronce, capa sputter, trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.07
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 592,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.95,
+      47.965
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      47.7,
+      47.715
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      47.45,
+      47.465
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3876025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3876050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-3876STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3929",
+  "codigo_fab": "71-3929/4",
+  "marca": "GLYCO",
+  "aplicacion": "Audi",
+  "descripcion": "VW GOLF 1.9TD-TRANSP. 1.9TD S/TR.",
+  "medidas": {
+   "diam_munon": [
+    47.758,
+    47.778
+   ],
+   "diam_alojamiento": [
+    50.6,
+    50.612
+   ],
+   "ancho": 19.0,
+   "espesor": 1.406
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.02,
+    0.067
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 59,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.758,
+      47.778
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3929STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3930",
+  "codigo_fab": "71-3930",
+  "marca": "GLYCO",
+  "aplicacion": "Audi A3 1.9 TDI 08/00–05/03 02-4941U 4 1 53.958/53.978 59.000/59.012 18.500 2.506 0.020/0.062 PC-LF 4 02-3085L 2-5 53.958/53.978 59.000/59.019 18.500 2.502 0.020/0.082 AL-LF",
+  "descripcion": "VW AMAROK 2.0 TDi (ALOJ. 54) (UN)",
+  "medidas": {
+   "diam_munon": [
+    50.858,
+    50.878
+   ],
+   "diam_alojamiento": [
+    53.7,
+    53.712
+   ],
+   "ancho": 20.4,
+   "espesor": 1.403
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": "A3 1.9 TDI 08/00–05/03 02-4941U 4 1 53.958/53.978 59.000/59.012 18.500 2.506 0.020/0.062 PC-LF 4 02-3085L 2-5 53.958/53.978 59.000/59.019 18.500 2.502 0.020/0.082 AL-LF",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1896",
+   "pares": "1",
+   "tipo_material": "SP",
+   "material": "respaldo de acero con bronce, capa sputter, trimetálico",
+   "luz_aceite": [
+    0.02,
+    0.073
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 60,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      50.858,
+      50.878
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      50.608,
+      50.628
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      50.358,
+      50.378
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3930025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-3930050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-3930STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3951",
+  "codigo_fab": null,
+  "marca": "GLYCO",
+  "aplicacion": "PEUGEOT BOXER 2.5TD 8V DJ5TED",
+  "descripcion": "PEUGEOT BOXER 2.5TD 8V DJ5TED",
+  "medidas": {
+   "diam_munon": null,
+   "diam_alojamiento": null,
+   "ancho": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_munon": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_alojamiento": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "ancho": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3951STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
   "codigo": "CAGL71-3952",
   "codigo_fab": "71-3952/4",
   "marca": "GLYCO",
-  "aplicacion": "Peugeot 306, 406 2.0 TD, DWIO TD/ATED",
+  "aplicacion": "Chevrolet TRACKER 2.0 HDI 05/02–07/05",
   "descripcion": "PEUGEOT 406 2.0TD DW10-306 2.0TD",
   "medidas": {
    "diam_munon": [
@@ -10271,25 +13368,25 @@
     53.708
    ],
    "ancho": 20.0,
-   "espesor": 1.836
+   "espesor": 1.838
   },
   "extra": {
-   "fabricante_motor": "Peugeot",
-   "motor": "306, 406 2.0 TD, DWIO TD/ATED",
+   "fabricante_motor": "Chevrolet",
+   "motor": "TRACKER 2.0 HDI 05/02–07/05",
    "nro_cil": "4",
-   "diam_x_carrera": "85 x 88",
+   "diam_x_carrera": null,
    "cilindrada": "1997",
-   "pares": null,
-   "tipo_material": null,
-   "material": null,
+   "pares": "4",
+   "tipo_material": "SP",
+   "material": "respaldo de acero con bronce, capa sputter, trimetálico",
    "luz_aceite": [
     0.02,
-    0.073
+    0.07
    ],
    "composicion": null,
    "codigo_metal_leve": null,
-   "catalogo": "Federal Mogul",
-   "pagina_catalogo": 77,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 137,
    "sobremedidas": [
     {
      "label": "STD",
@@ -10304,6 +13401,2201 @@
   "codigos_crac": [
    {
     "codigo": "CAGL71-3952STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3986",
+  "codigo_fab": "71-3986",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën C1 1.4 HDi 06/05–09/14 C3 II 1.4 HDi 06/10–09/16 C2 1.4 HDi 07/03–12/09 C3 II 1.4 HDi 70 11/09– C3 1.4 HDi 04/04– DS3 1.4 HDi 70 04/10–07/15",
+  "descripcion": "FORD ECOSPORT 1.4TDCi/CITROEN C3 1.4TDCi",
+  "medidas": {
+   "diam_munon": [
+    44.975,
+    44.991
+   ],
+   "diam_alojamiento": [
+    48.665,
+    48.671
+   ],
+   "ancho": 17.05,
+   "espesor": 1.82
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "C1 1.4 HDi 06/05–09/14 C3 II 1.4 HDi 06/10–09/16 C2 1.4 HDi 07/03–12/09 C3 II 1.4 HDi 70 11/09– C3 1.4 HDi 04/04– DS3 1.4 HDi 70 04/10–07/15",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1398",
+   "pares": "1",
+   "tipo_material": "SP",
+   "material": "respaldo de acero con bronce, capa sputter, trimetálico",
+   "luz_aceite": [
+    0.029,
+    0.081
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 153,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      44.975,
+      44.991
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3986STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-3988",
+  "codigo_fab": "71-3988/4",
+  "marca": "GLYCO",
+  "aplicacion": "Dacia PICK UP 1.9 D 02/00–05/08 SOLENZA 1.9 D 02/03–",
+  "descripcion": "RENAULT MEGANE 1.9TD F9Q (S/TRABA).",
+  "medidas": {
+   "diam_munon": [
+    48.0,
+    48.02
+   ],
+   "diam_alojamiento": [
+    51.587,
+    51.606
+   ],
+   "ancho": 20.5,
+   "espesor": 1.776
+  },
+  "extra": {
+   "fabricante_motor": "Dacia",
+   "motor": "PICK UP 1.9 D 02/00–05/08 SOLENZA 1.9 D 02/03–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1870",
+   "pares": "8",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.015,
+    0.079
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 180,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      48.0,
+      48.02
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-3988STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4041",
+  "codigo_fab": "71-4041/4",
+  "marca": "GLYCO",
+  "aplicacion": "Renault ESPACE III 2.2 12V TD 11/96–10/00 LAGUNA I 2.2 dT 03/96–03/01 ESPACE III 2.2 D 11/97–01/00 SAFRANE II 2.2 dT 07/96–12/00 LAGUNA I 2.2 D 11/93–03/01",
+  "descripcion": "RENAULT LAGUNA 2.2D 12V G8T",
+  "medidas": {
+   "diam_munon": [
+    47.975,
+    47.991
+   ],
+   "diam_alojamiento": [
+    51.612,
+    51.625
+   ],
+   "ancho": 20.65,
+   "espesor": 1.803
+  },
+  "extra": {
+   "fabricante_motor": "Renault",
+   "motor": "ESPACE III 2.2 12V TD 11/96–10/00 LAGUNA I 2.2 dT 03/96–03/01 ESPACE III 2.2 D 11/97–01/00 SAFRANE II 2.2 dT 07/96–12/00 LAGUNA I 2.2 D 11/93–03/01",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2188",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.025,
+    0.074
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 861,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      47.975,
+      47.991
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      47.34,
+      47.356
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4041025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4041STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4066",
+  "codigo_fab": "71-4066/4",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën JUMPER 2.2 HDi 100 04/06– JUMPER 2.2 HDi 130 07/11– JUMPER 2.2 HDi 110 07/11– JUMPER 2.2 HDi 150 07/11– JUMPER 2.2 HDi 120 04/06–",
+  "descripcion": "FORD PUMA 2.2TDCi",
+  "medidas": {
+   "diam_munon": [
+    52.98,
+    53.0
+   ],
+   "diam_alojamiento": [
+    55.996,
+    56.016
+   ],
+   "ancho": 24.45,
+   "espesor": 1.487
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "JUMPER 2.2 HDi 100 04/06– JUMPER 2.2 HDi 130 07/11– JUMPER 2.2 HDi 110 07/11– JUMPER 2.2 HDi 150 07/11– JUMPER 2.2 HDi 120 04/06–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2198",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.026,
+    0.084
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 171,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      52.98,
+      53.0
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      52.73,
+      52.75
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      52.48,
+      52.5
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4066025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4066050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4066STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4080",
+  "codigo_fab": "71-4080/4",
+  "marca": "GLYCO",
+  "aplicacion": "Fiat DUCATO 2.3 JTD 12/01– DUCATO 130 Multijet 2,3 D 07/06– DUCATO 110 Multijet 2,3 D 08/06– DUCATO 150 Multijet 2,3 D 06/11– DUCATO 120 Multijet 2,3 D 07/06– DUCATO 180 Multijet 2,3 D 12/15–",
+  "descripcion": "FIAT DUCATO 2.3JTD 16V F1A",
+  "medidas": {
+   "diam_munon": [
+    59.015,
+    59.038
+   ],
+   "diam_alojamiento": [
+    62.833,
+    62.848
+   ],
+   "ancho": 23.75,
+   "espesor": 1.884
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "DUCATO 2.3 JTD 12/01– DUCATO 130 Multijet 2,3 D 07/06– DUCATO 110 Multijet 2,3 D 08/06– DUCATO 150 Multijet 2,3 D 06/11– DUCATO 120 Multijet 2,3 D 07/06– DUCATO 180 Multijet 2,3 D 12/15–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2287",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.027,
+    0.065
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 255,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      59.015,
+      59.038
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      58.765,
+      58.788
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      58.515,
+      58.538
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4080025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4080050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4080STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4104",
+  "codigo_fab": "71-4104",
+  "marca": "GLYCO",
+  "aplicacion": "Iveco 66 01/85–12/99 90 01/84–12/92 88 01/89–12/93",
+  "descripcion": "IVECO 150T-AU130-80.66-115.90-140.90 P/P",
+  "medidas": {
+   "diam_munon": [
+    63.725,
+    63.744
+   ],
+   "diam_alojamiento": [
+    67.407,
+    67.422
+   ],
+   "ancho": 28.7,
+   "espesor": 1.815
+  },
+  "extra": {
+   "fabricante_motor": "Iveco",
+   "motor": "66 01/85–12/99 90 01/84–12/92 88 01/89–12/93",
+   "nro_cil": "3",
+   "diam_x_carrera": null,
+   "cilindrada": "2708",
+   "pares": "1",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.033,
+    0.092
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 377,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      63.725,
+      63.744
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      63.475,
+      63.494
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      63.225,
+      63.244
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      62.975,
+      62.994
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4104025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4104050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4104075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-4104STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4126",
+  "codigo_fab": "71-4126/4",
+  "marca": "GLYCO",
+  "aplicacion": "Fiat STILO 1.6 04/05–08/08 STILO 1.6 16V 03/05–12/07",
+  "descripcion": "FIAT STYLO 1.6 16V *",
+  "medidas": {
+   "diam_munon": [
+    45.498,
+    45.518
+   ],
+   "diam_alojamiento": [
+    48.63,
+    48.646
+   ],
+   "ancho": 19.2,
+   "espesor": 1.544
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "STILO 1.6 04/05–08/08 STILO 1.6 16V 03/05–12/07",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1598",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.02,
+    0.085
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 234,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      45.498,
+      45.518
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4126STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4143",
+  "codigo_fab": "71-4143/4",
+  "marca": "GLYCO",
+  "aplicacion": "Fiat FULLBACK 2.4 04/16–",
+  "descripcion": "MITSUBISHI 4G32-4G33",
+  "medidas": {
+   "diam_munon": 44.98,
+   "diam_alojamiento": 48.02,
+   "ancho": 23.6,
+   "espesor": 1.493
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "FULLBACK 2.4 04/16–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2351",
+   "pares": "8",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 254,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 44.98
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": 44.73
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": 44.48
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4143025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4143050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4143STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4145",
+  "codigo_fab": "71-4145/4",
+  "marca": "GLYCO",
+  "aplicacion": "Toyota BLIZZARD 2.2 D 03/80–03/84 HILUX IV 2.2 D 11/82–08/84 CRESSIDA 2.2 D 09/80–04/85 MARK II IV 2.2 DX 08/80–10/83 CROWN 2.2 D 04/80–07/83 PICKUP 2.2 D 09/80–12/83",
+  "descripcion": "TOYOTA L 2.2D-2L 2.4D",
+  "medidas": {
+   "diam_munon": 52.99,
+   "diam_alojamiento": 56.02,
+   "ancho": 26.0,
+   "espesor": 1.486
+  },
+  "extra": {
+   "fabricante_motor": "Toyota",
+   "motor": "BLIZZARD 2.2 D 03/80–03/84 HILUX IV 2.2 D 11/82–08/84 CRESSIDA 2.2 D 09/80–04/85 MARK II IV 2.2 DX 08/80–10/83 CROWN 2.2 D 04/80–07/83 PICKUP 2.2 D 09/80–12/83",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2188",
+   "pares": "8",
+   "tipo_material": "AL",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": 0.093,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 1008,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 52.99
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": 52.49
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": 52.74
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4145025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4145050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4145STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4156",
+  "codigo_fab": "71-4156/4",
+  "marca": "GLYCO",
+  "aplicacion": "Ford MAVERICK 2.7 TD 02/93–04/98 MAVERICK VAN 2.7 TD 06/96–04/98",
+  "descripcion": "NISSAN TD27 2.7",
+  "medidas": {
+   "diam_munon": 56.91,
+   "diam_alojamiento": 60.01,
+   "ancho": 26.1,
+   "espesor": 1.513
+  },
+  "extra": {
+   "fabricante_motor": "Ford",
+   "motor": "MAVERICK 2.7 TD 02/93–04/98 MAVERICK VAN 2.7 TD 06/96–04/98",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2664",
+   "pares": "8",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 312,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 56.91
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4156STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4157",
+  "codigo_fab": "71-4157/4",
+  "marca": "GLYCO",
+  "aplicacion": "Alfa Romeo 145 1.8 i.e. 16V 03/98–01/01 156 1.8 16V T.SPARK 02/97–05/06 145 1.8 i.e. 16V T.S. 12/96–12/98 GT 1.8 TS 11/03–09/10 146 1.8 i.e. 16V T.S. 11/96–01/01 GTV 1.8 16V 05/98–10/05",
+  "descripcion": "ALFA ROMEO 145 TWIN SPARK",
+  "medidas": {
+   "diam_munon": [
+    50.787,
+    50.807
+   ],
+   "diam_alojamiento": [
+    53.901,
+    53.913
+   ],
+   "ancho": 19.5,
+   "espesor": 1.534
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "145 1.8 i.e. 16V 03/98–01/01 156 1.8 16V T.SPARK 02/97–05/06 145 1.8 i.e. 16V T.S. 12/96–12/98 GT 1.8 TS 11/03–09/10 146 1.8 i.e. 16V T.S. 11/96–01/01 GTV 1.8 16V 05/98–10/05",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1747",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.028,
+    0.083
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 23,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      50.787,
+      50.807
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      50.537,
+      50.557
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4157025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4157STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4164",
+  "codigo_fab": "71-4164/4",
+  "marca": "GLYCO",
+  "aplicacion": "Honda ACCORD V 2.0 TDi 04/96–10/98 CIVIC VI 2.0 i D 04/98–02/01 ACCORD VI 2.0 TDi 12/99–10/00 CIVIC VI 2.0 TDiC 11/98–10/00 ACCORD VI 2.0 Turbo DI 02/99–12/02",
+  "descripcion": "ROVER 420 SDi-620 SDi 2.0TDi",
+  "medidas": {
+   "diam_munon": [
+    53.99,
+    54.01
+   ],
+   "diam_alojamiento": [
+    57.683,
+    57.696
+   ],
+   "ancho": 21.8,
+   "espesor": 1.825
+  },
+  "extra": {
+   "fabricante_motor": "Honda",
+   "motor": "ACCORD V 2.0 TDi 04/96–10/98 CIVIC VI 2.0 i D 04/98–02/01 ACCORD VI 2.0 TDi 12/99–10/00 CIVIC VI 2.0 TDiC 11/98–10/00 ACCORD VI 2.0 Turbo DI 02/99–12/02",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1994",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.023,
+    0.081
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 324,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      53.99,
+      54.01
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4164STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4168",
+  "codigo_fab": "71-4168/4",
+  "marca": "GLYCO",
+  "aplicacion": "Alfa Romeo 75 1.6 05/85–09/89 GIULIA 1600 Sprint 01/62–12/65 75 1.6 Cat 05/89–02/92 GIULIA 1600 Super 06/64–12/78 ALFETTA 1.6 01/75–12/84 GIULIA 1600 T.I 04/64–08/69",
+  "descripcion": "ALFA ROMEO 155*164 2.0",
+  "medidas": {
+   "diam_munon": [
+    49.988,
+    49.998
+   ],
+   "diam_alojamiento": [
+    53.695,
+    53.708
+   ],
+   "ancho": 23.44,
+   "espesor": 1.838
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "75 1.6 05/85–09/89 GIULIA 1600 Sprint 01/62–12/65 75 1.6 Cat 05/89–02/92 GIULIA 1600 Super 06/64–12/78 ALFETTA 1.6 01/75–12/84 GIULIA 1600 T.I 04/64–08/69",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1570",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.021,
+    0.069
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 19,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      49.988,
+      49.998
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      49.738,
+      49.748
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      49.488,
+      49.498
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4168025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4168050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4168STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4194",
+  "codigo_fab": "71-4194/4",
+  "marca": "GLYCO",
+  "aplicacion": "Fiat FULLBACK 2.5 D 04/16–",
+  "descripcion": "MITSUBISHI 4D55-4D56-4D56T-4G52-4G54",
+  "medidas": {
+   "diam_munon": 52.98,
+   "diam_alojamiento": 56.02,
+   "ancho": 25.13,
+   "espesor": 1.493
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "FULLBACK 2.5 D 04/16–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2477",
+   "pares": "8",
+   "tipo_material": "AL",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 256,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 52.98
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": 52.73
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": 52.48
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": 52.23
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4194025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4194050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4194075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-4194STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4215",
+  "codigo_fab": "71-4215/6",
+  "marca": "GLYCO",
+  "aplicacion": "Iveco EUROCARGO I-III 03/95–08/01 P/PA 06/84–12/92 EUROSTAR 01/93–02/02 P/PA-Haubenfahrzeuge 04/87–12/93 EUROTECH MH 01/98– Series 190 08/76–12/86",
+  "descripcion": "IVECO 190.33T-EUROTRAKER-EUROTECH 420",
+  "medidas": {
+   "diam_munon": [
+    84.713,
+    84.735
+   ],
+   "diam_alojamiento": [
+    88.482,
+    88.504
+   ],
+   "ancho": 40.25,
+   "espesor": 1.836
+  },
+  "extra": {
+   "fabricante_motor": "Iveco",
+   "motor": "EUROCARGO I-III 03/95–08/01 P/PA 06/84–12/92 EUROSTAR 01/93–02/02 P/PA-Haubenfahrzeuge 04/87–12/93 EUROTECH MH 01/98– Series 190 08/76–12/86",
+   "nro_cil": "6",
+   "diam_x_carrera": null,
+   "cilindrada": "13798",
+   "pares": "6",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.14,
+    0.144
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 412,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      84.713,
+      84.735
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      84.463,
+      84.485
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      84.213,
+      84.235
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4215025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4215050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4215STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4218",
+  "codigo_fab": "71-4218/6",
+  "marca": "GLYCO",
+  "aplicacion": "Alfa Romeo 6 2.0 07/81–12/86 166 2.0 V6 09/98–10/00 90 2.0 i.e. 10/84–07/87 GTV 2.0 V6 Turbo 06/95–09/98 164 2.0 V6 Turbo 03/91–09/98 SPIDER 2.0 V6 Turbo 05/98–04/05",
+  "descripcion": "ALFA ROMEO 155-156 2.5 V6-164 3.0 V6",
+  "medidas": {
+   "diam_munon": [
+    51.98,
+    52.0
+   ],
+   "diam_alojamiento": [
+    55.511,
+    55.524
+   ],
+   "ancho": 19.1,
+   "espesor": 1.749
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "6 2.0 07/81–12/86 166 2.0 V6 09/98–10/00 90 2.0 i.e. 10/84–07/87 GTV 2.0 V6 Turbo 06/95–09/98 164 2.0 V6 Turbo 03/91–09/98 SPIDER 2.0 V6 Turbo 05/98–04/05",
+   "nro_cil": "6",
+   "diam_x_carrera": null,
+   "cilindrada": "1996",
+   "pares": "6",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.02,
+    0.071
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 22,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      51.98,
+      52.0
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      51.73,
+      51.75
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4218025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4218STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4227",
+  "codigo_fab": "71-4227",
+  "marca": "GLYCO",
+  "aplicacion": "Iveco ZETA 01/79–06/88",
+  "descripcion": "IVECO 1580-1580T-1880-160.90 (PAR)",
+  "medidas": {
+   "diam_munon": [
+    72.482,
+    72.5
+   ],
+   "diam_alojamiento": [
+    76.695,
+    76.713
+   ],
+   "ancho": 34.93,
+   "espesor": 2.07
+  },
+  "extra": {
+   "fabricante_motor": "Iveco",
+   "motor": "ZETA 01/79–06/88",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "4570",
+   "pares": "1",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.055,
+    0.116
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 403,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      72.482,
+      72.5
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      72.232,
+      72.25
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      71.982,
+      72.0
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      71.732,
+      71.75
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4227025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4227050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4227075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-4227STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4229",
+  "codigo_fab": "71-4229",
+  "marca": "GLYCO",
+  "aplicacion": "Iveco 01/80– –12/79 66631CPA 76.187/76.200 80.587/80.607 25.000 2.172 0.043/0.101 BS",
+  "descripcion": "IVECO 540-640-980-1180-1380 (PAR)",
+  "medidas": {
+   "diam_munon": [
+    58.73,
+    58.743
+   ],
+   "diam_alojamiento": [
+    62.408,
+    62.42
+   ],
+   "ancho": 28.7,
+   "espesor": 1.816
+  },
+  "extra": {
+   "fabricante_motor": "Iveco",
+   "motor": "01/80– –12/79 66631CPA 76.187/76.200 80.587/80.607 25.000 2.172 0.043/0.101 BS",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "1",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.033,
+    0.083
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 372,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      58.73,
+      58.743
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      58.48,
+      58.493
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      58.23,
+      58.243
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      57.98,
+      57.993
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4229025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4229050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4229075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-4229STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4237",
+  "codigo_fab": "71-4237/6",
+  "marca": "GLYCO",
+  "aplicacion": "Scania",
+  "descripcion": "SCANIA L75-L76-110-111T-112T-113T",
+  "medidas": {
+   "diam_munon": [
+    84.233,
+    84.255
+   ],
+   "diam_alojamiento": [
+    88.483,
+    88.505
+   ],
+   "ancho": 48.0,
+   "espesor": 2.089
+  },
+  "extra": {
+   "fabricante_motor": "Scania",
+   "motor": null,
+   "nro_cil": "6",
+   "diam_x_carrera": null,
+   "cilindrada": "10261",
+   "pares": "6",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.05,
+    0.119
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 909,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      84.233,
+      84.255
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      83.983,
+      84.005
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      83.733,
+      83.755
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      83.483,
+      83.505
+     ]
+    },
+    {
+     "label": "-1 mm",
+     "valor": [
+      83.233,
+      83.255
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (075, 100): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4237025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4237050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4237075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-4237100",
+    "medida": "100"
+   },
+   {
+    "codigo": "CAGL71-4237STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4243",
+  "codigo_fab": "71-4243/4",
+  "marca": "GLYCO",
+  "aplicacion": "Dacia DOKKER 1.5 Blue dCi 95 12/18– LODGY 1.5 Blue dCi 115 08/18– DOKKER 1.5 dCi 11/12– LODGY 1.5 dCi 03/12– DOKKER 1.5 dCi / Blue dCi 75 11/12– LOGAN 1.5 dCi 09/05–",
+  "descripcion": "RENAULT K9K 1.5TDCi",
+  "medidas": {
+   "diam_munon": [
+    43.964,
+    43.98
+   ],
+   "diam_alojamiento": [
+    47.614,
+    47.625
+   ],
+   "ancho": 17.75,
+   "espesor": 1.807
+  },
+  "extra": {
+   "fabricante_motor": "Dacia",
+   "motor": "DOKKER 1.5 Blue dCi 95 12/18– LODGY 1.5 Blue dCi 115 08/18– DOKKER 1.5 dCi 11/12– LODGY 1.5 dCi 03/12– DOKKER 1.5 dCi / Blue dCi 75 11/12– LOGAN 1.5 dCi 09/05–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1461",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.02,
+    0.047
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 178,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      43.964,
+      43.98
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      43.714,
+      43.73
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      43.464,
+      43.48
+     ]
+    }
+   ],
+   "revisar": {
+    "codigo": "el catálogo trae este juego con más de un reparto de medidas y no son iguales: ancho 17.75 contra 20.75. Se tomó el primero, que es el que más se repite (5 filas del catálogo contra 5)"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4243025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4243050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4243STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4246",
+  "codigo_fab": "71-4246/4",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën BERLINGO 1.6 06/18– C3 PICASSO 1.6 HDI 90 07/10– BERLINGO 1.6 HDi 07/10– C4 1.6 HDi 11/04–07/11 BERLINGO 1.6 HDI 75 07/05–12/11 C4 CACTUS 1.6 HDi 90 09/14–",
+  "descripcion": "PEUGEOT DV6TED 1.6 16V/FORD ECOSPORT 1.5",
+  "medidas": {
+   "diam_munon": [
+    46.975,
+    46.991
+   ],
+   "diam_alojamiento": [
+    50.655,
+    50.674
+   ],
+   "ancho": 17.0,
+   "espesor": 1.818
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "BERLINGO 1.6 06/18– C3 PICASSO 1.6 HDI 90 07/10– BERLINGO 1.6 HDi 07/10– C4 1.6 HDi 11/04–07/11 BERLINGO 1.6 HDI 75 07/05–12/11 C4 CACTUS 1.6 HDi 90 09/14–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1560",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.028,
+    0.063
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 158,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      46.975,
+      46.991
+     ]
+    },
+    {
+     "label": "-0,3 mm",
+     "valor": [
+      46.675,
+      46.691
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4246030",
+    "medida": "030"
+   },
+   {
+    "codigo": "CAGL71-4246STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4250",
+  "codigo_fab": "71-4250/4",
+  "marca": "GLYCO",
+  "aplicacion": "Alfa Romeo 33 1.7 16V 01/90–09/94 146 1.7 i.e. 16V 12/94–12/96 145 1.7 i.e. 16V 10/94–12/96",
+  "descripcion": "ALFA ROMEO 145-146 1.6i-33 4Q 1.7i 16V",
+  "medidas": {
+   "diam_munon": [
+    49.984,
+    50.0
+   ],
+   "diam_alojamiento": [
+    53.696,
+    53.708
+   ],
+   "ancho": 17.8,
+   "espesor": 1.836
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "33 1.7 16V 01/90–09/94 146 1.7 i.e. 16V 12/94–12/96 145 1.7 i.e. 16V 10/94–12/96",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1712",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.024,
+    0.077
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 30,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      49.984,
+      50.0
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      49.349,
+      49.365
+     ]
+    },
+    {
+     "label": "-.050\"",
+     "valor": [
+      48.714,
+      48.73
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025, 050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4250025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4250050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4250STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4261",
+  "codigo_fab": "71-4261/4",
+  "marca": "GLYCO",
+  "aplicacion": "Daihatsu",
+  "descripcion": "TOYOTA K-2K-3K-4K",
+  "medidas": {
+   "diam_munon": 41.98,
+   "diam_alojamiento": 45.02,
+   "ancho": 18.9,
+   "espesor": 1.492
+  },
+  "extra": {
+   "fabricante_motor": "Daihatsu",
+   "motor": null,
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1166",
+   "pares": "8",
+   "tipo_material": "AL",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 197,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 41.98
+    },
+    {
+     "label": "-.025\"",
+     "valor": 41.345
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4261025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4261STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4297",
+  "codigo_fab": "71-4297/4",
+  "marca": "GLYCO",
+  "aplicacion": "Chevrolet ASTRA 1.7 Di 08/00–08/03 CORSA 1.7 DTi 08/01–12/11",
+  "descripcion": "ISUZU 4EE1-4EE1TDi 16V/CHEV.CORSA 1.7D",
+  "medidas": {
+   "diam_munon": [
+    45.936,
+    45.956
+   ],
+   "diam_alojamiento": [
+    48.976,
+    49.0
+   ],
+   "ancho": 16.7,
+   "espesor": 1.5
+  },
+  "extra": {
+   "fabricante_motor": "Chevrolet",
+   "motor": "ASTRA 1.7 Di 08/00–08/03 CORSA 1.7 DTi 08/01–12/11",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1686",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.02,
+    0.089
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 135,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      45.936,
+      45.956
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      45.686,
+      45.706
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      45.436,
+      45.456
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4297025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4297050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4297STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4311",
+  "codigo_fab": "71-4311/4",
+  "marca": "GLYCO",
+  "aplicacion": "Dacia DUSTER 1.6 D 03/88–12/93",
+  "descripcion": "RENAULT MEGANE 2.0 16V F7R",
+  "medidas": {
+   "diam_munon": [
+    48.0,
+    48.02
+   ],
+   "diam_alojamiento": [
+    51.587,
+    51.6
+   ],
+   "ancho": 20.5,
+   "espesor": 1.768
+  },
+  "extra": {
+   "fabricante_motor": "Dacia",
+   "motor": "DUSTER 1.6 D 03/88–12/93",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1596",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.031,
+    0.089
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 179,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      48.0,
+      48.02
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      47.75,
+      47.77
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4311025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4311STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4385",
+  "codigo_fab": "71-4385/6",
+  "marca": "GLYCO",
+  "aplicacion": "Iveco EUROCARGO I-III 03/95–08/01 P/PA 06/84–12/92 EUROSTAR 01/93–02/02 P/PA-Haubenfahrzeuge 04/87–12/93 EUROTECH MH 01/98– Series 190 08/76–12/86",
+  "descripcion": "FIAT 619 N1",
+  "medidas": {
+   "diam_munon": [
+    84.713,
+    84.735
+   ],
+   "diam_alojamiento": [
+    88.482,
+    88.504
+   ],
+   "ancho": 41.25,
+   "espesor": 1.836
+  },
+  "extra": {
+   "fabricante_motor": "Iveco",
+   "motor": "EUROCARGO I-III 03/95–08/01 P/PA 06/84–12/92 EUROSTAR 01/93–02/02 P/PA-Haubenfahrzeuge 04/87–12/93 EUROTECH MH 01/98– Series 190 08/76–12/86",
+   "nro_cil": "6",
+   "diam_x_carrera": null,
+   "cilindrada": "13798",
+   "pares": "6",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": [
+    0.14,
+    0.144
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 412,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      84.713,
+      84.735
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      84.463,
+      84.485
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      84.213,
+      84.235
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      83.963,
+      83.985
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (075): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4385025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4385050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4385075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-4385STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4565",
+  "codigo_fab": "71-4565/4",
+  "marca": "GLYCO",
+  "aplicacion": "Toyota DYNA 2.5 D4d 07/01– HILUX VI 2.5 D-4D 08/01–08/05 FORTUNER 2.5 D 03/16–08/17 HILUX VII 2.5 D 03/05–05/15 FORTUNER 2.5 D-4D 06/04– HILUX VII 2.5 D-4D 11/04–05/15",
+  "descripcion": "TOYOTA 1KZ 3.0-1KD-ftv 3.0TD-2KD-ftv 2.5",
+  "medidas": {
+   "diam_munon": [
+    58.985,
+    59.0
+   ],
+   "diam_alojamiento": 62.03,
+   "ancho": 24.59,
+   "espesor": 1.5
+  },
+  "extra": {
+   "fabricante_motor": "Toyota",
+   "motor": "DYNA 2.5 D4d 07/01– HILUX VI 2.5 D-4D 08/01–08/05 FORTUNER 2.5 D 03/16–08/17 HILUX VII 2.5 D 03/05–05/15 FORTUNER 2.5 D-4D 06/04– HILUX VII 2.5 D-4D 11/04–05/15",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2494",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 1009,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      58.985,
+      59.0
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      58.735,
+      58.75
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      58.485,
+      58.5
+     ]
+    },
+    {
+     "label": "-0,75 mm",
+     "valor": [
+      58.235,
+      58.25
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050, 075): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4565025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4565050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4565075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-4565STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4567",
+  "codigo_fab": "71-4567/4",
+  "marca": "GLYCO",
+  "aplicacion": "Mitsubishi Canter (FE5, FE6) VI 08/96–11/02 L 300 III 2.8 TDiC 06/94–12/97 DELICA / SPACE GEAR 2.8 D 01/94–12/06 PAJERO CLASSIC 2.8 TD 06/02– GALANT VIII 2.8 TD 10/96–07/01 PAJERO II 2.8 D 11/93–10/99",
+  "descripcion": "MITSUBISHI 4M40-4M40T",
+  "medidas": {
+   "diam_munon": 53.97,
+   "diam_alojamiento": 58.02,
+   "ancho": 27.63,
+   "espesor": 1.992
+  },
+  "extra": {
+   "fabricante_motor": "Mitsubishi",
+   "motor": "Canter (FE5, FE6) VI 08/96–11/02 L 300 III 2.8 TDiC 06/94–12/97 DELICA / SPACE GEAR 2.8 D 01/94–12/06 PAJERO CLASSIC 2.8 TD 06/02– GALANT VIII 2.8 TD 10/96–07/01 PAJERO II 2.8 D 11/93–10/99",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2835",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 688,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 53.97
+    },
+    {
+     "label": "-.025\"",
+     "valor": 53.335
+    },
+    {
+     "label": "-.050\"",
+     "valor": 52.7
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025, 050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4567025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4567050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4567STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4724",
+  "codigo_fab": "71-4724",
+  "marca": "GLYCO",
+  "aplicacion": "Jeep COMPASS 2.2 CRD 12/10–",
+  "descripcion": "M.BENZ OM651LA (UN) SPUTTER",
+  "medidas": {
+   "diam_munon": [
+    51.94,
+    51.965
+   ],
+   "diam_alojamiento": [
+    55.6,
+    55.614
+   ],
+   "ancho": 20.5,
+   "espesor": 1.809
+  },
+  "extra": {
+   "fabricante_motor": "Jeep",
+   "motor": "COMPASS 2.2 CRD 12/10–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2143",
+   "pares": "1",
+   "tipo_material": "SP-LF",
+   "material": "respaldo de acero con bronce, capa sputter, trimetálico",
+   "luz_aceite": [
+    0.027,
+    0.091
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 420,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      51.94,
+      51.965
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4724STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4744",
+  "codigo_fab": "71-4744/4",
+  "marca": "GLYCO",
+  "aplicacion": "Nissan INTERSTAR dCI 90 07/02–",
+  "descripcion": "RENAULT G9U MASTER 2.5 CDi 16V",
+  "medidas": {
+   "diam_munon": [
+    52.971,
+    52.99
+   ],
+   "diam_alojamiento": [
+    56.587,
+    56.606
+   ],
+   "ancho": 20.65,
+   "espesor": 1.782
+  },
+  "extra": {
+   "fabricante_motor": "Nissan",
+   "motor": "INTERSTAR dCI 90 07/02–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2188",
+   "pares": "4",
+   "tipo_material": "EC",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.015,
+    0.069
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 713,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      52.971,
+      52.99
+     ]
+    },
+    {
+     "label": "-0,25 mm",
+     "valor": [
+      52.721,
+      52.74
+     ]
+    },
+    {
+     "label": "-0,5 mm",
+     "valor": [
+      52.471,
+      52.49
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (050): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4744025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4744050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4744STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL71-4776",
+  "codigo_fab": "71-4776/4",
+  "marca": "GLYCO",
+  "aplicacion": "Alfa Romeo GIULIETTA 1.6 JTDM 04/10–12/20 MITO 1.6 JTDM 08/08–08/15",
+  "descripcion": "FIAT TORO 2.0 JTD 16V/CHEROKEE 2.0CRD",
+  "medidas": {
+   "diam_munon": [
+    48.226,
+    48.244
+   ],
+   "diam_alojamiento": [
+    51.354,
+    51.366
+   ],
+   "ancho": 19.1,
+   "espesor": 1.54
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "GIULIETTA 1.6 JTDM 04/10–12/20 MITO 1.6 JTDM 08/08–08/15",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1598",
+   "pares": "4",
+   "tipo_material": "EC-LF",
+   "material": "respaldo de acero con bronce fundido, capa electrodepositada",
+   "luz_aceite": [
+    0.03,
+    0.056
+   ],
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 20,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      48.226,
+      48.244
+     ]
+    },
+    {
+     "label": "-.025\"",
+     "valor": [
+      47.591,
+      47.609
+     ]
+    },
+    {
+     "label": "-.050\"",
+     "valor": [
+      46.956,
+      46.974
+     ]
+    },
+    {
+     "label": "-.075\"",
+     "valor": [
+      46.321,
+      46.339
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende bajomedidas que el catálogo no lista para este juego (025, 050, 075): el Ø del muñón rectificado sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL71-4776025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL71-4776050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL71-4776075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL71-4776STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CAGL713850A",
+  "codigo_fab": null,
+  "marca": "GLYCO",
+  "aplicacion": "M.BENZ OM904LA <170 (SIN SPUTTER) (UN)",
+  "descripcion": "M.BENZ OM904LA <170 (SIN SPUTTER) (UN)",
+  "medidas": {
+   "diam_munon": null,
+   "diam_alojamiento": null,
+   "ancho": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_munon": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_alojamiento": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "ancho": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CAGL713850A025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CAGL713850A050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CAGL713850A075",
+    "medida": "075"
+   },
+   {
+    "codigo": "CAGL713850ASTD",
     "medida": "STD"
    }
   ]
@@ -10404,7 +15696,7 @@
   "codigo": "CABE01536",
   "codigo_fab": "B01536",
   "marca": "MAHLE",
-  "aplicacion": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACIONÁ- RIO / MARITÍMO",
+  "aplicacion": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACION–- RIO / MARITÍMO",
   "descripcion": "IVECO CURSOR NEF N34 (E3 y E5)  69mm",
   "medidas": {
    "diam_munon": [
@@ -10426,7 +15718,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACIONÁ- RIO / MARITÍMO",
+   "motor": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACION–- RIO / MARITÍMO",
    "nro_cil": "4",
    "diam_x_carrera": "102,00x120,00",
    "cilindrada": null,
@@ -10522,7 +15814,7 @@
   "codigo": "CABE01540",
   "codigo_fab": "B01540",
   "marca": "MAHLE",
-  "aplicacion": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACIONÁ- RIO / MARITÍMO",
+  "aplicacion": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACION–- RIO / MARITÍMO",
   "descripcion": "IVECO CURSOR NEF III N40 (E3 y E5) 5.9L",
   "medidas": {
    "diam_munon": [
@@ -10544,7 +15836,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACIONÁ- RIO / MARITÍMO",
+   "motor": "FPT - MOTOR NEF III N40 (3.9L) - (Euro III e V) TRUCK MOTOR NEF N34 3cil. / NEF N45 4cil (Euro III e V) AGRÍCOLA / ESTACION–- RIO / MARITÍMO",
    "nro_cil": "4",
    "diam_x_carrera": "102,00x120,00",
    "cilindrada": null,
@@ -11192,7 +16484,7 @@
   "codigo": "CABE0700725",
   "codigo_fab": "B0700725",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR EA211 1.6L 16V MSI / MOTOR EA211 1.4 TSI 1.6 MSI -> CrossFox, Fox, Gol, Saveiro, SpaceFox (2014->) / 1.4 TSI -> Golf (2014->)",
+  "aplicacion": "MOTOR EA211 1.6L 16V MSI / MOTOR EA211 1.4 TSI 1.6 MSI -> CrossFox, Fox, Gol, Saveiro, SpaceFox (2014->) / 1.4 TSI -> Gol– (2014->)",
   "descripcion": "VW EA211 1.4-1.6 4 CIL.",
   "medidas": {
    "diam_munon": [
@@ -11214,7 +16506,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR EA211 1.6L 16V MSI / MOTOR EA211 1.4 TSI 1.6 MSI -> CrossFox, Fox, Gol, Saveiro, SpaceFox (2014->) / 1.4 TSI -> Golf (2014->)",
+   "motor": "MOTOR EA211 1.6L 16V MSI / MOTOR EA211 1.4 TSI 1.6 MSI -> CrossFox, Fox, Gol, Saveiro, SpaceFox (2014->) / 1.4 TSI -> Gol– (2014->)",
    "nro_cil": "4",
    "diam_x_carrera": "76,50",
    "cilindrada": null,
@@ -11732,7 +17024,7 @@
   "codigo": "CABE131090",
   "codigo_fab": "B131090",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR 4.12 TCAE ACTEON EURO 3, VWC - DELIVERY - MOTORES DE 150-180cv MOTOR ACTEON X12 (Trapezoidal)",
+  "aplicacion": "MOTOR 4.12 TCAE ACTEON EURO 3, VWC - DELIVER– - MOTORES DE 150-180cv MOTOR ACTEON X12 (Trapezoidal)",
   "descripcion": "MWM 4.12TCE-6.12TCE (UN)",
   "medidas": {
    "diam_munon": [
@@ -11754,7 +17046,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR 4.12 TCAE ACTEON EURO 3, VWC - DELIVERY - MOTORES DE 150-180cv MOTOR ACTEON X12 (Trapezoidal)",
+   "motor": "MOTOR 4.12 TCAE ACTEON EURO 3, VWC - DELIVER– - MOTORES DE 150-180cv MOTOR ACTEON X12 (Trapezoidal)",
    "nro_cil": "4",
    "diam_x_carrera": "105,00",
    "cilindrada": null,
@@ -16841,7 +22133,7 @@
   "codigo": "CABE48295",
   "codigo_fab": "B48295",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR OM 449 A (252 CV - L/LS - 1625)",
+  "aplicacion": "MOTOR OM 449 A (252 CV - L/LS - 1625) * Itens sob cons–lta",
   "descripcion": "M.BENZ OM449",
   "medidas": {
    "diam_munon": [
@@ -16860,7 +22152,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR OM 449 A (252 CV - L/LS - 1625)",
+   "motor": "MOTOR OM 449 A (252 CV - L/LS - 1625) * Itens sob cons–lta",
    "nro_cil": "5",
    "diam_x_carrera": "128,00x155,00",
    "cilindrada": null,
@@ -18684,7 +23976,7 @@
   "codigo": "CABE590717",
   "codigo_fab": "B0590717",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR SIGMA 1.6L 16V FLEX New Fiesta, Focus, EcoS- port (2010->)",
+  "aplicacion": "MOTOR SIGMA 1.6L 16V FLEX New Fiesta, Fo–us, E–oS- port (2010->) * Itens sob –onsulta",
   "descripcion": "FORD SIGMA 1.6 16V FYDA",
   "medidas": {
    "diam_munon": [
@@ -18706,7 +23998,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR SIGMA 1.6L 16V FLEX New Fiesta, Focus, EcoS- port (2010->)",
+   "motor": "MOTOR SIGMA 1.6L 16V FLEX New Fiesta, Fo–us, E–oS- port (2010->) * Itens sob –onsulta",
    "nro_cil": "4",
    "diam_x_carrera": "79,01",
    "cilindrada": null,
@@ -20305,7 +25597,7 @@
   "codigo": "CABE701035",
   "codigo_fab": "SB701035",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR AT / POWER 1.0L 8V e 16V 1000 10,5:1 GASOLINA/ALCOOL/FLEX (até 03/2008)",
+  "aplicacion": "MOTOR AT / POWER 1.0L 8V e 16V 1000 10,5:1 GASOLI–A/ALCOOL/FLEX (até 03/2008)",
   "descripcion": "VW GOL 1.0 8V-16V",
   "medidas": {
    "diam_munon": [
@@ -20324,7 +25616,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR AT / POWER 1.0L 8V e 16V 1000 10,5:1 GASOLINA/ALCOOL/FLEX (até 03/2008)",
+   "motor": "MOTOR AT / POWER 1.0L 8V e 16V 1000 10,5:1 GASOLI–A/ALCOOL/FLEX (até 03/2008)",
    "nro_cil": "4",
    "diam_x_carrera": "67,11x70,60",
    "cilindrada": null,
@@ -20572,7 +25864,7 @@
   "codigo": "CABE70390",
   "codigo_fab": "SB70390",
   "marca": "MAHLE",
-  "aplicacion": "MOTOR 1.8 AP 1781CC 8,5:1 Gasolina 12,3:1 Álcool ESCORT L, GL, GLX, GUARUJA, GHIA, XR3 / VERONA LX, GLX / VER- SAILLES GL / ROYALE GL / PAMPA L, GL, S.",
+  "aplicacion": "MOTOR 1.8 AP 1781CC 8,5:1 Gasolina 12,3:1 Álcool ESCORT L, GL, GL–, GUARUJA, GHIA, –R3 / VERONA L–, GL– / VER- SAILLES GL / ROYALE GL / PAMPA L, GL, S.",
   "descripcion": "VW AUDI 1.6-1.8-2.0-SENDA 1.6D S/AGUJ.",
   "medidas": {
    "diam_munon": [
@@ -20594,7 +25886,7 @@
   },
   "extra": {
    "fabricante_motor": null,
-   "motor": "MOTOR 1.8 AP 1781CC 8,5:1 Gasolina 12,3:1 Álcool ESCORT L, GL, GLX, GUARUJA, GHIA, XR3 / VERONA LX, GLX / VER- SAILLES GL / ROYALE GL / PAMPA L, GL, S.",
+   "motor": "MOTOR 1.8 AP 1781CC 8,5:1 Gasolina 12,3:1 Álcool ESCORT L, GL, GL–, GUARUJA, GHIA, –R3 / VERONA L–, GL– / VER- SAILLES GL / ROYALE GL / PAMPA L, GL, S.",
    "nro_cil": "4",
    "diam_x_carrera": "81,00x86,40",
    "cilindrada": null,

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Arma `CRAC/tecnicos/cojinetes_biela.json` leyendo los tres catálogos de cojinetes
+Arma `CRAC/tecnicos/cojinetes_biela.json` leyendo los cuatro catálogos de cojinetes
 que hay en `CRAC/tecnicos/fuentes/` y cruzándolos contra la lista del proveedor.
 
 POR QUÉ EXISTE
@@ -23,9 +23,10 @@ cambiando el prefijo del código y la categoría del proveedor).
 
 Lo que hay que saber para leer este archivo:
 
-* Los tres catálogos traen las mismas cinco columnas de medida, PERO EN DISTINTO
-  ORDEN. Mahle: Ø eje · Ø alojamiento · ancho · espesor · luz. Federal Mogul:
-  Ø eje · Ø alojamiento · luz · espesor · ancho. Eso está en `ORDEN_COLUMNAS`.
+* Los cuatro catálogos traen las mismas cinco columnas de medida, PERO EN
+  DISTINTO ORDEN. Mahle y Glyco: Ø eje · Ø alojamiento · ancho · espesor · luz.
+  Federal Mogul: Ø eje · Ø alojamiento · luz · espesor · ancho. Eso está en
+  `ORDEN_COLUMNAS`.
 
 * Una fila puede tener columnas vacías, y el texto del PDF no dice cuál falta:
   llegan tres números sueltos y hay que adivinar a qué columna va cada uno. Se
@@ -71,7 +72,7 @@ PRECIO_STOCK = RAIZ / "CRAC" / "precio-stock.csv"
 #
 # Los rangos no son decorativos: son lo que permite saber qué columna quedó
 # vacía cuando el PDF manda menos de cinco números. Salieron de mirar el mínimo y
-# el máximo de cada columna en los tres catálogos, con aire a los dos lados.
+# el máximo de cada columna en los cuatro catálogos, con aire a los dos lados.
 # ---------------------------------------------------------------------------
 RANGOS = {
     "diam_munon": (14.0, 145.0),
@@ -86,6 +87,11 @@ ORDEN_COLUMNAS = {
     "mahle": ["diam_munon", "diam_alojamiento", "ancho", "espesor", "luz"],
     # Federal Mogul: E Ø eje · F Ø alojamiento · G luz de aceite · H espesor · I ancho
     "fm": ["diam_munon", "diam_alojamiento", "luz", "espesor", "ancho"],
+    # Glyco: 6 Ø eje · 7 Ø alojamiento · 8 ancho máximo · 9 espesor máximo · 10 luz
+    # (la numeración es la de su propia página "HOW TO USE"). Coincide con la de
+    # Mahle, pero va aparte porque son catálogos distintos y nada garantiza que
+    # sigan coincidiendo en la próxima edición.
+    "glyco": ["diam_munon", "diam_alojamiento", "ancho", "espesor", "luz"],
 }
 
 
@@ -623,6 +629,245 @@ def _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo):
 
 
 # ===========================================================================
+# Glyco — glyco_cojinetes_2023.pdf
+# ===========================================================================
+#
+# El más prolijo de los cuatro, y el único que publica la leyenda de sus
+# columnas en la misma página que la tabla ("HOW TO USE", páginas VI-XXI). No
+# hace falta adivinar nada: cada fila dice de qué pieza es.
+#
+#     BE/PL 4 01-4116/4 STD 0.25 0.50 1015RA 37.998/38.008 41.128/41.140 …
+#     └───┘ │ └───────┘ └────────────┘ └────┘ └────────────────────────┘
+#       │   │     │            │         │      las cinco columnas de medida
+#       │   │     │            │         └───── referencia del componente
+#       │   │     │            └─────────────── bajomedidas del juego
+#       │   │     └──────────────────────────── código Glyco del JUEGO
+#       │   └────────────────────────────────── composición (pares o piezas)
+#       └────────────────────────────────────── tipo de cojinete
+#
+# El tipo es lo que separa biela de bancada, y por eso este catálogo sirve para
+# las dos familias sin cambiarle nada al lector:
+#
+#     BE/PL  Pleuellager    cojinete de BIELA
+#     MB/HL  Hauptlager     cojinete de BANCADA
+#     TW/A   Anlaufscheibe  semiarandela de empuje (categoría CF)
+#     SE/PB · CB/NWB · CS/NWL · BU   bujes y cojinetes de levas
+#
+# Un juego de bancada ocupa varias filas, una por posición de muñón: la primera
+# trae el código del juego y las siguientes sólo la posición y su componente. El
+# lector arrastra el código hacia abajo, igual que hace el de Mahle con la
+# composición.
+GLYCO_TIPOS = {
+    "BE/PL": "biela", "MB/HL": "bancada", "TW/A": "axial", "SE/PB": "perno",
+    "CB/NWB": "buje_levas", "CS/NWL": "cojinete_levas", "BU": "buje",
+}
+# Tres decimales es lo que separa una medida de una bajomedida: el catálogo
+# escribe las medidas con tres ("19.000", "1.549") y las bajomedidas con dos
+# ("0.25", "0.50"). Sin esa diferencia el "STD 0.25 0.50" del final de una fila
+# cortada se lee como si fueran las dos últimas columnas de medida.
+GLYCO_DECIMAL = re.compile(r"^\d+\.\d{3}$")
+GLYCO_RANGO = re.compile(r"^(\d+\.\d{2,3})/(\d+\.\d{2,3})$")
+GLYCO_BAJA = re.compile(r"^(?:STD|\d\.\d{2})$")
+GLYCO_JUEGO = re.compile(r"^[A-Z]{0,2}\d{2,4}(?:-\d{3,4})?[A-Z]{0,3}(?:/\d{1,2})?$")
+GLYCO_MATERIAL = re.compile(r"^[A-Z]{1,2}(?:-LF)?$")
+GLYCO_CONTINUA = re.compile(r"^\d{1,2}$")
+# La cabecera de cada panel: número de panel, el símbolo de diámetro y el Ø del
+# cilindro ("5 Ĭ 70.00"). El símbolo sale distinto según la fuente del PDF.
+GLYCO_PANEL = re.compile(r"^\d{1,3}\s+\S{1,2}\s+(\d{2,3}\.\d{2})$")
+GLYCO_MOTOR = re.compile(r"(\d+)\s*cyl\.\s+(\d+)cc")
+# El período de fabricación ("03/85ﬂ10/95"): es lo que delata un renglón de
+# modelo de vehículo entre todos los renglones sueltos de la página.
+GLYCO_MODELO = re.compile(r"\d{2}/\d{2}")
+GLYCO_PIE = re.compile(r"^\d{1,4}$")
+
+# Los materiales, de la página de uso del catálogo. La primera letra es el
+# respaldo y la capa de deslizamiento; "-LF" es libre de plomo (lead free).
+MATERIAL_GLYCO = {
+    "AL": "respaldo de acero con aluminio, bimetálico o trimetálico",
+    "B": "bronce",
+    "BB": "respaldo de acero con metal antifricción (babbit), bimetálico",
+    "BC": "respaldo de acero con bronce fundido, sin capa de deslizamiento",
+    "BS": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+    "EC": "respaldo de acero con bronce fundido, capa electrodepositada",
+    "SP": "respaldo de acero con bronce, capa sputter, trimetálico",
+    "PC": "respaldo de acero con aluminio o bronce, capa de polímero",
+}
+
+
+def leer_glyco(pdf: Path, pieza: str) -> list[dict]:
+    """
+    Las filas de una pieza (`biela` o `bancada`) del catálogo de Glyco.
+
+    Devuelve una fila por juego y por motor que lo usa, con la misma forma que
+    las de Mahle y Federal Mogul, para que el cruce contra el proveedor sea el
+    mismo para los cuatro catálogos.
+    """
+    if not pdf.exists():
+        print(f"  ⚠ falta {pdf.name}: los códigos Glyco quedan sin medidas.\n"
+              f"    Se baja del release 'catalogos' del repo (ver "
+              f"CRAC/tecnicos/CARGA-COJINETES.md).", file=sys.stderr)
+        return []
+
+    filas = []
+    for hoja, pagina in enumerate(PdfReader(str(pdf)).pages, start=1):
+        try:
+            texto = pagina.extract_text() or ""
+        except Exception:                                  # noqa: BLE001
+            continue
+        filas += _leer_pagina_glyco(texto, hoja, pieza)
+    return filas
+
+
+def _leer_pagina_glyco(texto: str, hoja: int, pieza: str) -> list[dict]:
+    renglones = texto.split("\n")
+    fabricante = _glyco_fabricante(renglones)
+    impresa = _glyco_pagina_impresa(renglones)
+
+    filas, tipo, motor, juego = [], None, _motor_vacio(), None
+    cortada: list[str] = []
+    for renglon in renglones:
+        campos = renglon.split()
+        if not campos:
+            continue
+        # La cabecera del panel se mira ANTES que todo: empieza con un número
+        # ("8 Ĭ 75.00") y si no, la toma la rama de las continuaciones y el Ø del
+        # cilindro termina entrando como si fuera el Ø de un muñón.
+        if GLYCO_PANEL.match(renglon.strip()):
+            tipo, juego, cortada = None, None, []
+            motor, _ = _glyco_panel(renglon, motor)
+            continue
+        if campos[0] in GLYCO_TIPOS:
+            tipo, campos, cortada = GLYCO_TIPOS[campos[0]], campos[1:], []
+        elif cortada:
+            campos = cortada + campos              # la fila venía cortada
+        elif tipo and GLYCO_CONTINUA.fullmatch(campos[0]):
+            pass                                   # continuación del mismo tipo
+        else:
+            tipo = None
+            motor, juego = _glyco_panel(renglon, motor)
+            continue
+
+        fila = _fila_glyco(campos)
+        if fila is None:
+            # Cuando la lista de bajomedidas no entra en la celda, el PDF parte
+            # la fila en dos o tres renglones y las medidas llegan recién en el
+            # último. Se guarda lo leído y se le pega el renglón de abajo.
+            cortada = campos if (tipo and len(cortada) < 3 * len(campos)
+                                 and any(GLYCO_BAJA.fullmatch(c) for c in campos)) else []
+            continue
+        cortada = []
+        if fila["codigo_fab"]:
+            juego = fila                           # arrastra el código hacia abajo
+        elif juego is not None and tipo == pieza:
+            fila = {**juego, **{k: v for k, v in fila.items() if v not in (None, {})}}
+            fila["codigo_fab"] = juego["codigo_fab"]
+        if tipo != pieza or not fila["codigo_fab"]:
+            continue
+        # Una fila de cojinete trae siempre el Ø del muñón y el del alojamiento.
+        # Con menos que eso no es una fila de la tabla: es una llamada al pie o
+        # un renglón de texto que quedó con un número suelto.
+        if not {"diam_munon", "diam_alojamiento"} <= fila["columnas"].keys():
+            continue
+        filas.append({
+            "catalogo": "Glyco 2023-2025",
+            "hoja_pdf": impresa or hoja,
+            "marca": "GLYCO",
+            "codigo_fab": fila["codigo_fab"],
+            "numero": fila["codigo_fab"].split("/")[0],
+            "sufijo": None,
+            "pares": fila["pares"],
+            "tipo_material": fila["material"],
+            "medidas_txt": "/".join(fila["bajas"]),
+            "columnas": fila["columnas"],
+            "dudoso": fila["dudoso"],
+            "motor": {**motor, "fabricante": motor["fabricante"] or fabricante},
+            "pulgadas": False,
+        })
+    return filas
+
+
+def _fila_glyco(campos: list[str]) -> dict | None:
+    """
+    Una fila de la tabla: las medidas se leen desde la derecha.
+
+    Se lee de atrás para adelante porque es el único extremo firme: el material
+    cierra la fila y antes vienen las columnas de medida, todas con decimales.
+    Por la izquierda, en cambio, la cantidad de campos cambia (hay llamadas al
+    pie, posiciones de muñón, referencias de componente) y no se puede contar.
+    """
+    campos = list(campos)
+    material = campos.pop() if campos and GLYCO_MATERIAL.fullmatch(campos[-1]) else None
+    valores = []
+    while campos and _glyco_medida(campos[-1]) is not None:
+        valores.insert(0, _glyco_medida(campos.pop()))
+    if not valores or len(campos) < 2:
+        return None
+
+    # Las bajomedidas son un dato del juego, no del componente: si la fila las
+    # trae, es la fila que abre el juego y su segundo campo es el código.
+    bajas = [c for c in campos if GLYCO_BAJA.fullmatch(c)]
+    codigo = campos[1] if bajas and GLYCO_JUEGO.fullmatch(campos[1]) else None
+    columnas, dudoso = asignar_columnas(valores, ORDEN_COLUMNAS["glyco"])
+    return {"codigo_fab": codigo, "pares": campos[0] if codigo else None,
+            "bajas": bajas, "material": material,
+            "columnas": columnas, "dudoso": dudoso}
+
+
+def _glyco_medida(campo: str):
+    """Un valor de medida siempre lleva decimales; una posición de muñón, no."""
+    rango = GLYCO_RANGO.fullmatch(campo)
+    if rango:
+        return [float(rango.group(1)), float(rango.group(2))]
+    return float(campo) if GLYCO_DECIMAL.fullmatch(campo) else None
+
+
+def _glyco_panel(renglon: str, motor: dict) -> tuple[dict, None]:
+    """
+    Los renglones de arriba de la tabla describen el motor.
+
+    La cabecera ("5 Ĭ 70.00") abre un panel nuevo y trae el Ø del cilindro —sin
+    la carrera, así que no hay dónde guardarlo: el JSON tiene `diam_x_carrera` y
+    poner ahí un número solo sería mentir—. Después vienen los códigos de motor,
+    que se reconocen por los cilindros y la cilindrada ("4cyl. 903cc"), y por
+    último los modelos de vehículo, que se reconocen por los períodos de
+    fabricación ("Y10 1.0 03/85-10/95").
+
+    Esa fecha es lo que separa un modelo del resto de los renglones sueltos de la
+    página: llamadas al pie, leyendas en cinco idiomas y el nombre del fabricante
+    del pie, que si no se cuela al final de la aplicación.
+    """
+    panel = GLYCO_PANEL.match(renglon.strip())
+    if panel:
+        return _motor_vacio(), None
+
+    datos = GLYCO_MOTOR.search(renglon)
+    if datos:
+        motor["nro_cil"] = motor["nro_cil"] or datos.group(1)
+        motor["cilindrada"] = motor["cilindrada"] or datos.group(2)
+    elif GLYCO_MODELO.search(renglon) and len(motor["modelo"]) < 3:
+        # El PDF separa las dos fechas del período con la ligadura "ﬂ" (U+FB02),
+        # que es la que le tocó al glifo de la flecha en esa fuente.
+        motor["modelo"].append(renglon.strip().replace("ﬂ", "–"))
+    return motor, None
+
+
+def _glyco_fabricante(renglones: list[str]) -> str:
+    """El fabricante va al pie de la página, en mayúsculas y solo."""
+    for renglon in reversed(renglones[-4:]):
+        texto = renglon.strip()
+        if 2 < len(texto) < 30 and texto == texto.upper() and texto[0].isalpha():
+            return texto.title()
+    return ""
+
+
+def _glyco_pagina_impresa(renglones: list[str]) -> int | None:
+    """El número impreso, que es el que sirve para volver a mirar la fila."""
+    for renglon in reversed(renglones[-4:]):
+        if GLYCO_PIE.fullmatch(renglon.strip()):
+            return int(renglon.strip())
+    return None
+
+# ===========================================================================
 # La lista del proveedor
 # ===========================================================================
 #
@@ -686,8 +931,36 @@ def clave_fm(codigo: str) -> str:
 
 
 def clave_glyco(codigo: str) -> str:
-    """'71-2185/6' en el catálogo es '71-2185' en el proveedor (el /6 son cilindros)."""
-    return codigo.split("/")[0].strip()
+    """Del lado del proveedor el código se usa tal cual: es el que manda."""
+    return codigo.strip()
+
+
+def claves_glyco(codigo: str, pares: str | None = None) -> list[str]:
+    """
+    Todas las formas en que el proveedor puede escribir un código Glyco.
+
+    Su campo tiene siete caracteres y el código no siempre entra, así que lo
+    recorta —y no de una sola manera—:
+
+        H982/5     entra entero
+        01-3040/4  pierde el prefijo de dos dígitos      → '3040/4'
+        01-3841/6  pierde los pares                      → '01-3841'
+        71-3850A   pierde el guión                       → '713850A'
+        71-2834    gana la composición que el catálogo
+                   escribe en la columna de al lado      → '2834/1'
+
+    No hay una regla que las cubra a todas, así que se generan todas las
+    variantes y gana la que exista en la lista del proveedor. Un mismo juego
+    puede quedar bajo dos códigos distintos ('3572/4' y '71-3572'), y está bien:
+    el proveedor los vende como dos artículos.
+    """
+    base = codigo.split("/")[0].strip()
+    sin_prefijo = re.sub(r"^\d{2}-", "", codigo)
+    variantes = {codigo, base, sin_prefijo, sin_prefijo.split("/")[0],
+                 codigo.replace("-", ""), base.replace("-", "")}
+    if "/" not in codigo and pares and pares.isdigit():
+        variantes.add(f"{sin_prefijo}/{pares}")
+    return sorted(variantes | {v[:7] for v in variantes})
 
 
 CLAVES = {"MAHLE": clave_mahle, "FEDERAL MOGUL": clave_fm, "GLYCO": clave_glyco}
@@ -697,7 +970,12 @@ def indexar(filas: list[dict]) -> dict[tuple[str, str], list[dict]]:
     indice: dict[tuple[str, str], list[dict]] = {}
     for fila in filas:
         marca = fila.get("marca", "MAHLE")
-        indice.setdefault((marca, CLAVES[marca](fila["codigo_fab"])), []).append(fila)
+        if marca == "GLYCO":
+            claves = claves_glyco(fila["codigo_fab"], fila.get("pares"))
+        else:
+            claves = [CLAVES[marca](fila["codigo_fab"])]
+        for clave in claves:
+            indice.setdefault((marca, clave), []).append(fila)
     return indice
 
 
@@ -717,6 +995,7 @@ def elegir_fila(filas: list[dict], codigo_proveedor: str) -> tuple[dict, str | N
       "1245 RA") y el proveedor a veces lo aclara ("F 1245CP"). Cuando lo aclara
       se usa ése.
     """
+    filas = _catalogo_de_la_marca(filas)
     if len(filas) == 1:
         return filas[0], None
 
@@ -743,6 +1022,25 @@ def elegir_fila(filas: list[dict], codigo_proveedor: str) -> tuple[dict, str | N
         f"más se repite ({len(ordenados[0])} filas del catálogo contra "
         f"{', '.join(str(len(g)) for g in ordenados[1:])})"
     )
+
+
+def _catalogo_de_la_marca(filas: list[dict]) -> list[dict]:
+    """
+    Cuando un código está en dos catálogos, manda el de su propia marca.
+
+    Pasa sólo con Glyco: sus últimas páginas están también dentro del catálogo de
+    Federal Mogul (es la misma empresa) y ahí las filas salen peor. Poniéndolas
+    una al lado de la otra, los Ø, el ancho y el espesor coinciden en los doce
+    códigos que están en los dos; lo que cambia es que el de Federal Mogul trae
+    erratas que el de Glyco no tiene —`51.995/51.965`, `48.917/48.987`,
+    `48.984/50.000`, con el segundo valor incoherente con el primero— y alguna
+    luz de aceite corrida en la última cifra.
+
+    El de Federal Mogul sigue haciendo falta igual: es el único que trae los ocho
+    códigos Glyco viejos que la edición 2023-2025 ya no lista.
+    """
+    propios = [f for f in filas if f["catalogo"].startswith("Glyco")]
+    return propios or filas
 
 
 def _diferencias(grupos: list[list[dict]]) -> str:
@@ -912,11 +1210,14 @@ def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None) -> dict:
     }
 
     if fila is None:
+        catalogos = {"MAHLE": "Mahle 2019 y Clevite 2014",
+                     "FEDERAL MOGUL": "Federal Mogul",
+                     "GLYCO": "Glyco 2023-2025 y Federal Mogul"}[marca]
         for campo in medidas:
             revisar[campo] = (
                 "Este código no está en ninguno de los catálogos que tenemos "
-                f"({'Mahle 2019 y Clevite 2014' if marca == 'MAHLE' else 'Federal Mogul'}): "
-                "la aplicación es la que publica la lista del proveedor"
+                f"({catalogos}): la aplicación es la que publica la lista del "
+                "proveedor"
             )
         aplicacion = articulo["descripcion"]
         codigo_fab = None
@@ -932,7 +1233,7 @@ def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None) -> dict:
             "cilindrada": fila["motor"].get("cilindrada"),
             "pares": fila.get("pares"),
             "tipo_material": fila.get("tipo_material"),
-            "material": material_fm(fila.get("sufijo")) if marca != "MAHLE" else None,
+            "material": _material(marca, fila),
             "luz_aceite": fila["columnas"].get("luz"),
             "composicion": fila.get("composicion"),
             "codigo_metal_leve": fila.get("codigo_metal_leve"),
@@ -984,6 +1285,23 @@ def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None) -> dict:
         "extra": extra,
         "codigos_crac": codigos,
     }
+
+
+def _material(marca: str, fila: dict) -> str | None:
+    """
+    De qué está hecho el cojinete, en castellano.
+
+    Cada catálogo lo codifica a su manera y sólo dos publican la tabla: Federal
+    Mogul en su página de instrucciones y Glyco en la suya. La de Mahle (`P`,
+    `SP`, `C`, `B`, `FT`) no está en las páginas de cojinetes que tenemos, así
+    que ese código queda sin traducir en `extra.tipo_material`.
+    """
+    if marca == "MAHLE":
+        return None
+    if marca == "GLYCO":
+        codigo = (fila.get("tipo_material") or "").split("-")[0]
+        return MATERIAL_GLYCO.get(codigo)
+    return material_fm(fila.get("sufijo"))
 
 
 def _marca_crac(marca: str) -> str:
@@ -1046,6 +1364,7 @@ def main() -> int:
         + leer_mahle(FUENTES / "mahle_clevite_2014.pdf", "Mahle Clevite 2014",
                      dos_por_hoja=False)
         + leer_federal_mogul(FUENTES / "federal_mogul_cojinetes.pdf")
+        + leer_glyco(FUENTES / "glyco_cojinetes_2023.pdf", "biela")
     )
     for fila in filas:
         fila.setdefault("marca", "MAHLE")
@@ -1054,12 +1373,7 @@ def main() -> int:
 
     fichas, sin_catalogo = [], []
     for (marca, codigo), articulo in sorted(articulos.items()):
-        # Glyco sólo entra por los códigos que aparecen en el catálogo de Federal
-        # Mogul (sus últimas páginas usan numeración Glyco). El resto espera al
-        # catálogo de Glyco: una ficha vacía antes de eso sería ruido.
         candidatas = indice.get((marca, CLAVES[marca](codigo)), [])
-        if not candidatas and marca == "GLYCO":
-            continue
         fila, aviso = elegir_fila(candidatas, codigo) if candidatas else (None, None)
         if fila is None:
             sin_catalogo.append(f"{marca} {codigo}")

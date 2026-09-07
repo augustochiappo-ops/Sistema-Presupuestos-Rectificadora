@@ -35,3 +35,9 @@ desktop.ini
 
 # Capturas que generan las verificaciones de UI (tests/ui_grupos.mjs)
 tests/capturas/
+
+# Catálogo de cojinetes de Glyco (30 MB). No se versiona: el repo entero se
+# copia a PythonAnywhere en cada deploy y el PDF pesa más que todo lo demás
+# junto. Vive en el release "catalogos" del repo; cómo bajarlo está en
+# CRAC/tecnicos/CARGA-COJINETES.md.
+CRAC/tecnicos/fuentes/glyco_cojinetes_2023.pdf

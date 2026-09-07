@@ -14,6 +14,21 @@ corre así, y no pisa nada más que el JSON:
 
 Los PDF están en [`fuentes/`](fuentes/). Sin ellos el script no corre.
 
+**El de Glyco es la excepción: no está en el repo.** Pesa 30 MB —más que todo
+lo demás junto— y el repo entero se copia a PythonAnywhere en cada deploy, así
+que vive en el release `catalogos` de GitHub. Se baja una vez y queda:
+
+```bash
+curl -sSL -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/octet-stream" \
+  -o CRAC/tecnicos/fuentes/glyco_cojinetes_2023.pdf \
+  "$(curl -sS -H "Authorization: Bearer $GITHUB_TOKEN" \
+      https://api.github.com/repos/augustochiappo-ops/Sistema-Presupuestos-Rectificadora/releases/tags/catalogos \
+      | grep -o '"url": "[^"]*assets/[0-9]*"' | head -1 | cut -d'"' -f4)"
+```
+
+Si el archivo no está, el script avisa y sigue: los códigos Glyco quedan sin
+medidas, pero Mahle y Federal Mogul se cargan igual.
+
 ---
 
 ## 1. El código del proveedor
@@ -41,7 +56,7 @@ C A B E 0 1 4 7 2 _ _ 0 2 5
 |---|---|
 | `BE` | Mahle — `mahle_cojinetes_2019.pdf` y `mahle_clevite_2014.pdf` |
 | `F ` | Federal Mogul — `federal_mogul_cojinetes.pdf` (ojo el espacio: la marca ocupa 2 caracteres) |
-| `GL` | Glyco — hoy sólo los que aparecen dentro del catálogo de Federal Mogul |
+| `GL` | Glyco — `glyco_cojinetes_2023.pdf`, y los viejos que sólo están dentro del catálogo de Federal Mogul |
 
 De los 5.170 renglones de la categoría `CA` que vende el proveedor, unos 3.800
 son marcas de las que **no tenemos catálogo** (Motores Japoneses 1.164, V.M.
@@ -52,10 +67,10 @@ familia hasta que aparezca un catálogo que las cubra.
 
 ## 2. Las cinco columnas de medida
 
-Los tres catálogos traen **las mismas cinco columnas**, con distinto nombre y —
+Los cuatro catálogos traen **las mismas cinco columnas**, con distinto nombre y —
 esto es lo que hay que tener presente— **en distinto orden**:
 
-| | Mahle 2019 y Clevite | Federal Mogul |
+| | Mahle 2019, Clevite y Glyco | Federal Mogul |
 |---|---|---|
 | 1ª | Ø standard do eixo | E · Ø estándar del eje |
 | 2ª | Ø standard do alojamento | F · Ø del alojamiento |
@@ -249,13 +264,107 @@ distingue del número de juego porque **la cantidad de pares no pasa de 12 y no 
 escribe con cero adelante**. El `/6` del final son los cilindros y el proveedor
 no lo escribe.
 
-Hoy salen 12 de los 87 códigos Glyco del proveedor. Los otros 75 esperan al
-catálogo de Glyco y **no están cargados ni como ficha vacía**: cargarlos antes de
-tener el catálogo sería ruido.
+De acá salen 12 de los 87 códigos Glyco del proveedor. Desde que está el
+catálogo de Glyco (sección 6) esas doce filas **ya no se usan**: `elegir_fila()`
+se queda con las del catálogo propio cuando las hay. Puestas una al lado de la
+otra, los Ø, el ancho y el espesor coinciden en los doce; lo que cambia es que
+las de Federal Mogul traen erratas que las de Glyco no tienen (`51.995/51.965`,
+`48.917/48.987`, `48.984/50.000`, con el segundo valor incoherente con el
+primero) y alguna luz de aceite corrida en la última cifra.
+
+Este catálogo sigue haciendo falta igual: es el único que trae los ocho códigos
+Glyco viejos que la edición 2023-2025 ya no lista.
 
 ---
 
-## 6. Las bajomedidas
+## 6. Glyco — `glyco_cojinetes_2023.pdf`
+
+El más prolijo de los cuatro, y el que resolvió Glyco de una: **83 de los 87
+códigos** del proveedor. 1.252 páginas, texto legible, y —a diferencia de los
+otros tres— **cada fila dice de qué pieza es**, así que sirve igual para biela y
+para bancada sin cambiarle una línea al lector.
+
+```
+BE/PL 4 01-4116/4 STD 0.25 0.50 1015RA 37.998/38.008 41.128/41.140 19.000 1.549 0.022/0.069 AL-LF
+└───┘ │ └───────┘ └────────────┘ └────┘ └───────────────────────────────────────────────────┘ └───┘
+  │   │     │            │         │      Ø eje · Ø alojamiento · ancho · espesor · luz        material
+  │   │     │            │         └───── referencia del componente
+  │   │     │            └─────────────── bajomedidas del juego
+  │   │     └──────────────────────────── código Glyco del JUEGO (es el que vende el proveedor)
+  │   └────────────────────────────────── composición: pares o piezas
+  └────────────────────────────────────── tipo de cojinete
+```
+
+El tipo sale de la propia página de uso del catálogo (`HOW TO USE`, páginas
+VI-XXI), que además numera las once columnas: **`BE/PL` es biela** (*Pleuellager*)
+y **`MB/HL` es bancada** (*Hauptlager*); `TW/A` son las semiarandelas de empuje
+(categoría `CF` del proveedor) y `SE/PB`, `CB/NWB`, `CS/NWL` y `BU` son bujes.
+
+Las cinco columnas de medida vienen **en el orden de Mahle** (Ø eje, Ø
+alojamiento, ancho, espesor, luz), no en el de Federal Mogul. Está en
+`ORDEN_COLUMNAS["glyco"]`, aparte de la de Mahle aunque hoy coincidan: son
+catálogos distintos y nada garantiza que sigan coincidiendo.
+
+### Las tres cosas que costaron
+
+1. **Tres decimales es lo que separa una medida de una bajomedida.** El catálogo
+   escribe las medidas con tres (`19.000`, `1.549`) y las bajomedidas con dos
+   (`0.25`, `0.50`). Sin esa diferencia, el `STD 0.25 0.50` del final de una fila
+   se lee como si fueran las dos últimas columnas de medida, y encima tapa el
+   caso de abajo.
+2. **Las filas largas vienen cortadas en tres renglones.** Cuando la lista de
+   bajomedidas no entra en la celda, el PDF parte la fila y las medidas llegan
+   recién en el último renglón:
+   ```
+   BE/PL 4 01-4174/4 STD 0.25 0.50
+   0.75
+   GS9763SA 58.725/58.744 62.433/62.446 25.070 1.830 0.029/0.086 AL-LF
+   ```
+   El lector guarda lo leído y le pega el renglón de abajo. Son 325 filas: sin
+   esto se perdían ocho códigos del proveedor.
+3. **La cabecera del panel se mira antes que nada.** Empieza con un número
+   (`8 Ĭ 75.00`, que es el Ø del cilindro) y si no se la saca primero, la toma la
+   rama de las continuaciones y el Ø del cilindro entra como si fuera el Ø de un
+   muñón. Deja fichas con un muñón de 125 mm y suena a dato bueno.
+
+Y una regla que no es del PDF sino del cruce: **un juego de bancada ocupa varias
+filas**, una por posición de muñón, y sólo la primera trae el código. El lector
+lo arrastra hacia abajo, igual que hace el de Mahle con la composición.
+
+### La aplicación
+
+Los renglones de arriba de la tabla describen el motor: la cabecera del panel
+trae el Ø del cilindro —sin la carrera, así que no se guarda: el JSON tiene
+`diam_x_carrera` y poner ahí un número solo sería mentir—, después vienen los
+códigos de motor, que se reconocen por `4cyl. 903cc`, y por último los modelos
+de vehículo, que se reconocen por **el período de fabricación** (`03/85–10/95`).
+
+Esa fecha es lo único que separa un modelo del resto de los renglones sueltos de
+la página: llamadas al pie, leyendas en cinco idiomas y el nombre del fabricante
+del pie, que si no se colaba al final de cada aplicación (`Autobianchi … Y10 1.0
+… AUTOBIANCHI`). Cuando el panel no trae fechas, la aplicación queda con el
+fabricante solo; la descripción del proveedor sigue estando en `descripcion`.
+
+### Los códigos, que el proveedor recorta de cuatro maneras
+
+Su campo tiene siete caracteres y el código no siempre entra. No hay una regla:
+se generan todas las variantes (`claves_glyco()`) y gana la que exista en la
+lista.
+
+| Catálogo | Proveedor | Qué perdió |
+|---|---|---|
+| `H982/5` | `H982/5` | nada, entra entero |
+| `01-3040/4` | `3040/4` | el prefijo de dos dígitos |
+| `01-3841/6` | `01-3841` | los pares |
+| `71-3850A` | `713850A` | el guión |
+| `71-2834` | `2834/1` | ganó la composición de la columna de al lado |
+
+Un mismo juego puede quedar bajo dos códigos del proveedor (`3572/4` y
+`71-3572`) y está bien: los vende como dos artículos.
+
+---
+
+## 7. Las bajomedidas
 
 Un cojinete de biela se pide por su **bajomedida**: cuánto se le rectificó al
 muñón del cigüeñal. Los catálogos las escriben en dos sistemas y el proveedor en
@@ -289,10 +398,13 @@ le va?*
 
 ---
 
-## 7. Lo que quedó pendiente
+## 8. Lo que quedó pendiente
 
 * **Cojinetes de bancada** (categoría `CB`): es el motivo de este documento.
-* **Glyco**: 75 códigos esperando el catálogo de la marca.
+* **4 códigos Glyco** que ni la edición 2023-2025 ni el catálogo de Federal Mogul
+  traen (`71-2404`, `71-3447`, `71-3951`, `713850A`): referencias viejas que
+  Glyco discontinuó y el proveedor todavía vende. Están cargadas igual, con la
+  aplicación y el precio, y las medidas vacías.
 * **27 códigos Mahle y 40 de Federal Mogul** que el proveedor vende y no están en
   ninguno de los catálogos que tenemos. Están cargados igual, con la aplicación y
   el precio del proveedor y las medidas vacías: se los encuentra buscando por
