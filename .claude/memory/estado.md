@@ -1370,6 +1370,51 @@ el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 
 ## Próximo paso
 
+**Cojinetes axiales: la undécima familia (2026-09-07, tercera sesión).**
+
+La semiarandela de empuje, que **no es un cojinete**: no abraza un muñón, apoya
+contra el costado del cigüeñal y le fija el juego axial. Son los **120 códigos**
+de la categoría `CF` que vende el proveedor de las tres marcas: 51 de Mahle
+(38 con medidas), 42 de Federal Mogul (todas con espesor, 3 con los dos
+diámetros) y 27 de Glyco (24 con medidas).
+
+**Se mide distinto y por eso es familia propia y no otra fila**: Ø interior,
+Ø exterior y espesor. Las columnas del PDF son las mismas —la del Ø del eje
+trae el Ø interior y la del alojamiento, el exterior—, así que la extracción
+sigue usando los nombres del cojinete y recién la ficha les pone el suyo
+(constante `CAMPOS` del script).
+
+**Y las medidas del proveedor SUMAN en vez de restar.** En el cojinete son
+bajomedidas del muñón; acá son sobremedidas de espesor: cuando la cara de
+empuje del cigüeñal se rectifica hay que poner una arandela más gruesa. El
+filtro de la pantalla se llama "Espesor con sobremedida" y busca contra
+`espesor + sobremedida`.
+
+**Las tres cosas que hubo que arreglar** (las tres están explicadas en
+`CARGA-COJINETES.md`, sección 8):
+
+1. `clave_mahle` tiraba la `B` de biela y la `M` de bancada pero no la `L` de
+   la arruela de encosto, así que **ninguno** de los 51 códigos de Mahle
+   cruzaba. Con la letra agregada, cruzan 38.
+2. El corte entre las medidas del juego y la primera columna de medida estaba
+   fijo en 14 mm (ningún muñón baja de ahí). Una arandela mide 2 mm, así que
+   con ese corte se perdían las filas que traen sólo el espesor —que en
+   Federal Mogul son 57 de 95—. Ahora el corte sale de la constante `CORTE`:
+   14 mm en el cojinete, 1,2 mm en la arandela.
+3. Las sobremedidas de la arandela son mucho más chicas (0,127 contra 0,25) y
+   el proveedor las escribe en milésimas de milímetro (`127` es 0,127, no
+   1,27). `sobremedidas_del_catalogo` y `leer_medida_axial` son las versiones
+   propias de la familia; las del cojinete quedaron intactas.
+
+**El script ahora acepta el nombre de la familia** (`convertir_cojinetes.py
+axial`): cada familia relee los cuatro catálogos y son unos minutos, así que
+tocar una sola ya no obliga a reescribir las otras dos.
+
+**Verificado:** las cuatro suites enteras. Backend medidas 170 verificaciones
+TODO OK.
+
+### Antes, el mismo día
+
 **Bancada completa: entran Mahle y Federal Mogul (2026-09-07, segunda sesión).**
 
 `cojinetes_bancada.json` pasó de **75 a 345 fichas**: 136 de Mahle (110 con
@@ -1381,7 +1426,7 @@ a correr los cuatro catálogos (~6 minutos).
 **Las 89 sin medidas** entran igual, con la aplicación y el precio del
 proveedor y las medidas en blanco con el "?": 83 no están en ningún catálogo
 (7 de Glyco, 26 de Mahle, 50 de Federal Mogul) y 6 tienen ficha pero con la
-fila de medidas vacía. Están listadas en `CARGA-COJINETES.md`, sección 8.
+fila de medidas vacía. Están listadas en `CARGA-COJINETES.md`, sección 9.
 
 **Lo de afuera, que es lo que no se hace solo:** la columna "marca" de la
 familia pasó de 90 a 145 px en `familias.js` (con 90 "FEDERAL MOGUL" salía
@@ -1457,7 +1502,7 @@ semiarandelas de empuje). Son 120 códigos de las tres marcas que tenemos en
 catálogo, y los cuatro PDF las traen, pero **no se miden con las mismas cinco
 columnas** —van por Ø interior, Ø exterior y espesor—, así que necesitan su
 propia familia en la pantalla, no sólo otra fila. Está anotado en
-`CARGA-COJINETES.md`, sección 8.
+`CARGA-COJINETES.md`, sección 8.  (Hecho el mismo día: ver arriba.)
 
 ---
 

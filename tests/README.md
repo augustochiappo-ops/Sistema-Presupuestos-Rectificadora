@@ -145,7 +145,7 @@ el motor tenga ficha cargada.
 
 ## 3. Backend — `backend_medidas.py`
 
-Ciento cincuenta y nueve verificaciones sobre la búsqueda por medidas
+Ciento setenta verificaciones sobre la búsqueda por medidas
 (`app/tecnicos.py`): los catálogos técnicos que trae el repo y su cruce con el
 catálogo del proveedor.
 
@@ -156,7 +156,7 @@ $VENV/bin/python tests/backend_medidas.py
 
 | Bloque | Qué verifica |
 |---|---|
-| Catálogos | Las **diez** familias cargadas con sus totales exactos (396 camisas, 1.782 válvulas, 915 guías, 1.108 asientos, 201 subconjuntos, 128 conjuntos, 35 pistones, 354 cojinetes de biela, 345 cojinetes de bancada, 190 bujes de biela), y el filtro "solo las que tiene el proveedor" en todas menos las que salen de la lista del proveedor (válvulas, subconjuntos, conjuntos y las dos de cojinetes), filtrando de verdad donde está |
+| Catálogos | Las **once** familias cargadas con sus totales exactos (396 camisas, 1.782 válvulas, 915 guías, 1.108 asientos, 201 subconjuntos, 128 conjuntos, 35 pistones, 354 cojinetes de biela, 345 cojinetes de bancada, 120 cojinetes axiales, 190 bujes de biela), y el filtro "solo las que tiene el proveedor" en todas menos las que salen de la lista del proveedor (válvulas, subconjuntos, conjuntos y las tres de cojinetes), filtrando de verdad donde está |
 | Sin filtros | No devuelve el catálogo entero, y una familia inexistente no explota |
 | Valor ± tolerancia | Encuentra con el valor exacto y con ±0,5, deja de encontrar con ±0,1, usa ±0,5 si no se escribe tolerancia, y acepta la coma decimal |
 | Acumulación | Sumar un segundo filtro achica el resultado y no pierde la pieza buscada |
@@ -167,6 +167,7 @@ $VENV/bin/python tests/backend_medidas.py
 | Asientos de válvulas | Los tres catálogos (559 Indy, 277 Nubo, 272 RYC) en una sola familia, 326 con código del proveedor; la cantidad por juego solo la traen los Indy y en los otros dos es `null`; el cruce de cada catálogo con la lista del proveedor (Indy por número, Nubo por número+letra del tipo, RYC por número); el ángulo como medida con tolerancia, que llega hasta los ángulos raros del catálogo (44,3º) |
 | Cojinetes de biela | El Ø del muñón encuentra el juego con las cuatro medidas del catálogo; la **luz de aceite** se guarda y se muestra pero no es una medida buscable; las fichas salen de cuatro catálogos (Mahle 2019, Clevite 2014, Federal Mogul y Glyco 2023-2025) y cada una dice de cuál y de qué página; un **muñón ya rectificado** a 48,72 encuentra la bajomedida de 0,25 del juego cuyo STD es 48,97 y la pantalla sabe cuál fue; los códigos que el proveedor vende y ningún catálogo trae se encuentran por código, dicen por qué no tienen medidas y **no aparecen nunca** en una búsqueda por medidas; en todas las fichas el alojamiento es mayor que el muñón (si no, hay una columna leída de la columna equivocada) |
 | Cojinetes de bancada | Las tres marcas, igual que biela: el juego del Golf 1.9 TD sale del catálogo de Glyco con sus cuatro medidas y su luz de aceite, y se lo encuentra midiendo el muñón; un muñón de **88 mm** —que en biela no existe, y es por eso que son dos familias y no una— encuentra el del OM366; la trasera de la Daily 2.8TD sale del Mahle 2019 y la de la F100 V8 del catálogo de Federal Mogul; en todas las fichas el alojamiento es mayor que el muñón; y los 89 códigos sin medidas entran con precio pero nunca en una búsqueda por medidas |
+| Cojinetes axiales | La semiarandela de empuje, que no es un cojinete: se mide por Ø interior, Ø exterior y espesor. La del Peugeot EW10J4 sale del Mahle 2019 con las tres medidas y se la encuentra midiendo el Ø exterior; las medidas del proveedor **suman** al espesor en vez de restar al muñón (la del MWM mide 3,42/3,47 y en 0,25 mm, 3,67/3,72), y el filtro de espesor con sobremedida la encuentra; las de Federal Mogul que el catálogo publica **sólo con el espesor** entran igual y se las encuentra por espesor; en todas las fichas el Ø exterior es mayor que el interior; y las 24 sin medidas nunca aparecen en una búsqueda por medidas |
 | Bujes de biela | El mismo código bajo dos marcas son dos fichas; el Ø exterior encuentra por cualquier sobremedida y dice cuál matcheó; un buje escalonado aparece por sus **dos** anchos y no por el promedio; el trapezoidal (I-143X) no se lleva el precio del recto (I-143) |
 | Tolerancia con signo | `+` trae el valor y todo lo mayor, `−` el valor y todo lo menor, el valor exacto entra en los dos, `+2` acota de un solo lado, y el `+` **llega entero por la URL** (viaja como `%2B`) |
 | Forma de la guía | Las formas escritas sin guiones (`A1`) o con dos detalles pegados (`P36`) se normalizan al cargar el catálogo; se filtra por la letra del cuerpo y se combina con las medidas; están los **trece dibujos** que la pantalla va a pedir |
@@ -176,14 +177,14 @@ $VENV/bin/python tests/backend_medidas.py
 
 ## 4. UI — `ui_medidas.mjs`
 
-Ciento treinta y una verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
+Ciento treinta y siete verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
 
 ```bash
 source /tmp/rect-corrida/entorno.sh
 node tests/ui_medidas.mjs
 ```
 
-Qué cubre: la sección en el menú lateral · las **diez** pestañas con su total ·
+Qué cubre: la sección en el menú lateral · las **once** pestañas con su total ·
 estado inicial sin resultados y con **ejemplos clicables** · buscar por medida y
 que **todas** las filas caigan dentro del rango pedido · achicar la tolerancia y
 ver menos filas · el tag del filtro activo · **ordenar** haciendo clic en
@@ -203,8 +204,11 @@ rectificado, con la luz de aceite en la tabla y no en los filtros, las
 bajomedidas legibles con su etiqueta, y los códigos sin catálogo mostrando "?"
 en las medidas con la explicación a mano · **cojinetes de bancada** con el juego
 del OM366, su muñón de 88 mm y sus bajomedidas hasta 1,50 mm, y las fichas de
-las otras dos marcas (la Daily 2.8TD de Mahle y la F100 V8 de Federal Mogul) · **que ninguna
-celda de ninguna de las diez familias quede cortada** (se mide en el navegador, `scrollWidth`
+las otras dos marcas (la Daily 2.8TD de Mahle y la F100 V8 de Federal Mogul) ·
+**cojinetes axiales** con los filtros de la arandela (Ø interior, Ø exterior,
+espesor) y no los del cojinete, la sobremedida sumando al espesor, y la de
+Federal Mogul que entra con el espesor solo · **que ninguna
+celda de ninguna de las once familias quede cortada** (se mide en el navegador, `scrollWidth`
 contra `clientWidth`, celda por celda y encabezado por encabezado: la tabla usa
 `tableLayout: fixed`, así que una columna más angosta que su contenido lo tapa
 sin avisar) · **asientos de válvulas** con las columnas que pidió el dueño (tipo,

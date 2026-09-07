@@ -1173,3 +1173,34 @@ usó acá: `git diff -U0` sobre el JSON y filtrar las líneas de `aplicacion` y
 entender por qué. Acá quedaron cero.
 
 **Fecha:** 2026-09-07
+
+
+---
+
+## La semiarandela de empuje entra al mismo script, no a uno nuevo
+
+**Contexto:** los cojinetes axiales (categoría `CF`) salen de las mismas tablas
+de los mismos cuatro catálogos que los de biela y bancada, pero **no se miden
+igual** —Ø interior, Ø exterior y espesor— y sus medidas del proveedor son
+sobremedidas de espesor, no bajomedidas del muñón. La tentación era un script
+aparte, porque "es otra pieza".
+
+**Se hizo con dos constantes más en el mismo script.** `PIEZAS` ganó una clave
+`forma` (`cojinete` o `axial`) y apareció `CAMPOS`, que dice cómo se llama cada
+medida en cada forma. La extracción sigue trabajando con los nombres del
+cojinete —son las mismas columnas del mismo PDF, en la misma posición— y recién
+la ficha les pone el nombre que corresponde a la pieza. Lo único que se duplicó
+son las dos funciones que leen las medidas del juego, porque ahí las reglas sí
+son distintas de verdad (`sobremedidas_del_catalogo` y `leer_medida_axial`).
+
+**Por qué importa que no se haya tocado nada del cojinete:** las dos familias
+viejas quedaron byte a byte iguales. Cada regla nueva —el corte de 1,2 mm, el
+cero adelante para separar milímetros de pulgadas, la lectura en milésimas de
+milímetro— entró como parámetro de la familia, no como cambio del camino común.
+
+**Y el script pasó a aceptar el nombre de la familia** (`convertir_cojinetes.py
+axial`). Cada familia relee los cuatro catálogos y son unos minutos: sin eso,
+tocar una obliga a reescribir las tres, y ya se vio (con biela) que una relectura
+que no hacía falta igual cambia el texto de algunas fichas.
+
+**Fecha:** 2026-09-07

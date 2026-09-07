@@ -485,6 +485,57 @@ export const FAMILIAS = [
     ],
   },
   {
+    id: 'cojinetes_axiales',
+    label: 'Cojinetes axiales',
+    // La semiarandela de empuje: la pieza que apoya contra el costado del
+    // cigüeñal y le fija el juego axial. No abraza ningún muñón, así que no se
+    // mide como los otros dos: van Ø interior, Ø exterior y espesor.
+    //
+    // El cuarto filtro es el que contesta la pregunta del taller: la cara de
+    // empuje se rectificó y hay que poner una arandela más gruesa, así que se
+    // busca por el espesor QUE TIENE la arandela en cada sobremedida, no por el
+    // espesor STD. Es el mismo mecanismo del "Ø muñón rectificado" de las dos
+    // familias de cojinetes, al revés: ahí se resta, acá se suma.
+    medidas: [
+      { campo: 'diam_int', label: 'Ø interior' },
+      { campo: 'diam_ext', label: 'Ø exterior' },
+      { campo: 'espesor', label: 'Espesor (STD)' },
+      { campo: 'diam_sobremedida', label: 'Espesor con sobremedida' },
+    ],
+    textos: [
+      { campo: 'codigo', label: 'Código', ancho: 200, icono: 'tag' },
+      { campo: 'aplicacion', label: 'Motor / aplicación', ancho: 300, icono: 'search' },
+    ],
+    columnas: [
+      { key: 'codigo', header: 'Código', width: 130, strong: true, wrap: true },
+      // 145, como en las otras dos familias de cojinetes: "FEDERAL MOGUL" son
+      // trece letras en mayúscula y con menos ancho sale cortada.
+      { key: 'marca', header: 'Marca', width: 145 },
+      { key: 'descripcion', header: 'Motor / aplicación', wrap: true, minWidth: 170, tipo: 'aplicacion' },
+      { key: 'nro_cil', header: 'Cil.', width: 55, align: 'center' },
+      { key: 'diam_int', header: 'Ø interior', width: 105, align: 'right', tipo: 'mm', wrap: true },
+      { key: 'diam_ext', header: 'Ø exterior', width: 105, align: 'right', tipo: 'mm', wrap: true },
+      // Con tres decimales, igual que en los cojinetes: una arandela mide entre
+      // 1,5 y 3,5 mm y las sobremedidas son de 0,127 mm, así que redondeando a
+      // dos se pierde justo lo que las distingue.
+      { key: 'espesor', header: 'Espesor', width: 100, align: 'right', tipo: 'mm', decimales: 3, wrap: true },
+      // Cada sobremedida con su etiqueta arriba del espesor que le queda a la
+      // arandela: es el número que se compara con lo que se midió.
+      { key: 'sobremedidas', header: 'Sobremedidas y espesor', minWidth: 250, tipo: 'sobremedidas', wrap: true },
+      { key: 'medida_crac', header: 'Precio de', width: 85, tipo: 'medida' },
+      { key: 'precio', header: 'Precio', width: 105, align: 'right', tipo: 'precio' },
+      { key: 'stock', header: 'Stock', width: 85, align: 'center', tipo: 'stock' },
+    ],
+    // El espesor va primero porque es la medida que siempre está: el catálogo de
+    // Federal Mogul publica el espesor de todas sus arandelas y los dos
+    // diámetros sólo de algunas.
+    ejemplos: [
+      { label: 'Espesor 2,5 mm', filtros: { espesor: '2.5', tol_espesor: '0.05' } },
+      { label: 'Ø exterior 73 mm', filtros: { diam_ext: '73', tol_diam_ext: '1' } },
+      { label: 'Con sobremedida: 2,7 mm', filtros: { diam_sobremedida: '2.7', tol_diam_sobremedida: '0.05' } },
+    ],
+  },
+  {
     id: 'bujes_biela',
     label: 'Bujes de biela',
     // El Ø exterior no está acá sino con las sobremedidas: un buje tiene el

@@ -162,6 +162,21 @@ ESPEC = {
         "medidas": ["diam_munon", "diam_alojamiento", "ancho", "espesor"],
         "sobremedidas": True,
     },
+    # La semiarandela de empuje no es un cojinete: no abraza el muñón, apoya
+    # contra el costado del cigüeñal y le fija el juego axial. Por eso se mide
+    # con otras tres medidas —Ø interior, Ø exterior y espesor— y tiene familia
+    # propia en vez de ser otra fila de las de cojinetes.
+    #
+    # Y las medidas del proveedor son SOBREmedidas de espesor, no bajomedidas:
+    # cuando la cara de empuje del cigüeñal se rectifica hay que poner una
+    # arandela más gruesa. El filtro `diam_sobremedida` —el mismo mecanismo de
+    # siempre— busca acá contra el espesor que tiene la arandela en cada
+    # sobremedida, que es lo que se mide en el taller.
+    "cojinetes_axiales": {
+        "label": "Cojinetes axiales",
+        "medidas": ["diam_int", "diam_ext", "espesor"],
+        "sobremedidas": True,
+    },
     "bujes_biela": {
         "label": "Bujes de biela",
         "medidas": ["diam_perno", "diam_int", "ancho"],

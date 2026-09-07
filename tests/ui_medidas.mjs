@@ -61,7 +61,7 @@ await esperar(900)
 check('se entra a la pantalla', page.url().includes('busqueda-medidas'), page.url())
 
 console.log('\n=== Estado inicial ===')
-check('las diez familias con su total',
+check('las once familias con su total',
   (await page.locator('button', { hasText: /^Camisas\s*396$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Válvulas\s*1782$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Guías de válvulas\s*915$/ }).count()) === 1
@@ -71,6 +71,7 @@ check('las diez familias con su total',
   && (await page.locator('button', { hasText: /^Pistones\s*35$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes de biela\s*354$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes de bancada\s*345$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Cojinetes axiales\s*120$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Bujes de biela\s*190$/ }).count()) === 1)
 check('en camisas el filtro se llama Ø exterior',
   await page.locator('label', { hasText: 'Ø EXTERIOR' }).count() === 1
@@ -526,6 +527,37 @@ await esperar(1300)
 await page.screenshot({ path: path.join(SHOT, 'medidas-cojinetes-bancada.png'), fullPage: true })
 await page.fill('input[placeholder="Código…"]', '')
 await esperar(400)
+
+console.log('\n=== Cojinetes axiales: la semiarandela de empuje ===')
+// La familia nueva (2026-09-07). No es un cojinete: apoya contra el costado del
+// cigüeñal y le fija el juego axial, así que se mide por Ø interior, Ø exterior
+// y espesor, y las medidas del proveedor SUMAN al espesor en vez de restar al
+// muñón — la arandela va más gruesa cuando la cara de empuje se rectifica.
+await page.locator('button', { hasText: 'Cojinetes axiales' }).click()
+await esperar(600)
+check('los filtros son los de la arandela y no los del cojinete',
+  (await page.locator('label', { hasText: 'Ø INTERIOR' }).count()) === 1
+  && (await page.locator('label', { hasText: 'ESPESOR CON SOBREMEDIDA' }).count()) === 1
+  && (await page.locator('label', { hasText: 'Ø MUÑÓN' }).count()) === 0)
+await page.fill('input[placeholder="Código…"]', 'CFBE13112')
+await esperar(1300)
+const axial = await textoDeFila(0)
+check('la arandela del MWM 4.10 está, con su espesor', axial.includes('3,42'), axial)
+// El espesor de la sobremedida de 0,25 es 3,67/3,72: el STD MÁS la sobremedida.
+check('y la sobremedida suma en vez de restar',
+  axial.includes('+0,25 mm') && axial.includes('3,67'), axial)
+check('con precio y stock del proveedor', /\$\s?[\d.]+/.test(axial), axial)
+await page.fill('input[placeholder="Código…"]', 'CFF 1203')
+await esperar(1300)
+const axialFm = await textoDeFila(0)
+// Federal Mogul publica el espesor de todas sus arandelas y los diámetros sólo
+// de algunas: las que no los traen entran igual, con el "?" y su explicación.
+check('la del Accord es de Federal Mogul y trae sólo el espesor',
+  axialFm.includes('FEDERAL MOGUL') && axialFm.includes('2,500')
+  && axialFm.includes('?'), axialFm)
+await page.screenshot({ path: path.join(SHOT, 'medidas-cojinetes-axiales.png'), fullPage: true })
+await page.fill('input[placeholder="Código…"]', '')
+await esperar(400)
 await page.locator('button', { hasText: 'Cojinetes de biela' }).click()
 await esperar(600)
 
@@ -548,7 +580,7 @@ console.log('\n=== Ninguna celda de la tabla queda cortada ===')
 // así que una columna más angosta que su contenido lo TAPA sin avisar: no hay
 // forma de darse cuenta mirando, salvo que falte el dato justo que se necesita.
 // Este check lo mide en el navegador —scrollWidth contra clientWidth, celda por
-// celda— en las diez familias, para que un dato nuevo más largo que su columna
+// celda— en las once familias, para que un dato nuevo más largo que su columna
 // se note acá y no en el taller. En bancada importa el doble: los muñones son
 // más grandes y los números, más largos.
 const cortadas = () => page.evaluate(() => {
@@ -574,6 +606,7 @@ for (const [pestana, ejemplo] of [
   ['Pistones', null],
   ['Cojinetes de biela', 'Ø muñón 50 mm'],
   ['Cojinetes de bancada', 'Ø muñón 54 mm'],
+  ['Cojinetes axiales', 'Espesor 2,5 mm'],
   ['Bujes de biela', null],
 ]) {
   await page.locator('button', { hasText: new RegExp(`^${pestana}\\s*\\d`) }).click()

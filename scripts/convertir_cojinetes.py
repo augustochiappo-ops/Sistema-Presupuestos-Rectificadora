@@ -49,9 +49,10 @@ Lo que hay que saber para leer este archivo:
 
 USO
 ---
-    .venv/bin/python scripts/convertir_cojinetes.py
+    .venv/bin/python scripts/convertir_cojinetes.py            # las tres familias
+    .venv/bin/python scripts/convertir_cojinetes.py axial      # una sola
 
-No pisa nada más que los dos JSON. Al final imprime, para cada familia, el
+No pisa nada más que los JSON de las familias que rehace. Al final imprime, para cada familia, el
 resumen: cuántas fichas por marca, cuántas quedaron con datos en duda y qué
 códigos del proveedor no están en ningún catálogo. Tarda unos cinco minutos: el
 catálogo de Glyco son 1.252 páginas y se lee dos veces, una por familia.
@@ -88,6 +89,7 @@ PIEZAS = {
         "categoria": "CA",
         "salida": "cojinetes_biela.json",
         "titulo": "cojinetes de biela",
+        "forma": "cojinete",
         "marcas": ("BE", "F", "GL"),
         # Mahle no pone el tipo de pieza en la fila: lo dice la columna de
         # composición, que sí está en todos los renglones del juego.
@@ -98,6 +100,7 @@ PIEZAS = {
         "categoria": "CB",
         "salida": "cojinetes_bancada.json",
         "titulo": "cojinetes de bancada",
+        "forma": "cojinete",
         # Las tres marcas, igual que biela (2026-09-07): entró primero sólo
         # Glyco y el mismo día se sumaron Mahle y Federal Mogul, que ya se
         # leían —es la misma tabla cambiando la columna de composición y la
@@ -107,6 +110,44 @@ PIEZAS = {
         "mahle": ("BC", "SBC"),
         "fm": "bancada",
     },
+    # La tercera familia (2026-09-07) NO es un cojinete: es la semiarandela de
+    # empuje, que no abraza un muñón sino que apoya contra el costado del
+    # cigüeñal y le fija el juego axial. Sale de las mismas tablas de los mismos
+    # cuatro catálogos, así que la lee el mismo script, pero se mide distinto —
+    # Ø interior, Ø exterior y espesor— y las medidas del proveedor son
+    # SOBREmedidas de espesor, no bajomedidas del muñón: cuando el cigüeñal se
+    # rectifica en la cara de empuje hay que ponerle una arandela más gruesa.
+    # Todo eso está en `forma`.
+    "axial": {
+        "categoria": "CF",
+        "salida": "cojinetes_axiales.json",
+        "titulo": "cojinetes axiales",
+        "forma": "axial",
+        "marcas": ("BE", "F", "GL"),
+        # Arruela de encosto: los cuatro prefijos que usa Mahle en la columna de
+        # composición (`AE-032-P`, `SAE-043-C`, `L-10`).
+        "mahle": ("AE", "SAE", "L", "SL"),
+        "fm": "axial",
+    },
+}
+
+
+# ---------------------------------------------------------------------------
+# Las dos formas de medir que hay en estos catálogos.
+#
+# La extracción trabaja siempre con los nombres del cojinete —son las mismas
+# columnas del mismo PDF, en la misma posición— y recién la ficha les pone el
+# nombre que corresponde a la pieza. En la semiarandela, la columna del Ø del
+# eje trae el Ø INTERIOR y la del alojamiento, el Ø EXTERIOR.
+#
+# El primer campo de cada forma es el principal: el que decide si la ficha tiene
+# medidas o no, y contra el que se restan (o suman) las medidas del proveedor.
+# ---------------------------------------------------------------------------
+CAMPOS = {
+    "cojinete": {"diam_munon": "diam_munon", "diam_alojamiento": "diam_alojamiento",
+                 "ancho": "ancho", "espesor": "espesor"},
+    "axial": {"diam_int": "diam_munon", "diam_ext": "diam_alojamiento",
+              "espesor": "espesor"},
 }
 
 
@@ -351,7 +392,8 @@ def _media_pagina(renglones, offset):
 
 
 def leer_mahle(pdf: Path, catalogo: str, dos_por_hoja: bool,
-               piezas: tuple[str, ...] = ("BB", "SBB")) -> list[dict]:
+               piezas: tuple[str, ...] = ("BB", "SBB"),
+               corte: float = None) -> list[dict]:
     """
     Las filas de cojinete de biela de un catálogo de Mahle.
 
@@ -362,12 +404,12 @@ def leer_mahle(pdf: Path, catalogo: str, dos_por_hoja: bool,
     for hoja, renglones in enumerate(paginas(pdf), 1):
         for offset in offsets:
             filas += _leer_pagina_mahle(
-                _media_pagina(renglones, offset), hoja, catalogo, piezas
+                _media_pagina(renglones, offset), hoja, catalogo, piezas, corte
             )
     return filas
 
 
-def _leer_pagina_mahle(renglones, hoja, catalogo, piezas):
+def _leer_pagina_mahle(renglones, hoja, catalogo, piezas, corte=None):
     """
     Recorre la página de arriba abajo llevando dos cosas: el motor al que
     pertenecen las filas que van saliendo, y la fila abierta (la última fila de
@@ -413,7 +455,7 @@ def _leer_pagina_mahle(renglones, hoja, catalogo, piezas):
             abierta = None
             if pieza.group("pieza") in piezas:
                 abierta = _fila_mahle(comp, cod, medidas, celdas, motor,
-                                      impresa or hoja, catalogo)
+                                      impresa or hoja, catalogo, corte)
                 filas.append(abierta)
             continue
 
@@ -453,24 +495,34 @@ def _pagina_impresa(renglones):
     return None
 
 
-def corte_de_medidas(texto: str) -> int:
-    """
-    Dónde termina la lista de bajomedidas y empieza la primera columna de medida.
+# Dónde empieza la primera columna de medida en cada familia. En el cojinete es
+# el Ø del muñón, que nunca baja de 14 mm; en la semiarandela, el espesor, que
+# no baja de 1,5 mm. El corte tiene que quedar por debajo de la medida más chica
+# y por encima de la medida del juego más grande (una bajomedida de cojinete
+# llega a 1,00 mm y una sobremedida de arandela, a 0,50), y 1,2 cumple las dos.
+CORTE = {"cojinete": RANGOS["diam_munon"][0], "axial": 1.2}
 
-    No se puede cortar por la barra, porque las bajomedidas también van separadas
-    con barra ("STD/ 0,25/ 0,50"). Se corta por el tamaño, que no se pisa:
-    ninguna bajomedida llega a 14 mm y ningún muñón de biela baja de ahí.
+
+def corte_de_medidas(texto: str, minimo: float = None) -> int:
     """
+    Dónde termina la lista de medidas del juego y empieza la primera columna de
+    medida.
+
+    No se puede cortar por la barra, porque las medidas del juego también van
+    separadas con barra ("STD/ 0,25/ 0,50"). Se corta por el tamaño, que no se
+    pisa (ver `CORTE`).
+    """
+    minimo = CORTE["cojinete"] if minimo is None else minimo
     for m in re.finditer(r"(?<![\d,.])(\d{1,3})[.,]\d", texto):
-        if int(m.group(1)) >= RANGOS["diam_munon"][0]:
+        if float(m.group(0).replace(",", ".")) >= minimo:
             return m.start()
     return len(texto)
 
 
-def _fila_mahle(comp, cod, medidas, celdas, motor, hoja, catalogo):
+def _fila_mahle(comp, cod, medidas, celdas, motor, hoja, catalogo, minimo=None):
     # Hay páginas que mandan las cinco columnas de medida pegadas al final de la
     # columna de bajomedidas, en un solo pedazo de texto.
-    corte = corte_de_medidas(medidas)
+    corte = corte_de_medidas(medidas, minimo)
     medidas, sueltos = medidas[:corte], numeros(medidas[corte:])
     grupos_por_columna = {}
     for columna, x0, x1 in MAHLE_COLS_MEDIDA:
@@ -544,16 +596,20 @@ FM_BANCADA = re.compile(r"^(?P<numero>\d{3,6})\s*(?P<sufijo>M)$")
 # números con coma y se cuela cuando se busca la continuación de una fila.
 FM_RANGO = re.compile(r"\d+[.,]\d+\s*/\s*\d+[.,]\d+")
 FM_GLYCO = re.compile(r"^(?P<numero>\d{2}-\d{3,4}(?:/\d+)?)\s*(?P<sufijo>[A-Z]{1,3})?$")
+# La semiarandela tampoco lleva los pares adelante ni la "M" de bancada: se
+# escribe "66326 AF", número y sufijo de material, que es como la vende el
+# proveedor ("66326").
+FM_AXIAL = re.compile(r"^(?P<numero>\d{3,6})\s*(?P<sufijo>[A-Z]{1,3})?$")
 
 
-def leer_federal_mogul(pdf: Path, pieza: str) -> list[dict]:
+def leer_federal_mogul(pdf: Path, pieza: str, corte: float = None) -> list[dict]:
     filas = []
     for hoja, renglones in enumerate(paginas(pdf), 1):
-        filas += _leer_pagina_fm(renglones, hoja, pieza)
+        filas += _leer_pagina_fm(renglones, hoja, pieza, corte)
     return filas
 
 
-def _leer_pagina_fm(renglones, hoja, pieza):
+def _leer_pagina_fm(renglones, hoja, pieza, corte=None):
     filas, motor, primera_del_grupo = [], _fm_motor_vacio(), False
     cortada = ""
 
@@ -568,7 +624,7 @@ def _leer_pagina_fm(renglones, hoja, pieza):
             continue                      # la misma fila en pulgadas
 
         etiqueta = FM_ETIQUETA.search(texto)
-        tiene_medida = corte_de_medidas(texto) < len(texto)
+        tiene_medida = corte_de_medidas(texto, corte) < len(texto)
 
         # El renglón del juego de bancada a veces trae sólo el número y las
         # bajomedidas ("Bancadas 4124 M STD-10-20-30-40-50") y las medidas
@@ -607,7 +663,7 @@ def _leer_pagina_fm(renglones, hoja, pieza):
             primera_del_grupo = True
             continue
 
-        fila = _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo, pieza)
+        fila = _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo, pieza, corte)
         if fila is not None:
             filas.append(fila)
         primera_del_grupo = False
@@ -673,7 +729,7 @@ def _fm_es_la_pieza(etiqueta, pieza) -> bool:
     return etiqueta.group("pieza").lower().startswith(PIEZAS[pieza]["fm"])
 
 
-def _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo, pieza):
+def _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo, pieza, minimo=None):
     if etiqueta:
         if not _fm_es_la_pieza(etiqueta, pieza):
             return None
@@ -691,7 +747,7 @@ def _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo, pieza):
     if cilindros and not motor["nro_cil"]:
         motor["nro_cil"] = cilindros.group(1)
 
-    corte = corte_de_medidas(texto)
+    corte = corte_de_medidas(texto, minimo)
     if corte == len(texto):
         return None                        # fila sin ninguna medida
     cabecera, cola = texto[:corte], texto[corte:]
@@ -711,7 +767,8 @@ def _fila_fm(texto, etiqueta, motor, hoja, primera_del_grupo, pieza):
     cabecera = _fm_limpiar_cabecera(cabecera)
 
     juego = FM_JUEGO.match(cabecera) or (
-        FM_BANCADA.match(cabecera) if pieza == "bancada" else None)
+        FM_BANCADA.match(cabecera) if pieza == "bancada" else None) or (
+        FM_AXIAL.match(cabecera) if pieza == "axial" else None)
     glyco = FM_GLYCO.match(cabecera)
     # "01-3841/6" y "71-3728/4" son códigos GLYCO, no juegos de Federal Mogul.
     # Se los distingue porque el número de pares de un juego no pasa de 12 y no
@@ -1045,8 +1102,13 @@ def _numero(texto):
 # Cruce catálogo ↔ proveedor
 # ---------------------------------------------------------------------------
 def clave_mahle(codigo: str) -> str:
-    """'B01472' y 'SB48135' del catálogo son '01472' y '48135' en el proveedor."""
-    return re.sub(r"^S?[BM]", "", codigo).lstrip("0") or "0"
+    """
+    'B01472' y 'SB48135' del catálogo son '01472' y '48135' en el proveedor.
+
+    La letra de adelante dice qué pieza es —`B` biela, `M` bancada, `L`
+    arruela de encosto— y el proveedor no la escribe: la tira toda.
+    """
+    return re.sub(r"^S?[BML]", "", codigo).lstrip("0") or "0"
 
 
 def clave_fm(codigo: str) -> str:
@@ -1242,8 +1304,77 @@ def bajomedidas_del_catalogo(medidas_txt: str) -> list[tuple[str, float]]:
     return unicas
 
 
-def _mm(valor: float) -> str:
-    return "-" + f"{valor:.3f}".rstrip("0").rstrip(".").replace(".", ",") + " mm"
+def _mm(valor: float, signo: str = "-") -> str:
+    return signo + f"{valor:.3f}".rstrip("0").rstrip(".").replace(".", ",") + " mm"
+
+
+def sobremedidas_del_catalogo(medidas_txt: str) -> list[tuple[str, float]]:
+    """
+    Lo mismo que `bajomedidas_del_catalogo`, para la semiarandela de empuje.
+
+    Cambian dos cosas, y por eso es otra función y no un parámetro:
+
+    * **Suman, no restan.** La arandela se pone MÁS GRUESA cuando la cara de
+      empuje del cigüeñal se rectifica, así que la etiqueta va con "+".
+    * **El corte entre milímetros y pulgadas es otro.** En el cojinete la
+      bajomedida métrica más chica es 0,25; en la arandela, 0,12. Acá no sirve
+      mirar el tamaño: lo que distingue los dos sistemas es **el cero adelante**,
+      que es como los escriben los catálogos — Mahle pone "0,127" y "0,19"
+      (milímetros) y Federal Mogul, "STD-5-10" (milésimas de pulgada, sin punto
+      ni cero). Un ".010" con punto adelante y sin cero es pulgadas, igual que
+      en el cojinete.
+    """
+    salida = []
+    for etiqueta in etiquetas_medida(medidas_txt):
+        if etiqueta == "STD":
+            salida.append(("STD", 0.0))
+            continue
+        valor = float(etiqueta)
+        if etiqueta.startswith("."):                           # ".010"
+            salida.append((f'+{etiqueta}"', round(valor * PULGADA_MM, 4)))
+        elif "." in etiqueta:                                  # "0,127", "0,25"
+            salida.append((_mm(valor, "+"), valor))
+        else:                                                  # "5" = .005"
+            salida.append((f'+.{int(valor):03d}"', round(valor / 1000 * PULGADA_MM, 4)))
+
+    vistas, unicas = set(), []
+    for etiqueta, mm in salida:
+        if etiqueta not in vistas:
+            vistas.add(etiqueta)
+            unicas.append((etiqueta, mm))
+    return unicas
+
+
+def leer_medida_axial(token: str, catalogo: list[tuple[str, float]]):
+    """
+    A qué sobremedida corresponde el sufijo del proveedor, en la semiarandela.
+
+    Mismo mecanismo que en el cojinete —primero se busca entre las que el
+    catálogo declara para ese juego— con un tercer candidato más: el proveedor
+    escribe las sobremedidas de la arandela en **milésimas de milímetro**
+    ("127" es 0,127 mm), además de en centésimas ("025" es 0,25) y en milésimas
+    de pulgada ("5" es .005"). Son todas chicas y no se pisan: ninguna
+    sobremedida de arandela llega a 0,6 mm.
+    """
+    if not token or token.upper() == "STD":
+        return "STD", 0.0, True
+    digitos = re.fullmatch(r"0*(\d+)", token)
+    if not digitos:
+        return None
+    numero = int(digitos.group(1))
+    candidatos = [numero / 100, numero / 1000, round(numero / 1000 * PULGADA_MM, 4)]
+    for etiqueta, mm in catalogo:
+        if any(abs(mm - c) < 0.02 for c in candidatos):
+            return etiqueta, mm, True
+
+    # El proveedor la vende y el catálogo no la lista: se la interpreta con el
+    # sistema del catálogo, y de los dos tamaños métricos posibles se toma el
+    # que puede ser una arandela (0,127 y no 1,27).
+    metrico = any(e.endswith("mm") for e, _mm in catalogo) or not catalogo
+    if metrico:
+        valor = numero / 100 if numero / 100 <= 0.6 else numero / 1000
+        return _mm(valor, "+"), valor, False
+    return f'+.{numero:03d}"', round(numero / 1000 * PULGADA_MM, 4), False
 
 
 def leer_medida_proveedor(token: str, catalogo: list[tuple[str, float]]):
@@ -1312,7 +1443,7 @@ def material_fm(sufijo: str | None) -> str | None:
 
 
 def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None,
-                categoria: str) -> dict:
+                config: dict) -> dict:
     """
     Una ficha del catálogo técnico: lo que el proveedor vende, con las medidas
     que le puso el catálogo del fabricante.
@@ -1324,8 +1455,13 @@ def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None,
     búsqueda por medidas, y no aparece porque `_en_rango` descarta los nulos.
     """
     marca = articulo["marca"]
+    categoria = config["categoria"]
+    # Los nombres que llevan las medidas en esta familia y de qué columna de la
+    # extracción sale cada una (ver `CAMPOS`). El primero es el principal.
+    campos = CAMPOS[config["forma"]]
+    principal = next(iter(campos))
     revisar: dict[str, str] = {}
-    medidas = {c: None for c in ("diam_munon", "diam_alojamiento", "ancho", "espesor")}
+    medidas = {c: None for c in campos}
     extra: dict = {
         "fabricante_motor": None, "motor": None, "nro_cil": None,
         "diam_x_carrera": None, "cilindrada": None, "pares": None,
@@ -1348,7 +1484,9 @@ def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None,
         aplicacion = articulo["descripcion"]
         codigo_fab = None
     else:
-        medidas.update({c: v for c, v in fila["columnas"].items() if c in medidas})
+        medidas.update({campo: fila["columnas"][interno]
+                        for campo, interno in campos.items()
+                        if interno in fila["columnas"]})
         aplicacion = _aplicacion(fila)
         codigo_fab = fila["codigo_fab"]
         extra.update({
@@ -1369,7 +1507,7 @@ def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None,
         if aviso:
             revisar["codigo"] = aviso
         if fila["dudoso"]:
-            revisar["diam_munon"] = (
+            revisar[principal] = (
                 "el PDF mandó las medidas sin separar las columnas y faltaba "
                 "alguna: el reparto entre columnas es el más probable, no el seguro"
             )
@@ -1379,23 +1517,26 @@ def armar_ficha(articulo: dict, fila: dict | None, aviso: str | None,
                     f"el catálogo trae {valor[0]}/{valor[1]}, con el segundo valor "
                     "más chico que el primero: hay un error de imprenta en el PDF"
                 )
-        if medidas["diam_munon"] is None:
-            revisar["diam_munon"] = "la fila del catálogo trae esta columna vacía"
+        if medidas[principal] is None:
+            revisar[principal] = "la fila del catálogo trae esta columna vacía"
 
     extra["sobremedidas"], codigos, sin_listar, combinadas = _sobremedidas(
-        articulo, fila, medidas)
+        articulo, fila, medidas, config)
+    axial = config["forma"] == "axial"
+    nombre = "sobremedidas" if axial else "bajomedidas"
+    resultado = "el espesor de la arandela" if axial else "el Ø del muñón rectificado"
     avisos = []
     if sin_listar and fila is not None:
         avisos.append(
-            "el proveedor vende bajomedidas que el catálogo no lista para este "
-            f"juego ({', '.join(sorted(set(sin_listar)))}): el Ø del muñón "
-            "rectificado sale de aplicar el sistema de medidas del catálogo"
+            f"el proveedor vende {nombre} que el catálogo no lista para este "
+            f"juego ({', '.join(sorted(set(sin_listar)))}): {resultado} "
+            "sale de aplicar el sistema de medidas del catálogo"
         )
     if combinadas and fila is not None:
         avisos.append(
             f"el proveedor vende juegos combinados ({', '.join(sorted(set(combinadas)))}), "
-            "que traen dos bajomedidas a la vez: no se los puede apuntar a un solo "
-            "Ø de muñón, así que se los lista sin Ø"
+            f"que traen dos {nombre} a la vez: no se los puede apuntar a un solo "
+            "valor, así que se los lista sin valor"
         )
     if avisos:
         revisar["sobremedidas"] = "; y ".join(avisos)
@@ -1439,19 +1580,29 @@ def _aplicacion(fila: dict) -> str:
     return re.sub(r"\s+", " ", " ".join(p for p in partes if p)).strip()
 
 
-def _sobremedidas(articulo, fila, medidas):
+def _sobremedidas(articulo, fila, medidas, config):
     """
-    Las bajomedidas de este juego, cada una con el Ø que le queda al muñón ya
-    rectificado. Es lo que hace que el filtro de "Ø de sobremedida" conteste la
-    pregunta del taller: medí un muñón de 49,75 — ¿qué cojinete le va?
+    Las medidas que ofrece este juego, cada una con el valor que le queda a la
+    pieza. Es lo que hace que el filtro de la pantalla conteste la pregunta del
+    taller.
+
+    En el cojinete son BAJOmedidas y el valor es el Ø que le queda al muñón ya
+    rectificado: medí un muñón de 49,75 — ¿qué cojinete le va? En la
+    semiarandela son SOBREmedidas y el valor es el espesor de la arandela:
+    rectifiqué la cara de empuje y necesito 0,25 mm más de espesor — ¿cuánto
+    mide entonces la arandela?
     """
-    catalogo = bajomedidas_del_catalogo(fila["medidas_txt"]) if fila else []
-    munon = medidas.get("diam_munon")
+    axial = config["forma"] == "axial"
+    tabla = sobremedidas_del_catalogo if axial else bajomedidas_del_catalogo
+    leer = leer_medida_axial if axial else leer_medida_proveedor
+    catalogo = tabla(fila["medidas_txt"]) if fila else []
+    base = medidas.get("espesor" if axial else "diam_munon")
+    signo = 1 if axial else -1
 
     entradas, codigos, sin_declarar, combinadas = [], [], [], []
     vistas = set()
     for item in sorted(articulo["medidas"], key=lambda m: (m["medida"] or "")):
-        resuelta = leer_medida_proveedor(item["medida"], catalogo) if catalogo else None
+        resuelta = leer(item["medida"], catalogo) if catalogo else None
         codigos.append({"codigo": item["codigo"], "medida": item["medida"]})
         if resuelta is None:
             if item["medida"]:
@@ -1463,9 +1614,9 @@ def _sobremedidas(articulo, fila, medidas):
         if etiqueta in vistas:
             continue
         vistas.add(etiqueta)
-        entrada = {"label": etiqueta, "valor": _restar(munon, bajada)}
+        entrada = {"label": etiqueta, "valor": _aplicar(base, bajada, signo)}
         if entrada["valor"] is None:
-            entrada["texto"] = "—"      # el catálogo no trae el Ø del muñón
+            entrada["texto"] = "—"      # el catálogo no trae la medida de base
         entradas.append(entrada)
 
     orden = {etiqueta: i for i, (etiqueta, _mm) in enumerate(catalogo)}
@@ -1473,19 +1624,32 @@ def _sobremedidas(articulo, fila, medidas):
     return entradas, codigos, sin_declarar, combinadas
 
 
-def _restar(munon, bajada):
-    if munon is None:
+def _aplicar(base, medida, signo):
+    """El valor que queda: el muñón MENOS la bajomedida, la arandela MÁS la sobremedida."""
+    if base is None:
         return None
-    if isinstance(munon, list):
-        return [round(v - bajada, 4) for v in munon]
-    return round(munon - bajada, 4)
+    if isinstance(base, list):
+        return [round(v + signo * medida, 4) for v in base]
+    return round(base + signo * medida, 4)
 
 
 # ===========================================================================
 # Main
 # ===========================================================================
-def main() -> int:
-    for pieza in PIEZAS:
+def main(argv: list[str] | None = None) -> int:
+    """
+    Sin argumentos rehace las tres familias. Con argumentos, sólo las que se
+    nombren (`... convertir_cojinetes.py axial`): cada familia lee los cuatro
+    catálogos de nuevo y son unos minutos, así que cuando se toca una sola no
+    tiene sentido volver a escribir las otras dos.
+    """
+    piezas = argv if argv else list(PIEZAS)
+    desconocidas = [p for p in piezas if p not in PIEZAS]
+    if desconocidas:
+        print(f"No existe la familia {', '.join(desconocidas)}. "
+              f"Las que hay: {', '.join(PIEZAS)}.", file=sys.stderr)
+        return 2
+    for pieza in piezas:
         armar_familia(pieza)
     return 0
 
@@ -1497,16 +1661,17 @@ def armar_familia(pieza: str) -> None:
     # Sólo se abren los PDF de las marcas que entran en la familia: leer los
     # cuatro son cinco minutos, y para bancada hoy alcanza con el de Glyco.
     filas = []
+    corte = CORTE[config["forma"]]
     if "BE" in config["marcas"]:
         filas += leer_mahle(FUENTES / "mahle_cojinetes_2019.pdf", "Mahle 2019",
-                            dos_por_hoja=True, piezas=config["mahle"])
+                            dos_por_hoja=True, piezas=config["mahle"], corte=corte)
         filas += leer_mahle(FUENTES / "mahle_clevite_2014.pdf", "Mahle Clevite 2014",
-                            dos_por_hoja=False, piezas=config["mahle"])
+                            dos_por_hoja=False, piezas=config["mahle"], corte=corte)
     if "F" in config["marcas"] or "GL" in config["marcas"]:
         # Los códigos Glyco viejos sólo están adentro del catálogo de Federal
         # Mogul, así que ese PDF hace falta también cuando la familia es
         # solamente de Glyco.
-        filas += leer_federal_mogul(FUENTES / "federal_mogul_cojinetes.pdf", pieza)
+        filas += leer_federal_mogul(FUENTES / "federal_mogul_cojinetes.pdf", pieza, corte)
     if "GL" in config["marcas"]:
         filas += leer_glyco(FUENTES / "glyco_cojinetes_2023.pdf", pieza)
 
@@ -1521,22 +1686,23 @@ def armar_familia(pieza: str) -> None:
         fila, aviso = elegir_fila(candidatas, codigo) if candidatas else (None, None)
         if fila is None:
             sin_catalogo.append(f"{marca} {codigo}")
-        fichas.append(armar_ficha(articulo, fila, aviso, config["categoria"]))
+        fichas.append(armar_ficha(articulo, fila, aviso, config))
 
     fichas.sort(key=lambda f: (f["marca"], f["codigo"]))
     salida = TECNICOS / config["salida"]
     salida.write_text(json.dumps(fichas, ensure_ascii=False, indent=1) + "\n",
                       encoding="utf-8")
 
-    _resumen(salida, fichas, filas, sin_catalogo)
+    _resumen(salida, fichas, filas, sin_catalogo, config)
 
 
-def _resumen(salida, fichas, filas, sin_catalogo):
+def _resumen(salida, fichas, filas, sin_catalogo, config):
+    principal = next(iter(CAMPOS[config["forma"]]))
     print(f"\n{salida.relative_to(RAIZ)}: {len(fichas)} fichas\n")
     print(f"{'marca':16} {'fichas':>7} {'con medidas':>12} {'con dudas':>10}")
     for marca in sorted({f["marca"] for f in fichas}):
         propias = [f for f in fichas if f["marca"] == marca]
-        con_medidas = [f for f in propias if f["medidas"]["diam_munon"] is not None]
+        con_medidas = [f for f in propias if f["medidas"][principal] is not None]
         con_dudas = [f for f in propias if f["extra"]["revisar"]]
         print(f"{marca:16} {len(propias):>7} {len(con_medidas):>12} {len(con_dudas):>10}")
 
@@ -1553,7 +1719,7 @@ def _resumen(salida, fichas, filas, sin_catalogo):
     dudas: dict[str, list[str]] = {}
     for ficha in fichas:
         for campo, motivo in (ficha["extra"]["revisar"] or {}).items():
-            if ficha["medidas"]["diam_munon"] is None and campo in ficha["medidas"]:
+            if ficha["medidas"][principal] is None and campo in ficha["medidas"]:
                 continue                    # ya contado arriba
             dudas.setdefault(motivo.split("(")[0].strip(), []).append(ficha["codigo"])
     if dudas:
@@ -1563,24 +1729,26 @@ def _resumen(salida, fichas, filas, sin_catalogo):
             print(f"    {len(codigos)}: {', '.join(sorted(codigos)[:8])}"
                   + (" …" if len(codigos) > 8 else ""))
 
-    _verificar(fichas)
+    _verificar(fichas, config)
 
 
-def _verificar(fichas):
+def _verificar(fichas, config):
     """Chequeos de cordura: si alguno salta, es una columna mal leída."""
+    campos = CAMPOS[config["forma"]]
+    interior, exterior = list(campos)[0], list(campos)[1]
     problemas = []
     for ficha in fichas:
         medidas = ficha["medidas"]
-        munon = valor_representativo(medidas["diam_munon"]) if medidas["diam_munon"] else None
-        alojamiento = (valor_representativo(medidas["diam_alojamiento"])
-                       if medidas["diam_alojamiento"] else None)
-        if munon and alojamiento and alojamiento <= munon:
-            problemas.append(f"{ficha['codigo']}: alojamiento {alojamiento} ≤ muñón {munon}")
-        for campo in ("diam_munon", "diam_alojamiento", "ancho", "espesor"):
+        adentro = valor_representativo(medidas[interior]) if medidas[interior] else None
+        afuera = (valor_representativo(medidas[exterior])
+                  if medidas[exterior] else None)
+        if adentro and afuera and afuera <= adentro:
+            problemas.append(f"{ficha['codigo']}: {exterior} {afuera} ≤ {interior} {adentro}")
+        for campo, interno in campos.items():
             valor = medidas[campo]
             if valor is None:
                 continue
-            minimo, maximo = RANGOS[campo]
+            minimo, maximo = RANGOS[interno]
             for v in (valor if isinstance(valor, list) else [valor]):
                 if not (minimo <= v <= maximo):
                     problemas.append(f"{ficha['codigo']}: {campo} = {v} fuera de rango")
@@ -1590,4 +1758,4 @@ def _verificar(fichas):
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))

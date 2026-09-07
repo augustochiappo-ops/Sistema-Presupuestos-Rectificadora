@@ -51,10 +51,10 @@ def _lista(valor):
 print("\n=== 0. Catálogos cargados ===")
 db.init_db()
 familias = {f["id"]: f for f in tecnicos.get_familias()}
-check("están las diez familias",
-      sorted(familias) == ["asientos", "bujes_biela", "camisas", "cojinetes_bancada",
-                           "cojinetes_biela", "conjuntos", "guias", "pistones",
-                           "subconjuntos", "valvulas"],
+check("están las once familias",
+      sorted(familias) == ["asientos", "bujes_biela", "camisas", "cojinetes_axiales",
+                           "cojinetes_bancada", "cojinetes_biela", "conjuntos", "guias",
+                           "pistones", "subconjuntos", "valvulas"],
       list(familias))
 check("1.782 válvulas (3B + Mahle)",
       familias.get("valvulas", {}).get("total") == 1782, familias.get("valvulas"))
@@ -83,6 +83,12 @@ check("354 cojinetes de biela (Mahle + Federal Mogul + Glyco)",
 check("345 cojinetes de bancada (Mahle + Federal Mogul + Glyco)",
       familias.get("cojinetes_bancada", {}).get("total") == 345,
       familias.get("cojinetes_bancada"))
+# La tercera familia de cojinetes no es un cojinete: son las semiarandelas de
+# empuje (categoría CF). Son los 120 códigos que vende el proveedor de las tres
+# marcas: 51 Mahle, 42 Federal Mogul y 27 Glyco.
+check("120 cojinetes axiales (Mahle + Federal Mogul + Glyco)",
+      familias.get("cojinetes_axiales", {}).get("total") == 120,
+      familias.get("cojinetes_axiales"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
 # La casilla "Solo las que tiene el proveedor" va en todas menos las dos
 # familias de Mahle: los catálogos técnicos son los del fabricante y traen más
@@ -617,6 +623,59 @@ r = tecnicos.buscar("cojinetes_bancada", {"diam_munon": "50", "tol_diam_munon": 
 check("y ninguno aparece en una búsqueda por medidas",
       not (sin_medidas & set(codigos(r))), sorted(sin_medidas & set(codigos(r)))[:5])
 
+print("\n=== 7 quinquies. Cojinetes axiales ===")
+# La semiarandela de empuje no es un cojinete: apoya contra el costado del
+# cigüeñal y le fija el juego axial, así que se mide por Ø interior, Ø exterior
+# y espesor. La del Peugeot EW10J4 sale del Mahle 2019.
+r = tecnicos.buscar("cojinetes_axiales", {"codigo": "CFBE0440364"})
+peugeot = r["resultados"][0]
+check("la arandela del Peugeot EW10J4 sale del Mahle 2019",
+      peugeot["extra"]["catalogo"] == "Mahle 2019"
+      and peugeot["medidas"] == {"diam_int": [67.05, 67.3],
+                                 "diam_ext": [83.05, 83.3],
+                                 "espesor": [2.27, 2.33]},
+      (peugeot["extra"]["catalogo"], peugeot["medidas"]))
+check("y se la encuentra midiendo el Ø exterior",
+      "CFBE0440364" in codigos(tecnicos.buscar(
+          "cojinetes_axiales", {"diam_ext": "83.1", "tol_diam_ext": "0.1"})))
+# Las medidas del proveedor son SOBREmedidas de espesor, no bajomedidas del
+# muñón: la arandela va MÁS GRUESA cuando la cara de empuje se rectifica. La del
+# MWM tiene 3,42/3,47 de espesor y la de 0,25 mm mide 3,67/3,72.
+r = tecnicos.buscar("cojinetes_axiales", {"codigo": "CFBE13112"})
+mwm = {s["label"]: s.get("valor") for s in r["resultados"][0]["extra"]["sobremedidas"]}
+check("la sobremedida SUMA al espesor en vez de restar",
+      mwm.get("STD") == [3.42, 3.47] and mwm.get("+0,25 mm") == [3.67, 3.72], mwm)
+check("y el filtro de espesor con sobremedida la encuentra",
+      "CFBE13112" in codigos(tecnicos.buscar(
+          "cojinetes_axiales", {"diam_sobremedida": "3.7", "tol_diam_sobremedida": "0.05"})))
+# Federal Mogul publica el espesor de todas sus arandelas y los dos diámetros
+# sólo de algunas: la del Accord entra con el espesor solo, y el "?" de la
+# pantalla explica por qué no tiene diámetros.
+r = tecnicos.buscar("cojinetes_axiales", {"codigo": "CFF 1203"})
+accord = r["resultados"][0]
+check("una de Federal Mogul entra con el espesor aunque no traiga los diámetros",
+      accord["medidas"] == {"diam_int": None, "diam_ext": None, "espesor": 2.5}
+      and "diam_int" in (accord["extra"]["revisar"] or {}),
+      (accord["medidas"], accord["extra"]["revisar"]))
+check("y aparece buscando por espesor",
+      "CFF 1203" in codigos(tecnicos.buscar(
+          "cojinetes_axiales", {"espesor": "2.5", "tol_espesor": "0.02"})))
+# Mismo control de cordura que en las otras dos familias, con los diámetros de
+# la arandela: si el exterior no es mayor que el interior, hay una columna leída
+# de la columna equivocada.
+malas_a = [f["codigo"] for f in tecnicos._catalogo("cojinetes_axiales")
+           if f["medidas"]["diam_int"] and f["medidas"]["diam_ext"]
+           and max(_lista(f["medidas"]["diam_ext"])) <= min(_lista(f["medidas"]["diam_int"]))]
+check("en todas las fichas el Ø exterior es mayor que el interior", not malas_a, malas_a[:5])
+# Las 24 que ningún catálogo trae entran igual, con la aplicación y el precio, y
+# nunca aparecen en una búsqueda por medidas.
+sin_medidas_ax = {f["codigo"] for f in tecnicos._catalogo("cojinetes_axiales")
+                  if f["medidas"]["espesor"] is None}
+check("24 códigos sin medidas", len(sin_medidas_ax) == 24, len(sin_medidas_ax))
+r = tecnicos.buscar("cojinetes_axiales", {"espesor": "1", "tol_espesor": "+"})
+check("y ninguno aparece en una búsqueda por medidas",
+      not (sin_medidas_ax & set(codigos(r))), sorted(sin_medidas_ax & set(codigos(r)))[:5])
+
 print("\n=== 8. El tope de 100 se avisa ===")
 r = tecnicos.buscar("guias", {"aplicacion": "guia"})
 check("se devuelven 100 como mucho", r["total"] == 100, r["total"])
@@ -628,7 +687,7 @@ cliente = app.test_client()
 check("sin sesión no se entra", cliente.get("/api/tecnicos/familias").status_code == 401)
 cliente.post("/api/auth/login", json={"usuario": os.environ["APP_USERNAME"], "password": CLAVE})
 resp = cliente.get("/api/tecnicos/familias")
-check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 10, resp.get_json())
+check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 11, resp.get_json())
 resp = cliente.get("/api/tecnicos/buscar?familia=camisas&diam_int=56.5&tol_diam_int=0")
 datos = resp.get_json()
 check("y la búsqueda", resp.status_code == 200 and "UC 2112" in [r["codigo"] for r in datos["resultados"]], datos)

@@ -1,0 +1,5976 @@
+[
+ {
+  "codigo": "CFF 1203",
+  "codigo_fab": "1203 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Honda Ika Bergantin, Jeep - 1956 / 1978, Motor Continental 4L-151 s Cojinete con pestaña - Flanged bearing",
+  "descripcion": "HONDA ACCORD 16V-TEV EX",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.5
+  },
+  "extra": {
+   "fabricante_motor": "Honda",
+   "motor": "Ika Bergantin, Jeep - 1956 / 1978, Motor Continental 4L-151 s Cojinete con pestaña - Flanged bearing",
+   "nro_cil": null,
+   "diam_x_carrera": "85 x 95",
+   "cilindrada": "2156",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 53,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.5
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 1203   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 1256",
+  "codigo_fab": null,
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "BORGWARD VM 4.92T-CHEROKEE-ZANELLO VM105",
+  "descripcion": "BORGWARD VM 4.92T-CHEROKEE-ZANELLO VM105",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 1256   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 1256   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 1256   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 1826",
+  "codigo_fab": "1826 AF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Honda",
+  "descripcion": "HONDA CIVIC LX 16V",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.489
+  },
+  "extra": {
+   "fabricante_motor": "Honda",
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": "75 x 90",
+   "cilindrada": "1590",
+   "pares": null,
+   "tipo_material": "AF",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 53,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.489
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 1826   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 2056",
+  "codigo_fab": "2056 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Di Tella Pick Up Argenta - 1960/1967",
+  "descripcion": "DI TELLA 1500*1600",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.362
+  },
+  "extra": {
+   "fabricante_motor": "Di Tella",
+   "motor": "Pick Up Argenta - 1960/1967",
+   "nro_cil": null,
+   "diam_x_carrera": "73.02 x 88.90",
+   "cilindrada": "1489",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 33,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.362
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 2056   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 2056   2  ",
+    "medida": "2"
+   },
+   {
+    "codigo": "CFF 2056   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 2392",
+  "codigo_fab": "2392 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Renault Dauphine, Gordini, 4L, 4F , 845 c.c. - 1960 / 1969 Tapa de cilindros 6 mkg",
+  "descripcion": "RENAULT DAUPHINE GORDINI",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.0
+  },
+  "extra": {
+   "fabricante_motor": "Renault",
+   "motor": "Dauphine, Gordini, 4L, 4F , 845 c.c. - 1960 / 1969 Tapa de cilindros 6 mkg",
+   "nro_cil": null,
+   "diam_x_carrera": "58 x 80",
+   "cilindrada": "845",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 78,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.0
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 2392   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 2392   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 2392   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 2516",
+  "codigo_fab": "2516 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Fiat (continuación) 1481 c.c., 1500 Berlina, Familiar, Multicarga Coupe - 1963/1969 Tapa de cilindros 9 mkg",
+  "descripcion": "FIAT 1500-1600",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.36
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "(continuación) 1481 c.c., 1500 Berlina, Familiar, Multicarga Coupe - 1963/1969 Tapa de cilindros 9 mkg",
+   "nro_cil": null,
+   "diam_x_carrera": "77 x 79.5",
+   "cilindrada": "1481",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 37,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.36
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 2516   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 2516   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 2516   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 2783",
+  "codigo_fab": "2783 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Perkins",
+  "descripcion": "PERKINS 3.152-4.203-6.305-T4.33",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 3.124
+  },
+  "extra": {
+   "fabricante_motor": "Perkins",
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": "91.44 x 127",
+   "cilindrada": "2500",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 71,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 3.124
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 2783   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 2783   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 2783   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 2847",
+  "codigo_fab": "2847 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Fiat 767 c.c., 797 c.c., 600 D, E, R, S - 1962 / 1977",
+  "descripcion": "FIAT 750-133",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.36
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "767 c.c., 797 c.c., 600 D, E, R, S - 1962 / 1977",
+   "nro_cil": null,
+   "diam_x_carrera": "62 x 63.5",
+   "cilindrada": "767",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 35,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.36
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 2847   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 2847   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 2847   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 2869",
+  "codigo_fab": "2869 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Peugeot 404, 504, 505, XC7, XC6-A, XMA-7, XM7, XN1, XN1-TN - 1965 / MODELOS 404/504 A PARTIR DE 1975 APARTIR DEL MOTOR Nº 132000 Tapa de cilindros 7/8 mkg. Tapa de cilindros preaprieto 4 mkg, final 7 mkg. Tapa de cilindros preaprieto 5 mkg. final aflojar bulones y reapretar a 2 mkg + 90º",
+  "descripcion": "PEUGEOT 404/504",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.33
+  },
+  "extra": {
+   "fabricante_motor": "Peugeot",
+   "motor": "404, 504, 505, XC7, XC6-A, XMA-7, XM7, XN1, XN1-TN - 1965 / MODELOS 404/504 A PARTIR DE 1975 APARTIR DEL MOTOR Nº 132000 Tapa de cilindros 7/8 mkg. Tapa de cilindros preaprieto 4 mkg, final 7 mkg. Tapa de cilindros preaprieto 5 mkg. final aflojar bulones y reapretar a 2 mkg + 90º",
+   "nro_cil": null,
+   "diam_x_carrera": "84 x 73",
+   "cilindrada": "1618",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 76,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.33
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 2869   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 2869   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 2869   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 2873",
+  "codigo_fab": "2873 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Ika Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Indenor - Peugeot Diesel Tapa de cilindros 7 mkg. Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
+  "descripcion": "INDENOR XD4.88-XD6.90",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.33
+  },
+  "extra": {
+   "fabricante_motor": "Ika",
+   "motor": "Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Indenor - Peugeot Diesel Tapa de cilindros 7 mkg. Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
+   "nro_cil": null,
+   "diam_x_carrera": "84.94 x 111.13",
+   "cilindrada": "3770",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 55,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.33
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 2873   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 2873   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 2873   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 2919",
+  "codigo_fab": null,
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "BEDFORD CHEVROLET",
+  "descripcion": "BEDFORD CHEVROLET",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 2919   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 2919   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 2919   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 2952",
+  "codigo_fab": "2952 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Renault 4L, 4S, 4F , R6, R12, M1000, M1100, M1300, M1400 -1970 / 1982",
+  "descripcion": "RENAULT 4-6-12",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.41
+  },
+  "extra": {
+   "fabricante_motor": "Renault",
+   "motor": "4L, 4S, 4F , R6, R12, M1000, M1100, M1300, M1400 -1970 / 1982",
+   "nro_cil": null,
+   "diam_x_carrera": "65 x 77",
+   "cilindrada": "1020",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 78,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.41
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 2952   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 2952   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 2952   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 3137",
+  "codigo_fab": "3137 BFA",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Perkins 4-236, 4-248, Q-20B4, Turbo TQ-20-B4",
+  "descripcion": "PERKINS 6.354-PHASER 1006-1006T",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.311
+  },
+  "extra": {
+   "fabricante_motor": "Perkins",
+   "motor": "4-236, 4-248, Q-20B4, Turbo TQ-20-B4",
+   "nro_cil": null,
+   "diam_x_carrera": "98.43 x 127",
+   "cilindrada": "3865",
+   "pares": null,
+   "tipo_material": "BFA",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 72,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.311
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 3137   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 3137   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 3137   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 3461",
+  "codigo_fab": "3461 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "COJINETES INFERIORES LISOS Ford",
+  "descripcion": "FORD SIERRA 1.6",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.35
+  },
+  "extra": {
+   "fabricante_motor": "COJINETES INFERIORES LISOS",
+   "motor": "Ford",
+   "nro_cil": null,
+   "diam_x_carrera": "82.5 x 82",
+   "cilindrada": "1753",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 45,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.35
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 3461   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 3461   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 3461   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 3482",
+  "codigo_fab": "3482 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Dodge 1498 c.c., 1500 - 1972/1981",
+  "descripcion": "DODGE 1500",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.362
+  },
+  "extra": {
+   "fabricante_motor": "Dodge",
+   "motor": "1498 c.c., 1500 - 1972/1981",
+   "nro_cil": null,
+   "diam_x_carrera": "86.1 x 64.3",
+   "cilindrada": "1498",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 34,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.362
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 3482   10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 3482   5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 3482   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 3567",
+  "codigo_fab": null,
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "MAZDA 1600/1800/2000",
+  "descripcion": "MAZDA 1600/1800/2000",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 3567   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 3911",
+  "codigo_fab": "3911 AF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Mazda s Cojinete con pestaña - Flanged bearing",
+  "descripcion": "MAZDA 323 (GLC)*FORD LASER",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.007
+  },
+  "extra": {
+   "fabricante_motor": "Mazda",
+   "motor": "s Cojinete con pestaña - Flanged bearing",
+   "nro_cil": null,
+   "diam_x_carrera": "77 x 69.6",
+   "cilindrada": "1269",
+   "pares": null,
+   "tipo_material": "AF",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 58,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.007
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 3911   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 4081",
+  "codigo_fab": "4081 AF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Alfa Romeo Bedford 200D SERIE DKT",
+  "descripcion": "ALFA ROMEO 164 GTV TURBO V6*",
+  "medidas": {
+   "diam_int": [
+    65.786,
+    66.04
+   ],
+   "diam_ext": [
+    82.423,
+    82.677
+   ],
+   "espesor": 2.362
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "Bedford 200D SERIE DKT",
+   "nro_cil": null,
+   "diam_x_carrera": "88 x 68.3",
+   "cilindrada": "2492",
+   "pares": null,
+   "tipo_material": "AF",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 24,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.362
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 4081   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 4886",
+  "codigo_fab": null,
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "MWM 4.10-6.10",
+  "descripcion": "MWM 4.10-6.10",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 4886   10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 4886   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 4891",
+  "codigo_fab": null,
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "MWM 4.07-4.07TCE-4.08TCE-6.07T",
+  "descripcion": "MWM 4.07-4.07TCE-4.08TCE-6.07T",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 4891   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 60087",
+  "codigo_fab": "60087 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Fiat 55R, 60R, 780, 780R - 1955/1971 Tornillo Auto Bloc.21.5 mkg.. Tornillo NO Auto Bloc. 19/ 221 mkg Tapa de cilindros 30 mkg. (55/60R). 780R-780. Ver Nota.",
+  "descripcion": "FIAT 55R-60R-780R/ZANELLO W56-W86",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.36
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "55R, 60R, 780, 780R  - 1955/1971 Tornillo Auto Bloc.21.5 mkg.. Tornillo NO Auto Bloc. 19/ 221 mkg Tapa de cilindros 30 mkg. (55/60R). 780R-780. Ver Nota.",
+   "nro_cil": null,
+   "diam_x_carrera": "122 x 140",
+   "cilindrada": "6546",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 43,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.36
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 60087  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 60087  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 60087  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 60116",
+  "codigo_fab": "60116 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Fiat Supersom 55, 450, 650, 700S U - 1962/1971 Tapa de cilindros 22 mkg",
+  "descripcion": "FIAT SOMECA M45-DA50-400-500-900-880/4",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.36
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "Supersom 55, 450, 650, 700S U - 1962/1971 Tapa de cilindros 22 mkg",
+   "nro_cil": null,
+   "diam_x_carrera": "100 x 100",
+   "cilindrada": "4397",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 41,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.36
+    },
+    {
+     "label": "+.020\"",
+     "valor": 2.868
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 60116  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 60116  20",
+    "medida": "20"
+   },
+   {
+    "codigo": "CFF 60116  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 60116  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 60476",
+  "codigo_fab": "60476 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Renault",
+  "descripcion": "RENAULT 9-11-12-18 Jr-19 1.6-TWINGO-CLIO",
+  "medidas": {
+   "diam_int": [
+    60.5,
+    60.75
+   ],
+   "diam_ext": [
+    79.75,
+    80.0
+   ],
+   "espesor": 2.85
+  },
+  "extra": {
+   "fabricante_motor": "Renault",
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": "74 x 72",
+   "cilindrada": "1239",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 79,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.85
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 60476  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 60476  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 60476  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 60987",
+  "codigo_fab": "60987 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Fiat (continuación) Super Europa, 147L, Spazio TR/TR5, Brio, Duna S/SC - 1971/1990",
+  "descripcion": "FIAT 125-128-TIPO 1.4-1.6-PALIO 1.6 16V",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.36
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "(continuación) Super Europa, 147L, Spazio TR/TR5, Brio, Duna S/SC  - 1971/1990",
+   "nro_cil": null,
+   "diam_x_carrera": "80 x 55.5",
+   "cilindrada": "1116",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 38,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.36
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 60987  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 60987  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 60987  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 62022",
+  "codigo_fab": "62022 BFA",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Fiat 221 A, 619N1, T1; 697N, T, B; Omnib. 319N - 1972/ Tapa de cilindros 30 mkg. (Lubricar con aceite)",
+  "descripcion": "FIAT 619 N1",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.362
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "221 A, 619N1, T1; 697N, T, B; Omnib. 319N - 1972/ Tapa de cilindros 30 mkg. (Lubricar con aceite)",
+   "nro_cil": null,
+   "diam_x_carrera": "137 x 156",
+   "cilindrada": "13798",
+   "pares": null,
+   "tipo_material": "BFA",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 44,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.362
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 62022  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 62022  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 62022  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 62037",
+  "codigo_fab": "62037 AF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Fiat 149 A 2 038, Regatta 100 S - 1985/1987",
+  "descripcion": "FIAT DUNA 1.7D-REGATTA 2000-100S-1.7TD",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.36
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "149 A 2 038, Regatta 100 S - 1985/1987",
+   "nro_cil": null,
+   "diam_x_carrera": "84 x 71.5",
+   "cilindrada": "1585",
+   "pares": null,
+   "tipo_material": "AF",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 39,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.36
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 62037  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 62037  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 62067",
+  "codigo_fab": "62067 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Fiat 5401 c.c. (C03), 700E, 800, E - 1971/1980",
+  "descripcion": "FIAT 700E-800/IVECO 1580",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.362
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "5401 c.c. (C03), 700E, 800, E - 1971/1980",
+   "nro_cil": null,
+   "diam_x_carrera": "115 x 130",
+   "cilindrada": "5401",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 42,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.362
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 62067  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 62067  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 62067  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 62082",
+  "codigo_fab": "62082 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Dodge",
+  "descripcion": "MAXION HS2.5T-HS2.8L-NGD3.0/DODGE 1.8",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.362
+  },
+  "extra": {
+   "fabricante_motor": "Dodge",
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": "86.1 x 77.2",
+   "cilindrada": "1798",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 34,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.362
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 62082  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 62082  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 62082  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 62099",
+  "codigo_fab": "62099 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Peugeot 404, 504, 505, XC7, XC6-A, XMA-7, XM7, XN1, XN1-TN - 1965 / MODELOS 404/504 A PARTIR DE 1975 APARTIR DEL MOTOR Nº 132000 Tapa de cilindros 7/8 mkg. Tapa de cilindros preaprieto 4 mkg, final 7 mkg. Tapa de cilindros preaprieto 5 mkg. final aflojar bulones y reapretar a 2 mkg + 90º",
+  "descripcion": "PEUGEOT 504 2000 CC-1800 CC",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.3
+  },
+  "extra": {
+   "fabricante_motor": "Peugeot",
+   "motor": "404, 504, 505, XC7, XC6-A, XMA-7, XM7, XN1, XN1-TN - 1965 / MODELOS 404/504 A PARTIR DE 1975 APARTIR DEL MOTOR Nº 132000 Tapa de cilindros 7/8 mkg. Tapa de cilindros preaprieto 4 mkg, final 7 mkg. Tapa de cilindros preaprieto 5 mkg. final aflojar bulones y reapretar a 2 mkg + 90º",
+   "nro_cil": null,
+   "diam_x_carrera": "84 x 73",
+   "cilindrada": "1618",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 76,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.3
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 62099  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 62099  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 62099  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 66311IM",
+  "codigo_fab": "66311 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Peugeot Rastrojero Tapa de cilindros 6 y 10 mkg (en frío). Primeros 500 mkg 10 mkg",
+  "descripcion": "PEUGEOT 604/RENAULT 30 *",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.35
+  },
+  "extra": {
+   "fabricante_motor": "Peugeot",
+   "motor": "Rastrojero Tapa de cilindros 6 y 10 mkg (en frío). Primeros 500 mkg 10 mkg",
+   "nro_cil": null,
+   "diam_x_carrera": "88 x 73",
+   "cilindrada": "2664",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 77,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.35
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 66311IM10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 66311IM15 ",
+    "medida": "15"
+   },
+   {
+    "codigo": "CFF 66311IMSTD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 66506",
+  "codigo_fab": "66506 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Renault R18, Coupe Fuego, Trafic, M2000, 829 - 1981",
+  "descripcion": "RENAULT 18 2.0-21 2.2-TRAFIC 2.1D",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.85
+  },
+  "extra": {
+   "fabricante_motor": "Renault",
+   "motor": "R18, Coupe Fuego, Trafic, M2000, 829 - 1981",
+   "nro_cil": null,
+   "diam_x_carrera": "88 x 82",
+   "cilindrada": "1995",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 80,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.85
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 66506  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 66506  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 66506  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 66586",
+  "codigo_fab": "66586 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Deutz F3L 913 - 1978 Tapa de cilindros preaprieto 3 mkg., reaprieto 45 º + 45º + 45º = 135º s Cojinete con pestaña - Flanged bearing",
+  "descripcion": "DEUTZ 913 FL(3-4-5-6)",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.985
+  },
+  "extra": {
+   "fabricante_motor": "Deutz",
+   "motor": "F3L 913 - 1978 Tapa de cilindros preaprieto 3 mkg., reaprieto 45 º + 45º + 45º = 135º s Cojinete con pestaña - Flanged bearing",
+   "nro_cil": null,
+   "diam_x_carrera": "102 x 125",
+   "cilindrada": "3064",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 29,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.985
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 66586  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 66586  5",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 66586  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 66591",
+  "codigo_fab": "66591 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Deutz BF6L 913 Turbo, F7000 - 1978 Tapa de cilindros preaprieto 3 mkg, reaprieto 45º + 45º + 45º = 135º",
+  "descripcion": "DEUTZ 913 TURBO",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.985
+  },
+  "extra": {
+   "fabricante_motor": "Deutz",
+   "motor": "BF6L 913 Turbo, F7000 - 1978 Tapa de cilindros preaprieto 3 mkg, reaprieto 45º + 45º + 45º = 135º",
+   "nro_cil": null,
+   "diam_x_carrera": "102 x 125",
+   "cilindrada": "6128",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 31,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.985
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 66591  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 66591  5",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 66591  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 66676",
+  "codigo_fab": "66676 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Cummins Daihatsu AB, AD, Cuore, Max Cuore, Van L 40, 55 W - 1978/1982",
+  "descripcion": "DAIHATSU CHARADE - CUORE",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 1.989
+  },
+  "extra": {
+   "fabricante_motor": "Cummins",
+   "motor": "Daihatsu AB, AD, Cuore, Max Cuore, Van L 40, 55 W - 1978/1982",
+   "nro_cil": null,
+   "diam_x_carrera": "4.016 x 4.724",
+   "cilindrada": "547",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 29,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 1.989
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 66676  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 66691",
+  "codigo_fab": "66691 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Ika Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Indenor - Peugeot Diesel Tapa de cilindros 7 mkg. Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
+  "descripcion": "INDENOR XD2-XD3-XD3T",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.33
+  },
+  "extra": {
+   "fabricante_motor": "Ika",
+   "motor": "Rambler, Torino, Jeep 1000 - 1974 / 1981, OCH-230-7B Indenor - Peugeot Diesel Tapa de cilindros 7 mkg. Indenor - Peugeot Diesel XD3, XD2 s Cojinete con pestaña - Flanged bearing",
+   "nro_cil": null,
+   "diam_x_carrera": "84.94 x 111.13",
+   "cilindrada": "3770",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 55,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.33
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 66691  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 66691  5",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 66691  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 66721",
+  "codigo_fab": "66721 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Citröen Cummins s Cojinete con pestaña - Flanged bearing",
+  "descripcion": "PEUGEOT 405 1.9D XUD9-XUD7-XU92C",
+  "medidas": {
+   "diam_int": [
+    67.05,
+    67.3
+   ],
+   "diam_ext": [
+    83.05,
+    83.3
+   ],
+   "espesor": 2.33
+  },
+  "extra": {
+   "fabricante_motor": "Citröen",
+   "motor": "Cummins s Cojinete con pestaña - Flanged bearing",
+   "nro_cil": null,
+   "diam_x_carrera": "80 x 88",
+   "cilindrada": "1769",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 28,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.33
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 66721  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 66721  15",
+    "medida": "15"
+   },
+   {
+    "codigo": "CFF 66721  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 67271",
+  "codigo_fab": null,
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "TOYOTA COROLLA 1300 - MOT. 4K 1290CC.",
+  "descripcion": "TOYOTA COROLLA 1300 - MOT. 4K 1290CC.",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 67271  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 67341",
+  "codigo_fab": "67341 AF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Honda",
+  "descripcion": "HONDA ACCORD*CIVIC",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.489
+  },
+  "extra": {
+   "fabricante_motor": "Honda",
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": "72 x 76",
+   "cilindrada": "1238",
+   "pares": null,
+   "tipo_material": "AF",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 52,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.489
+    }
+   ],
+   "revisar": {
+    "codigo": "el catálogo trae este juego con más de un reparto de medidas y no son iguales: espesor 2.489 contra 2.464. Se tomó el primero, que es el que más se repite (1 filas del catálogo contra 1)",
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 67341  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 67356",
+  "codigo_fab": null,
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "MAZDA 1000 - 1300CC.*",
+  "descripcion": "MAZDA 1000 - 1300CC.*",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 67356  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 68092",
+  "codigo_fab": "68092 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Fiat Spazio Diesel TRD, Duna SD, 147, Oggi, Uno, Mille, Europa, Panorama, Fiorino, Elba Prêmio,",
+  "descripcion": "FIAT 147 1.3D-147 1050 CC",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 2.36
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "Spazio Diesel TRD, Duna SD, 147, Oggi, Uno, Mille, Europa,  Panorama, Fiorino, Elba Prêmio,",
+   "nro_cil": null,
+   "diam_x_carrera": "76 x 54.80",
+   "cilindrada": "994",
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 36,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.36
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 68092  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 68092  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 68092  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 68097",
+  "codigo_fab": "68097 BF",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "PESTAÑA STD 68096 RAA",
+  "descripcion": "VW AUDI 1.6-1.8-2.0-SENDA 1.6D-GOL 1.0",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": 1.975
+  },
+  "extra": {
+   "fabricante_motor": "PESTAÑA STD",
+   "motor": "68096 RAA",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "BF",
+   "material": "respaldo de bronce, revestimiento Babbit",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Federal Mogul",
+   "pagina_catalogo": 46,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 1.975
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 68097  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 68097  5  ",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 68097  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFF 68111",
+  "codigo_fab": null,
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "FORD ESCORT 1.6 CHT",
+  "descripcion": "FORD ESCORT 1.6 CHT",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFF 68111  10 ",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFF 68111  5",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFF 68111  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA113/4",
+  "codigo_fab": "A113/4",
+  "marca": "GLYCO",
+  "aplicacion": "Mercedes-Benz /8 200 D 01/68–01/77 MB 2.0 D 04/88–04/96 123 200 D 07/76–11/85 1 H951/5 STD 0.25 02-3435 1,2,4,5 69.955/69.965 74.500/74.519 27.000 2.255 0.025/0.079 AL-LF",
+  "descripcion": "M.BENZ OM616",
+  "medidas": {
+   "diam_int": 78.025,
+   "diam_ext": 91.5,
+   "espesor": 2.2
+  },
+  "extra": {
+   "fabricante_motor": "Mercedes-Benz",
+   "motor": "/8 200 D 01/68–01/77 MB 2.0 D 04/88–04/96 123 200 D 07/76–11/85 1 H951/5 STD 0.25 02-3435 1,2,4,5 69.955/69.965 74.500/74.519 27.000 2.255 0.025/0.079 AL-LF",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1988",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 585,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.2
+    },
+    {
+     "label": "+.020\"",
+     "valor": 2.708
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende sobremedidas que el catálogo no lista para este juego (20): el espesor de la arandela sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA113/4 10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFGLA113/4 20",
+    "medida": "20"
+   },
+   {
+    "codigo": "CFGLA113/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA123/4",
+  "codigo_fab": "A123/4",
+  "marca": "GLYCO",
+  "aplicacion": "50 1.3 01/77–07/78 80 B2 1.3 09/78 07/81 10 H026/5 1 STD 0.25 02-3085U 1-5 53.958/53.978 59.000/59.019 18.500 2.502 0.020/0.082 AL-LF",
+  "descripcion": "VW GOLF 1.9TD-TRANSP. 1.9TD-AMAROK 2.0",
+  "medidas": {
+   "diam_int": 59.5,
+   "diam_ext": 73.2,
+   "espesor": 1.975
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "50 1.3 01/77–07/78 80 B2 1.3 09/78    07/81 10 H026/5 1 STD 0.25 02-3085U 1-5 53.958/53.978 59.000/59.019 18.500 2.502 0.020/0.082 AL-LF",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1272",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 8,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 1.975
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA123/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA124/4",
+  "codigo_fab": "A124/4",
+  "marca": "GLYCO",
+  "aplicacion": "Audi 100 C2 2.0 D 08/78–02/83 100 C3 2.0 D Turbo 08/82–11/90 100 C3 2.0 D 08/82–11/90 100 C3 2.0 TD 03/83–11/90",
+  "descripcion": "VW TRANSPORTER 2.5TDi 5 CIL.",
+  "medidas": {
+   "diam_int": [
+    63.5,
+    63.75
+   ],
+   "diam_ext": [
+    77.2,
+    77.45
+   ],
+   "espesor": 1.975
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": "100 C2 2.0 D 08/78–02/83 100 C3 2.0 D Turbo 08/82–11/90 100 C3 2.0 D 08/82–11/90 100 C3 2.0 TD 03/83–11/90",
+   "nro_cil": "5",
+   "diam_x_carrera": null,
+   "cilindrada": "1986",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 49,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 1.975
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA124/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA129/4",
+  "codigo_fab": "A129/4",
+  "marca": "GLYCO",
+  "aplicacion": "Mercedes-Benz",
+  "descripcion": "M.BENZ OM611 2.2D",
+  "medidas": {
+   "diam_int": 65.8,
+   "diam_ext": 81.0,
+   "espesor": 2.2
+  },
+  "extra": {
+   "fabricante_motor": "Mercedes-Benz",
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 577,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.2
+    },
+    {
+     "label": "+0,2 mm",
+     "valor": 2.4
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende sobremedidas que el catálogo no lista para este juego (20): el espesor de la arandela sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA129/4 10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFGLA129/4 20",
+    "medida": "20"
+   },
+   {
+    "codigo": "CFGLA129/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA139/4",
+  "codigo_fab": "A139/4",
+  "marca": "GLYCO",
+  "aplicacion": "Audi A3 3.2 V6 07/03–05/09 TT 3.2 VR6 07/03–06/06 TT 3.2 V6 08/06–06/10",
+  "descripcion": "VW PASSAT 2.8 V6",
+  "medidas": {
+   "diam_int": 65.45,
+   "diam_ext": 80.0,
+   "espesor": 1.723
+  },
+  "extra": {
+   "fabricante_motor": "Audi",
+   "motor": "A3 3.2 V6 07/03–05/09 TT 3.2 VR6 07/03–06/06 TT 3.2 V6 08/06–06/10",
+   "nro_cil": "6",
+   "diam_x_carrera": null,
+   "cilindrada": "3189",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 90,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 1.723
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA139/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA161/2",
+  "codigo_fab": "A161/2",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën C4 GRAND PICASSO I 1.8 i 16V 10/06–01/13 C5 II 1.8 16V 09/04–01/08 C4 PICASSO I 1.8 01/09–10/12 C5 III 1.8 16V 02/08– C4 PICASSO I 1.8 i 16V 02/07–12/11 XSARA 1.8 09/00–10/04",
+  "descripcion": "PEUGEOT EW10J4-EW12J4",
+  "medidas": {
+   "diam_int": [
+    67.05,
+    67.3
+   ],
+   "diam_ext": [
+    83.05,
+    83.3
+   ],
+   "espesor": 2.33
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "C4 GRAND PICASSO I 1.8 i 16V 10/06–01/13 C5 II 1.8 16V 09/04–01/08 C4 PICASSO I 1.8 01/09–10/12 C5 III 1.8 16V 02/08– C4 PICASSO I 1.8 i 16V 02/07–12/11 XSARA 1.8 09/00–10/04",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "2",
+   "tipo_material": "AL",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 162,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.33
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA161/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA168/2",
+  "codigo_fab": "A168/2",
+  "marca": "GLYCO",
+  "aplicacion": "Dacia DOKKER 1.5 Blue dCi 95 12/18– LODGY 1.5 Blue dCi 115 08/18– DOKKER 1.5 dCi 11/12– LODGY 1.5 dCi 03/12– DOKKER 1.5 dCi / Blue dCi 75 11/12– LOGAN 1.5 dCi 09/05–",
+  "descripcion": "RENAULT K9K-MEGANE 1.6 8V K7M-16V K4M",
+  "medidas": {
+   "diam_int": [
+    53.0,
+    53.25
+   ],
+   "diam_ext": [
+    73.67,
+    73.92
+   ],
+   "espesor": 2.85
+  },
+  "extra": {
+   "fabricante_motor": "Dacia",
+   "motor": "DOKKER 1.5 Blue dCi 95 12/18– LODGY 1.5 Blue dCi 115 08/18– DOKKER 1.5 dCi 11/12– LODGY 1.5 dCi 03/12– DOKKER 1.5 dCi / Blue dCi 75 11/12– LOGAN 1.5 dCi 09/05–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1461",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 178,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.85
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA168/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA169/4",
+  "codigo_fab": "A169/4",
+  "marca": "GLYCO",
+  "aplicacion": "Iveco 66 01/85–12/99 90 01/84–12/92 88 01/89–12/93",
+  "descripcion": "IVECO 150T-EUROCARGO 150E20-160E23",
+  "medidas": {
+   "diam_int": [
+    87.779,
+    88.033
+   ],
+   "diam_ext": [
+    111.51,
+    111.764
+   ],
+   "espesor": 3.429
+  },
+  "extra": {
+   "fabricante_motor": "Iveco",
+   "motor": "66 01/85–12/99 90 01/84–12/92 88 01/89–12/93",
+   "nro_cil": "3",
+   "diam_x_carrera": null,
+   "cilindrada": "2708",
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 377,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 3.429
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA169/4 5",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFGLA169/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA173/4",
+  "codigo_fab": null,
+  "marca": "GLYCO",
+  "aplicacion": "ROVER 420 SDi-620 SDi 2.0TDi",
+  "descripcion": "ROVER 420 SDi-620 SDi 2.0TDi",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA173/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA174/4",
+  "codigo_fab": "A174/4",
+  "marca": "GLYCO",
+  "aplicacion": "Ford TRANSIT 2.4 D 10/83–10/86 TRANSIT 2.5 TD 06/94–06/00 TRANSIT 2.5 D 10/83–09/92 TRANSIT TOURNEO 2.4 D 08/94–06/00 TRANSIT 2.5 DI 09/88–03/00 TRANSIT TOURNEO 2.5 DI 11/94–12/00",
+  "descripcion": "FORD TRANSIT 2.5D",
+  "medidas": {
+   "diam_int": [
+    78.75,
+    79.0
+   ],
+   "diam_ext": [
+    94.0,
+    94.25
+   ],
+   "espesor": 2.85
+  },
+  "extra": {
+   "fabricante_motor": "Ford",
+   "motor": "TRANSIT 2.4 D 10/83–10/86 TRANSIT 2.5 TD 06/94–06/00 TRANSIT 2.5 D 10/83–09/92 TRANSIT TOURNEO 2.4 D 08/94–06/00 TRANSIT 2.5 DI 09/88–03/00 TRANSIT TOURNEO 2.5 DI 11/94–12/00",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2496",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 311,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.85
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA174/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA178/4",
+  "codigo_fab": "A178/4",
+  "marca": "GLYCO",
+  "aplicacion": "Alfa Romeo A11 / A12 1.3 01/67–12/83 GIULIETTA 1.3 ti 01/57–12/62 F11 / F12 1.3 01/67–12/83 GT 1300 Junior 01/66–12/77 GIULIA 1300 01/64–08/69 GTA 1.3 Junior 05/68–12/76",
+  "descripcion": "ALFA ROMEO GIULIA 1.6-155-164 2.0",
+  "medidas": {
+   "diam_int": [
+    65.786,
+    66.04
+   ],
+   "diam_ext": [
+    82.423,
+    82.677
+   ],
+   "espesor": 2.362
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "A11 / A12 1.3 01/67–12/83 GIULIETTA 1.3 ti 01/57–12/62 F11 / F12 1.3 01/67–12/83 GT 1300 Junior 01/66–12/77 GIULIA 1300 01/64–08/69 GTA 1.3 Junior 05/68–12/76",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1290",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 19,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.362
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA178/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA180/2",
+  "codigo_fab": "A180/2",
+  "marca": "GLYCO",
+  "aplicacion": "Ford ESCORT III 1.6 D 02/84–12/85 FIESTA 1.6 D 09/83–09/89 ESCORT III Express 1.6 D 02/84–02/86 FIESTA II 1.6 D 04/84–02/89 ESCORT IV 1.6 D 01/86–01/89 ORION I 1.6 D 02/84–03/86",
+  "descripcion": "FORD FIESTA 1.8D",
+  "medidas": {
+   "diam_int": [
+    59.346,
+    59.69
+   ],
+   "diam_ext": [
+    74.498,
+    74.752
+   ],
+   "espesor": 2.362
+  },
+  "extra": {
+   "fabricante_motor": "Ford",
+   "motor": "ESCORT III 1.6 D 02/84–12/85 FIESTA 1.6 D 09/83–09/89 ESCORT III Express 1.6 D 02/84–02/86 FIESTA II 1.6 D 04/84–02/89 ESCORT IV 1.6 D 01/86–01/89 ORION I 1.6 D 02/84–03/86",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1608",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 290,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.362
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA180/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA185/4",
+  "codigo_fab": "A185/4",
+  "marca": "GLYCO",
+  "aplicacion": "Toyota BLIZZARD 2.2 D 03/80–03/84 HILUX IV 2.2 D 11/82–08/84 CRESSIDA 2.2 D 09/80–04/85 MARK II IV 2.2 DX 08/80–10/83 CROWN 2.2 D 04/80–07/83 PICKUP 2.2 D 09/80–12/83",
+  "descripcion": "TOYOTA L-2L-2LT-3L-5L",
+  "medidas": {
+   "diam_int": 70.0,
+   "diam_ext": 81.8,
+   "espesor": 2.48
+  },
+  "extra": {
+   "fabricante_motor": "Toyota",
+   "motor": "BLIZZARD 2.2 D 03/80–03/84 HILUX IV 2.2 D 11/82–08/84 CRESSIDA 2.2 D 09/80–04/85 MARK II IV 2.2 DX 08/80–10/83 CROWN 2.2 D 04/80–07/83 PICKUP 2.2 D 09/80–12/83",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2188",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 1008,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.48
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA185/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA188/4",
+  "codigo_fab": "A188/4",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën BX TRD Turbo 03/88–12/94",
+  "descripcion": "PEUGEOT 405 1.9TD-XUD7-405 1.9 XU10J2",
+  "medidas": {
+   "diam_int": [
+    67.05,
+    67.3
+   ],
+   "diam_ext": [
+    83.05,
+    83.3
+   ],
+   "espesor": 1.88
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "BX TRD Turbo 03/88–12/94",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1769",
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 161,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 1.88
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA188/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA190/2",
+  "codigo_fab": "A190/2",
+  "marca": "GLYCO",
+  "aplicacion": "Alfa Romeo 145 1.4 i.e. 16V T.S. 12/96–01/01 146 1.4 i.e. 16V T.S. 11/96–01/01 02/00– 4 01-4160/4 STD 0.25 4400RA 40.870/40.890 44.000/44.012 19.100 1.543 0.024/0.081 AL-LF",
+  "descripcion": "ALFA ROMEO 145 TWIN SPARK",
+  "medidas": {
+   "diam_int": [
+    58.808,
+    59.062
+   ],
+   "diam_ext": [
+    73.486,
+    73.74
+   ],
+   "espesor": 2.485
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "145 1.4 i.e. 16V T.S. 12/96–01/01 146 1.4 i.e. 16V T.S. 11/96–01/01 02/00– 4 01-4160/4 STD 0.25 4400RA 40.870/40.890 44.000/44.012 19.100 1.543 0.024/0.081 AL-LF",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1370",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 22,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.485
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA190/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA193/4",
+  "codigo_fab": "A193/4",
+  "marca": "GLYCO",
+  "aplicacion": "Fiat –12/77 1 55-4230 SEMI 66634YA 34.005/34.012 37.846/37.884 34.800 BS 01/78–",
+  "descripcion": "IVECO 540-640-980-1180-1380",
+  "medidas": {
+   "diam_int": [
+    85.09,
+    85.34
+   ],
+   "diam_ext": [
+    106.55,
+    106.8
+   ],
+   "espesor": 3.429
+  },
+  "extra": {
+   "fabricante_motor": "Fiat",
+   "motor": "–12/77 1 55-4230 SEMI 66634YA 34.005/34.012 37.846/37.884 34.800 BS 01/78–",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "4",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 259,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 3.429
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA193/4 5",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFGLA193/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA203/2",
+  "codigo_fab": "A203/2",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën LNA 1.0 07/84–10/86 VISA 1.0 09/84–06/88",
+  "descripcion": "PEUGEOT 205 1.4 TU3-TU5",
+  "medidas": {
+   "diam_int": [
+    55.25,
+    55.5
+   ],
+   "diam_ext": [
+    71.45,
+    71.7
+   ],
+   "espesor": 2.45
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "LNA 1.0 07/84–10/86 VISA 1.0 09/84–06/88",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "954",
+   "pares": "2",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 151,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.45
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA203/2 10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFGLA203/2 15",
+    "medida": "15"
+   },
+   {
+    "codigo": "CFGLA203/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA205/2",
+  "codigo_fab": null,
+  "marca": "GLYCO",
+  "aplicacion": "ALFA ROMEO 33-145-146-33 4Q",
+  "descripcion": "ALFA ROMEO 33-145-146-33 4Q",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA205/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA209/2",
+  "codigo_fab": "A209/2",
+  "marca": "GLYCO",
+  "aplicacion": "Ford FIESTA Body/MPV 1.0 04/89–12/91 FIESTA IV 1.0 i 04/96–09/99 FIESTA III 1.0 03/89–12/95 KA 1.0 i 07/97–09/99",
+  "descripcion": "FORD FIESTA 1.3-Ka 1.3",
+  "medidas": {
+   "diam_int": 63.6,
+   "diam_ext": 78.1,
+   "espesor": 2.85
+  },
+  "extra": {
+   "fabricante_motor": "Ford",
+   "motor": "FIESTA Body/MPV 1.0 04/89–12/91 FIESTA IV 1.0 i 04/96–09/99 FIESTA III 1.0 03/89–12/95 KA 1.0 i 07/97–09/99",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "999",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 276,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.85
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA209/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA215/2",
+  "codigo_fab": "A215/2",
+  "marca": "GLYCO",
+  "aplicacion": "Acura",
+  "descripcion": "RENAULT 19 1.9D-1.7-1.7i-1.8-LAGUNA 2.0",
+  "medidas": {
+   "diam_int": [
+    60.5,
+    60.75
+   ],
+   "diam_ext": [
+    79.75,
+    80.0
+   ],
+   "espesor": 2.35
+  },
+  "extra": {
+   "fabricante_motor": "Acura",
+   "motor": null,
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1721",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 10,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.35
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA215/2 10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFGLA215/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA216/4",
+  "codigo_fab": "A216/4",
+  "marca": "GLYCO",
+  "aplicacion": "Scania 01/75–",
+  "descripcion": "SCANIA 111-112T",
+  "medidas": {
+   "diam_int": [
+    112.65,
+    113.03
+   ],
+   "diam_ext": [
+    132.5,
+    132.9
+   ],
+   "espesor": 3.43
+  },
+  "extra": {
+   "fabricante_motor": "Scania",
+   "motor": "01/75–",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "4",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 910,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 3.43
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA216/4 5",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFGLA216/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA217/2",
+  "codigo_fab": "A217/2",
+  "marca": "GLYCO",
+  "aplicacion": "Citroën C1 1.4 HDi 06/05–09/14 C3 II 1.4 HDi 06/10–09/16 C2 1.4 HDi 07/03–12/09 C3 II 1.4 HDi 70 11/09– C3 1.4 HDi 04/04– DS3 1.4 HDi 70 04/10–07/15",
+  "descripcion": "FORD ECOSPORT 1.4TDCi/CITROEN C3 1.4TDCi",
+  "medidas": {
+   "diam_int": [
+    55.2,
+    55.48
+   ],
+   "diam_ext": [
+    71.35,
+    71.7
+   ],
+   "espesor": 2.46
+  },
+  "extra": {
+   "fabricante_motor": "Citroën",
+   "motor": "C1 1.4 HDi 06/05–09/14 C3 II 1.4 HDi 06/10–09/16 C2 1.4 HDi 07/03–12/09 C3 II 1.4 HDi 70 11/09– C3 1.4 HDi 04/04– DS3 1.4 HDi 70 04/10–07/15",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1398",
+   "pares": "2",
+   "tipo_material": "AL",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 153,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.46
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA217/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA218/2",
+  "codigo_fab": "A218/2",
+  "marca": "GLYCO",
+  "aplicacion": "Bedford",
+  "descripcion": "SUZUKI F8A-F10A",
+  "medidas": {
+   "diam_int": 57.0,
+   "diam_ext": 73.0,
+   "espesor": 2.52
+  },
+  "extra": {
+   "fabricante_motor": "Bedford",
+   "motor": null,
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "970",
+   "pares": "2",
+   "tipo_material": "BS",
+   "material": "respaldo de acero con bronce sinterizado, sin capa de deslizamiento",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 100,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.52
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA218/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA225/2",
+  "codigo_fab": "A225/2",
+  "marca": "GLYCO",
+  "aplicacion": "Isuzu",
+  "descripcion": "ISUZU 4JB1-4JB1T-C221 C240",
+  "medidas": {
+   "diam_int": 77.8,
+   "diam_ext": 92.95,
+   "espesor": 2.48
+  },
+  "extra": {
+   "fabricante_motor": "Isuzu",
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 345,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.48
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA225/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA229/4",
+  "codigo_fab": null,
+  "marca": "GLYCO",
+  "aplicacion": "TOYOTA 2T-3T",
+  "descripcion": "TOYOTA 2T-3T",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Glyco 2023-2025 y Federal Mogul): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA229/4 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA289/2",
+  "codigo_fab": "A289/2",
+  "marca": "GLYCO",
+  "aplicacion": "Nissan INTERSTAR dCI 90 07/02–",
+  "descripcion": "RENAULT G9U MASTER 2.5 CDi 16V",
+  "medidas": {
+   "diam_int": [
+    63.25,
+    63.5
+   ],
+   "diam_ext": [
+    78.55,
+    78.8
+   ],
+   "espesor": 2.35
+  },
+  "extra": {
+   "fabricante_motor": "Nissan",
+   "motor": "INTERSTAR dCI 90 07/02–",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "2188",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 713,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.35
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA289/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFGLA291/2",
+  "codigo_fab": "A291/2",
+  "marca": "GLYCO",
+  "aplicacion": "Alfa Romeo GIULIETTA 1.6 JTDM 04/10–12/20 MITO 1.6 JTDM 08/08–08/15",
+  "descripcion": "FIAT TORO 2.0 JTD 16V/CHEROKEE 2.0 CRD",
+  "medidas": {
+   "diam_int": [
+    59.0,
+    59.26
+   ],
+   "diam_ext": [
+    73.6,
+    73.85
+   ],
+   "espesor": 2.485
+  },
+  "extra": {
+   "fabricante_motor": "Alfa Romeo",
+   "motor": "GIULIETTA 1.6 JTDM 04/10–12/20 MITO 1.6 JTDM 08/08–08/15",
+   "nro_cil": "4",
+   "diam_x_carrera": null,
+   "cilindrada": "1598",
+   "pares": "2",
+   "tipo_material": "AL-LF",
+   "material": "respaldo de acero con aluminio, bimetálico o trimetálico",
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": "Glyco 2023-2025",
+   "pagina_catalogo": 20,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.485
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFGLA291/2 5",
+    "medida": "5"
+   },
+   {
+    "codigo": "CFGLA291/2 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE0440364",
+  "codigo_fab": "L0440364",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR EW10J4 2.0L 16V GAS. / MOTOR EW10A 2.0L 16V FLEX EW10J4 - Picasso, 206, 307, 406 (2000->2010) / EW10A - C4, C4 Pallas, 307 (2008->)",
+  "descripcion": "PEUGEOT EW10J4 2.0 16V",
+  "medidas": {
+   "diam_int": [
+    67.05,
+    67.3
+   ],
+   "diam_ext": [
+    83.05,
+    83.3
+   ],
+   "espesor": [
+    2.27,
+    2.33
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR EW10J4 2.0L 16V GAS. / MOTOR EW10A 2.0L 16V FLEX EW10J4 - Picasso, 206, 307, 406 (2000->2010) / EW10A - C4, C4 Pallas, 307 (2008->)",
+   "nro_cil": "4",
+   "diam_x_carrera": "85,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-2006-C",
+   "codigo_metal_leve": "AE-364-J*",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 294,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.27,
+      2.33
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE0440364STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE0660376",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "FORD ECOSPORT 1.4TDCi/CITROEN C3 1.4TDCi",
+  "descripcion": "FORD ECOSPORT 1.4TDCi/CITROEN C3 1.4TDCi",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE0660376STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE0700357",
+  "codigo_fab": "L0700357",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR EA211 1.0L 12V 3 CIL. Flex FOX Bluemotion (2013->) / UP (2014->)",
+  "descripcion": "VW UP 1.0 12V 3 CIL-EA211 1.4-1.6 4CIL",
+  "medidas": {
+   "diam_int": [
+    67.75,
+    68.0
+   ],
+   "diam_ext": null,
+   "espesor": [
+    2.425,
+    2.475
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR EA211 1.0L 12V 3 CIL. Flex FOX Bluemotion (2013->) / UP (2014->)",
+   "nro_cil": "3",
+   "diam_x_carrera": "74,50",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-351-U",
+   "codigo_metal_leve": "AE-357-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 420,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.425,
+      2.475
+     ]
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE0700357STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE0760375",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "SCANIA DC9-DC11-DC12",
+  "descripcion": "SCANIA DC9-DC11-DC12",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE0760375STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE13074",
+  "codigo_fab": "L13074",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR MWM TD-229 TRATOR FD9",
+  "descripcion": "MWM 229TD",
+  "medidas": {
+   "diam_int": [
+    79.0,
+    79.25
+   ],
+   "diam_ext": [
+    94.95,
+    95.2
+   ],
+   "espesor": [
+    3.42,
+    3.47
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR MWM TD-229 TRATOR FD9",
+   "nro_cil": "6",
+   "diam_x_carrera": "102,00x120,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-074-P",
+   "codigo_metal_leve": "AE-074-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 304,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      3.42,
+      3.47
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE13074  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE13112",
+  "codigo_fab": "L13112",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR SPRINT 4.08 TCE 3200 Dedalus, DELIVERY 5- 140E/ 8-150E, Ônibus 5- 140/ 8-150",
+  "descripcion": "MWM 4.10-6.10T-6.12TCE",
+  "medidas": {
+   "diam_int": [
+    95.0,
+    95.25
+   ],
+   "diam_ext": [
+    110.0,
+    110.25
+   ],
+   "espesor": [
+    3.42,
+    3.47
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR SPRINT 4.08 TCE 3200 Dedalus, DELIVERY 5- 140E/ 8-150E, Ônibus 5- 140/ 8-150",
+   "nro_cil": "4",
+   "diam_x_carrera": "96,00x103,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "1AE-112-P",
+   "codigo_metal_leve": "AE-112-P",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 376,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      3.42,
+      3.47
+     ]
+    },
+    {
+     "label": "+0,25 mm",
+     "valor": [
+      3.67,
+      3.72
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE13112  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE13112  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE13119",
+  "codigo_fab": "L13119",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR SPRINT 4.07T /4.07TCA 2.8L",
+  "descripcion": "MWM 4.07-6.07T",
+  "medidas": {
+   "diam_int": [
+    69.981,
+    70.0
+   ],
+   "diam_ext": [
+    92.0,
+    92.22
+   ],
+   "espesor": [
+    2.42,
+    2.47
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR SPRINT 4.07T /4.07TCA 2.8L",
+   "nro_cil": "4",
+   "diam_x_carrera": "93,00x103,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "1AE-119-I",
+   "codigo_metal_leve": "AE-119-P",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 376,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.42,
+      2.47
+     ]
+    },
+    {
+     "label": "+0,25 mm",
+     "valor": [
+      2.67,
+      2.72
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE13119  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE13119  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE13337",
+  "codigo_fab": "L13337",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 6.10NA /6.10T /6.10TCA /6. 10TCW ASP./TURBO (até 210cv) MOTOR ACTEON EURO V 16,8:1 MaxxForce 7.2H (7.2L)-> VOLVO VM // MaxxForce 4.8H (4.8L)-> AGRALE",
+  "descripcion": "MWM 4.12TCE-6.12TCE E5",
+  "medidas": {
+   "diam_int": 95.2511,
+   "diam_ext": 110.253,
+   "espesor": 3.47
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 6.10NA /6.10T /6.10TCA /6. 10TCW ASP./TURBO (até 210cv) MOTOR ACTEON EURO V 16,8:1 MaxxForce 7.2H (7.2L)-> VOLVO VM // MaxxForce 4.8H (4.8L)-> AGRALE",
+   "nro_cil": "6",
+   "diam_x_carrera": "103,00x129,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-337-SSTD",
+   "codigo_metal_leve": "AE-337-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 378,
+   "sobremedidas": [],
+   "revisar": {
+    "sobremedidas": "el proveedor vende juegos combinados (STD), que traen dos sobremedidas a la vez: no se los puede apuntar a un solo valor, así que se los lista sin valor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE13337  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE13362",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "MWM 6.12TCE E5 7.2 ACTEON*",
+  "descripcion": "MWM 6.12TCE E5 7.2 ACTEON*",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE13362  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE180374",
+  "codigo_fab": "L0180374",
+  "marca": "MAHLE",
+  "aplicacion": "Motor 2.5 16v DCI G9U.724 Master 2004->2012",
+  "descripcion": "RENAULT G9U 2.5 16V",
+  "medidas": {
+   "diam_int": [
+    63.25,
+    63.5
+   ],
+   "diam_ext": [
+    78.55,
+    78.8
+   ],
+   "espesor": [
+    2.3,
+    2.35
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "Motor 2.5 16v DCI G9U.724 Master 2004->2012",
+   "nro_cil": "4",
+   "diam_x_carrera": "89,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-2012-C",
+   "codigo_metal_leve": "AE-374-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 400,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.3,
+      2.35
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE180374 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE180377",
+  "codigo_fab": "L0180377",
+  "marca": "MAHLE",
+  "aplicacion": "Motor 1.0 12v B4D Kwid, Logan, Sandero - Flex",
+  "descripcion": "RENAULT B4D 1.0 3 CIL. KWID-SANDERO",
+  "medidas": {
+   "diam_int": [
+    44.875,
+    45.125
+   ],
+   "diam_ext": [
+    69.875,
+    70.125
+   ],
+   "espesor": [
+    1.9,
+    1.95
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "Motor 1.0 12v B4D Kwid, Logan, Sandero - Flex",
+   "nro_cil": "3",
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-352-C",
+   "codigo_metal_leve": "AE-377-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 400,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      1.9,
+      1.95
+     ]
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE180377 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE18117",
+  "codigo_fab": "L18117",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 2.0L.. (PRODUCED IN ARGENTI- NA)",
+  "descripcion": "RENAULT 18 2.0-21 2.2-TRAFIC 2.1D",
+  "medidas": {
+   "diam_int": [
+    71.2,
+    71.45
+   ],
+   "diam_ext": [
+    87.84,
+    88.09
+   ],
+   "espesor": 2.85
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 2.0L.. (PRODUCED IN ARGENTI- NA)",
+   "nro_cil": "4",
+   "diam_x_carrera": "88,00x82,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-117-C",
+   "codigo_metal_leve": "AE-117-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 400,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.85
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE18117  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFBE18117  15",
+    "medida": "15"
+   },
+   {
+    "codigo": "CFBE18117  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE18120",
+  "codigo_fab": "L18120",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 847 1.4 / 1.6L (PRODUCED IN ARGENTINA)",
+  "descripcion": "RENAULT 4-6-9-11-12-18-CLIO 1.4",
+  "medidas": {
+   "diam_int": [
+    60.5,
+    60.75
+   ],
+   "diam_ext": [
+    79.75,
+    80.0
+   ],
+   "espesor": [
+    2.75,
+    2.8
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 847 1.4 / 1.6L (PRODUCED IN ARGENTINA)",
+   "nro_cil": "4",
+   "diam_x_carrera": "76,00x77,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-120-C",
+   "codigo_metal_leve": "AE-120-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 400,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.75,
+      2.8
+     ]
+    },
+    {
+     "label": "+0,25 mm",
+     "valor": [
+      3.0,
+      3.05
+     ]
+    },
+    {
+     "label": "+0,127 mm",
+     "valor": [
+      2.877,
+      2.927
+     ]
+    }
+   ],
+   "revisar": {
+    "sobremedidas": "el proveedor vende sobremedidas que el catálogo no lista para este juego (127): el espesor de la arandela sale de aplicar el sistema de medidas del catálogo"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE18120  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE18120  127",
+    "medida": "127"
+   },
+   {
+    "codigo": "CFBE18120  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE18133",
+  "codigo_fab": "L18133",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR R19 - F8Q CLIO / KANGOO (DIESEL)",
+  "descripcion": "RENAULT 19 1.9D-1.7-1.7i-1.8-LAGUNA 2.0",
+  "medidas": {
+   "diam_int": [
+    60.9,
+    61.15
+   ],
+   "diam_ext": [
+    79.6,
+    79.85
+   ],
+   "espesor": [
+    2.4,
+    2.45
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR R19 - F8Q CLIO / KANGOO (DIESEL)",
+   "nro_cil": "4",
+   "diam_x_carrera": "80,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-133-C",
+   "codigo_metal_leve": "AE-133-J*",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 400,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.4,
+      2.45
+     ]
+    },
+    {
+     "label": "+0,12 mm",
+     "valor": [
+      2.52,
+      2.57
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE18133  127",
+    "medida": "127"
+   },
+   {
+    "codigo": "CFBE18133  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE18137",
+  "codigo_fab": "L18137",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR K4M 1.6L 16V (Não Repotenciado) GA- SOLINA / FLEX 1600 SCENIC, LAGUNA, MEGA- NE, CLIO, DUSTER",
+  "descripcion": "RENAULT MEGANE 1.6 K4M-K7M-K9M",
+  "medidas": {
+   "diam_int": [
+    53.5,
+    53.75
+   ],
+   "diam_ext": [
+    73.75,
+    74.0
+   ],
+   "espesor": [
+    2.77,
+    2.82
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR K4M 1.6L 16V (Não Repotenciado) GA- SOLINA / FLEX 1600 SCENIC, LAGUNA, MEGA- NE, CLIO, DUSTER",
+   "nro_cil": "4",
+   "diam_x_carrera": "79,50x80,50",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-314-CSTD",
+   "codigo_metal_leve": "AE-137-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 400,
+   "sobremedidas": [
+    {
+     "label": "+0,25 mm",
+     "valor": [
+      3.02,
+      3.07
+     ]
+    },
+    {
+     "label": "STD",
+     "valor": [
+      2.77,
+      2.82
+     ]
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE18137  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE18137  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE1950366",
+  "codigo_fab": "L1950366",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 4M41 3.2L DIESEL L200 TRITON",
+  "descripcion": "MITSUBISHI 4M41",
+  "medidas": {
+   "diam_int": [
+    76.0,
+    76.25
+   ],
+   "diam_ext": [
+    94.35,
+    94.6
+   ],
+   "espesor": [
+    2.4,
+    2.45
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 4M41 3.2L DIESEL L200 TRITON",
+   "nro_cil": "4",
+   "diam_x_carrera": "98,50",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-2009-S",
+   "codigo_metal_leve": "AE-366-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 374,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.4,
+      2.45
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE1950366STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE2080316",
+  "codigo_fab": "L2080316",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR G4GC Beta II 2.0L 16V Gasolina i30 / Tucson / Kia Sportage (06->)",
+  "descripcion": "HYUNDAI G4GC 2.0 16V",
+  "medidas": {
+   "diam_int": [
+    63.0,
+    63.25
+   ],
+   "diam_ext": [
+    84.5,
+    84.75
+   ],
+   "espesor": [
+    2.42,
+    2.47
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR G4GC Beta II 2.0L 16V Gasolina i30 / Tucson / Kia Sportage (06->)",
+   "nro_cil": "4",
+   "diam_x_carrera": "82,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-2000-C",
+   "codigo_metal_leve": "AE-316-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 338,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.42,
+      2.47
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE2080316STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE2080363",
+  "codigo_fab": "L2080363",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR GAMMA FFV 1.6L 16V FLEX HB20 / Kia Cerato, Soul",
+  "descripcion": "HYUNDAI G4FC 1.6 16V",
+  "medidas": {
+   "diam_int": [
+    54.0,
+    54.25
+   ],
+   "diam_ext": [
+    70.5,
+    71.0
+   ],
+   "espesor": [
+    1.92,
+    1.97
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR GAMMA FFV 1.6L 16V FLEX HB20 / Kia Cerato, Soul",
+   "nro_cil": "4",
+   "diam_x_carrera": "77,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-2004-C",
+   "codigo_metal_leve": "AE-363-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 338,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      1.92,
+      1.97
+     ]
+    },
+    {
+     "label": "+0,25 mm",
+     "valor": [
+      2.17,
+      2.22
+     ]
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE2080363025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE2080363STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE2080365",
+  "codigo_fab": "L2080365",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR KAPPA 1.0L 12V 3cil. FLEX HB20 / Kia Picanto (2012->)",
+  "descripcion": "HYUNDAI G4HC 1.0 12V",
+  "medidas": {
+   "diam_int": [
+    52.95,
+    53.2
+   ],
+   "diam_ext": [
+    66.75,
+    67.0
+   ],
+   "espesor": [
+    1.92,
+    1.97
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR KAPPA 1.0L 12V 3cil. FLEX HB20 / Kia Picanto (2012->)",
+   "nro_cil": "3",
+   "diam_x_carrera": "71,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-2008-C",
+   "codigo_metal_leve": "AE-365-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 338,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      1.92,
+      1.97
+     ]
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE2080365STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE208354",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "KIA D4CB 2.5 TDI 16V",
+  "descripcion": "KIA D4CB 2.5 TDI 16V",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE208354 025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE208354 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE25034",
+  "codigo_fab": "SL25034",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR SEVEL 1.9L 16V DOHC GASOLINA LINEA (08->)",
+  "descripcion": "FIAT 125-128-TIPO 1.4-1.6-PALIO 1.6 16V",
+  "medidas": {
+   "diam_int": [
+    50.653,
+    50.673
+   ],
+   "diam_ext": [
+    54.507,
+    54.52
+   ],
+   "espesor": [
+    2.31,
+    2.36
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR SEVEL 1.9L 16V DOHC GASOLINA LINEA (08->)",
+   "nro_cil": "4",
+   "diam_x_carrera": "86,40",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2SAE-115-C",
+   "codigo_metal_leve": "SAE-034-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 302,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.31,
+      2.36
+     ]
+    },
+    {
+     "label": "+0,127 mm",
+     "valor": [
+      2.437,
+      2.487
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE25034  127",
+    "medida": "127"
+   },
+   {
+    "codigo": "CFBE25034  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE250382",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "FIAT FIREFLY 1.3 8V 70 mm",
+  "descripcion": "FIAT FIREFLY 1.3 8V 70 mm",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE250382 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE25043",
+  "codigo_fab": "SL25043",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 1000 994CC (UNO MILLE / ELX / EP / IE / PALIO 1.0 M.P.I.)",
+  "descripcion": "FIAT 147 1.3D-147 1050 CC",
+  "medidas": {
+   "diam_int": [
+    54.22,
+    54.48
+   ],
+   "diam_ext": [
+    67.0,
+    67.25
+   ],
+   "espesor": [
+    2.31,
+    2.36
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 1000 994CC (UNO MILLE / ELX / EP / IE / PALIO 1.0 M.P.I.)",
+   "nro_cil": "4",
+   "diam_x_carrera": "76,00x54,80",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2SAE-043-C",
+   "codigo_metal_leve": "SAE-043-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 298,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.31,
+      2.36
+     ]
+    },
+    {
+     "label": "+0,12 mm",
+     "valor": [
+      2.43,
+      2.48
+     ]
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE25043  127",
+    "medida": "127"
+   },
+   {
+    "codigo": "CFBE25043  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE25122",
+  "codigo_fab": "SL25122",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 131 / 132 1995CC (BRAVA (USA VERSION) / RALLY) 1976 ATE 80 / (242/18 VAN / PICK-UP / CAMPGNOLA 1107A) 1973 EM DIANTE / (SPECIAL / GL / GLS 1800) 1972 ATE 76 / (NUOVA ARGENTA 120IE / SPIDEREUROPA 2000) 1983 EM DIANTE / (1322000 / OHC-4 1977 EM DIANTE) / (ARGENTA 110) 1981",
+  "descripcion": "FIAT DUNA 1.7D-REGATTA 2000-100S-1.7TD",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 131 / 132 1995CC (BRAVA (USA VERSION) / RALLY) 1976 ATE 80 / (242/18 VAN / PICK-UP / CAMPGNOLA 1107A) 1973 EM DIANTE / (SPECIAL / GL / GLS 1800) 1972 ATE 76 / (NUOVA ARGENTA 120IE / SPIDEREUROPA 2000) 1983 EM DIANTE / (1322000 / OHC-4 1977 EM DIANTE) / (ARGENTA 110) 1981",
+   "nro_cil": "4",
+   "diam_x_carrera": "84,00x90,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2SAE-122-C",
+   "codigo_metal_leve": "SAE-122-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 302,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": null,
+     "texto": "—"
+    },
+    {
+     "label": "+0,127 mm",
+     "valor": null,
+     "texto": "—"
+    }
+   ],
+   "revisar": {
+    "diam_int": "la fila del catálogo trae esta columna vacía"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE25122  127",
+    "medida": "127"
+   },
+   {
+    "codigo": "CFBE25122  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE31062",
+  "codigo_fab": "L31062",
+  "marca": "MAHLE",
+  "aplicacion": "VALMET MOTOR DS-420 98S - BM110 - BM100 MOTOR DS-620 380/ 1680/ 1880/ BH140/ BH160/ BH180",
+  "descripcion": "VALTRA 420-620",
+  "medidas": {
+   "diam_int": [
+    97.66,
+    97.91
+   ],
+   "diam_ext": [
+    119.44,
+    119.84
+   ],
+   "espesor": [
+    3.11,
+    3.17
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "VALMET MOTOR DS-420 98S - BM110 - BM100 MOTOR DS-620 380/ 1680/ 1880/ BH140/ BH160/ BH180",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-153-S",
+   "codigo_metal_leve": "AE-062-P",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 416,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      3.11,
+      3.17
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE31062  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFBE31062  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE44012",
+  "codigo_fab": "L44012",
+  "marca": "MAHLE",
+  "aplicacion": "DIESEL ENGINE- 2498CC (XD3 S / 604 TURBO DIESEL) 07/1981 EM DIANTE",
+  "descripcion": "INDENOR XD2-XD3-XD3T",
+  "medidas": {
+   "diam_int": [
+    84.75,
+    85.0
+   ],
+   "diam_ext": null,
+   "espesor": [
+    2.3,
+    2.35
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "DIESEL ENGINE- 2498CC (XD3 S / 604 TURBO DIESEL) 07/1981 EM DIANTE",
+   "nro_cil": "4",
+   "diam_x_carrera": "94,00x83,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-154-S",
+   "codigo_metal_leve": "AE-012-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 396,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.3,
+      2.35
+     ]
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE44012  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFBE44012  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE44048",
+  "codigo_fab": "L44048",
+  "marca": "MAHLE",
+  "aplicacion": "404 1.4L 1963-1971 (ENGINES: XB5 / XB5P",
+  "descripcion": "PEUGEOT 504 2000 CC-1800 CC",
+  "medidas": {
+   "diam_int": [
+    72.55,
+    72.8
+   ],
+   "diam_ext": null,
+   "espesor": [
+    2.28,
+    2.33
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "404 1.4L 1963-1971 (ENGINES: XB5 / XB5P",
+   "nro_cil": "4",
+   "diam_x_carrera": "84,00x71,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-216-S",
+   "codigo_metal_leve": "AE-048-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 394,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.28,
+      2.33
+     ]
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE44048  10",
+    "medida": "10"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE44315",
+  "codigo_fab": "L44315",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR TU5JP4 1.6L 16V 206/ C3 / Xsara Picasso",
+  "descripcion": "PEUGEOT TU5JP4 1.6 16V",
+  "medidas": {
+   "diam_int": 55.5007,
+   "diam_ext": 71.7001,
+   "espesor": 2.35
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR TU5JP4 1.6L 16V 206/ C3 / Xsara Picasso",
+   "nro_cil": "4",
+   "diam_x_carrera": "78,50",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-315-USTD",
+   "codigo_metal_leve": "AE-315-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 392,
+   "sobremedidas": [],
+   "revisar": {
+    "sobremedidas": "el proveedor vende juegos combinados (025, STD), que traen dos sobremedidas a la vez: no se los puede apuntar a un solo valor, así que se los lista sin valor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE44315  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE44315  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE44351",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "PEUGEOT TU3JP 1.4L/PARTNER 1.4L",
+  "descripcion": "PEUGEOT TU3JP 1.4L/PARTNER 1.4L",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE44351  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE460373",
+  "codigo_fab": "L0460373",
+  "marca": "MAHLE",
+  "aplicacion": "MAN MOTOR MAN D08.34 / D08.36 EURO V",
+  "descripcion": "MAN D08",
+  "medidas": {
+   "diam_int": [
+    94.5,
+    94.85
+   ],
+   "diam_ext": [
+    112.45,
+    112.8
+   ],
+   "espesor": [
+    2.85,
+    2.9
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MAN MOTOR MAN D08.34 / D08.36 EURO V",
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-350-S",
+   "codigo_metal_leve": "AE-373-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 360,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.85,
+      2.9
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE460373 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE48022",
+  "codigo_fab": "L48022",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR OM611 LA III ELETRÔNICO 18,0:1 SPRINTER313 CDI e 413 CDI 2150CC - 129CV.",
+  "descripcion": "M.BENZ OM611 2.2D-OM612 2.7CDi",
+  "medidas": {
+   "diam_int": [
+    65.8,
+    66.05
+   ],
+   "diam_ext": [
+    80.75,
+    81.0
+   ],
+   "espesor": [
+    2.15,
+    2.2
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR OM611 LA III ELETRÔNICO 18,0:1 SPRINTER313 CDI e 413 CDI 2150CC - 129CV.",
+   "nro_cil": "4",
+   "diam_x_carrera": "88,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "1AE-4022-I",
+   "codigo_metal_leve": "AE-022-P",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 360,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.15,
+      2.2
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE48022  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFBE48022  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE48165",
+  "codigo_fab": "L48165",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR OM 906LA/926LA (EURO III e V) OF 1722 - 52 / OF 1722 - 59 / 2432K - 6x4 - 36 / - 48 / OH 1725 - L-59 / OH 1725 - 66E - 59 / O 500M (1725/30)",
+  "descripcion": "M.BENZ OM904LA-OM906LA-OM924LA-OM926LA",
+  "medidas": {
+   "diam_int": [
+    93.65,
+    94.0
+   ],
+   "diam_ext": [
+    117.35,
+    117.85
+   ],
+   "espesor": [
+    3.24,
+    3.31
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR OM 906LA/926LA (EURO III e V) OF 1722 - 52 / OF 1722 - 59 / 2432K - 6x4 - 36 / - 48 / OH 1725 - L-59 / OH 1725 - 66E - 59 / O 500M (1725/30)",
+   "nro_cil": "6",
+   "diam_x_carrera": "102,00x130,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-165-U",
+   "codigo_metal_leve": "AE-165-P",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 364,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      3.24,
+      3.31
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE48165  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE50132",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "DEUTZ 913 TURBO",
+  "descripcion": "DEUTZ 913 TURBO",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE50132  127",
+    "medida": "127"
+   },
+   {
+    "codigo": "CFBE50132  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE57006",
+  "codigo_fab": "L57006",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR PERKINS D4.203 19,5:1 TRATOR CBT-2070 / CBT- 1000",
+  "descripcion": "PERKINS 3.152-4.203-6.305",
+  "medidas": {
+   "diam_int": [
+    77.34,
+    77.6
+   ],
+   "diam_ext": [
+    90.22,
+    90.47
+   ],
+   "espesor": [
+    3.07,
+    3.12
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR PERKINS D4.203 19,5:1 TRATOR CBT-2070 / CBT- 1000",
+   "nro_cil": "4",
+   "diam_x_carrera": "91,49x127,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-106-P",
+   "codigo_metal_leve": "AE-006-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 292,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      3.07,
+      3.12
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE57006  005",
+    "medida": "005"
+   },
+   {
+    "codigo": "CFBE57006  019",
+    "medida": "019"
+   },
+   {
+    "codigo": "CFBE57006  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE57032",
+  "codigo_fab": "L57032",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR PERKINS 4.236 3860CC 16,0:1 DODGE P-400/D-400D",
+  "descripcion": "MAXION S4-S4T/PERKINS 4.236-4.248",
+  "medidas": {
+   "diam_int": [
+    86.87,
+    87.12
+   ],
+   "diam_ext": [
+    104.14,
+    104.24
+   ],
+   "espesor": [
+    2.26,
+    2.31
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR PERKINS 4.236 3860CC 16,0:1 DODGE P-400/D-400D",
+   "nro_cil": "4",
+   "diam_x_carrera": "98,43x127,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-032-P",
+   "codigo_metal_leve": "AE-032-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 288,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.26,
+      2.31
+     ]
+    },
+    {
+     "label": "+0,19 mm",
+     "valor": [
+      2.45,
+      2.5
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE57032  190",
+    "medida": "190"
+   },
+   {
+    "codigo": "CFBE57032  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE57036",
+  "codigo_fab": "L57036",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 2.5 EURO I/II - DIESEL RANGER",
+  "descripcion": "MAXION HS2.5T-HS2.8L",
+  "medidas": {
+   "diam_int": [
+    63.475,
+    63.487
+   ],
+   "diam_ext": [
+    85.928,
+    86.182
+   ],
+   "espesor": [
+    2.3,
+    2.35
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 2.5 EURO I/II - DIESEL RANGER",
+   "nro_cil": "4",
+   "diam_x_carrera": "90,73",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-151-CSTD",
+   "codigo_metal_leve": "AE-036-P",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 310,
+   "sobremedidas": [
+    {
+     "label": "+0,127 mm",
+     "valor": [
+      2.427,
+      2.477
+     ]
+    },
+    {
+     "label": "+0,25 mm",
+     "valor": [
+      2.55,
+      2.6
+     ]
+    },
+    {
+     "label": "STD",
+     "valor": [
+      2.3,
+      2.35
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE57036  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE57036  127",
+    "medida": "127"
+   },
+   {
+    "codigo": "CFBE57036  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE59014",
+  "codigo_fab": "L59014",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 1.1 HCS / GUE 1100 FIESTA / POPULAR / FUN / CLASSIC (DE 04/89 EM DIANTE)",
+  "descripcion": "FORD FIESTA 1.3-Ka 1.3-ROCAM 1.0-1.6",
+  "medidas": {
+   "diam_int": [
+    63.6,
+    63.85
+   ],
+   "diam_ext": [
+    77.85,
+    78.1
+   ],
+   "espesor": [
+    2.8,
+    2.85
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 1.1 HCS / GUE 1100 FIESTA / POPULAR / FUN / CLASSIC (DE 04/89 EM DIANTE)",
+   "nro_cil": "4",
+   "diam_x_carrera": "68,70x75,50",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-156-C",
+   "codigo_metal_leve": "AE-014-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 306,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.8,
+      2.85
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE59014  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE59042",
+  "codigo_fab": "L59042",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 2500cc TRANSIT DIESEL",
+  "descripcion": "FORD TRANSIT 2.5D",
+  "medidas": {
+   "diam_int": [
+    78.65,
+    78.9
+   ],
+   "diam_ext": [
+    94.0,
+    94.25
+   ],
+   "espesor": [
+    2.3,
+    2.35
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 2500cc TRANSIT DIESEL",
+   "nro_cil": "4",
+   "diam_x_carrera": "93,70x85,60",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-211-S",
+   "codigo_metal_leve": "AE-042-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 310,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.3,
+      2.35
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE59042  12",
+    "medida": "12"
+   },
+   {
+    "codigo": "CFBE59042  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE59060",
+  "codigo_fab": "SL59060",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 1.0 AE / 1.0 CHT / 1.3 CHT / 1.6 CHT 1000 9,0:1 GAS. ESCORT HOBBY / ESCORT 1.3 - EXPORTA- ÇÃO / GAS. /ALC.(CORCEL II / BELINA II / ESCORT / DEL REY / SCALA / PAMPA 4X4) / (EXPOTACAO- ESCORT 1.6)",
+  "descripcion": "FORD ESCORT 1.6 CHT",
+  "medidas": {
+   "diam_int": [
+    60.0,
+    60.25
+   ],
+   "diam_ext": [
+    80.82,
+    81.07
+   ],
+   "espesor": 2.34
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 1.0 AE / 1.0 CHT / 1.3 CHT / 1.6 CHT 1000 9,0:1 GAS. ESCORT HOBBY / ESCORT 1.3 - EXPORTA- ÇÃO / GAS. /ALC.(CORCEL II / BELINA II / ESCORT / DEL REY / SCALA / PAMPA 4X4) / (EXPOTACAO- ESCORT 1.6)",
+   "nro_cil": "4",
+   "diam_x_carrera": "70,30x64,40",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2SAE-104-C",
+   "codigo_metal_leve": "SAE-060-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 306,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.34
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE59060  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFBE59060  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE59210",
+  "codigo_fab": "L59210",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 1.8L DIESEL FIESTA / ESCORT",
+  "descripcion": "FORD FIESTA 1.8D",
+  "medidas": {
+   "diam_int": [
+    59.65,
+    59.9
+   ],
+   "diam_ext": [
+    74.45,
+    74.7
+   ],
+   "espesor": [
+    2.3,
+    2.35
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 1.8L DIESEL FIESTA / ESCORT",
+   "nro_cil": "4",
+   "diam_x_carrera": "82,50",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-210-C",
+   "codigo_metal_leve": "AE-210-P",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 308,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.3,
+      2.35
+     ]
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE59210  10",
+    "medida": "10"
+   },
+   {
+    "codigo": "CFBE59210  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE63050",
+  "codigo_fab": "L63050",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 2.8 3L Aspirado HILUX - DIESEL",
+  "descripcion": "TOYOTA 3L",
+  "medidas": {
+   "diam_int": [
+    69.88,
+    70.12
+   ],
+   "diam_ext": [
+    81.38,
+    81.62
+   ],
+   "espesor": [
+    2.43,
+    2.48
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 2.8 3L Aspirado HILUX - DIESEL",
+   "nro_cil": "4",
+   "diam_x_carrera": "95,00x105,85",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-219-I",
+   "codigo_metal_leve": "AE-050-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 414,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      2.43,
+      2.48
+     ]
+    },
+    {
+     "label": "+0,12 mm",
+     "valor": [
+      2.55,
+      2.6
+     ]
+    },
+    {
+     "label": "+0,25 mm",
+     "valor": [
+      2.68,
+      2.73
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE63050  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE63050  127",
+    "medida": "127"
+   },
+   {
+    "codigo": "CFBE63050  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE63318",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "TOYOTA 1KZ 3.0-1KD-FTv 3.0-2KD-FTv 2.5",
+  "descripcion": "TOYOTA 1KZ 3.0-1KD-FTv 3.0-2KD-FTv 2.5",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE63318  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE63318  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE63367",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "TOYOTA 1ZZ-fe 1.8-TOYOTA 3ZZ-fe 1.6",
+  "descripcion": "TOYOTA 1ZZ-fe 1.8-TOYOTA 3ZZ-fe 1.6",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE63367  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE63372",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "TOYOTA 2NR-Fe 1.5 16V",
+  "descripcion": "TOYOTA 2NR-Fe 1.5 16V",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE63372  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE700383",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "VW EA211 1.4-1.6 4 CIL UP 1.0 12V 3 CI",
+  "descripcion": "VW EA211 1.4-1.6 4 CIL UP 1.0 12V 3 CI",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE700383 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE70100",
+  "codigo_fab": "SL70100",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR 1.8 AP 1781CC 8,5:1 Gasolina 12,3:1 Álcool ESCORT L, GL, GLX, GUARUJA, GHIA, XR3 / VERONA LX, GLX / VER- SAILLES GL / ROYALE GL / PAMPA L, GL, S.",
+  "descripcion": "VW AUDI 1.6-1.8-2.0-SENDA 1.6D(2 MIT.)",
+  "medidas": {
+   "diam_int": [
+    59.5,
+    59.75
+   ],
+   "diam_ext": [
+    72.92,
+    73.2
+   ],
+   "espesor": [
+    1.93,
+    1.97
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR 1.8 AP 1781CC 8,5:1 Gasolina 12,3:1 Álcool ESCORT L, GL, GLX, GUARUJA, GHIA, XR3 / VERONA LX, GLX / VER- SAILLES GL / ROYALE GL / PAMPA L, GL, S.",
+   "nro_cil": "4",
+   "diam_x_carrera": "81,00x86,40",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "C",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "1SAE-100-P",
+   "codigo_metal_leve": "SAE-100-P",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 308,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      1.93,
+      1.97
+     ]
+    },
+    {
+     "label": "+0,25 mm",
+     "valor": [
+      2.18,
+      2.22
+     ]
+    },
+    {
+     "label": "+0,5 mm",
+     "valor": [
+      2.43,
+      2.47
+     ]
+    }
+   ],
+   "revisar": {
+    "diam_int": "el PDF mandó las medidas sin separar las columnas y faltaba alguna: el reparto entre columnas es el más probable, no el seguro"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE70100  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE70100  050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CFBE70100  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE71076",
+  "codigo_fab": "L71076",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR DH10/ D10A/ TD10A/B 9600",
+  "descripcion": "VOLVO N88-N10-B58",
+  "medidas": {
+   "diam_int": 108.7,
+   "diam_ext": 131.93,
+   "espesor": 2.36
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR DH10/ D10A/ TD10A/B 9600",
+   "nro_cil": "6",
+   "diam_x_carrera": "120,65x140,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "P",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-076-P",
+   "codigo_metal_leve": "AE-076-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 458,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 2.36
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE71076  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE71097",
+  "codigo_fab": "L71097",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR TD 120G / TD 121G / F / TD 120GA CAMINHÃO N12",
+  "descripcion": "VOLVO N12-NL12-D13-MD13-PENTA TAD1250",
+  "medidas": {
+   "diam_int": [
+    116.59,
+    117.09
+   ],
+   "diam_ext": [
+    139.68,
+    139.93
+   ],
+   "espesor": [
+    3.14,
+    3.21
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR TD 120G / TD 121G / F / TD 120GA CAMINHÃO N12",
+   "nro_cil": "6",
+   "diam_x_carrera": "130,165x150,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "P",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "4AE-214-C",
+   "codigo_metal_leve": "AE-097-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 462,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      3.14,
+      3.21
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE71097  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE71150",
+  "codigo_fab": null,
+  "marca": "MAHLE",
+  "aplicacion": "VOLVO D7A",
+  "descripcion": "VOLVO D7A",
+  "medidas": {
+   "diam_int": null,
+   "diam_ext": null,
+   "espesor": null
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": null,
+   "nro_cil": null,
+   "diam_x_carrera": null,
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": null,
+   "material": null,
+   "luz_aceite": null,
+   "composicion": null,
+   "codigo_metal_leve": null,
+   "catalogo": null,
+   "pagina_catalogo": null,
+   "sobremedidas": [],
+   "revisar": {
+    "diam_int": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "diam_ext": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor",
+    "espesor": "Este código no está en ninguno de los catálogos que tenemos (Mahle 2019 y Clevite 2014): la aplicación es la que publica la lista del proveedor"
+   }
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE71150  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE76044",
+  "codigo_fab": "L76044",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR SCANIA D-11/05 TRATOR AD-14",
+  "descripcion": "SCANIA D11-DS11 TURBO 0.0075\"",
+  "medidas": {
+   "diam_int": [
+    112.65,
+    113.03
+   ],
+   "diam_ext": [
+    132.5,
+    132.9
+   ],
+   "espesor": 3.43
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR SCANIA D-11/05 TRATOR AD-14",
+   "nro_cil": "6",
+   "diam_x_carrera": "127,00x145,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "2AE-044-P",
+   "codigo_metal_leve": "AE-044-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 304,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": 3.43
+    },
+    {
+     "label": "+0,25 mm",
+     "valor": 3.68
+    },
+    {
+     "label": "+0,5 mm",
+     "valor": 3.93
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE76044  007",
+    "medida": "007"
+   },
+   {
+    "codigo": "CFBE76044  012",
+    "medida": "012"
+   },
+   {
+    "codigo": "CFBE76044  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE76044  050",
+    "medida": "050"
+   },
+   {
+    "codigo": "CFBE76044  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "CFBE76175",
+  "codigo_fab": "L76175",
+  "marca": "MAHLE",
+  "aplicacion": "MOTOR DC11 /D12 / DC12 / DSC12 Serie 4 01/02/05 12000 CAMINHÃO 114 / 124 / 124E / 124I 01/02/05 12 LITROS",
+  "descripcion": "SCANIA DSC12 SERIE 4",
+  "medidas": {
+   "diam_int": [
+    118.65,
+    119.9
+   ],
+   "diam_ext": [
+    143.691,
+    144.1
+   ],
+   "espesor": [
+    3.37,
+    3.43
+   ]
+  },
+  "extra": {
+   "fabricante_motor": null,
+   "motor": "MOTOR DC11 /D12 / DC12 / DSC12 Serie 4 01/02/05 12000 CAMINHÃO 114 / 124 / 124E / 124I 01/02/05 12 LITROS",
+   "nro_cil": "6",
+   "diam_x_carrera": "127,00",
+   "cilindrada": null,
+   "pares": null,
+   "tipo_material": "S",
+   "material": null,
+   "luz_aceite": null,
+   "composicion": "4AE-175-C",
+   "codigo_metal_leve": "AE-175-J",
+   "catalogo": "Mahle 2019",
+   "pagina_catalogo": 402,
+   "sobremedidas": [
+    {
+     "label": "STD",
+     "valor": [
+      3.37,
+      3.43
+     ]
+    },
+    {
+     "label": "+0,25 mm",
+     "valor": [
+      3.62,
+      3.68
+     ]
+    }
+   ],
+   "revisar": null
+  },
+  "codigos_crac": [
+   {
+    "codigo": "CFBE76175  012",
+    "medida": "012"
+   },
+   {
+    "codigo": "CFBE76175  025",
+    "medida": "025"
+   },
+   {
+    "codigo": "CFBE76175  STD",
+    "medida": "STD"
+   }
+  ]
+ }
+]

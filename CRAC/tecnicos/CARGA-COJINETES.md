@@ -1,18 +1,27 @@
 # Cómo se leen los catálogos de cojinetes
 
-Este documento explica de dónde sale cada dato de `cojinetes_biela.json` y de
-`cojinetes_bancada.json`. Son la misma tabla de los mismos PDF leyendo otra
-fila, y por eso las arma **un solo script**: lo que cambia entre una familia y
-la otra está todo junto arriba de todo, en la constante `PIEZAS`.
+Este documento explica de dónde sale cada dato de `cojinetes_biela.json`,
+`cojinetes_bancada.json` y `cojinetes_axiales.json`. Son la misma tabla de los
+mismos PDF leyendo otra fila, y por eso las arma **un solo script**: lo que
+cambia entre una familia y las otras está todo junto arriba de todo, en las
+constantes `PIEZAS` y `CAMPOS`.
 
-| | Biela | Bancada |
-|---|---|---|
-| Categoría del proveedor | `CA` | `CB` |
-| Marcas que entran hoy | Mahle, Federal Mogul, Glyco | Mahle, Federal Mogul, Glyco |
-| Fichas | 354 (282 con medidas) | 345 (256 con medidas) |
-| Cómo la marca Mahle | composición `BB`/`SBB` | composición `BC`/`SBC` |
-| Cómo la marca Federal Mogul | etiqueta `Bielas` | etiqueta `Bancadas` |
-| Cómo la marca Glyco | `BE/PL` | `MB/HL` |
+La tercera —los **cojinetes axiales**, que no son cojinetes sino las
+semiarandelas de empuje— se mide distinto que las otras dos: está explicado en
+la sección 8.
+
+| | Biela | Bancada | Axial |
+|---|---|---|---|
+| Categoría del proveedor | `CA` | `CB` | `CF` |
+| Marcas que entran hoy | Mahle, Federal Mogul, Glyco | Mahle, Federal Mogul, Glyco | Mahle, Federal Mogul, Glyco |
+| Fichas | 354 (282 con medidas) | 345 (256 con medidas) | 120 (96 con espesor, 65 con los dos Ø) |
+| Cómo la marca Mahle | composición `BB`/`SBB` | composición `BC`/`SBC` | composición `AE`/`SAE`/`L`/`SL` |
+| Cómo la marca Federal Mogul | etiqueta `Bielas` | etiqueta `Bancadas` | etiqueta `Axial` |
+| Cómo la marca Glyco | `BE/PL` | `MB/HL` | `TW/A` |
+
+**Axial es la familia nueva del 2026-09-07**, con las tres marcas desde el
+primer día: 51 códigos de Mahle (38 con medidas), 42 de Federal Mogul (todos
+con espesor, 3 con los dos diámetros) y 27 de Glyco (24 con medidas).
 
 **Bancada entró primero sólo con Glyco y el mismo día se le sumaron Mahle y
 Federal Mogul** (2026-09-07): los lectores de las dos ya sabían leerla, así que
@@ -22,11 +31,15 @@ y 75 de Glyco (68 con medidas).
 
 El script que hace la extracción es
 [`scripts/convertir_cojinetes.py`](../../scripts/convertir_cojinetes.py). Se
-corre así, y no pisa nada más que los dos JSON:
+corre así, y no pisa nada más que los JSON de las familias que rehace:
 
 ```bash
-.venv/bin/python scripts/convertir_cojinetes.py
+.venv/bin/python scripts/convertir_cojinetes.py            # las tres familias
+.venv/bin/python scripts/convertir_cojinetes.py axial      # una sola
 ```
+
+Cada familia lee los cuatro catálogos de nuevo y son unos minutos, así que
+cuando se toca una sola conviene nombrarla: las otras dos quedan como estaban.
 
 Los PDF están en [`fuentes/`](fuentes/). Sin ellos el script no corre.
 
@@ -414,14 +427,64 @@ le va?*
 
 ---
 
-## 8. Lo que quedó pendiente
+## 8. La semiarandela de empuje (cojinetes axiales)
 
-* **Cojinetes axiales** (categoría `CF`, las semiarandelas de empuje): 120
-  códigos del proveedor de las tres marcas que tenemos en catálogo (51 Mahle,
-  42 Federal Mogul, 27 Glyco). Los cuatro catálogos las traen —Glyco las marca `TW/A`,
-  Federal Mogul `Axial` y Mahle con los prefijos `L`/`SL`/`AE`/`SAE`— pero sus
-  medidas no son las mismas cinco: se miden por Ø interior, Ø exterior y espesor,
-  así que necesitan su propia familia en la pantalla, no sólo otra fila.
+La tercera familia, y **la única que no es un cojinete**: no abraza un muñón,
+apoya contra el costado del cigüeñal y le fija el juego axial. Sale de las
+mismas tablas de los mismos cuatro catálogos, así que la lee el mismo script,
+pero se mide distinto y sus medidas del proveedor significan otra cosa.
+
+| | Cojinete (biela y bancada) | Semiarandela (axial) |
+|---|---|---|
+| Categoría del proveedor | `CA` / `CB` | `CF` |
+| Cómo la marca Mahle | composición `BB`/`SBB`, `BC`/`SBC` | composición `AE`/`SAE`/`L`/`SL` |
+| Cómo la marca Federal Mogul | etiqueta `Bielas` / `Bancadas` | etiqueta `Axial` |
+| Cómo la marca Glyco | `BE/PL` · `MB/HL` | `TW/A` |
+| Qué se mide | Ø muñón · Ø alojamiento · ancho · espesor | **Ø interior · Ø exterior · espesor** |
+| Las medidas del juego | BAJOmedidas del muñón | **SOBREmedidas de espesor** |
+
+**Las columnas son las mismas, con otro significado.** La columna del Ø del eje
+trae el **Ø interior** de la arandela y la del alojamiento, el **Ø exterior**;
+la del espesor sigue siendo el espesor. Por eso la extracción usa siempre los
+nombres del cojinete y recién la ficha les pone el nombre que corresponde: es la
+constante `CAMPOS` del script.
+
+**Suman en vez de restar.** Cuando la cara de empuje del cigüeñal se rectifica,
+lo que hace falta es una arandela **más gruesa**. Así que el `valor` de cada
+entrada de `extra.sobremedidas` es `espesor + sobremedida`, y la etiqueta va con
+`+` (`+0,127 mm`, `+.005"`). En la pantalla, el filtro "Espesor con sobremedida"
+contesta la pregunta del taller: *rectifiqué la cara de empuje y necesito
+0,25 mm más — ¿cuánto tiene que medir la arandela?*
+
+**Y las sobremedidas son mucho más chicas.** Un cojinete baja de a 0,25 mm; una
+arandela sube de a 0,127. Eso obliga a dos cosas:
+
+1. **El corte entre pulgadas y milímetros no puede ser el tamaño.** En el
+   cojinete alcanza con mirar si algún valor llega a 0,2 mm; acá 0,127 y 0,19
+   son milímetros y `.005` son pulgadas, y los dos son más chicos que eso. Se
+   corta por **el cero adelante**, que es como los escriben los catálogos:
+   Mahle pone `0,127` y Federal Mogul, `STD-5-10`.
+2. **El proveedor las escribe en milésimas de milímetro.** `127` es 0,127 mm,
+   no 1,27. Por eso `leer_medida_axial` prueba tres lecturas del sufijo
+   (centésimas, milésimas y milésimas de pulgada) contra lo que declara el
+   catálogo para ese juego, en vez de las dos del cojinete.
+
+**Dónde empieza la primera columna de medida.** El script corta la lista de
+medidas del juego por tamaño (constante `CORTE`): en el cojinete, en 14 mm —
+ningún muñón baja de ahí—; en la arandela, en **1,2 mm**, que queda por debajo
+del espesor más fino (1,5) y por encima de la sobremedida más grande (0,5). Sin
+ese corte propio se perdían las filas de Federal Mogul que traen **sólo el
+espesor**, que son la mayoría: de los 95 renglones `Axial` del catálogo, 26
+traen los dos diámetros y 57 traen nada más que el espesor.
+
+**La letra del código Mahle.** El proveedor la tira, igual que la `B` de biela y
+la `M` de bancada: el catálogo dice `L57006` y él vende `57006`. Está en
+`clave_mahle`.
+
+---
+
+## 9. Lo que quedó pendiente
+
 * **89 códigos de bancada sin medidas.** 83 no están en ninguno de los
   catálogos que tenemos —7 de Glyco (`72-3314`, `72-3448`, `H705/7`, `H931/5`,
   `H938/7`, `H1098/5`, `H1225/5`), 26 de Mahle y 50 de Federal Mogul— y otros 6
