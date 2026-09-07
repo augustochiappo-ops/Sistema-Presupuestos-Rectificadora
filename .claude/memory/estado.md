@@ -1410,8 +1410,22 @@ filtro de la pantalla se llama "Espesor con sobremedida" y busca contra
 axial`): cada familia relee los cuatro catálogos y son unos minutos, así que
 tocar una sola ya no obliga a reescribir las otras dos.
 
-**Verificado:** las cuatro suites enteras. Backend medidas 170 verificaciones
-TODO OK.
+**Verificado:** las cuatro suites enteras, TODO OK — backend grupos 237,
+backend medidas 170, UI medidas 137 (incluido que ninguna celda de ninguna de
+las once familias quede cortada), UI grupos 211. **Producción quedó en
+`b99ff5b`**, deploy corrido y confirmado (HTTP 200, `git pull` fast-forward,
+reload agendado, la portada responde).
+
+**También quedó escrito en `CLAUDE.md` qué significa "caveman" en este
+proyecto** (sección propia): la skill en nivel `full` más el flujo de trabajo
+que ahorra contexto de verdad —`grep` sobre `estado.md` en vez de leerlo
+entero, filtrar los logs de extracción, contar los diffs de JSON en vez de
+leerlos, nada de subagentes—, y que la confiabilidad no se negocia por tokens.
+
+**Lo que sigue en esta línea de trabajo:** ya no quedan familias de cojinetes
+por cargar. Lo que queda anotado en `CARGA-COJINETES.md`, sección 9, son
+huecos de datos, no piezas nuevas: los códigos que ningún catálogo trae, la
+tabla de materiales de Mahle y las filas con errores de imprenta.
 
 ### Antes, el mismo día
 
