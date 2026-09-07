@@ -106,6 +106,42 @@ y con ella entra la de backend. **No vive en el repo** —misma regla que el
 suites lo dicen al arrancar en vez de morir en el login siete minutos después.
 Tener dos contraseñas dando vueltas ya costó dos corridas.
 
+## Cuando el dueño pide "caveman"
+
+Quiere decir **este flujo de trabajo completo**, no sólo el tono de los
+mensajes. Salió de la sesión del 2026-09-07, donde la anterior se había comido
+el 36% de la ventana de contexto y la mayor parte no era prosa: eran salidas
+enormes volcadas al contexto.
+
+**1. Prender la skill `caveman` en nivel `full`** (`Skill(caveman, "full")`), y
+dejarla prendida toda la sesión. Compacta los mensajes del chat: sin relleno,
+sin narrar cada llamada a herramienta, sin tablas decorativas, sin volcar logs
+crudos. La skill se apaga sola donde comprimir sería peligroso (advertencias,
+acciones irreversibles, secuencias de pasos donde el orden importa) y **no toca
+nada que quede escrito fuera del chat**: commits, documentos del repo, memoria y
+comentarios de código van en prosa normal, que es como los lee el dueño después.
+
+**2. Nunca traer al contexto lo que se puede filtrar antes.** Es acá donde está
+el ahorro grande, no en el tono. Las cuatro que más rindieron:
+
+* `estado.md` pesa 200 KB. Se ubica la sección con `grep -n` y se leen las
+  líneas que hacen falta, nunca el archivo entero.
+* Los logs de los scripts de extracción son miles de líneas de warnings de
+  fuentes. Se miran siempre con `grep -v` filtrando el ruido.
+* Un diff de 25.000 líneas de JSON **se cuenta, no se lee**: `git diff -U0 |
+  grep -vc` para separar las líneas de texto de las de medidas.
+* Para mirar los datos, un script de Python que imprima tres números —no traer
+  las fichas al chat.
+
+**3. No usar subagentes.** Cada uno arranca en frío y vuelve a derivar el
+contexto que acá ya está: para este repo sale más caro que hacer el trabajo
+directo.
+
+**4. La confiabilidad no se negocia por tokens.** El nivel `ultra` de la skill
+no se usa acá: con medidas, códigos y conteos conviene el margen de claridad de
+`full`. Y comprimir mensajes no cambia en nada lo que hay que verificar — las
+suites se corren enteras igual, y el resultado se informa con el número exacto.
+
 ## Ramas y producción
 
 - **`master` es la única rama y sirve producción.** El deploy (PythonAnywhere) hace `git pull` sobre `master`. Todo cambio se pushea ahí directamente (ver "Flujo de trabajo" arriba).
