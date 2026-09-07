@@ -1370,6 +1370,42 @@ el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 
 ## Próximo paso
 
+**Bancada completa: entran Mahle y Federal Mogul (2026-09-07, segunda sesión).**
+
+`cojinetes_bancada.json` pasó de **75 a 345 fichas**: 136 de Mahle (110 con
+medidas), 134 de Federal Mogul (78 con medidas) y las 75 de Glyco (68 con
+medidas) que ya estaban. Era lo que quedaba anotado como "prender, no
+escribir": el cambio en el script fue una tupla de marcas en `PIEZAS` y volver
+a correr los cuatro catálogos (~6 minutos).
+
+**Las 89 sin medidas** entran igual, con la aplicación y el precio del
+proveedor y las medidas en blanco con el "?": 83 no están en ningún catálogo
+(7 de Glyco, 26 de Mahle, 50 de Federal Mogul) y 6 tienen ficha pero con la
+fila de medidas vacía. Están listadas en `CARGA-COJINETES.md`, sección 8.
+
+**Lo de afuera, que es lo que no se hace solo:** la columna "marca" de la
+familia pasó de 90 a 145 px en `familias.js` (con 90 "FEDERAL MOGUL" salía
+cortada); los conteos quedaron al día en las dos suites, en
+`CARGA-COJINETES.md` y en `tests/README.md`; y los tres ejemplos de la pestaña
+se revisaron: siguen sirviendo y ahora traen fichas de las tres marcas.
+
+**Checks nuevos (cinco):** en backend, una ficha de Mahle y una de Federal
+Mogul con sus medidas y su catálogo, más el control de que en toda la familia
+el alojamiento sea mayor que el muñón (el mismo que ya tenía biela); en UI, la
+trasera de la Daily 2.8TD (Mahle) y la de la F100 V8 (Federal Mogul).
+
+**Una cosa para saber:** `cojinetes_biela.json` cambió sin que se tocara biela
+—16 fichas de Mahle, sólo el texto de la aplicación y para mejor: "Golf" donde
+la corrida anterior había dejado "Gol–"—. Es la decodificación de fuentes de
+`pypdf`, que no es determinista entre entornos. **Ninguna medida cambió**, y
+cómo verificarlo está en `decisiones.md`.
+
+**Verificado:** las cuatro suites enteras (backend grupos y medidas TODO OK;
+UI medidas 131 verificaciones TODO OK, incluido que ninguna celda de ninguna de
+las diez familias quede cortada; UI grupos TODO OK).
+
+### Antes, el mismo día
+
 **Glyco entero, y la décima familia: cojinetes de bancada (2026-09-07).**
 
 Dos cosas en una sesión, las dos sobre el mismo catálogo nuevo.
@@ -1408,37 +1444,13 @@ TODO OK, incluido que ninguna celda de ninguna de las diez familias quede
 cortada). **Producción quedó en `12d1b1f`**, deploy corrido y confirmado
 (HTTP 200, `git pull` fast-forward, reload agendado, la portada responde).
 
-### Lo que sigue: bancada de Mahle y de Federal Mogul
+### Lo que seguía: bancada de Mahle y de Federal Mogul (hecho el mismo día)
 
-**Está escrito y probado, sólo hay que prenderlo.** El mismo día se midió:
-Mahle resuelve 110 de sus 136 códigos y Federal Mogul 63 de 134. Quedó afuera
-porque el dueño pidió sólo Glyco.
-
-**No hace falta que el dueño consiga ni mande ningún PDF.** Los tres catálogos
-están versionados en el repo (`mahle_cojinetes_2019.pdf`,
-`mahle_clevite_2014.pdf`, `federal_mogul_cojinetes.pdf`). El único que no está
-es el de Glyco, y **hay que bajarlo del release `catalogos` antes de correr el
-script** — si no está, el script sigue igual pero regenera los dos JSON sin las
-fichas de Glyco: se perderían 83 de biela y las 68 de bancada. El comando está
-arriba de `CARGA-COJINETES.md`.
-
-Los pasos, en orden:
-
-1. Bajar el PDF de Glyco del release a `CRAC/tecnicos/fuentes/`.
-2. En `PIEZAS` (arriba de `scripts/convertir_cojinetes.py`), en `"bancada"`,
-   cambiar `"marcas": ("GL",)` por `("BE", "F", "GL")`.
-3. Correr `.venv/bin/python scripts/convertir_cojinetes.py` (~5 minutos, lee los
-   cuatro catálogos dos veces). Bancada pasa de **75 a 345 fichas**.
-4. Ajustar lo de afuera, que es lo único que no es automático:
-   * `familias.js`, familia `cojinetes_bancada`: la columna `marca` está en
-     **90 px** porque hoy todo dice GLYCO; con `FEDERAL MOGUL` necesita **145**,
-     como la de biela. Si no, sale cortada — y el check de celdas cortadas de la
-     suite de UI lo agarra.
-   * Los ejemplos de esa familia apuntan a piezas de Glyco; conviene revisarlos.
-   * Conteos: `tests/backend_medidas.py` (75 → 345) y `tests/ui_medidas.mjs`
-     (la pestaña `Cojinetes de bancada\s*75`).
-   * Los conteos de `CARGA-COJINETES.md` y de `tests/README.md`.
-5. `npm run build` + commitear `static_build/`, las dos suites, y el deploy.
+Quedó anotado acá como pendiente y se hizo en la sesión siguiente, tal cual
+estaban escritos los cinco pasos: bajar el PDF de Glyco del release, cambiar
+`"marcas"` en `PIEZAS`, correr el script, ajustar lo de afuera (columna de la
+marca, conteos de las suites y de los dos documentos) y build + suites +
+deploy. Ver arriba, "Bancada completa".
 
 **Lo que sigue en esta familia**: los **cojinetes axiales** (categoría `CF`, las
 semiarandelas de empuje). Son 120 códigos de las tres marcas que tenemos en

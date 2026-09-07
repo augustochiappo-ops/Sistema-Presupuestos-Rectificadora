@@ -1141,10 +1141,35 @@ la ficha— es el mismo código para las dos.
 La prueba de que sirvió: cuando el dueño pidió a mitad de sesión que bancada
 fuera **sólo de Glyco**, el cambio fue una tupla de marcas en esa tabla.
 
-**Por qué bancada arrancó con una sola marca.** Lo pidió el dueño (2026-09-07).
-Los lectores de Mahle y Federal Mogul ya saben leer bancada, probado el mismo
-día: Mahle resuelve 110 de sus 136 códigos y Federal Mogul 63 de 134. Prenderlas
-es agregar las marcas en `PIEZAS`; lo que hay que acordarse de tocar después es
-lo de afuera —la pantalla y los conteos de las dos suites—, no la extracción.
+**Por qué bancada arrancó con una sola marca, y cómo se prendieron las otras
+dos.** Empezó sólo con Glyco porque lo pidió el dueño (2026-09-07). Ese mismo
+día se sumaron Mahle y Federal Mogul: el cambio en el script fue una tupla de
+marcas en `PIEZAS` y volver a correr, tal como estaba previsto. Lo que sí hubo
+que tocar a mano es lo de afuera —la columna de marca de la pantalla, los
+conteos de las dos suites y los dos documentos—, que es exactamente lo que
+quedó anotado para no olvidarlo.
+
+**Fecha:** 2026-09-07
+
+---
+
+## El mismo PDF leído dos veces no siempre da el mismo texto
+
+**Contexto:** al volver a correr `convertir_cojinetes.py` para sumar las marcas
+de bancada, `cojinetes_biela.json` cambió en 16 fichas de Mahle **sin que se
+hubiera tocado nada de biela**. Ninguna medida cambió: sólo el texto de la
+aplicación, y para mejor — donde la corrida anterior había dejado un guión
+("Gol–", "ESTACION–- RIO") esta dejó la letra ("Golf", "ESTACIONÁ- RIO").
+
+**Por qué pasa:** el PDF de Mahle usa fuentes que no declaran del todo a qué
+carácter corresponde cada símbolo, y `pypdf` cae en una decodificación de
+reserva. Si `fontTools` está disponible resuelve más glifos; si no, deja el
+guión. Es la misma familia de problema por la que se descartó el Mahle Clevite
+2019/2020, sólo que en dosis chica.
+
+**Qué hacer con eso:** no alarmarse, pero **mirar el diff**. La regla que se
+usó acá: `git diff -U0` sobre el JSON y filtrar las líneas de `aplicacion` y
+`motor`; si queda alguna línea de medida, la corrida cambió datos y hay que
+entender por qué. Acá quedaron cero.
 
 **Fecha:** 2026-09-07

@@ -176,7 +176,7 @@ $VENV/bin/python tests/backend_medidas.py
 
 ## 4. UI — `ui_medidas.mjs`
 
-Ciento veintinueve verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
+Ciento treinta y una verificaciones con navegador real sobre la pantalla "Búsqueda por medidas".
 
 ```bash
 source /tmp/rect-corrida/entorno.sh
