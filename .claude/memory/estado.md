@@ -1076,6 +1076,12 @@ mismo:
 > Si las fotos vienen en `.rar`, se abren con `unrar`
 > (`apt-get install -y unrar`); `7z` lista el archivo pero no lo descomprime.
 
+**Desde el 2026-09-08 hay un camino mejor que las fotos: el tomo del catálogo.**
+Si lo que llega es un PDF de la serie MAHLE Aftermarket, no hay que recortar
+nada a mano — `scripts/fotos_desde_catalogo_mahle.py --pdf <tomo>` deja las
+fotos solo en `fuentes/pistones/` y después sigue el mismo
+`recortar_pistones_mahle.py` de siempre. Ver "Sesión 2026-09-08 (tercera)".
+
 ## Sesión 2026-08-22 — Camisas: las sobremedidas mal etiquetadas, las húmedas y el "?"
 
 El dueño abrió la sesión con las dos fuentes de Fadecya —el Excel de la lista
@@ -1477,33 +1483,134 @@ cinco checks nuevos que las hubieran agarrado a las dos:
   el dueño con "todos del mismo tamaño": los dos scripts pasan por el mismo
   `encuadrar()`, y este check avisa el día que uno deje de hacerlo.
 
+## Sesión 2026-09-08 (tercera) — El catálogo de Mahle, y las fotos que salen solas
+
+El dueño pasó el **MAHLE Aftermarket 2019/2020** en PDF, que es de donde venía
+recortando las fotos a mano. Con eso el circuito de los dibujos de Mahle dejó de
+depender de que él recorte: ahora el PDF entra y las fotos salen solas.
+
+**Pero el tomo cubre 19 de los 123 que faltaban.** La serie viene **un tomo por
+fabricante de motor** y éste es el de **Caterpillar y Cummins** (pistones,
+páginas 5 a 36; después vienen cojinetes). Los 104 números restantes son de
+Scania (21 códigos), Mercedes-Benz (19), Volvo (15), MWM (13), Renault (6), Ford
+y John Deere (5 cada uno) y una cola de tomos chicos. La lista entera, agrupada
+por fabricante, está en `CARGA-CONJUNTOS.md`.
+
+### El script nuevo produce ENTRADA, no salida
+
+`scripts/fotos_desde_catalogo_mahle.py` deja fotos recortadas en
+`CRAC/tecnicos/fuentes/pistones/` y **no toca ni un dibujo ni un manifiesto**. El
+que limpia, recorta y arma el manifiesto sigue siendo `recortar_pistones_mahle.py`,
+que sigue siendo el único dueño de `public/pistones/` y de `dibujos-pistones.js`:
+
+    python3 scripts/fotos_desde_catalogo_mahle.py --pdf <tomo>
+    python3 scripts/recortar_pistones_mahle.py --hoja
+
+Se armó así a propósito, y es la aplicación directa de lo que se aprendió esta
+misma mañana: un tercer script escribiendo en la carpeta de dibujos es
+exactamente cómo el de Mahle llegó a borrarle los 110 PNG al de Federal Mogul.
+Acá no hay nada que repartir, porque las dos puntas no se tocan.
+
+### Cómo está armada la página, y las tres trampas
+
+La plantilla es la misma en toda la serie: una fila por bloque de motor, con el
+dibujo en la columna "KH +/- GL" y los códigos a la derecha, en columnas fijas
+(E en x=393,4; S en 438,7; K en 527,3). **El dibujo está siempre a 28 puntos por
+debajo del renglón de códigos de su fila** — se midió en las 32 páginas y no
+varía ni una décima.
+
+**1. Se rasteriza la página; no se saca la imagen embebida.** Acá el dibujo SÍ
+viene como imagen suelta, pero es de 64 × 95 px con `/Interpolate: True`: el PDF
+mismo le pide al lector que la suavice al agrandarla. Sacarla cruda deja un
+dibujo de 60 px de alto que en la ficha ampliada —que lo pide a 320— es un
+borrón. Rasterizando la página a 300 dpi y recortando ahí salen los ~210 × 310 px
+de los dibujos que ya estaban, que es además lo mismo que hacía el dueño a mano
+con `pdftoppm -r 300`.
+
+**2. En 11 filas el S, el K y el E NO comparten número.** Lo normal es
+`S11440` / `K11440` / `E11440`, pero la fila de `E21500` trae el kit `K21510`, y
+la de `E21610` trae el `K21410`. Cinco de los códigos que faltaban son
+justamente de esas filas (`T BEK21510`, `T BEK21515`, `T BEK21635`, `T BEK21860`
+y `T BEK21950`): con la regla natural —una fila, un número— los cinco se
+quedaban sin dibujo. La foto se guarda **una vez por número distinto de la
+fila**, el mismo dibujo con dos nombres, que es lo que
+`recortar_pistones_mahle.py` necesita para colgárselo a las dos fichas.
+
+**3. Varias páginas arrastran texto fuera del papel.** A x negativa viene la
+página vecina que quedó fuera del recorte: no se ve impresa y no tiene su dibujo
+acá, pero pdfplumber la lee igual. La página 18 muestra una sola fila y el lector
+crudo devuelve cinco. Tomarla en serio le habría puesto a un código el dibujo de
+otra fila — el mismo error que se acababa de arreglar en el catálogo de Federal
+Mogul, por otro camino.
+
+Dos ajustes más, chicos, que salieron de mirar la salida: la tolerancia de la
+columna subió a 8 puntos (un código de siete dígitos como `E0211000` arranca 4
+puntos antes que uno de cinco, y con la tolerancia justa esas filas se leían a
+medias) y las filas se agrupan con 2 puntos de tolerancia en la altura (el PDF
+apoya los códigos de un mismo renglón a 599,9 y 600,0, y partirlas por esa décima
+dejaba códigos sueltos).
+
+### La verificación
+
+**Los 19 diámetros del catálogo coinciden con los 19 de nuestras fichas**, y no
+falla ninguno: `T BEK11440` Ø105,0, los cinco Cummins de la serie 855 en Ø139,7,
+los cuatro 6CTAA en Ø114, `T BEK211000` en Ø114,02. Es la misma prueba que se usó
+para Federal Mogul y es la que de verdad importa acá: dice que cada dibujo salió
+de la fila del pistón correcto, incluidos los cinco de número partido.
+
+**Salieron los 19**, y los 181 de Mahle que ya estaban quedaron **byte a byte
+iguales**: `public/pistones/` pasó de 181 a **200 dibujos de Mahle**. Cuatro se
+veían raros en la lámina de control y **NO son un error del recorte** —se
+miraron contra la página y el catálogo los dibuja así—: `T BEK211000` (media
+sección, con la faja de aros sombreada), y `T BEK21635`, `T BEK21860` y
+`T BEK21950`, los tres 6CTAA de cámara ancha, que el catálogo dibuja con el
+corte muy achatado.
+
+El PDF quedó en el repo como
+`CRAC/tecnicos/fuentes/mahle_aftermarket_2019_cat_cummins.pdf` (4,5 MB), igual
+que el de Federal Mogul: sin él la extracción no se puede repetir.
+
+**Verificado:** `tests/rapido.sh` entera en verde, `tests/ui_medidas.mjs` entera
+en verde (137 checks), los 19 diámetros del catálogo contra los 19 de las fichas
+sin una sola diferencia, y dos filas nuevas miradas en la app —`T BEK21510` y
+`T BEK211000`— cargando el dibujo y sirviéndolo a 56 px de alto como todos los
+demás.
+
+
 ## Próximo paso
 
-**Las 123 fotos de pistón de Mahle que faltan (2026-09-08).**
+**Los 104 dibujos de Mahle que faltan, y son de otros tomos (2026-09-08).**
 
-Es lo único que queda abierto de los dibujos, y **no se puede avanzar sin el
-dueño**: el catálogo de Mahle no está en el repo. Federal Mogul ya está completo
-(sus dos únicos faltantes salieron esta sesión, del PDF que sí está).
+El dueño pasó el **MAHLE Aftermarket 2019/2020**, que resultó ser el tomo de
+**Caterpillar y Cummins**: cubrió 19 de los 123 que faltaban y ya están en la
+app. La serie viene **un tomo por fabricante de motor**, así que lo que queda se
+pide por tomo. Con estos cuatro se cubren 68 de los 105 códigos:
 
-Faltan **124 códigos, 123 números distintos**: 11 subconjuntos y 113 conjuntos.
-La lista entera —código del proveedor, código de fábrica y descripción del
-motor— está en `CRAC/tecnicos/CARGA-CONJUNTOS.md`, sección "Los que todavía no
-tienen dibujo". Casi todos son conjuntos de motor grande: Scania, Volvo, Cummins,
-Mercedes-Benz, MWM y John Deere.
+| Tomo | Códigos que destraba |
+|---|---|
+| Scania | 21 |
+| Mercedes-Benz | 19 |
+| Volvo | 15 |
+| MWM | 13 |
 
-**Lo que se le pidió al dueño, en este orden:**
+Después, la cola: Renault 6, Ford 5, John Deere 5, Iveco 4, Peugeot 3, Deutz 3,
+Fiat 2, New Holland 2, VW 2, y uno cada uno de Chevrolet, Perkins, Maxion,
+Valtra y Honda. La lista completa, código por código, está en
+`CRAC/tecnicos/CARGA-CONJUNTOS.md`.
 
-1. **El PDF del catálogo Mahle de pistones** (el mismo del que viene recortando
-   las fotos a mano). Es lo que conviene: con el PDF acá, `encontrar_dibujo()` se
-   corre sobre los renglones de cada página y **las 123 salen de una sola vez**,
-   sin que él recorte nada. Es lo que ya se hizo con el catálogo de Federal
-   Mogul.
-2. Si el PDF no se puede pasar, **otra tanda de fotos** como las anteriores, con
-   el flujo de siempre: copiarlas a `CRAC/tecnicos/fuentes/pistones/`, correr
-   `scripts/recortar_pistones_mahle.py`, mirar la lámina de control. El prompt
-   completo está más abajo, en "Cómo agregar las fotos de pistón que faltan".
+**Con el tomo, no hay nada que recortar a mano:**
 
-Mientras tanto los 124 códigos muestran un guión en la columna de dibujo, que es lo
+```bash
+python3 scripts/fotos_desde_catalogo_mahle.py --pdf <tomo>   # deja las fotos
+python3 scripts/recortar_pistones_mahle.py --hoja            # las mete a la app
+```
+
+El script está probado contra este tomo y sabe leer la plantilla de la serie
+entera. Si de algún fabricante no aparece el tomo, sirve igual una captura de la
+fila —con las dos vistas del pistón— guardada en `CRAC/tecnicos/fuentes/pistones/`
+con el número en el nombre, que es como se venía haciendo.
+
+Mientras tanto los 105 muestran un guión en la columna de dibujo, que es lo
 correcto: la pantalla nunca sale a pedir una imagen que no está.
 
 ---

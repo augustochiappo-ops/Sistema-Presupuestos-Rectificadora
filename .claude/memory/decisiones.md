@@ -1353,3 +1353,36 @@ imprime un aviso para la segunda.
 
 Vale para cualquier lectura de un catálogo del que se carga sólo una parte: el
 lado incompleto es el que tiene que preguntar.
+
+## El script del catálogo produce ENTRADA, no salida (2026-09-08)
+
+Cuando llegó el PDF del catálogo Mahle, lo obvio era hacer un script que sacara
+los dibujos y escribiera los PNG y el manifiesto, como
+`dibujos_pistones_fm2010.py`. Se hizo al revés a propósito:
+`fotos_desde_catalogo_mahle.py` deja **fotos** en `fuentes/pistones/` —lo mismo
+que mandaba el dueño recortado a mano— y ahí termina. Limpiar, recortar y armar
+el manifiesto lo sigue haciendo `recortar_pistones_mahle.py`.
+
+El motivo es directo: esa misma mañana se descubrió que dos scripts dueños de la
+carpeta de dibujos alcanzaron para que uno le borrara los 110 PNG al otro (ver
+"Dos scripts dueños de la misma carpeta"). Un tercero multiplica el problema.
+Como entrada, en cambio, no hay nada que repartir: las dos puntas no se tocan, y
+el circuito de siempre —fotos adentro, `recortar_pistones_mahle.py`, mirar la
+lámina— vale igual venga la foto de un PDF o de una captura del dueño.
+
+El costo es una corrida de más (el recorte tarda ~4 minutos) y que las fotos
+queden guardadas dos veces, como foto y como dibujo. Barato al lado de que la
+carpeta tenga un solo dueño.
+
+## Sólo se extraen las fotos que alguna ficha necesita (2026-09-08)
+
+`fotos_desde_catalogo_mahle.py` saca, por defecto, únicamente las fotos de los
+códigos que tienen ficha y todavía no tienen dibujo — no las 142 filas del tomo.
+No es por espacio: es porque `recortar_pistones_mahle.py` imprime un aviso por
+cada foto cuyo código no está en los catálogos, y 120 avisos de rutina ahogan al
+que sí importa. El aviso vale mientras sea raro.
+
+La excepción sigue en pie y es deliberada: `S26510.png` está en `fuentes/` sin
+ficha desde el 2026-08-29, avisa en cada corrida, y se deja porque el día que el
+proveedor traiga ese código el dibujo entra solo. Una excepción se ve; ciento
+veinte, no. Para sacarlas todas igual está `--todos`.

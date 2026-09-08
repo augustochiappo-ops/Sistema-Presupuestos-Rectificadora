@@ -165,6 +165,16 @@ muestra con un "?" y el motivo en el tooltip.
 El dibujo del pistón se comparte con el subconjunto del mismo número, así que
 **los 15 que ya tenían ficha ya tienen dibujo**. Para los demás:
 
+**Si está el tomo del catálogo, no hay que recortar nada** (2026-09-08). La
+serie MAHLE Aftermarket viene un tomo por fabricante de motor, y
+`scripts/fotos_desde_catalogo_mahle.py --pdf <tomo>` deja las fotos ya
+recortadas en `CRAC/tecnicos/fuentes/pistones/`, listas para el paso 3. Con
+`--ver` dice qué sacaría sin escribir nada. En el repo está el tomo de
+Caterpillar y Cummins (`fuentes/mahle_aftermarket_2019_cat_cummins.pdf`); del
+resto de los fabricantes todavía no hay tomo.
+
+**Si no está el tomo**, sigue valiendo el camino de siempre:
+
 1. Recortar del PDF la fila con el pistón (skill `foto-mahle-006`: se rasteriza
    la página con `pdftoppm -jpeg -r 300`, se ubica la columna de dibujos y se
    recorta la fila). Que se vean **las dos vistas**: el corte y el círculo.
@@ -180,19 +190,45 @@ El dibujo del pistón se comparte con el subconjunto del mismo número, así que
 
 ## Los que todavía no tienen dibujo (al 2026-09-08)
 
-Faltan **124 códigos, 123 números distintos** — el conjunto y el
+Faltan **105 códigos, 104 números distintos** — el conjunto y el
 subconjunto del mismo número comparten dibujo, y `T BEK76560` / `T BEK76560WS`
 son la misma pieza con y sin orings de camisa.
 
-Ninguno tiene foto en `CRAC/tecnicos/fuentes/pistones/`, así que **no se pueden
-sacar acá**: el catálogo de Mahle no está en el repo, a diferencia del de Federal
-Mogul. Hacen falta o el PDF del catálogo (lo mejor: con él las 123 salen de una
-corrida, sin recortar a mano) o una tanda de fotos más.
+**Ninguno está en el volumen de Caterpillar y Cummins**, que es el único catálogo
+de Mahle que hay en el repo. La serie MAHLE Aftermarket viene un tomo por
+fabricante de motor, así que lo que falta se pide por tomo:
+
+| Fabricante | Códigos |
+|---|---|
+| SCANIA | 21 |
+| M.BENZ | 19 |
+| VOLVO | 15 |
+| MWM | 13 |
+| RENAULT | 6 |
+| FORD | 5 |
+| J.DEERE | 5 |
+| IVECO | 4 |
+| PEUGEOT | 3 |
+| DEUTZ | 3 |
+| FIAT | 2 |
+| NEW HOLLAND | 2 |
+| VW | 2 |
+| CHEVROLET | 1 |
+| PERKINS | 1 |
+| MAXION | 1 |
+| VALTRA | 1 |
+| HONDA | 1 |
+
+Con el tomo que corresponda, las de esa marca salen de una corrida:
+`scripts/fotos_desde_catalogo_mahle.py --pdf <tomo>` y después
+`scripts/recortar_pistones_mahle.py`. Si el tomo no aparece, sirve igual una
+captura de la fila —con las dos vistas del pistón— guardada en
+`CRAC/tecnicos/fuentes/pistones/` con el número en el nombre.
 
 Mientras tanto la pantalla les muestra un guión en la columna de dibujo, que es
 lo correcto: no sale a pedir una imagen que no está.
 
-### Subconjuntos (11)
+### Subconjuntos (10)
 
 | Código del proveedor | Cód. fábrica | Motor |
 |---|---|---|
@@ -204,11 +240,10 @@ lo correcto: no sale a pedir una imagen que no está.
 | `S BE 57120` | `S BE 57120` | PERKINS 4.203 (C/POZO) 3.601 |
 | `S BE 57450` | `S BE 57450` | MAXION S4T PLUS 101 mm |
 | `S BE14185` | `S BE14185` | CHEVROLET CORSA 1.6 79 mm |
-| `S BE21190` | `S BE21190` | CUMMINS 4B-6B CAM.54,2 (2 CIL) 102 mm |
 | `S BE25127` | `S BE25127` | FIAT 147 1.3D A.C.-0.5 76 mm |
 | `S BE591015` | `S BE591015` | FORD FOCUS 2.0 16V CJBA P.21 87,50 mm |
 
-### Conjuntos (113)
+### Conjuntos (95)
 
 | Código del proveedor | Cód. fábrica | Motor |
 |---|---|---|
@@ -217,10 +252,6 @@ lo correcto: no sale a pedir una imagen que no está.
 | `T BEK01410` | `K01410` | IVECO EUROTRAKKER 380 P.72 (1 CIL) 137mm |
 | `T BEK10330` | `K10330` | IVECO CURSOR 8 F2BE E3 Pz.84/62(UN) 115m |
 | `T BEK10530` | `K10530` | IVECO CURSOR 13 24V E5 (UN) 135 mm |
-| `T BEK11440` | `K11440` | CATERPILLAR 3114-3116 (UN) 105 mm |
-| `T BEK11500` | `K11500` | CATERPILLAR 3304T-06T I/IN.C/VALV.4.3/4"" |
-| `T BEK11570` | `K11570` | CATERPILLAR 3304-3306 INY.DIR.P.43 4.3/4 |
-| `T BEK11829` | `K11829` | CATERPILLAR 3304-3306 2 APA INY.IN4.3/4"" |
 | `T BEK130030` | `K130030` | MWM 4.12TCE-6.12TCE E5 (Pz.DOBLE) 105 mm |
 | `T BEK13250` | `K13250` | MWM D226 P.32 A.C. 59,80 (2 CIL) 105 mm |
 | `T BEK13603` | `K13603` | MWM 229 (UN) 102 mm |
@@ -239,20 +270,6 @@ lo correcto: no sale a pedir una imagen que no está.
 | `T BEK18750` | `K18750` | RENAULT CLIO 1.4 75,80 mm |
 | `T BEK18771` | `K18771` | RENAULT 9 1600 CC 77 mm |
 | `T BEK18860` | `K18860` | RENAULT TRAFIC 2.1D 86 mm |
-| `T BEK211000` | `K211000` | CUMMINS ISLe 330 CV (UN) 114 mm |
-| `T BEK21150` | `K21150` | CUMMINS N855C (1 CIL) 139,70 mm |
-| `T BEK21160` | `K21160` | CUMMINS NT-NTA855G-NT855C (1 CIL) 139,70 |
-| `T BEK21170` | `K21170` | CUMMINS NT855C-NT855P (1 CIL) 139,70 mm |
-| `T BEK21180` | `K21180` | CUMMINS NT-NT855M-NTA855 (1 CIL) 139,70 |
-| `T BEK21350` | `K21350` | CUMMINS N 15,0:1 (1 CIL) 139,70 mm |
-| `T BEK21510` | `K21510` | CUMMINS 6CTAA (63,30) (1 CIL) C/L 114 mm |
-| `T BEK21515` | `K21515` | CUMMINS 6CTAA (63,30) (1 CIL) C/C 114 mm |
-| `T BEK21635` | `K21635` | CUMMINS 6CTAA (66,20) (1 CIL) C/C 114 mm |
-| `T BEK21700` | `K21700` | CUMMINS 88NT (1 CIL) 139,70 mm |
-| `T BEK21710` | `K21710` | CUMMINS NTA855 (1 CIL) 139,70 mm |
-| `T BEK21730` | `K21730` | CUMMINS N855 (1 CIL) 139,70 mm |
-| `T BEK21860` | `K21860` | CUMMINS 6CTAA (56 mm) (1 CIL) C/C 114 mm |
-| `T BEK21950` | `K21950` | CUMMINS 6CTA (56,75) (1 CIL) C/C 114 mm |
 | `T BEK26040` | `K26040` | FORD CARGO 4600-5600 (NEW HOL) 111,80 mm |
 | `T BEK26060` | `K26060` | FORD CARGO 5600-5610 (NEW HOL) 111,80 mm |
 | `T BEK26070` | `K26070` | FORD CARGO 4610-6610 (1 CIL) 111,80 mm |
@@ -478,7 +495,8 @@ python3 scripts/conjuntos_desde_proveedor.py --desde-subconjuntos
 # 2. Cargar a mano las medidas leídas del PDF en CRAC/tecnicos/conjuntos.json
 #    (solo aplicacion / medidas / extra)
 
-# 3. Dibujos, si se recortó alguno
+# 3. Dibujos. Si llegó un tomo del catálogo, antes:
+#    python3 scripts/fotos_desde_catalogo_mahle.py --pdf <tomo>
 python3 scripts/recortar_pistones_mahle.py
 
 # 4. Verificar
