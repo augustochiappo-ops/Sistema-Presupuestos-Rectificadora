@@ -254,7 +254,9 @@ export const FAMILIAS = [
       // forma de la falda se reconocen de un vistazo y las medidas no. Los que
       // todavía no se recortaron del catálogo van con un guión.
       { key: 'dibujo', header: 'Dibujo', width: 80, tipo: 'dibujo' },
-      { key: 'marca', header: 'Marca', width: 100 },
+      // 145 y no 100: "FEDERAL MOGUL" no entra en 100 y la celda queda cortada.
+      // Es el mismo ancho que usan las familias de cojinetes, por lo mismo.
+      { key: 'marca', header: 'Marca', width: 145 },
       { key: 'descripcion', header: 'Descripción', wrap: true, minWidth: 220 },
       { key: 'nro_cil', header: 'Nº cil.', width: 80, align: 'right' },
       { key: 'diam_piston', header: 'Ø pistón', width: 100, align: 'right', tipo: 'mm' },
@@ -265,6 +267,9 @@ export const FAMILIAS = [
       // cuál es el que se está mostrando.
       { key: 'medida_crac', header: 'Precio de', width: 100 },
       { key: 'codigo_aros', header: 'Cód. aros', width: 155 },
+      // Si una persona ya cruzó la ficha contra el catálogo, igual que en
+      // conjuntos. Las de Federal Mogul entraron leídas por un extractor.
+      { key: 'verificado', header: 'Verif.', width: 75, align: 'center', tipo: 'si_no' },
       { key: 'precio', header: 'Precio', width: 120, align: 'right', tipo: 'precio' },
       { key: 'stock', header: 'Stock', width: 90, align: 'center', tipo: 'stock' },
     ],
@@ -294,15 +299,19 @@ export const FAMILIAS = [
     columnas: [
       // Los dos códigos a la vista, y por qué: el de la izquierda es el que se
       // pide (el de la lista del proveedor) y el de al lado es el del catálogo
-      // de Mahle, que es con el que se busca el motor en el PDF. Los dos se
-      // pueden escribir en el filtro "Código".
+      // del fabricante, que es con el que se busca el motor en el PDF. Los dos
+      // se pueden escribir en el filtro "Código".
       // Los anchos son ajustados a propósito: con el precio y el stock a la
       // derecha, la tabla tiene que entrar en pantalla sin dejarlos afuera del
       // borde — que es justamente lo que se viene a mirar de un conjunto.
       // 150 y no menos: el código más largo del proveedor es "T BEK482020WS" y
       // partido en dos renglones no se lee de un vistazo.
       { key: 'codigo', header: 'Código', width: 150, strong: true, wrap: true },
-      { key: 'codigo_fab', header: 'Cód. Mahle', width: 110 },
+      { key: 'codigo_fab', header: 'Cód. fáb.', width: 110 },
+      // Desde que entró el catálogo de Federal Mogul los conjuntos ya no son
+      // todos Mahle, así que la marca vuelve a la tabla: es lo primero que hay
+      // que saber para buscar la ficha en el PDF que corresponde.
+      { key: 'marca', header: 'Marca', width: 145 },
       // El dibujo del pistón sale del mismo recorte del catálogo que el del
       // subconjunto del mismo número: es el mismo pistón dibujado una sola vez.
       { key: 'dibujo', header: 'Dibujo', width: 70, tipo: 'dibujo' },
@@ -325,10 +334,8 @@ export const FAMILIAS = [
       // vista y no escondido en el dato, porque quien cotiza tiene derecho a
       // saber de dónde sale el número que está por usar.
       { key: 'verificado', header: 'Verif.', width: 75, align: 'center', tipo: 'si_no' },
-      // Sin columna "Precio de" y sin "Marca", al revés que en subconjuntos: el
-      // conjunto tiene UN código con UN precio (no se pide por sobremedida) y
-      // son todos Mahle, así que una columna con el mismo texto 128 veces solo
-      // le saca ancho a la descripción.
+      // Sin columna "Precio de", al revés que en subconjuntos: el conjunto tiene
+      // UN código con UN precio y no se pide por sobremedida.
       { key: 'precio', header: 'Precio', width: 110, align: 'right', tipo: 'precio' },
       { key: 'stock', header: 'Stock', width: 80, align: 'center', tipo: 'stock' },
     ],
@@ -356,6 +363,10 @@ export const FAMILIAS = [
     ],
     columnas: [
       { key: 'codigo', header: 'Código', width: 130, strong: true, wrap: true },
+      // El dibujo, igual que en subconjuntos y conjuntos: desde que entró el
+      // catálogo de Federal Mogul también hay dibujo para el pistón suelto, y es
+      // el mismo del subconjunto de su número.
+      { key: 'dibujo', header: 'Dibujo', width: 80, tipo: 'dibujo' },
       { key: 'marca', header: 'Marca', width: 155 },
       // Una sola columna que envuelve, como en subconjuntos: con dos, la tabla
       // se pasa del ancho de la pantalla y las aplasta a cero. El motor y la
@@ -371,6 +382,9 @@ export const FAMILIAS = [
       // Un pistón tiene un precio por sobremedida: esta columna dice de cuál es
       // el que se está mostrando (igual que en subconjuntos).
       { key: 'medida_crac', header: 'Precio de', width: 100 },
+      // Si una persona ya cruzó la ficha contra el catálogo, igual que en
+      // conjuntos. Las de Federal Mogul entraron leídas por un extractor.
+      { key: 'verificado', header: 'Verif.', width: 75, align: 'center', tipo: 'si_no' },
       { key: 'precio', header: 'Precio', width: 120, align: 'right', tipo: 'precio' },
       { key: 'stock', header: 'Stock', width: 90, align: 'center', tipo: 'stock' },
     ],

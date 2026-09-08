@@ -63,12 +63,18 @@ check("396 camisas (secas y húmedas)",
 check("915 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") == 915, familias.get("guias"))
 check("1.108 asientos de válvulas (Indy + Nubo + RYC)",
       familias.get("asientos", {}).get("total") == 1108, familias.get("asientos"))
-check("201 subconjuntos", familias.get("subconjuntos", {}).get("total") == 201, familias.get("subconjuntos"))
-# Los conjuntos son los juegos de motor que trabaja el proveedor ("T BEK…"), y
-# la ficha se arma desde su lista: hay uno por código, ni más ni menos.
-check("128 conjuntos (los que trabaja el proveedor)",
-      familias.get("conjuntos", {}).get("total") == 128, familias.get("conjuntos"))
-check("35 pistones (Persan)", familias.get("pistones", {}).get("total") == 35, familias.get("pistones"))
+# Las tres familias del pistón sumaron el catálogo Federal Mogul 2010 el
+# 2026-09-07: 83 subconjuntos, 38 conjuntos y 54 pistones, todos códigos que el
+# proveedor vende. Antes eran 201, 128 y 35, todos Mahle salvo los pistones.
+check("284 subconjuntos (Mahle + Federal Mogul)",
+      familias.get("subconjuntos", {}).get("total") == 284, familias.get("subconjuntos"))
+# Los conjuntos son los juegos de motor que trabaja el proveedor ("T BEK…" de
+# Mahle, "T F K…" de Federal Mogul), y la ficha se arma desde su lista: hay uno
+# por código, ni más ni menos.
+check("166 conjuntos (los que trabaja el proveedor)",
+      familias.get("conjuntos", {}).get("total") == 166, familias.get("conjuntos"))
+check("89 pistones (Persan + Federal Mogul)",
+      familias.get("pistones", {}).get("total") == 89, familias.get("pistones"))
 check("190 bujes de biela (Indubrón)",
       familias.get("bujes_biela", {}).get("total") == 190, familias.get("bujes_biela"))
 # Los cojinetes de biela salen de la lista del proveedor —Mahle, Federal Mogul y
@@ -210,6 +216,59 @@ por_motor = tecnicos.buscar("conjuntos", {"descripcion": "scania 113h"})
 check("los que esperan el catálogo se encuentran por el motor",
       len(por_motor["resultados"]) >= 2, codigos(por_motor))
 
+print("\n=== 5 ter. Federal Mogul: el catálogo 2010 en las tres familias ===")
+# Una ficha por familia, leída del PDF por scripts/leer_pistones_fm2010.py. Se
+# comprueban las tres medidas con las que se busca —Ø del pistón, alto total y Ø
+# del perno—, que el código del catálogo esté a la vista para poder verificarla,
+# y que el precio salga de la lista del proveedor.
+fm_pis = tecnicos.buscar("pistones", {"codigo": "P F 39493"})
+check("el pistón del Falcon 188/221 sale del catálogo 2010",
+      codigos(fm_pis) == ["P F 39493"], codigos(fm_pis))
+if fm_pis["total"]:
+    f = fm_pis["resultados"][0]
+    check("con sus tres medidas",
+          f["medidas"] == {"diam_piston": 93.47, "alt_piston": 85.1, "diam_perno": 23.17},
+          f["medidas"])
+    check("la marca es Federal Mogul y el código de fábrica, el del PDF",
+          (f["marca"], f["codigo_fab"]) == ("FEDERAL MOGUL", "P39493"),
+          (f["marca"], f["codigo_fab"]))
+    check("y con precio del proveedor", f["precio"] is not None and f["codigo_crac"], f["precio"])
+
+fm_sub = tecnicos.buscar("subconjuntos", {"codigo": "S F 79793"})
+check("el subconjunto del Transit 2.5D también",
+      codigos(fm_sub) == ["S F 79793"], codigos(fm_sub))
+if fm_sub["total"]:
+    f = fm_sub["resultados"][0]
+    check("con sus tres medidas",
+          f["medidas"] == {"diam_piston": 93.6, "alt_piston": 94.0, "diam_perno": 29.0},
+          f["medidas"])
+    # La cámara de la cabeza: los diesel de inyección directa la traen y es lo
+    # que distingue un pistón de otro del mismo diámetro.
+    check("y con la cámara de la cabeza leída de la columna 3",
+          (f["extra"]["cam_diam"], f["extra"]["cam_prof"]) == (40.0, 18.0),
+          (f["extra"]["cam_diam"], f["extra"]["cam_prof"]))
+
+fm_con = tecnicos.buscar("conjuntos", {"codigo": "T F K10073"})
+check("y el conjunto del Renault 12 1.3",
+      codigos(fm_con) == ["T F K10073"], codigos(fm_con))
+if fm_con["total"]:
+    f = fm_con["resultados"][0]
+    check("con sus tres medidas",
+          f["medidas"] == {"diam_piston": 73.0, "alt_piston": 62.5, "diam_perno": 20.0},
+          f["medidas"])
+    # El "oring" es una marca del código de Mahle (el sufijo WS). Federal Mogul
+    # no la usa: la ficha va en blanco y no en "no", que sería afirmar algo que
+    # el catálogo no dice.
+    check("y sin afirmar nada sobre los orings de camisa",
+          f["extra"]["oring"] is None, f["extra"]["oring"])
+
+# Una ficha nueva entra sin verificar hasta que el dueño la cruce contra el PDF.
+sin_ver = [r for r in tecnicos.buscar("conjuntos", {"codigo": "T F "})["resultados"]
+           if r["marca"] == "FEDERAL MOGUL"]
+check("las 38 de conjuntos entraron sin verificar",
+      len(sin_ver) == 38 and not any(r["extra"]["verificado"] for r in sin_ver),
+      len(sin_ver))
+
 print("\n=== 5 bis. Pistones ===")
 # Los mismos tres filtros que subconjuntos, sobre el catálogo Persan.
 pis = tecnicos.buscar("pistones", {"diam_piston": "98.42", "tol_diam_piston": "0.1"})
@@ -226,7 +285,10 @@ if uno["total"]:
     check("y con precio del proveedor", p82["precio"] is not None and p82["codigo_crac"], p82["precio"])
     check("sin nada para revisar", not p82["extra"]["revisar"], p82["extra"]["revisar"])
 r = tecnicos.buscar("pistones", {"aplicacion": "falcon"})
-check("y por el motor", codigos(r) == ["P PS169PH"], codigos(r))
+# El Falcon lo cubren el pistón de Persan y los de Federal Mogul, que entraron
+# con el catálogo 2010: el filtro por motor tiene que traer los dos.
+check("y por el motor", "P PS169PH" in codigos(r) and any(
+      c.startswith("P F ") for c in codigos(r)), codigos(r))
 
 # Las filas que el PDF dejó corridas de columna no cargan medidas inventadas:
 # van sin dato y con el motivo en `extra.revisar` (la pantalla las muestra "?").

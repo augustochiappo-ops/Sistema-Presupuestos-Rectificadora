@@ -1,33 +1,40 @@
 import React from 'react'
 import { Modal } from '../../components/Modal'
 import { DIBUJOS } from './dibujos-pistones'
+import { DIBUJOS_FM } from './dibujos-pistones-fm'
 
 /*
  * El dibujo del pistón de un subconjunto o de un conjunto.
  *
- * El catálogo Mahle trae, al lado de cada código, el corte del pistón y su
- * vista de abajo. Es lo que se mira para saber de una si el pistón que se está
+ * Los catálogos de Mahle y de Federal Mogul traen, al lado de cada código, el
+ * corte del pistón y su vista de abajo. Es lo que se mira para saber de una si el pistón que se está
  * buscando es el que se tiene en la mano: la cámara en la cabeza, el rebaje de
  * las válvulas, la forma de la falda. Las medidas de la fila dicen cuánto mide;
  * el dibujo dice qué es.
  *
- * Los archivos salen de scripts/recortar_pistones_mahle.py, uno por pistón, en
+ * Los archivos salen de dos scripts —scripts/recortar_pistones_mahle.py y
+ * scripts/dibujos_pistones_fm2010.py—, uno por pistón, en
  * /pistones/<archivo>.png. Todos vienen con la MISMA PROPORCIÓN de cuadro, así
  * que pedidos con una altura fija se ven todos del mismo tamaño y ninguno
  * empuja el alto de la fila.
  *
- * No todos los códigos tienen foto —se van agregando a medida que se recortan
- * del catálogo—, así que `DIBUJOS` (generado por el script) dice cuáles sí y
- * con qué archivo: el conjunto "E BE14040" y el subconjunto "S BE14040" son el
+ * No todos los códigos tienen foto —se van agregando a medida que se procesa un
+ * catálogo—, así que los manifiestos (generados por cada script) dicen cuáles sí
+ * y con qué archivo: el conjunto "E BE14040" y el subconjunto "S BE14040" son el
  * mismo pistón y comparten el PNG. Salir a pedir la imagen para ver si está
  * deja un cuadrito roto en la tabla y un 404 por fila.
+ *
+ * Son DOS mapas y no uno porque cada script reescribe entero su archivo en cada
+ * corrida: juntarlos en uno haría que el que corre segundo borre lo del primero.
+ * Acá se los busca en orden y listo.
  */
 
 /** El código como se busca en el mapa: "S BE 14040" y "S BE14040" son el mismo. */
 export const claveDe = (codigo) => (codigo || '').replace(/\s+/g, '')
 
 /** El archivo que le toca a este código, o null si todavía no se recortó. */
-export const archivoDibujo = (codigo) => DIBUJOS[claveDe(codigo)] || null
+export const archivoDibujo = (codigo) =>
+  DIBUJOS[claveDe(codigo)] || DIBUJOS_FM[claveDe(codigo)] || null
 
 export const tieneDibujo = (codigo) => Boolean(archivoDibujo(codigo))
 

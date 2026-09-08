@@ -5514,5 +5514,1601 @@
     "medida": null
    }
   ]
+ },
+ {
+  "codigo": "T F K10106",
+  "codigo_fab": "K10106",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Camión y Colectivo",
+  "descripcion": "BEDFORD 350-CIMARRON 4.3/16\"",
+  "medidas": {
+   "diam_piston": 106.36,
+   "alt_piston": 117.86,
+   "diam_perno": 34.92
+  },
+  "extra": {
+   "fabricante": "BEDFORD 350D",
+   "motor": "350D y H",
+   "nro_cil": "6",
+   "combustible": "Diesel",
+   "cilindrada": "5755 c.c.",
+   "r_compresion": null,
+   "anios": "1966/1978",
+   "alt_compresion": 71.13,
+   "cam_diam": null,
+   "cam_prof": -19.43,
+   "aros": "2,30 / 2,30 / 2,30 / 4,80 / 4,80",
+   "largo_perno": 91.0,
+   "perno_str": "∅34,92 × 91,00",
+   "huelgo": 0.16,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 10,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10106",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K587814",
+  "codigo_fab": "K587814",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "CUMMINS C",
+  "descripcion": "CUMMINS 6CTA (56,75) (1 CIL) C/L 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "300 HP",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.96,
+   "cam_diam": null,
+   "cam_prof": -24.0,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.13,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 26,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K587814",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K924714",
+  "codigo_fab": "K924714",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "CUMMINS C",
+  "descripcion": "CUMMINS 6CTAA (66,20) (1 CIL) C/L 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "300 HP",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.96,
+   "cam_diam": null,
+   "cam_prof": -21.26,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.13,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 26,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K924714",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K770714",
+  "codigo_fab": "K770714",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Modelo 220 HP, Euro 1",
+  "descripcion": "CUMMINS 6CTAA (56 mm) (1 CIL) C/L 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "C",
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.96,
+   "cam_diam": null,
+   "cam_prof": -25.0,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 26,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K770714",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K316314",
+  "codigo_fab": "K316314",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "CUMMINS C",
+  "descripcion": "CUMMINS 6CTAA (63,30) (1 CIL) C/L 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "C",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.75,
+   "cam_diam": null,
+   "cam_prof": -21.79,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 27,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K316314",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K316414",
+  "codigo_fab": "K316414",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "\"SERIES''",
+  "descripcion": "CUMMINS 6CTA (66,29) (1 CIL) C/L 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "C",
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.75,
+   "cam_diam": null,
+   "cam_prof": -21.26,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 27,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K316414",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K316514",
+  "codigo_fab": "K316514",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "\"SERIES''",
+  "descripcion": "CUMMINS 6CTA (60,50) (1 CIL) C/L 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "C",
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.75,
+   "cam_diam": null,
+   "cam_prof": -25.42,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 27,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K316514",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K11077",
+  "codigo_fab": "K11077",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Escort GL y Ghia",
+  "descripcion": "FORD ESCORT 1.6 CHT 77 mm",
+  "medidas": {
+   "diam_piston": 77.0,
+   "alt_piston": 66.5,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "fabricante": "FORD ESCORT GL / GHIA - MOTOR 1.6L CHT",
+   "motor": "M1600 CHT",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1555 c.c.",
+   "r_compresion": "9:1",
+   "anios": "1988/1992",
+   "alt_compresion": 34.0,
+   "cam_diam": null,
+   "cam_prof": -4.73,
+   "aros": "1,75 / 2,00 / 4,00",
+   "largo_perno": 64.0,
+   "perno_str": "∅20,00 × 64,00",
+   "huelgo": 0.05,
+   "alt_medicion": 20.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 37,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K11077",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K10105",
+  "codigo_fab": "K10105",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractores 45R y 50R.",
+  "descripcion": "FIAT SOMECA M45 105 mm",
+  "medidas": {
+   "diam_piston": 105.0,
+   "alt_piston": 145.2,
+   "diam_perno": 38.0
+  },
+  "extra": {
+   "fabricante": "IVECO FIAT - MOTOR C01",
+   "motor": "CO1D/45",
+   "nro_cil": "6",
+   "combustible": "Diesel",
+   "cilindrada": "5320 c.c.",
+   "r_compresion": null,
+   "anios": "1959 / 1968",
+   "alt_compresion": 80.2,
+   "cam_diam": null,
+   "cam_prof": -25.7,
+   "aros": "2,50 / 2,50 / 2,50 / 2,50 / 5,00 / 5,00",
+   "largo_perno": 88.1,
+   "perno_str": "∅38,00 × 88,10",
+   "huelgo": 0.11,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 47,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10105",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K15110",
+  "codigo_fab": "K15110",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Con inserto APA, Camión 673 N/T",
+  "descripcion": "FIAT 673 CP3 110 mm",
+  "medidas": {
+   "diam_piston": 110.0,
+   "alt_piston": 140.2,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "IVECO FIAT - MOTOR CP3",
+   "motor": "CP3",
+   "nro_cil": "6",
+   "combustible": "Diesel",
+   "cilindrada": "7412 c.c.",
+   "r_compresion": null,
+   "anios": "1969/1982",
+   "alt_compresion": 70.2,
+   "cam_diam": null,
+   "cam_prof": -28.0,
+   "aros": "2,50 / 2,50 / 2,50 / 5,00 / 5,00",
+   "largo_perno": 93.0,
+   "perno_str": "∅40,00 × 93,00",
+   "huelgo": 0.13,
+   "alt_medicion": 5.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 47,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K15110",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K13110",
+  "codigo_fab": "K13110",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor 500, 900 y 1100",
+  "descripcion": "FIAT 500-900-1100 (3 CIL) 110 mm",
+  "medidas": {
+   "diam_piston": 110.0,
+   "alt_piston": 140.2,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "IVECO FIAT - MOTOR CN3",
+   "motor": "CN3/CP3",
+   "nro_cil": "3/6",
+   "combustible": "Diesel",
+   "cilindrada": "3420/6840 c.c.",
+   "r_compresion": null,
+   "anios": "1969/1982",
+   "alt_compresion": 70.2,
+   "cam_diam": null,
+   "cam_prof": -28.0,
+   "aros": "2,50 / 2,50 / 2,50 / 5,00 / 5,00",
+   "largo_perno": 93.0,
+   "perno_str": "∅40,00 × 93,00",
+   "huelgo": 0.13,
+   "alt_medicion": 5.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 47,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K13110",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K14110",
+  "codigo_fab": "K14110",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor 400 S,V,U y 600 E",
+  "descripcion": "FIAT 400 (3 CIL) 110 mm",
+  "medidas": {
+   "diam_piston": 110.0,
+   "alt_piston": 150.0,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "IVECO FIAT - MOTOR CN3 / CN4",
+   "motor": "CN3/CN4",
+   "nro_cil": "3",
+   "combustible": "Diesel",
+   "cilindrada": "3420 c.c.",
+   "r_compresion": null,
+   "anios": "1969/1978",
+   "alt_compresion": 75.2,
+   "cam_diam": null,
+   "cam_prof": -27.5,
+   "aros": "2,50 / 2,50 / 2,50 / 5,00 / 5,00",
+   "largo_perno": 93.0,
+   "perno_str": "∅40,00 × 93,00",
+   "huelgo": 0.15,
+   "alt_medicion": 30.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 48,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K14110",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K10115",
+  "codigo_fab": "K10115",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor 700 E y 800",
+  "descripcion": "FIAT 700E-800 115 mm",
+  "medidas": {
+   "diam_piston": 115.0,
+   "alt_piston": 140.5,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "IVECO FIAT - MOTOR CO3",
+   "motor": "CO3",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "5401 c.c.",
+   "r_compresion": null,
+   "anios": "1971/1978",
+   "alt_compresion": 70.2,
+   "cam_diam": null,
+   "cam_prof": -28.5,
+   "aros": "2,50 / 2,50 / 5,00 / 5,00",
+   "largo_perno": 97.8,
+   "perno_str": "∅40,00 × 97,80",
+   "huelgo": 0.15,
+   "alt_medicion": 15.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 48,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10115",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K10122",
+  "codigo_fab": "K10122",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor 55 y 60 R",
+  "descripcion": "FIAT 55R-60R C/GUIA 122 mm",
+  "medidas": {
+   "diam_piston": 122.0,
+   "alt_piston": 158.0,
+   "diam_perno": 44.0
+  },
+  "extra": {
+   "fabricante": "IVECO FIAT - MOTOR 604",
+   "motor": "604",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "6546 c.c.",
+   "r_compresion": null,
+   "anios": "1959/1962",
+   "alt_compresion": 92.5,
+   "cam_diam": null,
+   "cam_prof": -27.0,
+   "aros": "3,00 / 3,00 / 3,00 / 3,00 / 5,50 / 5,50",
+   "largo_perno": 104.4,
+   "perno_str": "∅44,00 × 104,40",
+   "huelgo": 0.11,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 48,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10122",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K10125",
+  "codigo_fab": "K10125",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor 80R, 780 y 780 R",
+  "descripcion": "FIAT 780R-R80 C/GUIA 125 mm",
+  "medidas": {
+   "diam_piston": 125.0,
+   "alt_piston": 158.0,
+   "diam_perno": 44.0
+  },
+  "extra": {
+   "fabricante": "IVECO FIAT - MOTOR 203.000",
+   "motor": "203.000",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "6872 c.c.",
+   "r_compresion": null,
+   "anios": "1962/1971",
+   "alt_compresion": 92.5,
+   "cam_diam": null,
+   "cam_prof": -27.5,
+   "aros": "3,60 / 3,00 / 3,00 / 3,00 / 5,50 / 5,50",
+   "largo_perno": 107.0,
+   "perno_str": "∅44,00 × 107,00",
+   "huelgo": 0.15,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 48,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10125",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K11102",
+  "codigo_fab": "K11102",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "DLO 1, Con Inserto APA, Tractores.",
+  "descripcion": "J.DEERE 2330-2530 (1 CIL) (P.35) 102 mm",
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 112.0,
+   "diam_perno": 34.95
+  },
+  "extra": {
+   "fabricante": "JOHN DEERE 890/1120 2030/2530 3030/3530",
+   "motor": "3164/4219/6329",
+   "nro_cil": "3/4/6",
+   "combustible": "Diesel",
+   "cilindrada": "2687/3590/5380 c.c.",
+   "r_compresion": null,
+   "anios": "1970/1980",
+   "alt_compresion": 66.3,
+   "cam_diam": null,
+   "cam_prof": -21.8,
+   "aros": "3,18 / 2,38 / 5,00",
+   "largo_perno": 84.0,
+   "perno_str": "∅34,95 × 84,00",
+   "huelgo": 0.11,
+   "alt_medicion": 41.5,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 50,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K11102",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K11106",
+  "codigo_fab": "K11106",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "DLO 1, Con Inserto APA, Tractores.",
+  "descripcion": "J.DEERE 2730-4530 (1 CIL) 106,5 mm",
+  "medidas": {
+   "diam_piston": 106.5,
+   "alt_piston": 112.0,
+   "diam_perno": 34.95
+  },
+  "extra": {
+   "fabricante": "JOHN DEERE 1630/1635 2130/2730 & 4530",
+   "motor": "3239/4239/6539",
+   "nro_cil": "3/4/6",
+   "combustible": "Diesel",
+   "cilindrada": "2938/3918/5876 c.c.",
+   "r_compresion": null,
+   "anios": "1970/1980",
+   "alt_compresion": 66.3,
+   "cam_diam": null,
+   "cam_prof": -20.7,
+   "aros": "3,18 / 2,38 / 3,50",
+   "largo_perno": 84.5,
+   "perno_str": "∅34,95 × 84,50",
+   "huelgo": 0.14,
+   "alt_medicion": 41.5,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 50,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K11106",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K10091/1",
+  "codigo_fab": "K10091/1",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 4.203-6.305 (CAM.95,47) 3.601\"",
+  "medidas": {
+   "diam_piston": 91.49,
+   "alt_piston": 108.5,
+   "diam_perno": 31.75
+  },
+  "extra": {
+   "fabricante": "PERKINS 3.152, 4.203 & 6.305",
+   "motor": "3,152, 4,203 y 6,305",
+   "nro_cil": "3/4/6",
+   "combustible": "Diesel",
+   "cilindrada": "2500/3330/5004 c.c.",
+   "r_compresion": null,
+   "anios": "1957 →",
+   "alt_compresion": 57.24,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "2,38 / 2,38 / 3,17 / 6,35 / 6,35",
+   "largo_perno": 75.2,
+   "perno_str": "∅31,75 × 75,20",
+   "huelgo": 0.1,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 65,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10091/1",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K11091/1",
+  "codigo_fab": "K11091/1",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 4.203-6.305 (CAM.93,72) 3.601\"",
+  "medidas": {
+   "diam_piston": 91.49,
+   "alt_piston": 108.5,
+   "diam_perno": 31.75
+  },
+  "extra": {
+   "fabricante": "PERKINS 3.152, 4.203 & 6.305",
+   "motor": "3,152, 4,203 y 6,305",
+   "nro_cil": "3/4/6",
+   "combustible": "Diesel",
+   "cilindrada": "2500/3330/5004 c.c.",
+   "r_compresion": null,
+   "anios": "1957 →",
+   "alt_compresion": 57.24,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "2,38 / 2,38 / 3,17 / 6,35 / 6,35",
+   "largo_perno": 75.2,
+   "perno_str": "∅31,75 × 75,20",
+   "huelgo": 0.1,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 65,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K11091/1",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K12091/1",
+  "codigo_fab": "K12091/1",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 4.203-6.305 (CAM.94,48) 3.601\"",
+  "medidas": {
+   "diam_piston": 91.49,
+   "alt_piston": 108.5,
+   "diam_perno": 31.75
+  },
+  "extra": {
+   "fabricante": "PERKINS 3.152, 4.203 & 6.305",
+   "motor": "3,152, 4,203 y 6,305",
+   "nro_cil": "3/4/6",
+   "combustible": "Diesel",
+   "cilindrada": "2500/3330/5004 c.c.",
+   "r_compresion": null,
+   "anios": "1957 →",
+   "alt_compresion": 57.24,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "2,38 / 2,38 / 3,17 / 6,35 / 6,35",
+   "largo_perno": 75.2,
+   "perno_str": "∅31,75 × 75,20",
+   "huelgo": 0.1,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 65,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K12091/1",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K13091/1",
+  "codigo_fab": "K13091/1",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 4.203-6.305 (CAM.93,72) TER.INT.",
+  "medidas": {
+   "diam_piston": 91.49,
+   "alt_piston": 108.5,
+   "diam_perno": 31.75
+  },
+  "extra": {
+   "fabricante": "PERKINS 3.152, 4.203 & 6.305",
+   "motor": "3,152, 4,203 y 6,305",
+   "nro_cil": "3/4/6",
+   "combustible": "Diesel",
+   "cilindrada": "2500/3330/5004 c.c.",
+   "r_compresion": null,
+   "anios": "1957 →",
+   "alt_compresion": 57.24,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "2,38 / 2,38 / 3,17 / 6,35 / 6,35",
+   "largo_perno": 75.2,
+   "perno_str": "∅31,75 × 75,20",
+   "huelgo": 0.1,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 65,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K13091/1",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K14098",
+  "codigo_fab": "K14098",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 6.354 S/APA S/PEST. 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.47,
+   "alt_piston": 121.1,
+   "diam_perno": 34.93
+  },
+  "extra": {
+   "fabricante": "PERKINS 6.354",
+   "motor": "6,354",
+   "nro_cil": "6",
+   "combustible": "Diesel",
+   "cilindrada": "5800 c.c.",
+   "r_compresion": null,
+   "anios": "1966 →",
+   "alt_compresion": 70.28,
+   "cam_diam": null,
+   "cam_prof": -25.98,
+   "aros": "2,38 / 2,38 / 2,38 / 6,35 / 6,35",
+   "largo_perno": 84.0,
+   "perno_str": "∅34,93 × 84,00",
+   "huelgo": 0.15,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 66,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K14098",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K11098",
+  "codigo_fab": "K11098",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 6.354 S/APA C/PEST. 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.47,
+   "alt_piston": 121.1,
+   "diam_perno": 34.93
+  },
+  "extra": {
+   "fabricante": "PERKINS 6.354",
+   "motor": "6,354",
+   "nro_cil": "6",
+   "combustible": "Diesel",
+   "cilindrada": "5800 c.c.",
+   "r_compresion": null,
+   "anios": "1966 →",
+   "alt_compresion": 70.28,
+   "cam_diam": null,
+   "cam_prof": -25.98,
+   "aros": "2,38 / 2,38 / 2,38 / 6,35 / 6,35",
+   "largo_perno": 84.0,
+   "perno_str": "∅34,93 × 84,00",
+   "huelgo": 0.15,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 66,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K11098",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K15098",
+  "codigo_fab": "K15098",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Con inserto APA, Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 6.354 APA S/P 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.47,
+   "alt_piston": 121.1,
+   "diam_perno": 34.93
+  },
+  "extra": {
+   "fabricante": "PERKINS 6.354",
+   "motor": "6,354",
+   "nro_cil": "6",
+   "combustible": "Diesel",
+   "cilindrada": "5800 c.c.",
+   "r_compresion": null,
+   "anios": "1973/1982",
+   "alt_compresion": 70.28,
+   "cam_diam": null,
+   "cam_prof": -25.98,
+   "aros": "3,17 / 2,38 / 2,38 / 6,35 / 6,35",
+   "largo_perno": 84.0,
+   "perno_str": "∅34,93 × 84,00",
+   "huelgo": 0.15,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 66,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K15098",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K13084",
+  "codigo_fab": "K13084",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "404 y Pick-up T4B",
+  "descripcion": "PEUGEOT 404 8.3:1 C/NVA 84 mm",
+  "medidas": {
+   "diam_piston": 84.0,
+   "alt_piston": 79.75,
+   "diam_perno": 23.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT 404",
+   "motor": "XC6",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1618 c.c.",
+   "r_compresion": "8,3:1",
+   "anios": "1970/1978",
+   "alt_compresion": 41.5,
+   "cam_diam": null,
+   "cam_prof": 3.4,
+   "aros": "2,00 / 2,00 / 4,50",
+   "largo_perno": 70.0,
+   "perno_str": "∅23,00 × 70,00",
+   "huelgo": 0.05,
+   "alt_medicion": 15.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 70,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K13084",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K12085",
+  "codigo_fab": "K12085",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "504",
+  "descripcion": "PEUGEOT 504 8.35:1 C/NVA 85 mm",
+  "medidas": {
+   "diam_piston": 85.0,
+   "alt_piston": 79.4,
+   "diam_perno": 23.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT 504",
+   "motor": "XC6-A",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1657 c.c.",
+   "r_compresion": "8,35:1",
+   "anios": "1969/1973",
+   "alt_compresion": 42.3,
+   "cam_diam": null,
+   "cam_prof": 3.4,
+   "aros": "2,00 / 2,00 / 4,50",
+   "largo_perno": 69.7,
+   "perno_str": "∅23,00 × 69,70",
+   "huelgo": 0.05,
+   "alt_medicion": 15.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 70,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K12085",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K11085",
+  "codigo_fab": "K11085",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "504",
+  "descripcion": "PEUGEOT 504 7.85:1 85 mm",
+  "medidas": {
+   "diam_piston": 85.0,
+   "alt_piston": 79.4,
+   "diam_perno": 23.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT 504",
+   "motor": "XC6-A",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1657 c.c.",
+   "r_compresion": "7,85:1",
+   "anios": "1969/1973",
+   "alt_compresion": 42.3,
+   "cam_diam": null,
+   "cam_prof": 3.4,
+   "aros": "2,00 / 2,00 / 4,50",
+   "largo_perno": 69.7,
+   "perno_str": "∅23,00 × 69,70",
+   "huelgo": 0.05,
+   "alt_medicion": 15.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 70,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K11085",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K16085",
+  "codigo_fab": "K16085",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "504XL, XE y XSE",
+  "descripcion": "PEUGEOT 504 1800 CC 8:1 C/NVA 85 mm",
+  "medidas": {
+   "diam_piston": 85.0,
+   "alt_piston": 71.0,
+   "diam_perno": 23.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT 504",
+   "motor": "XMA",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1838 c.c.",
+   "r_compresion": "8:1",
+   "anios": "1973/1976",
+   "alt_compresion": 38.55,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "2,00 / 2,00 / 4,50",
+   "largo_perno": 69.7,
+   "perno_str": "∅23,00 × 69,70",
+   "huelgo": 0.05,
+   "alt_medicion": 15.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 70,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K16085",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K10088",
+  "codigo_fab": "K10088",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Peugeot 404 / 504 y, Rastrojero.",
+  "descripcion": "INDENOR XD4.88 88 mm",
+  "medidas": {
+   "diam_piston": 88.0,
+   "alt_piston": 95.35,
+   "diam_perno": 28.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT DIESEL XD 4.88",
+   "motor": "XD 4.88",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1948 c.c.",
+   "r_compresion": "22,2:1",
+   "anios": "1970/1978",
+   "alt_compresion": 58.35,
+   "cam_diam": null,
+   "cam_prof": -2.0,
+   "aros": "2,00 / 2,00 / 2,00 / 4,50",
+   "largo_perno": 71.5,
+   "perno_str": "∅28,00 × 71,50",
+   "huelgo": 0.09,
+   "alt_medicion": 30.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 72,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10088",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K11094",
+  "codigo_fab": "K11094",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Perno diam. 30 mm., Peugeot 504 / 505",
+  "descripcion": "INDENOR XD2 P.30 (A.C. 57) 94 mm",
+  "medidas": {
+   "diam_piston": 94.0,
+   "alt_piston": 99.9,
+   "diam_perno": 30.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT DIESEL XD2",
+   "motor": "XD2, XD2P",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "2304 c.c.",
+   "r_compresion": "22,20:1",
+   "anios": "1978/1999",
+   "alt_compresion": 57.4,
+   "cam_diam": null,
+   "cam_prof": -2.0,
+   "aros": "2,00 / 2,00 / 4,00",
+   "largo_perno": 79.0,
+   "perno_str": "∅30,00 × 79,00",
+   "huelgo": 0.13,
+   "alt_medicion": 19.2,
+   "posicion_block": "+0,69 a +0,99",
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 73,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K11094",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K13094",
+  "codigo_fab": "K13094",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Perno diam. 30 mm., Peugeot 504 / 505",
+  "descripcion": "INDENOR XD2 P.30 (A.C. 57)(C.-030) 94 mm",
+  "medidas": {
+   "diam_piston": 94.0,
+   "alt_piston": 99.9,
+   "diam_perno": 30.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT DIESEL XD2",
+   "motor": "XD2, XD2P",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "2304 c.c.",
+   "r_compresion": "22,20:1",
+   "anios": "1978/1999",
+   "alt_compresion": 57.4,
+   "cam_diam": null,
+   "cam_prof": -2.0,
+   "aros": "2,00 / 2,00 / 4,00",
+   "largo_perno": 79.0,
+   "perno_str": "∅30,00 × 79,00",
+   "huelgo": 0.13,
+   "alt_medicion": 19.2,
+   "posicion_block": "+0,69 a +0,99",
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 73,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K13094",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K10073",
+  "codigo_fab": "K10073",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "R12 L, TL, TR y TS",
+  "descripcion": "RENAULT 12 1.3 A/C 73 mm",
+  "medidas": {
+   "diam_piston": 73.0,
+   "alt_piston": 62.5,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "fabricante": "RENAULT 1.3 L",
+   "motor": "O.H.V. 810",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1289 c.c.",
+   "r_compresion": "8:1",
+   "anios": "1973 /1978",
+   "alt_compresion": 37.5,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "1,75 / 2,00 / 4,00",
+   "largo_perno": 62.0,
+   "perno_str": "∅20,00 × 62,00",
+   "huelgo": 0.04,
+   "alt_medicion": 11.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 75,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10073",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K10076",
+  "codigo_fab": "K10076",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "R6, R12 TS y R18 GTL",
+  "descripcion": "RENAULT 12 1.4 76 mm",
+  "medidas": {
+   "diam_piston": 76.0,
+   "alt_piston": 64.0,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "fabricante": "RENAULT 1.4 L",
+   "motor": "840, 847-20 y C2/3J",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1397 c.c.",
+   "r_compresion": "9,5:1",
+   "anios": "1976 /1994",
+   "alt_compresion": 37.5,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "1,70 / 2,00 / 4,00",
+   "largo_perno": 65.6,
+   "perno_str": "∅20,00 × 65,60",
+   "huelgo": 0.05,
+   "alt_medicion": 11.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 75,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10076",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K11076",
+  "codigo_fab": "K11076",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "R6, R12 TS y R18 GTL",
+  "descripcion": "RENAULT 18 1.4 Jrs 76 mm",
+  "medidas": {
+   "diam_piston": 76.0,
+   "alt_piston": 64.0,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "fabricante": "RENAULT 1.4 L",
+   "motor": "840, 847-20 y C2/3J",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1397 c.c.",
+   "r_compresion": "9,5:1",
+   "anios": "1976 /1994",
+   "alt_compresion": 37.5,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "1,70 / 2,00 / 4,00",
+   "largo_perno": 65.6,
+   "perno_str": "∅20,00 × 65,60",
+   "huelgo": 0.05,
+   "alt_medicion": 11.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 75,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K11076",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K10077",
+  "codigo_fab": "K10077",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "R9, R11, R12, R19 y Clio",
+  "descripcion": "RENAULT 9 1600 CC 77 mm",
+  "medidas": {
+   "diam_piston": 77.0,
+   "alt_piston": 60.5,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "fabricante": "RENAULT 1.6 L",
+   "motor": "M1600 CL2",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1565 c.c.",
+   "r_compresion": "9:1",
+   "anios": "1988/2000",
+   "alt_compresion": 33.95,
+   "cam_diam": null,
+   "cam_prof": -1.5,
+   "aros": "1,75 / 2,00 / 4,00",
+   "largo_perno": 64.0,
+   "perno_str": "∅20,00 × 64,00",
+   "huelgo": 0.08,
+   "alt_medicion": 15.5,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 77,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10077",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K10086",
+  "codigo_fab": "K10086",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "R18, R21, Nevada y Traffic",
+  "descripcion": "RENAULT TRAFIC 2.1D 86 mm",
+  "medidas": {
+   "diam_piston": 86.0,
+   "alt_piston": 92.9,
+   "diam_perno": 28.0
+  },
+  "extra": {
+   "fabricante": "RENAULT DIESEL J8S",
+   "motor": "J8S",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "2068 c.c.",
+   "r_compresion": "21,50:1",
+   "anios": "1988/1995",
+   "alt_compresion": 51.0,
+   "cam_diam": null,
+   "cam_prof": -1.95,
+   "aros": "2,00 / 2,00 / 4,00",
+   "largo_perno": 75.0,
+   "perno_str": "∅28,00 × 75,00",
+   "huelgo": 0.11,
+   "alt_medicion": 20.0,
+   "posicion_block": "+0,85 a +1,15",
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 80,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K10086",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K15088",
+  "codigo_fab": "K15088",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "R18, R21 GTX, Coupe",
+  "descripcion": "RENAULT 21 2.2 88 mm",
+  "medidas": {
+   "diam_piston": 88.0,
+   "alt_piston": 65.5,
+   "diam_perno": 23.0
+  },
+  "extra": {
+   "fabricante": "RENAULT 2.2 L",
+   "motor": "M2200",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "2165 c.c.",
+   "r_compresion": "8,7:1",
+   "anios": "1986/1996",
+   "alt_compresion": 40.5,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "1,75 / 2,00 / 4,00",
+   "largo_perno": 75.0,
+   "perno_str": "∅23,00 × 75,00",
+   "huelgo": 0.05,
+   "alt_medicion": 10.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 81,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K15088",
+    "medida": null
+   }
+  ]
+ },
+ {
+  "codigo": "T F K11090",
+  "codigo_fab": "K11090",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "1er. Aro rectangular, Hi-Lux, Corolla, Crown y, Cressidra",
+  "descripcion": "TOYOTA L 90 mm",
+  "medidas": {
+   "diam_piston": 90.0,
+   "alt_piston": 98.0,
+   "diam_perno": 27.0
+  },
+  "extra": {
+   "fabricante": "TOYOTA SERIE L DIESEL",
+   "motor": "Serie L",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "2188 c.c.",
+   "r_compresion": "21,5:1",
+   "anios": "1979 /1983",
+   "alt_compresion": 53.23,
+   "cam_diam": null,
+   "cam_prof": -1.4,
+   "aros": "2,50 / 2,00 / 4,00",
+   "largo_perno": 73.5,
+   "perno_str": "∅27,00 × 73,50",
+   "huelgo": 0.09,
+   "alt_medicion": 35.0,
+   "posicion_block": null,
+   "diams_dispon": null,
+   "medidas_dispon": null,
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 86,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "T F K11090",
+    "medida": null
+   }
+  ]
  }
 ]

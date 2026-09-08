@@ -7770,5 +7770,3839 @@
     "medida": "0.5"
    }
   ]
+ },
+ {
+  "codigo": "S F 81179",
+  "codigo_fab": "SC81179",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Corsa, Corsa, Vectra, Turbo Intercooled, Corsa, Astra",
+  "descripcion": "ISUZU 4EE1/CHEVROLET CORSA 1.7D 79 mm",
+  "medidas": {
+   "diam_piston": 79.0,
+   "alt_piston": 84.0,
+   "diam_perno": 25.0
+  },
+  "extra": {
+   "fabricante": "CHEVROLET CORSA 1.7 DIESEL",
+   "motor": "Y17DT",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1686 c.c.",
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 39.5,
+   "cam_diam": null,
+   "cam_prof": -1.3,
+   "aros": "2,00 / 1,50 / 3,00",
+   "largo_perno": 64.0,
+   "perno_str": "∅25,00 × 64,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 13,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 81179  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 81179  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 81879",
+  "codigo_fab": "SC81879",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Corsa",
+  "descripcion": "CHEVROLET CORSA 1.6 16V 79 mm",
+  "medidas": {
+   "diam_piston": 79.0,
+   "alt_piston": 48.0,
+   "diam_perno": 18.0
+  },
+  "extra": {
+   "fabricante": "CHEVROLET CORSA 1.6 - 16V",
+   "motor": "1,6 Nafta",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "1598 c.c.",
+   "r_compresion": "10,50:1",
+   "anios": null,
+   "alt_compresion": 28.05,
+   "cam_diam": null,
+   "cam_prof": -1.9,
+   "aros": "1,20 / 1,50 / 2,50",
+   "largo_perno": 55.0,
+   "perno_str": "∅18,00 × 55,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 14,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 81879  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 81879  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 81980",
+  "codigo_fab": "SC81980",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Idea, Marea 1,9",
+  "descripcion": "CHEVROLET MERIVA 1.8 8V (Pz-3,8) 80,50mm",
+  "medidas": {
+   "diam_piston": 80.5,
+   "alt_piston": 71.15,
+   "diam_perno": 18.0
+  },
+  "extra": {
+   "fabricante": "FIAT IDEA",
+   "motor": "187 A 7000",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "2387 c.c.",
+   "r_compresion": "9,4:1",
+   "anios": null,
+   "alt_compresion": 24.1,
+   "cam_diam": null,
+   "cam_prof": -3.8,
+   "aros": "1,20 / 1,50 / 2,00",
+   "largo_perno": 57.0,
+   "perno_str": "∅18,00 × 57,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 32,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 81980  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 81980  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 18098",
+  "codigo_fab": "SC18098",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "400, Special, Chevy y, Pick-up C10",
+  "descripcion": "CHEVROLET 230 B/C 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.43,
+   "alt_piston": 96.5,
+   "diam_perno": 23.55
+  },
+  "extra": {
+   "fabricante": "CHEVROLET 230",
+   "motor": "230 B/C",
+   "nro_cil": "6",
+   "combustible": "Nafta",
+   "cilindrada": "3769 c.c.",
+   "r_compresion": null,
+   "anios": "1965/1969",
+   "alt_compresion": 45.72,
+   "cam_diam": null,
+   "cam_prof": -5.8,
+   "aros": "1,98 / 1,98 / 4,76",
+   "largo_perno": 76.0,
+   "perno_str": "∅23,55 × 76,00",
+   "huelgo": 0.02,
+   "alt_medicion": 34.5,
+   "posicion_block": null,
+   "diams_dispon": "030 / 040 / STD",
+   "medidas_dispon": "030 / 040 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 17,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 18098  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "S F 18098  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "S F 18098  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 39298",
+  "codigo_fab": "SC39298",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Chevy SS, Malibu y, Pick-up C30",
+  "descripcion": "CHEVROLET 250 A/C 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.43,
+   "alt_piston": 89.4,
+   "diam_perno": 23.55
+  },
+  "extra": {
+   "fabricante": "CHEVROLET 250",
+   "motor": "250 A/C",
+   "nro_cil": "6",
+   "combustible": "Nafta",
+   "cilindrada": "4097 c.c.",
+   "r_compresion": null,
+   "anios": "1969/1978",
+   "alt_compresion": 42.16,
+   "cam_diam": null,
+   "cam_prof": -3.25,
+   "aros": "1,98 / 1,98 / 4,76",
+   "largo_perno": 76.0,
+   "perno_str": "∅23,55 × 76,00",
+   "huelgo": 0.03,
+   "alt_medicion": 34.5,
+   "posicion_block": null,
+   "diams_dispon": "030 / 040 / STD",
+   "medidas_dispon": "030 / 040 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 17,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 39298  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "S F 39298  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "S F 39298  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 39986",
+  "codigo_fab": "SC39986",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Dodge 1500 GT",
+  "descripcion": "DODGE 1500 B/C 86,14 mm",
+  "medidas": {
+   "diam_piston": 86.1,
+   "alt_piston": 75.8,
+   "diam_perno": 23.82
+  },
+  "extra": {
+   "fabricante": "CHRYSLER - DODGE 1.5 L",
+   "motor": "OHV Hillman",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1498 c.c.",
+   "r_compresion": null,
+   "anios": "1972/1990",
+   "alt_compresion": 44.0,
+   "cam_diam": null,
+   "cam_prof": -2.0,
+   "aros": "1,98 / 1,98 / 3,96",
+   "largo_perno": 74.7,
+   "perno_str": "∅23,82 × 74,70",
+   "huelgo": 0.05,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": "030 / 040 / STD",
+   "medidas_dispon": "030 / 040 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 18,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 39986  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "S F 39986  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "S F 39986  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 82273",
+  "codigo_fab": "SC82273",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Common Rail Turbo",
+  "descripcion": "FORD ECOSPORT 1.4TDCi 73,70 mm",
+  "medidas": {
+   "diam_piston": 73.7,
+   "alt_piston": 66.32,
+   "diam_perno": 25.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT 206 HDI/ 306 HDI/ 307 HDI",
+   "motor": "TUD5 (VJY/VZJ)",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "Cilindrada 1527 cc",
+   "r_compresion": "23:1",
+   "anios": null,
+   "alt_compresion": 42.94,
+   "cam_diam": 62.0,
+   "cam_prof": -14.7,
+   "aros": "2,50 / 2,00 / 2,50",
+   "largo_perno": 60.0,
+   "perno_str": "∅25,00 × 60,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 67,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 82273  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 82273  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 85378",
+  "codigo_fab": "SC85378",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "PEUGEOT 206 - 207 - 307 - Partner",
+  "descripcion": "PEUGEOT TU5JP4 1.6 16V 78,5 mm",
+  "medidas": {
+   "diam_piston": 78.51,
+   "alt_piston": 84.5,
+   "diam_perno": 19.5
+  },
+  "extra": {
+   "fabricante": "PEUGEOT 206 - 207 - 307 - Partner",
+   "motor": "XUD7 (161A)",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "Cilindrada 1769 cc",
+   "r_compresion": "11:1",
+   "anios": null,
+   "alt_compresion": 32.35,
+   "cam_diam": null,
+   "cam_prof": 0.15,
+   "aros": "1,20 / 1,50 / 2,50",
+   "largo_perno": 57.0,
+   "perno_str": "∅19,50 × 57,00",
+   "huelgo": 0.04,
+   "alt_medicion": 13.5,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 68,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 85378  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 85378  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 79083",
+  "codigo_fab": "SC79083",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "205, 306, 405, 406 y Partner",
+  "descripcion": "PEUGEOT 405 1.9D XUD9 83 mm",
+  "medidas": {
+   "diam_piston": 83.0,
+   "alt_piston": 84.3,
+   "diam_perno": 25.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT DIESEL XUD9",
+   "motor": "XUD 9",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1905 c.c.",
+   "r_compresion": "23,50:1",
+   "anios": "1995 →",
+   "alt_compresion": 46.8,
+   "cam_diam": null,
+   "cam_prof": -2.2,
+   "aros": "2,00 / 2,00 / 3,00",
+   "largo_perno": 71.5,
+   "perno_str": "∅25,00 × 71,50",
+   "huelgo": 0.08,
+   "alt_medicion": 25.0,
+   "posicion_block": "+0,54 a +0,82",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 69,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 79083  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 79083  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 622302",
+  "codigo_fab": "SC622302",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Early (anterior 1991), Rel Comp 17,3:1, Euro 1, 6 cil (115/177CV)",
+  "descripcion": "CUMMINS 4B-6B CAM.59,1 (UN) 102 mm",
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 105.41,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS B",
+   "motor": "B Aspiracion Natural",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "3900 cc / 5900 c.c.",
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 71.49,
+   "cam_diam": null,
+   "cam_prof": -19.3,
+   "aros": "2,47 / 2,43 / 4,05",
+   "largo_perno": 75.86,
+   "perno_str": "∅40,00 × 75,86",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": "0,40 a 0,60",
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 23,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 622302 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 716302",
+  "codigo_fab": "SC716302",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Early (anterior 1991), Rel Comp 17,5:1, Euro 1, 4 cil (76/116 CV), 6 cil( 115/177CV)",
+  "descripcion": "CUMMINS 4BT-6BT CAM.59 (1 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 105.41,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS B",
+   "motor": "BT Turbo",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "3900 cc / 5900 c.c.",
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 71.49,
+   "cam_diam": null,
+   "cam_prof": -17.7,
+   "aros": "2,90 / 2,43 / 4,05",
+   "largo_perno": 75.86,
+   "perno_str": "∅40,00 × 75,86",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": "0,40 a 0,60",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 23,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 716302 0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 716302 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 715602",
+  "codigo_fab": "SC715602",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Early (anterior 1991), Rel Comp 16,5:1, Euro 1, 4 cil (76/116 CV), 6 cil( 115/177CV)",
+  "descripcion": "CUMMINS 4BTA-6BTA CAM.64 (1 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 105.41,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS B",
+   "motor": "BTA Turbo con Inter C",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "3900 cc / 5900 c.c.",
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 71.49,
+   "cam_diam": null,
+   "cam_prof": -17.4,
+   "aros": "2,90 / 2,43 / 4,05",
+   "largo_perno": 75.86,
+   "perno_str": "∅40,00 × 75,86",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": "0,40 a 0,60",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 23,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 715602 0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 715602 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 904102",
+  "codigo_fab": "SC904102",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Diesel Euro II, Late Long Pin, Rel Comp 17,5:1",
+  "descripcion": "CUMMINS 4B-6B CAM.54,2 (UN) 102 mm",
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 105.41,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS B",
+   "motor": "BTA Turbo con Inter C",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "3900 cc / 5900 c.c.",
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 71.53,
+   "cam_diam": null,
+   "cam_prof": -20.67,
+   "aros": "2,90 / 2,43 / 4,05",
+   "largo_perno": 82.57,
+   "perno_str": "∅40,00 × 82,57",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 24,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 904102 0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 904102 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 663102",
+  "codigo_fab": "SC663102",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Diesel 235 HP, Late Long Pin, Rel Comp 17,5:1, Grado A 6631 02 AltCom STD, Grado B 6632 02 AltCom+0,1, Grado C 6633 02 AltCom+0,2",
+  "descripcion": "CUMMINS 4BT-6BT CAM.51,24 (1 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 105.36,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS B",
+   "motor": "BTA Turbo",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "3900 cc / 5900 c.c.",
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 71.6,
+   "cam_diam": null,
+   "cam_prof": -22.1,
+   "aros": "2,90 / 2,38 / 4,00",
+   "largo_perno": 82.6,
+   "perno_str": "∅40,00 × 82,60",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 25,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 663102 0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 663102 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 867302",
+  "codigo_fab": "SC867302",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Diesel 175 HP, Late, Grado A 867302 AltCom STD, Grado B 045002 AltCom+0,1, Grado C 045102 AltCom+0,2",
+  "descripcion": "CUMMINS 4BTA-6BTA CAM.51 (1 CIL) 102 mm",
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 105.36,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS B",
+   "motor": "BTA Turbo",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "3900 cc / 5900 c.c.",
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 71.6,
+   "cam_diam": null,
+   "cam_prof": -21.99,
+   "aros": "2,90 / 2,38 / 4,00",
+   "largo_perno": 82.6,
+   "perno_str": "∅40,00 × 82,60",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 25,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 867302 0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 867302 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 587814",
+  "codigo_fab": "SC587814",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "CUMMINS C",
+  "descripcion": "CUMMINS 6CTA (Pz.56,75) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "300 HP",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.96,
+   "cam_diam": null,
+   "cam_prof": -24.0,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.13,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 26,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 587814 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 924714",
+  "codigo_fab": "SC924714",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "CUMMINS C",
+  "descripcion": "CUMMINS 6CTA (Pz.66,20) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "300 HP",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.96,
+   "cam_diam": null,
+   "cam_prof": -21.26,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.13,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 26,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 924714 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 770714",
+  "codigo_fab": "SC770714",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Modelo 220 HP, Euro 1",
+  "descripcion": "CUMMINS 6CTA (Pz.56) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "C",
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.96,
+   "cam_diam": null,
+   "cam_prof": -25.0,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 26,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 770714 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 316314",
+  "codigo_fab": "SC316314",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "CUMMINS C",
+  "descripcion": "CUMMINS 6CTA (Pz.63,30) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "C",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.75,
+   "cam_diam": null,
+   "cam_prof": -21.79,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 27,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 316314 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 316414",
+  "codigo_fab": "SC316414",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "\"SERIES''",
+  "descripcion": "CUMMINS 6CTA (Pz.66,30) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "C",
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.75,
+   "cam_diam": null,
+   "cam_prof": -21.26,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 27,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 316414 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 316514",
+  "codigo_fab": "SC316514",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "\"SERIES''",
+  "descripcion": "CUMMINS 6CTA (Pz.60,50) (1 CIL) 114 mm",
+  "medidas": {
+   "diam_piston": 114.0,
+   "alt_piston": 120.39,
+   "diam_perno": 45.0
+  },
+  "extra": {
+   "fabricante": "CUMMINS C",
+   "motor": "C",
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 78.75,
+   "cam_diam": null,
+   "cam_prof": -25.42,
+   "aros": "3,50 / 3,00 / 4,05",
+   "largo_perno": 91.18,
+   "perno_str": "∅45,00 × 91,18",
+   "huelgo": 0.12,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 27,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 316514 STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 35562",
+  "codigo_fab": "SC35562",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "600D, E, R - Multipla y, 770 Coupé",
+  "descripcion": "FIAT 750-600 62 mm",
+  "medidas": {
+   "diam_piston": 62.0,
+   "alt_piston": 61.75,
+   "diam_perno": 19.99
+  },
+  "extra": {
+   "fabricante": "FIAT 600",
+   "motor": "100 D 000 / 006 / 008",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "797 c.c.",
+   "r_compresion": null,
+   "anios": "1962/1978",
+   "alt_compresion": 30.75,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "2,03 / 2,03 / 3,97",
+   "largo_perno": 54.0,
+   "perno_str": "∅19,99 × 54,00",
+   "huelgo": 0.04,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": "0.6 / 1.0 / STD",
+   "medidas_dispon": "0.6 / 1.0 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 30,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 35562  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 35562  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "S F 35562  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 70776",
+  "codigo_fab": "SC70776",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Con inserto APA, 127 / Spazio TRD / 147 D, Panda / Fiorino / Pick Up, Uno / Duna D",
+  "descripcion": "FIAT 147 1.3D 76 mm",
+  "medidas": {
+   "diam_piston": 76.0,
+   "alt_piston": 84.1,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "fabricante": "FIAT DIESEL 1.3",
+   "motor": "127 A 5.000,",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1301 c.c.",
+   "r_compresion": "20,00/21,00:1",
+   "anios": "1984/1997",
+   "alt_compresion": 47.15,
+   "cam_diam": null,
+   "cam_prof": 4.9,
+   "aros": "2,50 / 2,00 / 3,00",
+   "largo_perno": 64.5,
+   "perno_str": "∅22,00 × 64,50",
+   "huelgo": 0.05,
+   "alt_medicion": 15.0,
+   "posicion_block": "+ 0,85 a + 1,05",
+   "diams_dispon": "0.4 / 0.6 / STD",
+   "medidas_dispon": "0.4 / 0.6 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 31,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 70776  0.4",
+    "medida": "0.4"
+   },
+   {
+    "codigo": "S F 70776  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 70776  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 70776BC",
+  "codigo_fab": "SC70776BC",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "FIAT DIESEL 1.3",
+  "descripcion": "FIAT 147 1.3D COMP. -0,5 76 mm",
+  "medidas": {
+   "diam_piston": 76.0,
+   "alt_piston": 83.55,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "fabricante": "FIAT DIESEL 1.3",
+   "motor": null,
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 46.65,
+   "cam_diam": null,
+   "cam_prof": 4.9,
+   "aros": "2,50 / 2,00 / 3,00",
+   "largo_perno": 64.5,
+   "perno_str": "∅22,00 × 64,50",
+   "huelgo": 0.05,
+   "alt_medicion": 15.0,
+   "posicion_block": "+ 0,85 a + 1,05",
+   "diams_dispon": "0.6 / STD",
+   "medidas_dispon": "0.6 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 31,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 70776BC0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 70776BCSTD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 40080",
+  "codigo_fab": "SC40080",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "128, 128CL, Familiar y, Berlina.",
+  "descripcion": "FIAT 128 1100 CC 80 mm",
+  "medidas": {
+   "diam_piston": 80.0,
+   "alt_piston": 77.3,
+   "diam_perno": 21.99
+  },
+  "extra": {
+   "fabricante": "FIAT 128 - 1.1 L",
+   "motor": "128 A 000",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1116 c.c.",
+   "r_compresion": null,
+   "anios": "1971/1982",
+   "alt_compresion": 37.75,
+   "cam_diam": null,
+   "cam_prof": 0.6,
+   "aros": "1,50 / 2,00 / 3,97",
+   "largo_perno": 71.0,
+   "perno_str": "∅21,99 × 71,00",
+   "huelgo": 0.05,
+   "alt_medicion": 25.4,
+   "posicion_block": null,
+   "diams_dispon": "0.8 / 1.0 / STD",
+   "medidas_dispon": "0.8 / 1.0 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 31,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 40080  0.8",
+    "medida": "0.8"
+   },
+   {
+    "codigo": "S F 40080  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "S F 40080  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 70680",
+  "codigo_fab": "SC70680",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "147TR, Duna, Uno, Fiorino, y Tipo 1.4",
+  "descripcion": "FIAT TIPO 1.4 C/HERR. 80,5 mm",
+  "medidas": {
+   "diam_piston": 80.5,
+   "alt_piston": 72.8,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "fabricante": "FIAT - MOTOR TIPO 1.4",
+   "motor": "M202 PA 130",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1372 c.c.",
+   "r_compresion": null,
+   "anios": "1990/2000",
+   "alt_compresion": 33.3,
+   "cam_diam": null,
+   "cam_prof": -2.9,
+   "aros": "1,50 / 1,75 / 3,00",
+   "largo_perno": 57.7,
+   "perno_str": "∅22,00 × 57,70",
+   "huelgo": 0.03,
+   "alt_medicion": 19.5,
+   "posicion_block": null,
+   "diams_dispon": "0.6 / 1.0 / STD",
+   "medidas_dispon": "0.6 / 1.0 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 32,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 70680  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 70680  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "S F 70680  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 70580",
+  "codigo_fab": "SC70580",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Spazio T/TR y Tipo 1.4",
+  "descripcion": "FIAT TIPO 1.4 C/CONC. 80,5 mm",
+  "medidas": {
+   "diam_piston": 80.5,
+   "alt_piston": 72.8,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "fabricante": "FIAT - MOTOR TIPO 1.4 (B.N.O.)",
+   "motor": "M202 PN12A 000.38",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1372 c.c.",
+   "r_compresion": null,
+   "anios": "1990/2000",
+   "alt_compresion": 33.3,
+   "cam_diam": null,
+   "cam_prof": -3.75,
+   "aros": "1,50 / 1,75 / 3,00",
+   "largo_perno": 57.7,
+   "perno_str": "∅22,00 × 57,70",
+   "huelgo": 0.04,
+   "alt_medicion": 19.5,
+   "posicion_block": null,
+   "diams_dispon": "0.6 / 1.0 / STD",
+   "medidas_dispon": "0.6 / 1.0 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 32,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 70580  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 70580  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "S F 70580  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 71782",
+  "codigo_fab": "SC71782",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Diesel Aspiración Natural, Con inserto APA, Uno / Duna Diesel / Palio, Siena / Nueva Fiorino",
+  "descripcion": "FIAT DUNA 1.7D 82,6 mm",
+  "medidas": {
+   "diam_piston": 82.6,
+   "alt_piston": 78.5,
+   "diam_perno": 25.0
+  },
+  "extra": {
+   "fabricante": "FIAT DIESEL - 1.7 NA",
+   "motor": "149 B 3.000,",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "1697 c.c.",
+   "r_compresion": "22,00:1",
+   "anios": "1997",
+   "alt_compresion": 42.8,
+   "cam_diam": null,
+   "cam_prof": 2.5,
+   "aros": "2,50 / 2,00 / 3,00",
+   "largo_perno": 69.0,
+   "perno_str": "∅25,00 × 69,00",
+   "huelgo": 0.06,
+   "alt_medicion": 15.0,
+   "posicion_block": "+0,65 a +1,10",
+   "diams_dispon": "0.4 / 0.6 / STD",
+   "medidas_dispon": "0.4 / 0.6 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 33,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 71782  0.4",
+    "medida": "0.4"
+   },
+   {
+    "codigo": "S F 71782  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 71782  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 71782BC",
+  "codigo_fab": "SC71782BC",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "FIAT DIESEL - 1.7 NA",
+  "descripcion": "FIAT DUNA 1.7D A.C.-0,5 82,6 mm",
+  "medidas": {
+   "diam_piston": 82.6,
+   "alt_piston": 78.0,
+   "diam_perno": 25.0
+  },
+  "extra": {
+   "fabricante": "FIAT DIESEL - 1.7 NA",
+   "motor": null,
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 42.3,
+   "cam_diam": null,
+   "cam_prof": 2.5,
+   "aros": "2,50 / 2,00 / 3,00",
+   "largo_perno": 69.0,
+   "perno_str": "∅25,00 × 69,00",
+   "huelgo": 0.06,
+   "alt_medicion": 15.0,
+   "posicion_block": "+0,65 a +1,10",
+   "diams_dispon": "0.6 / STD",
+   "medidas_dispon": "0.6 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 33,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 71782BC0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 71782BCSTD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 78982",
+  "codigo_fab": "SC78982",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo Diesel, Con inserto APA, Tipo / Ducato / Palio, Siena / Duna Weekend",
+  "descripcion": "FIAT PALIO 1.7TD 82,6 mm",
+  "medidas": {
+   "diam_piston": 82.6,
+   "alt_piston": 78.6,
+   "diam_perno": 26.0
+  },
+  "extra": {
+   "fabricante": "FIAT DIESEL - 1.7 TD",
+   "motor": "M 725 TT 17 T",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "1697 c.c.",
+   "r_compresion": "19,20:1",
+   "anios": "1998",
+   "alt_compresion": 42.8,
+   "cam_diam": null,
+   "cam_prof": 2.6,
+   "aros": "3,00 / 2,00 / 3,00",
+   "largo_perno": 69.0,
+   "perno_str": "∅26,00 × 69,00",
+   "huelgo": 0.06,
+   "alt_medicion": 15.0,
+   "posicion_block": "+ 0,07 a +1,60",
+   "diams_dispon": "0.6 / STD",
+   "medidas_dispon": "0.6 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 34,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 78982  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 78982  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 78982BC",
+  "codigo_fab": "SC78982BC",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "FIAT DIESEL - 1.7 TD",
+  "descripcion": "FIAT PALIO 1.7TD (-0,5) 82,6 mm",
+  "medidas": {
+   "diam_piston": 82.6,
+   "alt_piston": 78.6,
+   "diam_perno": 26.0
+  },
+  "extra": {
+   "fabricante": "FIAT DIESEL - 1.7 TD",
+   "motor": null,
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 42.8,
+   "cam_diam": null,
+   "cam_prof": 2.6,
+   "aros": "3,00 / 2,00 / 3,00",
+   "largo_perno": 69.0,
+   "perno_str": "∅26,00 × 69,00",
+   "huelgo": 0.06,
+   "alt_medicion": 15.0,
+   "posicion_block": "+ 0,07 a +1,60",
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 34,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 78982BCSTD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 17386",
+  "codigo_fab": "SC17386",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "128 Europa CL/CLF y, 128 IAVA",
+  "descripcion": "FIAT 128 1301 CC 86,4 mm",
+  "medidas": {
+   "diam_piston": 86.4,
+   "alt_piston": 76.7,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "fabricante": "FIAT 128 EUROPA - 1.3 L",
+   "motor": "128 AC 000",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1301 c.c.",
+   "r_compresion": null,
+   "anios": "1980/1990",
+   "alt_compresion": 34.7,
+   "cam_diam": null,
+   "cam_prof": -5.0,
+   "aros": "1,50 / 2,00 / 3,92",
+   "largo_perno": 68.5,
+   "perno_str": "∅22,00 × 68,50",
+   "huelgo": 0.07,
+   "alt_medicion": 25.0,
+   "posicion_block": null,
+   "diams_dispon": "0.6 / 1.0 / STD",
+   "medidas_dispon": "0.6 / 1.0 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 34,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 17386  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 17386  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "S F 17386  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 18786",
+  "codigo_fab": "SC18786",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Super Europa, Regatta 85, S/SC/Weekend y Duna SCV",
+  "descripcion": "FIAT 128 1500 CC 86,4 mm",
+  "medidas": {
+   "diam_piston": 86.4,
+   "alt_piston": 74.4,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "fabricante": "FIAT 128 - 1.5 L",
+   "motor": "138 B 3000",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1498 c.c.",
+   "r_compresion": null,
+   "anios": "1985/1991",
+   "alt_compresion": 34.9,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "1,50 / 2,00 / 3,92",
+   "largo_perno": 68.5,
+   "perno_str": "∅22,00 × 68,50",
+   "huelgo": 0.07,
+   "alt_medicion": 25.0,
+   "posicion_block": null,
+   "diams_dispon": "0.6 / 1.0 / STD",
+   "medidas_dispon": "0.6 / 1.0 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 34,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 18786  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 18786  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "S F 18786  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 70486",
+  "codigo_fab": "SC70486",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Duna CL/SCL/SCR, Uno SCL/SCR y Tipo 1,6",
+  "descripcion": "FIAT TIPO 1.6 86,4 mm",
+  "medidas": {
+   "diam_piston": 86.4,
+   "alt_piston": 72.8,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "fabricante": "FIAT - MOTOR TIPO 1.6",
+   "motor": "M202 PA 150",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1580 c.c.",
+   "r_compresion": null,
+   "anios": "1990/2000",
+   "alt_compresion": 33.3,
+   "cam_diam": null,
+   "cam_prof": -2.3,
+   "aros": "1,50 / 1,75 / 3,00",
+   "largo_perno": 62.5,
+   "perno_str": "∅22,00 × 62,50",
+   "huelgo": 0.04,
+   "alt_medicion": 23.0,
+   "posicion_block": null,
+   "diams_dispon": "0.6 / 1.0 / STD",
+   "medidas_dispon": "0.6 / 1.0 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 35,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 70486  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 70486  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "S F 70486  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 69986",
+  "codigo_fab": "SC69986",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "1580 c.c. / 1.6 ltrs. - 8 V. - SPI, Tempra, Tipo, Punto, Palio, Siena, Palio / Siena / Tipo / Marea, EURO II, Sofim Nat Aspirado, Ducato",
+  "descripcion": "FIAT PALIO 1.6 8V 86,4 mm",
+  "medidas": {
+   "diam_piston": 86.4,
+   "alt_piston": 89.0,
+   "diam_perno": 22.0
+  },
+  "extra": {
+   "fabricante": "FIAT - TEMPRA, TIPO 1.6, PUNTO, PALIO, SIENA",
+   "motor": "8141.61.200",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "2445 cc",
+   "r_compresion": "9,20:1",
+   "anios": "1999 →",
+   "alt_compresion": 33.3,
+   "cam_diam": null,
+   "cam_prof": -2.3,
+   "aros": "1,50 / 1,75 / 3,00",
+   "largo_perno": 63.2,
+   "perno_str": "∅22,00 × 63,20",
+   "huelgo": 0.03,
+   "alt_medicion": 12.0,
+   "posicion_block": null,
+   "diams_dispon": "0.6 / STD",
+   "medidas_dispon": "0.6 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 35,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 69986  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 69986  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 80280",
+  "codigo_fab": "SC80280",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "16 válvulas, Escort / Focus",
+  "descripcion": "FORD ZETEC 1.8 16V P.20,63 C/PL. 80,60mm",
+  "medidas": {
+   "diam_piston": 80.6,
+   "alt_piston": 57.2,
+   "diam_perno": 20.65
+  },
+  "extra": {
+   "fabricante": "FORD ZETEC - MOTOR 1,8",
+   "motor": "Zetec E",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "1796 c.c.",
+   "r_compresion": null,
+   "anios": "1999 / 2004",
+   "alt_compresion": 33.2,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "1,50 / 1,60 / 2,50",
+   "largo_perno": 64.0,
+   "perno_str": "∅20,65 × 64,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 37,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 80280  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 80280  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 71281",
+  "codigo_fab": "SC71281",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Gol, Gacel, Senda, Pointer, y Saveiro (Perno Largo), Perno Largo",
+  "descripcion": "VW AUDI 1.6 81 mm",
+  "medidas": {
+   "diam_piston": 81.0,
+   "alt_piston": 66.8,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN 1.6 L",
+   "motor": "Audi 1.6",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1595 c.c.",
+   "r_compresion": null,
+   "anios": "1985/1996",
+   "alt_compresion": 36.5,
+   "cam_diam": null,
+   "cam_prof": -2.7,
+   "aros": "1,50 / 1,75 / 3,00",
+   "largo_perno": 57.0,
+   "perno_str": "∅20,00 × 57,00",
+   "huelgo": 0.03,
+   "alt_medicion": 10.0,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / 1.0 / STD",
+   "medidas_dispon": "0.5 / 1.0 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 90,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 71281  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 71281  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "S F 71281  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 38381",
+  "codigo_fab": "SC38381",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Sierra L y GL",
+  "descripcion": "FORD SIERRA 1.6 81 mm",
+  "medidas": {
+   "diam_piston": 81.3,
+   "alt_piston": 71.55,
+   "diam_perno": 24.0
+  },
+  "extra": {
+   "fabricante": "FORD 1.6 L",
+   "motor": "1.6LE- Max",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1597 c.c.",
+   "r_compresion": null,
+   "anios": "1984/1993",
+   "alt_compresion": 41.55,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "1,60 / 2,00 / 4,00",
+   "largo_perno": 68.0,
+   "perno_str": "∅24,00 × 68,00",
+   "huelgo": 0.04,
+   "alt_medicion": 11.0,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 38,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 38381  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 38381  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 82082",
+  "codigo_fab": "SC82082",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "1,6 Ltrs., Coureir, Eco Sport, Fiesta, Ka, Direct Injection Turbo",
+  "descripcion": "FORD ROCAM 1.6 8V 82 mm",
+  "medidas": {
+   "diam_piston": 82.08,
+   "alt_piston": 70.55,
+   "diam_perno": 18.03
+  },
+  "extra": {
+   "fabricante": "FORD COURIER, ECO SPORT, FIESTA, KA",
+   "motor": "LD18TCI ENDURA",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1753 c.c.",
+   "r_compresion": "19,4:1",
+   "anios": null,
+   "alt_compresion": 24.85,
+   "cam_diam": 36.5,
+   "cam_prof": -3.0,
+   "aros": "1,20 / 1,50 / 2,00",
+   "largo_perno": 62.0,
+   "perno_str": "∅18,03 × 62,00",
+   "huelgo": 0.04,
+   "alt_medicion": 12.0,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 38,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 82082  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 82082  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 82182",
+  "codigo_fab": "SC82182",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo",
+  "descripcion": "FORD FOCUS 1.8TD 82,50 mm",
+  "medidas": {
+   "diam_piston": 82.5,
+   "alt_piston": 75.8,
+   "diam_perno": 26.0
+  },
+  "extra": {
+   "fabricante": "FORD MONDEO / FOCUS 1.8 TD",
+   "motor": "D18T",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1753 c.c.",
+   "r_compresion": "21,5:1",
+   "anios": null,
+   "alt_compresion": 45.7,
+   "cam_diam": null,
+   "cam_prof": -1.5,
+   "aros": "2,50 / 2,00 / 3,00",
+   "largo_perno": 69.0,
+   "perno_str": "∅26,00 × 69,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 39,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 82182  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 82182  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 79482",
+  "codigo_fab": "SC79482",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Con inserto APA, Escort / Fiesta / Mondeo y, Transit 1.8 D",
+  "descripcion": "FORD FIESTA 1.8D 82,5 mm",
+  "medidas": {
+   "diam_piston": 82.51,
+   "alt_piston": 73.7,
+   "diam_perno": 26.0
+  },
+  "extra": {
+   "fabricante": "FORD DIESEL 1.8 L",
+   "motor": "1.8 NA",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1753 c.c.",
+   "r_compresion": "21,50/22,00:1",
+   "anios": "1988 →",
+   "alt_compresion": 45.7,
+   "cam_diam": null,
+   "cam_prof": 1.55,
+   "aros": "2,00 / 2,00 / 3,00",
+   "largo_perno": 59.0,
+   "perno_str": "∅26,00 × 59,00",
+   "huelgo": 0.04,
+   "alt_medicion": 13.6,
+   "posicion_block": "+0,50 a +0,86",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 39,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 79482  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 79482  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 17689",
+  "codigo_fab": "SC17689",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Taunus L y GXL",
+  "descripcion": "FORD TAUNUS 2.0 89,32 mm",
+  "medidas": {
+   "diam_piston": 89.32,
+   "alt_piston": 76.1,
+   "diam_perno": 23.17
+  },
+  "extra": {
+   "fabricante": "FORD 2 L",
+   "motor": "I4 - 2,0L",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1990 c.c.",
+   "r_compresion": null,
+   "anios": "1974/1983",
+   "alt_compresion": 40.6,
+   "cam_diam": null,
+   "cam_prof": -220.0,
+   "aros": "1,98 / 1,98 / 4,76",
+   "largo_perno": 77.1,
+   "perno_str": "∅23,17 × 77,10",
+   "huelgo": 0.04,
+   "alt_medicion": 36.0,
+   "posicion_block": null,
+   "diams_dispon": "030 / 040 / STD",
+   "medidas_dispon": "030 / 040 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 40,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 17689  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "S F 17689  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "S F 17689  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 79793",
+  "codigo_fab": "SC79793",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "FORD TRANSIT - MOTOR 2.5 DIESEL",
+  "descripcion": "FORD TRANSIT 2.5D (POZO 39) 93,67 mm",
+  "medidas": {
+   "diam_piston": 93.6,
+   "alt_piston": 94.0,
+   "diam_perno": 29.0
+  },
+  "extra": {
+   "fabricante": "FORD TRANSIT - MOTOR 2.5 DIESEL",
+   "motor": "D25 Transit 88en ad.",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "2496 c.c.",
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 59.54,
+   "cam_diam": 40.0,
+   "cam_prof": 18.0,
+   "aros": "2,50 / 2,00 / 4,00",
+   "largo_perno": 76.0,
+   "perno_str": "∅29,00 × 76,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "065 / STD",
+   "medidas_dispon": "065 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 41,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 79793  065",
+    "medida": "065"
+   },
+   {
+    "codigo": "S F 79793  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 39493",
+  "codigo_fab": "SC39493",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Falcon, Pick-Up F-100/350",
+  "descripcion": "FORD FALCON 188-221 B/C 3.680\"",
+  "medidas": {
+   "diam_piston": 93.47,
+   "alt_piston": 85.1,
+   "diam_perno": 23.17
+  },
+  "extra": {
+   "fabricante": "FORD 221 B/C",
+   "motor": "221 \"Econo 6\" B/C",
+   "nro_cil": "6",
+   "combustible": "Nafta",
+   "cilindrada": "3620 c.c.",
+   "r_compresion": "7,40:1",
+   "anios": "1968/1973",
+   "alt_compresion": 37.85,
+   "cam_diam": null,
+   "cam_prof": -3.0,
+   "aros": "1,98 / 1,98 / 4,76",
+   "largo_perno": 77.1,
+   "perno_str": "∅23,17 × 77,10",
+   "huelgo": 0.04,
+   "alt_medicion": 47.2,
+   "posicion_block": null,
+   "diams_dispon": "030 / 040 / STD",
+   "medidas_dispon": "030 / 040 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 41,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 39493  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "S F 39493  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "S F 39493  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 38893",
+  "codigo_fab": "SC38893",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Falcon, Fairlane, Sprint, Pick-up F100/350 y Ranchero",
+  "descripcion": "FORD FALCON 188-221 A/C 3.680\"",
+  "medidas": {
+   "diam_piston": 93.47,
+   "alt_piston": 85.1,
+   "diam_perno": 23.17
+  },
+  "extra": {
+   "fabricante": "FORD 188 B/C",
+   "motor": "188 B/C - 221 A/C",
+   "nro_cil": "6",
+   "combustible": "Nafta",
+   "cilindrada": "3075/3620 c.c.",
+   "r_compresion": "7,40:1 / 8,10:1 / 8,20:1",
+   "anios": "1968/1973",
+   "alt_compresion": 37.85,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "1,98 / 1,98 / 4,76",
+   "largo_perno": 77.0,
+   "perno_str": "∅23,17 × 77,00",
+   "huelgo": 0.04,
+   "alt_medicion": 47.2,
+   "posicion_block": null,
+   "diams_dispon": "030 / 040 / STD",
+   "medidas_dispon": "030 / 040 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 41,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 38893  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "S F 38893  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "S F 38893  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 38793",
+  "codigo_fab": "SC38793",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Falcon, Fairlane, Sprint, Pick-up F100/350 y Ranchero",
+  "descripcion": "FORD FALCON 188-221 A/C +0.7 3.680\"",
+  "medidas": {
+   "diam_piston": 93.47,
+   "alt_piston": 85.9,
+   "diam_perno": 23.17
+  },
+  "extra": {
+   "fabricante": "FORD 188 B/C",
+   "motor": "188 B/C - 221 A/C",
+   "nro_cil": "6",
+   "combustible": "Nafta",
+   "cilindrada": "3075/3620 c.c.",
+   "r_compresion": "8,20:1",
+   "anios": "1974/1987",
+   "alt_compresion": 38.56,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "1,98 / 1,98 / 4,76",
+   "largo_perno": 77.0,
+   "perno_str": "∅23,17 × 77,00",
+   "huelgo": 0.04,
+   "alt_medicion": 47.2,
+   "posicion_block": null,
+   "diams_dispon": "030 / 040 / STD",
+   "medidas_dispon": "030 / 040 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 42,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 38793  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "S F 38793  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "S F 38793  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 70893",
+  "codigo_fab": "SC70893",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Falcon, Pick-Up F-100 y, Ranchero",
+  "descripcion": "FORD MAX ECONO 3.0 3.680\"",
+  "medidas": {
+   "diam_piston": 93.47,
+   "alt_piston": 80.1,
+   "diam_perno": 23.17
+  },
+  "extra": {
+   "fabricante": "FORD I6 3.0L \"E. MAX\"",
+   "motor": "I6 3,0L E.Max",
+   "nro_cil": "6",
+   "combustible": "Nafta",
+   "cilindrada": "3000 c.c.",
+   "r_compresion": "7,40:1",
+   "anios": "1988/1996",
+   "alt_compresion": 39.12,
+   "cam_diam": null,
+   "cam_prof": -1.82,
+   "aros": "1,98 / 1,98 / 4,76",
+   "largo_perno": 77.0,
+   "perno_str": "∅23,17 × 77,00",
+   "huelgo": 0.05,
+   "alt_medicion": 22.1,
+   "posicion_block": null,
+   "diams_dispon": "030 / 040 / STD",
+   "medidas_dispon": "030 / 040 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 42,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 70893  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "S F 70893  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "S F 70893  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 71193",
+  "codigo_fab": "SC71193",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Falcon, Pick-Up F-100 y, Ranchero",
+  "descripcion": "FORD MAX ECONO 3.6 3.680\"",
+  "medidas": {
+   "diam_piston": 93.47,
+   "alt_piston": 80.1,
+   "diam_perno": 23.17
+  },
+  "extra": {
+   "fabricante": "FORD I6 3.6L \"E. MAX\"",
+   "motor": "I6 3,6L E.Max",
+   "nro_cil": "6",
+   "combustible": "Nafta",
+   "cilindrada": "3600 c.c.",
+   "r_compresion": "7,40:1",
+   "anios": "1988/1996",
+   "alt_compresion": 39.6,
+   "cam_diam": null,
+   "cam_prof": -6.6,
+   "aros": "1,98 / 1,98 / 4,76",
+   "largo_perno": 77.0,
+   "perno_str": "∅23,17 × 77,00",
+   "huelgo": 0.05,
+   "alt_medicion": 22.1,
+   "posicion_block": null,
+   "diams_dispon": "030 / 040 / STD",
+   "medidas_dispon": "030 / 040 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 42,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 71193  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "S F 71193  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "S F 71193  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 17796",
+  "codigo_fab": "SC17796",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Taunus GLX, GT y Ghía, Sierra Ghía, Rural y XR4",
+  "descripcion": "FORD TAUNUS 2.3 96 mm",
+  "medidas": {
+   "diam_piston": 96.0,
+   "alt_piston": 76.1,
+   "diam_perno": 23.17
+  },
+  "extra": {
+   "fabricante": "FORD 2.3 L",
+   "motor": "OHC 2300",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "2299 c.c.",
+   "r_compresion": null,
+   "anios": "1974/1993",
+   "alt_compresion": 40.6,
+   "cam_diam": null,
+   "cam_prof": -2.2,
+   "aros": "1,98 / 1,98 / 4,76",
+   "largo_perno": 68.0,
+   "perno_str": "∅23,17 × 68,00",
+   "huelgo": 0.04,
+   "alt_medicion": 36.0,
+   "posicion_block": null,
+   "diams_dispon": "030 / 040 / STD",
+   "medidas_dispon": "030 / 040 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 43,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 17796  030",
+    "medida": "030"
+   },
+   {
+    "codigo": "S F 17796  040",
+    "medida": "040"
+   },
+   {
+    "codigo": "S F 17796  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 21193",
+  "codigo_fab": "SC21193",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Ducato 2.5D Daily, 8140.43.2585/.3700/.3900, Sofim Turbo Intercooled, Ducato 2.8TD, Ducato Maxi 2.8TD, 8140.43.2585/.3700/.3900, Sofim Turbo Intercooled, Ducato 2.8TD, Ducato Maxi 2.8TD, 8140.63.4000, Sofim Aspirado, DAILY 35 - 8, EUROCARGO",
+  "descripcion": "FIAT DUCATO 2.5D 93 mm",
+  "medidas": {
+   "diam_piston": 93.0,
+   "alt_piston": 90.0,
+   "diam_perno": 32.0
+  },
+  "extra": {
+   "fabricante": "IVECO FIAT DUCATO 2.5",
+   "motor": "8140.63.3700",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "2800 c.c.",
+   "r_compresion": "22,00:1",
+   "anios": null,
+   "alt_compresion": 54.0,
+   "cam_diam": 39.2,
+   "cam_prof": -2.2,
+   "aros": "3,00 / 2,00 / 3,00",
+   "largo_perno": 74.4,
+   "perno_str": "∅32,00 × 74,40",
+   "huelgo": 0.06,
+   "alt_medicion": 15.0,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 45,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 21193  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 79290",
+  "codigo_fab": "SC79290",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo Diesel, Con inserto APA, Mercedes Benz Sprinter y, Rover Discovery.",
+  "descripcion": "MAXION HS2.5T 90,98 mm",
+  "medidas": {
+   "diam_piston": 90.48,
+   "alt_piston": 91.9,
+   "diam_perno": 30.16
+  },
+  "extra": {
+   "fabricante": "MAXION 2.5 TD - 2486 c.c.",
+   "motor": "Gemini III DI/TCI",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "2486 c.c.",
+   "r_compresion": "19,50:1",
+   "anios": "1995 →",
+   "alt_compresion": 55.4,
+   "cam_diam": null,
+   "cam_prof": -18.4,
+   "aros": "3,00 / 2,50 / 3,00",
+   "largo_perno": 77.0,
+   "perno_str": "∅30,16 × 77,00",
+   "huelgo": 0.08,
+   "alt_medicion": 15.0,
+   "posicion_block": "+0,50 a +0,80",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 53,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 79290  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 79290  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 79590",
+  "codigo_fab": "SC79590",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo Diesel, Con inserto APA, Ford Ranger, F 100, GM C10 y Blazer",
+  "descripcion": "MAXION HS2.5T 90,73 mm",
+  "medidas": {
+   "diam_piston": 90.74,
+   "alt_piston": 91.9,
+   "diam_perno": 30.16
+  },
+  "extra": {
+   "fabricante": "MAXION 2.5 TD - 2508 c.c.",
+   "motor": "Gemini III DI/TCI",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "2508 c.c.",
+   "r_compresion": "19,50:1",
+   "anios": "1995 →",
+   "alt_compresion": 55.4,
+   "cam_diam": null,
+   "cam_prof": -18.4,
+   "aros": "3,00 / 2,50 / 3,00",
+   "largo_perno": 77.0,
+   "perno_str": "∅30,16 × 77,00",
+   "huelgo": 0.08,
+   "alt_medicion": 15.0,
+   "posicion_block": "+0,50 a +0,80",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 53,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 79590  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 79590  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 40597",
+  "codigo_fab": "SC40597",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Diesel Aspiración Natural, Con Inserto APA",
+  "descripcion": "M.BENZ OM352 5R 97 mm",
+  "medidas": {
+   "diam_piston": 97.0,
+   "alt_piston": 115.7,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 314 / OM 352",
+   "motor": "OM 314/OM 352",
+   "nro_cil": "4/6",
+   "combustible": null,
+   "cilindrada": "3783/5675 c.c.",
+   "r_compresion": "17,00:1",
+   "anios": "1968 →",
+   "alt_compresion": 65.2,
+   "cam_diam": 55.0,
+   "cam_prof": -20.0,
+   "aros": "3,00 / 3,05 / 3,05 / 5,53 / 5,53",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.1,
+   "alt_medicion": 14.0,
+   "posicion_block": "-0,07 a +0,35",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 55,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 40597  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 40597  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 40597BC",
+  "codigo_fab": "SC40597BC",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "MERCEDES BENZ OM 314 / OM 352",
+  "descripcion": "M.BENZ OM352 5R (-0.3) 97 mm",
+  "medidas": {
+   "diam_piston": 97.0,
+   "alt_piston": 115.7,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 314 / OM 352",
+   "motor": null,
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 64.9,
+   "cam_diam": 55.0,
+   "cam_prof": -20.0,
+   "aros": "3,00 / 3,05 / 3,05 / 5,53 / 5,53",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.1,
+   "alt_medicion": 14.0,
+   "posicion_block": "-0,07 a +0,35",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 55,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 40597BC0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 40597BCSTD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 40397",
+  "codigo_fab": "SC40397",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo Diesel, Con Inserto APA",
+  "descripcion": "M.BENZ OM352A 5R 97 mm",
+  "medidas": {
+   "diam_piston": 97.0,
+   "alt_piston": 115.7,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 352-A",
+   "motor": "OM 352A",
+   "nro_cil": "6",
+   "combustible": null,
+   "cilindrada": "5675 c.c.",
+   "r_compresion": "17,00:1",
+   "anios": "1973 →",
+   "alt_compresion": 65.2,
+   "cam_diam": 55.0,
+   "cam_prof": -20.0,
+   "aros": "3,00 / 3,05 / 3,05 / 5,53 / 5,53",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.1,
+   "alt_medicion": 14.0,
+   "posicion_block": "-0,07 a +0,35",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 55,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 40397  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 40397  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 18497",
+  "codigo_fab": "SC18497",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Diesel Aspiración Natural, Con Inserto APA",
+  "descripcion": "M.BENZ OM352 3R 97 mm",
+  "medidas": {
+   "diam_piston": 97.0,
+   "alt_piston": 110.2,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 314 / OM 352",
+   "motor": "OM 314/OM 352",
+   "nro_cil": "4/6",
+   "combustible": null,
+   "cilindrada": "3783/5675 c.c.",
+   "r_compresion": "17,00:1",
+   "anios": "1970 →",
+   "alt_compresion": 65.2,
+   "cam_diam": 55.0,
+   "cam_prof": -20.0,
+   "aros": "2,50 / 2,57 / 4,03",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.13,
+   "alt_medicion": 16.0,
+   "posicion_block": "-0,07 a +0,35",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 56,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 18497  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 18497  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 18697",
+  "codigo_fab": "SC18697",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo Diesel, Con Inserto APA",
+  "descripcion": "M.BENZ OM352A 3R 97 mm",
+  "medidas": {
+   "diam_piston": 97.0,
+   "alt_piston": 105.3,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 314 A / OM 352 A",
+   "motor": "OM 314 A/OM 352 A",
+   "nro_cil": "4/6",
+   "combustible": null,
+   "cilindrada": "3783/5675 c.c.",
+   "r_compresion": "17,00:1",
+   "anios": "1973 →",
+   "alt_compresion": 65.2,
+   "cam_diam": 55.0,
+   "cam_prof": -20.0,
+   "aros": "2,50 / 2,57 / 4,03",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.1,
+   "alt_medicion": 16.0,
+   "posicion_block": "-0,07 a +0,35",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 56,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 18697  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 18697  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 18697BC",
+  "codigo_fab": "SC18697BC",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "MERCEDES BENZ OM 314 A / OM 352 A",
+  "descripcion": "M.BENZ OM352A 3R (-0,5) 97 mm",
+  "medidas": {
+   "diam_piston": 97.0,
+   "alt_piston": 105.3,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 314 A / OM 352 A",
+   "motor": null,
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 64.9,
+   "cam_diam": 55.0,
+   "cam_prof": -20.0,
+   "aros": "2,50 / 2,57 / 4,03",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.1,
+   "alt_medicion": 16.0,
+   "posicion_block": "-0,07 a +0,35",
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 56,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 18697BCSTD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 75297",
+  "codigo_fab": "SC75297",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Diesel Aspiración Natural, Con Inserto APA",
+  "descripcion": "M.BENZ OM366 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 364 / OM 366",
+   "motor": "OM 364/OM 366",
+   "nro_cil": "4/6",
+   "combustible": null,
+   "cilindrada": "3972/5958 c.c.",
+   "r_compresion": "17,00:1",
+   "anios": "1987 →",
+   "alt_compresion": 62.8,
+   "cam_diam": 48.0,
+   "cam_prof": -24.15,
+   "aros": "2,50 / 2,57 / 4,03",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.12,
+   "alt_medicion": 20.0,
+   "posicion_block": "-0,08 a +0,30",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 57,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 75297  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 75297  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 75297BC",
+  "codigo_fab": "SC75297BC",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "MERCEDES BENZ OM 364 / OM 366",
+  "descripcion": "M.BENZ OM366 (-0,3 mm) 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 364 / OM 366",
+   "motor": null,
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 62.5,
+   "cam_diam": 48.0,
+   "cam_prof": -24.15,
+   "aros": "2,50 / 2,57 / 4,03",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.12,
+   "alt_medicion": 20.0,
+   "posicion_block": "-0,08 a +0,30",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 57,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 75297BC0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 75297BCSTD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 75397",
+  "codigo_fab": "SC75397",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo Diesel, Con Inserto APA",
+  "descripcion": "M.BENZ OM366A 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 364 A / OM 366 A",
+   "motor": "OM 364 A/OM 366 A",
+   "nro_cil": "4/6",
+   "combustible": null,
+   "cilindrada": "3972/5958 c.c.",
+   "r_compresion": "17,00:1",
+   "anios": "1987 →",
+   "alt_compresion": 62.8,
+   "cam_diam": 55.8,
+   "cam_prof": -22.15,
+   "aros": "2,50 / 2,57 / 4,03",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.12,
+   "alt_medicion": 16.0,
+   "posicion_block": "-0,08 a +0,30",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 57,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 75397  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 75397  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 75397BC",
+  "codigo_fab": "SC75397BC",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "MERCEDES BENZ OM 364 A / OM 366 A",
+  "descripcion": "M.BENZ OM366A (-0,3) 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 364 A / OM 366 A",
+   "motor": null,
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 62.5,
+   "cam_diam": 55.8,
+   "cam_prof": -22.15,
+   "aros": "2,50 / 2,57 / 4,03",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.12,
+   "alt_medicion": 16.0,
+   "posicion_block": "-0,08 a +0,30",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 57,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 75397BC0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 75397BCSTD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 18897",
+  "codigo_fab": "SC18897",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo Diesel Post enfriado, Con Inserto APA, Biela Trapezoidal, Euro I",
+  "descripcion": "M.BENZ OM366LA (CAM.52,6) 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 108.0,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 366 LA",
+   "motor": "OM 366 LA",
+   "nro_cil": "6",
+   "combustible": null,
+   "cilindrada": "5958 c.c.",
+   "r_compresion": "18,00:1",
+   "anios": null,
+   "alt_compresion": 63.0,
+   "cam_diam": 52.7,
+   "cam_prof": -22.2,
+   "aros": "2,53 / 2,57 / 4,03",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.12,
+   "alt_medicion": 20.0,
+   "posicion_block": "+0,24 a +0,58",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 58,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 18897  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 18897  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 18897BC",
+  "codigo_fab": "SC18897BC",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "MERCEDES BENZ OM 366 LA",
+  "descripcion": "M.BENZ OM366LA (CAM.52,6)(-0,5) 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 108.0,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 366 LA",
+   "motor": null,
+   "nro_cil": null,
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 62.7,
+   "cam_diam": 52.7,
+   "cam_prof": -22.2,
+   "aros": "2,53 / 2,57 / 4,03",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.12,
+   "alt_medicion": 20.0,
+   "posicion_block": "+0,24 a +0,58",
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 58,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 18897BCSTD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 18997",
+  "codigo_fab": "SC18997",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo Diesel, Con Inserto APA, Biela Trapezoidal, EPA 91",
+  "descripcion": "M.BENZ OM366LA (54,7) B/TRAP. 97,5 mm",
+  "medidas": {
+   "diam_piston": 97.5,
+   "alt_piston": 107.8,
+   "diam_perno": 36.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 364 LA / 366 LA",
+   "motor": "OM 364 / 366 LA",
+   "nro_cil": "4/6",
+   "combustible": null,
+   "cilindrada": "3972/5958 c.c.",
+   "r_compresion": "17,25:1",
+   "anios": null,
+   "alt_compresion": 62.8,
+   "cam_diam": 54.9,
+   "cam_prof": -22.6,
+   "aros": "2,53 / 2,57 / 4,03",
+   "largo_perno": 82.5,
+   "perno_str": "∅36,00 × 82,50",
+   "huelgo": 0.12,
+   "alt_medicion": 20.0,
+   "posicion_block": "-0,08 a +0,30",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 58,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 18997  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 18997  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 90402",
+  "codigo_fab": "SC90402",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "La Euro II, Intercooler, Con inserto APA",
+  "descripcion": "M.BENZ OM904LA-OM906LA P.40 (UN) 102 mm",
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 101.2,
+   "diam_perno": 40.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 904",
+   "motor": "OM904",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": "4250 c.c.",
+   "r_compresion": null,
+   "anios": "96 →",
+   "alt_compresion": 64.4,
+   "cam_diam": 73.23,
+   "cam_prof": -13.9,
+   "aros": "3,00 / 2,57 / 4,03",
+   "largo_perno": 80.0,
+   "perno_str": "∅40,00 × 80,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 59,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 90402  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 90602",
+  "codigo_fab": "SC90602",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "La Euro II, Intercooler, Con inserto APA, EURO III, Turbo Intercooled, 979.988.990-994 Euro2, EURO II, Turbo Intercooled",
+  "descripcion": "M.BENZ OM904LA-OM906LA P.42 (UN) 102 mm",
+  "medidas": {
+   "diam_piston": 102.0,
+   "alt_piston": 139.85,
+   "diam_perno": 42.0
+  },
+  "extra": {
+   "fabricante": "MERCEDES BENZ OM 906",
+   "motor": "OM447HLA .903-907.970-",
+   "nro_cil": "6",
+   "combustible": "Diesel",
+   "cilindrada": "R.C.: 18:01 c.c.",
+   "r_compresion": null,
+   "anios": "96 →",
+   "alt_compresion": 64.4,
+   "cam_diam": 75.0,
+   "cam_prof": -13.9,
+   "aros": "3,00 / 2,57 / 4,03",
+   "largo_perno": 80.0,
+   "perno_str": "∅42,00 × 80,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 59,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 90602  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 21891/4",
+  "codigo_fab": "SC21891/4",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 4.203 5R 3.601\"",
+  "medidas": {
+   "diam_piston": 91.49,
+   "alt_piston": 108.5,
+   "diam_perno": 31.75
+  },
+  "extra": {
+   "fabricante": "PERKINS 3.152, 4.203 & 6.305",
+   "motor": "3,152, 4,203 y 6,305",
+   "nro_cil": "3/4/6",
+   "combustible": "Diesel",
+   "cilindrada": "2500/3330/5004 c.c.",
+   "r_compresion": null,
+   "anios": "1957 →",
+   "alt_compresion": 57.24,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "2,38 / 2,38 / 3,17 / 6,35 / 6,35",
+   "largo_perno": 75.2,
+   "perno_str": "∅31,75 × 75,20",
+   "huelgo": 0.1,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 65,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 21891/4STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 22091",
+  "codigo_fab": "SC22091",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 6.305 4R 3.601\"",
+  "medidas": {
+   "diam_piston": 91.49,
+   "alt_piston": 108.5,
+   "diam_perno": 31.75
+  },
+  "extra": {
+   "fabricante": "PERKINS 3.152, 4.203 & 6.305",
+   "motor": "3,152, 4,203 y 6,305",
+   "nro_cil": "3/4/6",
+   "combustible": "Diesel",
+   "cilindrada": "2500/3330/5004 c.c.",
+   "r_compresion": null,
+   "anios": "1957 →",
+   "alt_compresion": 57.24,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "2,38 / 2,38 / 3,17 / 6,35",
+   "largo_perno": 75.2,
+   "perno_str": "∅31,75 × 75,20",
+   "huelgo": 0.1,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 65,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 22091  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 78591",
+  "codigo_fab": "SC78591",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 6.305 3R 3.601\"",
+  "medidas": {
+   "diam_piston": 91.49,
+   "alt_piston": 108.5,
+   "diam_perno": 31.75
+  },
+  "extra": {
+   "fabricante": "PERKINS 3.152, 4.203 & 6.305",
+   "motor": "3,152, 4,203 y 6,305",
+   "nro_cil": "3/4/6",
+   "combustible": "Diesel",
+   "cilindrada": "2500/3330/5004 c.c.",
+   "r_compresion": null,
+   "anios": "1957 →",
+   "alt_compresion": 57.24,
+   "cam_diam": null,
+   "cam_prof": null,
+   "aros": "2,38 / 2,38 / 4,76",
+   "largo_perno": 75.2,
+   "perno_str": "∅31,75 × 75,20",
+   "huelgo": 0.12,
+   "alt_medicion": 17.0,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 65,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 78591  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 32198",
+  "codigo_fab": "SC32198",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Con inserto APA, Tractor, vehicular y motor, estacionario.",
+  "descripcion": "PERKINS 6.354 F2 APA 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.47,
+   "alt_piston": 121.1,
+   "diam_perno": 34.93
+  },
+  "extra": {
+   "fabricante": "PERKINS 6.354",
+   "motor": "6,354",
+   "nro_cil": "6",
+   "combustible": "Diesel",
+   "cilindrada": "5800 c.c.",
+   "r_compresion": null,
+   "anios": "1973/1982",
+   "alt_compresion": 70.28,
+   "cam_diam": null,
+   "cam_prof": -25.98,
+   "aros": "3,17 / 2,38 / 2,38 / 6,35 / 6,35",
+   "largo_perno": 84.0,
+   "perno_str": "∅34,93 × 84,00",
+   "huelgo": 0.15,
+   "alt_medicion": 2.0,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 66,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 32198  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 71698",
+  "codigo_fab": "SC71698",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "PERKINS FASE IV TURBO",
+  "descripcion": "PERKINS 6.354 F4T APA 3.7/8\"",
+  "medidas": {
+   "diam_piston": 98.48,
+   "alt_piston": 107.85,
+   "diam_perno": 38.1
+  },
+  "extra": {
+   "fabricante": "PERKINS FASE IV TURBO",
+   "motor": "T6 354 fase IV",
+   "nro_cil": "6",
+   "combustible": null,
+   "cilindrada": "5800 c.c.",
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 70.3,
+   "cam_diam": null,
+   "cam_prof": -19.3,
+   "aros": "3,17 / 2,38 / 4,76",
+   "largo_perno": 82.5,
+   "perno_str": "∅38,10 × 82,50",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "STD",
+   "medidas_dispon": "STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 66,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 71698  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 80082",
+  "codigo_fab": "SC80082",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Partner / Berlingo /206",
+  "descripcion": "PEUGEOT PARTNER 1.9D DW8 82,2 mm",
+  "medidas": {
+   "diam_piston": 82.12,
+   "alt_piston": 53.3,
+   "diam_perno": 25.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT DIESEL DW8",
+   "motor": "XU7JP",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "Cilindrada 1761 cc",
+   "r_compresion": null,
+   "anios": "1999 →",
+   "alt_compresion": 46.73,
+   "cam_diam": null,
+   "cam_prof": -1.35,
+   "aros": "2,00 / 2,00 / 3,00",
+   "largo_perno": 65.4,
+   "perno_str": "∅25,00 × 65,40",
+   "huelgo": 0.08,
+   "alt_medicion": 12.0,
+   "posicion_block": "+0,51 a +0,71",
+   "diams_dispon": "0.6 / STD",
+   "medidas_dispon": "0.6 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 68,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 80082  0.6",
+    "medida": "0.6"
+   },
+   {
+    "codigo": "S F 80082  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 90083",
+  "codigo_fab": "SC90083",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo, 406 1.9TD (SD)",
+  "descripcion": "PEUGEOT 405 1.9TD XUD9TE 83 mm",
+  "medidas": {
+   "diam_piston": 83.0,
+   "alt_piston": 79.3,
+   "diam_perno": 28.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT DIESEL XUD9 SD/TF",
+   "motor": "XUD9 SD/TF",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1905 c.c.",
+   "r_compresion": null,
+   "anios": null,
+   "alt_compresion": 46.8,
+   "cam_diam": null,
+   "cam_prof": -3.5,
+   "aros": "3,00 / 2,00 / 3,00",
+   "largo_perno": 68.0,
+   "perno_str": "∅28,00 × 68,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 69,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 90083  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 90083  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 14594",
+  "codigo_fab": "SC14594",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Perno diam. 30 mm., Peugeot 504 / 505",
+  "descripcion": "INDENOR XD2 P.30 A.C. 57 94 mm",
+  "medidas": {
+   "diam_piston": 94.0,
+   "alt_piston": 99.9,
+   "diam_perno": 30.0
+  },
+  "extra": {
+   "fabricante": "PEUGEOT DIESEL XD2",
+   "motor": "XD2, XD2P",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "2304 c.c.",
+   "r_compresion": "22,20:1",
+   "anios": "1978/1999",
+   "alt_compresion": 57.4,
+   "cam_diam": null,
+   "cam_prof": -2.0,
+   "aros": "2,00 / 2,00 / 4,00",
+   "largo_perno": 79.0,
+   "perno_str": "∅30,00 × 79,00",
+   "huelgo": 0.13,
+   "alt_medicion": 19.2,
+   "posicion_block": "+0,69 a +0,99",
+   "diams_dispon": "0.4 / STD",
+   "medidas_dispon": "0.4 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 73,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 14594  0.4",
+    "medida": "0.4"
+   },
+   {
+    "codigo": "S F 14594  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 77976",
+  "codigo_fab": "SC77976",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Turbo, Common Rail, Clio dCi, Megane dCi, 728 / 729 / 760 / 766, Turbo, Common Rail, Euro III / Euro IV, Aro Inserto (APA), Galería de enfriamiento, Escotadura de Inyector, de aceite, 804 / 806, Turbo, Common Rail, Euro IV, Aro Inserto (APA), Galería de enfriamiento, Escotadura de Inyector, de aceite",
+  "descripcion": "RENAULT K9K 1.5TDCi P.26 76 mm",
+  "medidas": {
+   "diam_piston": 76.0,
+   "alt_piston": 66.0,
+   "diam_perno": 26.0
+  },
+  "extra": {
+   "fabricante": "RENAULT K9K 1.5",
+   "motor": "K9K 732 / 763 / 780 /",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1461 c.c.",
+   "r_compresion": "18,8:1",
+   "anios": null,
+   "alt_compresion": 41.78,
+   "cam_diam": 49.0,
+   "cam_prof": -14.0,
+   "aros": "2,00 / 2,00 / 2,50",
+   "largo_perno": 60.0,
+   "perno_str": "∅26,00 × 60,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 76,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 77976  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 77976  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 77879",
+  "codigo_fab": "SC77879",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Clio, Megane, Scenic, Megane / Coupé RL RN RT, Kangoo 1.6, Clio 1.6i",
+  "descripcion": "RENAULT MEGANE 1.6 16V K4M 79,5 mm",
+  "medidas": {
+   "diam_piston": 79.5,
+   "alt_piston": 56.3,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "fabricante": "RENAULT K4M - 16V",
+   "motor": "K7M",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": "1598 c.c.",
+   "r_compresion": null,
+   "anios": "1995",
+   "alt_compresion": 31.7,
+   "cam_diam": null,
+   "cam_prof": -1.2,
+   "aros": "1,20 / 1,50 / 2,50",
+   "largo_perno": 62.0,
+   "perno_str": "∅20,00 × 62,00",
+   "huelgo": 0.05,
+   "alt_medicion": 12.35,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 77,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 77879  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 77879  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 79680",
+  "codigo_fab": "SC79680",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Sin inserto APA, Clio, Express, Kangoo, R19 y Trafic.",
+  "descripcion": "RENAULT KANGOO 1.9D 80 mm",
+  "medidas": {
+   "diam_piston": 80.0,
+   "alt_piston": 70.5,
+   "diam_perno": 24.0
+  },
+  "extra": {
+   "fabricante": "RENAULT DIESEL F8Q SIN APA",
+   "motor": "F8Q",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1870 c.c.",
+   "r_compresion": "21,50:1",
+   "anios": "2000",
+   "alt_compresion": 42.57,
+   "cam_diam": null,
+   "cam_prof": -0.7,
+   "aros": "2,00 / 2,00 / 3,00",
+   "largo_perno": 63.0,
+   "perno_str": "∅24,00 × 63,00",
+   "huelgo": 0.05,
+   "alt_medicion": 15.0,
+   "posicion_block": "+0,75 a +1.15",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 78,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 79680  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 79680  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 79180",
+  "codigo_fab": "SC79180",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Con inserto APA, Clio, Express, Kangoo, R19 y Trafic.",
+  "descripcion": "RENAULT 19 1.9D F8Q 80 mm",
+  "medidas": {
+   "diam_piston": 80.0,
+   "alt_piston": 70.5,
+   "diam_perno": 24.0
+  },
+  "extra": {
+   "fabricante": "RENAULT DIESEL F8Q",
+   "motor": "F8Q",
+   "nro_cil": "4",
+   "combustible": "Diesel",
+   "cilindrada": "1870 c.c.",
+   "r_compresion": "21,50:1",
+   "anios": "1995",
+   "alt_compresion": 42.57,
+   "cam_diam": null,
+   "cam_prof": -0.7,
+   "aros": "2,00 / 2,00 / 3,00",
+   "largo_perno": 63.0,
+   "perno_str": "∅24,00 × 63,00",
+   "huelgo": 0.05,
+   "alt_medicion": 15.0,
+   "posicion_block": "+0,75 a +1.15",
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 78,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 79180  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 79180  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 77676",
+  "codigo_fab": "SC77676",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Gol, Golf y Saveiro",
+  "descripcion": "VW SENDA 1.6D 76,5 mm",
+  "medidas": {
+   "diam_piston": 76.5,
+   "alt_piston": 71.7,
+   "diam_perno": 24.0
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN - DIESEL 1.6 L",
+   "motor": "1,6 D",
+   "nro_cil": null,
+   "combustible": "Diesel",
+   "cilindrada": "1588 c.c.",
+   "r_compresion": "23,00:1",
+   "anios": "1993/1999",
+   "alt_compresion": 41.47,
+   "cam_diam": null,
+   "cam_prof": -1.6,
+   "aros": "1,75 / 2,00 / 3,00",
+   "largo_perno": 64.0,
+   "perno_str": "∅24,00 × 64,00",
+   "huelgo": 0.03,
+   "alt_medicion": 10.0,
+   "posicion_block": "+0,58 +0,92",
+   "diams_dispon": "0.5 / 1.0 / STD",
+   "medidas_dispon": "0.5 / 1.0 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 88,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 77676  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 77676  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "S F 77676  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 79379",
+  "codigo_fab": "SC79379",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Polo,Golf y Passat",
+  "descripcion": "VW POLO 1.9D 79,5 mm",
+  "medidas": {
+   "diam_piston": 79.5,
+   "alt_piston": 65.65,
+   "diam_perno": 24.0
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN - DIESEL 1.9 L",
+   "motor": "1,9 D",
+   "nro_cil": null,
+   "combustible": "Diesel",
+   "cilindrada": "1896 c.c.",
+   "r_compresion": "22,50:1",
+   "anios": null,
+   "alt_compresion": 39.65,
+   "cam_diam": null,
+   "cam_prof": -1.9,
+   "aros": "1,75 / 2,00 / 3,00",
+   "largo_perno": 63.0,
+   "perno_str": "∅24,00 × 63,00",
+   "huelgo": 0.03,
+   "alt_medicion": 8.0,
+   "posicion_block": "+0,66 +1,00",
+   "diams_dispon": "0.5 / 1.0 / STD",
+   "medidas_dispon": "0.5 / 1.0 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 88,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 79379  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 79379  1.0",
+    "medida": "1.0"
+   },
+   {
+    "codigo": "S F 79379  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 71381",
+  "codigo_fab": "SC71381",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Gol",
+  "descripcion": "VW AUDI 1.6 MI 81 mm",
+  "medidas": {
+   "diam_piston": 81.0,
+   "alt_piston": 61.8,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN - MOTOR 1.6 MI",
+   "motor": "1,6MI",
+   "nro_cil": "4",
+   "combustible": null,
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": "98 →",
+   "alt_compresion": 37.8,
+   "cam_diam": null,
+   "cam_prof": -2.6,
+   "aros": "1,25 / 1,50 / 2,00",
+   "largo_perno": 57.0,
+   "perno_str": "∅20,00 × 57,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 89,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 71381  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 71381  STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "S F 71881",
+  "codigo_fab": "SC71881",
+  "marca": "FEDERAL MOGUL",
+  "aplicacion": "Gol, Golf, Parati, Saveiro.",
+  "descripcion": "VW POLO 1.8 MI 81 mm",
+  "medidas": {
+   "diam_piston": 81.0,
+   "alt_piston": 57.3,
+   "diam_perno": 20.0
+  },
+  "extra": {
+   "fabricante": "VOLKSWAGEN 1.8 L MI",
+   "motor": "Audi 1.8",
+   "nro_cil": "4",
+   "combustible": "Nafta",
+   "cilindrada": null,
+   "r_compresion": null,
+   "anios": "1985/1996",
+   "alt_compresion": 32.2,
+   "cam_diam": null,
+   "cam_prof": -3.7,
+   "aros": "1,20 / 1,50 / 2,00",
+   "largo_perno": 57.0,
+   "perno_str": "∅20,00 × 57,00",
+   "huelgo": null,
+   "alt_medicion": null,
+   "posicion_block": null,
+   "diams_dispon": "0.5 / STD",
+   "medidas_dispon": "0.5 / STD",
+   "codigo_aros": null,
+   "oring": null,
+   "pagina": 90,
+   "verificado": false
+  },
+  "codigos_crac": [
+   {
+    "codigo": "S F 71881  0.5",
+    "medida": "0.5"
+   },
+   {
+    "codigo": "S F 71881  STD",
+    "medida": "STD"
+   }
+  ]
  }
 ]

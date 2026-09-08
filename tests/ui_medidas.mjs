@@ -66,9 +66,9 @@ check('las once familias con su total',
   && (await page.locator('button', { hasText: /^Válvulas\s*1782$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Guías de válvulas\s*915$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Asientos de válvulas\s*1108$/ }).count()) === 1
-  && (await page.locator('button', { hasText: /^Subconjuntos\s*201$/ }).count()) === 1
-  && (await page.locator('button', { hasText: /^Conjuntos\s*128$/ }).count()) === 1
-  && (await page.locator('button', { hasText: /^Pistones\s*35$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Subconjuntos\s*284$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Conjuntos\s*166$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Pistones\s*89$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes de biela\s*354$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes de bancada\s*345$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes axiales\s*120$/ }).count()) === 1
@@ -300,7 +300,7 @@ await page.fill('input[placeholder="Código…"]', '')
 await page.locator('button', { hasText: /^Conjuntos/ }).first().click()
 await esperar(500)
 check('la pestaña dice cuántos conjuntos hay',
-  (await page.locator('button', { hasText: /^Conjuntos/ }).first().textContent() || '').includes('128'),
+  (await page.locator('button', { hasText: /^Conjuntos/ }).first().textContent() || '').includes('166'),
   await page.locator('button', { hasText: /^Conjuntos/ }).first().textContent())
 await page.fill('input[placeholder="Código…"]', 'T BEK21540')
 await esperar(1300)
@@ -321,7 +321,12 @@ check('y el archivo es el del subconjunto',
 check('la columna Oring está', await page.locator('th', { hasText: 'Oring' }).count() === 1)
 // Se mira la celda de la columna, no el texto de la fila entera: un "Sí"
 // suelto también lo pone la columna Stock.
-const celdaOring = () => filas().nth(0).locator('td').nth(10).textContent()
+// La columna se busca POR SU ENCABEZADO y no por un número fijo: agregar una
+// columna a la izquierda (pasó con "Marca", cuando los conjuntos dejaron de ser
+// todos Mahle) corría el índice y el check fallaba por la tabla, no por el dato.
+const columnaOring = async () => page.evaluate(() =>
+  [...document.querySelectorAll('table thead th')].findIndex((th) => th.innerText.trim() === 'Oring'))
+const celdaOring = async () => filas().nth(0).locator('td').nth(await columnaOring()).textContent()
 check('y este conjunto dice que no los trae', (await celdaOring()).trim() === 'No', await celdaOring())
 await page.fill('input[placeholder="Código…"]', 'T BEK76560WS')
 await esperar(1300)

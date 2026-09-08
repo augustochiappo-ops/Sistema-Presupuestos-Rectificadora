@@ -1,5 +1,52 @@
 # Decisiones técnicas y de diseño
 
+## Del catálogo Federal Mogul 2010 se cargan sólo los códigos que el proveedor vende (2026-09-08)
+**Decisión:** de los 284 códigos del catálogo entraron los 175 que cruzan con la
+lista del proveedor. Los otros 109 —casi todos de la línea europea, con el
+formato "87-704500-00"— quedaron afuera.
+**Por qué:** decisión del dueño. Una ficha sin precio ocupa una fila de la tabla
+y no se puede pedir; en Pistones ni siquiera se vería, porque esa familia tiene
+tildada por defecto la casilla "solo las del proveedor". Con Mahle se había
+hecho al revés (las fichas entran aunque no se vendan) porque ahí el catálogo se
+usa como consulta técnica del pistón, y esa asimetría es a propósito.
+**Cómo volver atrás si el proveedor los trae:** no hay nada que deshacer.
+`pistones_fm_desde_proveedor.py` cruza contra la lista viva, así que la próxima
+corrida los levanta solos.
+
+## La marca de las fichas de Federal Mogul dice la marca, no el fabricante del motor (2026-09-08)
+**Decisión:** `marca = "FEDERAL MOGUL"` en las 175 fichas. El fabricante del
+motor (BMW, Ford, Perkins) va en `aplicacion` y en `extra.fabricante`.
+**Por qué:** es lo que ya hacen los cojinetes, donde la columna dice MAHLE /
+FEDERAL MOGUL / GLYCO y es el primer dato que hay que saber para buscar la ficha
+en el PDF correcto. Las 35 fichas viejas de pistones (las de Persan) usan esa
+columna para el fabricante del vehículo —dice SEAT o I.K.A.— y quedan como
+estaban: cambiarlas no era parte de esta tanda y su dato no está mal, sólo
+significa otra cosa.
+
+## Cada script de dibujos es dueño de su manifiesto (2026-09-08)
+**Decisión:** los dibujos de Federal Mogul tienen manifiesto propio
+(`dibujos-pistones-fm.js`, `DIBUJOS_FM`) y no se escriben en el de Mahle
+(`dibujos-pistones.js`). `pistones.jsx` busca en los dos mapas.
+**Por qué:** `recortar_pistones_mahle.py` **reescribe entero** su manifiesto en
+cada corrida. Si los códigos de Federal Mogul se escribieran ahí, la próxima vez
+que se recorten fotos de Mahle desaparecerían los 172 códigos del otro catálogo
+sin que nadie se entere hasta ver los cuadritos rotos en la tabla. Un archivo
+por script hace que eso sea imposible.
+
+## La fila del catálogo Federal Mogul se ancla en la columna de códigos, no en el motor (2026-09-08)
+**Decisión:** el extractor abre una fila donde arranca una corrida de renglones
+seguidos de la columna 7 (la de los números de parte), y no donde dice
+"Motor …" en la columna 1.
+**Por qué:** las dos formas fallan al revés y la del motor falla más. Hay filas
+sin motor propio —la página 56 trae el mismo motor con dos alturas de compresión
+y la segunda no repite los datos— que con el ancla del motor se perdían enteras;
+y hay filas con dos líneas "Motor" —las de Cummins escriben "Motor C" y abajo
+"Motor 300 HP" para una sola pieza— que se partían al medio, dejando el pistón
+en una ficha y el subconjunto en otra.
+**El detalle que lo hace funcionar:** entre dos filas hay un salto grande en esa
+columna (el alto del dibujo del pistón) y dentro de una los renglones van cada 9
+o 10 puntos. El corte está en 22.
+
 ## Precios propios de mano de obra: una capa sobre la lista de la Cámara (2026-08-30)
 **Decisión:** la pantalla "Editar Precios" se implementó como una **capa
 superpuesta** (`precios_mano_obra`, clave `(servicio_id, lista_num)`) que se

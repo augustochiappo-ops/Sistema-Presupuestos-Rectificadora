@@ -1370,6 +1370,68 @@ el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 
 ## Próximo paso
 
+**Federal Mogul en las tres familias del pistón (2026-09-08).**
+
+El dueño pasó el **Catálogo Federal Mogul Argentina 2010 — Pistones,
+Subconjuntos y Conjuntos** (91 páginas). Es el equivalente Federal Mogul del
+catálogo Mahle que ya estaba cargado, y hasta ahora esas tres familias eran casi
+todas de una sola marca: 201 subconjuntos y 128 conjuntos de Mahle, más 35
+pistones sueltos que habían salido del catálogo Persan.
+
+**Entraron 175 fichas nuevas**: 54 pistones, 83 subconjuntos y 38 conjuntos. Las
+familias quedaron en **89 / 284 / 166**, y las fichas nuevas cubren **314
+renglones de la lista de precios** contando las sobremedidas. Todas con
+`extra.verificado: false` y con `extra.pagina`, para que el dueño las pueda
+cruzar contra el PDF.
+
+**Tres scripts nuevos**, en este orden: `leer_pistones_fm2010.py` (el PDF por
+coordenadas → un JSON crudo en /tmp), `pistones_fm_desde_proveedor.py` (mezcla
+ese JSON con la lista del proveedor y escribe los tres `.json`) y
+`dibujos_pistones_fm2010.py` (los dibujos). Todo el detalle —la grilla de
+columnas, las seis trampas del PDF, cómo se cruza cada código— está en
+`CRAC/tecnicos/CARGA-PISTONES-FM.md`.
+
+**Los dibujos salieron gratis.** En este catálogo cada dibujo ya viene como una
+imagen suelta embebida en el PDF, una por bloque de motor. No hubo que recortar
+nada: **110 dibujos** (772 KB) que el manifiesto apunta desde **172 códigos**.
+El de Mahle, en cambio, son recortes a ojo y `recortar_pistones_mahle.py` se
+pasa cuatrocientas líneas separando el pistón de las rayas de la grilla.
+
+**Se cargaron sólo los códigos que el proveedor vende**, por pedido del dueño.
+El catálogo trae 284 códigos distintos y 109 quedaron afuera: son en su mayoría
+de la línea europea, con el formato "87-704500-00", que por acá no se consigue.
+Si algún día el proveedor los trae, alcanza con volver a correr el segundo
+script.
+
+**Verificación automática que salió bien:** los **151** diámetros que se pueden
+cruzar contra la descripción del proveedor coinciden y no falla ninguno; ningún
+código del PDF quedó sin leer (0 sueltos sobre 284); **las 150 filas** tienen las
+tres medidas y ningún valor cae fuera de rango. Ese chequeo de plausibilidad
+—Ø de pistón entre 55 y 145 mm, perno entre 14 y 60, altura de compresión menor
+que el alto total, aros entre 0,8 y 8 mm— fue el que encontró la única fila que
+había quedado mal, la del Renault K9K de la página 76: terminaba con un segundo
+"Subconjunto" y un código europeo que no se carga, y tomarlo como fila propia
+cortaba la de arriba una línea antes de tiempo, dejándole 0,25 mm de alto.
+
+**En la pantalla:** los pistones sueltos ahora tienen columna de dibujo (antes
+sólo subconjuntos y conjuntos); subconjuntos y pistones sumaron la columna
+"Verif." que ya tenía conjuntos; y conjuntos volvió a mostrar la marca, porque
+ya no son todos Mahle —el encabezado "Cód. Mahle" pasó a "Cód. fáb."—.
+
+**Una cosa que quedó anotada y no se tocó:** `_partir_medida` en
+`webapp/backend/app/crac.py` exige un espacio antes de la medida, y hay **1.822
+códigos del proveedor que la traen pegada** (`S F 1015007STD`,
+`A BE0030640STD`). Esos no se agrupan por sobremedida: se muestran como piezas
+distintas en vez de una con STD / 0.5. No afecta a las fichas de esta tanda
+—sus códigos sí traen el espacio— pero conviene arreglarlo.
+
+**También se mergeó a `master` una rama suelta.** La rama
+`claude/great-goodall-xmzo30`, que el entorno de la tarea había creado, tenía
+**10 commits que nunca habían llegado a `master`** (los cojinetes axiales, entre
+otros): producción estaba sin todo eso. Se mergeó por fast-forward y se borró.
+
+### Antes, el mismo día
+
 **Cojinetes axiales: la undécima familia (2026-09-07, tercera sesión).**
 
 La semiarandela de empuje, que **no es un cojinete**: no abraza un muñón, apoya
