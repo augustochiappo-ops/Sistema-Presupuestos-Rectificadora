@@ -1,7 +1,7 @@
 """
 Suite de verificación de la búsqueda por medidas (`app/tecnicos.py`), contra los
-catálogos técnicos del repo (396 camisas, 915 guías, 1.108 asientos de válvulas,
-201 subconjuntos, 128 conjuntos, 35 pistones y 190 bujes de biela) y los 64.250
+catálogos técnicos del repo (396 camisas, 951 guías, 1.108 asientos de válvulas,
+284 subconjuntos, 166 conjuntos, 89 pistones y 190 bujes de biela) y los 64.250
 repuestos del proveedor ya importados en la base.
 
 Cómo se corre: ver tests/README.md. Resumen:
@@ -62,7 +62,10 @@ check("1.782 válvulas (3B + Mahle)",
       familias.get("valvulas", {}).get("total") == 1782, familias.get("valvulas"))
 check("396 camisas (secas y húmedas)",
       familias.get("camisas", {}).get("total") == 396, familias.get("camisas"))
-check("915 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") == 915, familias.get("guias"))
+# Las guías sumaron las 36 de la hoja "Indy - Últimas incorporaciones 2025" el
+# 2026-09-08. Eran 915. Ninguna de las 36 está en la lista del proveedor y entran
+# igual: las guías son del grupo "catálogo completo" (ver la cabecera de ESPEC).
+check("951 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") == 951, familias.get("guias"))
 check("1.108 asientos de válvulas (Indy + Nubo + RYC)",
       familias.get("asientos", {}).get("total") == 1108, familias.get("asientos"))
 # Las tres familias del pistón sumaron el catálogo Federal Mogul 2010 el

@@ -212,7 +212,7 @@ $VENV/bin/python tests/backend_medidas.py
 
 | Bloque | Qué verifica |
 |---|---|
-| Catálogos | Las **once** familias cargadas con sus totales exactos (396 camisas, 1.782 válvulas, 915 guías, 1.108 asientos, 201 subconjuntos, 128 conjuntos, 35 pistones, 354 cojinetes de biela, 345 cojinetes de bancada, 120 cojinetes axiales, 190 bujes de biela), y el filtro "solo las que tiene el proveedor" en todas menos las que salen de la lista del proveedor (válvulas, subconjuntos, conjuntos y las tres de cojinetes), filtrando de verdad donde está |
+| Catálogos | Las **once** familias cargadas con sus totales exactos (396 camisas, 1.782 válvulas, 951 guías, 1.108 asientos, 284 subconjuntos, 166 conjuntos, 89 pistones, 354 cojinetes de biela, 345 cojinetes de bancada, 120 cojinetes axiales, 190 bujes de biela), y la casilla "solo las que tiene el proveedor" en las cuatro familias del grupo "catálogo completo" —camisas, guías, asientos y bujes de biela— filtrando de verdad en las cuatro |
 | Sin filtros | No devuelve el catálogo entero, y una familia inexistente no explota |
 | Valor ± tolerancia | Encuentra con el valor exacto y con ±0,5, deja de encontrar con ±0,1, usa ±0,5 si no se escribe tolerancia, y acepta la coma decimal |
 | Acumulación | Sumar un segundo filtro achica el resultado y no pierde la pieza buscada |

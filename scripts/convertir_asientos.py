@@ -19,12 +19,14 @@ trae quince hojas de las que acá se usa una sola. Para rehacer un volcado:
     pd.read_excel(ORIGEN, sheet_name=HOJA, header=None, dtype=object) \\
       .to_csv(DESTINO, index=False, header=False)
 
-    | archivo                  | Excel de origen              | hoja                         |
-    |--------------------------|------------------------------|------------------------------|
-    | asientos_indy_2024.csv   | Indy Catálogo Interactivo    | Asientos-Seats - casquillos  |
-    |                          | 2024 web.xls                 |                              |
-    | asientos_nubo_2025.csv   | NUBO_2025.xlsx               | ASIENTOS                     |
-    | asientos_ryc.csv         | CatalogoASIENTOS.xls (RYC)   | Asientos Pag.1 (única)       |
+    | archivo                   | Excel de origen             | hoja                        |
+    |---------------------------|-----------------------------|-----------------------------|
+    | asientos_indy_2024.csv    | Indy Catálogo Interactivo   | Asientos-Seats - casquillos |
+    |                           | 2024 web.xls                |                             |
+    | asientos_indy_2025.csv    | Indy - Ultimas              | ASIENTOS                    |
+    |                           | incorporaciones 2025.xlsx   |                             |
+    | asientos_nubo_2025.csv    | NUBO_2025.xlsx              | ASIENTOS                    |
+    | asientos_ryc.csv          | CatalogoASIENTOS.xls (RYC)  | Asientos Pag.1 (única)      |
 
 De cada catálogo se usa lo que pidió el dueño y nada más: tipo (admisión o
 escape), Ø exterior, Ø interior, altura, ángulo y cantidad por juego. Lo demás
@@ -84,7 +86,11 @@ FUENTES = os.path.join(RAIZ, "CRAC", "tecnicos", "fuentes")
 CSV_PROVEEDOR = os.path.join(RAIZ, "CRAC", "precio-stock.csv")
 SALIDA = os.path.join(RAIZ, "CRAC", "tecnicos", "asientos.json")
 
+# Indy publica el catálogo entero cada tantos años y entremedio saca hojas de
+# incorporaciones. Las dos van a la misma lista: el catálogo primero, así una
+# ficha que aparece en los dos se queda con la del catálogo, que es la revisada.
 INDY = os.path.join(FUENTES, "asientos_indy_2024.csv")
+INDY_2025 = os.path.join(FUENTES, "asientos_indy_2025.csv")
 NUBO = os.path.join(FUENTES, "asientos_nubo_2025.csv")
 RYC = os.path.join(FUENTES, "asientos_ryc.csv")
 
@@ -162,6 +168,21 @@ TIPOS = {
     "E": "E", "ESC": "E", "ESC.": "E",
     "AE": "AE", "A-E": "AE", "A/E": "AE", "ADM/ESC": "AE",
 }
+
+
+def cant_por_juego(valor: str):
+    """
+    La cantidad por juego tal como la escribe el catálogo. La mayoría son un
+    número ("6"), pero hay asientos que sirven para motores de 4 y de 6
+    cilindros y ahí el catálogo pone un rango: "4/6" en la hoja de 2024 y
+    "4 o 6" en la de 2025. Es el mismo dato escrito distinto, así que se unifica
+    en la forma que ya está en el JSON —"4/6"— para que dos fichas iguales no se
+    lean como distintas. El 0 es un dato que falta, no un juego de cero piezas.
+    """
+    valor = (valor or "").strip()
+    if not valor or valor == "0":
+        return None
+    return re.sub(r"\s*o\s*", "/", valor)
 
 
 def tipo(valor: str):
@@ -266,13 +287,32 @@ def ficha(*, codigo_fab, marca, aplicacion, tipo_val, diam_ext, diam_int,
 
 # ── Indy ─────────────────────────────────────────────────────────────────────
 # Marca/Make | Motor/Engine | Nº Original | N°300-INDY | A/E | D.E | D.I | H |
-# µ (ángulo) | Cant. por juego.
+# µ (ángulo) | Cant. por juego. Las dos hojas —el catálogo 2024 y las
+# incorporaciones 2025— tienen exactamente esas columnas y se leen igual.
 def indy() -> list[dict]:
-    fichas = []
-    for fila in leer(INDY):
+    # El descarte de códigos repetidos va SOLO de la hoja nueva contra la vieja,
+    # nunca dentro de una hoja. El catálogo 2024 repite once códigos a propósito
+    # —el mismo asiento en dos motores es dos fichas, igual que en
+    # subconjuntos—, así que dedupear adentro se comía nueve fichas buenas. Lo
+    # que sí hay que descartar es lo que la hoja de 2025 vuelve a traer:
+    #
+    #   * contra 2024: tres códigos (A6766, A6767 y A6767T) ya estaban en el
+    #     catálogo, y la ficha que vale es la del catálogo, que está revisada.
+    #   * dentro de 2025: el asiento del MAN D08 figura una vez bajo MAN y otra
+    #     bajo VOLKSWAGEN —es la misma pieza, el motor lo hace MAN y lo monta
+    #     VW—, así que las catorce filas de la hoja son doce piezas.
+    fichas, del_catalogo = [], set()
+
+    def emitir(fila, saltear_repetidos):
         codigo = celda(fila, 3).upper()
         if not re.match(r"^A[\dA-Z\-]+$", codigo):
-            continue  # encabezados, títulos y filas vacías
+            return  # encabezados, títulos y filas vacías
+        if saltear_repetidos:
+            if codigo in del_catalogo:
+                return
+            del_catalogo.add(codigo)
+        else:
+            del_catalogo.add(codigo)
         cantidad = celda(fila, 9)
         fichas.append(ficha(
             codigo_fab=codigo,
@@ -284,10 +324,15 @@ def indy() -> list[dict]:
             altura=numero(celda(fila, 7)),
             angulo_val=angulo(celda(fila, 8)),
             # El 0 de esta columna es un dato que falta, no un juego vacío.
-            cant_juego=cantidad if cantidad and cantidad != "0" else None,
+            cant_juego=cant_por_juego(cantidad),
             nro_original=texto(celda(fila, 2)),
             base_crac="F IY " + codigo[1:],
         ))
+
+    for fila in leer(INDY):
+        emitir(fila, saltear_repetidos=False)
+    for fila in leer(INDY_2025):
+        emitir(fila, saltear_repetidos=True)
     return fichas
 
 

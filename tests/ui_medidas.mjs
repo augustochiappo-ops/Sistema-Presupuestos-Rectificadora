@@ -64,7 +64,7 @@ console.log('\n=== Estado inicial ===')
 check('las once familias con su total',
   (await page.locator('button', { hasText: /^Camisas\s*396$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Válvulas\s*1782$/ }).count()) === 1
-  && (await page.locator('button', { hasText: /^Guías de válvulas\s*915$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Guías de válvulas\s*951$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Asientos de válvulas\s*1108$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Subconjuntos\s*284$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Conjuntos\s*166$/ }).count()) === 1

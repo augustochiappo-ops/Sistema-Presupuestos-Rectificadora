@@ -23163,5 +23163,761 @@
     "medida": "STD"
    }
   ]
+ },
+ {
+  "codigo": "G3664B",
+  "codigo_fab": "G3664B",
+  "marca": "INDY",
+  "aplicacion": "YAMAHA R1 (2000), 150cv (110Kw-147hp), 4 cil, 1000 cm3",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 4.5,
+   "diam_ext": 10.05,
+   "largo": 33.0
+  },
+  "extra": {
+   "forma": "P-1",
+   "material": "Bronce",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": null
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3667",
+  "codigo_fab": "G3667",
+  "marca": "INDY",
+  "aplicacion": "DFSK UTILITARIO C32 1,5L 101 CV",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 5.02,
+   "diam_ext": 10.07,
+   "largo": 34.5
+  },
+  "extra": {
+   "forma": null,
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": null
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3668B",
+  "codigo_fab": "G3668B",
+  "marca": "INDY",
+  "aplicacion": "RENAULT MASTER 3 2,3 16V M9T",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 6.0,
+   "diam_ext": 11.04,
+   "largo": 42.5
+  },
+  "extra": {
+   "forma": null,
+   "material": "Bronce",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": null
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3671",
+  "codigo_fab": "G3671",
+  "marca": "INDY",
+  "aplicacion": "PERKINS 1106-E60TA VK BUILDS / Fractured Split Rod - 1006.60T YG, YH, YK, YJ Builds /Fractured Split Rod - 1004.42 Fractured Split Rod - 1004.40/40T / Fractured Split Rod",
+  "descripcion": null,
+  "tipo": "E",
+  "medidas": {
+   "diam_vastago": 9.01,
+   "diam_ext": 14.04,
+   "largo": 51.25
+  },
+  "extra": {
+   "forma": "A-1",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "3318A705",
+   "cant_juego": null
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3672",
+  "codigo_fab": "G3672",
+  "marca": "INDY",
+  "aplicacion": "PERKINS 4.203.2 Lip Seal - 4 CyL Perkins 4.108 Marine - 4 CyL Perkins D4.203 - 4 CyL",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 7.997,
+   "diam_ext": 12.762,
+   "largo": 61.9
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "33261723",
+   "cant_juego": 4
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3673",
+  "codigo_fab": "G3673",
+  "marca": "INDY",
+  "aplicacion": "CATERPILLAR GUIDE. VALVE. 3044C/3046 4 CyL - 6 Cy",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 8.0,
+   "diam_ext": 12.045,
+   "largo": 50.0
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "B103-9247",
+   "cant_juego": "4/6"
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3674",
+  "codigo_fab": "G3674",
+  "marca": "INDY",
+  "aplicacion": "PERKINS 1004/10 1100 - 4 CyL / 6 CyL",
+  "descripcion": null,
+  "tipo": "A",
+  "medidas": {
+   "diam_vastago": 9.01,
+   "diam_ext": 13.05,
+   "largo": 51.25
+  },
+  "extra": {
+   "forma": "A-1",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "3313A012",
+   "cant_juego": "4/6"
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3675",
+  "codigo_fab": "G3675",
+  "marca": "INDY",
+  "aplicacion": "PERKINS Marine/Industrial GUIDE. VALVE. INTAKE 4.108 4 CyL",
+  "descripcion": null,
+  "tipo": "A",
+  "medidas": {
+   "diam_vastago": 8.0,
+   "diam_ext": 12.75,
+   "largo": 57.0
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "3313E001",
+   "cant_juego": 4
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3676",
+  "codigo_fab": "G3676",
+  "marca": "INDY",
+  "aplicacion": "PERKINS 704-30 (UC) Turbocharged - 4 CyL 704-30 (UA) Naturally Aspirated - 4 CyL",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 6.99,
+   "diam_ext": 12.04,
+   "largo": 45.7
+  },
+  "extra": {
+   "forma": "A-1",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "3318A702",
+   "cant_juego": 4
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3677",
+  "codigo_fab": "G3677",
+  "marca": "INDY",
+  "aplicacion": "NAVISTAR INTERNATIONAL TRUCK DT408/DT530/DT530E HEUI/DT466E HEUI Engines application",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 9.52,
+   "diam_ext": 15.91,
+   "largo": 66.4
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "1824647",
+   "cant_juego": null
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3678",
+  "codigo_fab": "G3678",
+  "marca": "INDY",
+  "aplicacion": "PERKINS 1104D-E44T (NP) / 1104D-E44TA (NR) - 4 Cyl 1106C - E66TA (PK) / 1106D - E66TA (PJ) - 6 Cyl 1104D-E44TA (NJ) / 1104D-E44T (NH)",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 6.0,
+   "diam_ext": 10.04,
+   "largo": 46.3
+  },
+  "extra": {
+   "forma": "P",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "3313A035",
+   "cant_juego": "4/6"
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3679",
+  "codigo_fab": "G3679",
+  "marca": "INDY",
+  "aplicacion": "YANMAR TNE/V 84/86/88/98 3 CyL / 4 CyL",
+  "descripcion": null,
+  "tipo": "E",
+  "medidas": {
+   "diam_vastago": 8.0,
+   "diam_ext": 13.04,
+   "largo": 46.0
+  },
+  "extra": {
+   "forma": "A-1",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "Y129150-11810",
+   "cant_juego": "3/4"
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3680",
+  "codigo_fab": "G3680",
+  "marca": "INDY",
+  "aplicacion": "YANMAR TNE/V 84/86/88 4TNV88-3TNV88-TK486V-4TNV84-3TNV84-4TNE88- 3TNE88-TK486-4TNE84 3 CyL / 4 CyL",
+  "descripcion": null,
+  "tipo": "A",
+  "medidas": {
+   "diam_vastago": 8.0,
+   "diam_ext": 13.04,
+   "largo": 49.0
+  },
+  "extra": {
+   "forma": "A-1",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "Y120130-11860",
+   "cant_juego": "3/4"
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3681",
+  "codigo_fab": "G3681",
+  "marca": "INDY",
+  "aplicacion": "CUMMINS SERIE B - TURBOCHARGED AFTERCOOLED / EMISSION / NON - 6 CyL QSB - TURBOCHARGED -6 CyL / 4 CyL",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 8.03,
+   "diam_ext": 14.04,
+   "largo": 60.45
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "C3904408",
+   "cant_juego": "4/6"
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3682",
+  "codigo_fab": "G3682",
+  "marca": "INDY",
+  "aplicacion": "CUMMINS SERIE B 6BTA 5.9 / 6BT 5.9 / 6BT 5.9 QSB / 4BT 3.9 QSB (4 CyL) - TURBOCHARGED - AFTERCOOLED EMISSION - NON / EMISSION 6 CyL",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 8.03,
+   "diam_ext": 14.04,
+   "largo": 51.7
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "C3904409",
+   "cant_juego": "4/6"
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3683",
+  "codigo_fab": "G3683",
+  "marca": "INDY",
+  "aplicacion": "JOHN DEERE PowerTech 6090 9.0L Tier 4 - 6 CyL 9.0L Tier 2 & Tier 3 - 6 CyL",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 8.035,
+   "diam_ext": 13.55,
+   "largo": 62.6
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "R527286",
+   "cant_juego": 6
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3684",
+  "codigo_fab": "G3684",
+  "marca": "INDY",
+  "aplicacion": "CUMMINS 6C 6CTA / CT 8.3 TURBOCHARGED / AFTERCOOLED - 6 CyL",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 9.55,
+   "diam_ext": 16.01,
+   "largo": 72.0
+  },
+  "extra": {
+   "forma": "A-1-1",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "C3923564",
+   "cant_juego": 6
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3685",
+  "codigo_fab": "G3685",
+  "marca": "INDY",
+  "aplicacion": "PERKINS T6.354.4 (TU) - TURBOCHARGED - 6 CyL 1006.60T (YE, YD) - Grade L/TURBOCHARGED/Lip Seal - 6 Cyl 1004.40T (AB) - TURBOCHARGED/ INTERCOOLED Lip Seal - NATURALLY ASPIRATED- 4 Cyl",
+  "descripcion": null,
+  "tipo": "A",
+  "medidas": {
+   "diam_vastago": 9.51,
+   "diam_ext": 15.93,
+   "largo": 57.94
+  },
+  "extra": {
+   "forma": "F",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "3343F002",
+   "cant_juego": "4/6"
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3686",
+  "codigo_fab": "G3686",
+  "marca": "INDY",
+  "aplicacion": "PERKINS 1006.60T (YE, YD) - Grade L - TURBOCHARGED/ INTERCOOLED Lip Seal - 6 Cyl T6.354.4 (TU) - TURBOCHARGED - 6 Cyl",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 9.53,
+   "diam_ext": 15.912,
+   "largo": 61.12
+  },
+  "extra": {
+   "forma": "F",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "3343J002",
+   "cant_juego": null
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3687",
+  "codigo_fab": "G3687",
+  "marca": "INDY",
+  "aplicacion": "INTERNATIONAL DT466 - Perkins 1300 Series/To ESN 440,035 - 6 CyL DT436 / DT437 / DT414 / DT360 - IHC Navistar - 6 CyL",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 9.52,
+   "diam_ext": 15.9,
+   "largo": 69.9
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "675439",
+   "cant_juego": 6
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3688",
+  "codigo_fab": "G3688",
+  "marca": "INDY",
+  "aplicacion": "CUMMINS GUIDE, VALVE THIN WALL . 4B.6B 6BT 5.9 QSB-TURBOCHARGED-6 Cyl 4BT 3.9 QSB-8 VALVE TURBOCHARGED-4 Cyl 6BTA 5.9-TURBOCHARGED AFTERCOOLED-6 Cyl",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 8.03,
+   "diam_ext": 11.16,
+   "largo": 63.5
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "C3906206",
+   "cant_juego": "4/6"
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3689",
+  "codigo_fab": "G3689",
+  "marca": "INDY",
+  "aplicacion": "PERKINS 4.318 (NC)-Rope & Lip Seal-4 Cyl",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 9.52,
+   "diam_ext": 15.92,
+   "largo": 67.3
+  },
+  "extra": {
+   "forma": "M",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "33432532",
+   "cant_juego": 4
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3690",
+  "codigo_fab": "G3690",
+  "marca": "INDY",
+  "aplicacion": "JOHN DEERE 4.270-To ESN 280,000-4 Cyl 6.404D-To ESN 214,999-6 Cyl",
+  "descripcion": null,
+  "tipo": null,
+  "medidas": {
+   "diam_vastago": 9.53,
+   "diam_ext": 15.88,
+   "largo": 84.3
+  },
+  "extra": {
+   "forma": "F",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "R28654",
+   "cant_juego": "4/6"
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3691B",
+  "codigo_fab": "G3691B",
+  "marca": "INDY",
+  "aplicacion": "CITROEN C4 CACTUS BERLINA 5 PUERTAS 1.2 i THP 110(EB2DT M) 3cil",
+  "descripcion": null,
+  "tipo": "E",
+  "medidas": {
+   "diam_vastago": 5.19,
+   "diam_ext": 9.05,
+   "largo": 36.7
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Bronce",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": 6
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3692",
+  "codigo_fab": "G3692",
+  "marca": "INDY",
+  "aplicacion": "FORD Focus/Nova Ecosport/ Fusion - Duratec 2.0 16v Flex - Duratec 2.3 16v Gas. 2005/2006",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 5.51,
+   "diam_ext": 11.04,
+   "largo": 39.0
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": "157G/6510/AC",
+   "cant_juego": 8
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3692B",
+  "codigo_fab": "G3692B",
+  "marca": "INDY",
+  "aplicacion": "FORD Focus/Nova Ecosport/ Fusion - Duratec 2.0 16v Flex - Duratec 2.3 16v Gas. 2005/2006",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 5.51,
+   "diam_ext": 11.04,
+   "largo": 39.0
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Bronce",
+   "sobremedida": null,
+   "nro_original": "157G/6510/AC",
+   "cant_juego": 8
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3731",
+  "codigo_fab": "G3731",
+  "marca": "INDY",
+  "aplicacion": "RENAULT KWID B4D",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 5.01,
+   "diam_ext": 9.035,
+   "largo": 34.1
+  },
+  "extra": {
+   "forma": null,
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": null
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3732B",
+  "codigo_fab": "G3732B",
+  "marca": "INDY",
+  "aplicacion": "PEUGEOT XU10/2C-XUJ2",
+  "descripcion": null,
+  "tipo": "A",
+  "medidas": {
+   "diam_vastago": 8.01,
+   "diam_ext": 13.06,
+   "largo": 45.0
+  },
+  "extra": {
+   "forma": "N",
+   "material": "Bronce",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": 8
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3733B",
+  "codigo_fab": "G3733B",
+  "marca": "INDY",
+  "aplicacion": "PEUGEOT XU10/2C-XUJ2",
+  "descripcion": null,
+  "tipo": "E",
+  "medidas": {
+   "diam_vastago": 8.01,
+   "diam_ext": 13.06,
+   "largo": 50.0
+  },
+  "extra": {
+   "forma": "N",
+   "material": "Bronce",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": 8
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3734",
+  "codigo_fab": "G3734",
+  "marca": "INDY",
+  "aplicacion": "VOLVO 850 - V40 16v",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 7.0,
+   "diam_ext": 12.01,
+   "largo": 45.1
+  },
+  "extra": {
+   "forma": null,
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": null
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3735",
+  "codigo_fab": "G3735",
+  "marca": "INDY",
+  "aplicacion": "VOLVO 540 - 2.0 16v",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 6.0,
+   "diam_ext": 12.01,
+   "largo": 45.0
+  },
+  "extra": {
+   "forma": null,
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": null
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3737",
+  "codigo_fab": "G3737",
+  "marca": "INDY",
+  "aplicacion": "FORD FORD - ECOSPORT / KA / TERRITORY (motor DRAGON 1.5l 3 cil) 2018- ….",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 5.49,
+   "diam_ext": 10.05,
+   "largo": 38.0
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Fundición Gris",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": 4
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3737B",
+  "codigo_fab": "G3737B",
+  "marca": "INDY",
+  "aplicacion": "FORD FORD - ECOSPORT / KA / TERRITORY (motor DRAGON 1.5l 3 cil) 2018- ….",
+  "descripcion": null,
+  "tipo": "AE",
+  "medidas": {
+   "diam_vastago": 5.49,
+   "diam_ext": 10.05,
+   "largo": 38.0
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Bronce",
+   "sobremedida": null,
+   "nro_original": null,
+   "cant_juego": 4
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3745B",
+  "codigo_fab": "G3745B",
+  "marca": "INDY",
+  "aplicacion": "HYUNDAI 2021-2023 Hyundai Genesis G80; 2023 Hyundai Genesis G9019/2/2025 2022-2023 Hyundai Genesis GV70; 2021-2023 Hyundai Genesis GV80; 2022-2023 Hyundai Santa Cruz; 2021-2023 Hyundai Santa Fe; 2020-2023 Hyundai Sonata; 2022-2023 Hyundai Tucson; DOHC-TCI/GDI",
+  "descripcion": null,
+  "tipo": "E",
+  "medidas": {
+   "diam_vastago": 4.98,
+   "diam_ext": 10.55,
+   "largo": 47.0
+  },
+  "extra": {
+   "forma": "A",
+   "material": "Bronce",
+   "sobremedida": null,
+   "nro_original": "22114-3N100",
+   "cant_juego": 8
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3746B",
+  "codigo_fab": "G3746B",
+  "marca": "INDY",
+  "aplicacion": "HYUNDAI 2018-2022 Hyundai Accent DOHC MPI; 2021-2023 Elantra DOHC - TCI/GDI, 2022-2023 Kona, 2021-2023 Santa Fe Hybrid, 2020-2023 Sonata, 2022-2023 Tucson, 2020-2023 Venue",
+  "descripcion": null,
+  "tipo": "A",
+  "medidas": {
+   "diam_vastago": 5.05,
+   "diam_ext": 10.05,
+   "largo": 48.0
+  },
+  "extra": {
+   "forma": "A-1",
+   "material": "Bronce",
+   "sobremedida": null,
+   "nro_original": "22114-2M000",
+   "cant_juego": 8
+  },
+  "codigos_crac": []
+ },
+ {
+  "codigo": "G3747B",
+  "codigo_fab": "G3747B",
+  "marca": "INDY",
+  "aplicacion": "HYUNDAI 2018-2022 Hyundai Accent DOHC MPI; 2021-2023 Elantra DOHC - TCI/GDI, 2022-2023 Kona, 2021-2023 Santa Fe Hybrid, 2020-2023 Sonata, 2022-2023 Tucson, 2020-2023 Venue",
+  "descripcion": null,
+  "tipo": "E",
+  "medidas": {
+   "diam_vastago": 5.05,
+   "diam_ext": 10.05,
+   "largo": 51.2
+  },
+  "extra": {
+   "forma": "A-1",
+   "material": "Bronce",
+   "sobremedida": null,
+   "nro_original": "22115-2M000",
+   "cant_juego": 8
+  },
+  "codigos_crac": []
  }
 ]
