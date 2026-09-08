@@ -1483,3 +1483,34 @@ La fecha prometida y la marca de urgente las pone la oficina (`oficina_required`
 dentro de `/api/taller`, que es el único lugar donde el rol se chequea por
 endpoint y no por el guard general). El taller las ve pero no las toca: son un
 compromiso con el cliente, y el cliente lo atiende la oficina.
+
+## Cómo se le explica al dueño un paso manual en PythonAnywhere (2026-09-08)
+
+La configuración de la contraseña del taller se trabó dos veces, y ninguna de
+las dos fue por el código. Las dos son de cómo se redactó la instrucción, así
+que quedan acá para la próxima vez que haya que pedirle al dueño que pegue algo
+en la consola de PythonAnywhere.
+
+**Primera: el hash se confundió con la contraseña.** El comando devolvía un
+`scrypt:32768:8:1$…` de sesenta y pico de caracteres, y el dueño lo pegó en la
+pantalla de login. Es lo razonable si nadie aclara lo contrario: la consola te
+devuelve algo que parece una clave generada. La aclaración —"esto va sólo en el
+archivo WSGI; tu contraseña es la que tipeaste"— tiene que ir **antes** del
+comando, en la misma frase que lo presenta, no como nota al pie después.
+
+**Segunda: `getpass` parece que colgó la consola.** No muestra ni puntos ni
+asteriscos mientras se escribe. Es lo correcto en un servidor compartido, pero
+en la consola web de PythonAnywhere se lee como que la terminal no responde. La
+versión con la contraseña escrita en el comando:
+
+```bash
+python3 -c "from werkzeug.security import generate_password_hash as g; print(g('loquesea'))"
+```
+
+es la que conviene ofrecer **primero**, avisando que la contraseña queda en el
+historial de la consola. Para un taller de una persona eso no es un problema
+real, y el `getpass` queda como la alternativa para quien la prefiera.
+
+La regla general: cuando el paso lo ejecuta el dueño y no Claude, el costo de un
+malentendido es una vuelta entera de ida y vuelta por chat. Conviene gastar dos
+renglones de más en decir qué texto va a dónde.

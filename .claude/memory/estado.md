@@ -1675,41 +1675,42 @@ El dueño dio libertad para sumar lo que hiciera falta. Se sumó esto, y nada m�
 lado del número de presupuesto. Se ve en la captura y no en el código. Va con
 `!!` adelante.
 
+### Puesta en producción, y la confusión que costó dos vueltas
+
+Deployado en `414f3fb` + `c380183`; producción responde 200 y el login devuelve
+401 con clave mala (no 500), o sea que el camino nuevo de `_cuentas()` anda. El
+dueño configuró `TALLER_PASSWORD_HASH` en el WSGI de PythonAnywhere y **el panel
+del taller quedó andando**: entra con la cuenta `taller` y cae en su tablero.
+
+Dos cosas trabaron esa configuración, y las dos son de explicación, no de código:
+
+1. **El hash no es la contraseña.** El dueño pegó en la pantalla de login el
+   `scrypt:32768:8:1$…` que le devolvió la consola. Ese texto va **sólo** en el
+   archivo WSGI; la contraseña es la que él tipeó en el prompt. La próxima vez
+   hay que decirlo antes de dar el comando, no después.
+2. **`getpass` no muestra nada al escribir** —ni puntos ni asteriscos— y parece
+   que la consola está colgada. Para PythonAnywhere conviene ofrecer directamente
+   la versión con la contraseña escrita en el comando
+   (`generate_password_hash('loquesea')`), avisando que queda en el historial de
+   la consola, que en un taller de una persona no es problema.
+
 **Verificado:** las cuatro suites de backend en verde (`backend_taller` con sus
 63 checks), el humo entero, y las tres de UI enteras. Además, a ojo: el tablero y
 la orden con la cuenta del taller, el detalle del presupuesto con la cuenta de
-oficina, y el PDF de la orden leído para confirmar que no tiene un `$`.
+oficina, y el PDF de la orden leído para confirmar que no tiene un `$`. Y por
+último, en producción y por el dueño: la cuenta del taller entrando de verdad.
 
 
 ## Próximo paso
 
-**Configurar la contraseña del taller en producción (2026-09-08).** El panel
-está deployado (`414f3fb`, producción responde 200), pero la cuenta del taller
-**no existe** hasta que PythonAnywhere tenga `TALLER_PASSWORD_HASH`. Hasta
-entonces la oficina entra igual que siempre y el sistema anda idéntico a antes.
-
-Son dos pasos, los dos en PythonAnywhere:
-
-1. En una **consola Bash**, generar el hash de la contraseña que el dueño quiera
-   para el taller (la contraseña no se escribe en el comando: la pide aparte,
-   así no queda en el historial de la consola):
-
-   ```bash
-   python3 -c "import getpass; from werkzeug.security import generate_password_hash as g; print(g(getpass.getpass('Contraseña del taller: ')))"
-   ```
-
-   Sale algo como `scrypt:32768:8:1$XrDz…`, largo. Se copia entero.
-
-2. En **Web → WSGI configuration file**, al lado de donde ya está
-   `APP_PASSWORD_HASH`, agregar las dos líneas y darle **Reload**:
-
-   ```python
-   os.environ["TALLER_USERNAME"] = "taller"
-   os.environ["TALLER_PASSWORD_HASH"] = "scrypt:32768:8:1$…"   # el hash del paso 1
-   ```
-
-Después de eso, el taller entra con usuario `taller` y esa contraseña, y cae
-directo en su panel.
+**El mensaje de error del login no dice nada (2026-09-08).** Es lo único que
+quedó abierto de esta sesión, y salió de usarla: cuando el login falla, la
+pantalla muestra **"No autenticado"** en vez de "Usuario o contraseña
+incorrectos", que es lo que el servidor manda de verdad. El culpable es
+`webapp/frontend/src/api/client.js`: corta en el `if (res.status === 401)` y tira
+`ApiError('No autenticado', 401)` **antes** de leer el cuerpo JSON, así que el
+mensaje real nunca llega a la pantalla. Con `/auth/login` habría que leer el
+cuerpo y usar `data.error`. Es un bug viejo, no de esta tanda, y son dos líneas.
 
 **Los 104 dibujos de Mahle que faltan, y son de otros tomos (2026-09-08).**
 
