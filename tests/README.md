@@ -1,5 +1,57 @@
 # Verificaciones
 
+## Los dos carriles (leer esto primero)
+
+Las seis suites completas son **380 verificaciones y unos veinte minutos**, casi
+todos de las tres de UI, que manejan un Chromium de verdad. Correrlas después de
+cada cambio chico era el mayor desperdicio de tiempo del proyecto. Desde el
+2026-09-08 el trabajo va en dos carriles:
+
+| | Qué se corre | Cuánto tarda | Cuándo |
+|---|---|---|---|
+| **Corto** | `tests/rapido.sh` — las tres de backend + `humo.mjs` | **2 min 30 s** | en cada cambio |
+| | `tests/rapido.sh --backend` — solo las tres de backend | **3 segundos** | cuando el cambio no toca el frontend |
+| **Profundo** | las tres de UI enteras | **~20 min** | miércoles y viernes 7:00, solo |
+
+El carril profundo lo dispara una **Routine** que corre sola sobre `master`:
+levanta el entorno, corre `ui_medidas.mjs`, `ui_grupos.mjs` y `ui_precios.mjs`
+enteras, y si algo falla lo diagnostica, lo arregla, vuelve a correr la suite y
+pushea. Nadie tiene que acordarse de nada.
+
+**Dónde está el límite, dicho claro.** Que `rapido.sh` pase NO significa que el
+cambio esté bien: significa que la app no se cayó y que ninguna tabla quedó
+cortada. **Si el cambio toca lo que una suite de UI cubre —el agrupado de
+repuestos, los precios, un filtro de la búsqueda por medidas— esa suite se corre
+igual antes de pushear.** Lo que los dos carriles ahorran es correr las TRES por
+un cambio que toca UNA; no ahorran correr la que corresponde.
+
+---
+
+## 0. El test de humo — `humo.mjs`
+
+Alrededor de dos minutos. Es el que se corre en cada cambio, dentro de
+`rapido.sh`. Diecinueve verificaciones:
+
+- el login entra;
+- las siete pantallas abren y pintan algo suyo (motores, clientes, presupuestos,
+  precios, repuestos, búsqueda por medidas, actualizar Excel);
+- ningún error de JavaScript en ninguna de ellas;
+- en las once familias de la búsqueda por medidas: la tabla trae filas y
+  **ninguna celda queda cortada**.
+
+Ese último check es el que más rinde por segundo invertido. La pantalla de
+búsqueda por medidas es la que más columnas tiene y la que más se toca: agregar
+una columna empuja a las de al lado y las deja cortadas sin que nadie lo note
+hasta que un presupuesto sale con el código a medias. El 2026-09-08 encontró que
+"FEDERAL MOGUL" no entraba en la columna Marca, que tenía 100 px.
+
+Lo que NO cubre: que un precio sea el correcto, que el agrupado haga lo que
+tiene que hacer, que el PDF salga bien, que un filtro con tolerancia devuelva
+las piezas que corresponden. Eso son las tres suites de UI, y por eso siguen
+existiendo.
+
+---
+
 Seis suites. Dos cubren el bloque de **grupos de repuestos** (qué cotiza cada
 categoría, opcionales, ficha del motor, pedido, medidas automáticas), escritas el
 2026-08-10 junto con la feature; dos cubren la **búsqueda por

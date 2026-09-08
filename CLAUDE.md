@@ -70,6 +70,29 @@ Para capturas de pantalla: con los dos servidores arriba, Chromium headless ya
 está instalado en el entorno remoto (`/opt/pw-browsers/chromium`) —
 `playwright-core` + `executablePath`, **nunca** `playwright install`.
 
+### Los dos carriles de verificación (2026-09-08)
+
+Las seis suites enteras son **veinte minutos**, casi todos de las tres de UI.
+Correrlas después de cada cambio chico era el mayor desperdicio de tiempo del
+proyecto. Ahora:
+
+```bash
+tests/rapido.sh              # en CADA cambio: backend + humo · 2 min 30 s
+tests/rapido.sh --backend    # si el cambio no toca el frontend · 3 segundos
+```
+
+Y las **tres de UI enteras corren solas los miércoles y viernes a las 7:00** de
+la mañana, en una Routine que trabaja sobre `master`: si algo falla, lo arregla,
+vuelve a correr la suite y pushea.
+
+**El límite, que no se negocia:** que `rapido.sh` pase no quiere decir que el
+cambio esté bien, quiere decir que la app no se cayó. **Si el cambio toca lo que
+una suite de UI cubre —el agrupado de repuestos, los precios, un filtro de la
+búsqueda por medidas— esa suite se corre igual antes de pushear.** Los dos
+carriles ahorran correr las TRES por un cambio que toca UNA; no ahorran correr
+la que corresponde. Y una tanda grande —un catálogo nuevo, una familia nueva—
+sigue terminando con las tres, como hasta ahora.
+
 ### Cinco reglas que se ganaron a los golpes
 
 Las cinco salieron de sesiones que tardaron el doble de lo que debían (50 y 60
@@ -82,7 +105,8 @@ minutos, 2026-08-19). Ninguna sacrifica cobertura: lo que atacan es desperdicio.
 2. **La suite de UI se corre entera, UNA vez, al final**, con todos los arreglos
    ya hechos. No una vez por arreglo. (Ver `decisiones.md`: entera siempre, sin
    filtros ni recortes de esperas — lo que se optimiza es cuándo se corre, no
-   qué cubre.)
+   qué cubre.) Desde el 2026-09-08 "al final" puede ser el miércoles o el
+   viernes: ver "Los dos carriles de verificación", arriba.
 3. **Un check nuevo se prueba primero con un script chico** (un `.mjs` de veinte
    líneas en el scratchpad que abra Chromium y verifique solo eso: ~1 minuto).
    Meter un check sin probar y descubrir a los 7 minutos que estaba mal escrito
