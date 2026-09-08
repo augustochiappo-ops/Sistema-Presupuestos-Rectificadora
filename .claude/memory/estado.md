@@ -1772,6 +1772,17 @@ no se toca el entorno— con una variante que no estaba escrita: **git también 
 tocar el entorno**, aunque el que corre sea un comando de versionado y no un
 servidor.
 
+### Verificado y deployado
+
+`tests/rapido.sh` **TODO OK** (las cuatro suites de backend —medidas, grupos,
+precios y taller— y el humo con Chromium, 196 segundos) y `tests/ui_medidas.mjs`
+entera **TODO OK**, que es la suite que cubre esta pantalla y por eso se corrió
+igual aunque `rapido.sh` ya hubiera pasado. Producción quedó en **`88f171f`**,
+deploy corrido y confirmado (HTTP 200, `git pull` fast-forward de 98 archivos,
+reload agendado). Comprobado contra producción que un dibujo nuevo se sirve de
+verdad: `/pistones/TBEK48990.png` devuelve `image/png` de 4.022 bytes, y uno que
+no existe cae en el index de la SPA, que es lo que corresponde.
+
 ### El PDF quedó fuera del repo, como el de Glyco
 
 14,6 MB, y el repo entero se copia a PythonAnywhere en cada deploy. Va en
