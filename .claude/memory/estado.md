@@ -1435,6 +1435,46 @@ precios, y las de UI de medidas (137 checks), grupos y precios.
 **10 commits que nunca habían llegado a `master`** (los cojinetes axiales, entre
 otros): producción estaba sin todo eso. Se mergeó por fast-forward y se borró.
 
+### Los dos carriles de verificación (2026-09-08, el mismo día)
+
+El dueño pidió dejar de gastar veinte minutos de suites en cada cambio chico.
+Medido: **las tres suites de backend tardan un segundo cada una** y las tres de
+UI, siete minutos cada una. O sea que los veinte minutos son enteros de las de
+UI, y había un carril rápido gratis sin usar. Quedó partido en dos:
+
+* **`tests/rapido.sh`, en cada cambio** (2 min 30 s): las tres de backend más un
+  test de humo nuevo, `tests/humo.mjs`. Con `--backend` son 3 segundos.
+* **Las tres de UI enteras, miércoles y viernes a las 7:00**, en una Routine que
+  corre sola sobre `master`.
+
+**El test de humo** son 19 checks: que las siete pantallas abran y pinten algo,
+que no haya errores de JavaScript, y que en las once familias de la búsqueda por
+medidas la tabla traiga filas y **ninguna celda quede cortada**. Ese último es el
+que más rinde por segundo: es el mismo check de `ui_medidas.mjs` que ese día
+encontró que "FEDERAL MOGUL" no entraba en la columna Marca de 100 px.
+
+**El límite quedó escrito en tres lugares** (CLAUDE.md, `tests/README.md` y el
+encabezado de `rapido.sh`), porque es lo que se va a olvidar primero: que el
+carril corto pase no quiere decir que el cambio esté bien, quiere decir que la
+app no se cayó. Si el cambio toca lo que una suite de UI cubre, esa suite se
+corre igual antes de pushear.
+
+**La Routine tenía un problema que se encontró antes de confiar en ella.** Se
+mandó una sesión sonda a ver qué ve una sesión programada: arranca en
+`/home/user` **con el contenedor vacío**, sin el repo clonado y sin que haya
+corrido el hook de arranque. Con el prompt original habría fallado el primer
+miércoles sin hacer nada. El prompt corregido empieza por traerse el repo con
+`add_repo` + `register_repo_root`, y avisa que `preparar.sh` va a tardar varios
+minutos porque arma el venv, los `node_modules` y la base desde cero.
+
+**Queda por confirmar:** se disparó una corrida de prueba a mano el 2026-09-08
+para probarla de punta a punta. Lo que hay que mirar de esa corrida es si el
+clonado y el armado del entorno funcionaron; el resultado llega por notificación
+y no se puede leer desde la sesión que la disparó.
+
+La Routine **no deploya**: el `DEPLOY_SECRET` lo pasa el dueño a mano. Si arregla
+algo, avisa en el reporte que producción quedó atrás.
+
 ### Antes, el mismo día
 
 **Cojinetes axiales: la undécima familia (2026-09-07, tercera sesión).**

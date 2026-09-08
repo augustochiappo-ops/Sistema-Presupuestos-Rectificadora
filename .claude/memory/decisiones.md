@@ -1,5 +1,43 @@
 # Decisiones técnicas y de diseño
 
+## Verificación en dos carriles: el corto en cada cambio, las suites de UI dos veces por semana (2026-09-08)
+**Decisión:** en cada cambio se corre `tests/rapido.sh` (las tres suites de
+backend más `humo.mjs`, 2 min 30 s); las tres suites de UI enteras corren solas
+los miércoles y viernes a las 7:00 en una Routine sobre `master`.
+**Por qué:** las seis suites enteras son veinte minutos y **casi todos son de las
+tres de UI**: las de backend tardan un segundo cada una. Correr las tres de UI
+después de cada cambio chico era el mayor desperdicio de tiempo del proyecto, y
+no correrlas nunca es peor.
+**Lo que NO cambia, y está escrito en tres lugares porque es lo que se va a
+olvidar primero:** que el carril corto pase no quiere decir que el cambio esté
+bien, quiere decir que la app no se cayó. Si el cambio toca lo que una suite de
+UI cubre, esa suite se corre igual antes de pushear. Los dos carriles ahorran
+correr las TRES por un cambio que toca UNA; no ahorran correr la que
+corresponde. Y una tanda grande sigue terminando con las tres.
+**Qué cubre el humo y por qué eso:** las siete pantallas abren, no hay errores de
+JavaScript, y en las once familias de la búsqueda por medidas la tabla trae filas
+y ninguna celda queda cortada. Son las fallas que llegan a producción sin hacer
+ruido —una columna nueva que empuja a las otras— y las más baratas de detectar.
+El mismo día que se escribió, ese check encontró que "FEDERAL MOGUL" no entraba
+en la columna Marca.
+
+## Una sesión programada arranca con el contenedor vacío (2026-09-08)
+**Hallazgo, no decisión, pero hay que saberlo antes de programar cualquier cosa:**
+una sesión disparada por una Routine **no tiene el repo clonado**. Arranca en
+`/home/user`, sin nada, y sin que haya corrido el hook de arranque que prepara el
+venv, los `node_modules` y la base.
+**Cómo se descubrió:** mandando una sesión sonda de tres líneas a preguntarlo,
+antes de confiar en la Routine. Con el prompt original habría fallado el primer
+miércoles sin hacer absolutamente nada.
+**Qué hay que poner en el prompt de una Routine de este repo:** que se traiga el
+repo con `add_repo` (owner `augustochiappo-ops`, `access: "push"` si va a
+pushear) y `register_repo_root` para que carguen CLAUDE.md y las skills; y que
+`preparar.sh` va a tardar varios minutos porque arma todo desde cero. También que
+**la contraseña la inventa la propia sesión**: `preparar.sh` genera con ella el
+hash del backend y las suites entran con la misma, así que no hace falta ningún
+secreto guardado. El `DEPLOY_SECRET` sí hace falta y por eso la Routine no
+deploya.
+
 ## Del catálogo Federal Mogul 2010 se cargan sólo los códigos que el proveedor vende (2026-09-08)
 **Decisión:** de los 284 códigos del catálogo entraron los 175 que cruzan con la
 lista del proveedor. Los otros 109 —casi todos de la línea europea, con el
