@@ -1684,10 +1684,32 @@ oficina, y el PDF de la orden leído para confirmar que no tiene un `$`.
 ## Próximo paso
 
 **Configurar la contraseña del taller en producción (2026-09-08).** El panel
-está deployado, pero la cuenta del taller **no existe** hasta que PythonAnywhere
-tenga `TALLER_PASSWORD_HASH` en el archivo WSGI. Hasta entonces la oficina entra
-igual que siempre y el sistema anda idéntico a antes. El comando para generar el
-hash y dónde pegarlo quedaron en el chat de la sesión.
+está deployado (`414f3fb`, producción responde 200), pero la cuenta del taller
+**no existe** hasta que PythonAnywhere tenga `TALLER_PASSWORD_HASH`. Hasta
+entonces la oficina entra igual que siempre y el sistema anda idéntico a antes.
+
+Son dos pasos, los dos en PythonAnywhere:
+
+1. En una **consola Bash**, generar el hash de la contraseña que el dueño quiera
+   para el taller (la contraseña no se escribe en el comando: la pide aparte,
+   así no queda en el historial de la consola):
+
+   ```bash
+   python3 -c "import getpass; from werkzeug.security import generate_password_hash as g; print(g(getpass.getpass('Contraseña del taller: ')))"
+   ```
+
+   Sale algo como `scrypt:32768:8:1$XrDz…`, largo. Se copia entero.
+
+2. En **Web → WSGI configuration file**, al lado de donde ya está
+   `APP_PASSWORD_HASH`, agregar las dos líneas y darle **Reload**:
+
+   ```python
+   os.environ["TALLER_USERNAME"] = "taller"
+   os.environ["TALLER_PASSWORD_HASH"] = "scrypt:32768:8:1$…"   # el hash del paso 1
+   ```
+
+Después de eso, el taller entra con usuario `taller` y esa contraseña, y cae
+directo en su panel.
 
 **Los 104 dibujos de Mahle que faltan, y son de otros tomos (2026-09-08).**
 
