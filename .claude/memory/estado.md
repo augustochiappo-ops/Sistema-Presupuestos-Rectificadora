@@ -1368,9 +1368,147 @@ en `CRAC/tecnicos/CARGA-CONJUNTOS.md`), y una pregunta chica para el dueño: si
 el par `C/L` / `C/C` de los Cummins se lee "con lomo / con cavidad".
 (Resuelto el 2026-09-04: es camisa larga / camisa corta. Ver "Próximo paso".)
 
+## Sesión 2026-09-08 (segunda) — Los dibujos que faltaban, y dos scripts que se pisaban
+
+El dueño pidió terminar las fotos de pistón que faltaban en subconjuntos y
+conjuntos, bien recortadas y todas del mismo tamaño. Salieron **siete dibujos**
+—dos que faltaban y cinco que estaban mal— y, buscándolos, aparecieron **dos
+bombas de tiempo** en los scripts que nadie había disparado todavía.
+
+### Lo que faltaba, y lo que no se puede hacer sin el dueño
+
+De los 450 renglones de subconjuntos y conjuntos, 129 estaban sin dibujo. La
+división es limpia y decide todo lo demás:
+
+* **Federal Mogul: 2, y las dos se podían hacer acá.** El catálogo es un PDF que
+  está en el repo (`fuentes/federal_mogul_pistones_2010.pdf`): el dibujo se saca
+  sin pedirle nada a nadie.
+* **Mahle: 124 códigos (123 números distintos), y ninguna se puede hacer acá.** Ese
+  catálogo NO está en el repo. Los 181 dibujos de Mahle salieron de fotos que el
+  dueño fue recortando a ojo del PDF y mandando por tanda; las 123 que faltan no
+  tienen foto en `CRAC/tecnicos/fuentes/pistones/` y no hay de dónde sacarlas.
+  La lista completa quedó en `CARGA-CONJUNTOS.md`.
+
+Se le pidió al dueño el **PDF del catálogo Mahle** en vez de 123 fotos más: con
+el PDF, `encontrar_dibujo()` —las cuatrocientas líneas que ya saben separar el
+pistón de las rayas de la grilla y de los números de la fila— se puede correr
+sobre los renglones de la página y las 123 salen de una, sin que él recorte
+nada.
+
+### Los dos dibujos de Federal Mogul que faltaban
+
+Los dos estaban en el PDF; lo que fallaba era la caja de tamaños con la que el
+script decide qué imagen de la página es un dibujo de pistón (`ANCHO`, `ALTO`).
+
+* **`SC77676` / `P77676`** (VW Senda 1.6 D, página 88) es el pistón más angosto
+  del catálogo: su dibujo mide **30,8 × 61,4 puntos** y el mínimo de ancho estaba
+  en 35.
+* **`K11077`** (Ford Escort 1.6 CHT, página 37) es el único dibujo del catálogo
+  **partido en dos imágenes** —el corte arriba, el círculo abajo—, de 45,5 y 42,2
+  puntos de alto cuando el mínimo estaba en 60. Se juntan con `apilados()`, que
+  las pega usando las coordenadas de la página y no una encima de la otra, para
+  que las dos vistas queden alineadas como las dibuja el catálogo.
+
+La caja nueva se midió contra el catálogo entero: deja entrar **exactamente esas
+cuatro imágenes y ninguna otra**, y sigue dejando afuera la banda del encabezado
+(419 a 431 puntos de ancho) y los dos iconos de página.
+
+### Cinco pistones que mostraban el dibujo de otro
+
+Éste no lo pidió nadie: apareció midiendo. La regla vieja para cruzar dibujo y
+fila era **"a cada imagen le toca la última fila que empieza por encima"**, y lee
+bien mientras el catálogo esté entero. Pero `leer_pistones_fm2010.py` no ve todas
+las filas —las de la línea europea, que no se cargan, no quedan como fila—, y el
+dibujo de una fila que no se vio quedaba huérfano y se le colgaba a la fila
+detectada de más arriba, **aunque estuviera media página lejos**.
+
+Los buenos están entre 11 y 35 puntos por debajo de su fila. Estos seis estaban
+a 164, 169, 172, 174, 326 y 333:
+
+| Código | Estaba mostrando | Ahora muestra |
+|---|---|---|
+| `SC21193` Ducato 2.5D | el dibujo de otra fila, 172 pt abajo | el suyo, 19 pt abajo |
+| `SC69986` Fiat Tempra/Tipo | otra fila, 326 pt abajo | el suyo, 18 pt |
+| `SC77879` Renault K4M | otra fila, 164 pt abajo | el suyo, 22 pt |
+| `SC79379` VW Polo/Golf 1.9D | otra fila, 333 pt abajo | el suyo, 20 pt |
+| `SC82082` Ford Rocam 1.6 | otra fila, 174 pt abajo | el suyo, 24 pt |
+| `K11090` | la misma imagen, repetida 169 pt abajo | el suyo, 17 pt (archivo idéntico) |
+
+**El recorrido se dio vuelta**: ahora es cada FILA la que va a buscar el primer
+dibujo que arranque debajo suyo, y no más de 60 puntos abajo (`LIMITE`). Un
+dibujo huérfano ya no encuentra a quién colgarse. Los **105 dibujos que estaban
+bien salieron byte a byte iguales**; sólo cambiaron esos cinco, y se miraron los
+siete uno por uno contra la página del PDF renderizada, con la fila entera a la
+vista: cada uno es el de su motor.
+
+### Las dos bombas de tiempo
+
+Las dos aparecieron corriendo `recortar_pistones_mahle.py` **sin tocar nada**,
+que es lo primero que se hizo en la sesión. Ninguna estaba en producción
+todavía: las dos esperaban a la próxima tanda de fotos.
+
+**1. El script de Mahle borraba los 110 dibujos de Federal Mogul.** Los dos
+scripts escriben en la misma carpeta, y el de Mahle barre los PNG que ya no
+tienen foto de origen. Los de Federal Mogul no tienen foto: salen del PDF. Una
+corrida de rutina —la que el dueño pide cada vez que manda fotos— se los llevaba
+puestos **en silencio**, y con la pantalla pidiéndolos igual desde el otro
+manifiesto: 110 cuadritos rotos. Ahora el barrido saltea los `FM*.png`, que son
+del otro script.
+
+**2. `S BE70580` iba a perder su dibujo.** El script de Mahle cruzaba las fotos
+contra los dos JSON **sin mirar la marca**, y desde que entró Federal Mogul hay
+dos fichas que se leen con el mismo número: `S BE70580` (VW EA111 Suran/Fox) y
+`S F 70580` (Fiat Tipo 1.4). El control de ambigüedad —el que evita ponerle a un
+pistón el dibujo de otro— hacía lo correcto con la información que tenía y
+salteaba la foto. Ahora sólo entran las fichas de Mahle: las de Federal Mogul
+salen de otro catálogo y su número no quiere decir nada acá.
+
+### El control que faltaba
+
+Las dos bombas eran del mismo tipo: dos scripts dueños de la misma carpeta, cada
+uno reescribiendo su manifiesto entero. `tests/backend_medidas.py` tiene ahora
+cinco checks nuevos que las hubieran agarrado a las dos:
+
+* cada uno de los **dos manifiestos** apunta códigos (no quedó vacío);
+* **todo archivo que un manifiesto nombra está en la carpeta** (esto agarra el
+  borrado cruzado, que es lo que la pantalla sufre: cuadrito roto y 404);
+* **ningún PNG quedó sin que nadie lo nombre** (peso muerto en el build);
+* los **293 dibujos están en la proporción 13:20 exacta** — que es lo que pidió
+  el dueño con "todos del mismo tamaño": los dos scripts pasan por el mismo
+  `encuadrar()`, y este check avisa el día que uno deje de hacerlo.
+
 ## Próximo paso
 
-**Federal Mogul en las tres familias del pistón (2026-09-08).**
+**Las 123 fotos de pistón de Mahle que faltan (2026-09-08).**
+
+Es lo único que queda abierto de los dibujos, y **no se puede avanzar sin el
+dueño**: el catálogo de Mahle no está en el repo. Federal Mogul ya está completo
+(sus dos únicos faltantes salieron esta sesión, del PDF que sí está).
+
+Faltan **124 códigos, 123 números distintos**: 11 subconjuntos y 113 conjuntos.
+La lista entera —código del proveedor, código de fábrica y descripción del
+motor— está en `CRAC/tecnicos/CARGA-CONJUNTOS.md`, sección "Los que todavía no
+tienen dibujo". Casi todos son conjuntos de motor grande: Scania, Volvo, Cummins,
+Mercedes-Benz, MWM y John Deere.
+
+**Lo que se le pidió al dueño, en este orden:**
+
+1. **El PDF del catálogo Mahle de pistones** (el mismo del que viene recortando
+   las fotos a mano). Es lo que conviene: con el PDF acá, `encontrar_dibujo()` se
+   corre sobre los renglones de cada página y **las 123 salen de una sola vez**,
+   sin que él recorte nada. Es lo que ya se hizo con el catálogo de Federal
+   Mogul.
+2. Si el PDF no se puede pasar, **otra tanda de fotos** como las anteriores, con
+   el flujo de siempre: copiarlas a `CRAC/tecnicos/fuentes/pistones/`, correr
+   `scripts/recortar_pistones_mahle.py`, mirar la lámina de control. El prompt
+   completo está más abajo, en "Cómo agregar las fotos de pistón que faltan".
+
+Mientras tanto los 124 códigos muestran un guión en la columna de dibujo, que es lo
+correcto: la pantalla nunca sale a pedir una imagen que no está.
+
+---
+
+**Antes de esto: Federal Mogul en las tres familias del pistón (2026-09-08).**
 
 El dueño pasó el **Catálogo Federal Mogul Argentina 2010 — Pistones,
 Subconjuntos y Conjuntos** (91 páginas). Es el equivalente Federal Mogul del

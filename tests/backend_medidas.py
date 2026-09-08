@@ -12,6 +12,7 @@ No escribe nada: la búsqueda por medidas es de solo lectura. Igual DATA_DIR es
 obligatorio, para no correr nunca contra la base real por descuido.
 """
 import os
+import re
 import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,6 +23,7 @@ if not os.environ.get("DATA_DIR"):
     sys.exit("Falta DATA_DIR: apuntalo a una carpeta descartable, nunca a la base real.")
 
 os.environ["APP_USERNAME"] = os.environ.get("APP_USERNAME", "admin")
+from PIL import Image  # noqa: E402
 from werkzeug.security import generate_password_hash  # noqa: E402
 CLAVE = os.environ.get("APP_PASSWORD") or "clave-descartable-de-la-suite"
 os.environ["APP_PASSWORD_HASH"] = generate_password_hash(CLAVE)
@@ -268,6 +270,48 @@ sin_ver = [r for r in tecnicos.buscar("conjuntos", {"codigo": "T F "})["resultad
 check("las 38 de conjuntos entraron sin verificar",
       len(sin_ver) == 38 and not any(r["extra"]["verificado"] for r in sin_ver),
       len(sin_ver))
+
+print("\n=== 5 quater. Los dibujos de pistón y sus dos manifiestos ===")
+# Los dibujos salen de DOS scripts que escriben en la MISMA carpeta:
+# recortar_pistones_mahle.py (fotos del catálogo Mahle) y
+# dibujos_pistones_fm2010.py (el PDF de Federal Mogul). Cada uno reescribe su
+# manifiesto entero en cada corrida y barre los PNG que le sobran, así que un
+# script puede llevarse los archivos del otro sin que nadie se entere: pasó, y
+# una corrida de rutina del de Mahle borró los 110 dibujos de Federal Mogul.
+# Estos dos checks son el control: si un manifiesto nombra un archivo que no
+# está, la pantalla muestra un cuadrito roto y un 404 por fila.
+PISTONES_DIR = os.path.join(RAIZ, "webapp", "frontend", "public", "pistones")
+MANIFIESTOS = {
+    "Mahle": os.path.join(RAIZ, "webapp", "frontend", "src", "screens",
+                          "BusquedaMedidas", "dibujos-pistones.js"),
+    "Federal Mogul": os.path.join(RAIZ, "webapp", "frontend", "src", "screens",
+                                  "BusquedaMedidas", "dibujos-pistones-fm.js"),
+}
+apuntados, rotos = set(), []
+for marca, ruta in MANIFIESTOS.items():
+    with open(ruta, encoding="utf-8") as f:
+        mapa = re.findall(r"'([^']+)':\s*'([^']+)',", f.read())
+    check(f"el manifiesto de {marca} apunta códigos", len(mapa) > 100, len(mapa))
+    for codigo, archivo in mapa:
+        apuntados.add(f"{archivo}.png")
+        if not os.path.exists(os.path.join(PISTONES_DIR, f"{archivo}.png")):
+            rotos.append(f"{marca}: {codigo} → {archivo}.png")
+check("todos los dibujos que nombran los manifiestos están en la carpeta",
+      not rotos, rotos[:5])
+sobrantes = sorted({f for f in os.listdir(PISTONES_DIR) if f.endswith(".png")} - apuntados)
+check("y no quedó ningún PNG que nadie nombre", not sobrantes, sobrantes[:5])
+
+# Todos con la MISMA PROPORCIÓN de cuadro (13:20, `LADOS` del script de Mahle):
+# es lo que hace que, pedidos con una altura fija, se vean todos del mismo
+# tamaño y ninguno empuje el alto de la fila. Los dos scripts pasan por el mismo
+# `encuadrar`, y este check es el que avisa si alguno deja de hacerlo.
+descuadrados = []
+for archivo in sorted(apuntados):
+    ancho, alto = Image.open(os.path.join(PISTONES_DIR, archivo)).size
+    if ancho * 20 != alto * 13:
+        descuadrados.append(f"{archivo} {ancho}x{alto}")
+check(f"los {len(apuntados)} dibujos están en la misma proporción 13:20",
+      not descuadrados, descuadrados[:5])
 
 print("\n=== 5 bis. Pistones ===")
 # Los mismos tres filtros que subconjuntos, sobre el catálogo Persan.

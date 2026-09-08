@@ -25,10 +25,16 @@ filtro deja afuera la banda de encabezado de la página (423 puntos de ancho) y
 los dos iconitos de 22 y 32 puntos que la acompañan.
 
 A QUÉ FICHA LE TOCA CADA UNA. El dibujo va en la columna 2, a la altura de su
-fila, siempre unos 20 puntos por debajo de donde arranca la fila. Así que a cada
-imagen le corresponde la última fila que empieza por encima de ella. Las filas
-salen del JSON de `leer_pistones_fm2010.py`, que ya las tiene con su página y su
-altura.
+fila, siempre entre 11 y 35 puntos por debajo de donde arranca. Así que cada
+FILA se queda con el primer dibujo que arranque debajo suyo, y no más de 60
+puntos abajo (`LIMITE`). Las filas salen del JSON de
+`leer_pistones_fm2010.py`, que ya las tiene con su página y su altura.
+
+Se busca en ese sentido —la fila yendo a buscar su dibujo— porque al revés se
+leía mal: el lector del catálogo no ve todas las filas, y el dibujo de una fila
+que se salteó quedaba huérfano y se le colgaba a la fila detectada de más
+arriba, aunque estuviera media página lejos. Cinco pistones estuvieron
+mostrando el dibujo de otro hasta que se dio vuelta el recorrido.
 
 UN DIBUJO, HASTA TRES CÓDIGOS. El pistón suelto ("P39493"), el subconjunto
 ("SC39493") y el conjunto ("K39493") de una misma fila son el mismo pistón
@@ -42,6 +48,7 @@ ahí, la próxima corrida de aquel script se los llevaría puestos sin que nadie
 entere. Cada script es dueño de su archivo y la pantalla junta los dos mapas.
 """
 import argparse
+import collections
 import json
 import os
 import re
@@ -66,11 +73,37 @@ MANIFIESTO = os.path.join(RAIZ, "webapp", "frontend", "src", "screens",
 
 ALTO_PAGINA = 842.0
 
-# El rectángulo donde entra un dibujo de pistón, en puntos. Los medidos van de
-# 46 × 84 a 61 × 90; la banda del encabezado mide 423 de ancho y los iconos de
-# la página, 22 y 32.
-ANCHO = (35, 90)
-ALTO = (60, 110)
+# Dónde queda dibujada una imagen en la página: el nombre del recurso, la
+# distancia al borde de arriba (como la mide pdfplumber, no como la cuenta el
+# PDF, que va desde abajo) y el rectángulo, todo en puntos.
+Puesta = collections.namedtuple("Puesta", "nombre top x ancho alto")
+
+# El rectángulo donde entra un dibujo de pistón, en puntos. El grueso mide entre
+# 43 × 79 y 73 × 95, pero hay dos formas raras que también son dibujos y por eso
+# la caja es más grande que el grueso:
+#
+#   30,8 × 61,4 (página 88) — el pistón más angosto del catálogo, el VW 1.6 D de
+#   76,5 mm. Con el mínimo en 35 de ancho quedaba afuera y su fila salía sin
+#   dibujo.
+#
+#   58,1 × 45,5 + 58,1 × 42,2 (página 37) — el Ford Escort 1.6 CHT: el mismo
+#   dibujo de siempre, pero partido en DOS imágenes, el corte arriba y el
+#   círculo abajo. Cada mitad sola no llegaba al mínimo de 60 de alto. Se juntan
+#   en `apilados`.
+#
+# Lo que la caja tiene que seguir dejando afuera: la banda del encabezado (419 a
+# 431 de ancho), los dos iconos de la página (22 × 15 y 32 × 8). Se midió contra
+# el catálogo entero: con estos límites entran exactamente esas cuatro imágenes
+# nuevas y ninguna otra.
+ANCHO = (28, 90)
+ALTO = (38, 110)
+
+# Cuánto más abajo que el arranque de su fila puede estar un dibujo. Los buenos
+# están entre 11 y 35 puntos; el límite deja afuera los dibujos de las filas que
+# el lector del catálogo no llegó a ver, que antes se le colgaban a la fila
+# anterior —hasta 333 puntos más arriba— y le ponían a un pistón el dibujo de
+# otro.
+LIMITE = 60
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -78,13 +111,7 @@ ALTO = (60, 110)
 # ─────────────────────────────────────────────────────────────────────────────
 
 def imagenes(page, lector):
-    """
-    Dónde queda dibujada cada imagen de la página: [(nombre, top, alto)].
-
-    `top` es la distancia desde el borde de arriba, como la mide pdfplumber, y
-    no la del PDF, que cuenta desde abajo. Las dos conviven en este proyecto y
-    mezclarlas manda todos los dibujos a la fila de al lado.
-    """
+    """Las imágenes de la página que entran en la caja de un dibujo, de arriba abajo."""
     try:
         flujo = ContentStream(page.get_contents(), lector)
     except Exception:
@@ -105,14 +132,65 @@ def imagenes(page, lector):
         elif op == "Do":
             ancho, alto = abs(ctm[0]), abs(ctm[3])
             if ANCHO[0] < ancho < ANCHO[1] and ALTO[0] < alto < ALTO[1]:
-                salida.append((str(operandos[0]), ALTO_PAGINA - (ctm[5] + alto), alto))
-    return salida
+                salida.append(Puesta(str(operandos[0]), ALTO_PAGINA - (ctm[5] + alto),
+                                     ctm[4], ancho, alto))
+    return sorted(salida, key=lambda p: p.top)
 
 
-def de_que_fila(top, filas):
-    """La última fila que empieza por encima de este dibujo."""
-    candidatas = [f for f in filas if f["y"] <= top + 2]
-    return max(candidatas, key=lambda f: f["y"]) if candidatas else None
+def de_esta_fila(fila, puestas):
+    """
+    Las imágenes que forman el dibujo de esta fila, de arriba abajo.
+
+    EL DIBUJO ES EL DE MÁS ARRIBA DE LOS QUE ARRANCAN DEBAJO DE LA FILA, y no
+    cualquiera de los que están debajo. La regla vieja —"la última fila que
+    empieza por encima del dibujo"— leía bien mientras el catálogo estuviera
+    entero, pero el lector no ve todas las filas: las que se saltea dejan su
+    dibujo huérfano, y ese dibujo se le colgaba a la fila detectada de más
+    arriba, que podía estar media página lejos. Así salieron cinco pistones con
+    el dibujo de otro.
+
+    Después del primero se suman los APILADOS: las imágenes que siguen pegadas
+    abajo, a la misma altura de arranque y en la misma columna. El catálogo
+    parte un dibujo en dos una sola vez (el Ford Escort 1.6 CHT de la página
+    37), pero partido o entero es el mismo dibujo y va en un solo archivo.
+    """
+    cerca = [p for p in puestas if -2 <= p.top - fila["y"] <= LIMITE]
+    if not cerca:
+        return []
+    grupo = [cerca[0]]
+    for p in puestas:
+        ultima = grupo[-1]
+        if (p.top > ultima.top and abs(p.x - ultima.x) < 3
+                and abs(p.top - (ultima.top + ultima.alto)) < 6):
+            grupo.append(p)
+    return grupo
+
+
+def apilados(imagenes_pil, grupo):
+    """
+    Las imágenes de un dibujo partido, pegadas de vuelta en una sola.
+
+    Se ubican con las coordenadas de la página —la distancia entre ellas y el
+    corrimiento de una respecto de la otra son las del PDF, escaladas a los
+    pixeles de la primera—, y no simplemente una encima de la otra: así el
+    corte y el círculo quedan alineados como los dibuja el catálogo.
+    """
+    if len(imagenes_pil) == 1:
+        return imagenes_pil[0]
+    escala = imagenes_pil[0].size[0] / grupo[0].ancho
+    cajas = []
+    for im, p in zip(imagenes_pil, grupo):
+        x = round((p.x - grupo[0].x) * escala)
+        y = round((p.top - grupo[0].top) * escala)
+        cajas.append((x, y, im))
+    izq = min(c[0] for c in cajas)
+    arr = min(c[1] for c in cajas)
+    ancho = max(c[0] - izq + c[2].size[0] for c in cajas)
+    alto = max(c[1] - arr + c[2].size[1] for c in cajas)
+    hoja = Image.new("RGB", (ancho, alto), "white")
+    for x, y, im in cajas:
+        hoja.paste(im.convert("RGB"), (x - izq, y - arr))
+    return hoja
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -193,15 +271,16 @@ def main():
     del_codigo = codigos_por_numero()
     lector = PdfReader(args.pdf)
 
-    dibujos, sin_fila, sin_ficha = {}, 0, 0
+    dibujos, sin_ficha, sin_dibujo = {}, 0, 0
     for pagina, filas_pag in sorted(por_pagina.items()):
         page = lector.pages[pagina - 1]
         recursos = page["/Resources"]["/XObject"]
-        for nombre, top, _ in imagenes(page, lector):
-            fila = de_que_fila(top, filas_pag)
-            if fila is None:
-                sin_fila += 1
-                continue
+        puestas = imagenes(page, lector)
+        # Se recorren las FILAS y no las imágenes: cada fila va a buscar su
+        # dibujo. Al revés —cada imagen buscándose una fila— las que sobran (las
+        # de los bloques del catálogo que no se cargan) terminaban colgadas de
+        # una fila que no era la suya.
+        for fila in filas_pag:
             numeros = {c["numero"] for c in fila["codigos"]}
             usados = [n for n in numeros if n in del_codigo]
             if not usados:
@@ -210,11 +289,15 @@ def main():
             clave = nombre_archivo(sorted(usados)[0])
             if clave in dibujos:
                 continue
+            grupo = de_esta_fila(fila, puestas)
+            if not grupo:
+                sin_dibujo += 1
+                continue
             try:
-                imagen = recursos[nombre].get_object().decode_as_image()
+                partes = [recursos[p.nombre].get_object().decode_as_image() for p in grupo]
             except Exception:
                 continue
-            limpio = limpiar(imagen)
+            limpio = limpiar(apilados(partes, grupo))
             if limpio is not None:
                 dibujos[clave] = (limpio, sorted({c for n in usados for c in del_codigo[n]}))
 
@@ -251,12 +334,15 @@ def main():
     peso = sum(os.path.getsize(os.path.join(SALIDA, f"{c}.png")) for c in dibujos)
     print(f"✓ {len(dibujos)} dibujos · {len(manifiesto)} códigos apuntados "
           f"({peso // 1024} KB en total)")
-    if sin_fila or sin_ficha:
-        # Los dos casos son los bloques del catálogo que NO se cargan: los de la
-        # línea europea, con códigos "87-704500-00" que el proveedor no trae.
-        # Tienen su dibujo en la página pero ninguna ficha a la que colgárselo.
-        print(f"   {sin_fila + sin_ficha} dibujos de bloques que no se cargan "
+    if sin_ficha:
+        # Son los bloques del catálogo que NO se cargan: los de la línea europea,
+        # con códigos "87-704500-00" que el proveedor no trae. Tienen su dibujo
+        # en la página pero ninguna ficha a la que colgárselo.
+        print(f"   {sin_ficha} filas de bloques que no se cargan "
               f"(códigos que el proveedor no vende)")
+    if sin_dibujo:
+        # Ésta sí hay que mirarla: una ficha que se carga y se queda sin dibujo.
+        print(f"   ⚠ {sin_dibujo} filas con ficha pero sin dibujo en la página")
 
     if args.hoja:
         _lamina(dibujos)

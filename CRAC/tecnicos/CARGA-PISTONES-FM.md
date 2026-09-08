@@ -152,21 +152,58 @@ pistón de las rayas de la grilla y los números de la fila.
 
 Se encuentran recorriendo el flujo de instrucciones de la página (`q` / `Q` /
 `cm` / `Do`) para saber en qué rectángulo se dibuja cada imagen, y quedándose
-con las que midan entre 35 y 90 puntos de ancho y entre 60 y 110 de alto. Ese
-filtro deja afuera la banda del encabezado (423 puntos de ancho) y los dos
-iconitos de 22 y 32 puntos. A cada dibujo le toca la última fila que empieza por
-encima de él.
+con las que midan entre 28 y 90 puntos de ancho y entre 38 y 110 de alto. Ese
+filtro deja afuera la banda del encabezado (419 a 431 puntos de ancho) y los dos
+iconitos de la página (22 × 15 y 32 × 8).
 
-Salieron **110 dibujos** (772 KB en total) a `webapp/frontend/public/pistones/`,
-con el prefijo `FM`. El manifiesto apunta **172 códigos del proveedor**: el
+**La caja es más grande que el grueso de los dibujos** (que van de 43 × 79 a
+73 × 95) por dos formas raras que también son dibujos, y que con los límites
+originales —35 de ancho, 60 de alto— quedaban afuera:
+
+* **30,8 × 61,4** (página 88): el pistón más angosto del catálogo, el VW Senda
+  1.6 D de 76,5 mm. Es un dibujo entero, sólo que flaco.
+* **58,1 × 45,5 más 58,1 × 42,2** (página 37): el Ford Escort 1.6 CHT es el único
+  dibujo del catálogo **partido en dos imágenes**, el corte arriba y el círculo
+  abajo. Las junta `apilados()`, que las pega con las coordenadas de la página
+  —la separación y el corrimiento reales, escalados a pixeles— y no una encima de
+  la otra, para que las dos vistas queden alineadas como las dibuja el catálogo.
+
+Con estos límites entran **exactamente esas cuatro imágenes de más y ninguna
+otra** en las 91 páginas; se midió contra el catálogo entero antes de tocarlos.
+
+**A qué fila le toca cada dibujo: la fila busca al dibujo, no al revés.** Cada
+fila se queda con el primer dibujo que arranque debajo suyo y no más de 60 puntos
+abajo (`LIMITE`); los buenos están entre 11 y 35.
+
+Se hacía al revés —"a cada dibujo le toca la última fila que empieza por encima
+de él"— y esa regla lee bien sólo si el catálogo está entero. No lo está: los
+bloques de la línea europea no se cargan y no quedan como fila, pero **sus
+dibujos siguen estando en la página**. Ese dibujo huérfano se le colgaba a la
+fila detectada de más arriba, hasta 333 puntos lejos, y así **cinco pistones
+mostraron el dibujo de otro motor** (`SC21193`, `SC69986`, `SC77879`, `SC79379`
+y `SC82082`) hasta que se dio vuelta el recorrido. Un dibujo sin fila es normal y
+se descarta; una fila sin dibujo es una anomalía y el script la avisa.
+
+Salieron **112 dibujos** (818 KB en total) a `webapp/frontend/public/pistones/`,
+con el prefijo `FM`. El manifiesto apunta **175 códigos del proveedor**: el
 pistón, el subconjunto y el conjunto de un mismo número son el mismo pistón,
-dibujado una sola vez, así que los tres comparten el PNG.
+dibujado una sola vez, así que los tres comparten el PNG. Con eso **Federal Mogul
+no tiene ningún subconjunto ni conjunto sin dibujo.**
 
 **El manifiesto va aparte del de Mahle.** `dibujos-pistones.js` lo reescribe
 entero `recortar_pistones_mahle.py` en cada corrida: si estos códigos se
 escribieran ahí, la próxima corrida de aquel script se los llevaría puestos sin
 que nadie se entere. Cada script es dueño de su archivo —el de Federal Mogul es
 `dibujos-pistones-fm.js`— y `pistones.jsx` busca en los dos mapas.
+
+**Y cada script barre sólo sus PNG.** Los dos escriben en la misma carpeta, y el
+de Mahle borra los archivos que ya no tienen foto de origen. Los de Federal Mogul
+no tienen foto —salen de este PDF—, así que una corrida de rutina de aquel script
+se llevaba puestos los 110 dibujos, en silencio. Desde el 2026-09-08 el de Mahle
+saltea todo lo que empiece con `FM`. Si algún día entra una tercera marca, tiene
+que elegir su prefijo y sumarlo a esa exclusión: el de Mahle es el que barre por
+descarte. `tests/backend_medidas.py` verifica que todo archivo nombrado por un
+manifiesto esté en la carpeta, que es lo que agarra este tipo de borrado.
 
 Para mirar de un vistazo que ninguno salió cortado o vacío:
 

@@ -482,6 +482,13 @@ def codigos_por_numero():
 
     El mismo número cae en las dos familias cuando el catálogo publica el
     pistón suelto y el juego del motor, que es lo normal: son la misma foto.
+
+    SÓLO ENTRAN LAS FICHAS DE MAHLE. Los dos JSON tienen también las de Federal
+    Mogul, que salen de otro catálogo y las recorta otro script, y su número no
+    quiere decir nada acá: "S F 70580" (Fiat Tipo 1.4) y "S BE70580" (VW EA111)
+    no tienen nada que ver más que los cinco dígitos. Mientras las de Federal
+    Mogul entraban, ese choque hacía que el 70580 se leyera como ambiguo y el
+    subconjunto de Mahle perdiera su dibujo en la próxima corrida.
     """
     por_numero = {}
     for familia, path in FICHAS.items():
@@ -490,6 +497,8 @@ def codigos_por_numero():
         with open(path, encoding="utf-8") as f:
             fichas = json.load(f)
         for ficha in fichas:
+            if (ficha.get("marca") or "") != "MAHLE":
+                continue
             m = re.search(r"(\d+)", ficha["codigo"])
             if m:
                 por_numero.setdefault(int(m.group(1)), {}).setdefault(familia, []).append(
@@ -557,7 +566,12 @@ def main():
         raise SystemExit("No salió ningún dibujo: revisá la carpeta de fuentes")
 
     os.makedirs(SALIDA, exist_ok=True)
-    viejos = {f for f in os.listdir(SALIDA) if f.endswith(".png")}
+    # Los dibujos de Federal Mogul viven en esta misma carpeta pero son de otro
+    # script y de otro catálogo: no tienen foto en `fuentes/pistones/` y no hay
+    # que salir a borrarlos. Sin este filtro, una corrida de rutina de este
+    # script se llevaba puestos los 110 PNG de Federal Mogul en silencio.
+    viejos = {f for f in os.listdir(SALIDA)
+              if f.endswith(".png") and not f.startswith("FM")}
     for archivo, (_, dibujo, _claves) in sorted(elegidos.items()):
         encuadrar(dibujo).save(os.path.join(SALIDA, f"{archivo}.png"))
         viejos.discard(f"{archivo}.png")

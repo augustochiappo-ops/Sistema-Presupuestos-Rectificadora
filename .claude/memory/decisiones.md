@@ -1289,3 +1289,67 @@ tocar una obliga a reescribir las tres, y ya se vio (con biela) que una relectur
 que no hacía falta igual cambia el texto de algunas fichas.
 
 **Fecha:** 2026-09-07
+
+## Dos scripts dueños de la misma carpeta: cómo se reparten (2026-09-08)
+
+`webapp/frontend/public/pistones/` la escriben DOS scripts que no se conocen:
+`recortar_pistones_mahle.py` (fotos recortadas a mano del catálogo Mahle) y
+`dibujos_pistones_fm2010.py` (imágenes embebidas en el PDF de Federal Mogul).
+Cada uno reescribe su manifiesto entero en cada corrida y **barre los PNG que le
+sobran**. Eso alcanzó para que el de Mahle borrara los 110 dibujos de Federal
+Mogul en una corrida de rutina, en silencio y con la pantalla pidiéndolos igual.
+
+La alternativa obvia —un solo script, un solo manifiesto— se descartó: son dos
+catálogos que no tienen nada que ver, con dos maneras completamente distintas de
+sacar el dibujo (cuatrocientas líneas de separación de tinta contra una
+extracción directa), y juntarlos ata la carga de una marca a la de la otra.
+
+**La regla que quedó, y que hay que respetar si algún día entra una tercera
+marca:** cada script es dueño de un prefijo de nombre de archivo y sólo barre lo
+suyo. El de Federal Mogul barre `FM*.png`; el de Mahle, todo lo que **no**
+empiece con `FM`. Un tercer catálogo tiene que elegir su prefijo y sumarlo a la
+exclusión del de Mahle, que es el que barre por descarte.
+
+El control está en `tests/backend_medidas.py`: si un manifiesto nombra un archivo
+que no está en la carpeta, la suite falla. Es barato y agarra el borrado cruzado
+enseguida, que es lo único que la pantalla sufre de verdad.
+
+## Las fichas de otra marca no se cruzan por número (2026-09-08)
+
+`recortar_pistones_mahle.py` cruza cada foto contra las fichas por el NÚMERO del
+código, y tiene un control de ambigüedad: si un número cae en dos códigos con
+bases distintas, saltea la foto en vez de arriesgarse a ponerle a un pistón el
+dibujo de otro. Bien pensado, pero leía los JSON enteros, y desde que entró
+Federal Mogul los JSON tienen dos marcas: `S BE70580` (VW EA111) y `S F 70580`
+(Fiat Tipo 1.4) no tienen nada que ver más que los cinco dígitos.
+
+El control hacía lo correcto con la información que tenía —dos códigos, un
+número, no se sabe de cuál es la foto— y salteaba una foto que estaba perfecta.
+
+**El número de un código sólo significa algo dentro de su propio catálogo.** El
+cruce se filtra por `marca == "MAHLE"` antes de armar el índice. Vale para
+cualquier marca que entre después: cada catálogo numera por su cuenta, y mezclar
+numeraciones es lo que hace que un control de ambigüedad legítimo empiece a dar
+falsos positivos.
+
+## Un dibujo se busca desde la fila, no la fila desde el dibujo (2026-09-08)
+
+En el PDF de Federal Mogul el dibujo va en la columna 2, entre 11 y 35 puntos por
+debajo de donde arranca su fila. La regla original para cruzarlos era, mirando
+desde el dibujo, **"a cada imagen le toca la última fila que empieza por
+encima"**. Es correcta si el catálogo está entero, y no lo está:
+`leer_pistones_fm2010.py` deja afuera los bloques de la línea europea, que el
+proveedor no vende. Esas filas no existen para el script, pero sus dibujos sí
+están en la página, y quedaban huérfanos: se le colgaban a la fila detectada de
+más arriba, hasta 333 puntos lejos. **Cinco pistones estuvieron mostrando el
+dibujo de otro motor.**
+
+Dado vuelta —cada FILA busca el primer dibujo que arranque debajo suyo, y no más
+de 60 puntos abajo— un dibujo huérfano no encuentra a quién colgarse y
+simplemente no se usa. La diferencia de fondo: **un dibujo sin fila es normal y
+hay que descartarlo; una fila sin dibujo es una anomalía y hay que avisarla.**
+Sólo la segunda dirección puede distinguir los dos casos, y ahora el script
+imprime un aviso para la segunda.
+
+Vale para cualquier lectura de un catálogo del que se carga sólo una parte: el
+lado incompleto es el que tiene que preguntar.
