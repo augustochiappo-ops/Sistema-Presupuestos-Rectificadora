@@ -1783,6 +1783,43 @@ reload agendado). Comprobado contra producción que un dibujo nuevo se sirve de
 verdad: `/pistones/TBEK48990.png` devuelve `image/png` de 4.022 bytes, y uno que
 no existe cae en el index de la SPA, que es lo que corresponde.
 
+### Los dibujos que faltan se contaban mal: hay DOS manifiestos
+
+Al final de la sesión el dueño preguntó cuántas de las fichas sin dibujo tienen
+medidas cargadas, para salir a buscar esas fotos a mano. Contestando eso apareció
+un error de conteo que venía de antes: **los dibujos viven en dos manifiestos**,
+`dibujos-pistones.js` (Mahle) y `dibujos-pistones-fm.js` (Federal Mogul), y las
+cuentas que se venían haciendo miraban sólo el primero. Los "76 que faltan" de
+`CARGA-CONJUNTOS.md` son correctos pero son **sólo los de Mahle**; el total real,
+cruzando las tres familias contra los dos manifiestos, es de **119 fichas sin
+dibujo**.
+
+De esas 119:
+
+| | Fichas |
+|---|---|
+| Con las tres medidas (Ø pistón, altura, Ø perno) | 91 |
+| Con medidas parciales | 7 |
+| Sin ninguna medida | 21 |
+
+**Las 21 sin medidas no se piden**, y el razonamiento es del dueño: si no se le
+pudieron leer las medidas al catálogo es porque la ficha no está ahí, así que la
+foto tampoco va a estar. Son 18 conjuntos de Mahle y 3 pistones sueltos.
+
+Las 98 que sí sirven se le pasaron en una lista agrupada por familia y marca, con
+el motor y las medidas de cada una para poder reconocer la pieza. El reparto:
+**52 conjuntos de Mahle** (Scania, Volvo, Mercedes, MWM, John Deere), **32
+pistones sueltos** en trece marcas, **9 subconjuntos de Mahle**, **4 conjuntos y
+1 subconjunto de Federal Mogul**.
+
+Los 32 pistones sueltos son un caso aparte: salieron del catálogo **Persan**, que
+es un archivo de texto sin imágenes. Nunca tuvieron dibujo y no lo van a tener de
+ningún catálogo de los que hay — ésos sólo salen con la captura a mano.
+
+**Cómo contar esto bien la próxima vez**: los dos manifiestos juntos, y las tres
+familias (`subconjuntos`, `conjuntos` y `pistones`), no sólo las dos de la tabla
+de `CARGA-CONJUNTOS.md`.
+
 ### El PDF quedó fuera del repo, como el de Glyco
 
 14,6 MB, y el repo entero se copia a PythonAnywhere en cada deploy. Va en
@@ -1837,6 +1874,13 @@ posición que el script no toma: para ésos el recorte a mano es el camino corto
 
 Mientras tanto los 76 muestran un guión en la columna de dibujo, que es lo
 correcto: la pantalla nunca sale a pedir una imagen que no está.
+
+**Ojo con el número: 76 son sólo los de Mahle.** Contando las tres familias
+contra los DOS manifiestos de dibujos, las fichas sin dibujo son **119**, de las
+cuales **98 tienen medidas cargadas** y valen la foto (ver la sesión quinta,
+arriba). El dueño quedó en buscar esas 98 a mano y mandar las capturas de a
+tandas, sin juntarlas todas: van a `CRAC/tecnicos/fuentes/pistones/` con el
+número en el nombre, y de ahí las levanta `recortar_pistones_mahle.py --hoja`.
 
 ---
 

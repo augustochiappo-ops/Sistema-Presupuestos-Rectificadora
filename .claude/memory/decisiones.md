@@ -1574,3 +1574,22 @@ archivo equivocado con el nombre correcto.
 
 **Fecha:** 2026-09-08
 
+## Los dibujos de pistón viven en dos manifiestos, y hay que mirar los dos (2026-09-08)
+
+**Contexto:** `webapp/frontend/src/screens/BusquedaMedidas/` tiene
+`dibujos-pistones.js` (lo escribe `recortar_pistones_mahle.py`) y
+`dibujos-pistones-fm.js` (lo escribe `dibujos_pistones_fm2010.py`). Están
+separados a propósito: cada script es dueño de su archivo, que es lo que evitó
+que uno le borrara los PNG al otro. La pantalla los junta.
+
+**El costo de olvidarse del segundo:** cualquier cuenta de "cuántas fichas no
+tienen dibujo" hecha contra un solo manifiesto da de más. Pasó al cerrar esta
+sesión: mirando sólo el de Mahle daban 200 fichas sin dibujo; mirando los dos,
+119. La diferencia entera eran fichas de Federal Mogul que sí tienen su dibujo.
+
+**La regla:** para contar dibujos se leen **los dos** manifiestos y **las tres**
+familias (`subconjuntos`, `conjuntos` y `pistones`), no las dos de la tabla de
+`CARGA-CONJUNTOS.md`, que es una lista de una tanda de Mahle y no el universo.
+
+**Fecha:** 2026-09-08
+
