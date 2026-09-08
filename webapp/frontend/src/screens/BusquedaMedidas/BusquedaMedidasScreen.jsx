@@ -234,6 +234,16 @@ function contenidoCelda(col, fila, acciones) {
     // De qué sobremedida es el precio que se está mostrando.
     case 'medida':
       return valor ? formatEtiqueta(valor) : '—'
+    // Qué sobremedidas existen, como una lista de etiquetas sueltas. Va aparte
+    // del tipo 'sobremedidas' —el de camisas y bujes, que pone la etiqueta
+    // arriba de su Ø— porque en los pernos NO hay un Ø por sobremedida: el
+    // catálogo de Pescara no publica la equivalencia en milímetros de cada
+    // etiqueta, así que lo único honesto que se puede mostrar es la etiqueta.
+    case 'etiquetas': {
+      const lista = Array.isArray(valor) ? valor : []
+      if (!lista.length) return <span style={{ color: 'var(--text-faint)' }}>—</span>
+      return lista.map((e) => formatEtiqueta(e)).join(' · ')
+    }
     case 'aplicacion':
       return celdaAplicacion(fila, col.key)
     case 'forma':

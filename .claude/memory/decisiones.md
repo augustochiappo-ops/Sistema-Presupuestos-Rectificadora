@@ -1638,3 +1638,68 @@ peor que no tenerla. La casilla la sirve el backend (`ESPEC` en
 de un lado nomás.
 
 **Fecha:** 2026-09-08
+
+## Las sobremedidas del perno se guardan con su etiqueta, no en milímetros (2026-09-08)
+
+**Contexto:** la familia de pernos de pistón salió del catálogo de Pescara, que
+en su página 3 explica dos escalas de supermedida según cómo trabaje el perno:
+deslizante en la biela (+1/2" = 0,012 mm, +1" = 0,025 mm, 005" = 0,125 mm) y fijo
+en la biela (1ra = 0,010 mm, 2da = 0,015 mm). La lista del proveedor, en cambio,
+etiqueta cada renglón `STD`, `003`, `005`, `010`, `020`, `1/2`, `+1`, `1SM`, `2SM`
+o `3SM`.
+
+**El problema:** las dos fuentes hablan de lo mismo pero ninguna dice cuál
+etiqueta es cuál milímetro. "005" *podría* ser el `005"` de la tabla de
+deslizantes; "010" y "020" no figuran en ninguna de las dos columnas del
+catálogo. Camisas y bujes sí tienen un Ø por sobremedida y por eso ofrecen el
+filtro `diam_sobremedida`.
+
+**La decisión:** no se calcula el Ø de las sobremedidas. `extra.sobremedidas`
+guarda las etiquetas tal cual las escribe el proveedor, el filtro de la familia va
+por el Ø de la medida STD y por el largo, y la pantalla muestra las etiquetas para
+que el taller pida la que quiere. Es la misma regla que ya rige en pistones con
+`extra.revisar`: un Ø inventado en una ficha es peor que un Ø que falta, porque el
+que falta se ve y el inventado no.
+
+**Cómo se destraba, si algún día hace falta:** la segunda tabla del catálogo
+(páginas 8 a 28) trae un campo "Gpo" —A o C— que dice de qué escala es cada
+perno. Con eso más una confirmación de Pescara sobre `003`, `010` y `020` se puede
+calcular el Ø de cada sobremedida y sumar el filtro, como en camisas.
+
+**Consecuencia de UI:** hizo falta un renderer nuevo, `tipo: 'etiquetas'`, porque
+el de camisas y bujes espera objetos `{label, valor}` para poner la etiqueta
+arriba de su Ø. Pasarle strings habría dejado la columna vacía sin avisar.
+
+**Fecha:** 2026-09-08
+
+## Un binario que va al repo se pide, no se reconstruye (2026-09-08)
+
+**Contexto:** para cargar las incorporaciones 2025 de Indy hacía falta un Excel de
+20 KB que estaba en el Drive del dueño. La herramienta de Drive lo devuelve en
+base64, y para escribirlo a disco hay que re-emitir ese base64.
+
+**Qué pasó:** el archivo decodificado pesaba exactamente los 20.288 bytes del
+original, pero `unzip -t` encontró dos miembros con CRC malo — entre ellos
+`sharedStrings.xml`, donde un `.xlsx` guarda **todos los textos y todas las
+medidas**. Re-emitir 27 KB de base64 no es fiel al byte. `sheet1.xml` sí decodificó
+bien, pero sus 251 celdas son punteros a la tabla corrupta: no había nada que
+rescatar.
+
+**La tentación, y por qué se rechazó:** la herramienta había devuelto antes una
+versión en texto de la planilla, así que se podían transcribir las 49 filas a mano.
+Son unas 245 medidas. Un error de transcripción en un buscador por medidas **no lo
+agarra ninguna suite** —la ficha entra prolija, con un número equivocado— y este
+proyecto ya tiene escrito que un Ø equivocado es peor que un Ø que falta.
+
+**La regla:** un binario que tiene que llegar al repo se le pide al dueño (que lo
+sube por GitHub web en diez segundos) o se baja de una fuente que se pueda
+verificar contra un hash. No se reconstruye desde la salida de una herramienta, y
+mucho menos se transcribe a mano. Lo que sí se puede hacer con la salida en texto
+es *entender* la estructura del archivo —cuántas filas, qué columnas— para llegar
+preparado cuando el archivo aparezca; eso valió la pena y no arriesgaba ningún
+dato.
+
+**Cómo verificar que llegó bien**, que cuesta un segundo: el tamaño contra el que
+informa el origen, y `unzip -t` si es un `.xlsx` o un `.docx`.
+
+**Fecha:** 2026-09-08

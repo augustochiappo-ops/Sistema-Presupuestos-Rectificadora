@@ -1,7 +1,7 @@
 """
 Suite de verificación de la búsqueda por medidas (`app/tecnicos.py`), contra los
 catálogos técnicos del repo (396 camisas, 951 guías, 1.108 asientos de válvulas,
-284 subconjuntos, 166 conjuntos, 89 pistones y 190 bujes de biela) y los 64.250
+284 subconjuntos, 166 conjuntos, 89 pistones, 252 pernos y 190 bujes de biela) y los 64.250
 repuestos del proveedor ya importados en la base.
 
 Cómo se corre: ver tests/README.md. Resumen:
@@ -53,10 +53,10 @@ def _lista(valor):
 print("\n=== 0. Catálogos cargados ===")
 db.init_db()
 familias = {f["id"]: f for f in tecnicos.get_familias()}
-check("están las once familias",
+check("están las doce familias",
       sorted(familias) == ["asientos", "bujes_biela", "camisas", "cojinetes_axiales",
                            "cojinetes_bancada", "cojinetes_biela", "conjuntos", "guias",
-                           "pistones", "subconjuntos", "valvulas"],
+                           "pernos", "pistones", "subconjuntos", "valvulas"],
       list(familias))
 check("1.782 válvulas (3B + Mahle)",
       familias.get("valvulas", {}).get("total") == 1782, familias.get("valvulas"))
@@ -80,6 +80,11 @@ check("166 conjuntos (los que trabaja el proveedor)",
       familias.get("conjuntos", {}).get("total") == 166, familias.get("conjuntos"))
 check("89 pistones (Persan + Federal Mogul)",
       familias.get("pistones", {}).get("total") == 89, familias.get("pistones"))
+# Los pernos entraron el 2026-09-08 con el catálogo de Pescara. Son los códigos
+# que el proveedor vende y tienen ficha en el catálogo: de los 305 de la lista,
+# 252. Los otros 53 son posteriores a esa edición del catálogo (es de 2018).
+check("252 pernos de pistón (Pescara)",
+      familias.get("pernos", {}).get("total") == 252, familias.get("pernos"))
 check("190 bujes de biela (Indubrón)",
       familias.get("bujes_biela", {}).get("total") == 190, familias.get("bujes_biela"))
 # Los cojinetes de biela salen de la lista del proveedor —Mahle, Federal Mogul y
@@ -784,6 +789,49 @@ r = tecnicos.buscar("cojinetes_axiales", {"espesor": "1", "tol_espesor": "+"})
 check("y ninguno aparece en una búsqueda por medidas",
       not (sin_medidas_ax & set(codigos(r))), sorted(sin_medidas_ax & set(codigos(r)))[:5])
 
+print("\n=== 7 sexies. Pernos de pistón (Pescara) ===")
+# El perno del Bedford 350 sirve de caso completo: tiene las dos medidas, la
+# descripción del proveedor y tres sobremedidas en la lista de precios.
+uno = tecnicos.buscar("pernos", {"codigo": "3008"})
+check("se encuentra un perno por su código de catálogo", uno["total"] == 1, uno["total"])
+f = uno["resultados"][0] if uno["total"] else {}
+check("el código que se muestra es el del proveedor sin la sobremedida",
+      f.get("codigo") == "PEPE3008", f.get("codigo"))
+check("con el Ø exterior y el largo del catálogo",
+      f.get("medidas") == {"diam_ext": 34.92, "largo": 91.1}, f.get("medidas"))
+check("el motor sale de la descripción del proveedor, más precisa que la marca",
+      f.get("descripcion") == "BEDFORD 350" and f.get("aplicacion") == "BEDFORD",
+      (f.get("descripcion"), f.get("aplicacion")))
+# Las sobremedidas van con su etiqueta y NO con un Ø: el catálogo de Pescara no
+# publica a cuántos milímetros equivale cada una (ver la cabecera de ESPEC).
+check("las tres sobremedidas, con la etiqueta del proveedor",
+      (f.get("extra") or {}).get("sobremedidas") == ["005", "010", "STD"],
+      (f.get("extra") or {}).get("sobremedidas"))
+check("y el precio que se muestra dice de qué sobremedida es",
+      f.get("medida_crac") in ("005", "010", "STD") and f.get("precio") is not None,
+      (f.get("medida_crac"), f.get("precio")))
+
+r = tecnicos.buscar("pernos", {"diam_ext": "17", "tol_diam_ext": "0.1"})
+check("se busca por Ø exterior", r["total"] == 3, r["total"])
+check("y todos caen dentro de la tolerancia",
+      all(abs(x["medidas"]["diam_ext"] - 17) <= 0.1 for x in r["resultados"]),
+      [x["medidas"] for x in r["resultados"]])
+r = tecnicos.buscar("pernos", {"diam_ext": "17", "tol_diam_ext": "0.1", "largo": "53.5", "tol_largo": "0.05"})
+check("el largo desempata entre pernos del mismo Ø", r["total"] == 1, r["total"])
+check("y es el que corresponde", r["resultados"][0]["codigo"] == "PEPE5549",
+      r["resultados"][0]["codigo"])
+
+fichas_pernos = tecnicos._catalogo("pernos")
+# La regla del dueño para esta familia: sólo lo que el proveedor vende. Si una
+# ficha entrara sin código, la casilla del proveedor —que los pernos no tienen—
+# la dejaría escondida para siempre.
+check("las 252 fichas tienen código del proveedor",
+      all(x["codigos_crac"] for x in fichas_pernos), len(fichas_pernos))
+check("y en todas el Ø es menor que el largo",
+      all(x["medidas"]["diam_ext"] < x["medidas"]["largo"] for x in fichas_pernos))
+check("ninguna quedó sin Ø o sin largo",
+      all(all(x["medidas"].values()) for x in fichas_pernos))
+
 print("\n=== 8. El tope de 100 se avisa ===")
 r = tecnicos.buscar("guias", {"aplicacion": "guia"})
 check("se devuelven 100 como mucho", r["total"] == 100, r["total"])
@@ -795,7 +843,7 @@ cliente = app.test_client()
 check("sin sesión no se entra", cliente.get("/api/tecnicos/familias").status_code == 401)
 cliente.post("/api/auth/login", json={"usuario": os.environ["APP_USERNAME"], "password": CLAVE})
 resp = cliente.get("/api/tecnicos/familias")
-check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 11, resp.get_json())
+check("con sesión, las familias", resp.status_code == 200 and len(resp.get_json()) == 12, resp.get_json())
 resp = cliente.get("/api/tecnicos/buscar?familia=camisas&diam_int=56.5&tol_diam_int=0")
 datos = resp.get_json()
 check("y la búsqueda", resp.status_code == 200 and "UC 2112" in [r["codigo"] for r in datos["resultados"]], datos)

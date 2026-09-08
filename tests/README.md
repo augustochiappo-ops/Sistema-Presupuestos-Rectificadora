@@ -39,7 +39,7 @@ Alrededor de dos minutos. Es el que se corre en cada cambio, dentro de
 - la **cuenta del taller** entra y cae en su panel, tiene un solo ítem de menú,
   no muestra ni un `$` en el tablero ni en la orden de trabajo, y si se escribe
   `/presupuestos` a mano en la barra vuelve rebotada al taller;
-- en las once familias de la búsqueda por medidas: la tabla trae filas y
+- en las doce familias de la búsqueda por medidas: la tabla trae filas y
   **ninguna celda queda cortada**.
 
 Ese último check es el que más rinde por segundo invertido. La pantalla de
@@ -212,7 +212,7 @@ $VENV/bin/python tests/backend_medidas.py
 
 | Bloque | Qué verifica |
 |---|---|
-| Catálogos | Las **once** familias cargadas con sus totales exactos (396 camisas, 1.782 válvulas, 951 guías, 1.108 asientos, 284 subconjuntos, 166 conjuntos, 89 pistones, 354 cojinetes de biela, 345 cojinetes de bancada, 120 cojinetes axiales, 190 bujes de biela), y la casilla "solo las que tiene el proveedor" en las cuatro familias del grupo "catálogo completo" —camisas, guías, asientos y bujes de biela— filtrando de verdad en las cuatro |
+| Catálogos | Las **doce** familias cargadas con sus totales exactos (396 camisas, 1.782 válvulas, 951 guías, 1.108 asientos, 284 subconjuntos, 166 conjuntos, 89 pistones, 252 pernos de pistón, 354 cojinetes de biela, 345 cojinetes de bancada, 120 cojinetes axiales, 190 bujes de biela), y la casilla "solo las que tiene el proveedor" en las cuatro familias del grupo "catálogo completo" —camisas, guías, asientos y bujes de biela— filtrando de verdad en las cuatro |
 | Sin filtros | No devuelve el catálogo entero, y una familia inexistente no explota |
 | Valor ± tolerancia | Encuentra con el valor exacto y con ±0,5, deja de encontrar con ±0,1, usa ±0,5 si no se escribe tolerancia, y acepta la coma decimal |
 | Acumulación | Sumar un segundo filtro achica el resultado y no pierde la pieza buscada |
@@ -264,7 +264,7 @@ las otras dos marcas (la Daily 2.8TD de Mahle y la F100 V8 de Federal Mogul) ·
 **cojinetes axiales** con los filtros de la arandela (Ø interior, Ø exterior,
 espesor) y no los del cojinete, la sobremedida sumando al espesor, y la de
 Federal Mogul que entra con el espesor solo · **que ninguna
-celda de ninguna de las once familias quede cortada** (se mide en el navegador, `scrollWidth`
+celda de ninguna de las doce familias quede cortada** (se mide en el navegador, `scrollWidth`
 contra `clientWidth`, celda por celda y encabezado por encabezado: la tabla usa
 `tableLayout: fixed`, así que una columna más angosta que su contenido lo tapa
 sin avisar) · **asientos de válvulas** con las columnas que pidió el dueño (tipo,

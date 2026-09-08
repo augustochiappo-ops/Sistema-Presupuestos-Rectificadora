@@ -1,0 +1,7700 @@
+[
+ {
+  "codigo": "PEPE3008",
+  "codigo_fab": "3008",
+  "marca": "PESCARA",
+  "aplicacion": "BEDFORD",
+  "descripcion": "BEDFORD 350",
+  "medidas": {
+   "diam_ext": 34.92,
+   "largo": 91.1
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3008   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3008   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3008   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3009",
+  "codigo_fab": "3009",
+  "marca": "PESCARA",
+  "aplicacion": "BEDFORD",
+  "descripcion": "BEDFORD 300",
+  "medidas": {
+   "diam_ext": 34.92,
+   "largo": 83.3
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3009   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3009   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3009   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3015",
+  "codigo_fab": "3015",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET / ISUZU / RASTROJERO",
+  "descripcion": "RASTROJERO 52 HP/ISUZU 4EE1",
+  "medidas": {
+   "diam_ext": 25.0,
+   "largo": 64.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3015   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3015   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3015   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3016",
+  "codigo_fab": "3016",
+  "marca": "PESCARA",
+  "aplicacion": "RASTROJERO / BORGWARD",
+  "descripcion": "RASTROJERO 42 HP",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 69.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3016   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3016   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3016   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3028",
+  "codigo_fab": "3028",
+  "marca": "PESCARA",
+  "aplicacion": "CASE",
+  "descripcion": "CASE 830",
+  "medidas": {
+   "diam_ext": 38.1,
+   "largo": 93.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3028   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3028   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3046",
+  "codigo_fab": "3046",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT 55R-60R",
+  "medidas": {
+   "diam_ext": 44.0,
+   "largo": 104.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3046   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3046   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3046   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3047",
+  "codigo_fab": "3047",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT U25-411",
+  "medidas": {
+   "diam_ext": 28.0,
+   "largo": 74.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3047   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3047   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3047   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3054",
+  "codigo_fab": "3054",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT 780R-R80-682",
+  "medidas": {
+   "diam_ext": 44.0,
+   "largo": 107.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3054   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3054   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3054   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3055",
+  "codigo_fab": "3055",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / OM / MAN - BUSSING",
+  "descripcion": "FIAT 400-500-900-1100",
+  "medidas": {
+   "diam_ext": 40.0,
+   "largo": 94.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3055   +1",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE3055   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3055   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3055   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3056",
+  "codigo_fab": "3056",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT 700E-800",
+  "medidas": {
+   "diam_ext": 40.0,
+   "largo": 98.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3056   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3056   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3056   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3058",
+  "codigo_fab": "3058",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / DEUTZ / OM",
+  "descripcion": "FIAT 619 N1",
+  "medidas": {
+   "diam_ext": 48.0,
+   "largo": 117.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3058   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3058   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3058   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3061",
+  "codigo_fab": "3061",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT 619 N",
+  "medidas": {
+   "diam_ext": 48.0,
+   "largo": 115.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3061   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3061   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3061   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3069",
+  "codigo_fab": "3069",
+  "marca": "PESCARA",
+  "aplicacion": "HANOMAG",
+  "descripcion": "HANOMAG R55-R60-R75",
+  "medidas": {
+   "diam_ext": 35.0,
+   "largo": 95.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3069   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3069   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3069   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3078",
+  "codigo_fab": "3078",
+  "marca": "PESCARA",
+  "aplicacion": "BORGWARD / INDENOR / PEUGEOT / CITROEN / FORD",
+  "descripcion": "INDENOR XD4.88",
+  "medidas": {
+   "diam_ext": 28.0,
+   "largo": 72.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3078   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3078   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3078   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3079",
+  "codigo_fab": "3079",
+  "marca": "PESCARA",
+  "aplicacion": "BORGWARD / INDENOR",
+  "descripcion": "INDENOR XD6.90",
+  "medidas": {
+   "diam_ext": 28.0,
+   "largo": 77.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "003",
+    "005",
+    "010",
+    "1/2",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3079   003",
+    "medida": "003"
+   },
+   {
+    "codigo": "PEPE3079   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3079   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3079   1/2",
+    "medida": "1/2"
+   },
+   {
+    "codigo": "PEPE3079   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3086",
+  "codigo_fab": "3086",
+  "marca": "PESCARA",
+  "aplicacion": "LEYLAND",
+  "descripcion": "LEYLAND TIGER*600 125 HP",
+  "medidas": {
+   "diam_ext": 41.28,
+   "largo": 106.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3086   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3086   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3086   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3087",
+  "codigo_fab": "3087",
+  "marca": "PESCARA",
+  "aplicacion": "LISTER",
+  "descripcion": "LISTER 6 HP-12 HP",
+  "medidas": {
+   "diam_ext": 31.75,
+   "largo": 98.2
+  },
+  "extra": {
+   "sobremedidas": [
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3087   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3087   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3090",
+  "codigo_fab": "3090",
+  "marca": "PESCARA",
+  "aplicacion": "JOHN DEERE",
+  "descripcion": "J.DEERE 730",
+  "medidas": {
+   "diam_ext": 59.81,
+   "largo": 130.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "020",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3090   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3090   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3090   020",
+    "medida": "020"
+   },
+   {
+    "codigo": "PEPE3090   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3091",
+  "codigo_fab": "3091",
+  "marca": "PESCARA",
+  "aplicacion": "JOHN DEERE",
+  "descripcion": "J.DEERE 3420",
+  "medidas": {
+   "diam_ext": 30.17,
+   "largo": 81.3
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3091   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3091   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3091   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3094",
+  "codigo_fab": "3094",
+  "marca": "PESCARA",
+  "aplicacion": "JOHN DEERE",
+  "descripcion": "J.DEERE 1420-2420-4420",
+  "medidas": {
+   "diam_ext": 30.17,
+   "largo": 84.9
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3094   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3094   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3094   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3105",
+  "codigo_fab": "3105",
+  "marca": "PESCARA",
+  "aplicacion": "PERKINS",
+  "descripcion": "PERKINS 6.354 F2T-F4T",
+  "medidas": {
+   "diam_ext": 38.1,
+   "largo": 82.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3105   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3105   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3105   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3106",
+  "codigo_fab": "3106",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ OM321",
+  "medidas": {
+   "diam_ext": 30.0,
+   "largo": 82.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3106   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3106   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3106   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3107",
+  "codigo_fab": "3107",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ 170",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 63.2
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3107   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3107   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3107   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3108",
+  "codigo_fab": "3108",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ / HANOMAG",
+  "descripcion": "M.BENZ OM312-HANOMAG R35-R40",
+  "medidas": {
+   "diam_ext": 30.0,
+   "largo": 78.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3108   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3108   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3108   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3110",
+  "codigo_fab": "3110",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ L6600",
+  "medidas": {
+   "diam_ext": 38.0,
+   "largo": 94.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3110   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3110   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3110   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3111",
+  "codigo_fab": "3111",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ OM326-332-346",
+  "medidas": {
+   "diam_ext": 44.0,
+   "largo": 111.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3111   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3111   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3112",
+  "codigo_fab": "3112",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ / HANOMAG",
+  "descripcion": "M.BENZ OM352-352A-366-366A",
+  "medidas": {
+   "diam_ext": 36.0,
+   "largo": 82.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "005",
+    "010",
+    "1/2",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3112   +1 ",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE3112   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3112   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3112   1/2",
+    "medida": "1/2"
+   },
+   {
+    "codigo": "PEPE3112   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3117",
+  "codigo_fab": "3117",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ COMPRESOR (15x65)",
+  "medidas": {
+   "diam_ext": 15.0,
+   "largo": 65.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3117   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3117   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3118",
+  "codigo_fab": "3118",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ / VOLVO",
+  "descripcion": "M.BENZ OM321 COMPRESOR (BRASIL)",
+  "medidas": {
+   "diam_ext": 16.0,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3118   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3118   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3119",
+  "codigo_fab": "3119",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ OM352-352A COMPRESOR",
+  "medidas": {
+   "diam_ext": 16.01,
+   "largo": 66.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3119   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3119   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3119   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3120",
+  "codigo_fab": "3120",
+  "marca": "PESCARA",
+  "aplicacion": "DEUTZ / MAGIRUS / SKODA / STEYR",
+  "descripcion": "DEUTZ 514/STEYR 280/SKODA",
+  "medidas": {
+   "diam_ext": 40.0,
+   "largo": 93.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "1",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3120   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3120   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3120   1",
+    "medida": "1"
+   },
+   {
+    "codigo": "PEPE3120   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3124",
+  "codigo_fab": "3124",
+  "marca": "PESCARA",
+  "aplicacion": "PERKINS / MASSEY FERGUSON / FORDSON / RENAULT",
+  "descripcion": "PERKINS 4.203-6.305",
+  "medidas": {
+   "diam_ext": 31.74,
+   "largo": 75.3
+  },
+  "extra": {
+   "sobremedidas": [
+    "003",
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3124   003",
+    "medida": "003"
+   },
+   {
+    "codigo": "PEPE3124   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3124   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3124   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3127",
+  "codigo_fab": "3127",
+  "marca": "PESCARA",
+  "aplicacion": "SCANIA",
+  "descripcion": "SCANIA L71",
+  "medidas": {
+   "diam_ext": 42.0,
+   "largo": 98.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3127   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3127   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3130",
+  "codigo_fab": "3130",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "IVECO 1580-1580T-1880-180.90",
+  "medidas": {
+   "diam_ext": 42.0,
+   "largo": 97.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3130   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3130   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3131",
+  "codigo_fab": "3131",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT SOMECA DA50-450",
+  "medidas": {
+   "diam_ext": 38.01,
+   "largo": 84.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3131   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3131   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3132",
+  "codigo_fab": "3132",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / OM",
+  "descripcion": "FIAT SOMECA M45-650",
+  "medidas": {
+   "diam_ext": 38.01,
+   "largo": 89.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3132   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3132   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3132   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3135",
+  "codigo_fab": "3135",
+  "marca": "PESCARA",
+  "aplicacion": "PERKINS / JOHN DEERE / MASSEY FERGUSON / LEYLAND",
+  "descripcion": "PERKINS 6.354 F1-F2",
+  "medidas": {
+   "diam_ext": 34.92,
+   "largo": 84.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3135   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3135   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3135   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3137",
+  "codigo_fab": "3137",
+  "marca": "PESCARA",
+  "aplicacion": "DEUTZ / MAGIRUS",
+  "descripcion": "DEUTZ 1114-2114",
+  "medidas": {
+   "diam_ext": 45.0,
+   "largo": 95.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3137   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3137   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3137   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3138",
+  "codigo_fab": "3138",
+  "marca": "PESCARA",
+  "aplicacion": "SCANIA",
+  "descripcion": "SCANIA L75-L76",
+  "medidas": {
+   "diam_ext": 47.0,
+   "largo": 108.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3138   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3138   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3139",
+  "codigo_fab": "3139",
+  "marca": "PESCARA",
+  "aplicacion": "SCANIA",
+  "descripcion": "SCANIA 111 TURBO-H113",
+  "medidas": {
+   "diam_ext": 50.0,
+   "largo": 108.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3139   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3139   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3139   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3150",
+  "codigo_fab": "3150",
+  "marca": "PESCARA",
+  "aplicacion": "DEUTZ / VOLVO",
+  "descripcion": "DEUTZ 413/VOLVO TITAN 495",
+  "medidas": {
+   "diam_ext": 45.0,
+   "largo": 102.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3150   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3150   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3150   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3160",
+  "codigo_fab": "3160",
+  "marca": "PESCARA",
+  "aplicacion": "PERKINS / BENDIX / BURMOR / CLAYTON",
+  "descripcion": "BURMOR SC6*",
+  "medidas": {
+   "diam_ext": 11.11,
+   "largo": 57.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "003",
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3160   003",
+    "medida": "003"
+   },
+   {
+    "codigo": "PEPE3160   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3160   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3160   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3161",
+  "codigo_fab": "3161",
+  "marca": "PESCARA",
+  "aplicacion": "PERKINS / MIDLAND / TENSA",
+  "descripcion": "TENSA COMPRESOR 6.354",
+  "medidas": {
+   "diam_ext": 12.7,
+   "largo": 52.4
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3161   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3161   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3161   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3210",
+  "codigo_fab": "3210",
+  "marca": "PESCARA",
+  "aplicacion": "SCANIA",
+  "descripcion": "SCANIA L75-L76 COMPRESOR",
+  "medidas": {
+   "diam_ext": 13.5,
+   "largo": 58.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3210   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3210   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3210   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3351",
+  "codigo_fab": "3351",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ COMPRESOR (16x60)",
+  "medidas": {
+   "diam_ext": 16.0,
+   "largo": 60.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3351   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3351   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3411",
+  "codigo_fab": "3411",
+  "marca": "PESCARA",
+  "aplicacion": "DEUTZ",
+  "descripcion": "DEUTZ 913 TURBO",
+  "medidas": {
+   "diam_ext": 40.0,
+   "largo": 80.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3411   +1 ",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE3411   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3411   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3411   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3412",
+  "codigo_fab": "3412",
+  "marca": "PESCARA",
+  "aplicacion": "DEUTZ",
+  "descripcion": "DEUTZ 712-812-913 S/TURBO",
+  "medidas": {
+   "diam_ext": 35.0,
+   "largo": 80.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3412   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3412   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3412   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3415",
+  "codigo_fab": "3415",
+  "marca": "PESCARA",
+  "aplicacion": "JOHN DEERE",
+  "descripcion": "J.DEERE 2330-2530-2730-3530-4530",
+  "medidas": {
+   "diam_ext": 34.93,
+   "largo": 84.4
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3415   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3415   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3415   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3416",
+  "codigo_fab": "3416",
+  "marca": "PESCARA",
+  "aplicacion": "BORGWARD / INDENOR / PEUGEOT",
+  "descripcion": "INDENOR XD2 P.28 mm",
+  "medidas": {
+   "diam_ext": 28.0,
+   "largo": 81.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "003",
+    "005",
+    "010",
+    "1",
+    "1/2",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3416   003",
+    "medida": "003"
+   },
+   {
+    "codigo": "PEPE3416   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3416   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3416   1  ",
+    "medida": "1"
+   },
+   {
+    "codigo": "PEPE3416   1/2",
+    "medida": "1/2"
+   },
+   {
+    "codigo": "PEPE3416   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3418",
+  "codigo_fab": "3418",
+  "marca": "PESCARA",
+  "aplicacion": "MARELLI",
+  "descripcion": "FIAT COMPRESOR MARELLI 400 CC",
+  "medidas": {
+   "diam_ext": 14.0,
+   "largo": 71.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3418   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3418   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3419",
+  "codigo_fab": "3419",
+  "marca": "PESCARA",
+  "aplicacion": "MARELLI / FIAT",
+  "descripcion": "FIAT COMPRESOR MARELLI 300 CC",
+  "medidas": {
+   "diam_ext": 14.0,
+   "largo": 57.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3419   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3419   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3419   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3420",
+  "codigo_fab": "3420",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / BURMOR / CLAYTON",
+  "descripcion": "BURMOR SC9 COMPRESOR FIAT",
+  "medidas": {
+   "diam_ext": 19.05,
+   "largo": 73.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3420   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3420   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3420   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3421",
+  "codigo_fab": "3421",
+  "marca": "PESCARA",
+  "aplicacion": "JOHN DEERE",
+  "descripcion": "J.DEERE 5010*5020",
+  "medidas": {
+   "diam_ext": 44.45,
+   "largo": 95.7
+  },
+  "extra": {
+   "sobremedidas": [
+    "003",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3421   003",
+    "medida": "003"
+   },
+   {
+    "codigo": "PEPE3421   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3421   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3422",
+  "codigo_fab": "3422",
+  "marca": "PESCARA",
+  "aplicacion": "PERKINS",
+  "descripcion": "PERKINS V8 540",
+  "medidas": {
+   "diam_ext": 44.45,
+   "largo": 89.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3422   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3422   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3423",
+  "codigo_fab": "3423",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT / INDENOR / FORD / CITROEN",
+  "descripcion": "INDENOR XD2-XD3 P.30 mm",
+  "medidas": {
+   "diam_ext": 30.0,
+   "largo": 78.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "003",
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3423   003",
+    "medida": "003"
+   },
+   {
+    "codigo": "PEPE3423   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3423   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3423   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3424",
+  "codigo_fab": "3424",
+  "marca": "PESCARA",
+  "aplicacion": "TOYOTA",
+  "descripcion": "TOYOTA L 2.2D",
+  "medidas": {
+   "diam_ext": 27.0,
+   "largo": 74.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3424   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3424   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3424   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3425",
+  "codigo_fab": "3425",
+  "marca": "PESCARA",
+  "aplicacion": "TOYOTA",
+  "descripcion": "TOYOTA B-1B-2B/XINCHAI A490BPG",
+  "medidas": {
+   "diam_ext": 29.0,
+   "largo": 79.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3425   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3426",
+  "codigo_fab": "3426",
+  "marca": "PESCARA",
+  "aplicacion": "MITSUBISHI",
+  "descripcion": "MITSUBISHI 4D30 CANTER",
+  "medidas": {
+   "diam_ext": 34.0,
+   "largo": 84.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3426   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3426   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3426   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3430",
+  "codigo_fab": "3430",
+  "marca": "PESCARA",
+  "aplicacion": "ZANELLO",
+  "descripcion": "ZANELLO VM 105 mm",
+  "medidas": {
+   "diam_ext": 35.0,
+   "largo": 90.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3430   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3430   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3430   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3432",
+  "codigo_fab": "3432",
+  "marca": "PESCARA",
+  "aplicacion": "BORGWARD / ROVER",
+  "descripcion": "BORGWARD VM 4.92T",
+  "medidas": {
+   "diam_ext": 30.0,
+   "largo": 75.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3432   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3432   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3432   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3434",
+  "codigo_fab": "3434",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT / CHEVROLET",
+  "descripcion": "INDENOR XD3T 32 mm",
+  "medidas": {
+   "diam_ext": 32.0,
+   "largo": 78.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3434   +1",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE3434   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3434   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3434   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3436",
+  "codigo_fab": "3436",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / KUBOTA",
+  "descripcion": "IVECO 780/880-5/1180/1380 34 mm",
+  "medidas": {
+   "diam_ext": 34.0,
+   "largo": 90.4
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "1/2",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3436   +1",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE3436   1/2",
+    "medida": "1/2"
+   },
+   {
+    "codigo": "PEPE3436   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3437",
+  "codigo_fab": "3437",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "IVECO 540/640/980 0 32 mm",
+  "medidas": {
+   "diam_ext": 32.0,
+   "largo": 84.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3437   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3437   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3440",
+  "codigo_fab": "3440",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ OM355-OM355A",
+  "medidas": {
+   "diam_ext": 48.0,
+   "largo": 107.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3440   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3440   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3440   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3441",
+  "codigo_fab": "3441",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT 147 1.3D",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 64.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3441   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3441   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3441   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3442",
+  "codigo_fab": "3442",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN / SEAT / VOLVO / AUDI",
+  "descripcion": "VW SENDA 1.6D-VW POLO 1.9D",
+  "medidas": {
+   "diam_ext": 24.0,
+   "largo": 64.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "1/2",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3442   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3442   1/2",
+    "medida": "1/2"
+   },
+   {
+    "codigo": "PEPE3442   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3444",
+  "codigo_fab": "3444",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / LANCIA",
+  "descripcion": "FIAT DUNA 1.7D",
+  "medidas": {
+   "diam_ext": 25.0,
+   "largo": 69.4
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3444   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3444   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3445",
+  "codigo_fab": "3445",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT TRAFIC 2.1D",
+  "medidas": {
+   "diam_ext": 28.0,
+   "largo": 75.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "1",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3445   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3445   1",
+    "medida": "1"
+   },
+   {
+    "codigo": "PEPE3445   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3446",
+  "codigo_fab": "3446",
+  "marca": "PESCARA",
+  "aplicacion": "SCANIA",
+  "descripcion": "SCANIA 111-112T COMPRESOR",
+  "medidas": {
+   "diam_ext": 15.88,
+   "largo": 60.3
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3446   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3446   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3447",
+  "codigo_fab": "3447",
+  "marca": "PESCARA",
+  "aplicacion": "FORD / MWM",
+  "descripcion": "MWM 229",
+  "medidas": {
+   "diam_ext": 32.0,
+   "largo": 82.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "1",
+    "1/2",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3447   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3447   1",
+    "medida": "1"
+   },
+   {
+    "codigo": "PEPE3447   1/2",
+    "medida": "1/2"
+   },
+   {
+    "codigo": "PEPE3447   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3449",
+  "codigo_fab": "3449",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / LANCIA",
+  "descripcion": "FIAT PALIO 1.7TD-DUCATO 1.9TD",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 69.4
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3449   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3449   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3450",
+  "codigo_fab": "3450",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD FIESTA 1.8D",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 59.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3450   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3450   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3452",
+  "codigo_fab": "3452",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT 19 1.9TD F8QT",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 66.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3452   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3452   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3454",
+  "codigo_fab": "3454",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT 19 1.9D F8Q",
+  "medidas": {
+   "diam_ext": 24.0,
+   "largo": 63.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3454   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3454   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3457",
+  "codigo_fab": "3457",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT / CITROEN / LADA / TALBOT / ROVER",
+  "descripcion": "PEUGEOT 405 1.9D",
+  "medidas": {
+   "diam_ext": 25.0,
+   "largo": 72.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3457   +1",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE3457   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3458",
+  "codigo_fab": "3458",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT / CITROEN / FIAT",
+  "descripcion": "PEUGEOT 405 1.9TD",
+  "medidas": {
+   "diam_ext": 28.0,
+   "largo": 68.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "1",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3458   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3458   1",
+    "medida": "1"
+   },
+   {
+    "codigo": "PEPE3458   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3459",
+  "codigo_fab": "3459",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN / SEAT / AUDI",
+  "descripcion": "VW GOLF 1.9TD/DEUTZ 2011",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 66.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3459   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3459   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3460",
+  "codigo_fab": "3460",
+  "marca": "PESCARA",
+  "aplicacion": "MAXION / CHEVROLET / PERKINS",
+  "descripcion": "MAXION S4/PERKINS T4-3.3",
+  "medidas": {
+   "diam_ext": 34.92,
+   "largo": 77.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3460   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3460   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3461",
+  "codigo_fab": "3461",
+  "marca": "PESCARA",
+  "aplicacion": "MAXION / CHEVROLET",
+  "descripcion": "MAXION S4T-S4T EURO",
+  "medidas": {
+   "diam_ext": 38.1,
+   "largo": 78.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3461   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3461   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3462",
+  "codigo_fab": "3462",
+  "marca": "PESCARA",
+  "aplicacion": "PERKINS",
+  "descripcion": "PERKINS 4.203-6.305 ALIVIANADO",
+  "medidas": {
+   "diam_ext": 31.75,
+   "largo": 75.3
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3462   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3462   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3463",
+  "codigo_fab": "3463",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ / CHEVROLET / MAXION / ROVER",
+  "descripcion": "MAXION HS2.5T",
+  "medidas": {
+   "diam_ext": 30.16,
+   "largo": 76.9
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3463   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3463   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3465",
+  "codigo_fab": "3465",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ OM616",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 74.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3465   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3465   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3467",
+  "codigo_fab": "3467",
+  "marca": "PESCARA",
+  "aplicacion": "CUMMINS",
+  "descripcion": "CUMMINS 4B-4BT-6B-6BT (LARGO 75,50)",
+  "medidas": {
+   "diam_ext": 40.0,
+   "largo": 75.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3467   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3467   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3468",
+  "codigo_fab": "3468",
+  "marca": "PESCARA",
+  "aplicacion": "CUMMINS",
+  "descripcion": "CUMMINS 4B-4BT-6B-6BT (LARGO 82,50)",
+  "medidas": {
+   "diam_ext": 40.0,
+   "largo": 82.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3468   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3468   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3469",
+  "codigo_fab": "3469",
+  "marca": "PESCARA",
+  "aplicacion": "CUMMINS",
+  "descripcion": "CUMMINS 6C-6CT-6CTAA-6CTE",
+  "medidas": {
+   "diam_ext": 45.0,
+   "largo": 91.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3469   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3469   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3472",
+  "codigo_fab": "3472",
+  "marca": "PESCARA",
+  "aplicacion": "CUMMINS / HOLSET",
+  "descripcion": "CUMMINS COMPRESOR",
+  "medidas": {
+   "diam_ext": 17.46,
+   "largo": 69.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3472   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3472   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3473",
+  "codigo_fab": "3473",
+  "marca": "PESCARA",
+  "aplicacion": "WABCO / WESTINGHOUSE / BITZER",
+  "descripcion": "WABCO 90 mm",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 60.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3473   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3473   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3475",
+  "codigo_fab": "3475",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET",
+  "descripcion": "CHEVROLET 230-250 DIESEL",
+  "medidas": {
+   "diam_ext": 23.55,
+   "largo": 87.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3475   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3475   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3476",
+  "codigo_fab": "3476",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD FALCON 188-221 DIESEL",
+  "medidas": {
+   "diam_ext": 23.17,
+   "largo": 82.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3476   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3477",
+  "codigo_fab": "3477",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD TRANSIT 2.5D",
+  "medidas": {
+   "diam_ext": 29.0,
+   "largo": 77.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1/2",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3477   1/2",
+    "medida": "1/2"
+   },
+   {
+    "codigo": "PEPE3477   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3478",
+  "codigo_fab": "3478",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT DUCATO 2.8TD",
+  "medidas": {
+   "diam_ext": 32.0,
+   "largo": 78.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3478   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3478   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3479",
+  "codigo_fab": "3479",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / RENAULT",
+  "descripcion": "IVECO DAILY 49.10T 2.5TD",
+  "medidas": {
+   "diam_ext": 32.0,
+   "largo": 74.4
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3479   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3479   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3480",
+  "codigo_fab": "3480",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "IVECO 150T",
+  "medidas": {
+   "diam_ext": 37.99,
+   "largo": 85.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3480   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3480   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE3480   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3483",
+  "codigo_fab": "3483",
+  "marca": "PESCARA",
+  "aplicacion": "LAIDONG",
+  "descripcion": "LAIDONG L480Q 1.9D",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 64.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3483   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3483   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3484",
+  "codigo_fab": "3484",
+  "marca": "PESCARA",
+  "aplicacion": "LAIDONG",
+  "descripcion": "LAIDONG 4Q95A",
+  "medidas": {
+   "diam_ext": 31.0,
+   "largo": 79.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3484   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3484   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3486",
+  "codigo_fab": "3486",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET / ISUZU",
+  "descripcion": "ISUZU 4EE1T/CHEVROLET VECTRA 1.7TD",
+  "medidas": {
+   "diam_ext": 27.0,
+   "largo": 64.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3486   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3486   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3489",
+  "codigo_fab": "3489",
+  "marca": "PESCARA",
+  "aplicacion": "MWM",
+  "descripcion": "MWM 229TD",
+  "medidas": {
+   "diam_ext": 35.0,
+   "largo": 88.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3489   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3489   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3500",
+  "codigo_fab": "3500",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT",
+  "descripcion": "PEUGEOT PARTNER 1.9D DW8",
+  "medidas": {
+   "diam_ext": 25.0,
+   "largo": 66.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3500   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3500   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3502",
+  "codigo_fab": "3502",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ OM447-OM449A",
+  "medidas": {
+   "diam_ext": 46.0,
+   "largo": 105.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3502   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3502   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3504",
+  "codigo_fab": "3504",
+  "marca": "PESCARA",
+  "aplicacion": "MWM",
+  "descripcion": "MWM 4.10-6.10T",
+  "medidas": {
+   "diam_ext": 38.0,
+   "largo": 87.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3504   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3504   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3508",
+  "codigo_fab": "3508",
+  "marca": "PESCARA",
+  "aplicacion": "CATERPILLAR",
+  "descripcion": "CATERPILLAR 3304-3306 (DIAM. 38 mm)",
+  "medidas": {
+   "diam_ext": 38.11,
+   "largo": 94.9
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3508   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3510",
+  "codigo_fab": "3510",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "IVECO 190.33T",
+  "medidas": {
+   "diam_ext": 50.0,
+   "largo": 117.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3510   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3512",
+  "codigo_fab": "3512",
+  "marca": "PESCARA",
+  "aplicacion": "BENDIX / WESTINGHOUSE",
+  "descripcion": "TUFLO 500",
+  "medidas": {
+   "diam_ext": 13.49,
+   "largo": 56.6
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3512   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3512   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3514",
+  "codigo_fab": "3514",
+  "marca": "PESCARA",
+  "aplicacion": "MIDLAND / VARGA",
+  "descripcion": "MIDLAND COMPRESOR",
+  "medidas": {
+   "diam_ext": 14.27,
+   "largo": 58.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3514   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3516",
+  "codigo_fab": "3516",
+  "marca": "PESCARA",
+  "aplicacion": "KNORR",
+  "descripcion": "KNORR 75 mm",
+  "medidas": {
+   "diam_ext": 18.0,
+   "largo": 63.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3516   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3516   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3517",
+  "codigo_fab": "3517",
+  "marca": "PESCARA",
+  "aplicacion": "WABCO / MERCEDES BENZ",
+  "descripcion": "WABCO 85 mm",
+  "medidas": {
+   "diam_ext": 19.05,
+   "largo": 60.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3517   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3517   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3518",
+  "codigo_fab": "3518",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD ECOSPORT 1.4TDCi 16V",
+  "medidas": {
+   "diam_ext": 25.0,
+   "largo": 60.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3518   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3522",
+  "codigo_fab": "3522",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD FIESTA 1.8TD",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 69.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3522   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3522   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3524",
+  "codigo_fab": "3524",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT MEGANE 1.9TDi F9QT",
+  "medidas": {
+   "diam_ext": 28.0,
+   "largo": 60.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3524   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3524   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3526",
+  "codigo_fab": "3526",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT / LANCIA",
+  "descripcion": "PEUGEOT 406 2.0 HDi DW10",
+  "medidas": {
+   "diam_ext": 28.0,
+   "largo": 70.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3526   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3528",
+  "codigo_fab": "3528",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ / MWM",
+  "descripcion": "MWM 4.07-6.07T",
+  "medidas": {
+   "diam_ext": 35.0,
+   "largo": 77.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3528   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3528   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3536",
+  "codigo_fab": "3536",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ OM904LA-OM906LA (40x78)",
+  "medidas": {
+   "diam_ext": 40.0,
+   "largo": 78.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3536   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3548",
+  "codigo_fab": "3548",
+  "marca": "PESCARA",
+  "aplicacion": "ISUZU",
+  "descripcion": "ISUZU 4EE1/CHEVROLET CORSA 1.7D",
+  "medidas": {
+   "diam_ext": 25.0,
+   "largo": 60.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3548   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3548   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3562",
+  "codigo_fab": "3562",
+  "marca": "PESCARA",
+  "aplicacion": "ISUZU",
+  "descripcion": "ISUZU 4FB1/MAZDA R2/NISSAN LD20-LD28",
+  "medidas": {
+   "diam_ext": 25.0,
+   "largo": 67.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3562   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3562   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3564",
+  "codigo_fab": "3564",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT K9K 1.5TDCi",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 60.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3564   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3564   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3566",
+  "codigo_fab": "3566",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD FOCUS 2.0TDi (P.28)",
+  "medidas": {
+   "diam_ext": 28.0,
+   "largo": 66.1
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3566   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3566   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3570",
+  "codigo_fab": "3570",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT DUCATO 2.5D (32x68)",
+  "medidas": {
+   "diam_ext": 31.99,
+   "largo": 68.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3570   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3570   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3572",
+  "codigo_fab": "3572",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT DUCATO 2.8D (32x72)",
+  "medidas": {
+   "diam_ext": 31.99,
+   "largo": 72.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3572   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3572   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3573",
+  "codigo_fab": "3573",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT DUCATO 2.8TD (32x78)",
+  "medidas": {
+   "diam_ext": 31.99,
+   "largo": 78.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3573   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3573   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3575",
+  "codigo_fab": "3575",
+  "marca": "PESCARA",
+  "aplicacion": "MAXION",
+  "descripcion": "MAXION HS2.8T",
+  "medidas": {
+   "diam_ext": 32.0,
+   "largo": 73.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3575   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3575   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3576",
+  "codigo_fab": "3576",
+  "marca": "PESCARA",
+  "aplicacion": "MAXION",
+  "descripcion": "MAXION NGD3.0",
+  "medidas": {
+   "diam_ext": 32.0,
+   "largo": 76.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3576   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3576   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3580",
+  "codigo_fab": "3580",
+  "marca": "PESCARA",
+  "aplicacion": "CUMMINS",
+  "descripcion": "CUMMINS 4BTE-6BTE (40x90)",
+  "medidas": {
+   "diam_ext": 40.0,
+   "largo": 90.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3580   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3580   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3581",
+  "codigo_fab": "3581",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ OM904LA-906LA-924LA-926LA P.42",
+  "medidas": {
+   "diam_ext": 42.0,
+   "largo": 80.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3581   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3581   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3583",
+  "codigo_fab": "3583",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ OM457LA",
+  "medidas": {
+   "diam_ext": 52.0,
+   "largo": 102.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3583   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3583   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3585",
+  "codigo_fab": "3585",
+  "marca": "PESCARA",
+  "aplicacion": "MWM",
+  "descripcion": "MWM 4.12TCE-6.12TCE",
+  "medidas": {
+   "diam_ext": 38.0,
+   "largo": 88.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3585   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3585   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3592",
+  "codigo_fab": "3592",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "IVECO EUROTRACKER 380-EUROTECH",
+  "medidas": {
+   "diam_ext": 50.0,
+   "largo": 115.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3592   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3592   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3593",
+  "codigo_fab": "3593",
+  "marca": "PESCARA",
+  "aplicacion": "MERCEDES BENZ",
+  "descripcion": "M.BENZ OM611-OM612",
+  "medidas": {
+   "diam_ext": 30.0,
+   "largo": 70.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3593   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3593   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3595",
+  "codigo_fab": "3595",
+  "marca": "PESCARA",
+  "aplicacion": "MITSUBISHI / HYUNDAI / TOYOTA",
+  "descripcion": "MITSUBISHI 4D55-4D56-4D56T/TOYOTA 3L",
+  "medidas": {
+   "diam_ext": 29.0,
+   "largo": 75.1
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3595   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3595   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3596",
+  "codigo_fab": "3596",
+  "marca": "PESCARA",
+  "aplicacion": "MAZDA / KIA",
+  "descripcion": "MAZDA R2-RF/KIA BESTA 2200",
+  "medidas": {
+   "diam_ext": 25.0,
+   "largo": 68.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3596   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3600",
+  "codigo_fab": "3600",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT",
+  "descripcion": "PEUGEOT DV6TED 1.6 16V",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 61.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3600   +1",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE3600   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3601",
+  "codigo_fab": "3601",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN",
+  "descripcion": "VW GOLF 1.9SDi (24x58,50)",
+  "medidas": {
+   "diam_ext": 24.0,
+   "largo": 58.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3601   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3601   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3603",
+  "codigo_fab": "3603",
+  "marca": "PESCARA",
+  "aplicacion": "TOYOTA",
+  "descripcion": "TOYOTA 3L-5L",
+  "medidas": {
+   "diam_ext": 29.0,
+   "largo": 74.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3603   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3603   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3605",
+  "codigo_fab": "3605",
+  "marca": "PESCARA",
+  "aplicacion": "TOYOTA",
+  "descripcion": "TOYOTA 1KZ-1KD",
+  "medidas": {
+   "diam_ext": 34.0,
+   "largo": 73.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3605   +1",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE3605   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3605   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3607",
+  "codigo_fab": "3607",
+  "marca": "PESCARA",
+  "aplicacion": "TOYOTA",
+  "descripcion": "TOYOTA 1HZ",
+  "medidas": {
+   "diam_ext": 29.0,
+   "largo": 65.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3607   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3607   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3609",
+  "codigo_fab": "3609",
+  "marca": "PESCARA",
+  "aplicacion": "ISUZU",
+  "descripcion": "ISUZU C190-C223-C240",
+  "medidas": {
+   "diam_ext": 27.0,
+   "largo": 68.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3609   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3609   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3611",
+  "codigo_fab": "3611",
+  "marca": "PESCARA",
+  "aplicacion": "ISUZU",
+  "descripcion": "ISUZU 4JA1",
+  "medidas": {
+   "diam_ext": 31.0,
+   "largo": 76.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3611   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3613",
+  "codigo_fab": "3613",
+  "marca": "PESCARA",
+  "aplicacion": "ISUZU",
+  "descripcion": "ISUZU 4JB1T-4JG2T",
+  "medidas": {
+   "diam_ext": 34.0,
+   "largo": 78.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3613   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3613   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3615",
+  "codigo_fab": "3615",
+  "marca": "PESCARA",
+  "aplicacion": "KIA",
+  "descripcion": "KIA PREGIO 2700/K2700/J2-MITSUBISHI S4S",
+  "medidas": {
+   "diam_ext": 30.0,
+   "largo": 76.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3615   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3615   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3617",
+  "codigo_fab": "3617",
+  "marca": "PESCARA",
+  "aplicacion": "MITSUBISHI",
+  "descripcion": "MITSUBISHI 4M40 30x78",
+  "medidas": {
+   "diam_ext": 30.0,
+   "largo": 78.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3617   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3617   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3619",
+  "codigo_fab": "3619",
+  "marca": "PESCARA",
+  "aplicacion": "SSANGYONG",
+  "descripcion": "SSANGYOUNG MUSSO 5 CIL./M.B. OM602 26x62",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 66.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3619   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3621",
+  "codigo_fab": "3621",
+  "marca": "PESCARA",
+  "aplicacion": "MITSUBISHI",
+  "descripcion": "MITSUBISHI 4D56-4D56T HPE TDi (32x75)",
+  "medidas": {
+   "diam_ext": 32.0,
+   "largo": 75.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3621   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3621   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3623",
+  "codigo_fab": "3623",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN",
+  "descripcion": "VW GOLF 1.9TDi (24x59)",
+  "medidas": {
+   "diam_ext": 24.0,
+   "largo": 59.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3623   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3623   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3625",
+  "codigo_fab": "3625",
+  "marca": "PESCARA",
+  "aplicacion": "SCANIA",
+  "descripcion": "SCANIA DSC12 SERIE 4",
+  "medidas": {
+   "diam_ext": 54.0,
+   "largo": 106.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3625   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3627",
+  "codigo_fab": "3627",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT G9U 2.5TDCi 16V",
+  "medidas": {
+   "diam_ext": 31.0,
+   "largo": 65.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3627   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3627   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3629",
+  "codigo_fab": "3629",
+  "marca": "PESCARA",
+  "aplicacion": "CUMMINS",
+  "descripcion": "CUMMINS QSB (34,5x79)",
+  "medidas": {
+   "diam_ext": 34.5,
+   "largo": 78.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3629   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3630",
+  "codigo_fab": "3630",
+  "marca": "PESCARA",
+  "aplicacion": "DEUTZ",
+  "descripcion": "DEUTZ 3.6 TIER 4 (34x79)",
+  "medidas": {
+   "diam_ext": 34.0,
+   "largo": 79.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3630   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3631",
+  "codigo_fab": "3631",
+  "marca": "PESCARA",
+  "aplicacion": "HYUNDAI",
+  "descripcion": "HYUNDAI HR (29x75)",
+  "medidas": {
+   "diam_ext": 29.0,
+   "largo": 75.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3631   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3633",
+  "codigo_fab": "3633",
+  "marca": "PESCARA",
+  "aplicacion": "PERKINS",
+  "descripcion": "PERKINS 1004-40/1006-60 39,7 mm",
+  "medidas": {
+   "diam_ext": 39.7,
+   "largo": 78.1
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3633   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3633   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3634",
+  "codigo_fab": "3634",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN",
+  "descripcion": "VW AMAROK 2.0 TDi (26x66)",
+  "medidas": {
+   "diam_ext": 26.0,
+   "largo": 66.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3634   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3636",
+  "codigo_fab": "3636",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT DUCATO 2.3JTD 16V F1A",
+  "medidas": {
+   "diam_ext": 30.99,
+   "largo": 67.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3636   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3636   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3638",
+  "codigo_fab": "3638",
+  "marca": "PESCARA",
+  "aplicacion": "JOHN DEERE",
+  "descripcion": "J.DEERE 4045D-6068D (35x71)",
+  "medidas": {
+   "diam_ext": 34.92,
+   "largo": 71.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3638   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3638   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3640",
+  "codigo_fab": "3640",
+  "marca": "PESCARA",
+  "aplicacion": "JOHN DEERE",
+  "descripcion": "J.DEERE 320T (41,2x71)",
+  "medidas": {
+   "diam_ext": 41.27,
+   "largo": 71.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3640   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3642",
+  "codigo_fab": "3642",
+  "marca": "PESCARA",
+  "aplicacion": "DEUTZ",
+  "descripcion": "DEUTZ TD2.9 (30x68)",
+  "medidas": {
+   "diam_ext": 30.0,
+   "largo": 68.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3642   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3643",
+  "codigo_fab": "3643",
+  "marca": "PESCARA",
+  "aplicacion": "JOHN DEERE",
+  "descripcion": "J.DEERE 2140-5700-6300-4039 (41,2x84)",
+  "medidas": {
+   "diam_ext": 41.27,
+   "largo": 84.4
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3643   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3646",
+  "codigo_fab": "3646",
+  "marca": "PESCARA",
+  "aplicacion": "DEUTZ",
+  "descripcion": "DEUTZ 1013",
+  "medidas": {
+   "diam_ext": 42.0,
+   "largo": 86.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3646   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3646   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3648",
+  "codigo_fab": "3648",
+  "marca": "PESCARA",
+  "aplicacion": "SCANIA",
+  "descripcion": "SCANIA DSC9 P93-P94",
+  "medidas": {
+   "diam_ext": 50.0,
+   "largo": 92.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3648   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3648   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3651",
+  "codigo_fab": "3651",
+  "marca": "PESCARA",
+  "aplicacion": "FORD / NEW HOLLAND",
+  "descripcion": "FORD CARGO 4610-5600-6600/N.H.TS120 38mm",
+  "medidas": {
+   "diam_ext": 38.1,
+   "largo": 89.3
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3651   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3651   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3652",
+  "codigo_fab": "3652",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "IVECO CURSOR NEF TC (38x82)",
+  "medidas": {
+   "diam_ext": 38.0,
+   "largo": 82.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3652   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3652   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3653",
+  "codigo_fab": "3653",
+  "marca": "PESCARA",
+  "aplicacion": "NEW HOLLAND",
+  "descripcion": "NEW HOLLAND TM140 42 mm",
+  "medidas": {
+   "diam_ext": 42.0,
+   "largo": 97.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3653   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE3654",
+  "codigo_fab": "3654",
+  "marca": "PESCARA",
+  "aplicacion": "FORD / NEW HOLLAND",
+  "descripcion": "NEW HOLLAND TM150-TM180-8030 41,27 mm",
+  "medidas": {
+   "diam_ext": 41.27,
+   "largo": 94.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 7
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE3654   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE3654   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE4160",
+  "codigo_fab": "4160",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD A",
+  "medidas": {
+   "diam_ext": 25.4,
+   "largo": 80.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE4160   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE4160   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE4160   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE4245",
+  "codigo_fab": "4245",
+  "marca": "PESCARA",
+  "aplicacion": "JEEP",
+  "descripcion": "WILLYS",
+  "medidas": {
+   "diam_ext": 20.65,
+   "largo": 71.7
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE4245   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE4245   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE4245   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5240",
+  "codigo_fab": "5240",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET",
+  "descripcion": "CHEVROLET 230-250/OPEL K180",
+  "medidas": {
+   "diam_ext": 23.55,
+   "largo": 76.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "3SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5240   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5240   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5240   3SM",
+    "medida": "3SM"
+   },
+   {
+    "codigo": "PEPE5240   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5250",
+  "codigo_fab": "5250",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET",
+  "descripcion": "CHEVROLET 400*41/55",
+  "medidas": {
+   "diam_ext": 21.97,
+   "largo": 78.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "020",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5250   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5250   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5250   020",
+    "medida": "020"
+   },
+   {
+    "codigo": "PEPE5250   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5251",
+  "codigo_fab": "5251",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET",
+  "descripcion": "CHEVROLET APACHE",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 82.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5251   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5251   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5251   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5260",
+  "codigo_fab": "5260",
+  "marca": "PESCARA",
+  "aplicacion": "DODGE",
+  "descripcion": "DODGE D100*D400",
+  "medidas": {
+   "diam_ext": 21.82,
+   "largo": 73.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5260   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5260   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5260   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5270",
+  "codigo_fab": "5270",
+  "marca": "PESCARA",
+  "aplicacion": "CITROEN",
+  "descripcion": "CITROEN 2 CV",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 55.6
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5270   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5270   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5271",
+  "codigo_fab": "5271",
+  "marca": "PESCARA",
+  "aplicacion": "CITROEN",
+  "descripcion": "CITROEN 3 CV",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 63.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5271   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5271   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5271   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5280",
+  "codigo_fab": "5280",
+  "marca": "PESCARA",
+  "aplicacion": "DITELLA",
+  "descripcion": "DI TELLA 1500",
+  "medidas": {
+   "diam_ext": 17.45,
+   "largo": 65.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5280   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5280   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5280   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5284",
+  "codigo_fab": "5284",
+  "marca": "PESCARA",
+  "aplicacion": "DODGE",
+  "descripcion": "DODGE 1500-1800",
+  "medidas": {
+   "diam_ext": 23.81,
+   "largo": 74.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5284   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5284   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5284   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5285",
+  "codigo_fab": "5285",
+  "marca": "PESCARA",
+  "aplicacion": "DODGE",
+  "descripcion": "DODGE GTX V8",
+  "medidas": {
+   "diam_ext": 25.0,
+   "largo": 76.2
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5285   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5285   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5285   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5290",
+  "codigo_fab": "5290",
+  "marca": "PESCARA",
+  "aplicacion": "DKW",
+  "descripcion": "AUTO UNION-DKW",
+  "medidas": {
+   "diam_ext": 18.0,
+   "largo": 63.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5290   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5290   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5290   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5310",
+  "codigo_fab": "5310",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / SEAT",
+  "descripcion": "FIAT 750",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 51.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5310   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5310   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5310   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5311",
+  "codigo_fab": "5311",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT 1100",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 56.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5311   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5311   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5311   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5312",
+  "codigo_fab": "5312",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / SEAT",
+  "descripcion": "FIAT 1500-1600",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 65.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5312   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5312   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5312   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5313",
+  "codigo_fab": "5313",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / LANCIA",
+  "descripcion": "FIAT 128 1300-1500-REGATTA 100-2000",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 69.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5313   +1",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE5313   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5313   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5313   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5315",
+  "codigo_fab": "5315",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / LANCIA / LADA / SEAT",
+  "descripcion": "FIAT 125-128 1100 CC",
+  "medidas": {
+   "diam_ext": 21.97,
+   "largo": 71.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "3SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5315   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5315   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5315   3SM",
+    "medida": "3SM"
+   },
+   {
+    "codigo": "PEPE5315   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5316",
+  "codigo_fab": "5316",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / SEAT",
+  "descripcion": "FIAT 133",
+  "medidas": {
+   "diam_ext": 19.98,
+   "largo": 54.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5316   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5316   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5316   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5319",
+  "codigo_fab": "5319",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD F100 V8",
+  "medidas": {
+   "diam_ext": 23.17,
+   "largo": 77.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5319   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5319   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5319   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5320",
+  "codigo_fab": "5320",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD FALCON 170-188-221",
+  "medidas": {
+   "diam_ext": 23.17,
+   "largo": 76.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "3SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5320   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5320   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5320   3SM",
+    "medida": "3SM"
+   },
+   {
+    "codigo": "PEPE5320   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5330",
+  "codigo_fab": "5330",
+  "marca": "PESCARA",
+  "aplicacion": "IKA",
+  "descripcion": "IKA CONTINENTAL 4 Y 6 CIL.",
+  "medidas": {
+   "diam_ext": 21.83,
+   "largo": 71.3
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5330   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5330   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5330   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5331",
+  "codigo_fab": "5331",
+  "marca": "PESCARA",
+  "aplicacion": "IKA",
+  "descripcion": "IKA TORNADO 4B",
+  "medidas": {
+   "diam_ext": 21.83,
+   "largo": 71.9
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5331   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5331   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5331   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5332",
+  "codigo_fab": "5332",
+  "marca": "PESCARA",
+  "aplicacion": "IKA",
+  "descripcion": "IKA TORINO 7B",
+  "medidas": {
+   "diam_ext": 25.0,
+   "largo": 72.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5332   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5332   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5332   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5385",
+  "codigo_fab": "5385",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT",
+  "descripcion": "PEUGEOT 403*",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 67.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5385   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5385   010",
+    "medida": "010"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5386",
+  "codigo_fab": "5386",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT",
+  "descripcion": "PEUGEOT 404 P.22 mm",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 70.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5386   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5386   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5386   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5388",
+  "codigo_fab": "5388",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT / CHEVROLET / FIAT / CHEVETTE",
+  "descripcion": "PEUGEOT 404/504 P.23 mm/CHEVETTE 1.4-1.6",
+  "medidas": {
+   "diam_ext": 23.0,
+   "largo": 70.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5388   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5388   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5388   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5389",
+  "codigo_fab": "5389",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT / CITROEN / FIAT",
+  "descripcion": "PEUGEOT 504-505 2000 CC",
+  "medidas": {
+   "diam_ext": 23.0,
+   "largo": 74.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5389   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5389   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5389   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5398",
+  "codigo_fab": "5398",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT GORDINI-4L",
+  "medidas": {
+   "diam_ext": 14.0,
+   "largo": 50.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5398   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5398   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5398   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5400",
+  "codigo_fab": "5400",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT 4S 1000 CC",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 55.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "3SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5400   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5400   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5400   3SM",
+    "medida": "3SM"
+   },
+   {
+    "codigo": "PEPE5400   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5401",
+  "codigo_fab": "5401",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT 6 1100 CC",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 58.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "3SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5401   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5401   3SM",
+    "medida": "3SM"
+   },
+   {
+    "codigo": "PEPE5401   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5402",
+  "codigo_fab": "5402",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT / FORD / DACIA",
+  "descripcion": "RENAULT 12 1.3",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "3SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5402   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5402   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5402   3SM",
+    "medida": "3SM"
+   },
+   {
+    "codigo": "PEPE5402   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5403",
+  "codigo_fab": "5403",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT 12 1.4",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 65.6
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "3SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5403   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5403   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5403   3SM",
+    "medida": "3SM"
+   },
+   {
+    "codigo": "PEPE5403   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5404",
+  "codigo_fab": "5404",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT / FIAT / DACIA",
+  "descripcion": "RENAULT 9-11-12-19 1.6-18 1.4 Jrs",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 64.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "3SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5404   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5404   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5404   3SM",
+    "medida": "3SM"
+   },
+   {
+    "codigo": "PEPE5404   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5405",
+  "codigo_fab": "5405",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT 18 2.0",
+  "medidas": {
+   "diam_ext": 23.0,
+   "largo": 75.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5405   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5405   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5428",
+  "codigo_fab": "5428",
+  "marca": "PESCARA",
+  "aplicacion": "DODGE",
+  "descripcion": "VALIANT B/C Y A/C",
+  "medidas": {
+   "diam_ext": 22.88,
+   "largo": 75.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "3SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5428   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5428   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5428   3SM",
+    "medida": "3SM"
+   },
+   {
+    "codigo": "PEPE5428   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5450",
+  "codigo_fab": "5450",
+  "marca": "PESCARA",
+  "aplicacion": "VILLA MOTORES / BRIGGS STRATTON",
+  "descripcion": "VILLA  2.1/2 HP",
+  "medidas": {
+   "diam_ext": 12.44,
+   "largo": 48.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5450   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5451",
+  "codigo_fab": "5451",
+  "marca": "PESCARA",
+  "aplicacion": "VILLA MOTORES",
+  "descripcion": "VILLA 3 HP / 4.1/2 HP",
+  "medidas": {
+   "diam_ext": 17.44,
+   "largo": 58.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5451   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5451   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5451   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5452",
+  "codigo_fab": "5452",
+  "marca": "PESCARA",
+  "aplicacion": "VILLA MOTORES",
+  "descripcion": "VILLA 8 HP-16 HP",
+  "medidas": {
+   "diam_ext": 19.0,
+   "largo": 72.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5452   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5452   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5452   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5454",
+  "codigo_fab": "5454",
+  "marca": "PESCARA",
+  "aplicacion": "DAIHATSU",
+  "descripcion": "DAIHATSU CUORE 2 CIL.-CHARADE 3 CIL.",
+  "medidas": {
+   "diam_ext": 18.0,
+   "largo": 60.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "3SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5454   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5454   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5454   3SM",
+    "medida": "3SM"
+   },
+   {
+    "codigo": "PEPE5454   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5456",
+  "codigo_fab": "5456",
+  "marca": "PESCARA",
+  "aplicacion": "DATSUN",
+  "descripcion": "NISSAN L18-L24-L28 (21x72)",
+  "medidas": {
+   "diam_ext": 21.0,
+   "largo": 72.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5456   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5457",
+  "codigo_fab": "5457",
+  "marca": "PESCARA",
+  "aplicacion": "DATSUN",
+  "descripcion": "NISSAN A12",
+  "medidas": {
+   "diam_ext": 17.5,
+   "largo": 65.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5457   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5457   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5458",
+  "codigo_fab": "5458",
+  "marca": "PESCARA",
+  "aplicacion": "DATSUN",
+  "descripcion": "DATSUN 1800 CC",
+  "medidas": {
+   "diam_ext": 21.0,
+   "largo": 67.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5458   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5460",
+  "codigo_fab": "5460",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD SIERRA 1.6",
+  "medidas": {
+   "diam_ext": 24.0,
+   "largo": 68.8
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5460   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5460   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5461",
+  "codigo_fab": "5461",
+  "marca": "PESCARA",
+  "aplicacion": "TOYOTA",
+  "descripcion": "TOYOTA 2T-3T CELICA 1.6",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 66.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5461   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5462",
+  "codigo_fab": "5462",
+  "marca": "PESCARA",
+  "aplicacion": "TOYOTA",
+  "descripcion": "TOYOTA 18R HI-LUX 2.0",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 75.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5462   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5462   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5462   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5464",
+  "codigo_fab": "5464",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN",
+  "descripcion": "VW GACEL 1.6",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 63.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5464   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5464   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5465",
+  "codigo_fab": "5465",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN",
+  "descripcion": "VW KOMBI 1.6",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 72.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5465   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5465   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5466",
+  "codigo_fab": "5466",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN / AUDI",
+  "descripcion": "VW GACEL 1.6",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 55.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5466   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5466   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5467",
+  "codigo_fab": "5467",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT TIPO 1.4",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 58.2
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5467   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5467   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5468",
+  "codigo_fab": "5468",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT / LANCIA",
+  "descripcion": "FIAT TIPO 1.6",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 63.2
+  },
+  "extra": {
+   "sobremedidas": [
+    "003",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5468   003",
+    "medida": "003"
+   },
+   {
+    "codigo": "PEPE5468   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5472",
+  "codigo_fab": "5472",
+  "marca": "PESCARA",
+  "aplicacion": "FORD / VOLKSWAGEN",
+  "descripcion": "VW AUDI 1.6",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 54.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "1/2",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5472   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5472   1/2",
+    "medida": "1/2"
+   },
+   {
+    "codigo": "PEPE5472   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5473",
+  "codigo_fab": "5473",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN / FORD / SEAT / AUDI",
+  "descripcion": "VW AUDI 1.8-2.0",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 57.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "005",
+    "1/2",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5473   +1",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE5473   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5473   1/2",
+    "medida": "1/2"
+   },
+   {
+    "codigo": "PEPE5473   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5474",
+  "codigo_fab": "5474",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT 19 1700 CC",
+  "medidas": {
+   "diam_ext": 21.0,
+   "largo": 65.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5474   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5475",
+  "codigo_fab": "5475",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT / PEUGEOT / CITROEN",
+  "descripcion": "RENAULT 21 2.2-21 2.2i",
+  "medidas": {
+   "diam_ext": 23.0,
+   "largo": 75.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5475   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5480",
+  "codigo_fab": "5480",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT / CITROEN",
+  "descripcion": "PEUGEOT 405 SRi XU10J2-XU7JP",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5480   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5482",
+  "codigo_fab": "5482",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET",
+  "descripcion": "CHEVROLET MONZA 2.0i",
+  "medidas": {
+   "diam_ext": 21.0,
+   "largo": 61.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5482   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5483",
+  "codigo_fab": "5483",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET",
+  "descripcion": "CHEVROLET CORSA 1.6",
+  "medidas": {
+   "diam_ext": 18.0,
+   "largo": 55.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5483   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5483   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5486",
+  "codigo_fab": "5486",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT PALIO 1.6 16V",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 56.1
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5486   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5486   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5488",
+  "codigo_fab": "5488",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD FIESTA 1.3-Ka 1.3 (DIAM. 20,63)",
+  "medidas": {
+   "diam_ext": 20.63,
+   "largo": 63.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5488   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5489",
+  "codigo_fab": "5489",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD FIESTA 1.3-Ka 1.3 (DIAM. 18,03)",
+  "medidas": {
+   "diam_ext": 18.03,
+   "largo": 64.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5489   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5492",
+  "codigo_fab": "5492",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT MEGANE 1.6 8V K7M",
+  "medidas": {
+   "diam_ext": 19.0,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5492   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5493",
+  "codigo_fab": "5493",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT MEGANE 2.0-LAGUNA 2.0",
+  "medidas": {
+   "diam_ext": 21.0,
+   "largo": 57.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5493   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5494",
+  "codigo_fab": "5494",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT CLIO 1.4",
+  "medidas": {
+   "diam_ext": 19.0,
+   "largo": 60.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5494   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5494   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5495",
+  "codigo_fab": "5495",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT TWINGO 1.239 CC",
+  "medidas": {
+   "diam_ext": 18.0,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5495   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5496",
+  "codigo_fab": "5496",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT TWINGO 1.100 CC",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5496   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5498",
+  "codigo_fab": "5498",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT / CITROEN",
+  "descripcion": "PEUGEOT 405 SRi 1.9N",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 66.2
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5498   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5498   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5507",
+  "codigo_fab": "5507",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN",
+  "descripcion": "VW GOL 1.0",
+  "medidas": {
+   "diam_ext": 17.0,
+   "largo": 45.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD",
+    "1SM"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5507   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5507   STD",
+    "medida": "STD"
+   },
+   {
+    "codigo": "PEPE5507  1SM",
+    "medida": "1SM"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5509",
+  "codigo_fab": "5509",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD ROCAM 1.6 8V",
+  "medidas": {
+   "diam_ext": 18.03,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "2SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5509   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5509   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5509   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5523",
+  "codigo_fab": "5523",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT",
+  "descripcion": "PEUGEOT TU5JP4 1.6 16V",
+  "medidas": {
+   "diam_ext": 19.49,
+   "largo": 57.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5523   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5529",
+  "codigo_fab": "5529",
+  "marca": "PESCARA",
+  "aplicacion": "KUBOTA",
+  "descripcion": "KUBOTA LF 100 (20x54)",
+  "medidas": {
+   "diam_ext": 20.0,
+   "largo": 53.9
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5529   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5534",
+  "codigo_fab": "5534",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT MEGANE 1.6 16V K4M",
+  "medidas": {
+   "diam_ext": 19.99,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "1SM",
+    "2SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5534   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5534   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5534   2SM",
+    "medida": "2SM"
+   },
+   {
+    "codigo": "PEPE5534   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5537",
+  "codigo_fab": "5537",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD 281 4.6L-330 5.4L V8",
+  "medidas": {
+   "diam_ext": 22.0,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5537   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5541",
+  "codigo_fab": "5541",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD 256 4.2L V6",
+  "medidas": {
+   "diam_ext": 23.0,
+   "largo": 64.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5541   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5545",
+  "codigo_fab": "5545",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD F100 4.9i",
+  "medidas": {
+   "diam_ext": 24.77,
+   "largo": 80.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5545   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5545   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5547",
+  "codigo_fab": "5547",
+  "marca": "PESCARA",
+  "aplicacion": "VOLKSWAGEN",
+  "descripcion": "VW FOX 1.6 EA111 (17x52)",
+  "medidas": {
+   "diam_ext": 17.0,
+   "largo": 52.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5547   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5549",
+  "codigo_fab": "5549",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET",
+  "descripcion": "CHEVROLET CORSA 1.0 8V",
+  "medidas": {
+   "diam_ext": 17.0,
+   "largo": 53.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5549   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5551",
+  "codigo_fab": "5551",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT FIRE 1.3 16V",
+  "medidas": {
+   "diam_ext": 17.97,
+   "largo": 49.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5551   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5553",
+  "codigo_fab": "5553",
+  "marca": "PESCARA",
+  "aplicacion": "GENERAL MOTORS",
+  "descripcion": "CHEVROLET CORSA 1.0",
+  "medidas": {
+   "diam_ext": 18.0,
+   "largo": 50.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5553   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5555",
+  "codigo_fab": "5555",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT FIRE 1.0",
+  "medidas": {
+   "diam_ext": 18.0,
+   "largo": 53.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5555   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5557",
+  "codigo_fab": "5557",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET",
+  "descripcion": "CHEVROLET MERIVA 1.8/FIAT PALIO 1.8",
+  "medidas": {
+   "diam_ext": 18.0,
+   "largo": 57.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5557   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5559",
+  "codigo_fab": "5559",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD Ka 1.0",
+  "medidas": {
+   "diam_ext": 18.03,
+   "largo": 59.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5559   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5561",
+  "codigo_fab": "5561",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT LOGAN 1.6 8V K7J",
+  "medidas": {
+   "diam_ext": 19.0,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5561   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5563",
+  "codigo_fab": "5563",
+  "marca": "PESCARA",
+  "aplicacion": "FIAT",
+  "descripcion": "FIAT PALIO 1.3MPi",
+  "medidas": {
+   "diam_ext": 21.99,
+   "largo": 55.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5563   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5565",
+  "codigo_fab": "5565",
+  "marca": "PESCARA",
+  "aplicacion": "CHRYSLER",
+  "descripcion": "CHRYSLER 150 2.5-242 4.0",
+  "medidas": {
+   "diam_ext": 23.65,
+   "largo": 68.5
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5565   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5569",
+  "codigo_fab": "5569",
+  "marca": "PESCARA",
+  "aplicacion": "CHRYSLER",
+  "descripcion": "CHRYSLER 150 2.5L-242 4.0L",
+  "medidas": {
+   "diam_ext": 23.65,
+   "largo": 81.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 6
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5569   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5570",
+  "codigo_fab": "5570",
+  "marca": "PESCARA",
+  "aplicacion": "PEUGEOT",
+  "descripcion": "PEUGEOT 205 1.4 TU3 (18x55)",
+  "medidas": {
+   "diam_ext": 17.97,
+   "largo": 55.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5570   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5571",
+  "codigo_fab": "5571",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD ROCAM 1.0 (18x44)",
+  "medidas": {
+   "diam_ext": 18.03,
+   "largo": 44.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5571   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5571   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5576",
+  "codigo_fab": "5576",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT TWINGO 1.1 D7F-1.2 D4F",
+  "medidas": {
+   "diam_ext": 17.5,
+   "largo": 54.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "1SM",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 4
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5576   1SM",
+    "medida": "1SM"
+   },
+   {
+    "codigo": "PEPE5576   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5577",
+  "codigo_fab": "5577",
+  "marca": "PESCARA",
+  "aplicacion": "RENAULT",
+  "descripcion": "RENAULT MEGANE 2.0 F3R-F3P 82,7 mm",
+  "medidas": {
+   "diam_ext": 20.99,
+   "largo": 57.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5577   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5577   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5578",
+  "codigo_fab": "5578",
+  "marca": "PESCARA",
+  "aplicacion": "FORD",
+  "descripcion": "FORD FOCUS 2.0 16V (DURATEC)",
+  "medidas": {
+   "diam_ext": 21.0,
+   "largo": 60.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "+1",
+    "010",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5578   +1",
+    "medida": "+1"
+   },
+   {
+    "codigo": "PEPE5578   010",
+    "medida": "010"
+   },
+   {
+    "codigo": "PEPE5578   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5582",
+  "codigo_fab": "5582",
+  "marca": "PESCARA",
+  "aplicacion": "CHEVROLET",
+  "descripcion": "CHEVROLET VECTRA 2.2i",
+  "medidas": {
+   "diam_ext": 20.32,
+   "largo": 67.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5582   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5582   STD",
+    "medida": "STD"
+   }
+  ]
+ },
+ {
+  "codigo": "PEPE5583",
+  "codigo_fab": "5583",
+  "marca": "PESCARA",
+  "aplicacion": "GENERAL MOTORS",
+  "descripcion": "CHEVROLET CADILLAC 4.6 V8",
+  "medidas": {
+   "diam_ext": 21.0,
+   "largo": 62.0
+  },
+  "extra": {
+   "sobremedidas": [
+    "005",
+    "STD"
+   ],
+   "catalogo": "Pescara 2018",
+   "pagina": 5
+  },
+  "codigos_crac": [
+   {
+    "codigo": "PEPE5583   005",
+    "medida": "005"
+   },
+   {
+    "codigo": "PEPE5583   STD",
+    "medida": "STD"
+   }
+  ]
+ }
+]

@@ -395,6 +395,45 @@ export const FAMILIAS = [
     ],
   },
   {
+    id: 'pernos',
+    label: 'Pernos de pistón',
+    // Dos medidas y nada más: a un perno se le mide el Ø exterior y el largo, y
+    // con eso queda identificado. Es la familia con menos filtros del buscador.
+    medidas: [
+      { campo: 'diam_ext', label: 'Ø exterior' },
+      { campo: 'largo', label: 'Largo' },
+    ],
+    textos: [
+      { campo: 'codigo', label: 'Código', ancho: 200, icono: 'tag' },
+      { campo: 'aplicacion', label: 'Marca', ancho: 220, icono: 'search' },
+      { campo: 'descripcion', label: 'Motor', ancho: 260, icono: 'search' },
+    ],
+    columnas: [
+      { key: 'codigo', header: 'Código', width: 130, strong: true },
+      { key: 'marca', header: 'Marca', width: 110 },
+      // El catálogo de Pescara publica la marca del motor y la llama "aplicación
+      // orientativa"; el modelo sale de la descripción de la lista del proveedor,
+      // que es más específica ("BEDFORD 350" contra "BEDFORD").
+      { key: 'aplicacion', header: 'Marca del motor', width: 150, wrap: true },
+      { key: 'descripcion', header: 'Motor / aplicación', wrap: true, minWidth: 200, tipo: 'aplicacion' },
+      { key: 'diam_ext', header: 'Ø ext.', width: 95, align: 'right', tipo: 'mm' },
+      { key: 'largo', header: 'Largo', width: 95, align: 'right', tipo: 'mm' },
+      // Las etiquetas y nada más: el catálogo no publica a cuántos milímetros
+      // equivale cada una, así que no hay un Ø por sobremedida que mostrar.
+      { key: 'sobremedidas', header: 'Sobremedidas', width: 170, wrap: true, tipo: 'etiquetas' },
+      // Un perno tiene un precio por sobremedida: esta columna dice de cuál es
+      // el que se está mostrando (igual que en camisas y subconjuntos).
+      { key: 'medida_crac', header: 'Precio de', width: 100, tipo: 'medida' },
+      { key: 'precio', header: 'Precio', width: 115, align: 'right', tipo: 'precio' },
+      { key: 'stock', header: 'Stock', width: 90, align: 'center', tipo: 'stock' },
+    ],
+    ejemplos: [
+      { label: 'Ø exterior 17 mm', filtros: { diam_ext: '17', tol_diam_ext: '0.1' } },
+      { label: 'Largo 91,10 mm', filtros: { largo: '91.1', tol_largo: '0.05' } },
+      { label: 'Motor: Bedford', filtros: { descripcion: 'bedford' } },
+    ],
+  },
+  {
     id: 'cojinetes_biela',
     label: 'Cojinetes de biela',
     // El Ø del muñón es el campo principal: es lo único que se puede medir con

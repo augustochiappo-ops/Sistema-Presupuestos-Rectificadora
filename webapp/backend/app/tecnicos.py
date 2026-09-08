@@ -147,6 +147,25 @@ ESPEC = {
         # de hecho la casilla ya no filtraba nada — las 89 fichas tienen las dos
         # cosas, código y precio.
     },
+    # El perno de pistón se busca por lo único que se le mide: el Ø exterior y el
+    # largo. Es la familia con menos campos del buscador, y alcanza — con esos dos
+    # números un perno queda identificado.
+    #
+    # Las SOBREMEDIDAS no entran como filtro, a diferencia de camisas y bujes.
+    # El catálogo de Pescara explica dos escalas —deslizante en la biela (+1/2",
+    # +1", 005") y fijo (1ra y 2da supermedida)— pero la lista del proveedor las
+    # etiqueta "003", "005", "010", "020", "1/2", "+1", "1SM", "2SM" y "3SM", y
+    # cuál es cuál no está escrito en ninguna de las dos fuentes. Filtrar por un Ø
+    # de sobremedida exigiría inventar la equivalencia; se muestran con su
+    # etiqueta y el filtro va por el Ø de la STD.
+    #
+    # Sin `filtro_proveedor`: es del grupo "sólo proveedor" (ver arriba), así que
+    # las 252 fichas tienen código y la casilla no filtraría nada.
+    "pernos": {
+        "label": "Pernos de pistón",
+        "medidas": ["diam_ext", "largo"],
+        "descripcion": True,
+    },
     # El cojinete de biela se busca por lo que se mide con el micrómetro sobre el
     # cigüeñal: el Ø del muñón. Los otros tres campos son para desempatar cuando
     # ese Ø da varios candidatos, que es lo normal (medio parque automotor usa

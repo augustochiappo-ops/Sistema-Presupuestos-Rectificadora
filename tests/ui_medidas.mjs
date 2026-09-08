@@ -61,7 +61,7 @@ await esperar(900)
 check('se entra a la pantalla', page.url().includes('busqueda-medidas'), page.url())
 
 console.log('\n=== Estado inicial ===')
-check('las once familias con su total',
+check('las doce familias con su total',
   (await page.locator('button', { hasText: /^Camisas\s*396$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Válvulas\s*1782$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Guías de válvulas\s*951$/ }).count()) === 1
@@ -69,6 +69,7 @@ check('las once familias con su total',
   && (await page.locator('button', { hasText: /^Subconjuntos\s*284$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Conjuntos\s*166$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Pistones\s*89$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Pernos de pistón\s*252$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes de biela\s*354$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes de bancada\s*345$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes axiales\s*120$/ }).count()) === 1
@@ -376,6 +377,49 @@ check('y las medidas que no se pudieron leer van con "?"',
   (await dudoso.locator('td', { hasText: /^\?$/ }).count()) >= 3,
   await dudoso.textContent())
 
+console.log('\n=== Pernos de pistón: la familia nueva, del catálogo Pescara ===')
+await page.fill('input[placeholder="Código…"]', '')
+await page.locator('button', { hasText: 'Pernos de pistón' }).click()
+await esperar(500)
+// Dos filtros y nada más: a un perno se le mide el Ø exterior y el largo.
+check('la pestaña ofrece sólo los dos filtros de medida',
+  await page.locator('label', { hasText: 'Ø EXTERIOR' }).count() === 1
+  && await page.locator('label', { hasText: 'LARGO' }).count() === 1
+  && await page.locator('label', { hasText: 'sobremedida' }).count() === 0)
+// Los pernos son del grupo "sólo proveedor", así que NO llevan la casilla: sus
+// 252 fichas tienen código y la casilla no filtraría nada.
+check('y no ofrece la casilla del proveedor',
+  await page.locator('text=Solo las que tiene el proveedor').count() === 0)
+await page.fill('input[placeholder="Código…"]', '3008')
+await esperar(1200)
+const filaPerno = await textoDeFila(0)
+check('se encuentra el perno del Bedford por su código de catálogo',
+  filaPerno.includes('PEPE3008'), filaPerno)
+check('con el Ø exterior y el largo', filaPerno.includes('34,92') && filaPerno.includes('91,1'), filaPerno)
+check('el motor sale de la descripción del proveedor', filaPerno.includes('BEDFORD 350'), filaPerno)
+// Las sobremedidas van con su etiqueta y sin Ø: el catálogo de Pescara no
+// publica a cuántos milímetros equivale cada una.
+check('las sobremedidas se listan con su etiqueta',
+  filaPerno.includes('005') && filaPerno.includes('010') && filaPerno.includes('STD'), filaPerno)
+check('y con precio de la base', /\$\s?[\d.]+/.test(filaPerno), filaPerno)
+await page.screenshot({ path: path.join(SHOT, 'medidas-pernos.png'), fullPage: true })
+
+// El largo desempata entre pernos del mismo Ø. Los dos filtros van con la
+// tolerancia por defecto de ±0,5 mm, que es la del buscador: por eso "Ø 17"
+// trae ocho pernos y no los tres que miden exactamente 17,00.
+await page.fill('input[placeholder="Código…"]', '')
+const campoDePerno = (label) => page.locator('label', { hasText: label }).locator('input').first()
+await campoDePerno('Ø exterior').fill('17')
+await esperar(1200)
+check('ocho pernos en Ø 17 ± 0,5 mm', await filas().count() === 8, await filas().count())
+await campoDePerno('Largo').fill('53.5')
+await esperar(1200)
+check('y el largo baja a dos', await filas().count() === 2, await filas().count())
+check('el primero es el del Corsa', (await textoDeFila(0)).includes('PEPE5549'), await textoDeFila(0))
+await campoDePerno('Ø exterior').fill('')
+await campoDePerno('Largo').fill('')
+await esperar(500)
+
 console.log('\n=== Guías: la forma, con su dibujo ===')
 // El código de forma del catálogo (F, A-1, P-3-6…) estaba en los datos pero no
 // se mostraba, y es lo primero que se mira para saber si una guía reemplaza a
@@ -589,7 +633,7 @@ console.log('\n=== Ninguna celda de la tabla queda cortada ===')
 // así que una columna más angosta que su contenido lo TAPA sin avisar: no hay
 // forma de darse cuenta mirando, salvo que falte el dato justo que se necesita.
 // Este check lo mide en el navegador —scrollWidth contra clientWidth, celda por
-// celda— en las once familias, para que un dato nuevo más largo que su columna
+// celda— en las doce familias, para que un dato nuevo más largo que su columna
 // se note acá y no en el taller. En bancada importa el doble: los muñones son
 // más grandes y los números, más largos.
 const cortadas = () => page.evaluate(() => {
@@ -613,6 +657,7 @@ for (const [pestana, ejemplo] of [
   ['Subconjuntos', null],
   ['Conjuntos', null],
   ['Pistones', null],
+  ['Pernos de pistón', null],
   ['Cojinetes de biela', 'Ø muñón 50 mm'],
   ['Cojinetes de bancada', 'Ø muñón 54 mm'],
   ['Cojinetes axiales', 'Espesor 2,5 mm'],

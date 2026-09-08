@@ -1828,7 +1828,244 @@ de `CARGA-CONJUNTOS.md`.
 descarga de `CARGA-COJINETES.md` —que agarraba el primero con `head -1`— pasó a
 elegir **por nombre** con `jq`. Con un solo asset funcionaba de casualidad.
 
+## Sesión 2026-09-08 (sexta) — La regla de qué se carga, Indy 2025 y la familia de pernos
+
+El dueño subió al Drive todos sus catálogos y pidió que se investigara la carpeta
+antes de tocar nada. De la investigación salió una pregunta que el proyecto nunca
+había contestado en voz alta, y contestarla ordenó el resto de la sesión.
+
+### Lo que había en el Drive
+
+`Chiappo Repuestos / Catalogos` —la única carpeta con ese nombre en todo el
+Drive— tiene **22 carpetas de marca** y 11 accesos directos `.url` a webs. Cuatro
+archivos ya estaban en el repo (se identificaron por tamaño exacto): el Coj.
+Clevite 2014, el "Clevite 2020-21" que en realidad es el tomo de Caterpillar y
+Cummins, el Mahle brasileño y el FM Cojinetes 09.
+
+Lo que **no** teníamos y sirve, por orden de valor:
+
+| Archivo | Qué es |
+|---|---|
+| `Federal Mogul/Motores Comerciales.pdf` | **Catálogo de Partes de Motor FP Diesel / FM 2013-2014, organizado POR MOTOR**: cada motor con su Ø y carrera, forma del pistón, altura de compresión, aros, perno, huelgo, posición respecto al block, y los números de parte de Pistón (P), Subconjunto (SC) y Conjunto (K), más juegos de cojinetes y junta superior |
+| `Persan/PERSAN_CatalogoCompleto_Enero-2026.pdf` | 51 MB, Edición 16, el catálogo gráfico completo de Pistones Persan |
+| `Pescara/Pescara 2018web.pdf` | Pernos de pistón, listado por Ø exterior |
+| `Susin Francescutti-abril-2024.pdf` | Cigüeñales y árboles de levas, indexado por fabricante de motor |
+| `KS/` (3 PDF) | Kolbenschmidt: pistones, cojinetes y aros 2021 |
+| `Mahle/Perfect Circle-Conj, Subc. Aros-2012web.pdf` | Conjuntos y subconjuntos de otra marca |
+| `Federal Mogul/FM - Nural 2017-2019` | La línea de pistones de FM |
+| Taranto, Sabó, VMG, SABI, Schadek, Akuro, Seeger Reno, Fallone | Juntas, retenes, bombas de agua y de aceite, aros — familias que el sistema no tiene |
+
+**El nombre de la carpeta no manda**, como avisó el dueño: Glyco y Nural están
+bajo Federal Mogul, Perfect Circle y Clevite bajo Mahle, Basso bajo "3B", Riken y
+NPR bajo "Akuro". Para cargar hay que ir por la marca que dice el catálogo
+adentro.
+
+**Lo que NO está en el Drive**: la lista de la Cámara (motores + mano de obra) y
+el Excel diario del proveedor. Esos siguen viniendo por otro lado.
+
+### La regla: dos grupos, no un criterio único
+
+El disparador fue el Excel *Indy — Últimas incorporaciones 2025*. Trae 49 fichas
+y el proveedor sólo trabaja 4 de ellas: con el criterio "sólo lo que trabaja el
+proveedor" la tanda entera se caía. Preguntando eso apareció que el repo venía
+cargando con **dos lógicas distintas sin que estuviera escrito**: las válvulas
+sólo con lo del proveedor (2026-09-04) y las otras diez con el catálogo entero,
+lo que dejaba 1.171 fichas sin renglón del proveedor y a nadie pudiendo decir si
+eso estaba bien.
+
+El dueño resolvió:
+
+| Grupo | Familias | Qué entra |
+|---|---|---|
+| **Catálogo completo** | camisas, guías, asientos, bujes de biela | Todo lo del catálogo del fabricante, lo trabaje o no el proveedor |
+| **Sólo proveedor** | válvulas, pistones, subconjuntos, conjuntos, los tres de cojinetes, pernos | Sólo la ficha con renglón en la lista |
+
+Rige **de acá en adelante**: los 92 subconjuntos sin proveedor que ya estaban
+cargados se dejan, porque salieron de la decisión del 2026-08-22 y sacarlos la
+revertiría. El razonamiento del corte está en `decisiones.md`.
+
+La consecuencia en el código fue **una sola**: `filtro_proveedor` —la casilla
+"Solo las que tiene el proveedor"— dejó de ser una decisión por familia y pasó a
+ser la marca del grupo. La llevan las cuatro del catálogo completo y nadie más.
+`pistones` la perdió sin que cambie ningún resultado (sus 89 fichas tienen todas
+código), y lo que se saca es un control que prometía filtrar y no filtraba.
+
+### Indy 2025: 36 guías, y los asientos ya estaban
+
+**Guías: 915 → 951.** De las 37 de la hoja, 36 eran nuevas; la única que el
+proveedor trabaja (G3666B) ya estaba cargada. Las 36 tienen las tres medidas.
+
+**Asientos: sin cambios.** Los 12 códigos distintos de la hoja ya estaban todos
+en el Catálogo Interactivo 2024. `asientos.json` quedó byte a byte igual.
+
+Tres cosas que costaron encontrarse, y las tres son de la misma familia —el mismo
+dato escrito de varias maneras—:
+
+1. **Un código repetido no se ve comparando strings.** La misma guía es "G3666B"
+   en la hoja del fabricante, "G IY3666B  003" en la lista del proveedor, y las
+   155 guías de Indy que ya estaban se guardaron con esa segunda forma,
+   **sobremedida incluida**. Comparar pelado daba que G3666B no estaba cargada
+   cuando sí lo estaba. Se compara por el código base, sin la medida del final.
+
+2. **Dedupear asientos adentro de una hoja borra fichas buenas.** El primer
+   intento descartaba códigos repetidos en todo el catálogo de Indy y los
+   asientos bajaron de 1.108 a **1.106**: el catálogo 2024 repite once códigos a
+   propósito, porque el mismo asiento en dos motores son dos fichas, igual que en
+   subconjuntos. El descarte va **sólo de la hoja nueva contra la vieja**.
+
+3. **La hoja de 2025 repite una pieza entre dos marcas.** El asiento del MAN D08
+   figura bajo MAN y bajo VOLKSWAGEN —el motor lo hace MAN y lo monta VW—, así
+   que sus catorce filas son doce piezas.
+
+**Por qué hay un script nuevo para las guías.** `guias.json` lo armó
+`convertir_tecnicos.js`, que en la misma corrida reescribe también `camisas.json`
+y `subconjuntos.json`. Pero `subconjuntos.json` hoy lo escribe
+`pistones_fm_desde_proveedor.py`, que le sumó las 83 fichas de Federal Mogul:
+correr el .js le habría pasado el trapo a esa tanda entera. Mientras siga así, la
+hoja nueva entra por `convertir_guias_indy_2025.py`, que **agrega** en vez de
+regenerar — 0 líneas borradas, 756 agregadas — y es idempotente.
+
+### Pernos de pistón: la familia número doce
+
+Del catálogo de Talleres Metalúrgicos Pescara ("CATALOGO WEB 07-2018", 28
+páginas, 481 KB, va en el repo). **252 fichas**, todas con Ø exterior, largo y
+código del proveedor, cubriendo 582 renglones de la lista de precios.
+
+Las cuentas: el catálogo tiene 332 códigos y el proveedor 305; **252 están en los
+dos**. Los 53 que el proveedor vende y el catálogo no tiene son posteriores a esa
+edición (series 3658-3680, 5595-5609, 7240-7473, 8001-8003 y 9998/9999) y el
+script los lista en cada corrida `--ver`, así se sabe qué pedirle a Pescara. Hay
+además 24 renglones de fabricación especial que traen el Ø y el largo **dentro
+del código** (`PEPE1190088STD`, `PEPE19X63  STD`): no son códigos de catálogo y
+quedan afuera.
+
+**Las sobremedidas se guardan con la etiqueta del proveedor, sin traducir a
+milímetros.** El catálogo explica dos escalas —deslizante en la biela (+1/2" =
+0,012 mm, +1" = 0,025 mm, 005" = 0,125 mm) y fijo (1ra = 0,010, 2da = 0,015)—
+pero la lista etiqueta "003", "005", "010", "020", "1/2", "+1", "1SM", "2SM" y
+"3SM", y **cuál es cuál no está escrito en ninguna de las dos fuentes**. Por eso
+el filtro va por el Ø de la STD y por el largo, y la columna de sobremedidas
+muestra las etiquetas. Adivinar la equivalencia habría puesto un Ø falso en una
+ficha de perno.
+
+**La segunda tabla del catálogo quedó a propósito para otra tanda.** Las páginas
+8 a 28 traen el modelo, el motor, la cantidad de cilindros, el Ø del cilindro y
+el "Gpo" (A o C) que dice qué sobremedidas acepta cada perno. Pero ahí las
+columnas salen del PDF **pegadas y sin separador**: `3028 38.10 93.50A4111.12830`
+es código 3028, Ø 38,10, largo 93,50, grupo A, 4 cilindros, Ø de cilindro 111,12
+y modelo 830. Partir eso con expresiones regulares es adivinar dónde termina un
+número; se hace leyendo las coordenadas x, como `convertir_cojinetes.py`. Cuando
+se haga hay un control gratis: los códigos y las medidas están en las dos tablas.
+Ya se cruzó a mano el `5549` —Ø 17,00 × 53,50 en las dos— y coincide.
+
+Todo está en `CRAC/tecnicos/CARGA-PERNOS.md`.
+
+### Un renderer nuevo, chico, y por qué no se reusó el de camisas
+
+La columna de sobremedidas de camisas y bujes pone la etiqueta **arriba de su Ø**,
+y espera objetos `{label, valor}`. Los pernos son etiquetas sueltas sin Ø, así que
+se agregó `tipo: 'etiquetas'` en `BusquedaMedidasScreen.jsx`: cuatro líneas que
+las listan separadas por " · ". Pasarle strings al renderer de camisas habría
+mostrado la columna vacía sin avisar.
+
+### El Excel que se corrompió en el camino, y por qué no se transcribió a mano
+
+En la primera parte de la sesión, antes de que el dueño subiera los archivos al
+repo, se intentó bajar el Excel de Indy del Drive: la herramienta lo devuelve en
+base64 y hay que re-emitirlo para escribirlo a disco. Los 20.288 bytes coincidían
+con el original, pero `unzip -t` encontró dos partes con CRC malo, entre ellas
+`sharedStrings.xml` —donde el Excel guarda **todos los textos y todas las
+medidas**—. Re-emitir 27 KB de base64 no es fiel al byte.
+
+`sheet1.xml` (la hoja GUIAS) sí decodificó bien, pero sus 251 celdas son punteros
+a la tabla de textos corrupta: no había nada que rescatar. **Se decidió no
+transcribir** las 49 filas × 5 medidas del texto que la herramienta había
+devuelto antes: un error de transcripción en un buscador por medidas no lo agarra
+ninguna suite, y la regla del proyecto es que un Ø equivocado es peor que un Ø
+que falta. Se le pidió el archivo al dueño, que lo subió por GitHub web. Llegó
+intacto y la carga salió derecho.
+
+**La regla que queda**: un binario que hay que traer al repo se pide, no se
+reconstruye desde la salida de una herramienta.
+
+### Verificado
+
+* **Las cuatro suites de backend** con los datos reales del repo: medidas **201**
+  verificaciones (incluido el bloque nuevo de pernos y los totales 951 y 252),
+  grupos 237, precios 73 y taller 73.
+* **Las tres suites de UI enteras**, porque es una tanda grande — catálogo nuevo
+  más familia nueva.
+* Los diez checks nuevos de la pestaña de pernos se probaron primero con un
+  script chico de veinte líneas en el scratchpad, como manda la regla 3, y ahí
+  aparecieron dos que estaban mal escritos: el largo se muestra "91,1" y no
+  "91,10" (el renderer de mm no pone el cero final), y la tolerancia por defecto
+  es ±0,5 mm, así que "Ø 17" trae ocho pernos y no los tres que miden 17,00
+  exactos. Probarlos aparte costó un minuto; descubrirlo en la suite habría
+  costado la corrida.
+* `npm run build` y `oxlint` limpios: 8 avisos, todos preexistentes y ninguno en
+  los archivos tocados.
+
+### Un check hardcodeado que se quedó viejo, otra vez
+
+El de "ninguna celda queda cortada" recorre las familias con una **lista escrita
+a mano** en `ui_medidas.mjs`, y el comentario de arriba decía "las once
+familias". Con la familia nueva la lista quedó corta y el check pasó igual,
+saltándose Pernos: la primera corrida fue de Pistones directo a Cojinetes de
+biela. Se agregó la entrada. **Es la segunda vez en dos sesiones que un check con
+una lista hardcodeada envejece solo** (la anterior fue el del subconjunto sin
+dibujo). Al agregar una familia hay que buscar esas listas: `grep -n "Bujes de
+biela" tests/ui_medidas.mjs` las encuentra todas, porque es la última de todas.
+
 ## Próximo paso
+
+**Persan: hasta 285 fichas de pistón y los dibujos que faltan (2026-09-08).** Es
+lo próximo de la tanda que empezó esta sesión, y estaba planificado con el dueño:
+el ítem 1 (Indy) y el 2 (Pescara) se hicieron, éste quedó a mitad. El PDF ya está
+en el release `catalogos` (`PERSAN_CatalogoCompleto_Enero-2026.pdf`, 51 MB,
+Edición 16).
+
+El número, medido: el proveedor trabaja **320 códigos base** de pistón Persan
+(`P PS…`) y hoy hay **35 fichas** cargadas. Faltan ~285, y **todas pasan la regla
+nueva** porque el proveedor las vende. Los pistones pasarían de 89 a ~374. El
+dueño eligió esta versión —fichas nuevas **y** dibujos— sobre la corta.
+
+Falta también corregir un renglón de esta memoria: la sesión quinta dice que los
+32 pistones Persan sin dibujo "nunca van a tener dibujo de ningún catálogo de los
+que hay". La fuente existe y es este PDF; el `.txt` del repo
+(`persan_pistones.txt`, 58 KB) es una foto vieja y parcial, sin imágenes.
+
+**Lo primero al bajarlo, antes de escribir una línea**: `pdftotext` o pypdf sobre
+una página de tabla. Drive no devolvió el texto de las páginas de tabla —sólo el
+de la portada—, así que **no está confirmado que tenga capa de texto**. Si sale
+vacío es un escaneo y hay que ir por OCR o recorte a mano: se corta ahí y se
+avisa.
+
+El circuito, si tiene texto, es el de siempre partido en dos, como Federal Mogul:
+un lector que deja la tabla (`scripts/leer_pistones_persan_pdf.py`, nuevo) y el
+converter que ya existe (`convertir_pistones_persan.py`) armando la ficha, así
+sigue habiendo **un solo** productor de `pistones.json`. Sus dos reglas se
+respetan tal cual: las sobremedidas salen de la lista del proveedor y no del
+catálogo, y los campos que salieron corridos de columna van a `extra.revisar`,
+que la pantalla muestra como "?".
+
+Los dibujos van con un script espejo de `dibujos_pistones_fm2010.py` y un
+**tercer** manifiesto (`dibujos-pistones-persan.js`), porque cada script reescribe
+el suyo entero en cada corrida. `pistones.jsx` importa dos hoy y tendría que
+importar tres. **Y al contar dibujos faltantes hay que mirar los tres manifiestos
+y las tres familias**, que es el error que ya se cometió una vez.
+
+**Lo que queda del Drive, para después de Persan.** La investigación de esta
+sesión dejó identificado todo (ver la sesión sexta, arriba). Por valor:
+
+| Qué | Para qué |
+|---|---|
+| `Motores Comerciales.pdf` (FP Diesel / FM 2013-14) | La asociación motor → pistón / subconjunto / conjunto / cojinetes / junta, **organizada por motor**. Es la más ambiciosa: toca el corazón del sistema. El dueño la dejó pendiente y pidió que primero se le explique bien en qué consiste y cómo se ejecutaría |
+| Segunda tabla del catálogo Pescara | Modelo, motor, cilindros, Ø de cilindro y el "Gpo" que destraba el Ø de las sobremedidas (ver `CARGA-PERNOS.md`) |
+| Susin Francescutti | Cigüeñales y árboles de levas: familias nuevas, y son el corazón del trabajo de una rectificadora |
+| KS Pistones / Cojinetes / Aros 2021, FM Nural, Perfect Circle | Marcas nuevas para familias que ya existen, y dibujos para los 76 que faltan |
+| Fadecya Aros 2019 (Excel), Mahle/KS/Goetze Aros | La familia de aros, con una fuente en Excel que es la más fácil de todas |
+| Taranto, Sabó | Juntas y retenes |
+| VMG, SABI, Schadek, Akuro | Bombas de agua y de aceite |
 
 **El mensaje de error del login no dice nada (2026-09-08).** Es lo único que
 quedó abierto de esta sesión, y salió de usarla: cuando el login falla, la
