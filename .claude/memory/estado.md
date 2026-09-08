@@ -1425,6 +1425,11 @@ códigos del proveedor que la traen pegada** (`S F 1015007STD`,
 distintas en vez de una con STD / 0.5. No afecta a las fichas de esta tanda
 —sus códigos sí traen el espacio— pero conviene arreglarlo.
 
+**Producción quedó en `a6947db`** (deploy HTTP 200, `git_pull` ok, y el dibujo
+`/pistones/FM39493.png` se sirve). **Las cuatro suites en verde**: backend de
+medidas (con once checks nuevos de Federal Mogul), backend de grupos, backend de
+precios, y las de UI de medidas (137 checks), grupos y precios.
+
 **También se mergeó a `master` una rama suelta.** La rama
 `claude/great-goodall-xmzo30`, que el entorno de la tarea había creado, tenía
 **10 commits que nunca habían llegado a `master`** (los cojinetes axiales, entre
