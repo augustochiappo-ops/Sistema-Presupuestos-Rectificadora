@@ -43,15 +43,30 @@ TOLERANCIA_DEFECTO = 0.5
 # uno se filtra con `<campo>` y `tol_<campo>`. El orden es el que usa la
 # pantalla para armar los filtros.
 #
+# QUÉ FICHAS SE CARGAN, Y POR ESO QUÉ FAMILIAS LLEVAN LA CASILLA.
+# Regla del dueño (2026-09-08). Las familias son de uno de dos grupos:
+#
+#   * CATÁLOGO COMPLETO — camisas, guías, asientos y bujes de biela. Entra todo
+#     lo que trae el catálogo del fabricante, lo trabaje o no el proveedor. Son
+#     las piezas que el taller necesita IDENTIFICAR por sus medidas aunque
+#     después las consiga por otro lado.
+#   * SÓLO PROVEEDOR — todas las demás: válvulas, pistones, subconjuntos,
+#     conjuntos, los tres de cojinetes y pernos. Sólo entra la ficha que tiene
+#     renglón en la lista del proveedor. Llenar la pantalla de fichas sin precio
+#     que no se pueden pedir no le sirve a nadie.
+#
+# La regla rige DE ACÁ EN ADELANTE. Los 92 subconjuntos sin código del proveedor
+# que ya estaban cargados se dejan: salieron de la decisión del 2026-08-22 —la
+# ficha del subconjunto se consulta por el dibujo, las medidas y el código de
+# aros aunque la pieza no se pueda pedir— y sacarlos sería revertirla. Lo que
+# cambia es que en la próxima tanda de subconjuntos no entran fichas nuevas sin
+# proveedor.
+#
 # `filtro_proveedor` es la casilla "Solo las que tiene el proveedor", tildada por
-# defecto: los catálogos técnicos son los del fabricante y siempre traen más
-# piezas de las que el proveedor vende, así que la búsqueda arranca mostrando lo
-# que se puede pedir hoy y la casilla abre el catálogo entero cuando hace falta
-# saber qué existe. Va en todas MENOS las dos familias que salen del catálogo de
-# Mahle —subconjuntos y conjuntos— (pedido del dueño, 2026-08-22): ahí el
-# catálogo se usa para leer la ficha del pistón —medidas, dibujo, código de
-# aros— aunque la pieza no se pueda pedir, así que esconder la mitad de las
-# fichas por defecto estorba.
+# defecto, y es la consecuencia directa de la regla: **la llevan las cuatro del
+# grupo "catálogo completo" y nadie más**. En una familia del grupo "sólo
+# proveedor" todas las fichas tienen código, así que la casilla no filtraría
+# nada — sería un control que promete algo y no hace nada.
 ESPEC = {
     "camisas": {
         "label": "Camisas",
@@ -128,7 +143,9 @@ ESPEC = {
         "label": "Pistones",
         "medidas": ["diam_piston", "alt_piston", "diam_perno"],
         "descripcion": True,
-        "filtro_proveedor": True,
+        # Sin `filtro_proveedor`: es del grupo "sólo proveedor" (ver arriba), y
+        # de hecho la casilla ya no filtraba nada — las 89 fichas tienen las dos
+        # cosas, código y precio.
     },
     # El cojinete de biela se busca por lo que se mide con el micrómetro sobre el
     # cigüeñal: el Ø del muñón. Los otros tres campos son para desempatar cuando

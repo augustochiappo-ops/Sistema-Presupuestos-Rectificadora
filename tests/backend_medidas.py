@@ -98,14 +98,13 @@ check("120 cojinetes axiales (Mahle + Federal Mogul + Glyco)",
       familias.get("cojinetes_axiales", {}).get("total") == 120,
       familias.get("cojinetes_axiales"))
 check("el catálogo del proveedor está importado", crac.get_info_catalogo()["total"] == 64250)
-# La casilla "Solo las que tiene el proveedor" va en todas menos las dos
-# familias de Mahle: los catálogos técnicos son los del fabricante y traen más
-# de lo que se puede pedir, pero la ficha de Mahle se consulta igual aunque la
-# pieza no se pueda pedir. En conjuntos la casilla además no filtraría nada:
-# las 128 fichas salen de la lista del proveedor.
-check("ofrecen el filtro del proveedor todas menos las que salen del proveedor",
+# La casilla "Solo las que tiene el proveedor" la llevan las CUATRO familias del
+# grupo "catálogo completo" y nadie más (regla del dueño, 2026-09-08; el detalle
+# está en la cabecera de ESPEC). En una familia del grupo "sólo proveedor" todas
+# las fichas tienen código, así que la casilla prometería un filtro que no filtra.
+check("la casilla del proveedor está sólo en las del catálogo completo",
       {k for k, v in familias.items() if v["filtro_proveedor"]}
-      == {"camisas", "guias", "asientos", "pistones", "bujes_biela"},
+      == {"camisas", "guias", "asientos", "bujes_biela"},
       {k: v.get("filtro_proveedor") for k, v in familias.items()})
 for id_familia in familias:
     con = tecnicos.buscar(id_familia, {"aplicacion": "a"})

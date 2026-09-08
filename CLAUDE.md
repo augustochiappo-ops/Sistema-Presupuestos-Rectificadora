@@ -231,6 +231,30 @@ suites se corren enteras igual, y el resultado se informa con el número exacto.
 - **Historial de clientes**: cada presupuesto queda vinculado a un cliente (nombre + motor + fecha).
 - **Generación de PDF**: presupuesto formal con nombre del cliente, motor, fecha y leyenda de validez de 1 semana.
 
+### Qué fichas entran al buscador por medidas (regla del dueño, 2026-09-08)
+
+Antes de cargar un catálogo hay que saber de qué grupo es la familia. Son dos, y
+el criterio no es el mismo:
+
+| Grupo | Familias | Qué entra |
+|---|---|---|
+| **Catálogo completo** | camisas, guías, asientos, bujes de biela | Todo lo que trae el catálogo del fabricante, **lo trabaje o no el proveedor** |
+| **Sólo proveedor** | válvulas, pistones, subconjuntos, conjuntos, cojinetes de biela / bancada / axiales, pernos | **Sólo** la ficha que tiene renglón en la lista del proveedor |
+
+El motivo de que la línea caiga ahí: las cuatro del primer grupo son las que el
+taller necesita **identificar** por sus medidas cuando no sabe el código, y eso
+sirve igual si después la pieza se consigue por otro lado. En las demás, una
+ficha sin código es una ficha que no se puede pedir.
+
+**Rige de acá en adelante.** Los 92 subconjuntos sin proveedor que ya estaban
+cargados se dejan (ver `decisiones.md`); lo que cambia es la próxima tanda.
+
+En el código la regla se ve en un solo lugar: `filtro_proveedor` —la casilla
+"Solo las que tiene el proveedor"— la llevan **las cuatro del catálogo completo y
+nadie más**. Está en `ESPEC`, en `webapp/backend/app/tecnicos.py`, con el detalle
+escrito ahí mismo; el frontend sólo la lee. Al agregar una familia nueva, decidir
+el grupo primero.
+
 ## Skills disponibles para el desarrollo
 
 Estas skills deben usarse **proactivamente** cuando la tarea corresponda a su especialidad. No esperar a que el usuario las pida.

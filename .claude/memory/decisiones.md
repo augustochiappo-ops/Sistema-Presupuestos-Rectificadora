@@ -1593,3 +1593,48 @@ familias (`subconjuntos`, `conjuntos` y `pistones`), no las dos de la tabla de
 
 **Fecha:** 2026-09-08
 
+
+## Qué fichas se cargan: dos grupos, no un criterio único (2026-09-08)
+
+**Contexto:** el buscador por medidas venía cargándose con dos lógicas distintas
+sin que estuviera escrito en ningún lado. Las válvulas se habían cargado sólo con
+lo que trabaja el proveedor (pedido del dueño, 2026-09-04); las otras diez
+familias, con el catálogo entero del fabricante, y por eso llevaban la casilla
+"Solo las que tiene el proveedor". El resultado era que había 1.171 fichas sin
+renglón del proveedor y nadie podía decir si eso estaba bien o mal.
+
+Lo que forzó la definición fue una tanda concreta. El Excel *Indy — Últimas
+incorporaciones 2025* trae 49 fichas nuevas (37 guías + 12 asientos) y el
+proveedor sólo tiene 4 de ellas, que además ya estaban cargadas desde el Catálogo
+Interactivo 2024. Con el criterio "sólo lo que trabaja el proveedor" la tanda
+entera se caía; el dueño preguntó por eso antes de que se cargara nada.
+
+**La decisión:** las familias son de uno de dos grupos.
+
+| Grupo | Familias | Qué entra |
+|---|---|---|
+| Catálogo completo | camisas, guías, asientos, bujes de biela | Todo lo del catálogo del fabricante, lo trabaje o no el proveedor |
+| Sólo proveedor | válvulas, pistones, subconjuntos, conjuntos, los tres de cojinetes, pernos | Sólo la ficha con renglón en la lista del proveedor |
+
+**El razonamiento del dueño**, que es lo que hace que la línea caiga ahí: las
+cuatro del primer grupo son las piezas que el taller necesita **identificar** por
+sus medidas cuando no sabe el código, y esa identificación sirve igual si después
+la pieza se consigue por otro lado. En las demás, una ficha sin precio y sin
+código es una ficha que no se puede pedir: llena la pantalla y no resuelve nada.
+
+**Rige de acá en adelante.** Los 92 subconjuntos sin código del proveedor que ya
+estaban cargados **se dejan**: salieron de la decisión del 2026-08-22 —la ficha
+del subconjunto se consulta por el dibujo, las medidas y el código de aros aunque
+la pieza no se pueda pedir— y sacarlos sería revertirla sin que nadie lo haya
+pedido. Lo que cambia es la próxima tanda.
+
+**La consecuencia en el código, que es una sola:** `filtro_proveedor` —la casilla
+"Solo las que tiene el proveedor"— dejó de ser una decisión por familia y pasó a
+ser la marca del grupo. La llevan las cuatro del catálogo completo y nadie más.
+`pistones` la perdió: sus 89 fichas tienen todas código del proveedor, así que la
+casilla ya no filtraba nada, y una casilla que promete un filtro y no filtra es
+peor que no tenerla. La casilla la sirve el backend (`ESPEC` en
+`webapp/backend/app/tecnicos.py`) y el frontend sólo la lee, así que el cambio es
+de un lado nomás.
+
+**Fecha:** 2026-09-08
