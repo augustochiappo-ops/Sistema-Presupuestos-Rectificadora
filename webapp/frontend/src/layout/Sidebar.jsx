@@ -1,9 +1,14 @@
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { NavItem } from '../components/NavItem'
 import { Icon } from '../components/Icon'
 import { useAuth } from '../context/AuthContext'
+import { api } from '../api/client'
 
-const ITEMS = [
+// El menú depende del rol. La oficina ve todo (y "Taller" al principio, porque
+// es donde mira cómo viene el trabajo del día); el taller ve solamente su panel.
+const ITEMS_OFICINA = [
+  { to: '/taller', label: 'Taller', icon: 'hard-hat' },
   { to: '/motores', label: 'Listado de Motores', icon: 'wrench' },
   { to: '/excel', label: 'Actualizar Excel', icon: 'folder' },
   { to: '/presupuestos', label: 'Presupuestos', icon: 'file-text' },
@@ -13,6 +18,10 @@ const ITEMS = [
   { to: '/busqueda-medidas', label: 'Búsqueda por medidas', icon: 'ruler' },
 ]
 
+const ITEMS_TALLER = [
+  { to: '/taller', label: 'Trabajos del taller', icon: 'hard-hat' },
+]
+
 function horaVencimiento(venceTs) {
   if (!venceTs) return 'Sesión activa'
   const hora = new Date(venceTs * 1000).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false })
@@ -20,7 +29,28 @@ function horaVencimiento(venceTs) {
 }
 
 export function Sidebar({ open = false, onClose }) {
-  const { user, logout, venceTs } = useAuth()
+  const { user, rol, esTaller, logout, venceTs } = useAuth()
+  const [conteo, setConteo] = React.useState(null)
+
+  // Cuántos trabajos hay en cada estado. La oficina lo usa para saber, sin
+  // entrar, que hay motores terminados esperando que se llame al cliente; el
+  // taller, para ver cuántos tiene para empezar.
+  React.useEffect(() => {
+    let vivo = true
+    const traer = () => api.get('/taller/resumen').then((d) => { if (vivo) setConteo(d) }).catch(() => {})
+    traer()
+    const t = setInterval(traer, 60000)
+    const alCambiar = () => traer()
+    window.addEventListener('trabajos-cambiaron', alCambiar)
+    return () => { vivo = false; clearInterval(t); window.removeEventListener('trabajos-cambiaron', alCambiar) }
+  }, [])
+
+  const items = esTaller ? ITEMS_TALLER : ITEMS_OFICINA
+  // La oficina cuenta lo terminado (hay que avisarle al cliente); el taller
+  // cuenta lo que tiene para empezar y lo que ya tiene en la máquina.
+  const pendiente = esTaller
+    ? (conteo?.aprobado || 0) + (conteo?.en_proceso || 0)
+    : (conteo?.terminado || 0)
 
   return (
     <aside className={`sidebar ${open ? 'open' : ''}`}>
@@ -44,10 +74,16 @@ export function Sidebar({ open = false, onClose }) {
       </div>
 
       <nav style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
-        {ITEMS.map((it) => (
+        {items.map((it) => (
           <NavLink key={it.to} to={it.to} style={{ textDecoration: 'none' }} onClick={onClose}>
             {({ isActive }) => (
-              <NavItem icon={<Icon n={it.icon} />} active={isActive}>{it.label}</NavItem>
+              <NavItem
+                icon={<Icon n={it.icon} />}
+                active={isActive}
+                badge={it.to === '/taller' && pendiente > 0 ? pendiente : null}
+              >
+                {it.label}
+              </NavItem>
             )}
           </NavLink>
         ))}
@@ -55,7 +91,12 @@ export function Sidebar({ open = false, onClose }) {
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 8px', borderTop: '1px solid var(--border-subtle)' }}>
         <div>
-          <div style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: 14, color: 'var(--text-strong)' }}>{user}</div>
+          <div style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: 14, color: 'var(--text-strong)' }}>
+            {user}
+            <span style={{ fontWeight: 500, fontSize: 12, color: 'var(--text-muted)' }}>
+              {rol ? ` · ${esTaller ? 'Taller' : 'Oficina'}` : ''}
+            </span>
+          </div>
           <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>{horaVencimiento(venceTs)}</div>
         </div>
         <button

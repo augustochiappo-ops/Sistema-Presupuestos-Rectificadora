@@ -42,7 +42,7 @@ cd "$RAIZ"
 fallaron=()
 inicio=$SECONDS
 
-for suite in backend_medidas backend_grupos backend_precios; do
+for suite in backend_medidas backend_grupos backend_precios backend_taller; do
   printf '\n\033[1m▶ %s\033[0m\n' "$suite"
   if "$VENV/bin/python" "tests/$suite.py" | tail -2; then
     :

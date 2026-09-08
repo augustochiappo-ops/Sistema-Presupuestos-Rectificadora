@@ -11,6 +11,14 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me")
 APP_USERNAME = os.environ.get("APP_USERNAME", "admin")
 APP_PASSWORD_HASH = os.environ.get("APP_PASSWORD_HASH")  # generado con werkzeug.security.generate_password_hash
 
+# Segunda cuenta: el taller. Entra al mismo sistema pero con otro rol, y el rol
+# decide a qué llega (ver el guard de create_app): el taller sólo alcanza
+# /api/auth y /api/taller, así que ningún precio le llega ni siquiera por la API.
+# Si TALLER_PASSWORD_HASH no está configurado, la cuenta simplemente no existe y
+# el sistema funciona igual que antes, con la sola cuenta de oficina.
+TALLER_USERNAME = os.environ.get("TALLER_USERNAME", "taller")
+TALLER_PASSWORD_HASH = os.environ.get("TALLER_PASSWORD_HASH")
+
 # Duración de la sesión: se cuenta desde el momento del login y no se renueva
 # con el uso, así cada jornada hay que volver a escribir la contraseña (y no se
 # olvida). Configurable con SESSION_HORAS por si hace falta cambiarla.

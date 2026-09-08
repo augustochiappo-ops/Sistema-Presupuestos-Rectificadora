@@ -12,6 +12,7 @@ import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { formatPrecioARS, formatFechaAR, estadoPresupuesto } from '../../utils/format'
 import { useUndo } from '../../context/UndoContext'
+import { estadoDe } from '../Taller/estados'
 
 const accionFila = {
   border: 'none', background: 'transparent', cursor: 'pointer',
@@ -212,6 +213,26 @@ export default function HistorialPresupuestos() {
             render: (_, row) => (row.aprobado_en
               ? <StatusBadge status="active">Aprobado</StatusBadge>
               : <StatusBadge status={estadoPresupuesto(row.fecha)} />),
+          },
+          // Un presupuesto aprobado es un trabajo, y el trabajo tiene su propio
+          // recorrido en el taller. Esta columna lo muestra sin tener que entrar.
+          {
+            key: 'taller', header: 'Taller', align: 'center', width: 130,
+            render: (_, row) => (row.aprobado_en
+              ? (
+                <span style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 12px',
+                  borderRadius: 'var(--radius-pill)', fontFamily: 'var(--font-body)',
+                  fontWeight: 'var(--weight-semibold)', fontSize: 'var(--text-xs)',
+                  whiteSpace: 'nowrap',
+                  background: estadoDe(row.estado_trabajo).bg,
+                  color: estadoDe(row.estado_trabajo).fg,
+                }}>
+                  {row.prioridad ? <Icon n="flame" s={12} /> : null}
+                  {estadoDe(row.estado_trabajo).corto}
+                </span>
+              )
+              : <span style={{ color: 'var(--text-faint)', fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)' }}>—</span>),
           },
           {
             key: 'acciones', header: '', align: 'center', width: 80,

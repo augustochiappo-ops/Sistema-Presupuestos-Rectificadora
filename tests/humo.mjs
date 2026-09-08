@@ -34,6 +34,7 @@ const { chromium } = await import(
 
 const BASE = process.env.BASE_URL || 'http://localhost:5173'
 const USUARIO = process.env.APP_USERNAME || 'admin'
+const USUARIO_TALLER = process.env.TALLER_USERNAME || 'taller'
 const CLAVE = process.env.APP_PASSWORD
 if (!CLAVE) {
   console.error(
@@ -77,6 +78,7 @@ for (const [ruta, nombre] of [
   ['/repuestos', 'Repuestos'],
   ['/busqueda-medidas', 'Búsqueda por medidas'],
   ['/excel', 'Actualizar Excel'],
+  ['/taller', 'Taller'],
 ]) {
   await page.goto(BASE + ruta, { waitUntil: 'networkidle' })
   await esperar(700)
@@ -138,6 +140,53 @@ for (const [pestana, ejemplo] of [
   const fuera = await cortadas()
   check(`${pestana}: trae filas y ninguna celda cortada`,
     (await filas().count()) > 0 && fuera.length === 0, fuera)
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// La cuenta del taller: entra a lo suyo y no ve un peso
+// ─────────────────────────────────────────────────────────────────────────────
+// Es el check que cuida la única regla que no se puede aflojar: al taller no le
+// llega un precio. La suite backend_taller ya lo verifica endpoint por endpoint;
+// acá se mira lo que efectivamente queda pintado en la pantalla, que es donde
+// un descuido se ve.
+console.log('\n=== La cuenta del taller ===')
+await page.goto(BASE + '/taller', { waitUntil: 'networkidle' })
+await page.click('button[title="Cerrar sesión"]')
+await page.waitForURL(/login/, { timeout: 10000 })
+await page.fill('input[autocomplete="username"]', USUARIO_TALLER)
+await page.fill('input[type="password"]', CLAVE)
+await page.click('button[type="submit"]')
+await page.waitForURL(/taller/, { timeout: 15000 })
+// La URL cambia antes de que el Shell repinte el menú con los ítems del rol: sin
+// esta espera el check contaba los ocho de la oficina y fallaba por la carrera
+// del propio check, no por la app.
+await esperar(900)
+check('el taller entra y cae en su panel', page.url().includes('/taller'))
+
+const itemsMenu = await page.locator('aside nav button').count()
+check('el menú del taller tiene un solo ítem', itemsMenu === 1, itemsMenu)
+
+// Se mira el texto de la pantalla entera: un "$" o un "ARS" acá significa que
+// un precio se coló por algún lado.
+const textoTablero = await page.locator('body').innerText()
+check('no hay precios en el tablero', !/\$|ARS/.test(textoTablero),
+  (textoTablero.match(/.{0,25}(\$|ARS).{0,25}/) || [])[0])
+
+// Y la ruta de la oficina, escrita a mano en la barra: tiene que rebotar.
+await page.goto(BASE + '/presupuestos', { waitUntil: 'networkidle' })
+await esperar(700)
+check('escribir /presupuestos a mano lo devuelve al taller', page.url().includes('/taller'), page.url())
+
+const primeraTarjeta = page.locator('article button').first()
+if (await primeraTarjeta.count()) {
+  await primeraTarjeta.click()
+  await esperar(900)
+  const textoOrden = await page.locator('body').innerText()
+  check('la orden de trabajo abre', /Qué hay que hacerle al motor|Repuestos pedidos/.test(textoOrden))
+  check('y tampoco tiene precios', !/\$|ARS/.test(textoOrden),
+    (textoOrden.match(/.{0,25}(\$|ARS).{0,25}/) || [])[0])
+} else {
+  console.log('  ..   no hay trabajos aprobados en esta base: la orden no se pudo abrir')
 }
 
 await browser.close()

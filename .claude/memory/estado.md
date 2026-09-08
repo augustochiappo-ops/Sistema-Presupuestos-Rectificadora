@@ -1577,7 +1577,117 @@ sin una sola diferencia, y dos filas nuevas miradas en la app —`T BEK21510` y
 demás.
 
 
+## Sesión 2026-09-08 (cuarta) — El panel del taller y la segunda cuenta
+
+El dueño pidió partir el sistema en dos usuarios: la **oficina**, que arma los
+presupuestos y ve todo como hasta ahora, y el **taller**, que ve qué motores hay
+que hacer y en qué estado está cada uno — sin ver un solo precio. Se hizo entero
+en una tanda, con los agregados que se detallan más abajo.
+
+### Los dos roles, y dónde está el candado
+
+Hay dos cuentas y el usuario con que se entra decide el rol, que queda guardado
+en la sesión:
+
+| Cuenta | Variables del servidor | Qué alcanza |
+|---|---|---|
+| Oficina | `APP_USERNAME` (default `admin`) + `APP_PASSWORD_HASH` | todo |
+| Taller | `TALLER_USERNAME` (default `taller`) + `TALLER_PASSWORD_HASH` | `/api/auth` y `/api/taller`, nada más |
+
+**La decisión que ordena todo lo demás:** el corte está en el backend y es una
+lista blanca, no una lista negra. `create_app` tiene un `before_request` que, con
+rol `taller`, responde 403 a cualquier cosa de `/api` que no empiece con
+`/api/auth` o `/api/taller`. Esconder los precios en la interfaz no habría
+servido de nada —bastaba con abrir `/api/presupuestos` en otra pestaña— y una
+lista negra habría dejado abierto el primer endpoint que se agregara sin
+acordarse. Con lista blanca, un endpoint nuevo nace cerrado para el taller.
+
+El blueprint `/api/taller` está escrito sin consultar un solo precio: no es que
+los filtre, es que no los pide. La suite lo verifica recorriendo el JSON entero
+en busca de cualquier clave que hable de plata.
+
+Si `TALLER_PASSWORD_HASH` no está configurado, la cuenta del taller no existe y
+el sistema anda exactamente como antes. Eso también está en la suite.
+
+### Los cuatro estados
+
+Un presupuesto **aprobado** es un trabajo. Recorre:
+
+    aprobado → en_proceso → terminado → entregado
+
+La oficina aprueba (eso lo pone en *Para hacer*), y de ahí en adelante lo mueve
+cualquiera de los dos roles, para adelante o para atrás. Se guarda en
+`presupuestos.estado_trabajo`; desaprobar lo vuelve a NULL y lo saca del panel,
+pero el historial de movimientos no se borra.
+
+La tabla `trabajo_historial` anota cada movimiento con usuario y hora. Sirve para
+dos cosas: que la oficina vea el recorrido del motor sin preguntar, y que el
+tablero pueda mostrar hace cuántos días que un trabajo está donde está.
+
+### Lo que se agregó por decisión propia
+
+El dueño dio libertad para sumar lo que hiciera falta. Se sumó esto, y nada más
+—en particular **no** se puso una lista de procesos para tildar uno por uno, que
+él descartó expresamente:
+
+1. **Notas del taller.** Un campo de texto que escribe el taller y lee la oficina
+   en el detalle del presupuesto ("el cigüeñal va a 0,25", "falta la junta"). Es
+   la única vía de vuelta que tiene el taller, y evita el llamado por teléfono.
+2. **Orden de trabajo en PDF.** El papel que va con el motor: el motor grande
+   arriba, la mano de obra, los repuestos con código y marca, las notas y cuatro
+   renglones en blanco para escribir a mano. Sin precios, y lo dice al pie. Las
+   listas llevan una columna vacía a la izquierda para tildar con lápiz: en
+   pantalla no se anotan procesos, pero el papel del taller se tilda, que es como
+   se venía trabajando.
+3. **Urgente y fecha de entrega prometida.** Las pone la oficina; el taller las
+   ve. El tablero ordena por urgente primero y después por fecha más cercana.
+4. **Días en el estado y aviso de demora.** Sin cargar ningún dato: sale del
+   historial. Un trabajo que lleva una semana quieto, o que se pasó de la fecha
+   prometida, se marca en el tablero.
+5. **Contador en el menú.** La oficina ve cuántos motores hay *terminados*
+   (hay que llamar al cliente); el taller, cuántos tiene para empezar o en la
+   máquina.
+6. **Buscador en el tablero** por motor, cliente o número, y un botón para
+   mostrar u ocultar la columna de entregados (por defecto está oculta: el
+   tablero muestra tres columnas y las cuatro cuando se pide).
+
+### Lo que se tocó
+
+* Backend: `config.py` (las dos variables del taller), `auth.py` (rol en la
+  sesión, `oficina_required`), `__init__.py` (el guard de lista blanca),
+  `db.py` (migración de cuatro columnas + `trabajo_historial` + las funciones del
+  tablero y de la orden), `routes/taller.py` (nuevo), `routes/presupuestos.py`
+  (aprobar deja el trabajo en *Para hacer*), `pdf_gen.py` (`generar_orden_trabajo`).
+* Frontend: `screens/Taller/` (nuevo: tablero, orden y el módulo de estados),
+  `App.jsx` (ruteo por rol), `Sidebar.jsx` (menú por rol + contador),
+  `AuthContext.jsx` (el rol), `NavItem.jsx` (badge), `Icon.jsx` (ocho íconos),
+  `colors.css` (los colores de los estados), `layout.css` (el tablero),
+  y del lado de oficina: columna "Taller" en el Historial, campo "En el taller" +
+  botón "Ver en el taller" + la nota del taller en el Detalle.
+* Tests: `backend_taller.py` (nueva, 63 checks), `humo.mjs` (la pantalla del
+  taller y el recorrido de la cuenta del taller), `rapido.sh` (suma la suite),
+  `preparar.sh` (levanta también la cuenta del taller y prueba su login).
+
+### Un detalle que costó un rato
+
+`prioridad` viene de SQLite como `0`/`1`, no como booleano. En React,
+`{trabajo.prioridad && <Chip/>}` con `prioridad = 0` **pinta un "0" suelto** al
+lado del número de presupuesto. Se ve en la captura y no en el código. Va con
+`!!` adelante.
+
+**Verificado:** las cuatro suites de backend en verde (`backend_taller` con sus
+63 checks), el humo entero, y las tres de UI enteras. Además, a ojo: el tablero y
+la orden con la cuenta del taller, el detalle del presupuesto con la cuenta de
+oficina, y el PDF de la orden leído para confirmar que no tiene un `$`.
+
+
 ## Próximo paso
+
+**Configurar la contraseña del taller en producción (2026-09-08).** El panel
+está deployado, pero la cuenta del taller **no existe** hasta que PythonAnywhere
+tenga `TALLER_PASSWORD_HASH` en el archivo WSGI. Hasta entonces la oficina entra
+igual que siempre y el sistema anda idéntico a antes. El comando para generar el
+hash y dónde pegarlo quedaron en el chat de la sesión.
 
 **Los 104 dibujos de Mahle que faltan, y son de otros tomos (2026-09-08).**
 

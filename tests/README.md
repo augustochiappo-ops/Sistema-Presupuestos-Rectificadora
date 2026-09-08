@@ -2,15 +2,15 @@
 
 ## Los dos carriles (leer esto primero)
 
-Las seis suites completas son **380 verificaciones y unos veinte minutos**, casi
+Las siete suites completas son **440 verificaciones y unos veinte minutos**, casi
 todos de las tres de UI, que manejan un Chromium de verdad. Correrlas después de
 cada cambio chico era el mayor desperdicio de tiempo del proyecto. Desde el
 2026-09-08 el trabajo va en dos carriles:
 
 | | Qué se corre | Cuánto tarda | Cuándo |
 |---|---|---|---|
-| **Corto** | `tests/rapido.sh` — las tres de backend + `humo.mjs` | **2 min 30 s** | en cada cambio |
-| | `tests/rapido.sh --backend` — solo las tres de backend | **3 segundos** | cuando el cambio no toca el frontend |
+| **Corto** | `tests/rapido.sh` — las cuatro de backend + `humo.mjs` | **2 min 30 s** | en cada cambio |
+| | `tests/rapido.sh --backend` — solo las cuatro de backend | **4 segundos** | cuando el cambio no toca el frontend |
 | **Profundo** | las tres de UI enteras | **~20 min** | miércoles y viernes 7:00, solo |
 
 El carril profundo lo dispara una **Routine** que corre sola sobre `master`:
@@ -33,9 +33,12 @@ Alrededor de dos minutos. Es el que se corre en cada cambio, dentro de
 `rapido.sh`. Diecinueve verificaciones:
 
 - el login entra;
-- las siete pantallas abren y pintan algo suyo (motores, clientes, presupuestos,
-  precios, repuestos, búsqueda por medidas, actualizar Excel);
+- las ocho pantallas abren y pintan algo suyo (motores, clientes, presupuestos,
+  precios, repuestos, búsqueda por medidas, actualizar Excel, taller);
 - ningún error de JavaScript en ninguna de ellas;
+- la **cuenta del taller** entra y cae en su panel, tiene un solo ítem de menú,
+  no muestra ni un `$` en el tablero ni en la orden de trabajo, y si se escribe
+  `/presupuestos` a mano en la barra vuelve rebotada al taller;
 - en las once familias de la búsqueda por medidas: la tabla trae filas y
   **ninguna celda queda cortada**.
 
@@ -52,15 +55,16 @@ existiendo.
 
 ---
 
-Seis suites. Dos cubren el bloque de **grupos de repuestos** (qué cotiza cada
+Siete suites. Dos cubren el bloque de **grupos de repuestos** (qué cotiza cada
 categoría, opcionales, ficha del motor, pedido, medidas automáticas), escritas el
 2026-08-10 junto con la feature; dos cubren la **búsqueda por
 medidas** (los catálogos técnicos de camisas, guías, asientos de válvulas,
 subconjuntos, pistones y bujes de biela), escritas el 2026-08-19 junto con esa
-pantalla; y las dos últimas cubren los **precios propios de mano de obra** (la
+pantalla; dos cubren los **precios propios de mano de obra** (la
 pantalla "Editar Precios" y el guardado desde el wizard), escritas el 2026-08-30
-junto con esa feature. Sirven para no romperlas al tocar repuestos o precios
-más adelante.
+junto con esa feature; y la última cubre el **panel del taller** (los dos roles,
+los cuatro estados y el aislamiento de precios), escrita el 2026-09-08 junto con
+esa feature. Sirven para no romperlas al tocar repuestos o precios más adelante.
 
 No son tests unitarios ni usan pytest: son scripts que corren de punta a punta
 contra los **datos reales del repo** y contra la app de verdad. Imprimen una
@@ -382,3 +386,43 @@ node tests/ui_precios.mjs
   acuse posterior `span[title*="Guardado como tu precio"]`.
 - **El botón ⤓ no aparece si el precio tipeado es igual a la tarifa vigente**:
   guardar ahí sería una escritura que no cambia nada.
+
+---
+
+## 7. Backend — `backend_taller.py`
+
+Cuatro segundos, 63 verificaciones. Cubre el **panel del taller**: la segunda
+cuenta, los cuatro estados de un trabajo y —lo que de verdad importa— que al
+taller no le llegue un precio.
+
+```bash
+source /tmp/rect-corrida/entorno.sh
+$VENV/bin/python tests/backend_taller.py
+```
+
+Crea un presupuesto de prueba (cliente `Suite Taller …`) y lo borra al terminar.
+
+Los cinco bloques que valen:
+
+1. **El aislamiento, endpoint por endpoint.** Con la sesión del taller se piden
+   quince endpoints de la oficina (presupuestos, ítems, grupos, pedido, precios,
+   motores, repuestos, clientes, backup, aprobar, eliminar) y los quince tienen
+   que dar 403. Es la razón de ser de toda la feature: si el corte no está en el
+   servidor, esconder los precios en la interfaz no sirve de nada — basta con
+   abrir `/api/presupuestos` en otra pestaña.
+2. **La regla general.** Una ruta `/api` que no existe también da **403 y no
+   404** con la sesión del taller. El guard es una lista blanca, así que un
+   endpoint que se agregue mañana nace cerrado para el taller sin que nadie se
+   acuerde de cerrarlo.
+3. **Ni un peso en lo que sí se devuelve.** No se revisan campos de a uno: se
+   recorre el JSON entero del tablero y de la orden de trabajo buscando
+   cualquier clave que hable de plata (`precio`, `subtotal`, `total`, `monto`…).
+   Si aparece una, falla.
+4. **Los cuatro estados**, para adelante y para atrás, movidos por los dos roles,
+   más el historial de movimientos. Y que un presupuesto **sin aprobar** no sea
+   un trabajo: no aparece en el tablero, no tiene orden y no se le puede cambiar
+   el estado.
+5. **Que sin la segunda cuenta configurada el sistema ande igual.** Si el
+   servidor no tiene `TALLER_PASSWORD_HASH`, la oficina entra lo mismo y la
+   cuenta del taller simplemente no existe. Es lo que pasa en una instalación
+   que todavía no configuró la variable, y no tiene que romper nada.

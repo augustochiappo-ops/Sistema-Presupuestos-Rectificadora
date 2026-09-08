@@ -280,6 +280,20 @@ def init_db():
                 valor TEXT
             );
 
+            -- Cada movimiento de estado de un trabajo: quién lo movió y cuándo.
+            -- Sirve para dos cosas: que la oficina vea el recorrido del motor
+            -- sin preguntar, y que el panel pueda mostrar hace cuánto que un
+            -- trabajo está donde está.
+            CREATE TABLE IF NOT EXISTS trabajo_historial (
+                id             INTEGER PRIMARY KEY AUTOINCREMENT,
+                presupuesto_id INTEGER REFERENCES presupuestos(id) ON DELETE CASCADE,
+                estado         TEXT NOT NULL,
+                usuario        TEXT,
+                fecha_hora     TEXT NOT NULL   -- ISO local, con hora
+            );
+            CREATE INDEX IF NOT EXISTS idx_trabajo_historial_pres
+                ON trabajo_historial(presupuesto_id);
+
             -- Prefijos del proveedor de repuestos (categoría y marca)
             CREATE TABLE IF NOT EXISTS crac_prefijos (
                 tipo    TEXT NOT NULL,   -- 'categoria' | 'marca'
@@ -329,6 +343,27 @@ def init_db():
             # Fecha en que el cliente aprobó el presupuesto. NULL = todavía no.
             # Sirve de flag y de fecha a la vez, así no hacen falta dos columnas.
             conn.execute("ALTER TABLE presupuestos ADD COLUMN aprobado_en TEXT")
+
+        if "estado_trabajo" not in cols_presupuestos:
+            # Estado del trabajo en el taller: 'aprobado' | 'en_proceso' |
+            # 'terminado' | 'entregado'. NULL = todavía no está aprobado, o sea
+            # que no es un trabajo, es un presupuesto. Los presupuestos que ya
+            # estaban aprobados arrancan en 'aprobado', que es donde estaban.
+            conn.execute("ALTER TABLE presupuestos ADD COLUMN estado_trabajo TEXT")
+            conn.execute(
+                "UPDATE presupuestos SET estado_trabajo = 'aprobado' WHERE aprobado_en IS NOT NULL"
+            )
+        if "prioridad" not in cols_presupuestos:
+            # 1 = urgente. Lo marca la oficina y lo ve el taller arriba de todo.
+            conn.execute("ALTER TABLE presupuestos ADD COLUMN prioridad INTEGER NOT NULL DEFAULT 0")
+        if "entrega_prometida" not in cols_presupuestos:
+            # Fecha ISO que la oficina le prometió al cliente. NULL = sin fecha.
+            conn.execute("ALTER TABLE presupuestos ADD COLUMN entrega_prometida TEXT")
+        if "notas_taller" not in cols_presupuestos:
+            # Lo que el taller le quiere decir a la oficina sobre este motor
+            # ("el cigüeñal va a 0,25", "falta la junta"). Lo escribe el taller,
+            # lo lee la oficina en el detalle del presupuesto.
+            conn.execute("ALTER TABLE presupuestos ADD COLUMN notas_taller TEXT")
 
         cols_clientes = {r[1] for r in conn.execute("PRAGMA table_info(clientes)")}
         if "tipo" not in cols_clientes:
@@ -591,14 +626,15 @@ def get_presupuestos() -> list[dict]:
         cur = conn.execute(
             """
             SELECT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path, c.tipo AS cliente_tipo,
-                   p.aprobado_en
+                   p.aprobado_en, p.estado_trabajo, p.prioridad
             FROM presupuestos p
             LEFT JOIN clientes  c ON c.id = p.cliente_id
             LEFT JOIN motores   m ON m.id = p.motor_id
             ORDER BY p.fecha DESC, p.id DESC
             """
         )
-        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path", "cliente_tipo", "aprobado_en"]
+        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path", "cliente_tipo",
+                "aprobado_en", "estado_trabajo", "prioridad"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
@@ -620,7 +656,7 @@ def buscar_presupuestos(
     """
     query = """
         SELECT DISTINCT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path, c.tipo AS cliente_tipo,
-               p.aprobado_en
+               p.aprobado_en, p.estado_trabajo, p.prioridad
         FROM presupuestos p
         LEFT JOIN clientes c ON c.id = p.cliente_id
         LEFT JOIN motores  m ON m.id = p.motor_id
@@ -661,7 +697,8 @@ def buscar_presupuestos(
 
     with get_connection() as conn:
         cur = conn.execute(query, params)
-        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path", "cliente_tipo", "aprobado_en"]
+        cols = ["id", "fecha", "cliente", "motor", "total", "pdf_path", "cliente_tipo",
+                "aprobado_en", "estado_trabajo", "prioridad"]
         return [dict(zip(cols, row)) for row in cur.fetchall()]
 
 
@@ -795,6 +832,7 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
         row = conn.execute(
             """
             SELECT p.id, p.fecha, p.total, p.notas, p.ajuste_pct, p.aprobado_en,
+                   p.estado_trabajo, p.prioridad, p.entrega_prometida, p.notas_taller,
                    c.id AS cliente_id, c.nombre AS cliente, c.tipo AS cliente_tipo,
                    ct.nombre AS contacto,
                    m.id AS motor_id,   m.motor,  m.lista_num, m.cilindros
@@ -809,6 +847,7 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
         if not row:
             return None
         cols = ["id", "fecha", "total", "notas", "ajuste_pct", "aprobado_en",
+                "estado_trabajo", "prioridad", "entrega_prometida", "notas_taller",
                 "cliente_id", "cliente", "cliente_tipo", "contacto",
                 "motor_id", "motor", "lista_num", "cilindros"]
         return dict(zip(cols, row))
@@ -1539,16 +1578,267 @@ def get_grupos_presupuesto(presupuesto_id: int) -> list[dict]:
     return list(grupos.values())
 
 
-def aprobar_presupuesto(presupuesto_id: int, aprobado: bool) -> str | None:
+def aprobar_presupuesto(presupuesto_id: int, aprobado: bool, usuario: str | None = None) -> str | None:
     """Marca o desmarca el presupuesto como aprobado por el cliente.
-    Retorna la fecha de aprobación, o None si quedó sin aprobar."""
+    Retorna la fecha de aprobación, o None si quedó sin aprobar.
+
+    Aprobar es lo que convierte un presupuesto en un trabajo: al aprobarlo entra
+    al panel del taller en estado 'aprobado'. Desmarcarlo lo saca del panel
+    (estado_trabajo vuelve a NULL), pero el historial de lo que ya pasó no se
+    borra: si el motor vuelve a aprobarse, ahí está el recorrido anterior.
+    """
     valor = date.today().isoformat() if aprobado else None
+    estado = ESTADO_APROBADO if aprobado else None
     with get_connection() as conn:
         conn.execute(
-            "UPDATE presupuestos SET aprobado_en = ? WHERE id = ?",
+            "UPDATE presupuestos SET aprobado_en = ?, estado_trabajo = ? WHERE id = ?",
+            (valor, estado, presupuesto_id),
+        )
+        if estado:
+            _anotar_movimiento(conn, presupuesto_id, estado, usuario)
+    return valor
+
+
+# ─── Trabajos del taller ──────────────────────────────────────────────────────
+#
+# Un trabajo es un presupuesto aprobado. Recorre cuatro estados en este orden, y
+# lo puede mover tanto la oficina como el taller (que es como trabajan: el que
+# está al lado de la máquina es el que sabe):
+#
+#   aprobado → en_proceso → terminado → entregado
+#
+# La oficina aprueba (eso lo pone en 'aprobado'), el taller marca 'en_proceso'
+# cuando lo empieza y 'terminado' cuando lo deja listo, y 'entregado' lo pone el
+# que lo entrega. Se puede volver atrás: si algo se marcó de más, se corrige.
+
+ESTADO_APROBADO = "aprobado"
+ESTADO_EN_PROCESO = "en_proceso"
+ESTADO_TERMINADO = "terminado"
+ESTADO_ENTREGADO = "entregado"
+
+ESTADOS_TRABAJO = [ESTADO_APROBADO, ESTADO_EN_PROCESO, ESTADO_TERMINADO, ESTADO_ENTREGADO]
+
+
+def _anotar_movimiento(conn, presupuesto_id: int, estado: str, usuario: str | None) -> None:
+    conn.execute(
+        """
+        INSERT INTO trabajo_historial (presupuesto_id, estado, usuario, fecha_hora)
+        VALUES (?, ?, ?, ?)
+        """,
+        (presupuesto_id, estado, usuario, datetime.now().isoformat(timespec="seconds")),
+    )
+
+
+def cambiar_estado_trabajo(presupuesto_id: int, estado: str, usuario: str | None = None) -> dict | None:
+    """Mueve el trabajo a otro estado y lo anota en el historial.
+
+    Retorna {estado_trabajo, desde} o None si el presupuesto no existe o no está
+    aprobado (un presupuesto sin aprobar no es un trabajo y no tiene estado).
+    Lanza ValueError si el estado no es uno de los cuatro.
+    """
+    if estado not in ESTADOS_TRABAJO:
+        raise ValueError(f"Estado desconocido: {estado}")
+
+    with get_connection() as conn:
+        fila = conn.execute(
+            "SELECT aprobado_en, estado_trabajo FROM presupuestos WHERE id = ?",
+            (presupuesto_id,),
+        ).fetchone()
+        if not fila or not fila["aprobado_en"]:
+            return None
+        anterior = fila["estado_trabajo"] or ESTADO_APROBADO
+        conn.execute(
+            "UPDATE presupuestos SET estado_trabajo = ? WHERE id = ?",
+            (estado, presupuesto_id),
+        )
+        # El movimiento se anota aunque el estado sea el mismo que ya tenía: si
+        # alguien vuelve a tocar el botón, el historial lo muestra tal cual pasó.
+        _anotar_movimiento(conn, presupuesto_id, estado, usuario)
+    return {"estado_trabajo": estado, "desde": anterior}
+
+
+def get_historial_trabajo(presupuesto_id: int) -> list[dict]:
+    """Los movimientos de estado del trabajo, del más viejo al más nuevo."""
+    with get_connection() as conn:
+        cur = conn.execute(
+            """
+            SELECT estado, usuario, fecha_hora
+            FROM trabajo_historial
+            WHERE presupuesto_id = ?
+            ORDER BY fecha_hora, id
+            """,
+            (presupuesto_id,),
+        )
+        return [dict(zip(["estado", "usuario", "fecha_hora"], row)) for row in cur.fetchall()]
+
+
+def get_trabajos(incluir_entregados: bool = True) -> list[dict]:
+    """
+    El tablero del taller: un renglón por trabajo (presupuesto aprobado).
+
+    NO trae precios NI totales, a propósito: esta consulta es la que alimenta la
+    pantalla del taller, y el taller no ve plata. `desde` es cuándo entró al
+    estado en el que está (el último movimiento), para poder mostrar hace
+    cuántos días que está ahí.
+    """
+    query = """
+        SELECT p.id, p.fecha, p.estado_trabajo, p.prioridad, p.entrega_prometida,
+               p.notas_taller, p.notas,
+               COALESCE(c.nombre, '—') AS cliente,
+               COALESCE(m.motor, '—')  AS motor,
+               (SELECT MAX(h.fecha_hora) FROM trabajo_historial h
+                 WHERE h.presupuesto_id = p.id AND h.estado = p.estado_trabajo) AS desde,
+               (SELECT COUNT(*) FROM presupuesto_items pi
+                 WHERE pi.presupuesto_id = p.id AND pi.tipo = 'repuesto' AND pi.opcional = 0) AS repuestos,
+               (SELECT COUNT(*) FROM presupuesto_items pi
+                 WHERE pi.presupuesto_id = p.id AND pi.tipo != 'repuesto' AND pi.opcional = 0) AS tareas
+        FROM presupuestos p
+        LEFT JOIN clientes c ON c.id = p.cliente_id
+        LEFT JOIN motores  m ON m.id = p.motor_id
+        WHERE p.aprobado_en IS NOT NULL
+    """
+    if not incluir_entregados:
+        query += " AND COALESCE(p.estado_trabajo, 'aprobado') != 'entregado'"
+    # Primero lo urgente, después lo que tiene fecha prometida más cercana (los
+    # que no tienen fecha van al final del grupo), y al final por número.
+    query += """
+        ORDER BY p.prioridad DESC,
+                 CASE WHEN p.entrega_prometida IS NULL THEN 1 ELSE 0 END,
+                 p.entrega_prometida,
+                 p.id DESC
+    """
+    cols = ["id", "fecha", "estado_trabajo", "prioridad", "entrega_prometida",
+            "notas_taller", "notas", "cliente", "motor", "desde", "repuestos", "tareas"]
+    with get_connection() as conn:
+        cur = conn.execute(query)
+        trabajos = [dict(zip(cols, row)) for row in cur.fetchall()]
+    for t in trabajos:
+        t["estado_trabajo"] = t["estado_trabajo"] or ESTADO_APROBADO
+    return trabajos
+
+
+def get_orden_trabajo(presupuesto_id: int) -> dict | None:
+    """
+    Todo lo que el taller necesita saber de un motor, y nada más que eso.
+
+    Trae qué hay que hacerle (la mano de obra), qué repuestos se pidieron (con
+    código, marca y medida, que es lo que se busca en el estante) y las notas.
+    NO trae precios, ni unitarios, ni subtotales, ni total: ni siquiera se
+    consultan. Los opcionales van aparte y marcados, porque son cosas que quizá
+    haya que hacer y el taller tiene que saber que todavía no están confirmadas.
+    """
+    detalle = get_presupuesto_detalle(presupuesto_id)
+    if not detalle or not detalle["aprobado_en"]:
+        return None
+
+    with get_connection() as conn:
+        extra = conn.execute(
+            """
+            SELECT p.estado_trabajo, p.prioridad, p.entrega_prometida, p.notas_taller,
+                   ct.nombre AS contacto, c.telefono
+            FROM presupuestos p
+            LEFT JOIN clientes c  ON c.id = p.cliente_id
+            LEFT JOIN clientes ct ON ct.id = p.contacto_id
+            WHERE p.id = ?
+            """,
+            (presupuesto_id,),
+        ).fetchone()
+
+    tareas, repuestos = [], []
+    for it in get_presupuesto_items_full(presupuesto_id):
+        if it["tipo"] == "repuesto":
+            repuestos.append({
+                "id": it["id"],
+                "categoria": it["categoria"],
+                "descripcion": it["descripcion_custom"],
+                "codigo": it["repuesto_codigo"],
+                "cantidad": it["cantidad"],
+                "grupo_num": it["grupo_num"],
+                "opcional": bool(it["opcional"]),
+            })
+        else:
+            tareas.append({
+                "id": it["id"],
+                "item_num": it["item_num"],
+                "descripcion": it["desc_facra"] or it["descripcion_custom"],
+                "cantidad": it["cantidad"],
+                "opcional": bool(it["opcional"]),
+            })
+
+    # Marca y medida de cada repuesto cotizado: no están en presupuesto_items
+    # (ahí se congela el código y la descripción), sí en las opciones del grupo.
+    elegidas = {}
+    for grupo in get_grupos_presupuesto(presupuesto_id):
+        for op in grupo["opciones"]:
+            if op["elegida"]:
+                elegidas[op["repuesto_codigo"]] = {"marca": op["marca"], "medida": op["medida"]}
+    for r in repuestos:
+        datos = elegidas.get(r["codigo"]) or {}
+        r["marca"] = datos.get("marca")
+        r["medida"] = datos.get("medida")
+
+    return {
+        "id": detalle["id"],
+        "fecha": detalle["fecha"],
+        "cliente": detalle["cliente"],
+        "contacto": extra["contacto"] if extra else None,
+        "telefono": extra["telefono"] if extra else None,
+        "motor": detalle["motor"],
+        "cilindros": detalle["cilindros"],
+        "aprobado_en": detalle["aprobado_en"],
+        "estado_trabajo": (extra["estado_trabajo"] if extra else None) or ESTADO_APROBADO,
+        "prioridad": bool(extra["prioridad"]) if extra else False,
+        "entrega_prometida": extra["entrega_prometida"] if extra else None,
+        "notas": detalle["notas"],
+        "notas_taller": extra["notas_taller"] if extra else None,
+        "tareas": tareas,
+        "repuestos": repuestos,
+        "historial": get_historial_trabajo(presupuesto_id),
+    }
+
+
+def set_notas_taller(presupuesto_id: int, notas: str | None) -> str | None:
+    valor = (notas or "").strip() or None
+    with get_connection() as conn:
+        conn.execute(
+            "UPDATE presupuestos SET notas_taller = ? WHERE id = ?",
             (valor, presupuesto_id),
         )
     return valor
+
+
+def set_prioridad(presupuesto_id: int, prioridad: bool) -> bool:
+    with get_connection() as conn:
+        conn.execute(
+            "UPDATE presupuestos SET prioridad = ? WHERE id = ?",
+            (1 if prioridad else 0, presupuesto_id),
+        )
+    return bool(prioridad)
+
+
+def set_entrega_prometida(presupuesto_id: int, fecha_iso: str | None) -> str | None:
+    valor = (fecha_iso or "").strip() or None
+    with get_connection() as conn:
+        conn.execute(
+            "UPDATE presupuestos SET entrega_prometida = ? WHERE id = ?",
+            (valor, presupuesto_id),
+        )
+    return valor
+
+
+def contar_trabajos_por_estado() -> dict:
+    """Cuántos trabajos hay en cada estado. Alimenta el contador del menú."""
+    with get_connection() as conn:
+        cur = conn.execute(
+            """
+            SELECT COALESCE(estado_trabajo, 'aprobado') AS estado, COUNT(*)
+            FROM presupuestos
+            WHERE aprobado_en IS NOT NULL
+            GROUP BY estado
+            """
+        )
+        cuenta = dict(cur.fetchall())
+    return {estado: cuenta.get(estado, 0) for estado in ESTADOS_TRABAJO}
 
 
 def actualizar_fecha_presupuesto(presupuesto_id: int) -> str:

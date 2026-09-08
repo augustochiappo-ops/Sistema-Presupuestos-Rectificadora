@@ -270,3 +270,187 @@ def generar_pdf(
 
     doc.build(story)
     return output_path
+
+
+# ─── Orden de trabajo (el papel que va con el motor) ──────────────────────────
+
+ESTADOS_LEGIBLES = {
+    "aprobado": "Para hacer",
+    "en_proceso": "En proceso",
+    "terminado": "Terminado",
+    "entregado": "Entregado",
+}
+
+
+def generar_orden_trabajo(orden: dict, output_path: str) -> str:
+    """
+    La orden de trabajo del taller, para imprimir y dejar con el motor.
+
+    Es el mismo dato que ve el taller en pantalla, en papel: qué motor es, de
+    quién es, qué hay que hacerle y qué repuestos se pidieron. NO lleva precios
+    —ni de mano de obra, ni de repuestos, ni total— porque es un papel que anda
+    dando vueltas por el taller y por el mostrador.
+
+    `orden` es lo que devuelve db.get_orden_trabajo().
+    """
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    doc = SimpleDocTemplate(
+        output_path, pagesize=A4,
+        leftMargin=1.6 * cm, rightMargin=1.6 * cm, topMargin=1.6 * cm, bottomMargin=1.6 * cm,
+    )
+
+    E = _estilos()
+    story = []
+    page_w = A4[0] - 3.2 * cm
+
+    numero = f"N.° {orden['id']:04d}"
+    estado = ESTADOS_LEGIBLES.get(orden.get("estado_trabajo"), "Para hacer")
+    urgente = " · URGENTE" if orden.get("prioridad") else ""
+
+    header_data = [
+        [Paragraph(config.NOMBRE_TALLER, E["taller"]), Paragraph("ORDEN DE TRABAJO", E["titulo_doc"])],
+        [Paragraph("Rectificación de motores", E["subtaller"]), Paragraph(numero, E["num_doc"])],
+        [Paragraph(f"Estado: {estado}{urgente}", E["subtaller"]),
+         Paragraph(f"Aprobado: {_fmt_fecha(orden.get('aprobado_en'))}", E["num_doc"])],
+    ]
+    header_table = Table(header_data, colWidths=[page_w * 0.55, page_w * 0.45])
+    header_table.setStyle(TableStyle([
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("TOPPADDING", (0, 0), (-1, -1), 0),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+    ]))
+    story.append(header_table)
+    story.append(Spacer(1, 0.3 * cm))
+    story.append(HRFlowable(width="100%", thickness=3, color=AZUL_OSCURO, spaceAfter=0.4 * cm))
+
+    # El motor, grande: es el dato que se busca de un vistazo entre diez papeles.
+    motor_style = ParagraphStyle(
+        "motor_orden", fontName="Helvetica-Bold", fontSize=17, textColor=AZUL_OSCURO, leading=21,
+    )
+    info_data = [
+        [Paragraph("MOTOR", E["label"]), Paragraph("CLIENTE", E["label"])],
+        [Paragraph(orden.get("motor") or "—", motor_style),
+         Paragraph(orden.get("cliente") or "—", E["valor_bold"])],
+    ]
+    pie_cliente = []
+    if orden.get("contacto"):
+        pie_cliente.append(orden["contacto"])
+    if orden.get("telefono"):
+        pie_cliente.append(orden["telefono"])
+    entrega = _fmt_fecha(orden["entrega_prometida"]) if orden.get("entrega_prometida") else "sin fecha"
+    info_data.append([
+        Paragraph(f"Entrega prometida: {entrega}", E["subtaller"]),
+        Paragraph(" · ".join(pie_cliente) or " ", E["subtaller"]),
+    ])
+    info_table = Table(info_data, colWidths=[page_w * 0.55, page_w * 0.45])
+    info_table.setStyle(TableStyle([
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("TOPPADDING", (0, 0), (-1, -1), 3),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+        ("BACKGROUND", (0, 0), (-1, -1), AZUL_CLARO),
+        ("BOX", (0, 0), (-1, -1), 0.5, AZUL_MEDIO),
+        ("LEFTPADDING", (0, 0), (-1, -1), 10),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 10),
+    ]))
+    story.append(info_table)
+    story.append(Spacer(1, 0.45 * cm))
+
+    def _hd(texto, alignment=TA_LEFT):
+        return Paragraph(texto, ParagraphStyle(
+            "hd", fontName="Helvetica-Bold", fontSize=10, textColor=BLANCO, alignment=alignment,
+        ))
+
+    estilo_tabla = TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), AZUL_MEDIO),
+        ("TOPPADDING", (0, 0), (-1, 0), 8),
+        ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
+        ("ROWBACKGROUNDS", (0, 1), (-1, -1), [BLANCO, AZUL_CLARO]),
+        ("TOPPADDING", (0, 1), (-1, -1), 6),
+        ("BOTTOMPADDING", (0, 1), (-1, -1), 6),
+        ("LEFTPADDING", (0, 0), (-1, -1), 6),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+        ("BOX", (0, 0), (-1, -1), 0.5, AZUL_MEDIO),
+        ("LINEBELOW", (0, 0), (-1, -1), 0.3, colors.HexColor("#cccccc")),
+    ])
+
+    def _texto_opcional(item):
+        return " <font color='#888888'>(opcional)</font>" if item.get("opcional") else ""
+
+    tareas = orden.get("tareas") or []
+    if tareas:
+        # La columna de la izquierda queda vacía a propósito: es el casillero
+        # para tildar a mano lo que se va haciendo. En pantalla no hay tildes
+        # (no se anotan procesos), pero el papel del taller sí se tilda con
+        # lápiz, que es como se venía trabajando.
+        col_tilde = 1.0 * cm
+        col_n = 1.2 * cm
+        data = [[_hd(""), _hd("Nº", TA_CENTER), _hd("Qué hay que hacerle al motor")]]
+        for t in tareas:
+            desc = str(t.get("descripcion") or "")
+            cantidad = t.get("cantidad")
+            if cantidad is not None and float(cantidad) != 1:
+                desc = f"{desc} ×{_fmt_cantidad(cantidad)}"
+            data.append([
+                Paragraph("", E["celda_desc"]),
+                Paragraph(str(t.get("item_num") or ""), E["celda_num"]),
+                Paragraph(desc + _texto_opcional(t), E["celda_desc"]),
+            ])
+        tabla = Table(data, colWidths=[col_tilde, col_n, page_w - col_tilde - col_n], repeatRows=1)
+        tabla.setStyle(estilo_tabla)
+        story.append(tabla)
+        story.append(Spacer(1, 0.35 * cm))
+
+    repuestos = orden.get("repuestos") or []
+    if repuestos:
+        col_tilde = 1.0 * cm
+        col_cant = 1.6 * cm
+        col_cod = 3.6 * cm
+        data = [[_hd(""), _hd("Cant.", TA_CENTER), _hd("Código"), _hd("Repuesto")]]
+        for r in repuestos:
+            detalle = [str(r.get("descripcion") or r.get("categoria") or "")]
+            if r.get("marca"):
+                detalle.append(str(r["marca"]))
+            if r.get("medida"):
+                detalle.append(str(r["medida"]))
+            data.append([
+                Paragraph("", E["celda_desc"]),
+                Paragraph(_fmt_cantidad(r.get("cantidad")), E["celda_num"]),
+                Paragraph(str(r.get("codigo") or "—"), E["celda_desc"]),
+                Paragraph(" · ".join(detalle) + _texto_opcional(r), E["celda_desc"]),
+            ])
+        tabla = Table(
+            data,
+            colWidths=[col_tilde, col_cant, col_cod, page_w - col_tilde - col_cant - col_cod],
+            repeatRows=1,
+        )
+        tabla.setStyle(estilo_tabla)
+        story.append(tabla)
+        story.append(Spacer(1, 0.35 * cm))
+
+    for titulo, texto_nota in (("Notas de la oficina", orden.get("notas")),
+                               ("Notas del taller", orden.get("notas_taller"))):
+        if not texto_nota:
+            continue
+        nota_data = [[_hd(titulo)], [Paragraph(str(texto_nota).replace("\n", "<br/>"), E["celda_desc"])]]
+        tabla_nota = Table(nota_data, colWidths=[page_w])
+        tabla_nota.setStyle(estilo_tabla)
+        story.append(tabla_nota)
+        story.append(Spacer(1, 0.3 * cm))
+
+    # Renglones en blanco para escribir a mano lo que aparezca en la máquina.
+    obs_data = [[_hd("Observaciones")]] + [[Paragraph("&nbsp;", E["celda_desc"])] for _ in range(4)]
+    tabla_obs = Table(obs_data, colWidths=[page_w])
+    tabla_obs.setStyle(estilo_tabla)
+    story.append(tabla_obs)
+
+    story.append(Spacer(1, 0.5 * cm))
+    story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#cccccc"), spaceAfter=0.3 * cm))
+    story.append(Paragraph(
+        "Orden de trabajo interna. No es un presupuesto y no lleva precios.",
+        E["pie"],
+    ))
+
+    doc.build(story)
+    return output_path

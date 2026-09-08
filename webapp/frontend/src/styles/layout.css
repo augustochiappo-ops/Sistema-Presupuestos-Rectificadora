@@ -9,6 +9,20 @@
 .sidebar{width:var(--sidebar-width);flex-shrink:0;padding:28px 20px;display:flex;flex-direction:column;gap:28px;border-right:1px solid var(--border-subtle);box-sizing:border-box}
 .sidebar-backdrop{display:none}
 
+/* Tablero del taller: una columna por estado. Las columnas se reparten el
+   ancho en partes iguales y NO scrollean adentro: la página crece para abajo,
+   que es como se lee en una pantalla de taller (o en un teléfono, donde las
+   columnas se apilan una debajo de la otra). */
+.taller-tablero{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
+.taller-tablero.tres{grid-template-columns:repeat(3,1fr)}
+.taller-columna{min-width:0}
+/* La orden de trabajo: la mano de obra a la izquierda, los repuestos a la
+   derecha. Son las dos listas que se miran en paralelo con el motor delante. */
+.taller-orden-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media (max-width: 1240px){
+  .taller-tablero,.taller-tablero.tres{grid-template-columns:repeat(2,1fr)}
+}
+
 /* Motor selector: brand rail + table */
 .motor-selector-grid{display:grid;grid-template-columns:160px 1fr;gap:14px;align-items:start}
 .motor-selector-brands{max-height:560px;overflow:auto}
@@ -44,6 +58,9 @@
     z-index:30;opacity:0;pointer-events:none;transition:opacity .2s ease;
   }
   .sidebar-backdrop.open{opacity:1;pointer-events:auto}
+
+  .taller-tablero,.taller-tablero.tres{grid-template-columns:1fr;gap:20px}
+  .taller-orden-grid{grid-template-columns:1fr}
 
   .motor-selector-grid{grid-template-columns:1fr;gap:12px}
   .motor-selector-brands{

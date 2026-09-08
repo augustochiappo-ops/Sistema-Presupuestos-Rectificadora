@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function NavItem({ icon, children, active = false, style, ...rest }) {
+export function NavItem({ icon, children, active = false, badge = null, style, ...rest }) {
   const [hover, setHover] = React.useState(false)
   return (
     <button
@@ -19,7 +19,20 @@ export function NavItem({ icon, children, active = false, style, ...rest }) {
       {...rest}
     >
       <span style={{ display: 'flex', width: 22, justifyContent: 'center', color: active ? '#fff' : 'var(--text-muted)' }}>{icon}</span>
-      <span>{children}</span>
+      <span style={{ flex: 1 }}>{children}</span>
+      {badge != null && (
+        <span
+          style={{
+            minWidth: 22, padding: '2px 7px', borderRadius: 'var(--radius-pill)',
+            background: active ? 'rgba(255,255,255,.22)' : 'var(--status-active-bg)',
+            color: active ? '#fff' : 'var(--status-active-fg)',
+            fontSize: 'var(--text-xs)', fontWeight: 'var(--weight-semibold)',
+            textAlign: 'center', lineHeight: 1.5,
+          }}
+        >
+          {badge}
+        </span>
+      )}
     </button>
   )
 }

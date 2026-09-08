@@ -72,13 +72,13 @@ está instalado en el entorno remoto (`/opt/pw-browsers/chromium`) —
 
 ### Los dos carriles de verificación (2026-09-08)
 
-Las seis suites enteras son **veinte minutos**, casi todos de las tres de UI.
+Las siete suites enteras son **veinte minutos**, casi todos de las tres de UI.
 Correrlas después de cada cambio chico era el mayor desperdicio de tiempo del
 proyecto. Ahora:
 
 ```bash
 tests/rapido.sh              # en CADA cambio: backend + humo · 2 min 30 s
-tests/rapido.sh --backend    # si el cambio no toca el frontend · 3 segundos
+tests/rapido.sh --backend    # si el cambio no toca el frontend · 4 segundos
 ```
 
 Y las **tres de UI enteras corren solas los miércoles y viernes a las 7:00** de
@@ -129,6 +129,27 @@ y con ella entra la de backend. **No vive en el repo** —misma regla que el
 `DEPLOY_SECRET`— así que el dueño la pasa al empezar la sesión; si falta, las
 suites lo dicen al arrancar en vez de morir en el login siete minutos después.
 Tener dos contraseñas dando vueltas ya costó dos corridas.
+
+### Dos cuentas, dos roles (2026-09-08)
+
+El sistema tiene **dos cuentas**, y el usuario con que se entra decide el rol:
+
+| Cuenta | Variables | Qué ve |
+|---|---|---|
+| **Oficina** | `APP_USERNAME` (default `admin`) + `APP_PASSWORD_HASH` | todo el sistema, como siempre |
+| **Taller** | `TALLER_USERNAME` (default `taller`) + `TALLER_PASSWORD_HASH` | sólo el panel de trabajos, sin un solo precio |
+
+**El corte está en el backend, no en la interfaz.** `create_app` tiene un
+`before_request` de lista blanca: con rol `taller`, lo único que se responde de
+`/api` es `/api/auth` y `/api/taller`; todo lo demás da 403, **incluido lo que se
+agregue en el futuro**. Esconder los precios en el frontend no habría servido de
+nada: bastaba con abrir `/api/presupuestos` en otra pestaña.
+
+Si `TALLER_PASSWORD_HASH` no está configurado, la cuenta del taller no existe y
+el sistema funciona exactamente como antes. En dev, `preparar.sh` le da al taller
+**la misma contraseña** que a la oficina (una sola contraseña dando vueltas, ver
+arriba) y cambia sólo el usuario; en producción son dos contraseñas distintas que
+pone el dueño.
 
 ## Cuando el dueño pide "caveman"
 
@@ -192,6 +213,13 @@ suites se corren enteras igual, y el resultado se informa con el número exacto.
 
 - **Selección de motor**: desplegable/buscador con todos los motores de la Cámara.
 - **Cálculo automático**: al elegir el motor se consultan la lista de la Cámara (mano de obra) y el Excel del proveedor (repuestos asociados al motor).
+- **Panel del taller**: la cuenta del taller entra al mismo sistema y ve un
+  tablero con los motores aprobados, en cuatro columnas: *Para hacer → En proceso
+  → Terminado → Entregado*. Los estados los mueven los dos roles. Cada motor abre
+  su **orden de trabajo**: qué hay que hacerle, qué repuestos se pidieron (con
+  código, marca y medida) y las notas — nunca un precio. La orden se puede
+  imprimir en PDF para dejarla con el motor. La oficina agrega, sobre lo mismo,
+  la marca de *urgente* y la *fecha de entrega prometida*.
 - **Búsqueda por medidas**: sección propia del menú lateral que encuentra una pieza por sus medidas (Ø, largo, alto…) con tolerancia, cuando no se sabe el código. Los catálogos técnicos (camisas, válvulas, guías, asientos, subconjuntos, conjuntos, pistones, cojinetes de biela, cojinetes de bancada y bujes de biela) viven en `CRAC/tecnicos/*.json`; el precio y el stock salen del catálogo del proveedor ya importado. Cómo se leyó cada catálogo del fabricante está documentado al lado de los datos: `CRAC/tecnicos/CARGA-CONJUNTOS.md` y `CRAC/tecnicos/CARGA-COJINETES.md`.
 - **Buscador de repuestos**: ícono de lupa en cada ítem (ej. "válvulas") que abre una interfaz de búsqueda dentro del catálogo del proveedor. El código elegido queda guardado asociado al motor para próximos presupuestos.
 - **Edición post-creación**: los presupuestos se pueden modificar después de generados.

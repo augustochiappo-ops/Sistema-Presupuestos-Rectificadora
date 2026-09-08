@@ -1386,3 +1386,100 @@ La excepción sigue en pie y es deliberada: `S26510.png` está en `fuentes/` sin
 ficha desde el 2026-08-29, avisa en cada corrida, y se deja porque el día que el
 proveedor traiga ese código el dibujo entra solo. Una excepción se ve; ciento
 veinte, no. Para sacarlas todas igual está `--todos`.
+
+## El taller no ve precios porque el backend no se los manda (2026-09-08)
+
+El pedido fue "que en el taller no se vean los precios". La forma barata de
+hacerlo era ocultar las columnas en el frontend. No se hizo así, porque no
+habría servido de nada: la sesión del taller es una sesión válida, y cualquiera
+con esa sesión abierta puede escribir `/api/presupuestos` en la barra del
+navegador y ver el JSON entero con todos los precios.
+
+Entonces el corte quedó en el servidor, en `create_app`:
+
+```python
+@app.before_request
+def _cerrar_api_al_taller():
+    if not request.path.startswith("/api/"):
+        return None
+    if rol_actual() != ROL_TALLER:
+        return None
+    if request.path.startswith(("/api/auth/", "/api/taller/")):
+        return None
+    return jsonify({"error": "Esta parte del sistema es de la oficina"}), 403
+```
+
+Y la parte que importa es que sea **lista blanca y no lista negra**. Con una
+lista de endpoints prohibidos, el primer endpoint que se agregue en el futuro
+nace abierto para el taller y nadie se va a acordar de cerrarlo. Con lista
+blanca nace cerrado, y abrirlo es una decisión explícita: hay que agregarlo a
+`_API_TALLER` o ponerlo bajo `/api/taller`.
+
+El blueprint `/api/taller`, a su vez, está escrito sin consultar precios: no es
+que los devuelva y los filtre, es que las consultas no los piden.
+`db.get_trabajos()` y `db.get_orden_trabajo()` no tocan `precio_aplicado`,
+`precio_unitario` ni `total`.
+
+La suite verifica las tres capas por separado: los quince endpoints de la
+oficina dan 403 uno por uno; una ruta `/api` inexistente da **403 y no 404** (que
+es la prueba de que la lista es blanca); y el JSON que sí se devuelve se recorre
+entero buscando cualquier clave que hable de plata. Verificar campo por campo
+habría dejado pasar el campo que se agregue mañana.
+
+## El taller ve la misma app, no una app aparte (2026-09-08)
+
+La otra forma de haberlo hecho era una segunda aplicación, o al menos un Shell
+distinto para el taller. Se descartó: es el mismo sistema, con el mismo login, el
+mismo menú y las mismas pantallas; lo único que cambia es qué ítems tiene el
+menú y a qué rutas se llega. Un `/taller` que la oficina también puede abrir
+—desde su propio menú, y con el botón "Ver en el taller" del presupuesto— sale
+gratis y es justamente lo que la oficina necesita para saber cómo viene el día.
+
+De ahí que el ruteo por rol del frontend sea deliberadamente flojo: `SoloOficina`
+redirige al taller si intenta entrar a una pantalla de oficina, pero eso es
+comodidad (que no vea una pantalla rota), no seguridad. La seguridad está en el
+backend, y sólo ahí.
+
+## Los estados son cuatro y no llevan lista de procesos (2026-09-08)
+
+El dueño arrancó describiendo un seguimiento por proceso —qué se le está
+haciendo al motor en cada momento— y se corrigió solo a mitad de frase: "no
+anotar procesos, mejor". Quedaron cuatro estados para el motor entero:
+
+    aprobado → en_proceso → terminado → entregado
+
+Esa decisión se respetó también donde tentaba romperla: la orden de trabajo NO
+tiene tildes por renglón en pantalla. Lo que sí tiene es una **columna vacía en
+el PDF**, para tildar con lápiz. En papel el taller ya venía tildando; el punto
+del pedido era no obligar a nadie a cargar datos en una pantalla mientras tiene
+las manos sucias.
+
+Los cuatro estados los mueven los dos roles, para adelante y para atrás. No hay
+máquina de estados que impida saltar o retroceder: si algo se marcó de más, se
+corrige, y el historial guarda lo que pasó de verdad.
+
+## Aprobar el presupuesto es lo que crea el trabajo (2026-09-08)
+
+No hay una entidad "trabajo" aparte del presupuesto. Un trabajo **es** un
+presupuesto con `aprobado_en` cargado, y `estado_trabajo` dice dónde está. La
+alternativa —una tabla `trabajos` con su propia clave— habría duplicado el
+cliente, el motor y los ítems, y abierto la pregunta de qué pasa cuando el
+presupuesto se edita después de aprobado.
+
+Consecuencia buena: editar el presupuesto actualiza la orden de trabajo sola.
+Consecuencia a tener presente: desaprobar un presupuesto lo saca del panel del
+taller. Por eso el historial de movimientos NO se borra al desaprobar — si el
+motor vuelve, ahí está el recorrido anterior.
+
+## El tablero no muestra plata, pero sí muestra tiempo (2026-09-08)
+
+Un tablero de trabajos sin ningún número queda plano: no se distingue el motor
+que entró ayer del que está hace tres semanas. Como los precios no pueden estar,
+lo que se muestra es **tiempo**, que sale del historial sin que nadie cargue
+nada: hace cuántos días está el trabajo en el estado en que está, y si se pasó
+de la fecha prometida. Un trabajo quieto una semana se marca solo.
+
+La fecha prometida y la marca de urgente las pone la oficina (`oficina_required`
+dentro de `/api/taller`, que es el único lugar donde el rol se chequea por
+endpoint y no por el guard general). El taller las ve pero no las toca: son un
+compromiso con el cliente, y el cliente lo atiende la oficina.

@@ -31,6 +31,22 @@
   --status-aviso-bg:#f6efdf;
   --status-aviso-fg:#8a6520;
 
+  /* Los cuatro estados de un trabajo en el taller. Van de frío a verde a medida
+     que el motor avanza, para que el tablero se lea de un vistazo desde lejos:
+     gris = todavía no se tocó, ámbar = en la máquina, verde = listo,
+     azul apagado = ya salió del taller. */
+  --trabajo-aprobado-bg:#eceef0;
+  --trabajo-aprobado-fg:#565b66;
+  --trabajo-proceso-bg:#f6efdf;
+  --trabajo-proceso-fg:#8a6520;
+  --trabajo-terminado-bg:#e6f4ec;
+  --trabajo-terminado-fg:#1f7a46;
+  --trabajo-entregado-bg:#e8ecf4;
+  --trabajo-entregado-fg:#455170;
+  /* Urgente: el único rojo del tablero, para que signifique algo. */
+  --trabajo-urgente-bg:#f4e9e9;
+  --trabajo-urgente-fg:#a23b3b;
+
   /* Familia de medidas: la línea vertical que marca, de un vistazo, qué códigos
      son el mismo repuesto en distintas medidas (STD, 025, 050…). Es el único
      acento de color fuerte de la UI, a propósito: sin él las medidas hermanas

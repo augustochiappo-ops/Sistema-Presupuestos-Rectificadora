@@ -41,6 +41,7 @@ RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VENV="${VENV:-$RAIZ/.venv}"
 DATA_DIR="${DATA_DIR:-$RAIZ/.datos-dev}"
 USUARIO="${APP_USERNAME:-admin}"
+USUARIO_TALLER="${TALLER_USERNAME:-taller}"
 CORRIDA="${CORRIDA:-/tmp/rect-corrida}"   # logs y PIDs: son de la corrida, no se conservan
 
 BACKEND_URL="http://127.0.0.1:5000"
@@ -204,9 +205,14 @@ paso "Levantando el backend"
 # comilla o una barra en la contraseña romperían el comando.
 HASH="$(CLAVE="$APP_PASSWORD" "$VENV/bin/python" -c \
   "import os; from werkzeug.security import generate_password_hash as g; print(g(os.environ['CLAVE']))")"
+# La cuenta del taller usa LA MISMA contraseña que la de oficina, a propósito:
+# la regla de este proyecto es una sola contraseña dando vueltas (ver el CLAUDE.md).
+# Lo que cambia entre las dos cuentas es el usuario, que es lo que decide el rol.
+# En producción sí son dos contraseñas distintas, que las pone el dueño.
 cd "$RAIZ/webapp/backend"
 lanzar backend env "DATA_DIR=$DATA_DIR" "APP_USERNAME=$USUARIO" \
-  "APP_PASSWORD_HASH=$HASH" SESSION_COOKIE_SECURE=0 "$VENV/bin/python" wsgi.py
+  "APP_PASSWORD_HASH=$HASH" "TALLER_USERNAME=$USUARIO_TALLER" "TALLER_PASSWORD_HASH=$HASH" \
+  SESSION_COOKIE_SECURE=0 "$VENV/bin/python" wsgi.py
 cd "$RAIZ"
 
 paso "Levantando el frontend"
@@ -243,6 +249,18 @@ if [ "$CODIGO" != "200" ]; then
 fi
 ok "login OK con el usuario '$USUARIO'"
 
+# Lo mismo con la cuenta del taller: si no entra, la suite del taller moriría en
+# el login por un motivo que no tiene nada que ver con lo que está probando.
+CUERPO_TALLER="$(CLAVE="$APP_PASSWORD" USUARIO="$USUARIO_TALLER" "$VENV/bin/python" -c \
+  "import json, os; print(json.dumps({'usuario': os.environ['USUARIO'], 'password': os.environ['CLAVE']}))")"
+CODIGO="$(curl -s -o /dev/null -w '%{http_code}' -X POST "$BACKEND_URL/api/auth/login" \
+  -H 'Content-Type: application/json' --data-binary "$CUERPO_TALLER")"
+if [ "$CODIGO" != "200" ]; then
+  echo "  ✗ el login del taller devolvió $CODIGO con el usuario '$USUARIO_TALLER'" >&2
+  exit 1
+fi
+ok "login OK con el usuario '$USUARIO_TALLER' (rol taller)"
+
 # Un archivo para hacerle `source` desde cualquier comando posterior. Un proceso
 # hijo no le puede exportar variables al shell que lo llamó, y en Claude Code
 # cada comando corre en un shell nuevo: sin esto habría que repetir la clave y
@@ -251,6 +269,7 @@ ok "login OK con el usuario '$USUARIO'"
 {
   printf 'export DATA_DIR=%q\n' "$DATA_DIR"
   printf 'export APP_USERNAME=%q\n' "$USUARIO"
+  printf 'export TALLER_USERNAME=%q\n' "$USUARIO_TALLER"
   printf 'export APP_PASSWORD=%q\n' "$APP_PASSWORD"
   printf 'export VENV=%q\n' "$VENV"
 } > "$CORRIDA/entorno.sh"

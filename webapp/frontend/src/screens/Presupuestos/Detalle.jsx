@@ -21,6 +21,7 @@ import {
   subtotalDe, subtotalDelGrupo, lineaDeOpcion,
 } from '../../utils/grupos'
 import { textoSubtotal, unitarioDesdeSubtotal } from '../../utils/precios'
+import { estadoDe } from '../Taller/estados'
 import { CajaOpcionales, BotonOpcional } from '../../components/CajaOpcionales'
 import { useArrastreOpcionales } from '../../hooks/useArrastreOpcionales'
 import { useRepuestosAgrupados } from '../../hooks/useRepuestosAgrupados'
@@ -676,6 +677,11 @@ export default function DetallePresupuesto() {
                 >
                   {detalle.aprobado_en ? 'Aprobado' : 'Marcar aprobado'}
                 </Button>
+                {detalle.aprobado_en && (
+                  <Button variant="secondary" iconLeft={<Icon n="hard-hat" s={16} />} onClick={() => navigate(`/taller/${id}`)}>
+                    Ver en el taller
+                  </Button>
+                )}
                 <Button variant="secondary" iconLeft={<Icon n="cart" s={16} />} onClick={() => navigate(`/presupuestos/${id}/pedido`)}>
                   Pedido de repuestos
                 </Button>
@@ -724,6 +730,24 @@ export default function DetallePresupuesto() {
         <Campo label="Fecha" valor={formatFechaAR(detalle.fecha)} />
         {detalle.aprobado_en && (
           <Campo label="Aprobado" valor={<StatusBadge status="active">{formatFechaAR(detalle.aprobado_en)}</StatusBadge>} />
+        )}
+        {detalle.aprobado_en && (
+          <Campo
+            label="En el taller"
+            valor={
+              <span
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 12px',
+                  borderRadius: 'var(--radius-pill)', fontFamily: 'var(--font-body)',
+                  fontWeight: 'var(--weight-semibold)', fontSize: 'var(--text-xs)',
+                  background: estadoDe(detalle.estado_trabajo).bg,
+                  color: estadoDe(detalle.estado_trabajo).fg,
+                }}
+              >
+                {estadoDe(detalle.estado_trabajo).titulo}
+              </span>
+            }
+          />
         )}
         <Campo label="Total" valor={formatPrecioARS(editMode ? totalEditado : detalle.total)} />
         {editMode && (
@@ -1117,6 +1141,19 @@ export default function DetallePresupuesto() {
           <TextField as="textarea" rows={3} value={editNotas} onChange={(e) => setEditNotas(e.target.value)} />
         )}
       </div>
+
+      {/* Lo que el taller escribió sobre este motor. Es de sólo lectura acá: lo
+          edita el taller desde su pantalla, la oficina lo lee. */}
+      {detalle.notas_taller && (
+        <div style={{ padding: '14px 18px', background: 'var(--trabajo-proceso-bg)', borderRadius: 'var(--radius-xl)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--trabajo-proceso-fg)', marginBottom: 6 }}>
+            <Icon n="message-square" s={14} /> Nota del taller
+          </div>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-body)', margin: 0, whiteSpace: 'pre-wrap' }}>
+            {detalle.notas_taller}
+          </p>
+        </div>
+      )}
 
       {!editMode && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '18px 22px', background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)' }}>

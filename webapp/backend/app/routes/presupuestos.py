@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, jsonify, request, send_from_directory, abort
+from flask import Blueprint, jsonify, request, send_from_directory, abort, session
 
 from .. import db, facra, pdf_gen, config, crac
 from ..auth import login_required
@@ -790,7 +790,13 @@ def aprobar(presupuesto_id):
         return jsonify({"error": "Presupuesto no encontrado"}), 404
     data = request.get_json(silent=True) or {}
     aprobado = bool(data.get("aprobado", True))
-    return jsonify({"aprobado_en": db.aprobar_presupuesto(presupuesto_id, aprobado)})
+    # Aprobar es lo que manda el motor al panel del taller: queda en estado
+    # "Para hacer" y desde ahí lo mueve el taller.
+    aprobado_en = db.aprobar_presupuesto(presupuesto_id, aprobado, session.get("usuario"))
+    return jsonify({
+        "aprobado_en": aprobado_en,
+        "estado_trabajo": db.ESTADO_APROBADO if aprobado else None,
+    })
 
 
 @bp.get("/<int:presupuesto_id>/revalidacion")
