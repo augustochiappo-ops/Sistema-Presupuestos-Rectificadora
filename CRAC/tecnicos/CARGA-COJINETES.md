@@ -52,8 +52,11 @@ curl -sSL -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/octet
   -o CRAC/tecnicos/fuentes/glyco_cojinetes_2023.pdf \
   "$(curl -sS -H "Authorization: Bearer $GITHUB_TOKEN" \
       https://api.github.com/repos/augustochiappo-ops/Sistema-Presupuestos-Rectificadora/releases/tags/catalogos \
-      | grep -o '"url": "[^"]*assets/[0-9]*"' | head -1 | cut -d'"' -f4)"
+      | jq -r '.assets[] | select(.name|startswith("FM.-.Glyco")) | .url')"
 ```
+
+El asset se elige **por nombre y no por posición**: en ese release vive también
+el catálogo Mahle 2019 de 242 páginas, que usan los pistones.
 
 Si el archivo no está, el script avisa y sigue: los códigos Glyco quedan sin
 medidas, pero Mahle y Federal Mogul se cargan igual.

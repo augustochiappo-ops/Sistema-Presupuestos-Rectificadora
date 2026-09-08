@@ -1514,3 +1514,63 @@ real, y el `getpass` queda como la alternativa para quien la prefiera.
 La regla general: cuando el paso lo ejecuta el dueño y no Claude, el costo de un
 malentendido es una vuelta entera de ida y vuelta por chat. Conviene gastar dos
 renglones de más en decir qué texto va a dónde.
+
+## La ventana del dibujo no se ensancha para arañar 27 fichas (2026-09-08)
+
+**Contexto:** el Mahle 2019 brasileño (242 páginas, el del release `catalogos`)
+no usa la plantilla rígida del tomo de Caterpillar. Ahí el dibujo del pistón está
+**siempre** a 28 puntos por debajo de su fila; acá, midiendo las 88 páginas de
+pistones, cae a 21 (79 veces), 28 (56), 30 (19), 36 (11), 38 (9) y 46 (5), y a
+veces un mismo dibujo encabeza un bloque de varias filas.
+`fotos_desde_catalogo_mahle.py` busca en una ventana de 10 a 45 puntos: sacó 29
+fotos y salteó 27 filas que también hacían falta.
+
+**La decisión:** dejar la ventana como está. Ensancharla hasta 46 o 50 puntos
+empieza a alcanzar al dibujo de la fila de abajo, y esas fichas quedarían con un
+dibujo que no es el suyo **sin que nada avise**. Un guión en la columna dice "no
+sé"; el pistón equivocado dice algo falso con toda seguridad, y quien arma el
+presupuesto no tiene cómo notarlo. Las 27 salen con el recorte a mano de siempre
+—que ya está documentado y probado— o con el tomo del fabricante cuando aparezca.
+
+Vale como criterio general para los extractores de este repo: cuando la
+alternativa a un dato faltante es un dato probablemente equivocado, gana el dato
+faltante. Es la misma regla que "un dato que no está no se inventa", aplicada a
+una imagen.
+
+**Fecha:** 2026-09-08
+
+## Un catálogo nuevo se identifica por md5, no por el nombre (2026-09-08)
+
+**Contexto:** el dueño adjuntó un PDF llamado `MahleClevite_202021.pdf`. Por el
+nombre parecía el Mahle Clevite 2019/2020, que además figura en la memoria como
+"descartado". Era, byte a byte, el tomo de Caterpillar y Cummins que ya estaba en
+`fuentes/` (mismo md5, 4.740.858 bytes).
+
+**La decisión:** antes de procesar un catálogo que llega, correr `md5sum` contra
+los que ya están en `CRAC/tecnicos/fuentes/`. Cuesta un segundo y evita una
+corrida entera —rasterizar 242 páginas son varios minutos— sobre un archivo que
+ya se leyó. El nombre del archivo no es evidencia de nada: lo pone quien lo
+descarga.
+
+**Fecha:** 2026-09-08
+
+## En el release `catalogos`, el asset se elige por nombre (2026-09-08)
+
+**Contexto:** el comando de descarga que quedó escrito en `CARGA-COJINETES.md`
+agarraba el primer asset del release con `head -1`. Funcionaba porque había uno
+solo. Al subir el Mahle 2019 pasó a haber dos, y "el primero" dejó de ser una
+descripción de nada.
+
+**La decisión:** los dos comandos de descarga (el de Glyco y el del Mahle 2019)
+seleccionan el asset **por su nombre** con `jq`:
+
+```bash
+jq -r '.assets[] | select(.name|startswith("FM.-.Glyco")) | .url'
+```
+
+El release va a seguir creciendo —es el lugar donde viven los catálogos que no
+entran en el repo— y un comando que depende del orden se rompe callado: baja el
+archivo equivocado con el nombre correcto.
+
+**Fecha:** 2026-09-08
+

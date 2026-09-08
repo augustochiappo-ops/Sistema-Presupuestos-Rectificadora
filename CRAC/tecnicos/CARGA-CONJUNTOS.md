@@ -165,13 +165,38 @@ muestra con un "?" y el motivo en el tooltip.
 El dibujo del pistón se comparte con el subconjunto del mismo número, así que
 **los 15 que ya tenían ficha ya tienen dibujo**. Para los demás:
 
-**Si está el tomo del catálogo, no hay que recortar nada** (2026-09-08). La
-serie MAHLE Aftermarket viene un tomo por fabricante de motor, y
-`scripts/fotos_desde_catalogo_mahle.py --pdf <tomo>` deja las fotos ya
+**Si está el catálogo, no hay que recortar nada** (2026-09-08).
+`scripts/fotos_desde_catalogo_mahle.py --pdf <catálogo>` deja las fotos ya
 recortadas en `CRAC/tecnicos/fuentes/pistones/`, listas para el paso 3. Con
-`--ver` dice qué sacaría sin escribir nada. En el repo está el tomo de
-Caterpillar y Cummins (`fuentes/mahle_aftermarket_2019_cat_cummins.pdf`); del
-resto de los fabricantes todavía no hay tomo.
+`--ver` dice qué sacaría sin escribir nada. Hay dos catálogos de Mahle para
+darle de comer, y son distintos entre sí:
+
+* **`fuentes/mahle_aftermarket_2019_cat_cummins.pdf`**, que está en el repo. Es
+  un tomo de la serie MAHLE Aftermarket, que viene **un tomo por fabricante de
+  motor**: éste es el de Caterpillar y Cummins.
+* **`fuentes/mahle_2019_completo.pdf`** — el Mahle 2019 brasileño de 242
+  páginas (pistones, camisas, kits y bronzinas), con **todos los fabricantes
+  juntos**; los pistones van de la página 35 a la 122. **No está en el repo**:
+  pesa 14,6 MB y el repo entero se copia a PythonAnywhere en cada deploy, así
+  que vive en el release `catalogos` de GitHub, igual que el de Glyco. Se baja
+  una vez y queda:
+
+  ```bash
+  curl -sSL -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/octet-stream" \
+    -o CRAC/tecnicos/fuentes/mahle_2019_completo.pdf \
+    "$(curl -sS -H "Authorization: Bearer $GITHUB_TOKEN" \
+        https://api.github.com/repos/augustochiappo-ops/Sistema-Presupuestos-Rectificadora/releases/tags/catalogos \
+        | jq -r '.assets[] | select(.name|startswith("Mahle-Pistones")) | .url')"
+  ```
+
+**El de 242 páginas no usa la plantilla rígida del tomo.** En el de Caterpillar
+el dibujo está siempre a 28 puntos por debajo de su fila; en el brasileño cae a
+21, 28, 30, 36 o 46 según la página, y a veces un mismo dibujo encabeza un
+bloque de varias filas. El script trabaja con una ventana de 10 a 45 puntos, así
+que **saca los que caen adentro y saltea el resto** — los que saltea los lista al
+final de la corrida. Ensanchar la ventana no es gratis: a 46 puntos ya se corre
+el riesgo de colgarle a un pistón el dibujo del vecino, y un dibujo equivocado es
+peor que el guión que la pantalla muestra hoy.
 
 **Si no está el tomo**, sigue valiendo el camino de siempre:
 
@@ -190,34 +215,43 @@ resto de los fabricantes todavía no hay tomo.
 
 ## Los que todavía no tienen dibujo (al 2026-09-08)
 
-Faltan **105 códigos, 104 números distintos** — el conjunto y el
+Faltan **76 códigos, 75 números distintos** — el conjunto y el
 subconjunto del mismo número comparten dibujo, y `T BEK76560` / `T BEK76560WS`
 son la misma pieza con y sin orings de camisa.
 
-**Ninguno está en el volumen de Caterpillar y Cummins**, que es el único catálogo
-de Mahle que hay en el repo. La serie MAHLE Aftermarket viene un tomo por
-fabricante de motor, así que lo que falta se pide por tomo:
+**Eran 105 hasta el 2026-09-08**, cuando el Mahle 2019 brasileño destrabó 29 de
+una corrida: 8 de Mercedes-Benz, 6 de Scania, 5 de MWM, 2 de Renault, 2 de Ford
+y uno de Fiat, Chevrolet, Maxion, Valtra, Honda y Deutz.
+
+De los 76 que quedan, **ninguno sale de los dos catálogos que tenemos**. Lo que
+falta se pide por tomo de la serie MAHLE Aftermarket, que viene uno por
+fabricante de motor:
 
 | Fabricante | Códigos |
 |---|---|
-| SCANIA | 21 |
-| M.BENZ | 19 |
 | VOLVO | 15 |
-| MWM | 13 |
-| RENAULT | 6 |
-| FORD | 5 |
+| SCANIA | 15 |
+| M.BENZ | 11 |
+| MWM | 8 |
 | J.DEERE | 5 |
 | IVECO | 4 |
+| RENAULT | 4 |
+| FORD | 3 |
 | PEUGEOT | 3 |
-| DEUTZ | 3 |
-| FIAT | 2 |
 | NEW HOLLAND | 2 |
+| DEUTZ | 2 |
 | VW | 2 |
-| CHEVROLET | 1 |
 | PERKINS | 1 |
-| MAXION | 1 |
-| VALTRA | 1 |
-| HONDA | 1 |
+| FIAT | 1 |
+
+**El tomo de Volvo es el que más rinde**: 15 códigos, y el catálogo brasileño no
+le tocó ninguno.
+
+**27 de los 76 sí están en el catálogo brasileño**, pero con el dibujo en una
+posición que el script no toma (ver arriba, en "Los dibujos"): los lista al final
+de cada corrida con `--ver`. Para ésos alcanza con el recorte a mano de siempre,
+que es más rápido que ensanchar la ventana y arriesgarse a colgar el dibujo del
+vecino.
 
 Con el tomo que corresponda, las de esa marca salen de una corrida:
 `scripts/fotos_desde_catalogo_mahle.py --pdf <tomo>` y después
@@ -228,22 +262,18 @@ captura de la fila —con las dos vistas del pistón— guardada en
 Mientras tanto la pantalla les muestra un guión en la columna de dibujo, que es
 lo correcto: no sale a pedir una imagen que no está.
 
-### Subconjuntos (10)
+### Subconjuntos (6)
 
 | Código del proveedor | Cód. fábrica | Motor |
 |---|---|---|
-| `S BE 48030` | `S BE 48030` | M.BENZ COMPRESOR 94 mm |
 | `S BE 48415` | `S BE 48415` | M.BENZ OM366-OM364 (2 CIL) (-0,3) 97,5mm |
 | `S BE 48416` | `S BE 48416` | M.BENZ OM366-OM364 (2 CIL) (-0,6) 97,5mm |
 | `S BE 48520` | `S BE 48520` | M.BENZ OM366LA E1 B/Tr54,7(2 CIL)97,5 mm |
 | `S BE 48530` | `S BE 48530` | M.BENZ OM366LA (CAM.54,7) (2 CIL)97,5 mm |
 | `S BE 57120` | `S BE 57120` | PERKINS 4.203 (C/POZO) 3.601 |
-| `S BE 57450` | `S BE 57450` | MAXION S4T PLUS 101 mm |
-| `S BE14185` | `S BE14185` | CHEVROLET CORSA 1.6 79 mm |
-| `S BE25127` | `S BE25127` | FIAT 147 1.3D A.C.-0.5 76 mm |
 | `S BE591015` | `S BE591015` | FORD FOCUS 2.0 16V CJBA P.21 87,50 mm |
 
-### Conjuntos (95)
+### Conjuntos (70)
 
 | Código del proveedor | Cód. fábrica | Motor |
 |---|---|---|
@@ -253,29 +283,19 @@ lo correcto: no sale a pedir una imagen que no está.
 | `T BEK10330` | `K10330` | IVECO CURSOR 8 F2BE E3 Pz.84/62(UN) 115m |
 | `T BEK10530` | `K10530` | IVECO CURSOR 13 24V E5 (UN) 135 mm |
 | `T BEK130030` | `K130030` | MWM 4.12TCE-6.12TCE E5 (Pz.DOBLE) 105 mm |
-| `T BEK13250` | `K13250` | MWM D226 P.32 A.C. 59,80 (2 CIL) 105 mm |
 | `T BEK13603` | `K13603` | MWM 229 (UN) 102 mm |
-| `T BEK13800` | `K13800` | MWM 229TD P.35 PZ.52,4 102 mm |
 | `T BEK13860` | `K13860` | MWM 4.12TCE-6.12TCE (UN) S/C Pz.61 105mm |
 | `T BEK13885` | `K13885` | MWM 4.12TCE-6.12TCE (1 CIL) 105 mm |
 | `T BEK13897` | `K13897` | MWM 4.12TCE E3 (1 CIL)(105L80A1+2)105 mm |
 | `T BEK13905` | `K13905` | MWM 4.12TCE-6.12TCE E3 (1 CIL) 105 mm |
 | `T BEK13910` | `K13910` | MWM 4.10-6.10 (1 CIL)(103L20A1) 103 mm |
-| `T BEK13920` | `K13920` | MWM 6.10-6.10TCA (1 CIL) (103L02) 103 mm |
-| `T BEK13930` | `K13930` | MWM 4.10TCA-6.10TCA (2 CIL)(103L18A1)103 |
 | `T BEK13940` | `K13940` | MWM 4.10TCA-6.10TCA (1 CIL)(103L11)103mm |
-| `T BEK13966` | `K13966` | MWM 4.07TCE (2 CIL) (NIS)(93L45A1) 93 mm |
 | `T BEK18510` | `K18510` | RENAULT 18 1.4 Jrs 76 mm |
-| `T BEK18730` | `K18730` | RENAULT 12 1.3 A/C 73 mm |
-| `T BEK18750` | `K18750` | RENAULT CLIO 1.4 75,80 mm |
 | `T BEK18771` | `K18771` | RENAULT 9 1600 CC 77 mm |
 | `T BEK18860` | `K18860` | RENAULT TRAFIC 2.1D 86 mm |
-| `T BEK26040` | `K26040` | FORD CARGO 4600-5600 (NEW HOL) 111,80 mm |
-| `T BEK26060` | `K26060` | FORD CARGO 5600-5610 (NEW HOL) 111,80 mm |
 | `T BEK26070` | `K26070` | FORD CARGO 4610-6610 (1 CIL) 111,80 mm |
 | `T BEK26610` | `K26610` | NEW HOLLAND 8030 P.38 PZ.62 A/C 73 111.8 |
 | `T BEK26620` | `K26620` | NEW HOLLAND 8030 (P.41)(1 CIL) 111,80 mm |
-| `T BEK31150` | `K31150` | VALTRA 420-620 TURBO PZ.70 P.40 108 mm |
 | `T BEK430375WS` | `K430375WS` | J.DEERE 6068HBM P.41 Pz.78 (UN) 106,5 mm |
 | `T BEK430425WS` | `K430425WS` | J.DEERE 4045HBM P.35 Pz.58 106,5 mm |
 | `T BEK430450WS` | `K430450WS` | J.DEERE 4045H-6068H (UN) 106,5 mm |
@@ -285,23 +305,14 @@ lo correcto: no sale a pedir una imagen que no está.
 | `T BEK44165` | `K44165` | PEUGEOT 504 2.0 8,8:1 (<86) 88 mm |
 | `T BEK44700` | `K44700` | PEUGEOT XU7JPZ 1762 CC 83 mm |
 | `T BEK48170` | `K48170` | M.BENZ OM442LA (1 CIL) 128 mm |
-| `T BEK482020WS` | `K482020WS` | M.BENZ OM457LA E3 (1 CIL) 128 mm |
-| `T BEK482030WS` | `K482030WS` | M.BENZ OM457LA E3/E5 (1 CIL)S/BUJE 128mm |
 | `T BEK482040WS` | `K482040WS` | M.BENZ OM457LA E5 (1 CIL) C/BUJE 128 mm |
 | `T BEK482080` | `K482080` | M.BENZ OM501-502-542 Pz.93 (UN) 130 mm |
 | `T BEK48320` | `K48320` | M.BENZ OM924LA-OM926LA E5 (2 CIL) 106 mm |
 | `T BEK48930` | `K48930` | M.BENZ OM447A-449LA ->95 (1 CIL) 128 mm |
-| `T BEK48933` | `K48933` | M.BENZ OM447A-449LA ->95 (-0,3) 128 mm |
 | `T BEK48940` | `K48940` | M.BENZ OM447A-449LA 95-> (1 CIL) 128 mm |
-| `T BEK48943` | `K48943` | M.BENZ OM447A-449LA 95-> (-0,3) 128 mm |
-| `T BEK48964` | `K48964` | M.BENZ OM457LA INY.EL. EURO2/3 128 mm |
 | `T BEK48967WS` | `K48967WS` | M.BENZ OM457LA EURO V (1 CIL) 128 mm |
-| `T BEK48979WS` | `K48979WS` | M.BENZ OM460LA |
-| `T BEK48990` | `K48990` | M.BENZ OM457LA INY.EL.Pz.90 P.52 128 mm |
-| `T BEK50135` | `K50135` | DEUTZ 913 ECOL.3R C/C Pz.54,5 124*102mm |
 | `T BEK50181` | `K50181` | DEUTZ 913 ECOL.3R P.35 Pz.45 120 102 mm |
 | `T BEK50240` | `K50240` | DEUTZ 1013 (TETON CHATO)(1 CIL) 108 mm |
-| `T BEK51200` | `K51200` | HONDA BIZ 125 (1 CIL) CARBURADO 52,40 mm |
 | `T BEK59201` | `K59201` | FORD ESCORT 1.6 CHT 77 mm |
 | `T BEK70022` | `K70022` | VW KOMBI 1.3 77 mm |
 | `T BEK70150` | `K70150` | VW KOMBI 1600 85,5 mm |
@@ -323,23 +334,17 @@ lo correcto: no sale a pedir una imagen que no está.
 | `T BEK71860 WS` | `K71860 WS` | VOLVO D13A 400-440 (1 CIL) 131 mm |
 | `T BEK760300` | `K760300` | SCANIA DC12 380 S5 ARTIC.(1 CIL) 127 mm |
 | `T BEK76061` | `K76061` | SCANIA DSC14 P.50 Pz.75 (UN) 127 mm |
-| `T BEK760730` | `K760730` | SCANIA DC13 E5 5/6 CIL. (UN) 130 mm |
 | `T BEK760820` | `K760820` | SCANIA DC9 20V E5 P.58 A/C 92,04 130 mm |
 | `T BEK76200` | `K76200` | SCANIA DSC9 P94 (1 CIL) 115 mm |
 | `T BEK76520` | `K76520` | SCANIA 110 S/TURBO (1 CIL) 127 mm |
-| `T BEK76540WS` | `K76540WS` | SCANIA DS11 (1 CIL) 127 mm |
 | `T BEK76550` | `K76550` | SCANIA 112T 1§T (1 CIL) 127 mm |
-| `T BEK76551` | `K76551` | SCANIA 112T 1§T (1 CIL)(A.C.-0,4) 127 mm |
 | `T BEK76560` | `K76560` | SCANIA 113H (DSC11) 93/95 (UN) 127 mm |
 | `T BEK76560WS` | `K76560WS` | SCANIA 113H (DSC11) 93/95 (UN) 127 mm |
 | `T BEK76564` | `K76564` | SCANIA 113H (DSC11) 93/95(-0,4)(UN) 127 |
 | `T BEK76570` | `K76570` | SCANIA 113 (DSC11) 95--> A/C 100 127 mm |
 | `T BEK76574` | `K76574` | SCANIA 113 (DSC11) 95--> (-0,4) 127 mm |
-| `T BEK76590WS` | `K76590WS` | SCANIA DC11 360CV CAM.150 (UN) 127 mm |
 | `T BEK76595` | `K76595` | SCANIA DC11 EVO 5 CAM.151 (UN) 127 mm |
-| `T BEK76650` | `K76650` | SCANIA DSC12 S4 360CV (1 CIL) 127 mm |
 | `T BEK76655` | `K76655` | SCANIA DSC12 S4 400CV (1 CIL) 127 mm |
-| `T BEK76670` | `K76670` | SCANIA DSC12 S4 420CV ARTIC.(1 CIL)127mm |
 | `T BEK76675WS` | `K76675WS` | SCANIA DC12 S4 420 CV (ARTIC) 127 mm |
 | `T BEK76680WS` | `K76680WS` | SCANIA DC9-DC11 CAM.151 P/EMB.(UN) 127mm |
 

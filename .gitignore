@@ -41,3 +41,10 @@ tests/capturas/
 # junto. Vive en el release "catalogos" del repo; cómo bajarlo está en
 # CRAC/tecnicos/CARGA-COJINETES.md.
 CRAC/tecnicos/fuentes/glyco_cojinetes_2023.pdf
+
+# Catálogo Mahle 2019 completo, el brasileño de 242 páginas (14,6 MB): pistones,
+# camisas, kits y bronzinas. Mismo criterio que el de Glyco: no se versiona
+# porque el repo entero se copia a PythonAnywhere en cada deploy. Vive en el
+# release "catalogos" del repo; cómo bajarlo está en
+# CRAC/tecnicos/CARGA-CONJUNTOS.md.
+CRAC/tecnicos/fuentes/mahle_2019_completo.pdf

@@ -1701,6 +1701,85 @@ oficina, y el PDF de la orden leído para confirmar que no tiene un `$`. Y por
 último, en producción y por el dueño: la cuenta del taller entrando de verdad.
 
 
+## Sesión 2026-09-08 (quinta) — El catálogo brasileño, 29 dibujos más
+
+El dueño subió al release `catalogos` de GitHub un catálogo de Mahle que
+**resultó no ser un tomo más de la serie**, sino el **Mahle 2019 brasileño
+completo**: 242 páginas de pistones, camisas, kits y bronzinas, con todos los
+fabricantes juntos (los pistones van de la página 35 a la 122). De ahí salieron
+**29 fotos, 28 dibujos distintos**, y los códigos sin dibujo pasaron de **105 a
+76**.
+
+Los 29 son 8 de Mercedes-Benz, 6 de Scania, 5 de MWM, 2 de Renault, 2 de Ford y
+uno de Fiat, Chevrolet, Maxion, Valtra, Honda y Deutz. El circuito fue el de
+siempre, sin tocar una línea de código:
+
+    .venv/bin/python scripts/fotos_desde_catalogo_mahle.py --pdf CRAC/tecnicos/fuentes/mahle_2019_completo.pdf
+    .venv/bin/python scripts/recortar_pistones_mahle.py --hoja
+
+El control del paso 4 pasó limpio: `git status webapp/frontend/public/pistones/`
+mostró **29 PNG nuevos y ni un archivo viejo modificado**, y el manifiesto
+`dibujos-pistones.js` creció 29 líneas sin borrar ninguna.
+
+### El PDF adjunto en el chat era un archivo que ya teníamos
+
+El dueño adjuntó además un PDF llamado `MahleClevite_202021.pdf`. Es **byte a
+byte el tomo de Caterpillar y Cummins que ya está en el repo** (mismo MD5,
+4.740.858 bytes): el nombre engaña, el contenido no. Cuando llegue un catálogo
+que "parece nuevo", el `md5sum` contra los que ya están en `fuentes/` cuesta un
+segundo y evita una corrida entera.
+
+### El brasileño no usa la plantilla rígida del tomo
+
+En el tomo de Caterpillar el dibujo está **siempre** a 28 puntos por debajo de su
+fila —se midió en las 32 páginas y no varía ni una décima—. En el brasileño no:
+midiendo las 88 páginas de pistones, el dibujo cae a 21 puntos (79 veces), 28
+(56), 30 (19), 36 (11), 38 (9) y 46 (5), y a veces un mismo dibujo encabeza un
+bloque de varias filas. La ventana del script es de 10 a 45 puntos, así que sacó
+lo que caía adentro y salteó el resto.
+
+**Los 27 que salteó se dejaron salteados a propósito.** Ensanchar la ventana
+hasta 46 empieza a alcanzar al dibujo de la fila de abajo, y un dibujo
+equivocado en una ficha de pistón es peor que el guión que la pantalla muestra
+hoy: el guión dice "no sé", el dibujo de otro pistón dice algo falso con toda
+seguridad. Los 27 salen con el recorte a mano de siempre, o con el tomo del
+fabricante cuando aparezca. El script los lista al final de cada corrida `--ver`.
+
+### Un check de la suite de UI se quedó viejo solo
+
+`ui_medidas.mjs` verifica que un subconjunto **sin** dibujo muestre un guión y no
+un cuadrito roto, y el código que usaba de ejemplo era `S BE25127` — que en esta
+tanda **pasó a tener dibujo**. El check falló sin que la app tuviera nada malo:
+lo que envejeció fue el ejemplo. Se cambió por `S BE591015` (Ford Focus), que
+sigue sin dibujo, y quedó un comentario arriba avisando que ese código se vuelve
+a quedar viejo con el próximo catálogo. La lista al día está en
+`CARGA-CONJUNTOS.md`.
+
+Es una familia de check que tiene esa fragilidad de fábrica: verifica una
+ausencia, y las ausencias de este proyecto se van llenando. No se saca —cubre
+algo real, que la pantalla no salga a pedir una imagen que no está—, pero cada
+catálogo nuevo obliga a mirarlo.
+
+### Y una perdida de tiempo evitable: se tocó git con la suite corriendo
+
+La primera corrida de `ui_medidas.mjs` se hizo en paralelo con un `git checkout`
++ rebase de esta misma rama. El checkout **borró los 29 PNG y revirtió el
+manifiesto** por unos segundos (master todavía no tenía el commit) y el servidor
+de Vite se quedó sirviendo el manifiesto viejo. Resultado: el diagnóstico del
+fallo salió al revés y hubo que levantar el entorno de nuevo y repetir los siete
+minutos. Es exactamente la quinta regla del CLAUDE.md —mientras corre una suite
+no se toca el entorno— con una variante que no estaba escrita: **git también es
+tocar el entorno**, aunque el que corre sea un comando de versionado y no un
+servidor.
+
+### El PDF quedó fuera del repo, como el de Glyco
+
+14,6 MB, y el repo entero se copia a PythonAnywhere en cada deploy. Va en
+`.gitignore` y vive en el release `catalogos`; cómo bajarlo está en
+`CARGA-CONJUNTOS.md`. Como el release ya tiene **dos** assets, el comando de
+descarga de `CARGA-COJINETES.md` —que agarraba el primero con `head -1`— pasó a
+elegir **por nombre** con `jq`. Con un solo asset funcionaba de casualidad.
+
 ## Próximo paso
 
 **El mensaje de error del login no dice nada (2026-09-08).** Es lo único que
@@ -1712,24 +1791,24 @@ incorrectos", que es lo que el servidor manda de verdad. El culpable es
 mensaje real nunca llega a la pantalla. Con `/auth/login` habría que leer el
 cuerpo y usar `data.error`. Es un bug viejo, no de esta tanda, y son dos líneas.
 
-**Los 104 dibujos de Mahle que faltan, y son de otros tomos (2026-09-08).**
+**Los 76 dibujos de Mahle que faltan, y son de otros tomos (2026-09-08).**
 
-El dueño pasó el **MAHLE Aftermarket 2019/2020**, que resultó ser el tomo de
-**Caterpillar y Cummins**: cubrió 19 de los 123 que faltaban y ya están en la
-app. La serie viene **un tomo por fabricante de motor**, así que lo que queda se
-pide por tomo. Con estos cuatro se cubren 68 de los 105 códigos:
+Eran 123. El tomo de **Caterpillar y Cummins** cubrió 19 y el **Mahle 2019
+brasileño** otros 29 (ver la sesión quinta, arriba). Los 76 que quedan son de
+tomos que no tenemos, y la serie MAHLE Aftermarket viene **un tomo por fabricante
+de motor**, así que lo que falta se pide por tomo. Con estos cuatro se cubren 49
+de los 76:
 
 | Tomo | Códigos que destraba |
 |---|---|
-| Scania | 21 |
-| Mercedes-Benz | 19 |
 | Volvo | 15 |
-| MWM | 13 |
+| Scania | 15 |
+| Mercedes-Benz | 11 |
+| MWM | 8 |
 
-Después, la cola: Renault 6, Ford 5, John Deere 5, Iveco 4, Peugeot 3, Deutz 3,
-Fiat 2, New Holland 2, VW 2, y uno cada uno de Chevrolet, Perkins, Maxion,
-Valtra y Honda. La lista completa, código por código, está en
-`CRAC/tecnicos/CARGA-CONJUNTOS.md`.
+Después, la cola: John Deere 5, Iveco 4, Renault 4, Ford 3, Peugeot 3, New
+Holland 2, Deutz 2, VW 2, Perkins 1 y Fiat 1. La lista completa, código por
+código, está en `CRAC/tecnicos/CARGA-CONJUNTOS.md`.
 
 **Con el tomo, no hay nada que recortar a mano:**
 
@@ -1738,12 +1817,14 @@ python3 scripts/fotos_desde_catalogo_mahle.py --pdf <tomo>   # deja las fotos
 python3 scripts/recortar_pistones_mahle.py --hoja            # las mete a la app
 ```
 
-El script está probado contra este tomo y sabe leer la plantilla de la serie
-entera. Si de algún fabricante no aparece el tomo, sirve igual una captura de la
-fila —con las dos vistas del pistón— guardada en `CRAC/tecnicos/fuentes/pistones/`
-con el número en el nombre, que es como se venía haciendo.
+El script está probado contra los dos catálogos y sabe leer la plantilla de la
+serie entera. Si de algún fabricante no aparece el tomo, sirve igual una captura
+de la fila —con las dos vistas del pistón— guardada en
+`CRAC/tecnicos/fuentes/pistones/` con el número en el nombre, que es como se
+venía haciendo. **27 de los 76 están en el brasileño** pero con el dibujo en una
+posición que el script no toma: para ésos el recorte a mano es el camino corto.
 
-Mientras tanto los 105 muestran un guión en la columna de dibujo, que es lo
+Mientras tanto los 76 muestran un guión en la columna de dibujo, que es lo
 correcto: la pantalla nunca sale a pedir una imagen que no está.
 
 ---

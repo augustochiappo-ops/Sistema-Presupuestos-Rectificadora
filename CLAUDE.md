@@ -120,6 +120,11 @@ minutos, 2026-08-19). Ninguna sacrifica cobertura: lo que atacan es desperdicio.
    contra esa base y se queda sin datos a mitad de camino. Pasó el 2026-08-19,
    con la suite ya lanzada: se perdieron los 7 minutos completos. Si hay que
    tocar el entorno, primero se espera a que termine.
+   **`git` también es tocar el entorno**: un `checkout`, un `merge` o un
+   `rebase` cambian los archivos que el servidor de Vite está sirviendo. El
+   2026-09-08 un checkout borró por unos segundos los PNG que la suite estaba
+   verificando y el fallo que salió no era el real. Commitear sí se puede —no
+   toca el árbol de trabajo—; cambiar de rama, no.
 
 ### Una sola contraseña en todo el proyecto
 

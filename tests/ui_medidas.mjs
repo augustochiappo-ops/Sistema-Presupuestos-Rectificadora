@@ -253,7 +253,11 @@ check('y el dibujo carga de verdad',
   await mini.evaluate((img) => img.complete && img.naturalWidth > 0),
   await mini.getAttribute('src'))
 // Un subconjunto todavía sin foto no puede quedar con un cuadrito roto.
-await page.fill('input[placeholder="Código…"]', 'S BE25127')
+// OJO: este código se queda viejo solo. Cuando entra un catálogo nuevo, el que
+// estaba acá puede pasar a TENER dibujo y el check falla sin que la app tenga
+// nada malo (pasó el 2026-09-08 con `S BE25127`). La lista al día de los que
+// siguen sin dibujo está en CRAC/tecnicos/CARGA-CONJUNTOS.md.
+await page.fill('input[placeholder="Código…"]', 'S BE591015')
 await esperar(1200)
 check('el que no tiene dibujo va con un guión, sin imagen rota',
   await filas().nth(0).locator('img').count() === 0
