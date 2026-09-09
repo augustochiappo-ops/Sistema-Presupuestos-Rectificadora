@@ -2034,11 +2034,62 @@ Falta también corregir un renglón de esta memoria: la sesión quinta dice que 
 que hay". La fuente existe y es este PDF; el `.txt` del repo
 (`persan_pistones.txt`, 58 KB) es una foto vieja y parcial, sin imágenes.
 
-**Lo primero al bajarlo, antes de escribir una línea**: `pdftotext` o pypdf sobre
-una página de tabla. Drive no devolvió el texto de las páginas de tabla —sólo el
-de la portada—, así que **no está confirmado que tenga capa de texto**. Si sale
-vacío es un escaneo y hay que ir por OCR o recorte a mano: se corta ahí y se
-avisa.
+**El PDF ya se bajó y se investigó (2026-09-08, fin de la sesión sexta), y lo que
+sigue es mecánico.** Esto es lo que quedó averiguado, que es la parte difícil:
+
+* **Tiene capa de texto en las 204 páginas** (0 sin texto, mediana 2.408
+  caracteres). No es un escaneo.
+* **187 páginas son de tabla** (5 a 203), 8 son el índice por diámetro (7 a 14).
+  De las 187 salen **652 registros de pistón**.
+* **La tabla NO se puede leer como texto lineal**: cada pistón ocupa cinco o seis
+  líneas y la lectura lineal las entrevera. Hay que ir por posiciones, con
+  `visitor_text`, como hace `convertir_cojinetes.py`.
+* **El mapeo de columnas está PROBADO**, campo por campo, contra el pistón 82 que
+  ya estaba cargado. Los offsets van relativos a la x de la columna del Nº de
+  pistón (la x absoluta se corre unos 9 puntos entre página par e impar), con
+  tolerancia de 7:
+
+  | Offset | Columna | Dónde |
+  |---|---|---|
+  | 0 | Nº de pistón | sólo en la línea 0 |
+  | 29 | texto | L0 motor · L1 cilindrada + R.C. · L2-L3 aplicación |
+  | 168 | cilindros | L0 |
+  | 194 | características | |
+  | 243 | Ø del pistón | L0 |
+  | 277 | altura de compresión (L0) · "+ ó -" (L1) · largo total (L3) | |
+  | 311 | cámara de combustión Ø | |
+  | 346 | Ø del perno (L0) · largo del perno (L2) | |
+  | 353 | hermanado | última línea |
+  | 382 | espesores de aros | L0, L1, L2 |
+  | 416 | huelgo (L0) · altura de medición | |
+  | 460 | medidas de fabricación | una por línea |
+
+* **Hay que volver a pegar los fragmentos antes de clasificar la columna.** La
+  fuente del catálogo (Montserrat) lleva kerning y pypdf corta el fragmento ahí:
+  "96,50" sale como "96" y ",50" con menos de 3 puntos de separación. Sin pegarlos
+  el largo total sale "96" y el dato queda mal por medio milímetro, que es peor
+  que no tenerlo. Se juntan los fragmentos contiguos de la misma banda de y.
+* **Validado contra las 34 fichas Persan que ya están cargadas** (35 menos el
+  código 136, que no está en el PDF): **32 de 34 coinciden** en Ø del pistón,
+  altura de compresión, Ø y largo del perno, huelgo, altura de medición y
+  hermanado. Las 2 que no son códigos (171 y 184) donde la ficha cargada tiene el
+  dato **vacío**: el TXT viejo tampoco los pudo leer, así que el PDF los mejora
+  —pero justamente por eso hay que mirarlos, no confiarlos.
+* **Dos guardas de plausibilidad, geométricas y no arbitrarias, hacen falta** y
+  van a `extra.revisar`, que la pantalla muestra como "?":
+  - el largo total tiene que ser **mayor que la altura de compresión** (el código
+    149 da 6,35 contra 70,42: mal leído, y es el único de los 34 que falla así);
+  - el largo del perno tiene que ser **mayor que su diámetro** (el 171 da 2,00
+    contra 20,00);
+  - la altura de medición es de 1 a 2 mm: un 25,00 o un 43,80 ahí es la columna
+    de la cámara que se corrió.
+
+**Lo que falta hacer, en orden:** convertir el prototipo en
+`scripts/leer_pistones_persan.py` con esas guardas; resolver el código del
+catálogo al del proveedor ("82" → `P PS082PH`, que es `P PS` + número a tres
+dígitos + sufijo, y el sufijo hay que sacarlo de la lista porque el PDF no lo
+trae); correr `convertir_pistones_persan.py`, que ya existe y no se toca; y
+después los dibujos con su tercer manifiesto.
 
 El circuito, si tiene texto, es el de siempre partido en dos, como Federal Mogul:
 un lector que deja la tabla (`scripts/leer_pistones_persan_pdf.py`, nuevo) y el
