@@ -15,12 +15,13 @@ import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { StatusBadge } from '../../components/StatusBadge'
 import { ModalRepuestosAgregados } from './Wizard/ModalRepuestosAgregados'
 import { ModalRevalidacion } from './ModalRevalidacion'
-import { formatPrecioARS, formatFechaAR, aPesos } from '../../utils/format'
+import { formatPrecioARS, formatFechaAR, aPesos, parsePrecioARS } from '../../utils/format'
 import {
   gruposParaPayload, totalRepuestos, totalRepuestosOpcionales, agruparLineas,
   subtotalDe, subtotalDelGrupo, lineaDeOpcion,
 } from '../../utils/grupos'
 import { textoSubtotal, unitarioDesdeSubtotal } from '../../utils/precios'
+import { pctParaTotal, avisoDeTotalFijado } from '../../utils/totalFinal'
 import { estadoDe } from '../Taller/estados'
 import { CajaOpcionales, BotonOpcional } from '../../components/CajaOpcionales'
 import { useArrastreOpcionales } from '../../hooks/useArrastreOpcionales'
@@ -209,6 +210,10 @@ export default function DetallePresupuesto() {
     const ajusteInicial = detalle?.ajuste_pct || 0
     setAjustePct(ajusteInicial)
     setAjusteTexto(ajusteInicial ? String(ajusteInicial) : '')
+    // El recuadro del total arranca mostrando el calculado, y sin ningún aviso
+    // colgado de una edición anterior.
+    setTotalTexto(null)
+    setAvisoTotal(null)
     payloadOriginalRef.current = JSON.stringify(
       construirPayload(itemsIniciales, notasIniciales, ajusteInicial, lineasGrupos),
     )
@@ -223,25 +228,99 @@ export default function DetallePresupuesto() {
     }
   }
 
+  /*
+   * El precio de lista de un ítem con el ajuste % puesto, o null si a ese ítem
+   * el porcentaje no lo toca: un repuesto, un ítem manual (que ya tiene un
+   * precio elegido a mano) o un servicio cuyo precio de lista vigente no se
+   * pudo cargar.
+   *
+   * Vive en una sola función porque de ella dependen las DOS cosas que hacen
+   * cuentas con el %: aplicarlo —que reescribe los renglones— y simular qué
+   * total daría, que es lo que permite fijar el total a mano. Si las dos no dan
+   * exactamente lo mismo, el total que se escribe no es el que queda.
+   */
+  const unitarioAjustado = React.useCallback((it, factor) => {
+    if (it.tipo === 'repuesto' || !it.servicio_id) return null
+    const base = preciosListaPorServicio.get(it.servicio_id)
+    if (base === undefined || base === null) return null
+    return aPesos(base * factor)
+  }, [preciosListaPorServicio])
+
   // Aumento/descuento en % sobre la mano de obra, igual criterio que en el
   // wizard: solo toca servicios de la lista FACRA (servicio_id presente), no
   // ítems manuales ni repuestos, que ya tienen un precio elegido a mano.
   // Parte siempre del precio de lista VIGENTE (preciosListaPorServicio), no
   // del que quedó guardado la última vez, para no componer sobre un ajuste
   // anterior si se cambia el % de nuevo en esta edición.
-  const aplicarAjusteTexto = (texto) => {
+  const aplicarAjustePct = (pct, texto) => {
     setAjusteTexto(texto)
+    setAjustePct(pct)
+    const factor = 1 + pct / 100
+    setEditItems((prev) => prev.map((it) => {
+      const unitario = unitarioAjustado(it, factor)
+      return unitario === null ? it : { ...it, precio_unitario: unitario }
+    }))
+  }
+
+  const aplicarAjusteTexto = (texto) => {
     const normalizado = texto.replace(',', '.').trim()
     const pct = normalizado === '' || normalizado === '-' ? 0 : parseFloat(normalizado)
-    const pctValido = Number.isNaN(pct) ? 0 : pct
-    setAjustePct(pctValido)
-    const factor = 1 + pctValido / 100
-    setEditItems((prev) => prev.map((it) => {
-      if (it.tipo === 'repuesto' || !it.servicio_id) return it
-      const base = preciosListaPorServicio.get(it.servicio_id)
-      if (base === undefined || base === null) return it
-      return { ...it, precio_unitario: aPesos(base * factor) }
-    }))
+    aplicarAjustePct(Number.isNaN(pct) ? 0 : pct, texto)
+  }
+
+  /*
+   * El TOTAL escrito a mano (pedido del dueño, 2026-09-09): se tipea el número
+   * final y el ajuste % de la mano de obra se acomoda solo para darlo. Es la
+   * misma función que en la Revisión del wizard, con el mismo módulo haciendo la
+   * cuenta al revés (utils/totalFinal.js); lo único propio de esta pantalla es
+   * cómo se arma el total, porque acá los renglones ya vienen del presupuesto
+   * guardado en vez de recalcularse desde la selección.
+   *
+   * `totalTexto` en null quiere decir "mostrá el total calculado". Se aplica al
+   * salir del recuadro o con Enter y no en cada tecla: mueve el precio de todos
+   * los renglones de mano de obra a la vez, y hacerlo con el total a medio
+   * escribir dejaría el ajuste en el mínimo en cada tecla.
+   */
+  const [totalTexto, setTotalTexto] = React.useState(null)
+  const [avisoTotal, setAvisoTotal] = React.useState(null)
+
+  const totalPara = React.useCallback((pct) => {
+    const factor = 1 + pct / 100
+    return editItems
+      .filter((it) => !it.opcional)
+      .reduce((acc, it) => {
+        const unitario = unitarioAjustado(it, factor) ?? (Number(it.precio_unitario) || 0)
+        return acc + unitario * (Number(it.cantidad) || 0)
+      }, 0) + totalRepuestos(editGrupos)
+  }, [editItems, editGrupos, unitarioAjustado])
+
+  const aplicarTotalEscrito = () => {
+    const texto = totalTexto
+    setTotalTexto(null)
+    // Salir sin haber escrito nada (o borrando todo) no toca el presupuesto.
+    if (texto === null || !texto.trim()) return
+    const objetivo = parsePrecioARS(texto)
+    // `totalEditado` y no `totalPara(ajustePct)`: el segundo es lo que DARÍA
+    // aplicar ese % contra la lista vigente, que no es lo que hay en pantalla si
+    // el presupuesto trae precios calculados con una lista más vieja o si se
+    // editó un renglón a mano. El aviso se ancla a lo que se está viendo.
+    if (objetivo === null) {
+      setAvisoTotal({ texto: 'Ese total no se entiende como un número.', total: totalEditado })
+      return
+    }
+    const resultado = pctParaTotal(totalPara, objetivo)
+    // 'bajo' y 'alto' son totales que el porcentaje no puede alcanzar. Ahí no se
+    // toca nada: aplicar el extremo dejaría el presupuesto en cero o por las
+    // nubes, que no es lo que se pidió y habría que deshacer a mano. Se explica
+    // hasta dónde llega y el presupuesto queda como estaba.
+    const alcanzable = resultado.motivo === null || resultado.motivo === 'salto'
+    setAvisoTotal(
+      resultado.exacto ? null : {
+        texto: avisoDeTotalFijado(resultado, formatPrecioARS),
+        total: alcanzable ? resultado.total : totalEditado,
+      },
+    )
+    if (alcanzable && resultado.pct !== null) aplicarAjustePct(resultado.pct, String(resultado.pct))
   }
 
   const cancelarEdicion = () => setEditMode(false)
@@ -749,7 +828,33 @@ export default function DetallePresupuesto() {
             }
           />
         )}
-        <Campo label="Total" valor={formatPrecioARS(editMode ? totalEditado : detalle.total)} />
+        {/* Fuera de edición el total es un dato más; en edición se escribe, y lo
+            que se tipee ahí manda: el ajuste % de abajo se acomoda solo para dar
+            ese número (ver utils/totalFinal.js). */}
+        {!editMode ? (
+          <Campo label="Total" valor={formatPrecioARS(detalle.total)} />
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+              Total
+            </div>
+            <input
+              type="text"
+              inputMode="decimal"
+              value={totalTexto ?? formatPrecioARS(totalEditado)}
+              onChange={(e) => setTotalTexto(e.target.value)}
+              onFocus={(e) => setTotalTexto(e.target.value)}
+              onBlur={aplicarTotalEscrito}
+              onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur() }}
+              title="Total final — se puede escribir a mano: el ajuste % de la mano de obra se acomoda para dar ese número"
+              style={{
+                width: 170, height: 34, textAlign: 'right', borderRadius: 8, padding: '0 10px',
+                border: '2px solid var(--border-strong)', background: 'var(--surface-card)', color: 'var(--text-strong)',
+                fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, outline: 'none',
+              }}
+            />
+          </div>
+        )}
         {editMode && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
@@ -764,7 +869,10 @@ export default function DetallePresupuesto() {
                 onChange={(e) => aplicarAjusteTexto(e.target.value)}
                 title="Porcentaje de aumento (positivo) o descuento (negativo) sobre la mano de obra"
                 style={{
-                  width: 64, height: 34, textAlign: 'center', borderRadius: 8,
+                  // Más ancho que los 64 px que tenía: desde que el % puede
+                  // salir de fijar el total a mano, trae decimales ("160,092")
+                  // y en el recuadro angosto no se leía entero.
+                  width: 96, height: 34, textAlign: 'center', borderRadius: 8,
                   border: `2px solid ${colorAjuste}`, background: 'var(--surface-card)', color: 'var(--text-strong)',
                   fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, outline: 'none',
                 }}
@@ -774,6 +882,19 @@ export default function DetallePresupuesto() {
           </div>
         )}
       </div>
+
+      {/* Por qué el total no quedó en el número que se escribió. Se muestra solo
+          mientras siga siendo ese el total en pantalla: si después se edita un
+          renglón, el aviso deja de aplicar y desaparece solo. */}
+      {editMode && avisoTotal && avisoTotal.total === totalEditado && (
+        <div style={{
+          fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', lineHeight: 1.5,
+          color: 'var(--status-aviso-fg)', background: 'var(--status-aviso-bg)',
+          borderRadius: 'var(--radius-md)', padding: '10px 14px',
+        }}>
+          {avisoTotal.texto}
+        </div>
+      )}
 
       {!editMode ? (
         <>

@@ -1738,3 +1738,51 @@ regenerando `subconjuntos.json` y hoy le pasaría el trapo a las 83 fichas de Fe
 Mogul. Mientras no se le ponga su `fusionar()`, ese script no se corre.
 
 **Fecha:** 2026-09-09
+
+## El total se fija a mano y el % se busca, no se despeja (2026-09-09)
+
+**Decisión:** en la Revisión del wizard y en la edición del detalle, el total del
+presupuesto es un campo que se escribe. Lo que se tipea es el número final, y el
+`ajuste_pct` de la mano de obra se acomoda solo para producirlo. La cuenta al
+revés vive en `webapp/frontend/src/utils/totalFinal.js` y la resuelve una
+**bisección**, no una fórmula.
+
+**Por qué no un despeje.** La fórmula obvia es
+`pct = ((objetivo − fijo) / base − 1) × 100`, y da un número que después no
+produce el total pedido. El motivo es el redondeo del proyecto: cada precio
+unitario se lleva a pesos enteros **hacia arriba** (`aPesos` / `pesos()`), así
+que el total no es una recta sino una escalera. El despeje resuelve la recta,
+que no es la función que la app calcula. La bisección sí encuentra el porcentaje
+exacto cuando existe, y es barata: el total nunca baja al subir el %, así que
+alcanzan ~27 pasos sobre una grilla de cuatro decimales (500 resoluciones en
+1 ms, medido).
+
+**La consecuencia que hay que aceptar: hay totales que no se pueden alcanzar.**
+Entre un escalón y el siguiente hay un salto de tantos pesos como piezas mueva
+ese redondeo. Medido sobre un presupuesto de prueba, **cerca de un tercio de los
+totales posibles se pueden clavar al peso**; el resto cae en un salto y lo más
+cerca que se llega está a uno o dos pesos. Ahí el módulo devuelve el escalón más
+cercano con `exacto: false` y la pantalla **lo dice** —"lo más cerca que se puede
+llegar es $X, $1 menos de lo que pediste"— en vez de mostrar callada un número
+distinto del que se escribió. Se descartó tapar la diferencia pisando el precio
+de algún renglón: ensuciaría la marca de "precio editado", que es la que alimenta
+el ofrecimiento de guardar ese precio como tarifa.
+
+**Un total fuera de rango no se aplica.** Si lo pedido queda por debajo de lo que
+el % puede bajar (los repuestos y los precios puestos a mano no los toca) o por
+encima del techo de +5000%, **el presupuesto queda como estaba** y sólo se
+explica hasta dónde llega. Aplicar el extremo dejaría el presupuesto en cero o
+por las nubes, que no es lo que se pidió y habría que deshacer a mano.
+
+**Se aplica al salir del recuadro o con Enter, no en cada tecla.** Es la única
+excepción a "el que se escribe manda" tecla por tecla que rige en el unitario y
+el subtotal de cada renglón. El motivo es que este campo mueve el precio de
+**todos** los renglones de mano de obra a la vez: aplicarlo con el total a medio
+escribir ("1", "15", "150"…) dejaría el ajuste en el mínimo en cada tecla y la
+pantalla entera parpadeando.
+
+**Del tramo de porcentajes que da el mismo total se elige el más redondo.** Un
+escalón es un tramo, no un punto: entre 37% y 37,0042% el total es idéntico. Como
+el % también se muestra y se guarda, se devuelve el que tenga menos decimales.
+
+**Fecha:** 2026-09-09

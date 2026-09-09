@@ -9,10 +9,11 @@ import { TextField } from '../../../components/TextField'
 import { CampoMonto } from '../../../components/CampoMonto'
 import { ContadorCantidad } from '../../../components/ContadorCantidad'
 import { useArrastreOpcionales } from '../../../hooks/useArrastreOpcionales'
-import { formatPrecioARS } from '../../../utils/format'
+import { formatPrecioARS, parsePrecioARS } from '../../../utils/format'
 import { lineasServicios, totalLineas, hayPreciosInvalidos } from '../../../utils/servicios'
 import { textoSubtotal } from '../../../utils/precios'
 import { subtotalDe } from '../../../utils/grupos'
+import { pctParaTotal, avisoDeTotalFijado } from '../../../utils/totalFinal'
 import { ResumenPreciosEditados } from './ResumenPreciosEditados'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
@@ -27,6 +28,13 @@ const chip = {
   fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
   color: 'var(--text-muted)', background: 'var(--surface-sunken)',
   borderRadius: 'var(--radius-pill)', padding: '2px 8px', whiteSpace: 'nowrap',
+}
+
+/* El ajuste % ya no siempre es un número redondo: cuando sale de fijar el total
+   a mano puede traer decimales (ver utils/totalFinal.js), y se escriben con coma
+   como cualquier otro número de la pantalla. */
+function fmtPct(pct) {
+  return Number(pct).toLocaleString('es-AR', { maximumFractionDigits: 4 })
 }
 
 function Campo({ label, valor }) {
@@ -62,9 +70,14 @@ function Campo({ label, valor }) {
  * recalcula; ver utils/precios.js). Las ediciones suben al wizard, que es donde
  * vive el estado, así que volver atrás las conserva. Bajar una cantidad a 0
  * saca la línea, igual que en los pasos anteriores.
+ *
+ * Y desde el 2026-09-09 el TOTAL también se escribe a mano: se tipea el número
+ * final y el ajuste % de la mano de obra se acomoda solo para dar ese total
+ * (ver utils/totalFinal.js). Es la misma idea del par unitario/subtotal —el que
+ * se escribe manda y lo otro se recalcula— un piso más arriba.
  */
 export function PasoRevision({
-  cliente, motor, serviciosSel, ajustePct, repuestos,
+  cliente, motor, serviciosSel, ajustePct, onAjustePctChange, repuestos,
   onMoverServicio, onMoverRepuesto, onEditarServicio, onEditarRepuesto,
   onConfirmar, guardando, guardarPrecios, onGuardarPreciosChange,
 }) {
@@ -154,6 +167,59 @@ export function PasoRevision({
   // que el backend descartara el ítem en silencio.
   const preciosInvalidos = hayPreciosInvalidos(filasServicios)
     || repuestos.some((r) => r.precio_unitario === null || r.precio_unitario === undefined || !(r.cantidad > 0))
+
+  /*
+   * El total, escrito a mano. `totalTexto` en null quiere decir "mostrá el
+   * total calculado"; en cuanto se toca el recuadro pasa a mandar lo tipeado.
+   *
+   * A diferencia del unitario y el subtotal de cada renglón —que se aplican
+   * tecla por tecla— éste se aplica recién al salir del recuadro o con Enter.
+   * Es a propósito: mueve el precio de TODOS los renglones de mano de obra de
+   * una, y hacerlo con el total a medio escribir ("1", "15", "150"…) dejaría el
+   * ajuste en el mínimo en cada tecla y la pantalla entera parpadeando.
+   *
+   * El aviso se guarda junto con el total al que se refiere, así deja de verse
+   * solo cuando el total cambia por cualquier otro motivo (se editó un renglón,
+   * se movió algo a opcionales) y nunca queda un texto viejo explicando un
+   * número que ya no está en pantalla.
+   */
+  const [totalTexto, setTotalTexto] = React.useState(null)
+  const [avisoTotal, setAvisoTotal] = React.useState(null)
+
+  // El total del presupuesto para un ajuste % cualquiera. Se arma con las
+  // mismas funciones que dibujan las tablas de arriba, así que el % que
+  // devuelve la búsqueda produce exactamente el total que se va a ver acá (y el
+  // que va a calcular el backend, que aplica la misma fórmula).
+  const totalPara = React.useCallback(
+    (pct) => totalLineas(lineasServicios(servicios, serviciosSel, pct)) + totalRepuestosCotizados,
+    [servicios, serviciosSel, totalRepuestosCotizados],
+  )
+
+  const aplicarTotalEscrito = () => {
+    const texto = totalTexto
+    setTotalTexto(null)
+    // Salir sin haber escrito nada (o borrando todo) no toca el presupuesto:
+    // vuelve a verse el total calculado, como si no se hubiera entrado.
+    if (texto === null || !texto.trim()) return
+    const objetivo = parsePrecioARS(texto)
+    if (objetivo === null) {
+      setAvisoTotal({ texto: 'Ese total no se entiende como un número.', total: totalGeneral })
+      return
+    }
+    const resultado = pctParaTotal(totalPara, objetivo)
+    // 'bajo' y 'alto' son totales que el porcentaje no puede alcanzar. Ahí no se
+    // toca nada: aplicar el extremo dejaría el presupuesto en cero o por las
+    // nubes, que no es lo que se pidió y habría que deshacer a mano. Se explica
+    // hasta dónde llega y el presupuesto queda como estaba.
+    const alcanzable = resultado.motivo === null || resultado.motivo === 'salto'
+    setAvisoTotal(
+      resultado.exacto ? null : {
+        texto: avisoDeTotalFijado(resultado, formatPrecioARS),
+        total: alcanzable ? resultado.total : totalGeneral,
+      },
+    )
+    if (alcanzable && resultado.pct !== null && resultado.pct !== ajustePct) onAjustePctChange(resultado.pct)
+  }
 
   const tipoContacto = cliente.tipo ? TIPO_OPUESTO[cliente.tipo] : null
 
@@ -272,9 +338,26 @@ export function PasoRevision({
           <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
             Repuestos <strong style={{ color: '#fff' }}>{formatPrecioARS(totalRepuestosCotizados)}</strong>
           </span>
-          <span style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+          {/* El total se escribe: lo que se tipee acá es el número final y el
+              ajuste % de la mano de obra se acomoda solo para darlo. Va como
+              input y no como texto para que se vea que es editable. */}
+          <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: '#fff' }}>Total</span>
-            <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, color: '#fff' }}>{formatPrecioARS(totalGeneral)}</span>
+            <input
+              type="text"
+              inputMode="decimal"
+              value={totalTexto ?? formatPrecioARS(totalGeneral)}
+              onChange={(e) => setTotalTexto(e.target.value)}
+              onFocus={(e) => setTotalTexto(e.target.value)}
+              onBlur={aplicarTotalEscrito}
+              onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur() }}
+              title="Total final — se puede escribir a mano: el ajuste % de la mano de obra se acomoda para dar ese número"
+              style={{
+                width: 190, height: 42, textAlign: 'right', borderRadius: 8, padding: '0 12px',
+                border: '2px solid rgba(255,255,255,.35)', background: 'rgba(255,255,255,.06)', color: '#fff',
+                fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, outline: 'none',
+              }}
+            />
           </span>
           {totalOpcionales > 0 && (
             <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
@@ -292,6 +375,18 @@ export function PasoRevision({
           {guardando ? 'Generando presupuesto…' : 'Confirmar y generar PDF'}
         </Button>
       </div>
+
+      {/* Por qué el total no quedó en el número que se escribió. Se muestra solo
+          mientras siga siendo ese total el que está en pantalla. */}
+      {avisoTotal && avisoTotal.total === totalGeneral && (
+        <div style={{
+          fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', lineHeight: 1.5,
+          color: 'var(--status-aviso-fg)', background: 'var(--status-aviso-bg)',
+          borderRadius: 'var(--radius-md)', padding: '10px 14px',
+        }}>
+          {avisoTotal.texto}
+        </div>
+      )}
 
       {!hayItems && (
         <div style={{ textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-faint)' }}>
@@ -313,7 +408,7 @@ export function PasoRevision({
         )}
         <Campo label="Motor" valor={motor.motor} />
         {ajustePct !== 0 && (
-          <Campo label="Ajuste de este presupuesto" valor={`${ajustePct > 0 ? '+' : ''}${ajustePct}%`} />
+          <Campo label="Ajuste de este presupuesto" valor={`${ajustePct > 0 ? '+' : ''}${fmtPct(ajustePct)}%`} />
         )}
       </div>
 
@@ -412,6 +507,10 @@ export function PasoRevision({
         Cantidad, precio unitario y subtotal se editan acá mismo: entre el unitario y el subtotal manda el
         que escribís y el otro se recalcula solo. Como los precios van en pesos enteros, un subtotal que no
         se reparte justo entre la cantidad sube al peso siguiente. Bajar una cantidad a cero saca la línea.
+        <br />
+        El <strong>total</strong> también se escribe: poné ahí arriba el número que querés cobrar y el ajuste %
+        de la mano de obra se acomoda solo para dar ese total (se aplica al salir del recuadro o con Enter).
+        No mueve los repuestos ni los precios que hayas puesto a mano en un renglón: esos quedan como están.
         <br />
         Esta pantalla es interna: el PDF que recibe el cliente lleva el detalle de qué se hace y qué se pone,
         con el precio solo en el total. Los opcionales sí van con su precio, en una caja aparte y aclarando
