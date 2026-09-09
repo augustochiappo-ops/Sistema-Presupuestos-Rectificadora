@@ -48,3 +48,10 @@ CRAC/tecnicos/fuentes/glyco_cojinetes_2023.pdf
 # release "catalogos" del repo; cómo bajarlo está en
 # CRAC/tecnicos/CARGA-CONJUNTOS.md.
 CRAC/tecnicos/fuentes/mahle_2019_completo.pdf
+
+# Catálogo Persan Edición 16, enero 2026 (51 MB): el catálogo gráfico completo de
+# Pistones Persan. Mismo criterio que los dos de arriba, y con más razón: es el
+# archivo más pesado de los tres y el repo entero se copia a PythonAnywhere en
+# cada deploy. Vive en el release "catalogos"; cómo bajarlo está en
+# CRAC/tecnicos/CARGA-COJINETES.md (el comando elige el asset por nombre).
+CRAC/tecnicos/fuentes/persan_2026_ed16.pdf
