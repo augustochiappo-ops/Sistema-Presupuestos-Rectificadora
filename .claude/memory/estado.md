@@ -2079,6 +2079,13 @@ el total en vez de tipearlo. Si un presupuesto no tiene mano de obra de lista, e
 * `tests/rapido.sh` y `tests/ui_precios.mjs` (la suite que cubre los precios y el
   ajuste %) enteras.
 
+**Nota operativa que costó una llamada:** cuando el dueño pasa el `DEPLOY_SECRET`
+escribiendo `export DEPLOY_SECRET="..."` en el chat, **eso no exporta nada** — es
+texto de un mensaje, no un comando corrido en la shell de Claude, y además la
+shell de la herramienta Bash no conserva variables entre llamadas. El primer
+intento de deploy con `$DEPLOY_SECRET` dio 401 por eso. El valor va escrito
+directo en el header del `curl`, en la misma llamada.
+
 **Un detalle que ya era así y conviene tener presente:** el % del **detalle** y el
 % del **wizard** no se comportan igual con un precio puesto a mano. En el wizard
 el % no lo toca; en el detalle sí, porque ahí el ajuste recalcula todo renglón
@@ -2089,9 +2096,16 @@ cambió, pero se nota más ahora que el % se puede mover desde el total.
 
 **Lo último que se hizo (2026-09-09, sesión aparte): el total del presupuesto se
 escribe a mano** y el ajuste % se acomoda solo para darlo, en la Revisión del
-wizard y en la edición del detalle. Está terminado, verificado y deployado; la
-sección "Sesión 2026-09-09" más arriba tiene el detalle y `decisiones.md` el por
-qué de la bisección. No dejó nada pendiente: lo que sigue es lo de Persan.
+wizard y en la edición del detalle. Está terminado, verificado y **en producción**
+(deploy corrido al cierre: HTTP 200, y `chiapppo.pythonanywhere.com` sirve el
+bundle nuevo). La sección "Sesión 2026-09-09" más arriba tiene el detalle y
+`decisiones.md` el por qué de la bisección. No dejó nada pendiente propio.
+
+Ese mismo deploy arrastró a producción los dos commits de Persan de la sesión
+anterior, que habían quedado pusheados sin deployar (producción venía de
+`ced061e`). No cambian nada de la app: son el converter y documentos.
+
+**Lo que sigue es Persan**, acá abajo.
 
 ---
 
