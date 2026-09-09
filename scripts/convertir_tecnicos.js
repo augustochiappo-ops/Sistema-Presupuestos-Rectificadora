@@ -5,6 +5,24 @@
  *
  *     node scripts/convertir_tecnicos.js /ruta/al/clon/de/Chiappo-Repuestos-
  *
+ * ⚠ HOY ESTE SCRIPT NO SE PUEDE CORRER SIN PERDER DATOS (2026-09-09).
+ *
+ * Reescribe `subconjuntos.json` ENTERO con lo que sale del repo del buscador, y
+ * ese archivo ya no es sólo suyo: `pistones_fm_desde_proveedor.py` le sumó 83
+ * fichas de Federal Mogul el 2026-09-08. Correrlo se las lleva puestas sin avisar
+ * — no falla, escribe 201 fichas donde había 284.
+ *
+ * Lo mismo vale para `guias.json`: las 36 guías de la hoja "Indy - Últimas
+ * incorporaciones 2025" las carga `convertir_guias_indy_2025.py`, que agrega en
+ * vez de regenerar. Por eso esa hoja no se sumó acá.
+ *
+ * Para poder correrlo de nuevo hay que darle un `fusionar()` como el que tienen
+ * `pistones_fm_desde_proveedor.py` y `convertir_pistones_persan.py`: reemplazar en
+ * su lugar sólo las fichas de las marcas que este script produce y no tocar las
+ * demás. Cómo verificarlo está en `decisiones.md` ("Un JSON de familia con dos
+ * productores se fusiona, no se sobrescribe"): con la fuente vieja sin tocar, el
+ * JSON tiene que quedar byte a byte idéntico.
+ *
  * Se corre A MANO, solo cuando allá se procesa un catálogo nuevo. La salida
  * (CRAC/tecnicos/*.json) se commitea: es lo que hace que producción tenga los
  * datos apenas hace `git pull`, sin ningún paso de importación.

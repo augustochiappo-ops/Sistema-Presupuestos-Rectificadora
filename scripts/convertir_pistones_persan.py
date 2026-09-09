@@ -182,6 +182,16 @@ def ficha(fila: dict, indice) -> dict:
         largo = None
         revisar["alt_piston"] = "el largo total del TXT no es creíble"
 
+    # El perno es más largo que ancho, siempre: un largo menor o igual que el
+    # diámetro es una celda que se leyó de la columna de al lado. Pasó con el
+    # pistón 171, que sale con Ø 20,00 y "largo" 2,00 — eso 2,00 es la altura de
+    # medición corrida un lugar. Sin esta guarda la ficha muestra un perno
+    # imposible con toda seguridad, que es peor que mostrar un "?".
+    if perno_d and perno_l and perno_l <= perno_d:
+        revisar["largo_perno"] = "el largo del perno no es creíble: es menor que su diámetro"
+        revisar["perno_str"] = revisar["largo_perno"]
+        perno_l = None
+
     perno_str = None
     if perno_d and perno_l:
         perno_str = f"∅{fila['PERNO D. (mm)']} × {fila['PERNO L. (mm)']}"
@@ -220,18 +230,57 @@ def ficha(fila: dict, indice) -> dict:
     }
 
 
+def fusionar(previas: list[dict], nuevas: list[dict]) -> tuple[list[dict], list[str]]:
+    """
+    Las fichas de Persan encima de las que ya estaban, sin tocar las de las otras
+    marcas.
+
+    HACE FALTA porque `pistones.json` NO es de este script solo: desde el
+    2026-09-08 tiene también los 54 pistones de Federal Mogul que carga
+    `pistones_fm_desde_proveedor.py`. Escribir el archivo entero con lo que sale de
+    acá se los llevaba puestos sin decir nada — el mismo problema que tenía
+    `convertir_tecnicos.js` con los subconjuntos.
+
+    Quién es de quién se ve en el código del proveedor: los de Persan son "P PS…"
+    y los de Federal Mogul "P F …". Una ficha de Persan que ya estaba se reemplaza
+    en su lugar, para que el diff sea el de los campos que cambiaron y no el del
+    archivo reordenado; las nuevas van al final.
+    """
+    salida = list(previas)
+    donde = {}
+    for i, f in enumerate(salida):
+        if str(f.get("codigo", "")).startswith("P PS"):
+            donde.setdefault(f["codigo"], i)
+
+    agregadas = []
+    for f in nuevas:
+        i = donde.get(f["codigo"])
+        if i is None:
+            salida.append(f)
+            agregadas.append(f["codigo"])
+        else:
+            salida[i] = f
+    return salida, agregadas
+
+
 def main():
     filas = leer_tabla(TXT)
     indice = indice_proveedor()
     fichas = [ficha(f, indice) for f in filas]
 
+    previas = json.load(open(SALIDA, encoding="utf-8")) if os.path.exists(SALIDA) else []
+    de_otras_marcas = sum(1 for f in previas if not str(f.get("codigo", "")).startswith("P PS"))
+    salida, agregadas = fusionar(previas, fichas)
+
     with open(SALIDA, "w", encoding="utf-8") as f:
-        json.dump(fichas, f, ensure_ascii=False, indent=1)
+        json.dump(salida, f, ensure_ascii=False, indent=1)
         f.write("\n")
 
     sin_codigo = [f["codigo"] for f in fichas if not f["codigos_crac"]]
     a_revisar = [f["codigo"] for f in fichas if (f["extra"] or {}).get("revisar")]
-    print(f"✓ {len(fichas)} pistones → {os.path.relpath(SALIDA, RAIZ)}")
+    print(f"✓ {len(fichas)} pistones de Persan ({len(agregadas)} nuevos) → "
+          f"{os.path.relpath(SALIDA, RAIZ)}, {len(salida)} fichas en total")
+    print(f"  {de_otras_marcas} de otras marcas quedaron intactas")
     print(f"  {sum(len(f['codigos_crac']) for f in fichas)} códigos del proveedor cruzados")
     if sin_codigo:
         print(f"  ⚠ sin código en la lista del proveedor ({len(sin_codigo)}): {', '.join(sin_codigo)}")

@@ -2018,7 +2018,30 @@ biela" tests/ui_medidas.mjs` las encuentra todas, porque es la última de todas.
 
 ## Próximo paso
 
-**Persan: hasta 285 fichas de pistón y los dibujos que faltan (2026-09-08).** Es
+**Persan: falta el lector del PDF, y nada más (2026-09-09).** La sesión se cortó
+por tiempo con dos de las tres partes hechas y commiteadas: el converter ya fusiona
+en vez de sobrescribir (antes borraba los 54 pistones de Federal Mogul) y ya tiene
+las dos guardas de plausibilidad. Falta `scripts/leer_pistones_persan.py`, que del
+PDF produce el TXT que el converter ya sabe leer.
+
+**Arrancar por acá**, en la sección "Sesión 2026-09-08 (sexta)" y su bloque "Persan:
+dos cosas YA HECHAS, y qué falta exactamente", más abajo en este archivo: está la
+tabla de offsets de columnas probada campo por campo, el arreglo del kerning, los
+números del cruce (319 códigos del proveedor, 304 con ficha, 284 nuevas), cómo sacar
+la marca del vehículo y cómo cruzar el código del catálogo con el del proveedor.
+Nada de eso hay que volver a derivar.
+
+**El PDF hay que bajarlo de nuevo**: está en el release `catalogos` y NO va al repo
+(el `.gitignore` ya lo excluye; en esta sesión se subió por error y hubo que
+sacarlo). El comando con `jq` que elige el asset por nombre está en
+`CRAC/tecnicos/CARGA-COJINETES.md`.
+
+**Y lo que el dueño confirmó el 2026-09-09**: de Persan entra **sólo lo que trabaja
+el proveedor**. Ya está así por diseño.
+
+---
+
+**Antes de esto: Persan, la investigación (2026-09-08).** Es
 lo próximo de la tanda que empezó esta sesión, y estaba planificado con el dueño:
 el ítem 1 (Indy) y el 2 (Pescara) se hicieron, éste quedó a mitad. El PDF ya está
 en el release `catalogos` (`PERSAN_CatalogoCompleto_Enero-2026.pdf`, 51 MB,
@@ -2084,12 +2107,91 @@ sigue es mecánico.** Esto es lo que quedó averiguado, que es la parte difícil
   - la altura de medición es de 1 a 2 mm: un 25,00 o un 43,80 ahí es la columna
     de la cámara que se corrió.
 
-**Lo que falta hacer, en orden:** convertir el prototipo en
-`scripts/leer_pistones_persan.py` con esas guardas; resolver el código del
-catálogo al del proveedor ("82" → `P PS082PH`, que es `P PS` + número a tres
-dígitos + sufijo, y el sufijo hay que sacarlo de la lista porque el PDF no lo
-trae); correr `convertir_pistones_persan.py`, que ya existe y no se toca; y
-después los dibujos con su tercer manifiesto.
+### Persan: dos cosas YA HECHAS, y qué falta exactamente
+
+**Lo que entra, confirmado por el dueño (2026-09-09): SÓLO lo que trabaja el
+proveedor.** Los pistones son del grupo "sólo proveedor" y el lector se maneja por
+la lista, no por el catálogo. Los números del cruce, medidos:
+
+| | Códigos |
+|---|---|
+| Base del proveedor (`P PS…`, sin la sobremedida) | **319** |
+| De ésos, con ficha en el catálogo → medidas de verdad | **304** |
+| De ésos, sin ficha en el catálogo → entran con "?" en las medidas | 15 |
+| Registros del catálogo que el proveedor NO trabaja → **quedan afuera** | 348 |
+| Ya cargados hoy | 35 |
+| **Fichas nuevas que entrarían** | **284** |
+
+#### YA HECHO Nº 1: el converter sobrescribía y se llevaba puestos los 54 de FM
+
+`convertir_pistones_persan.py` escribía `pistones.json` entero con sólo las fichas
+de Persan. Como desde el 2026-09-08 ese archivo tiene también los **54 pistones de
+Federal Mogul** que carga `pistones_fm_desde_proveedor.py`, correrlo los borraba
+sin decir nada. Era el mismo problema que tenía `convertir_tecnicos.js` con los
+subconjuntos, y estaba latente: cualquiera que corriera el script perdía 54 fichas.
+
+**Arreglado**: ahora tiene `fusionar()`, que reemplaza en su lugar las fichas de
+Persan y deja intactas las de las otras marcas. Quién es de quién se ve en el
+código del proveedor: Persan es `P PS…` y Federal Mogul `P F …`. Verificado
+corriéndolo con el TXT viejo: `pistones.json` salió **byte a byte idéntico**, 89
+fichas, los 54 de FM intactos.
+
+#### YA HECHO Nº 2: la guarda del perno
+
+El converter ya tenía la del largo total (tiene que ser mayor que la altura de
+compresión). Se le sumó la del perno: **el largo tiene que ser mayor que el
+diámetro**, porque un perno es más largo que ancho siempre. Sin ella el pistón 171
+entra con Ø 20,00 y "largo" 2,00 — ese 2,00 es la altura de medición corrida un
+lugar. Va a `extra.revisar`, que la pantalla muestra como "?". También verificado
+como no-op contra el TXT viejo.
+
+#### FALTA: el lector, y sólo el lector
+
+`scripts/leer_pistones_persan.py`, que del PDF produce el **TXT de tabla pipe** que
+`convertir_pistones_persan.py` ya sabe leer — así sigue habiendo un solo productor
+de `pistones.json` por marca. Las 24 columnas del TXT están en la cabecera del
+archivo actual (`CRAC/tecnicos/fuentes/persan_pistones.txt`), que se sobrescribe.
+
+El TXT lo maneja **la lista del proveedor**: una fila por código base. El converter
+ya está preparado para una fila sin datos técnicos (los 15 de arriba) — la carga
+igual y marca las medidas como dudosas.
+
+Lo que queda por resolver, y son dos cosas chicas:
+
+1. **La MARCA del vehículo.** Está en la banda `775 < y < 790` de cada página de
+   tabla, junto a los rótulos del encabezado. Se aísla calculando qué textos de esa
+   banda se repiten en más del 80% de las 187 páginas —esos son los 10 rótulos
+   fijos— y quedándose con el que sobra: **185 de 187 páginas dan una marca clara**,
+   56 marcas distintas. Las dos excepciones son la página 5 (no tiene) y la 188 (da
+   dos, TOYOTA y WABCO: ahí termina una sección y empieza otra, así que hay que
+   asignar por la y de cada registro).
+   **Ojo con dos artefactos de kerning**: salen `RENAUL T` y `CLA YTON`. El merge de
+   fragmentos con umbral de 3 puntos no los junta. Lo que se estaba probando cuando
+   se cortó la sesión era tomar la marca del texto lineal de la página, donde sale
+   limpia — es una línea suelta con el nombre.
+   **Y un dato para no confundirse**: el pistón 82 está bajo **FIAT** en el
+   catálogo, pero la ficha cargada dice **SEAT** (el 600/750 era un Fiat con
+   insignia SEAT en España). El catálogo es la fuente: va a quedar FIAT, y es un
+   cambio esperado sobre la ficha vieja, no un error.
+
+2. **El código del catálogo al del proveedor.** El PDF trae "82" y el proveedor
+   `P PS082PH`. El patrón es `P PS` + número a tres dígitos + sufijo (`PH`, `C`,
+   `/1020`…), y **el sufijo no está en el PDF**: hay que sacarlo de la lista. Como
+   el TXT se maneja por la lista, el camino es al revés y es fácil: de cada base del
+   proveedor se saca el número con `^P PS0*(\d+)` —las 319 lo dan— y con ese número
+   se busca el registro del catálogo. Un número puede tener dos bases
+   (`P PS117PH/1020` y `P PS117PH/1030`): las dos llevan los mismos datos técnicos.
+
+**Después del lector, los dibujos**, que son una tanda aparte: script espejo de
+`dibujos_pistones_fm2010.py`, un **tercer** manifiesto
+(`dibujos-pistones-persan.js`) y el import en `pistones.jsx`, que hoy importa dos.
+Al contar dibujos faltantes hay que mirar los **tres** manifiestos y las **tres**
+familias.
+
+**Y al terminar, lo que la tanda toca y hay que verificar**: `backend_medidas.py`
+afirma "89 pistones (Persan + Federal Mogul)" y `ui_medidas.mjs` afirma
+`^Pistones\s*89$` — los dos hay que actualizarlos. La suite de UI que cubre la
+pantalla es `ui_medidas.mjs` y se corre entera.
 
 El circuito, si tiene texto, es el de siempre partido en dos, como Federal Mogul:
 un lector que deja la tabla (`scripts/leer_pistones_persan_pdf.py`, nuevo) y el

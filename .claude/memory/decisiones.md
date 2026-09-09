@@ -1703,3 +1703,38 @@ dato.
 informa el origen, y `unzip -t` si es un `.xlsx` o un `.docx`.
 
 **Fecha:** 2026-09-08
+
+## Un JSON de familia con dos productores se fusiona, no se sobrescribe (2026-09-09)
+
+**Contexto:** `pistones.json` lo escribían dos scripts sin saber uno del otro.
+`convertir_pistones_persan.py` lo generaba entero desde su TXT, y
+`pistones_fm_desde_proveedor.py` le sumaba las 54 fichas de Federal Mogul el
+2026-09-08 con un `fusionar()` que respeta lo que ya estaba.
+
+**El problema, que estaba latente:** correr el de Persan borraba los 54 de Federal
+Mogul sin decir nada. No falla, no avisa: escribe 35 fichas donde había 89. Es
+exactamente el mismo problema que tiene `convertir_tecnicos.js` con
+`subconjuntos.json` —y por el que la carga de guías de Indy 2025 necesitó un script
+aparte—, sólo que acá el que sobrescribía era el más viejo.
+
+**La decisión:** en cuanto una familia tiene más de una marca cargada por scripts
+distintos, **cada script fusiona en vez de regenerar**. El de Persan ahora tiene su
+`fusionar()`: reemplaza en su lugar las fichas cuyo código empieza con `P PS` y no
+toca ninguna otra. Reemplazar en el lugar en vez de reordenar es a propósito: el
+diff queda en los campos que cambiaron y no en el archivo entero, que es la única
+forma de poder revisarlo.
+
+**Cómo se sabe de quién es cada ficha:** por el prefijo del código del proveedor,
+que ya distingue la marca — `P PS…` es Persan, `P F …` es Federal Mogul. No hace
+falta un campo nuevo.
+
+**Cómo verificarlo, y es la parte que vale:** correr el script con la fuente vieja
+sin tocar y comprobar que el JSON queda **byte a byte idéntico**. Si el merge está
+bien, un cambio que no cambia nada no cambia nada. Así se validó éste: 89 fichas
+antes, 89 después, `cmp` sin diferencias.
+
+**Lo que queda pendiente y es el mismo caso:** `convertir_tecnicos.js` sigue
+regenerando `subconjuntos.json` y hoy le pasaría el trapo a las 83 fichas de Federal
+Mogul. Mientras no se le ponga su `fusionar()`, ese script no se corre.
+
+**Fecha:** 2026-09-09
