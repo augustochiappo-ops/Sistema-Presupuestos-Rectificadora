@@ -70,7 +70,7 @@ function fmtCantidad(cantidad) {
 // el payload real al guardar como para la "foto" inicial al entrar en modo
 // edición, así comparar ambas dice si hubo cambios de verdad (y por lo tanto
 // si hay que reconstruir el PDF).
-function construirPayload(lista, notas, ajustePct, lineasGrupos = []) {
+function construirPayload(lista, notas, ajustePct, lineasGrupos = [], totalManual = null) {
   // cantidad/precio_unitario se normalizan a Number: los inputs numéricos del
   // formulario los guardan como string en cuanto el usuario toca el campo,
   // aunque el valor final sea igual — sin esto, comparar el payload contra la
@@ -107,6 +107,11 @@ function construirPayload(lista, notas, ajustePct, lineasGrupos = []) {
     grupos_repuestos: gruposParaPayload(lineasGrupos),
     notas,
     ajuste_pct: ajustePct || 0,
+    // Presupuesto rápido: el total lo escribió una persona y no es la suma de
+    // los renglones, así que viaja en el payload y vuelve a guardarse tal cual.
+    // En un presupuesto normal es null y el backend lo ignora (deja el que hay,
+    // que también es null): el total sigue saliendo de la suma.
+    total_manual: totalManual ?? null,
   }
 }
 
@@ -214,8 +219,10 @@ export default function DetallePresupuesto() {
     // colgado de una edición anterior.
     setTotalTexto(null)
     setAvisoTotal(null)
+    const manualInicial = detalle?.total_manual ?? null
+    setTotalManual(manualInicial)
     payloadOriginalRef.current = JSON.stringify(
-      construirPayload(itemsIniciales, notasIniciales, ajusteInicial, lineasGrupos),
+      construirPayload(itemsIniciales, notasIniciales, ajusteInicial, lineasGrupos, manualInicial),
     )
     setEditMode(true)
     if (detalle?.motor_id) {
@@ -283,6 +290,15 @@ export default function DetallePresupuesto() {
    */
   const [totalTexto, setTotalTexto] = React.useState(null)
   const [avisoTotal, setAvisoTotal] = React.useState(null)
+  /*
+   * Total escrito a mano, si el presupuesto tiene uno (los que salen de
+   * "Presupuesto rápido"). Cuando lo hay, el recuadro del total lo edita
+   * DERECHO —se guarda el número que se escribe— en vez de buscar el ajuste %
+   * que lo produzca: en un rápido los repuestos van sin precio, así que no hay
+   * un % capaz de dar cualquier total, y encima el número ya está decidido.
+   */
+  const [totalManual, setTotalManual] = React.useState(null)
+  const esRapido = totalManual !== null
 
   const totalPara = React.useCallback((pct) => {
     const factor = 1 + pct / 100
@@ -300,6 +316,17 @@ export default function DetallePresupuesto() {
     // Salir sin haber escrito nada (o borrando todo) no toca el presupuesto.
     if (texto === null || !texto.trim()) return
     const objetivo = parsePrecioARS(texto)
+    // Presupuesto rápido: el número se guarda tal cual. No hay nada que
+    // buscar ni total inalcanzable, así que tampoco hay aviso que dar.
+    if (esRapido) {
+      if (objetivo === null || objetivo < 0) {
+        setAvisoTotal({ texto: 'Ese total no se entiende como un número.', total: totalManual })
+        return
+      }
+      setAvisoTotal(null)
+      setTotalManual(objetivo)
+      return
+    }
     // `totalEditado` y no `totalPara(ajustePct)`: el segundo es lo que DARÍA
     // aplicar ese % contra la lista vigente, que no es lo que hay en pantalla si
     // el presupuesto trae precios calculados con una lista más vieja o si se
@@ -482,7 +509,7 @@ export default function DetallePresupuesto() {
     setGuardando(true)
     setError('')
     try {
-      const payload = construirPayload(editItems, editNotas, ajustePct, editGrupos)
+      const payload = construirPayload(editItems, editNotas, ajustePct, editGrupos, totalManual)
       // Si el payload es idéntico al que había al entrar en modo edición, no
       // hubo cambios de verdad: no tiene sentido generar una versión de PDF
       // nueva (y consumir un número de versión) por un guardado que no cambió nada.
@@ -841,21 +868,31 @@ export default function DetallePresupuesto() {
             <input
               type="text"
               inputMode="decimal"
-              value={totalTexto ?? formatPrecioARS(totalEditado)}
+              value={totalTexto ?? formatPrecioARS(esRapido ? totalManual : totalEditado)}
               onChange={(e) => setTotalTexto(e.target.value)}
               onFocus={(e) => setTotalTexto(e.target.value)}
               onBlur={aplicarTotalEscrito}
               onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur() }}
-              title="Total final — se puede escribir a mano: el ajuste % de la mano de obra se acomoda para dar ese número"
+              title={esRapido
+                ? 'Total final — se guarda tal cual, no es la suma de los renglones'
+                : 'Total final — se puede escribir a mano: el ajuste % de la mano de obra se acomoda para dar ese número'}
               style={{
                 width: 170, height: 34, textAlign: 'right', borderRadius: 8, padding: '0 10px',
                 border: '2px solid var(--border-strong)', background: 'var(--surface-card)', color: 'var(--text-strong)',
                 fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, outline: 'none',
               }}
             />
+            {esRapido && (
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--text-faint)' }}>
+                Escrito a mano
+              </span>
+            )}
           </div>
         )}
-        {editMode && (
+        {/* El ajuste % no se ofrece en un presupuesto rápido: movería los
+            precios de unos renglones que el cliente no ve, y el total —que es
+            lo único que ve— está escrito a mano y no lo seguiría. */}
+        {editMode && !esRapido && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
               Ajuste mano de obra
@@ -886,7 +923,7 @@ export default function DetallePresupuesto() {
       {/* Por qué el total no quedó en el número que se escribió. Se muestra solo
           mientras siga siendo ese el total en pantalla: si después se edita un
           renglón, el aviso deja de aplicar y desaparece solo. */}
-      {editMode && avisoTotal && avisoTotal.total === totalEditado && (
+      {editMode && avisoTotal && avisoTotal.total === (esRapido ? totalManual : totalEditado) && (
         <div style={{
           fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', lineHeight: 1.5,
           color: 'var(--status-aviso-fg)', background: 'var(--status-aviso-bg)',

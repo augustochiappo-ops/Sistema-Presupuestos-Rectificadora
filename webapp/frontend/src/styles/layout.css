@@ -34,6 +34,10 @@
 /* Paso Servicios del wizard: catálogo de mano de obra a la izquierda, previsualización del presupuesto a la derecha */
 .servicios-picker-grid{display:grid;grid-template-columns:1fr 700px;gap:14px;align-items:start}
 
+/* Presupuesto rápido: las dos listas para tildar, mano de obra y categorías de
+   repuestos, una al lado de la otra y del mismo ancho. */
+.rapido-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+
 @media (max-width: 860px){
   .shell-outer{padding:0}
   .shell-inner{border-radius:0;box-shadow:none;min-height:100vh;display:block}
@@ -71,6 +75,7 @@
 
   .repuestos-categorias-panel{max-height:none}
   .servicios-picker-grid{grid-template-columns:1fr}
+  .rapido-grid{grid-template-columns:1fr}
   .categoria-chips-row{
     display:flex;flex-direction:row;gap:8px;
     overflow-x:auto;overflow-y:hidden;padding-bottom:4px;

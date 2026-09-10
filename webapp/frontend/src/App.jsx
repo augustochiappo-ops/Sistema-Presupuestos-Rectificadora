@@ -8,6 +8,7 @@ import ClientesScreen from './screens/Clientes/ClientesScreen'
 import ClienteDetalle from './screens/Clientes/ClienteDetalle'
 import HistorialPresupuestos from './screens/Presupuestos/Historial'
 import WizardPresupuesto from './screens/Presupuestos/Wizard/WizardPresupuesto'
+import PresupuestoRapido from './screens/Presupuestos/PresupuestoRapido'
 import DetallePresupuesto from './screens/Presupuestos/Detalle'
 import PedidoRepuestos from './screens/Presupuestos/Pedido'
 import PreciosScreen from './screens/Precios/PreciosScreen'
@@ -63,6 +64,7 @@ function App() {
         <Route path="clientes/:id" element={<SoloOficina><ClienteDetalle /></SoloOficina>} />
         <Route path="presupuestos" element={<SoloOficina><HistorialPresupuestos /></SoloOficina>} />
         <Route path="presupuestos/nuevo" element={<SoloOficina><WizardPresupuesto /></SoloOficina>} />
+        <Route path="presupuestos/nuevo/rapido" element={<SoloOficina><PresupuestoRapido /></SoloOficina>} />
         <Route path="presupuestos/:id" element={<SoloOficina><DetallePresupuesto /></SoloOficina>} />
         <Route path="presupuestos/:id/pedido" element={<SoloOficina><PedidoRepuestos /></SoloOficina>} />
         <Route path="precios" element={<SoloOficina><PreciosScreen /></SoloOficina>} />

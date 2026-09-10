@@ -1868,3 +1868,48 @@ se ve. El buscador no filtra por marca —busca por código, medidas y aplicaci�
 así que juntarlas no rompe ningún filtro.
 
 **Fecha:** 2026-09-10
+
+## Un total escrito a mano se guarda, no se despeja de vuelta (2026-09-10)
+
+**Decisión:** el presupuesto rápido guarda el total en una columna propia,
+`presupuestos.total_manual`, y el `total` del presupuesto pasa a ser ese número.
+No se busca ningún `ajuste_pct` que lo produzca.
+
+**Por qué no reusar la bisección** que ya existía (ver "El total se fija a mano y
+el % se busca, no se despeja", 2026-09-09). Esa mecánica mueve el precio de la
+mano de obra hasta que la suma dé el número pedido, y funciona bien donde
+apareció: un presupuesto cotizado renglón por renglón, donde el % es una palanca
+real. En el rápido no hay de dónde agarrarse:
+
+* Los repuestos se tildan **por categoría y sin precio**, así que no hay
+  renglones de repuesto que muevan la suma.
+* Si el trabajo fuera casi todo repuestos, el % de la mano de obra no tendría
+  fuerza para llegar al total y quedaría en el extremo.
+* Hay totales que la escalera del redondeo **no puede clavar al peso**, y en un
+  rápido el número escrito no es una aspiración: es el precio que el dueño ya le
+  dijo al cliente.
+
+Y la razón de fondo: en el rápido el % no significa nada. Estaría ajustando el
+precio de unos renglones que **el cliente nunca ve** —el PDF no imprime precios
+por línea— para llegar al único número que sí ve. Guardarlo directo dice la
+verdad: ese total lo escribió una persona.
+
+**Dónde vive la regla, una sola vez:** `db.total_guardado(items, total_manual)`
+—`total_manual` si está, la suma si no—, y la llaman las dos funciones que
+escriben el total (`guardar_presupuesto` y `actualizar_presupuesto`). La columna
+`total` sigue siendo la que leen el historial, los clientes, el taller y el PDF,
+así que ninguna de esas consultas se enteró del cambio.
+
+**La consecuencia que hay que respetar:** `total_manual` no es sólo el número,
+es la marca de que lo puso una persona. Por eso una edición que **no habla del
+total lo conserva** (el PUT sin `total_manual` arrastra el que había), y
+revalidar contra los precios de hoy también: un total escrito no es un precio de
+catálogo. Si algún día se quiere volver a la suma, hay que ponerlo en NULL
+explícitamente — no puede pasar solo, porque pasar solo es exactamente la falla
+que se quiere evitar (se corrige una descripción y el presupuesto cambia de
+precio sin que nadie lo note).
+
+**Los dos caminos conviven, a propósito.** Presupuesto normal: se escribe el
+total y se busca el %. Presupuesto rápido: se escribe el total y se guarda. No
+se unificaron porque no son lo mismo — en el normal los renglones tienen precio y
+el cliente los cotiza; en el rápido el total ES el presupuesto.

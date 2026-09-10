@@ -2,15 +2,15 @@
 
 ## Los dos carriles (leer esto primero)
 
-Las siete suites completas son **440 verificaciones y unos veinte minutos**, casi
+Las ocho suites completas son **472 verificaciones y unos veinte minutos**, casi
 todos de las tres de UI, que manejan un Chromium de verdad. Correrlas después de
 cada cambio chico era el mayor desperdicio de tiempo del proyecto. Desde el
 2026-09-08 el trabajo va en dos carriles:
 
 | | Qué se corre | Cuánto tarda | Cuándo |
 |---|---|---|---|
-| **Corto** | `tests/rapido.sh` — las cuatro de backend + `humo.mjs` | **2 min 30 s** | en cada cambio |
-| | `tests/rapido.sh --backend` — solo las cuatro de backend | **4 segundos** | cuando el cambio no toca el frontend |
+| **Corto** | `tests/rapido.sh` — las cinco de backend + `humo.mjs` | **2 min 30 s** | en cada cambio |
+| | `tests/rapido.sh --backend` — solo las cinco de backend | **4 segundos** | cuando el cambio no toca el frontend |
 | **Profundo** | las tres de UI enteras | **~20 min** | miércoles y viernes 7:00, solo |
 
 El carril profundo lo dispara una **Routine** que corre sola sobre `master`:
@@ -55,7 +55,7 @@ existiendo.
 
 ---
 
-Siete suites. Dos cubren el bloque de **grupos de repuestos** (qué cotiza cada
+Ocho suites. Dos cubren el bloque de **grupos de repuestos** (qué cotiza cada
 categoría, opcionales, ficha del motor, pedido, medidas automáticas), escritas el
 2026-08-10 junto con la feature; dos cubren la **búsqueda por
 medidas** (los catálogos técnicos de camisas, guías, asientos de válvulas,
@@ -64,7 +64,9 @@ pantalla; dos cubren los **precios propios de mano de obra** (la
 pantalla "Editar Precios" y el guardado desde el wizard), escritas el 2026-08-30
 junto con esa feature; y la última cubre el **panel del taller** (los dos roles,
 los cuatro estados y el aislamiento de precios), escrita el 2026-09-08 junto con
-esa feature. Sirven para no romperlas al tocar repuestos o precios más adelante.
+esa feature; y la octava cubre el **presupuesto rápido** (el total escrito a mano
+y los repuestos tildados por categoría), escrita el 2026-09-10 junto con esa
+pantalla. Sirven para no romperlas al tocar repuestos o precios más adelante.
 
 No son tests unitarios ni usan pytest: son scripts que corren de punta a punta
 contra los **datos reales del repo** y contra la app de verdad. Imprimen una
@@ -426,3 +428,35 @@ Los cinco bloques que valen:
    servidor no tiene `TALLER_PASSWORD_HASH`, la oficina entra lo mismo y la
    cuenta del taller simplemente no existe. Es lo que pasa en una instalación
    que todavía no configuró la variable, y no tiene que romper nada.
+
+---
+
+## 8. Backend — `backend_rapido.py`
+
+Cuatro segundos, 32 verificaciones. Cubre el **presupuesto rápido**: el atajo
+donde se tilda el motor, la mano de obra y las categorías de repuestos, y el
+total lo escribe el dueño.
+
+```bash
+source /tmp/rect-corrida/entorno.sh
+$VENV/bin/python tests/backend_rapido.py
+```
+
+Crea presupuestos de prueba (cliente `Suite Rapido …`) y los borra al terminar.
+
+Los cuatro bloques que valen:
+
+1. **El total es EXACTAMENTE el número escrito**, no la suma de los renglones
+   (la suite elige un objetivo que no puede coincidir con la suma, y lo verifica).
+   Es lo único que el cliente lee del presupuesto: si el backend recalculara, el
+   papel diría otro precio que el que se acordó por teléfono.
+2. **Un repuesto tildado por categoría** —sin código y sin precio— entra como
+   línea válida y llega al PDF con el nombre de la categoría. El PDF no imprime
+   precios por renglón, así que la categoría es TODO lo que se ve de un repuesto.
+3. **Editarlo después no convierte el total escrito en una suma.** Es la forma
+   más fácil de perder el número sin que nadie se entere: se corrige una
+   descripción y el total cambia solo. Se prueba con el payload SIN
+   `total_manual`, que es lo que manda cualquier edición que no hable del total.
+4. **El presupuesto normal no cambia**: sin total escrito, el total sigue siendo
+   la suma de los renglones y `total_manual` queda en NULL. Más los rechazos:
+   un total que no es número, uno negativo y un rápido sin un solo tilde.

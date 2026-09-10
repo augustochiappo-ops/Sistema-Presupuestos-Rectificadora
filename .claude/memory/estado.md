@@ -2205,12 +2205,114 @@ dos sesiones editaron en el mismo lugar. Se quedaron las dos secciones. Es la
 segunda vez que pasa: cuando una sesión larga toca la memoria, conviene
 `git fetch` antes de escribirla.
 
+## Sesión 2026-09-10 (segunda) — El presupuesto rápido
+
+**Lo que pidió el dueño**, con el caso concreto delante: estaban con el padre
+armando un presupuesto que ya tenían resuelto de antemano, y les llevó los cinco
+pasos completos —cliente, si era mecánico o dueño, buscar la mano de obra,
+buscar los repuestos uno por uno por código— para que al final el total que
+salía no fuera el que querían cobrar, así que lo terminaron corrigiendo igual.
+Pidió un camino corto: **motor → tildar los trabajos → tildar las categorías de
+repuestos → escribir el precio final**.
+
+**Dónde está.** Botón "Presupuesto rápido" en el encabezado de Presupuestos, al
+lado de "Nuevo Presupuesto", que lleva a `/presupuestos/nuevo/rapido`. Es una
+sola pantalla, sin pasos.
+
+**Lo que sale del otro lado no es un presupuesto distinto:** mismo endpoint,
+misma tabla, mismo PDF, se edita y se aprueba igual. Y el PDF no hubo que
+tocarlo, porque **ya tenía la forma que el dueño describió**: sus dos tablas
+nunca imprimieron precios por renglón, el número aparece una sola vez, en el
+TOTAL. Lo que faltaba era la pantalla para llenarlo rápido y que ese TOTAL fuera
+un número escrito.
+
+**Las cuatro decisiones de la pantalla** (las eligió el dueño en la sesión):
+
+* **Cliente opcional y sin tipo.** Un campo de nombre que se puede dejar vacío;
+  vacío se guarda como "Consumidor final". No pregunta mecánico/dueño ni
+  contacto. El contrato del endpoint no se tocó: el default lo resuelve la
+  pantalla, que es la única que permite dejarlo en blanco.
+* **Subtotal de referencia a la vista.** Abajo a la izquierda, cuánto daría la
+  mano de obra tildada según la lista. Es un dato al costado para decidir el
+  precio: no incluye repuestos, no viaja al backend y no sale en el PDF.
+* **Categorías como en Repuestos**: favoritas arriba, después todas, con
+  buscador. Mismo gesto en los dos lados.
+* **La mano de obra lleva contador**, así el PDF puede decir "Reunir cilindros
+  ×4". El contador aparece recién cuando el trabajo está tildado.
+
+**El total, que es el cambio de fondo.** No alcanzaba con lo que ya había: el
+total escrito a mano del 2026-09-09 funciona **buscando el `ajuste_pct`** de la
+mano de obra que da ese número (`utils/totalFinal.js`). En un rápido eso no
+sirve —los repuestos van sin precio, hay totales que no se pueden clavar al peso,
+y un trabajo de casi puros repuestos no le deja al % de dónde moverse—. Así que
+ahora el número se guarda tal cual, en una columna nueva:
+
+* `presupuestos.total_manual` (REAL, nullable), con su migración `ALTER TABLE`.
+* Una regla en un solo lugar, `db.total_guardado(items, total_manual)`: el total
+  es `total_manual` si está, y si no la suma de los ítems. La usan las dos
+  funciones que escriben el total (crear y editar).
+* La columna `total` sigue siendo la que leen el historial, los clientes, el
+  taller y el PDF: **no hubo que tocar ninguna de esas consultas**.
+* `total_manual` es además la memoria de que el número lo puso una persona: una
+  edición que no habla del total **lo conserva** en vez de reemplazarlo por una
+  suma. Revalidar también lo conserva (trae precios de hoy, pero un total escrito
+  no es un precio de catálogo).
+
+**En el detalle de un presupuesto rápido**, el recuadro del Total escribe
+`total_manual` derecho, sin bisección, y el ajuste % no se ofrece: movería
+precios de renglones que el cliente no ve, y el total —lo único que ve— no lo
+seguiría. Para un presupuesto normal no cambió nada.
+
+**Los repuestos por categoría no necesitaron código nuevo en el backend.** Un
+ítem `{tipo:'repuesto', descripcion:'Aros', categoria:'Aros', cantidad:1,
+precio_unitario:0}` ya lo resolvía `_resolver_repuesto` (pide cantidad > 0,
+descripción y un unitario numérico — el 0 lo es), y `_items_para_pdf` lo agrupa
+por categoría, que es lo único que el cliente lee.
+
+**Archivos:** `webapp/backend/app/db.py`, `.../routes/presupuestos.py`,
+`webapp/frontend/src/screens/Presupuestos/PresupuestoRapido.jsx` (**nuevo**),
+`.../Presupuestos/Historial.jsx`, `.../Presupuestos/Detalle.jsx`, `App.jsx`,
+`styles/layout.css`, y `tests/backend_rapido.py` (**nuevo**, 32 verificaciones,
+sumada a `tests/rapido.sh` y documentada en `tests/README.md`).
+
+**Verificado:**
+
+* `tests/backend_rapido.py` entera, 32 checks: el total es exactamente el escrito
+  y no la suma; los tres repuestos por categoría entran sin código ni precio y
+  llegan al PDF con el nombre de la categoría; editar sin mandar `total_manual`
+  no se lo lleva puesto; un presupuesto normal sigue sumando y queda con
+  `total_manual` en NULL; y los rechazos (no numérico, negativo, sin un solo
+  tilde).
+* **La migración sobre una base vieja**: se copió `.datos-dev` (creada antes del
+  cambio, sin la columna), se corrió `init_db` y la columna quedó agregada sin
+  tocar nada más.
+* **La pantalla, con Chromium** (script chico en el scratchpad, regla 3): el
+  botón, elegir motor, cinco tildes, el botón apagado sin precio y encendido con
+  él, la pestaña del PDF que se abre, el presupuesto en el historial con
+  $1.350.000 y "Consumidor Final", y el detalle mostrándolo. La única falla de la
+  primera corrida fue **del check, no de la app**: buscaba "CATERPILLAR" y el
+  motor de los datos se llama "CATERPILAR", con una sola L.
+* **El PDF, leído de verdad** (`pypdf`): dice PRESUPUESTO / Rectificación de
+  motores, lista los dos trabajos y las tres categorías **sin un solo precio al
+  costado**, y abajo TOTAL $ 1.350.000. Que es exactamente lo que el dueño
+  describió que quería.
+* `tests/rapido.sh` entero (las cinco de backend + humo): TODO OK, 197 s.
+* `tests/ui_precios.mjs` entera —la suite que cubre el total y el detalle, que es
+  lo que este cambio toca.
+
 ## Próximo paso
 
-**Lo anterior, terminado y en producción (2026-09-09, sesión aparte):** el
-total del presupuesto se escribe a mano y el ajuste % se acomoda solo para
-darlo. La sección "Sesión 2026-09-09" más arriba tiene el detalle. No dejó nada
-pendiente propio.
+**Lo último, terminado y en producción (2026-09-10, segunda sesión):** el
+**presupuesto rápido** — motor, tildes y el precio final escrito a mano. La
+sección "Sesión 2026-09-10 (segunda)" más arriba tiene el detalle. No dejó nada
+pendiente propio. Lo que sí conviene saber si se toca el total: desde ahora hay
+**dos caminos** para un total escrito a mano —el `ajuste_pct` que se busca por
+bisección (presupuesto normal) y la columna `total_manual` que se guarda tal cual
+(rápido)—, y el que manda lo decide `db.total_guardado`.
+
+**Lo anterior (2026-09-09, sesión aparte):** el total del presupuesto se escribe
+a mano y el ajuste % se acomoda solo para darlo. La sección "Sesión 2026-09-09"
+más arriba tiene el detalle. No dejó nada pendiente propio.
 
 **Los dibujos de Persan (2026-09-10).** Es la tanda que el dueño dejó para
 después de los datos, y es la que sigue. Van con un script espejo de

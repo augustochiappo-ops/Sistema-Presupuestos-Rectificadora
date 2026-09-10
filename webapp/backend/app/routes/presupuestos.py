@@ -842,6 +842,9 @@ def revalidar(presupuesto_id):
     db.actualizar_presupuesto(
         presupuesto_id, items_resueltos, detalle.get("notas") or "",
         detalle.get("ajuste_pct") or 0, opciones=opciones,
+        # Revalidar trae los precios de hoy, pero un total escrito a mano no es
+        # un precio de catálogo: lo puso el dueño y sigue valiendo.
+        total_manual=detalle.get("total_manual"),
     )
     # Los precios pasan a ser los de hoy, así que la semana de validez vuelve a
     # contar desde hoy — y coincide con la fecha que imprime el PDF.
@@ -955,6 +958,27 @@ def _agrupar_por_marca(opciones):
     return salida
 
 
+def _total_manual(data, defecto=None):
+    """
+    Total escrito a mano que viene en el payload (presupuesto rápido).
+
+    Devuelve (valor, error). `defecto` es lo que vale si el payload no trae la
+    clave (o la trae en null): en la edición, el total que el presupuesto ya
+    tenía — así editar un renglón no borra el número que escribió el dueño. Un valor que no es un
+    número, o negativo, es un error y no se ignora: el total es EL dato del
+    presupuesto rápido y perderlo en silencio sería emitir otro presupuesto.
+    """
+    if "total_manual" not in data or data.get("total_manual") is None:
+        return defecto, None
+    try:
+        valor = float(data["total_manual"])
+    except (TypeError, ValueError):
+        return None, "El total final no se entiende como un número"
+    if valor < 0:
+        return None, "El total final no puede ser negativo"
+    return valor, None
+
+
 @bp.post("")
 @login_required
 def crear():
@@ -966,6 +990,10 @@ def crear():
         ajuste_pct = float(data.get("ajuste_pct") or 0)
     except (TypeError, ValueError):
         ajuste_pct = 0
+
+    total_manual, error_total = _total_manual(data)
+    if error_total:
+        return jsonify({"error": error_total}), 400
 
     cliente_tipo = data.get("cliente_tipo") or None
     if cliente_tipo is not None and cliente_tipo not in TIPOS_CLIENTE_VALIDOS:
@@ -996,7 +1024,7 @@ def crear():
     presupuesto_id = db.guardar_presupuesto(
         cliente_nombre, motor_id, items_resueltos, ajuste_pct,
         cliente_tipo=cliente_tipo, contacto_nombre=contacto_nombre,
-        opciones=opciones,
+        opciones=opciones, total_manual=total_manual,
     )
 
     # El motor queda cargado con lo que se acaba de presupuestar y con lo que se
@@ -1036,6 +1064,11 @@ def actualizar(presupuesto_id):
         ajuste_pct = float(data.get("ajuste_pct") or 0)
     except (TypeError, ValueError):
         ajuste_pct = 0
+    # Sin `total_manual` en el payload manda el que ya tenía: una edición que no
+    # habla del total no puede convertirlo en la suma de los ítems.
+    total_manual, error_total = _total_manual(data, existente.get("total_manual"))
+    if error_total:
+        return jsonify({"error": error_total}), 400
 
     items_resueltos = _resolver_items_edicion(items_payload)
     # congelar_stock=False: al editar se preserva el stock que quedó grabado al
@@ -1045,7 +1078,8 @@ def actualizar(presupuesto_id):
     if not items_resueltos:
         return jsonify({"error": "Agregá al menos un servicio o repuesto"}), 400
 
-    db.actualizar_presupuesto(presupuesto_id, items_resueltos, notas, ajuste_pct, opciones=opciones)
+    db.actualizar_presupuesto(presupuesto_id, items_resueltos, notas, ajuste_pct,
+                              opciones=opciones, total_manual=total_manual)
     if existente.get("motor_id"):
         _aplicar_ficha(existente["motor_id"], opciones, data)
     return jsonify(db.get_presupuesto_detalle(presupuesto_id))

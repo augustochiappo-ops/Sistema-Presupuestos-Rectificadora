@@ -82,7 +82,12 @@ def init_db():
                 -- % de aumento/descuento sobre mano de obra aplicado al cotizar
                 -- (o al último guardado en edición); se guarda para mostrarlo de
                 -- nuevo la próxima vez que se abra a editar, no para recalcular nada.
-                ajuste_pct REAL DEFAULT 0
+                ajuste_pct REAL DEFAULT 0,
+                -- Total escrito a mano (presupuesto rápido): cuando NO es NULL,
+                -- `total` es este número y no la suma de los ítems. Es la memoria
+                -- de que el número lo puso una persona, para que una edición
+                -- posterior no lo reemplace en silencio por una suma.
+                total_manual REAL
             );
 
             CREATE TABLE IF NOT EXISTS presupuesto_items (
@@ -359,6 +364,10 @@ def init_db():
         if "entrega_prometida" not in cols_presupuestos:
             # Fecha ISO que la oficina le prometió al cliente. NULL = sin fecha.
             conn.execute("ALTER TABLE presupuestos ADD COLUMN entrega_prometida TEXT")
+        if "total_manual" not in cols_presupuestos:
+            # Total escrito a mano (presupuesto rápido). NULL = el total sale de
+            # la suma de los ítems, como siempre.
+            conn.execute("ALTER TABLE presupuestos ADD COLUMN total_manual REAL")
         if "notas_taller" not in cols_presupuestos:
             # Lo que el taller le quiere decir a la oficina sobre este motor
             # ("el cigüeñal va a 0,25", "falta la junta"). Lo escribe el taller,
@@ -498,6 +507,20 @@ def total_de_items(items: list[dict]) -> float:
     return sum((i.get("precio_aplicado") or 0.0) for i in items if not i.get("opcional"))
 
 
+def total_guardado(items: list[dict], total_manual: float | None) -> float:
+    """
+    El número que va a la columna `total`, que es la que leen el historial, los
+    clientes, el taller y el PDF.
+
+    Normalmente es la suma de los ítems. En un presupuesto rápido no: ahí el
+    total lo escribe el dueño y la suma no significa nada, porque los repuestos
+    se tildan por categoría y van sin precio. Por eso `total_manual`, cuando
+    está, MANDA — y queda guardado aparte para que una edición posterior sepa
+    que ese número lo puso una persona y no lo reemplace por una suma.
+    """
+    return pesos(total_manual) if total_manual is not None else total_de_items(items)
+
+
 _COLS_ITEM = (
     "presupuesto_id, servicio_id, descripcion_custom, precio_aplicado, "
     "tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar, "
@@ -565,6 +588,7 @@ def guardar_presupuesto(
     cliente_tipo: str | None = None,
     contacto_nombre: str | None = None,
     opciones: list[dict] | None = None,
+    total_manual: float | None = None,
 ) -> int:
     """
     Crea (o reutiliza) el cliente, inserta el presupuesto y sus ítems.
@@ -584,9 +608,11 @@ def guardar_presupuesto(
     contacto_nombre: nombre opcional de la contraparte (el mecánico si el
     cliente es el dueño, o viceversa); se resuelve como otro cliente, con el
     tipo inverso al del cliente principal.
+    total_manual: total escrito a mano (presupuesto rápido). Si viene, ese es el
+    total del presupuesto y la suma de los ítems no se usa (ver total_guardado).
     Retorna el id del presupuesto creado.
     """
-    total = total_de_items(items)
+    total = total_guardado(items, total_manual)
 
     with get_connection() as conn:
         cliente_id = _resolver_cliente(conn, cliente_nombre, cliente_tipo)
@@ -601,8 +627,10 @@ def guardar_presupuesto(
             contacto_id = _resolver_cliente(conn, contacto_nombre, tipo_contraparte)
 
         cur = conn.execute(
-            "INSERT INTO presupuestos (cliente_id, contacto_id, motor_id, fecha, total, ajuste_pct) VALUES (?, ?, ?, ?, ?, ?)",
-            (cliente_id, contacto_id, motor_id, date.today().isoformat(), total, ajuste_pct or 0),
+            "INSERT INTO presupuestos (cliente_id, contacto_id, motor_id, fecha, total, ajuste_pct, total_manual)"
+            " VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (cliente_id, contacto_id, motor_id, date.today().isoformat(), total, ajuste_pct or 0,
+             pesos(total_manual) if total_manual is not None else None),
         )
         presupuesto_id = cur.lastrowid
 
@@ -831,7 +859,7 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
     with get_connection() as conn:
         row = conn.execute(
             """
-            SELECT p.id, p.fecha, p.total, p.notas, p.ajuste_pct, p.aprobado_en,
+            SELECT p.id, p.fecha, p.total, p.total_manual, p.notas, p.ajuste_pct, p.aprobado_en,
                    p.estado_trabajo, p.prioridad, p.entrega_prometida, p.notas_taller,
                    c.id AS cliente_id, c.nombre AS cliente, c.tipo AS cliente_tipo,
                    ct.nombre AS contacto,
@@ -846,7 +874,7 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
         ).fetchone()
         if not row:
             return None
-        cols = ["id", "fecha", "total", "notas", "ajuste_pct", "aprobado_en",
+        cols = ["id", "fecha", "total", "total_manual", "notas", "ajuste_pct", "aprobado_en",
                 "estado_trabajo", "prioridad", "entrega_prometida", "notas_taller",
                 "cliente_id", "cliente", "cliente_tipo", "contacto",
                 "motor_id", "motor", "lista_num", "cilindros"]
@@ -893,15 +921,19 @@ def actualizar_presupuesto(
     notas: str,
     ajuste_pct: float = 0,
     opciones: list[dict] | None = None,
+    total_manual: float | None = None,
 ) -> float:
     """
     items_data: [{servicio_id, descripcion_custom, precio_aplicado,
                   tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
                   categoria, grupo_num}]
     opciones: alternativas de los grupos de repuestos (reemplazan a las anteriores).
+    total_manual: total escrito a mano, si el presupuesto tiene uno. El endpoint
+    que llama acá lo arrastra del presupuesto existente cuando la edición no lo
+    toca, así que editar un renglón NO convierte el número escrito en una suma.
     Elimina los ítems anteriores y los reinserta. Retorna el nuevo total.
     """
-    total = total_de_items(items_data)
+    total = total_guardado(items_data, total_manual)
     with get_connection() as conn:
         conn.execute(
             "DELETE FROM presupuesto_items WHERE presupuesto_id = ?",
@@ -915,8 +947,9 @@ def actualizar_presupuesto(
             _insertar_item(conn, presupuesto_id, item)
         _insertar_opciones(conn, presupuesto_id, opciones)
         conn.execute(
-            "UPDATE presupuestos SET total = ?, notas = ?, ajuste_pct = ? WHERE id = ?",
-            (total, notas.strip() if notas else None, ajuste_pct or 0, presupuesto_id),
+            "UPDATE presupuestos SET total = ?, notas = ?, ajuste_pct = ?, total_manual = ? WHERE id = ?",
+            (total, notas.strip() if notas else None, ajuste_pct or 0,
+             pesos(total_manual) if total_manual is not None else None, presupuesto_id),
         )
     return total
 

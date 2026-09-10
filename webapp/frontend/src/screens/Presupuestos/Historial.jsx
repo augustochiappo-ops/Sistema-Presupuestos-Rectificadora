@@ -172,6 +172,11 @@ export default function HistorialPresupuestos() {
             <Button variant="secondary" iconLeft={<Icon n="search" s={16} />} onClick={() => setModalBusqueda(true)}>
               Buscar
             </Button>
+            {/* El rápido es el atajo (motor, tildes y el precio a mano), no el
+                reemplazo: por eso va en secundario y al lado del de siempre. */}
+            <Button variant="secondary" iconLeft={<Icon n="clock" s={16} />} onClick={() => navigate('/presupuestos/nuevo/rapido')}>
+              Presupuesto rápido
+            </Button>
             <Button variant="success" iconLeft={<Icon n="plus" s={16} />} onClick={() => navigate('/presupuestos/nuevo')}>
               Nuevo Presupuesto
             </Button>
