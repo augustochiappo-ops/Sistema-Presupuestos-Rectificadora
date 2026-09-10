@@ -2185,6 +2185,26 @@ ficha `P PS309` está igual, con sus medidas 0.5 y 1.0.
 dudosos — justamente el que esta tanda arregló—, así que el ejemplo pasó a ser el
 `P PS093`, que el proveedor vende y el catálogo no lista.
 
+### Cierre de la sesión
+
+**Verificado y en producción.** Las cuatro suites de backend pasan y
+`ui_medidas.mjs` entera da **148 OK, 0 fallas**. La primera corrida levantó una
+sola falla y valió la pena: la columna Marca tapaba «JOHN DEERE / PERKINS» con
+puntos suspensivos, porque desde esta tanda un pistón lista todas las marcas bajo
+las que el catálogo lo publica. Se le puso `wrap: true` —es la única marca de las
+doce familias que lo necesita— y se rebuildeó el bundle.
+
+Deploy corrido al cierre: **HTTP 200**, `git pull` en fast-forward hasta
+`8186ae2`, reload agendado, y `chiapppo.pythonanywhere.com` sirviendo el bundle
+nuevo (`index-B3XpzWE2.js`).
+
+**Un cruce con otra sesión, para tener presente.** Mientras esta sesión
+trabajaba, otra pusheó a `master` el total del presupuesto escrito a mano. Hubo
+que mergear, y el conflicto estuvo sólo en estos dos archivos de memoria, que las
+dos sesiones editaron en el mismo lugar. Se quedaron las dos secciones. Es la
+segunda vez que pasa: cuando una sesión larga toca la memoria, conviene
+`git fetch` antes de escribirla.
+
 ## Próximo paso
 
 **Lo anterior, terminado y en producción (2026-09-09, sesión aparte):** el
