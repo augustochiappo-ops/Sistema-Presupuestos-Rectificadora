@@ -43,6 +43,14 @@ export default function WizardPresupuesto() {
   // = aumento, negativo = descuento). Vive acá (no en el paso) para no perderse
   // al ir y volver entre pasos, igual que serviciosSel.
   const [ajustePct, setAjustePct] = React.useState(0)
+  /*
+   * Redondear el total hacia arriba, al múltiplo de cien que sigue. Vive acá y
+   * no en el paso de Revisión —que es donde se prende— para que sobreviva a ir
+   * y volver: el ajuste % se escribe en el paso de Servicios, y si el
+   * interruptor se perdiera al salir de Revisión, volver con el % nuevo
+   * dejaría el total sin redondear.
+   */
+  const [redondear, setRedondear] = React.useState(false)
   const [repuestos, setRepuestos] = React.useState([])
   // Cantidad vigente de cada grupo de repuestos: lo que se tilda después dentro
   // de la misma categoría la hereda. Cada opción puede después ajustar la suya
@@ -364,6 +372,8 @@ export default function WizardPresupuesto() {
           serviciosSel={serviciosSel}
           ajustePct={ajustePct}
           onAjustePctChange={setAjustePct}
+          redondear={redondear}
+          onRedondearChange={setRedondear}
           repuestos={repuestos}
           onMoverServicio={moverServicioOpcional}
           onMoverRepuesto={moverRepuestoOpcional}

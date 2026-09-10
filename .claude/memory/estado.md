@@ -2300,9 +2300,125 @@ sumada a `tests/rapido.sh` y documentada en `tests/README.md`).
 * `tests/ui_precios.mjs` entera —la suite que cubre el total y el detalle, que es
   lo que este cambio toca.
 
+## Sesión 2026-09-10 (tercera) — Cantidades por cilindro y redondeo del total
+
+Tres pedidos del dueño, los dos primeros sobre el presupuesto rápido y el
+tercero sobre el presupuesto normal.
+
+### 1. La tarjeta negra, arriba
+
+La tarjeta oscura del presupuesto rápido —la que tiene la referencia de mano de
+obra, el recuadro del precio final y el botón de generar— estaba al pie de la
+pantalla, debajo de las dos listas. Pasó a estar arriba, justo debajo de la
+tarjeta del motor y el cliente. El bloque se movió entero, sin cambiarle nada
+adentro: es el mismo JSX en otro lugar del árbol. Queda más compacto (una sola
+fila) porque arriba tiene todo el ancho disponible.
+
+El motivo del dueño es el que se ve al usarlo: el precio final es lo que se está
+decidiendo mientras se tilda, y tenerlo al pie obligaba a bajar la pantalla cada
+vez para mirarlo.
+
+### 2. Las cantidades: se fijan, y salen de los cilindros del motor
+
+Dos problemas en el mismo control.
+
+**Sumaba en vez de fijar.** Tildar un trabajo lo dejaba en 1, y tocar el botón
+"6" lo dejaba en 7 — porque `ContadorServicio` SUMA la cantidad del botón a la
+que había, que es lo que corresponde en el wizard pero no acá. Ahora el contador
+tiene dos modos: `sumar` (el de siempre, y el default, así el wizard y el detalle
+no cambian) y `fijar`, que es el que usa el rápido. En modo `fijar` el botón que
+coincide con la cantidad actual queda marcado en negro, así se ve en qué quedó
+el renglón.
+
+**Los números ofrecidos eran fijos (1/4/6/8) y no alcanzaban.** Casi todo lo que
+se le hace a un motor se hace una vez por cilindro, o una vez por válvula, y las
+válvulas son dos o cuatro por cilindro. Sabiendo los cilindros, los tres números
+que hacen falta salen solos: **N, N×2 y N×4**, más el 1 para los trabajos que se
+hacen una sola vez. En un motor de 6 son 1/6/12/24; en uno de 4, 1/4/8/16.
+
+Los cilindros se eligen **una vez para todo el presupuesto** —un motor tiene los
+que tiene— en una tira nueva al lado del título "Mano de obra", con las tres
+opciones comunes: 4, 6 y 8, arrancando en 4. No se sacan del motor elegido
+porque la lista de la Cámara no trae ese dato como número: el nombre dice
+"4CIL" o no dice nada, y parsear el nombre para esto sería adivinar. Para
+cualquier otro caso (un tricilíndrico, un motor de cinco) sigue estando el
+recuadro donde se escribe la cantidad a mano.
+
+### 3. Redondear el total para arriba, al múltiplo de cien
+
+En el presupuesto **normal** (no el rápido), al lado del recuadro del total, hay
+un botón **"Redondear ↑"**: sube el total al múltiplo de cien que sigue.
+$1.236.746 pasa a $1.236.800. Siempre para arriba, nunca para abajo.
+
+No hace nada nuevo por dentro: calcula el múltiplo de cien y lo fija por el mismo
+camino que escribir el total a mano, o sea buscando el ajuste % que lo produce
+(`pctParaTotal`, ver `utils/totalFinal.js`). Por eso el redondeo y el porcentaje
+conviven sin pelearse.
+
+**Es un interruptor, no un botón de una vez.** Mientras está prendido, cada vez
+que el total deja de ser múltiplo de cien —porque se movió el ajuste %, porque
+se subió una cantidad, porque se editó un renglón— vuelve a subirlo. Eso es lo
+que pidió el dueño: "si se llega a aplicar el porcentaje de aumento, sigue
+aplicándose esta idea del redondeo".
+
+Dos detalles que hicieron falta para que eso funcione de verdad:
+
+* **El interruptor vive en el wizard, no en el paso de Revisión.** El ajuste % se
+  escribe en el paso de Servicios; si el estado se perdiera al salir de
+  Revisión, volver con el % nuevo dejaría el total sin redondear. Verificado
+  yendo y volviendo con un +17%.
+* **Se apaga solo si no puede clavar el número.** El total va en escalones (los
+  precios se redondean a pesos enteros renglón por renglón), así que hay
+  múltiplos de cien que no existen. Quedarse prendido ahí lo haría reintentar
+  contra un objetivo cada vez más alto, subiendo el presupuesto de a cien pesos
+  por vuelta; en vez de eso aplica lo más cerca que llegó, se apaga y el aviso
+  de siempre explica por qué.
+
+Está también en el **detalle en edición**, que es la otra pantalla donde el total
+se fija a mano, con el mismo comportamiento. No está en los presupuestos rápidos:
+ahí el total se guarda tal cual y no hay ningún % que buscar (igual que el ajuste
+%, que tampoco se ofrece).
+
+### Archivos tocados
+
+* `webapp/frontend/src/components/ContadorServicio.jsx` — modos `sumar`/`fijar` y
+  atajos configurables.
+* `webapp/frontend/src/screens/Presupuestos/PresupuestoRapido.jsx` — la tarjeta
+  negra arriba, la tira de cilindros, el contador en modo `fijar`.
+* `webapp/frontend/src/utils/totalFinal.js` — `redondearArriba`,
+  `estaRedondeado`, `PASO_REDONDEO`.
+* `webapp/frontend/src/screens/Presupuestos/Wizard/WizardPresupuesto.jsx` — el
+  estado del interruptor.
+* `webapp/frontend/src/screens/Presupuestos/Wizard/PasoRevision.jsx` — el botón,
+  el efecto y `fijarTotalEn` factorizado.
+* `webapp/frontend/src/screens/Presupuestos/Detalle.jsx` — lo mismo en edición.
+  De paso, el cálculo de `totalEditado` subió a antes del `if (!detalle)`: el
+  efecto del redondeo es un hook y los hooks no pueden quedar después de un
+  return condicional (se descubrió con el error "Rendered more hooks than during
+  the previous render").
+
+### Verificado
+
+* Script chico de Playwright, el rápido: la tarjeta negra queda arriba de las
+  listas; con 4 cilindros los atajos son 1/4/8/16 y con 6 son 1/6/12/24; tildar
+  deja 1; tocar "6" deja 6 y tocarlo otra vez lo deja en 6 (no en 12); tocar
+  "12" deja 12.
+* Script chico, el wizard: el total queda en múltiplo de cien y no baja; subir
+  una cantidad lo vuelve a redondear; ir al paso de Servicios, poner +17% y
+  volver lo deja redondeado igual; el detalle en edición redondea también.
+* `tests/rapido.sh` y `tests/ui_precios.mjs` —la suite que cubre el total y el
+  detalle, que es lo que este cambio toca.
+
+
 ## Próximo paso
 
-**Lo último, terminado y en producción (2026-09-10, segunda sesión):** el
+**Lo último, terminado (2026-09-10, tercera sesión):** las **cantidades por
+cilindro** del presupuesto rápido (los atajos 1 / N / N×2 / N×4, que ahora fijan
+en vez de sumar), la **tarjeta negra movida arriba** y el **redondeo del total
+hacia arriba a los cien pesos** en el presupuesto normal. La sección "Sesión
+2026-09-10 (tercera)" más arriba tiene el detalle. No dejó nada pendiente propio.
+
+**Antes de eso (2026-09-10, segunda sesión):** el
 **presupuesto rápido** — motor, tildes y el precio final escrito a mano. La
 sección "Sesión 2026-09-10 (segunda)" más arriba tiene el detalle. No dejó nada
 pendiente propio. Lo que sí conviene saber si se toca el total: desde ahora hay

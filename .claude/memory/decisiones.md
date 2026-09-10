@@ -1913,3 +1913,60 @@ precio sin que nadie lo note).
 total y se busca el %. Presupuesto rápido: se escribe el total y se guarda. No
 se unificaron porque no son lo mismo — en el normal los renglones tienen precio y
 el cliente los cotiza; en el rápido el total ES el presupuesto.
+
+## Los atajos de cantidad salen de los cilindros, no de una lista fija (2026-09-10)
+
+**Contexto.** En el presupuesto rápido cada renglón de mano de obra ofrecía
+cuatro atajos fijos: 1, 4, 6 y 8. El dueño pidió que los números se
+multiplicaran: eligiendo 4 quería ver 1, 4, 8 y 16; eligiendo 6, 1, 6, 12 y 24.
+
+**Por qué.** Lo dijo él mismo y es el dato que faltaba: los trabajos de un motor
+se cuentan por cilindro o por válvula, y las válvulas son dos o cuatro por
+cilindro. Con esa regla, sabiendo N —los cilindros— los tres números que hacen
+falta son N, N×2 y N×4, y el 1 queda para lo que se hace una sola vez
+(rectificar el cigüeñal, planear la tapa). Una lista fija de cuatro números no
+puede cubrir un motor de 6 con cuatro válvulas por cilindro: 24 no estaba.
+
+**Dónde se elige N.** En una tira propia, arriba de la lista, una sola vez para
+todo el presupuesto. Un motor tiene los cilindros que tiene: ponerlo por renglón
+sería repetir el mismo dato en cada fila y dejar abierta la posibilidad de que
+dos renglones del mismo presupuesto no coincidan.
+
+**Por qué no se lee del motor elegido.** Sería lo natural, pero la lista de la
+Cámara no trae los cilindros como dato: vienen adentro del nombre ("BEDFORD 200
+DIESEL \*4CIL\* 98.4mm") y en muchos motores no vienen. Sacarlo del nombre con
+una expresión regular funcionaría en la mayoría y fallaría callado en el resto,
+que es la peor forma de fallar cuando el resultado es una cantidad que multiplica
+el precio. Tres botones y un default de 4 cuestan un click y no se equivocan.
+
+**Y los botones fijan, no suman.** En el wizard los atajos suman a la cantidad
+actual, y ahí tiene sentido (se van agregando pasadas). En el rápido tildar el
+trabajo ya lo deja en 1, así que sumar hacía que tocar "6" dejara 7. El contador
+quedó con dos modos y el default sigue siendo `sumar`, para no cambiarle el
+comportamiento a las dos pantallas que ya lo usaban.
+
+## El redondeo del total es un interruptor que se apaga solo (2026-09-10)
+
+**Contexto.** El dueño pidió un botón para redondear el total hacia arriba a los
+cien pesos, y aclaró que "si se llega a aplicar el porcentaje de aumento, sigue
+aplicándose esta idea del redondeo".
+
+**Decisión.** Es un interruptor con memoria, no una acción de una sola vez:
+mientras está prendido, cada vez que el total deja de ser múltiplo de cien
+vuelve a subirlo. Por dentro no hace nada nuevo — calcula el múltiplo y lo fija
+por el mismo camino que escribir el total a mano, o sea buscando el ajuste % que
+lo produce. Así el redondeo y el porcentaje no compiten: son la misma palanca.
+
+**El peligro que hubo que atajar.** El total no es una recta sino una escalera
+(cada renglón se redondea a pesos enteros), así que hay múltiplos de cien que no
+existen. Un interruptor ingenuo, ante uno de esos, se queda prendido: el total
+que quedó tampoco es múltiplo de cien, el efecto vuelve a correr, y como el
+objetivo se recalcula desde el total nuevo, apunta cien pesos más arriba cada
+vuelta. El presupuesto se iría subiendo solo. La salida es que **el redondeo se
+apague cuando no pudo clavar el número**: aplica lo más cerca que llegó, se
+apaga, y el aviso de siempre explica por qué el total no es el pedido.
+
+**Dónde vive el estado.** En el wizard, no en el paso de Revisión donde está el
+botón. El ajuste % se escribe en el paso de Servicios, así que el camino real es
+prender el redondeo, ir atrás a tocar el %, y volver — y si el estado viviera en
+la pantalla, ese viaje lo perdería justo cuando más hace falta.

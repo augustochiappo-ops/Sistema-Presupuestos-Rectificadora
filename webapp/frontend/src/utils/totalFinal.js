@@ -187,3 +187,29 @@ export function avisoDeTotalFijado(resultado, formatear) {
     + `${diferencia > 0 ? 'más' : 'menos'} de lo que pediste: como los precios van en pesos enteros, el total `
     + 'salta de a varios y no pasa por cualquier número.'
 }
+
+/*
+ * REDONDEO DEL TOTAL HACIA ARRIBA.
+ *
+ * Pedido del dueño (2026-09-10): un presupuesto que da $1.236.746 se le dice al
+ * cliente como $1.236.800. El paso es de cien pesos y siempre para arriba —
+ * nunca para abajo, porque redondear a la baja es regalar plata.
+ *
+ * Va acá, al lado de `pctParaTotal`, porque es la misma cuenta vista de otra
+ * manera: el botón de redondear no hace nada nuevo, calcula el múltiplo de cien
+ * que sigue y lo fija como total escrito a mano, con lo cual el ajuste % se
+ * acomoda solo igual que si el número se hubiera tipeado. Por eso el redondeo
+ * sigue valiendo cuando después se toca el porcentaje: cada vez que el total
+ * deja de ser múltiplo de cien, la pantalla vuelve a fijar el escalón de arriba.
+ */
+export const PASO_REDONDEO = 100
+
+/** El múltiplo de `paso` igual o mayor al total dado, en pesos enteros. */
+export function redondearArriba(total, paso = PASO_REDONDEO) {
+  return Math.ceil(Math.round(total) / paso) * paso
+}
+
+/** Si el total ya cae justo en un múltiplo de `paso` no hay nada que redondear. */
+export function estaRedondeado(total, paso = PASO_REDONDEO) {
+  return Math.round(total) % paso === 0
+}

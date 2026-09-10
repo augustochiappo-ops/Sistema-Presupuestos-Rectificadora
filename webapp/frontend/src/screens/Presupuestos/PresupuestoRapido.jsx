@@ -22,6 +22,9 @@ import { aPesos, formatPrecioARS, parsePrecioARS } from '../../utils/format'
  * se edita y se aprueba igual); lo que cambia es cuánto cuesta cargarlo:
  *
  *   - El cliente es opcional y no se pregunta si es mecánico o dueño.
+ *   - La cantidad de cada trabajo se pone de un toque: se eligen los cilindros
+ *     del motor una vez y cada renglón ofrece 1 / N / N×2 / N×4, que es lo que
+ *     hace falta para los trabajos por cilindro y para los de por válvula.
  *   - Los repuestos se tildan POR CATEGORÍA ("Aros", "Cojinetes de biela"), sin
  *     buscar código por código. Van sin precio a propósito: el número que se le
  *     dice al cliente lo escribe el dueño abajo.
@@ -64,6 +67,28 @@ const vacio = {
 // el default se resuelve acá, en la única pantalla que lo permite en blanco.
 const CLIENTE_POR_DEFECTO = 'Consumidor final'
 
+/*
+ * CUÁNTAS VECES SE HACE CADA TRABAJO — los atajos de cantidad.
+ *
+ * Casi todo lo que se le hace a un motor se hace una vez por cilindro (rectificar
+ * cilindros, reunir), o una vez por válvula, y las válvulas son dos o cuatro por
+ * cilindro. Así que sabiendo los cilindros del motor los tres números que hacen
+ * falta salen solos: N, N×2 y N×4. En un motor de 6 son 6, 12 y 24; en uno de 4
+ * son 4, 8 y 16. El 1 va siempre, para los trabajos que se hacen una sola vez
+ * (rectificar el cigüeñal, planear la tapa).
+ *
+ * Los cilindros se eligen una vez para todo el presupuesto —un motor tiene los
+ * que tiene— y no se sacan del motor elegido porque la lista de la Cámara no
+ * trae ese dato como número: el nombre dice "4 CIL" o no dice nada.
+ */
+const CILINDROS = [4, 6, 8]
+const CILINDROS_POR_DEFECTO = 4
+
+/** Los cuatro atajos de cantidad para un motor de N cilindros: 1, N, N×2, N×4. */
+function atajosDeCantidad(cilindros) {
+  return [...new Set([1, cilindros, cilindros * 2, cilindros * 4])]
+}
+
 export default function PresupuestoRapido() {
   const navigate = useNavigate()
   const [motor, setMotor] = React.useState(null)
@@ -73,6 +98,7 @@ export default function PresupuestoRapido() {
   const [favServicios, setFavServicios] = React.useState(new Set())
   const [cantidades, setCantidades] = React.useState({})
   const [buscarServicio, setBuscarServicio] = React.useState('')
+  const [cilindros, setCilindros] = React.useState(CILINDROS_POR_DEFECTO)
 
   const categorias = useCategorias()
   const [favCategorias, setFavCategorias] = React.useState(new Set())
@@ -126,6 +152,8 @@ export default function PresupuestoRapido() {
   const categoriasFiltradas = categorias.filter((c) => coincideBusqueda([c.nombre], buscarCategoria))
   const categoriasFav = categoriasFiltradas.filter((c) => favCategorias.has(c.prefijo))
   const categoriasResto = categoriasFiltradas.filter((c) => !favCategorias.has(c.prefijo))
+
+  const atajos = atajosDeCantidad(cilindros)
 
   const elegidas = categorias.filter((c) => categoriasSel.includes(c.prefijo))
   const cantidadTildes = Object.keys(cantidades).length + categoriasSel.length
@@ -201,8 +229,17 @@ export default function PresupuestoRapido() {
         {/* El contador aparece recién cuando el trabajo está tildado: la
             cantidad solo tiene sentido sobre algo que ya está adentro, y así la
             lista para tildar queda limpia de recuadros. */}
+        {/* Los atajos FIJAN la cantidad (no suman, como en el wizard): acá
+            tildar ya deja el trabajo en 1, y tocar "6" quiere decir "son seis". */}
         {cantidad > 0
-          ? <ContadorServicio cantidad={cantidad} onChange={(n) => cambiarCantidad(s.id, n)} />
+          ? (
+            <ContadorServicio
+              cantidad={cantidad}
+              onChange={(n) => cambiarCantidad(s.id, n)}
+              opciones={atajos}
+              modo="fijar"
+            />
+          )
           : <span />}
       </div>
     )
@@ -277,9 +314,77 @@ export default function PresupuestoRapido() {
             </div>
           </div>
 
+          <div style={{
+            display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16,
+            flexWrap: 'wrap', padding: '16px 20px', background: 'var(--surface-inverse)',
+            borderRadius: 'var(--radius-xl)',
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 10, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,.65)' }}>
+                Según la lista, solo la mano de obra
+              </span>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-lg)', fontWeight: 600, color: '#fff' }}>
+                {formatPrecioARS(referenciaManoObra)}
+              </span>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'rgba(255,255,255,.55)' }}>
+                Es al costado: no incluye repuestos y no sale en el PDF.
+              </span>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <label style={{ fontFamily: 'var(--font-body)', fontSize: 10, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,.65)' }} htmlFor="rapido-total">
+                  Precio final
+                </label>
+                <CampoMonto
+                  id="rapido-total"
+                  valor={totalTexto}
+                  onEscribir={setTotalTexto}
+                  placeholder="$ 0"
+                  title="El total que va a leer el cliente. Se guarda tal cual: no es la suma de los renglones."
+                  style={{ width: 190, textAlign: 'right', fontWeight: 600, fontSize: 'var(--text-md)' }}
+                />
+              </div>
+              <Button
+                variant="success"
+                iconLeft={<Icon n="file-text" s={16} />}
+                disabled={!puedeConfirmar || guardando}
+                onClick={confirmar}
+              >
+                {guardando ? 'Generando…' : 'Generar presupuesto'}
+              </Button>
+            </div>
+          </div>
+
           <div className="rapido-grid">
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
-              <div style={tituloSeccion}>Mano de obra</div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
+                <div style={tituloSeccion}>Mano de obra</div>
+                {/* Los cilindros del motor. No entran en el presupuesto: lo único
+                    que hacen es decidir qué números ofrecen los atajos de cada
+                    renglón (ver atajosDeCantidad). */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ ...tituloSeccion, letterSpacing: '.08em' }}>Cilindros</span>
+                  {CILINDROS.map((n) => (
+                    <button
+                      key={n}
+                      type="button"
+                      onClick={() => setCilindros(n)}
+                      title={`Motor de ${n} cilindros: los atajos pasan a ser ${atajosDeCantidad(n).join(' / ')}`}
+                      style={{
+                        minWidth: 30, height: 26, padding: '0 8px', borderRadius: 8, cursor: 'pointer',
+                        fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, lineHeight: 1,
+                        border: '1px solid var(--border-default)',
+                        background: cilindros === n ? 'var(--surface-inverse)' : 'var(--surface-card)',
+                        color: cilindros === n ? '#fff' : 'var(--text-strong)',
+                        borderColor: cilindros === n ? 'var(--surface-inverse)' : 'var(--border-default)',
+                      }}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <SearchInput
                 icon={<Icon n="search" s={16} />}
                 placeholder="Buscar por número o descripción…"
@@ -324,48 +429,6 @@ export default function PresupuestoRapido() {
                 Van por categoría y sin precio: en el PDF el cliente lee "Aros", no el código.
                 Si necesitás el código para el pedido, ese es el presupuesto completo.
               </div>
-            </div>
-          </div>
-
-          <div style={{
-            display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16,
-            flexWrap: 'wrap', padding: '16px 20px', background: 'var(--surface-inverse)',
-            borderRadius: 'var(--radius-xl)',
-          }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: 10, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,.65)' }}>
-                Según la lista, solo la mano de obra
-              </span>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-lg)', fontWeight: 600, color: '#fff' }}>
-                {formatPrecioARS(referenciaManoObra)}
-              </span>
-              <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'rgba(255,255,255,.55)' }}>
-                Es al costado: no incluye repuestos y no sale en el PDF.
-              </span>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                <label style={{ fontFamily: 'var(--font-body)', fontSize: 10, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,.65)' }} htmlFor="rapido-total">
-                  Precio final
-                </label>
-                <CampoMonto
-                  id="rapido-total"
-                  valor={totalTexto}
-                  onEscribir={setTotalTexto}
-                  placeholder="$ 0"
-                  title="El total que va a leer el cliente. Se guarda tal cual: no es la suma de los renglones."
-                  style={{ width: 190, textAlign: 'right', fontWeight: 600, fontSize: 'var(--text-md)' }}
-                />
-              </div>
-              <Button
-                variant="success"
-                iconLeft={<Icon n="file-text" s={16} />}
-                disabled={!puedeConfirmar || guardando}
-                onClick={confirmar}
-              >
-                {guardando ? 'Generando…' : 'Generar presupuesto'}
-              </Button>
             </div>
           </div>
 

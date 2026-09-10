@@ -21,7 +21,9 @@ import {
   subtotalDe, subtotalDelGrupo, lineaDeOpcion,
 } from '../../utils/grupos'
 import { textoSubtotal, unitarioDesdeSubtotal } from '../../utils/precios'
-import { pctParaTotal, avisoDeTotalFijado } from '../../utils/totalFinal'
+import {
+  pctParaTotal, avisoDeTotalFijado, redondearArriba, estaRedondeado, PASO_REDONDEO,
+} from '../../utils/totalFinal'
 import { estadoDe } from '../Taller/estados'
 import { CajaOpcionales, BotonOpcional } from '../../components/CajaOpcionales'
 import { useArrastreOpcionales } from '../../hooks/useArrastreOpcionales'
@@ -299,6 +301,21 @@ export default function DetallePresupuesto() {
    */
   const [totalManual, setTotalManual] = React.useState(null)
   const esRapido = totalManual !== null
+  /*
+   * Redondear el total para arriba, al múltiplo de cien que sigue. Mismo
+   * interruptor que en la Revisión del wizard: queda puesto, así que si
+   * después se mueve el ajuste % o se edita un renglón, el total vuelve a
+   * subir al múltiplo siguiente. Ver el efecto más abajo y utils/totalFinal.js.
+   */
+  const [redondear, setRedondear] = React.useState(false)
+
+  // En edición el total suma todo lo cargado, menos lo marcado como opcional.
+  // Se calcula acá arriba, y no al lado de la tabla, porque el redondeo (más
+  // abajo) es un hook y los hooks no pueden quedar después del `if (!detalle)`.
+  const totalEditado = editItems
+    .filter((it) => !it.opcional)
+    .reduce((acc, it) => acc + (Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0), 0)
+    + totalRepuestos(editGrupos)
 
   const totalPara = React.useCallback((pct) => {
     const factor = 1 + pct / 100
@@ -335,6 +352,18 @@ export default function DetallePresupuesto() {
       setAvisoTotal({ texto: 'Ese total no se entiende como un número.', total: totalEditado })
       return
     }
+    // Escribir un total a mano manda sobre el redondeo: es un número decidido y
+    // dejarlo prendido lo empujaría al múltiplo de cien de arriba en el acto.
+    setRedondear(false)
+    fijarTotalEn(objetivo)
+  }
+
+  /*
+   * Dejar el total en `objetivo` moviendo el ajuste % de la mano de obra.
+   * Devuelve el resultado de la búsqueda: el redondeo lo mira para saber si
+   * pudo clavar el número o si tiene que apagarse.
+   */
+  const fijarTotalEn = (objetivo) => {
     const resultado = pctParaTotal(totalPara, objetivo)
     // 'bajo' y 'alto' son totales que el porcentaje no puede alcanzar. Ahí no se
     // toca nada: aplicar el extremo dejaría el presupuesto en cero o por las
@@ -348,7 +377,27 @@ export default function DetallePresupuesto() {
       },
     )
     if (alcanzable && resultado.pct !== null) aplicarAjustePct(resultado.pct, String(resultado.pct))
+    return resultado
   }
+
+  /*
+   * El redondeo, mientras esté prendido: cada vez que el total deja de ser
+   * múltiplo de cien lo sube al siguiente. Se apaga solo si no se puede clavar
+   * exacto (el total va en escalones, ver utils/totalFinal.js): quedarse
+   * prendido ahí lo haría reintentar contra un objetivo cada vez más alto,
+   * subiendo el presupuesto de a cien pesos por vuelta.
+   */
+  React.useEffect(() => {
+    if (!redondear || !editMode || esRapido || estaRedondeado(totalEditado)) return
+    const resultado = fijarTotalEn(redondearArriba(totalEditado))
+    if (!resultado.exacto) setRedondear(false)
+    // fijarTotalEn se rearma en cada render; el efecto corre por el total.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [redondear, editMode, esRapido, totalEditado])
+
+  // Salir de edición deja el redondeo apagado: es una decisión de esta tanda de
+  // cambios, no una propiedad guardada del presupuesto.
+  React.useEffect(() => { if (!editMode) setRedondear(false) }, [editMode])
 
   const cancelarEdicion = () => setEditMode(false)
 
@@ -684,11 +733,6 @@ export default function DetallePresupuesto() {
   const ultimoPdf = pdfs[0]
   const anteriores = pdfs.slice(1)
 
-  // En edición el total suma todo lo cargado, menos lo marcado como opcional.
-  const totalEditado = editItems
-    .filter((it) => !it.opcional)
-    .reduce((acc, it) => acc + (Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0), 0)
-    + totalRepuestos(editGrupos)
   const totalOpcionalesEditado = editItems
     .filter((it) => it.opcional)
     .reduce((acc, it) => acc + (Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0), 0)
@@ -882,10 +926,28 @@ export default function DetallePresupuesto() {
                 fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, outline: 'none',
               }}
             />
-            {esRapido && (
+            {esRapido ? (
               <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--text-faint)' }}>
                 Escrito a mano
               </span>
+            ) : (
+              /* Redondear para arriba: sube el total al múltiplo de cien que
+                 sigue y lo deja ahí aunque después se mueva el ajuste %. */
+              <button
+                type="button"
+                onClick={() => setRedondear((v) => !v)}
+                title={`Redondear el total hacia arriba, al múltiplo de ${PASO_REDONDEO} más cercano. `
+                  + 'Queda puesto: si el total cambia, se vuelve a redondear.'}
+                style={{
+                  height: 28, padding: '0 10px', borderRadius: 8, cursor: 'pointer', alignSelf: 'flex-start',
+                  fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600,
+                  border: '1px solid var(--border-strong)',
+                  background: redondear ? 'var(--surface-inverse)' : 'var(--surface-card)',
+                  color: redondear ? '#fff' : 'var(--text-strong)',
+                }}
+              >
+                Redondear ↑
+              </button>
             )}
           </div>
         )}

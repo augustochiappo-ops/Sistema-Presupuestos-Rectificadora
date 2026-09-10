@@ -11,16 +11,27 @@ const botonCantidad = {
 
 /*
  * Contador de cantidad para ítems de mano de obra (servicios): un recuadro
- * editable a mano + atajos 1/4/6/8. A diferencia de SelectorCantidad
- * (repuestos), que fija la cantidad final elegida, acá los botones SUMAN a la
- * cantidad actual — tocar "8" dos veces deja 16, "6" dos veces deja 12.
- * Cantidad 0 (o vacía) = el servicio no está incluido en el presupuesto.
+ * editable a mano + una tira de atajos.
+ *
+ * Tiene dos modos, porque las dos pantallas que lo usan quieren cosas
+ * distintas del mismo control:
+ *
+ *   - modo "sumar" (el de siempre, y el default): los botones SUMAN a la
+ *     cantidad actual — tocar "8" dos veces deja 16, "6" dos veces deja 12.
+ *     Así funcionan el paso Servicios del wizard y la edición del detalle.
+ *   - modo "fijar": el botón PONE ese número, sin importar lo que hubiera.
+ *     Es lo que pide el presupuesto rápido, donde tildar un trabajo ya lo deja
+ *     en 1 y tocar "6" quiere decir "son seis", no "seis más el que había".
+ *
+ * `opciones` permite cambiar los atajos (el rápido los deriva de los cilindros
+ * del motor: 1 / N / N×2 / N×4). Cantidad 0 (o vacía) = el servicio no está
+ * incluido en el presupuesto.
  */
-export function ContadorServicio({ cantidad, onChange, disabled }) {
-  const sumar = (e, n) => {
+export function ContadorServicio({ cantidad, onChange, disabled, opciones = CANTIDADES_SERVICIO, modo = 'sumar' }) {
+  const tocar = (e, n) => {
     e.stopPropagation()
     if (disabled) return
-    onChange((cantidad || 0) + n)
+    onChange(modo === 'fijar' ? n : (cantidad || 0) + n)
   }
 
   const escribir = (e) => {
@@ -41,8 +52,22 @@ export function ContadorServicio({ cantidad, onChange, disabled }) {
           fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', background: 'var(--surface-card)', color: 'var(--text-strong)',
         }}
       />
-      {CANTIDADES_SERVICIO.map((n) => (
-        <button key={n} type="button" disabled={disabled} onClick={(e) => sumar(e, n)} style={botonCantidad}>
+      {opciones.map((n) => (
+        <button
+          key={n}
+          type="button"
+          disabled={disabled}
+          onClick={(e) => tocar(e, n)}
+          title={modo === 'fijar' ? `Poner ${n}` : `Sumar ${n}`}
+          style={{
+            ...botonCantidad,
+            // En modo "fijar" el botón que coincide con la cantidad actual queda
+            // marcado: dice de un vistazo en qué quedó el renglón.
+            ...(modo === 'fijar' && cantidad === n
+              ? { background: 'var(--surface-inverse)', color: '#fff', borderColor: 'var(--surface-inverse)' }
+              : null),
+          }}
+        >
           {n}
         </button>
       ))}

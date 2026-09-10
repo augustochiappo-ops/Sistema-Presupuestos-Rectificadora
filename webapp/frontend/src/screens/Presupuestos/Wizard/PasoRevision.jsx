@@ -13,7 +13,9 @@ import { formatPrecioARS, parsePrecioARS } from '../../../utils/format'
 import { lineasServicios, totalLineas, hayPreciosInvalidos } from '../../../utils/servicios'
 import { textoSubtotal } from '../../../utils/precios'
 import { subtotalDe } from '../../../utils/grupos'
-import { pctParaTotal, avisoDeTotalFijado } from '../../../utils/totalFinal'
+import {
+  pctParaTotal, avisoDeTotalFijado, redondearArriba, estaRedondeado, PASO_REDONDEO,
+} from '../../../utils/totalFinal'
 import { ResumenPreciosEditados } from './ResumenPreciosEditados'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
@@ -77,7 +79,7 @@ function Campo({ label, valor }) {
  * se escribe manda y lo otro se recalcula— un piso más arriba.
  */
 export function PasoRevision({
-  cliente, motor, serviciosSel, ajustePct, onAjustePctChange, repuestos,
+  cliente, motor, serviciosSel, ajustePct, onAjustePctChange, redondear, onRedondearChange, repuestos,
   onMoverServicio, onMoverRepuesto, onEditarServicio, onEditarRepuesto,
   onConfirmar, guardando, guardarPrecios, onGuardarPreciosChange,
 }) {
@@ -195,17 +197,12 @@ export function PasoRevision({
     [servicios, serviciosSel, totalRepuestosCotizados],
   )
 
-  const aplicarTotalEscrito = () => {
-    const texto = totalTexto
-    setTotalTexto(null)
-    // Salir sin haber escrito nada (o borrando todo) no toca el presupuesto:
-    // vuelve a verse el total calculado, como si no se hubiera entrado.
-    if (texto === null || !texto.trim()) return
-    const objetivo = parsePrecioARS(texto)
-    if (objetivo === null) {
-      setAvisoTotal({ texto: 'Ese total no se entiende como un número.', total: totalGeneral })
-      return
-    }
+  /*
+   * Dejar el total en `objetivo` moviendo el ajuste % de la mano de obra.
+   * Devuelve el resultado de la búsqueda, que el que llama usa para decidir si
+   * hay algo más que decir (lo usa el redondeo, más abajo).
+   */
+  const fijarTotalEn = (objetivo) => {
     const resultado = pctParaTotal(totalPara, objetivo)
     // 'bajo' y 'alto' son totales que el porcentaje no puede alcanzar. Ahí no se
     // toca nada: aplicar el extremo dejaría el presupuesto en cero o por las
@@ -219,7 +216,53 @@ export function PasoRevision({
       },
     )
     if (alcanzable && resultado.pct !== null && resultado.pct !== ajustePct) onAjustePctChange(resultado.pct)
+    return resultado
   }
+
+  const aplicarTotalEscrito = () => {
+    const texto = totalTexto
+    setTotalTexto(null)
+    // Salir sin haber escrito nada (o borrando todo) no toca el presupuesto:
+    // vuelve a verse el total calculado, como si no se hubiera entrado.
+    if (texto === null || !texto.trim()) return
+    const objetivo = parsePrecioARS(texto)
+    if (objetivo === null) {
+      setAvisoTotal({ texto: 'Ese total no se entiende como un número.', total: totalGeneral })
+      return
+    }
+    // Escribir un total a mano manda sobre el redondeo: es un número decidido y
+    // dejarlo prendido lo empujaría al múltiplo de cien de arriba en el acto.
+    onRedondearChange(false)
+    fijarTotalEn(objetivo)
+  }
+
+  /*
+   * REDONDEAR EL TOTAL PARA ARRIBA (pedido del dueño, 2026-09-10).
+   *
+   * $1.236.746 se le dice al cliente como $1.236.800. Es un interruptor y no un
+   * botón de una vez: mientras está prendido, cada vez que el total deja de ser
+   * múltiplo de cien —porque se movió el ajuste %, porque se editó un renglón—
+   * vuelve a subirlo al múltiplo siguiente. Por eso "si se aplica el porcentaje,
+   * el redondeo sigue aplicándose".
+   *
+   * Se apaga solo si un redondeo no se puede clavar exacto (el total va en
+   * escalones, ver utils/totalFinal.js): quedarse prendido ahí lo haría
+   * reintentar contra un objetivo cada vez más alto, subiendo el presupuesto de
+   * a cien pesos por vuelta. Cuando pasa se aplica lo más cerca que llegó y se
+   * explica en el aviso.
+   *
+   * El interruptor vive en el wizard (ver WizardPresupuesto) porque el ajuste %
+   * se escribe en el paso de Servicios: si se perdiera al salir de esta
+   * pantalla, volver con el % nuevo dejaría el total sin redondear.
+   */
+  React.useEffect(() => {
+    if (!redondear || !hayItems || estaRedondeado(totalGeneral)) return
+    const resultado = fijarTotalEn(redondearArriba(totalGeneral))
+    if (!resultado.exacto) onRedondearChange(false)
+    // fijarTotalEn se rearma en cada render; el efecto tiene que correr por el
+    // total, no por la identidad de la función.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [redondear, totalGeneral, hayItems])
 
   const tipoContacto = cliente.tipo ? TIPO_OPUESTO[cliente.tipo] : null
 
@@ -358,6 +401,23 @@ export function PasoRevision({
                 fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 700, outline: 'none',
               }}
             />
+            {/* Redondear para arriba: sube el total al múltiplo de cien que
+                sigue y lo deja ahí aunque después se mueva el ajuste %. */}
+            <button
+              type="button"
+              onClick={() => onRedondearChange(!redondear)}
+              title={`Redondear el total hacia arriba, al múltiplo de ${PASO_REDONDEO} más cercano. `
+                + 'Queda puesto: si el total cambia, se vuelve a redondear.'}
+              style={{
+                height: 42, padding: '0 14px', borderRadius: 8, cursor: 'pointer',
+                fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600,
+                border: '2px solid rgba(255,255,255,.35)',
+                background: redondear ? '#fff' : 'rgba(255,255,255,.06)',
+                color: redondear ? 'var(--surface-inverse)' : '#fff',
+              }}
+            >
+              Redondear ↑
+            </button>
           </span>
           {totalOpcionales > 0 && (
             <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,.75)' }}>
