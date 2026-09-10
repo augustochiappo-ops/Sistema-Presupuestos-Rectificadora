@@ -230,7 +230,7 @@ def ficha(fila: dict, indice) -> dict:
     }
 
 
-def fusionar(previas: list[dict], nuevas: list[dict]) -> tuple[list[dict], list[str]]:
+def fusionar(previas: list[dict], nuevas: list[dict]) -> tuple[list[dict], list[str], list[str]]:
     """
     Las fichas de Persan encima de las que ya estaban, sin tocar las de las otras
     marcas.
@@ -246,7 +246,20 @@ def fusionar(previas: list[dict], nuevas: list[dict]) -> tuple[list[dict], list[
     en su lugar, para que el diff sea el de los campos que cambiaron y no el del
     archivo reordenado; las nuevas van al final.
     """
-    salida = list(previas)
+    codigos_nuevos = {f["codigo"] for f in nuevas}
+    salida, retiradas = [], []
+    for f in previas:
+        codigo = str(f.get("codigo", ""))
+        if codigo.startswith("P PS") and codigo not in codigos_nuevos:
+            # Una ficha de Persan que este script ya no produce se va: el
+            # universo de la marca es lo que sale del TXT, no lo que quedó de
+            # una corrida vieja. Pasó cuando el código base pasó a leerse con la
+            # regla de ancho fijo del proveedor ("P PS136PH/10" era en realidad
+            # la base "P PS136PH/1" con la sobremedida "0.4" pegada).
+            retiradas.append(codigo)
+            continue
+        salida.append(f)
+
     donde = {}
     for i, f in enumerate(salida):
         if str(f.get("codigo", "")).startswith("P PS"):
@@ -260,7 +273,7 @@ def fusionar(previas: list[dict], nuevas: list[dict]) -> tuple[list[dict], list[
             agregadas.append(f["codigo"])
         else:
             salida[i] = f
-    return salida, agregadas
+    return salida, agregadas, retiradas
 
 
 def main():
@@ -270,7 +283,7 @@ def main():
 
     previas = json.load(open(SALIDA, encoding="utf-8")) if os.path.exists(SALIDA) else []
     de_otras_marcas = sum(1 for f in previas if not str(f.get("codigo", "")).startswith("P PS"))
-    salida, agregadas = fusionar(previas, fichas)
+    salida, agregadas, retiradas = fusionar(previas, fichas)
 
     with open(SALIDA, "w", encoding="utf-8") as f:
         json.dump(salida, f, ensure_ascii=False, indent=1)
@@ -281,6 +294,8 @@ def main():
     print(f"✓ {len(fichas)} pistones de Persan ({len(agregadas)} nuevos) → "
           f"{os.path.relpath(SALIDA, RAIZ)}, {len(salida)} fichas en total")
     print(f"  {de_otras_marcas} de otras marcas quedaron intactas")
+    if retiradas:
+        print(f"  {len(retiradas)} de Persan que el TXT ya no trae se retiraron: {', '.join(retiradas)}")
     print(f"  {sum(len(f['codigos_crac']) for f in fichas)} códigos del proveedor cruzados")
     if sin_codigo:
         print(f"  ⚠ sin código en la lista del proveedor ({len(sin_codigo)}): {', '.join(sin_codigo)}")

@@ -1738,3 +1738,83 @@ regenerando `subconjuntos.json` y hoy le pasaría el trapo a las 83 fichas de Fe
 Mogul. Mientras no se le ponga su `fusionar()`, ese script no se corre.
 
 **Fecha:** 2026-09-09
+
+---
+
+## Una tabla de PDF se corta por las líneas que el PDF dibuja, no por offsets medidos (2026-09-10)
+
+**Contexto:** el catálogo Persan tiene 186 páginas de tabla con doce columnas y
+cada pistón ocupa cinco o seis renglones. La sesión anterior había medido los
+offsets de cada columna a mano, relativos al rótulo "NÚMERO DEL PISTÓN" del
+encabezado, y había descubierto que ese rótulo se corre unos once puntos entre
+página par e impar.
+
+**La decisión:** los bordes salen de `page.lines` — las líneas verticales que el
+PDF trae dibujadas para pintar la grilla—, no de medir dónde cae el texto. Son
+las mismas en las 186 páginas y no dependen del rótulo, que sí se corre. Once
+números fijos y ninguna tolerancia.
+
+**Y `pdfplumber` en vez de `visitor_text` de pypdf.** El plan anterior era
+recorrer los fragmentos con `visitor_text` y volver a pegar los que el kerning de
+la fuente (Montserrat) parte al medio: "96,50" sale como "96" y ",50", y sin
+pegarlos el dato queda mal por medio milímetro. `extract_words` con
+`x_tolerance=1.5` ya hace ese pegado, y de paso resuelve los dos artefactos de
+marca que la sesión anterior había encontrado a mano (`RENAUL T`, `CLA YTON`).
+
+**Fecha:** 2026-09-10
+
+---
+
+## Una columna apilada se separa por lo que el valor ES, no por la línea en que cae (2026-09-10)
+
+**Contexto:** la columna de la altura del catálogo Persan apila tres datos:
+altura de compresión, "+ ó -" y largo total. La lectura obvia es por posición —el
+primero, el segundo, el tercero— y con dos variantes de altura el bloque se
+repite.
+
+**El problema:** no siempre son tres. Hay pistones sin largo total, otros con dos
+valores de "+ ó -", y uno con el largo dibujado en la columna equivocada. Contar
+posiciones fallaba en **100 de los 807 registros**, medido: cada falla es un
+pistón que entra con un largo total menor que su altura de compresión, que es
+imposible.
+
+**La decisión:** clasificar por la forma del valor. El "+ ó -" viene con el signo
+dibujado como palabra aparte ("- 1,60") o vale 0,00; la altura y el largo van sin
+signo. De los que quedan sin signo, el primero es la altura y el largo es **el
+primero que la supera**, que es la misma condición que el converter le exige
+después. Con esa regla fallan 8 de 807, y esos 8 entran con "?" en el largo en
+vez de con un número inventado.
+
+**La regla general, que es lo que vale para el próximo catálogo:** cuando una
+columna de PDF apila varios datos, buscar primero qué los distingue —un signo,
+una unidad, un rango— y recién si no hay nada, contar posiciones. Contar
+posiciones es lo primero que se rompe cuando el catálogo tiene una fila
+incompleta.
+
+**Fecha:** 2026-09-10
+
+---
+
+## Un pistón repetido bajo varias marcas: gana el registro mejor leído (2026-09-10)
+
+**Contexto:** el catálogo Persan lista el mismo pistón bajo cada marca que lo
+usa. El 460 está en cinco páginas; 107 números están repetidos. Los datos
+técnicos coinciden casi siempre, y cuando no coinciden es porque uno de los
+registros se leyó mal.
+
+**La decisión:** se elige el registro con más campos completos, restando 5 puntos
+por cada guarda de plausibilidad que no pasa (largo total mayor que la altura de
+compresión, largo del perno mayor que su diámetro). Así el 171 entra con el perno
+de 62,00 mm de la página de Renault y no con el 2,00 de la de Dacia, que es la
+altura de medición corrida un lugar.
+
+**Elegir un registro entero y no armar uno con lo mejor de cada uno es a
+propósito:** los registros repetidos pueden ser variantes distintas del mismo
+número, y mezclarles los campos deja una ficha que no existe en ningún lado.
+
+**La marca, en cambio, las lista a todas** ("FIAT / SEAT"): 58 de los 276
+pistones sirven para más de una, y el campo de marca es el único lugar donde eso
+se ve. El buscador no filtra por marca —busca por código, medidas y aplicación—,
+así que juntarlas no rompe ningún filtro.
+
+**Fecha:** 2026-09-10

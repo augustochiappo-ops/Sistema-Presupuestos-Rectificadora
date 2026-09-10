@@ -68,7 +68,7 @@ check('las doce familias con su total',
   && (await page.locator('button', { hasText: /^Asientos de válvulas\s*1108$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Subconjuntos\s*284$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Conjuntos\s*166$/ }).count()) === 1
-  && (await page.locator('button', { hasText: /^Pistones\s*89$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Pistones\s*368$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Pernos de pistón\s*252$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes de biela\s*354$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Cojinetes de bancada\s*345$/ }).count()) === 1
@@ -368,11 +368,11 @@ check('con las medidas del catálogo', pis.includes('62') && pis.includes('61,75
 check('y con precio de la base', /\$\s?[\d.]+/.test(pis), pis)
 await page.screenshot({ path: path.join(SHOT, 'medidas-pistones.png'), fullPage: true })
 
-await page.fill('input[placeholder="Código…"]', 'PS171PH')
+await page.fill('input[placeholder="Código…"]', 'PS093')
 await esperar(1200)
 const dudoso = await filas().nth(0)
 check('el pistón con datos dudosos aparece igual',
-  (await dudoso.textContent()).includes('P PS171PH'), await dudoso.textContent())
+  (await dudoso.textContent()).includes('P PS093'), await dudoso.textContent())
 check('y las medidas que no se pudieron leer van con "?"',
   (await dudoso.locator('td', { hasText: /^\?$/ }).count()) >= 3,
   await dudoso.textContent())

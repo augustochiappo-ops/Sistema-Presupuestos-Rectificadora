@@ -2016,28 +2016,129 @@ una lista hardcodeada envejece solo** (la anterior fue el del subconjunto sin
 dibujo). Al agregar una familia hay que buscar esas listas: `grep -n "Bujes de
 biela" tests/ui_medidas.mjs` las encuentra todas, porque es la última de todas.
 
+## Sesión 2026-09-10 — Persan entero: de 35 fichas a 314
+
+Los pistones de Persan quedaron cargados. **`pistones.json` pasó de 89 fichas a
+368**: 314 de Persan (eran 35) y los 54 de Federal Mogul, intactos. Los dibujos
+quedan para otra tanda, como pidió el dueño.
+
+**Lo que faltaba era el lector, y es lo que se escribió**:
+`scripts/leer_pistones_persan.py`. Del PDF del catálogo (Edición 16, enero 2026,
+204 páginas, 51 MB, en el release `catalogos`) saca los 807 registros de pistón
+—662 números distintos— y deja el TXT de tabla pipe que
+`convertir_pistones_persan.py` ya sabía leer. Sigue habiendo **un solo productor
+de `pistones.json` por marca**.
+
+**Se leyó con `pdfplumber` y no con `visitor_text` de pypdf**, que era el plan de
+la sesión anterior. `extract_words` pega solo los fragmentos que el kerning de la
+fuente del catálogo (Montserrat) parte al medio: los dos artefactos que la sesión
+anterior había encontrado a mano —`RENAUL T` y `CLA YTON`— salen enteros sin
+escribir una línea para eso. Las 57 marcas del catálogo salen limpias.
+
+**Los bordes de columna son las líneas verticales que el PDF trae dibujadas**
+(`page.lines`), no offsets medidos contra el encabezado. Eso resolvió el problema
+de que los rótulos del encabezado se corren once puntos entre página par e impar:
+los datos no se corren, y los bordes son los mismos en las 186 páginas de tabla
+(que van de la 17 a la 203, con la 193 en blanco).
+
+### Las decisiones que se tomaron leyendo (están en `decisiones.md`)
+
+1. **La columna de la altura se separa por lo que el valor ES, no por posición.**
+   Apila (altura de compresión, "+ ó -", largo total), pero no siempre de a tres:
+   hay pistones sin largo y otros con dos valores de "+ ó -". Contar posiciones
+   fallaba en 100 de los 807 registros. La regla que quedó: el "+ ó -" viene con
+   signo dibujado aparte o vale 0,00; de los que quedan sin signo, el primero es
+   la altura y el largo es el primero que la supera.
+2. **Un pistón repetido bajo varias marcas se queda con el registro mejor leído.**
+   El 460 está en cinco páginas. Se puntúa por campos completos, castigando los
+   que no pasan las guardas de plausibilidad. Así el 171 entra con el perno de
+   62,00 mm de la página de Renault y no con el 2,00 de la de Dacia.
+3. **La marca lista a todas.** 58 de los 276 pistones sirven para más de una
+   marca; es el único campo donde eso se ve.
+4. **En la página 188 hay dos marcas encimadas** —TOYOTA abajo y WABCO arriba, de
+   una edición anterior—. Gana la que se dibuja última, igual que con los títulos
+   pisados del catálogo de Federal Mogul. WABCO es además la que corresponde por
+   orden alfabético y por contenido.
+5. **Un decimal en la columna de los cilindros es un valor fuera de lugar.** Pasa
+   una sola vez en las 186 páginas: el pistón 149 de John Deere, con el largo
+   total (121,22) dibujado en el hueco de los cilindros. Se realinea; sin eso el
+   149 entraba con un largo de 6,35 mm contra una altura de compresión de 70,42.
+
+### La verificación, que es lo que vale
+
+Se comparó el TXT nuevo contra las 35 fichas que ya estaban, campo por campo, en
+las once medidas: **25 idénticas, 0 regresiones y 10 mejoras**. Seis fichas
+ganaron el largo total que antes salía vacío o negativo (127, 128, 140 ×2, 160 y
+169), y dos que estaban enteras corridas de columna quedaron bien (171 y 184: el
+TXT viejo les ponía el Ø en la altura de compresión y el perno en los aros). Las
+dos restantes son el cambio de convención del código base, abajo.
+
+Los rangos de las 303 fichas con datos del catálogo dan todos plausibles: Ø del
+pistón 58 a 137 mm, largo total 44 a 167, Ø del perno 12,7 a 50, huelgo 0,02 a
+0,19.
+
+### El código base ahora se lee con la regla de ancho fijo del proveedor
+
+`P PS136PH/10.4` son catorce caracteres: los tres últimos son la medida, así que
+la base es `P PS136PH/1` y la sobremedida `0.4`. Antes se leía `P PS136PH/10` con
+la medida `.4`. Las dos matchean el precio, pero la del proveedor es la
+documentada (`CRAC/tecnicos/CARGA-COJINETES.md`). El cambio dejó dos fichas viejas
+huérfanas, y por eso **`fusionar()` ahora también retira las fichas de Persan que
+el TXT ya no trae**: el universo de la marca es lo que sale del TXT, no lo que
+quedó de una corrida vieja. Lo dice en su salida cuando pasa.
+
+### Los números
+
+| | |
+|---|---|
+| Códigos base de Persan en la lista del proveedor | **314** |
+| De ésos, con ficha en el catálogo | 303 |
+| Sin ficha en el catálogo (entran con "?" en las ocho medidas) | 11 |
+| Fichas con algo para verificar | **12** (los 11 de arriba y el 157, sin largo) |
+| Códigos del proveedor cruzados | 544 de 545 |
+| Fichas de pistones en total | **368** (314 Persan + 54 Federal Mogul) |
+
+El único renglón del proveedor que quedó sin cruzar es `P PS309    S/T`: su medida
+es "S/T" y no es ninguna de las que el converter reconoce (STD o un decimal). La
+ficha `P PS309` está igual, con sus medidas 0.5 y 1.0.
+
+### Lo que se tocó además
+
+`tests/backend_medidas.py` y `tests/ui_medidas.mjs` afirmaban "89 pistones": ahora
+368. Y las dos suites usaban el `P PS171PH` como ejemplo de ficha con datos
+dudosos — justamente el que esta tanda arregló—, así que el ejemplo pasó a ser el
+`P PS093`, que el proveedor vende y el catálogo no lista.
+
 ## Próximo paso
 
-**Persan: falta el lector del PDF, y nada más (2026-09-09).** La sesión se cortó
-por tiempo con dos de las tres partes hechas y commiteadas: el converter ya fusiona
-en vez de sobrescribir (antes borraba los 54 pistones de Federal Mogul) y ya tiene
-las dos guardas de plausibilidad. Falta `scripts/leer_pistones_persan.py`, que del
-PDF produce el TXT que el converter ya sabe leer.
+**Los dibujos de Persan (2026-09-10).** Es la tanda que el dueño dejó para
+después de los datos, y es la que sigue. Van con un script espejo de
+`dibujos_pistones_fm2010.py`, un **tercer** manifiesto
+(`dibujos-pistones-persan.js`) y el import en `pistones.jsx`, que hoy importa
+dos. **Al contar dibujos faltantes hay que mirar los TRES manifiestos y las TRES
+familias**, que es el error que ya se cometió una vez. El PDF de Persan tiene la
+figura de cada pistón dibujada en la columna que va de x 235,6 a 288,0 de cada
+página de tabla; el lector nuevo ya sabe encontrarla.
 
-**Arrancar por acá**, en la sección "Sesión 2026-09-08 (sexta)" y su bloque "Persan:
-dos cosas YA HECHAS, y qué falta exactamente", más abajo en este archivo: está la
-tabla de offsets de columnas probada campo por campo, el arreglo del kerning, los
-números del cruce (319 códigos del proveedor, 304 con ficha, 284 nuevas), cómo sacar
-la marca del vehículo y cómo cruzar el código del catálogo con el del proveedor.
-Nada de eso hay que volver a derivar.
+**El PDF hay que bajarlo de nuevo**: está en el release `catalogos` y NO va al
+repo. El comando con `jq` que elige el asset por nombre está en el encabezado de
+`scripts/leer_pistones_persan.py`.
 
-**El PDF hay que bajarlo de nuevo**: está en el release `catalogos` y NO va al repo
-(el `.gitignore` ya lo excluye; en esta sesión se subió por error y hubo que
-sacarlo). El comando con `jq` que elige el asset por nombre está en
-`CRAC/tecnicos/CARGA-COJINETES.md`.
+**Lo otro que sigue pendiente, y es más grande:** `Motores Comerciales.pdf` (FP
+Diesel / FM 2013-14) del Drive, que trae la asociación motor → pistón /
+subconjunto / cojinetes / junta **organizada por motor**. Toca el corazón del
+sistema. El dueño pidió que primero se le explique bien en qué consiste y cómo se
+ejecutaría.
 
-**Y lo que el dueño confirmó el 2026-09-09**: de Persan entra **sólo lo que trabaja
-el proveedor**. Ya está así por diseño.
+**Y una que quedó anotada sin hacer:** `scripts/convertir_tecnicos.js` sigue
+regenerando entero cada JSON que produce, y produce **tres** —`camisas.json`,
+`guias.json` y `subconjuntos.json`—, los tres con un segundo productor hoy.
+Correrlo se lleva puestas las 83 fichas de Federal Mogul de los subconjuntos, las
+36 guías de Indy 2025, y degrada las camisas a la versión pobre (sin
+húmeda/seca, sin bocas, sin notas). No lo corre ni el deploy ni un hook: sólo se
+corre a mano cuando en el repo del buscador se procesa un catálogo nuevo, y el
+aviso está en la cabecera del archivo. El arreglo es el mismo `fusionar()` que ya
+tienen los dos de pistones, y la verificación está escrita en `decisiones.md`.
 
 ---
 

@@ -1,7 +1,7 @@
 """
 Suite de verificación de la búsqueda por medidas (`app/tecnicos.py`), contra los
 catálogos técnicos del repo (396 camisas, 951 guías, 1.108 asientos de válvulas,
-284 subconjuntos, 166 conjuntos, 89 pistones, 252 pernos y 190 bujes de biela) y los 64.250
+284 subconjuntos, 166 conjuntos, 368 pistones, 252 pernos y 190 bujes de biela) y los 64.250
 repuestos del proveedor ya importados en la base.
 
 Cómo se corre: ver tests/README.md. Resumen:
@@ -78,8 +78,8 @@ check("284 subconjuntos (Mahle + Federal Mogul)",
 # por código, ni más ni menos.
 check("166 conjuntos (los que trabaja el proveedor)",
       familias.get("conjuntos", {}).get("total") == 166, familias.get("conjuntos"))
-check("89 pistones (Persan + Federal Mogul)",
-      familias.get("pistones", {}).get("total") == 89, familias.get("pistones"))
+check("368 pistones (Persan + Federal Mogul)",
+      familias.get("pistones", {}).get("total") == 368, familias.get("pistones"))
 # Los pernos entraron el 2026-09-08 con el catálogo de Pescara. Son los códigos
 # que el proveedor vende y tienen ficha en el catálogo: de los 305 de la lista,
 # 252. Los otros 53 son posteriores a esa edición del catálogo (es de 2018).
@@ -341,10 +341,13 @@ r = tecnicos.buscar("pistones", {"aplicacion": "falcon"})
 check("y por el motor", "P PS169PH" in codigos(r) and any(
       c.startswith("P F ") for c in codigos(r)), codigos(r))
 
-# Las filas que el PDF dejó corridas de columna no cargan medidas inventadas:
-# van sin dato y con el motivo en `extra.revisar` (la pantalla las muestra "?").
-dudoso = tecnicos.buscar("pistones", {"codigo": "PS171PH"})["resultados"][0]
-check("un pistón con columnas corridas no trae medidas",
+# Los pistones son del grupo "sólo proveedor": el universo es la lista, así que
+# un código que el proveedor vende entra aunque el catálogo Persan no lo liste.
+# Cuando pasa, las medidas NO se cargan vacías: van sin dato y con el motivo en
+# `extra.revisar`, que la pantalla muestra como "?". Un dato que falta y un dato
+# que hay que verificar no son lo mismo.
+dudoso = tecnicos.buscar("pistones", {"codigo": "PS093"})["resultados"][0]
+check("un pistón que el catálogo no lista no trae medidas",
       all(v is None for v in dudoso["medidas"].values()), dudoso["medidas"])
 check("pero sí el motivo para revisarlo",
       set(dudoso["extra"]["revisar"]) >= {"diam_piston", "alt_piston", "diam_perno"}, dudoso["extra"]["revisar"])
