@@ -363,6 +363,7 @@ export default function WizardPresupuesto() {
           motor={motor}
           serviciosSel={serviciosSel}
           ajustePct={ajustePct}
+          onAjustePctChange={setAjustePct}
           repuestos={repuestos}
           onMoverServicio={moverServicioOpcional}
           onMoverRepuesto={moverRepuestoOpcional}

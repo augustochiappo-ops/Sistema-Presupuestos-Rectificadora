@@ -2016,6 +2016,82 @@ una lista hardcodeada envejece solo** (la anterior fue el del subconjunto sin
 dibujo). Al agregar una familia hay que buscar esas listas: `grep -n "Bujes de
 biela" tests/ui_medidas.mjs` las encuentra todas, porque es la última de todas.
 
+## Sesión 2026-09-09 — El total del presupuesto se escribe a mano
+
+**Lo que pidió el dueño:** poder poner a mano el resultado del total final, y que
+el porcentaje se adapte a ese total. Hasta ahora el camino era al revés —se
+escribe un %, se mira cómo quedó el total, se corrige el %— y cuando lo que uno
+tiene en la cabeza es el número final, el que le va a decir al cliente,
+acertarlo tanteando el porcentaje lleva varios intentos.
+
+**Dónde está.** En las dos pantallas donde el total es el número final:
+
+* **Revisión del wizard** (paso 5): el "Total" de la barra negra dejó de ser
+  texto y es un recuadro que se escribe.
+* **Edición del detalle** de un presupuesto ya emitido: mismo cambio, al lado del
+  recuadro del ajuste %.
+
+Se escribe el número, se sale del recuadro (o Enter) y el `ajuste_pct` de la mano
+de obra se acomoda solo para dar ese total.
+
+**Los tres archivos:**
+
+* `webapp/frontend/src/utils/totalFinal.js` — **nuevo**. La cuenta al revés, y
+  no sabe nada de pantallas: recibe una función `totalPara(pct)` y busca el
+  argumento. Las dos pantallas le pasan la suya, armada con las mismas funciones
+  con las que después dibujan la tabla, así el % que sale produce exactamente el
+  total que se va a ver **y el que va a guardar el backend**.
+* `.../Wizard/PasoRevision.jsx` — el recuadro del total, el aviso y el texto de
+  ayuda del pie. Recibe `onAjustePctChange`, que el wizard ya tenía.
+* `.../Presupuestos/Detalle.jsx` — lo mismo en modo edición. De paso se partió
+  `aplicarAjusteTexto` en dos (`aplicarAjustePct` + el parseo del texto) y el
+  precio ajustado de un ítem quedó en una sola función, `unitarioAjustado`, que
+  usan las dos cosas que dependen del %: aplicarlo y simular qué total daría. Si
+  esas dos no dan lo mismo, el total que se escribe no es el que queda.
+
+**Por qué una bisección y no una fórmula** está en `decisiones.md` ("El total se
+fija a mano y el % se busca, no se despeja"), junto con las dos consecuencias que
+se ven en pantalla: que **hay totales que no se pueden clavar al peso** (el
+redondeo hacia arriba hace que el total sea una escalera, y cerca de un tercio de
+los números caen justo en un salto — ahí se avisa cuánto es la diferencia) y que
+un total **fuera de rango no se aplica**: el presupuesto queda como estaba.
+
+**Lo que el % sigue sin tocar, y está bien así:** los repuestos y los precios que
+se hayan puesto a mano en un renglón. El `ajuste_pct` siempre fue "% sobre la
+mano de obra de lista" y eso no cambió; lo único nuevo es poder calcularlo desde
+el total en vez de tipearlo. Si un presupuesto no tiene mano de obra de lista, el
+% no puede mover nada y la pantalla lo dice en vez de fallar en silencio.
+
+**Verificado** (con los servidores de dev arriba):
+
+* El módulo solo, con un script chico: 2.200.001 objetivos entre $800.000 y
+  $3.000.000, ninguna inconsistencia entre el total que promete y el que produce.
+  Elige el % redondo cuando existe (el total de +25% devuelve `25`, no
+  `25,0031`). 500 resoluciones en 1 ms.
+* En la app, con Chromium: pedir $1.500.000, $2.000.000 y $850.000 en la Revisión
+  deja el total clavado en ese número; un total fuera de rango avisa y **no toca
+  el presupuesto**; vaciar el recuadro y salir lo deja como estaba.
+* **La parte que más importa:** se emitió un presupuesto, se editó su total a
+  $1.750.000 y se guardó — y el total que devuelve `/api/presupuestos/<id>` es
+  $1.750.000. El backend recalcula la mano de obra desde el `ajuste_pct` con su
+  propia fórmula (`_resolver_items`), así que si el redondeo de los dos lados no
+  coincidiera, el número guardado no sería el que se escribió. Coincide.
+* `tests/rapido.sh` y `tests/ui_precios.mjs` (la suite que cubre los precios y el
+  ajuste %) enteras.
+
+**Nota operativa que costó una llamada:** cuando el dueño pasa el `DEPLOY_SECRET`
+escribiendo `export DEPLOY_SECRET="..."` en el chat, **eso no exporta nada** — es
+texto de un mensaje, no un comando corrido en la shell de Claude, y además la
+shell de la herramienta Bash no conserva variables entre llamadas. El primer
+intento de deploy con `$DEPLOY_SECRET` dio 401 por eso. El valor va escrito
+directo en el header del `curl`, en la misma llamada.
+
+**Un detalle que ya era así y conviene tener presente:** el % del **detalle** y el
+% del **wizard** no se comportan igual con un precio puesto a mano. En el wizard
+el % no lo toca; en el detalle sí, porque ahí el ajuste recalcula todo renglón
+con `servicio_id` desde la lista vigente. Es de antes de esta sesión y no se
+cambió, pero se nota más ahora que el % se puede mover desde el total.
+
 ## Sesión 2026-09-10 — Persan entero: de 35 fichas a 314
 
 Los pistones de Persan quedaron cargados. **`pistones.json` pasó de 89 fichas a
@@ -2110,6 +2186,11 @@ dudosos — justamente el que esta tanda arregló—, así que el ejemplo pasó 
 `P PS093`, que el proveedor vende y el catálogo no lista.
 
 ## Próximo paso
+
+**Lo anterior, terminado y en producción (2026-09-09, sesión aparte):** el
+total del presupuesto se escribe a mano y el ajuste % se acomoda solo para
+darlo. La sección "Sesión 2026-09-09" más arriba tiene el detalle. No dejó nada
+pendiente propio.
 
 **Los dibujos de Persan (2026-09-10).** Es la tanda que el dueño dejó para
 después de los datos, y es la que sigue. Van con un script espejo de
