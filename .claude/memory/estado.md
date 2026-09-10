@@ -2406,8 +2406,12 @@ ahí el total se guarda tal cual y no hay ningún % que buscar (igual que el aju
 * Script chico, el wizard: el total queda en múltiplo de cien y no baja; subir
   una cantidad lo vuelve a redondear; ir al paso de Servicios, poner +17% y
   volver lo deja redondeado igual; el detalle en edición redondea también.
-* `tests/rapido.sh` y `tests/ui_precios.mjs` —la suite que cubre el total y el
-  detalle, que es lo que este cambio toca.
+* `tests/rapido.sh` entero (backend + humo): TODO OK.
+* `tests/ui_precios.mjs` entera —la suite que cubre el total y el detalle, que es
+  lo que este cambio toca—: todas las verificaciones pasaron.
+* **En producción**: deploy corrido (HTTP 200, `git_pull` 8f904e5..666cd22 en
+  fast-forward y reload agendado), y `chiapppo.pythonanywhere.com` ya sirve el
+  bundle nuevo (`index-YV-imnvs.js`, el del commit).
 
 
 ## Próximo paso
