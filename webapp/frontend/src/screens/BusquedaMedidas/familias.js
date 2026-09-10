@@ -367,7 +367,11 @@ export const FAMILIAS = [
       // catálogo de Federal Mogul también hay dibujo para el pistón suelto, y es
       // el mismo del subconjunto de su número.
       { key: 'dibujo', header: 'Dibujo', width: 80, tipo: 'dibujo' },
-      { key: 'marca', header: 'Marca', width: 155 },
+      // Envuelve, y es la única marca de las doce familias que lo necesita: un
+      // pistón de Persan se lista en el catálogo bajo cada marca que lo usa y
+      // acá salen todas ("JOHN DEERE / PERKINS"). El 460 sirve para cinco. Con
+      // `tableLayout: fixed` y sin envolver, la celda las tapa sin avisar.
+      { key: 'marca', header: 'Marca', width: 155, wrap: true },
       // Una sola columna que envuelve, como en subconjuntos: con dos, la tabla
       // se pasa del ancho de la pantalla y las aplasta a cero. El motor y la
       // aplicación se siguen buscando por su filtro, no hace falta la columna.
