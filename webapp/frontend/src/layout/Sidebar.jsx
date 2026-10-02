@@ -9,6 +9,9 @@ import { api } from '../api/client'
 // es donde mira cómo viene el trabajo del día); el taller ve solamente su panel.
 const ITEMS_OFICINA = [
   { to: '/taller', label: 'Taller', icon: 'hard-hat' },
+  // El atajo de todos los días, sobre todo desde el celular: anotar el motor
+  // que entra. Está también como botón en Presupuestos.
+  { to: '/rapido', label: 'Presupuesto rápido', icon: 'zap' },
   { to: '/motores', label: 'Listado de Motores', icon: 'wrench' },
   { to: '/excel', label: 'Actualizar Excel', icon: 'folder' },
   { to: '/presupuestos', label: 'Presupuestos', icon: 'file-text' },

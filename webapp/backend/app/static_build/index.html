@@ -2,10 +2,23 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- interactive-widget: en Android, cuando sale el teclado la pantalla se
+         achica en vez de quedar tapada, así la barra de abajo del presupuesto
+         rápido (el precio y "Guardar") queda arriba del teclado. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
     <title>Sistema de Presupuestos — Rectificadora</title>
-    <script type="module" crossorigin src="/assets/index-YV-imnvs.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-bfRwiCh0.css">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- La app para el celular: "Agregar a la pantalla principal" deja un ícono
+         que abre directo en el presupuesto rápido (ver public/manifest.webmanifest). -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Chiappo" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <script type="module" crossorigin src="/assets/index-D1IOaFBJ.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-4wm7zGTw.css">
   </head>
   <body>
     <div id="root"></div>

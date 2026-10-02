@@ -62,10 +62,13 @@ export function ContadorServicio({ cantidad, onChange, disabled, opciones = CANT
           style={{
             ...botonCantidad,
             // En modo "fijar" el botón que coincide con la cantidad actual queda
-            // marcado: dice de un vistazo en qué quedó el renglón.
+            // marcado: dice de un vistazo en qué quedó el renglón. El color del
+            // borde va SIEMPRE, marcado o no: si se agregara sólo al marcar,
+            // desmarcarlo lo sacaría y el borde quedaría del color del texto
+            // (React lo avisa: quitar borderColor con un `border` puesto).
             ...(modo === 'fijar' && cantidad === n
               ? { background: 'var(--surface-inverse)', color: '#fff', borderColor: 'var(--surface-inverse)' }
-              : null),
+              : { borderColor: 'var(--border-default)' }),
           }}
         >
           {n}

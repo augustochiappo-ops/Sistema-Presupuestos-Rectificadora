@@ -1,4 +1,5 @@
 import os
+from datetime import date
 
 from flask import Blueprint, jsonify, request, send_from_directory, abort, session
 
@@ -191,7 +192,7 @@ def _unitario_pisado(it):
     return pesos(precio) if precio >= 0 else None
 
 
-def _resolver_items(items_payload, lista_num, ajuste_pct=0):
+def _resolver_items(items_payload, lista_num, ajuste_pct=0, total_a_mano=False):
     """
     Recalcula el precio server-side para ítems de FACRA (no confía en el precio
     que mande el cliente); los ítems custom usan el precio que carga el usuario
@@ -215,6 +216,14 @@ def _resolver_items(items_payload, lista_num, ajuste_pct=0):
     un número elegido a mano. Sin `precio_unitario` (el caso normal) el precio
     sale de la lista, como siempre: el cliente no puede alterar un precio sin
     decirlo explícitamente.
+
+    total_a_mano: el total del presupuesto lo escribe una persona (presupuesto
+    rápido, con precio o "a cotizar"). Importa sólo para un servicio que no
+    tiene precio de lista, que es lo que pasa siempre con un motor escrito a
+    mano (no hay lista de la Cámara de dónde sacarlo): con el total a mano el
+    renglón va en $0, porque no se cobra por sí solo; sin total a mano se
+    descarta y se avisa, porque ahí el renglón SÍ suma y un $0 inventado
+    abarataría el presupuesto sin que nadie lo note.
 
     Retorna (resueltos, descartados): descartados lleva una descripción por cada
     ítem inválido, para avisar en vez de perderlo en silencio.
@@ -247,7 +256,14 @@ def _resolver_items(items_payload, lista_num, ajuste_pct=0):
                 continue
             precio_unitario = _unitario_pisado(it)
             if precio_unitario is None:
-                precio_unitario = pesos(precios_lista[servicio_id] * factor_ajuste)
+                de_lista = precios_lista[servicio_id]
+                if de_lista is not None:
+                    precio_unitario = pesos(de_lista * factor_ajuste)
+                elif total_a_mano:
+                    precio_unitario = 0
+                else:
+                    descartados.append(_descripcion_descartado(it))
+                    continue
             resueltos.append({
                 "servicio_id": servicio_id,
                 "descripcion_custom": None,
@@ -843,8 +859,10 @@ def revalidar(presupuesto_id):
         presupuesto_id, items_resueltos, detalle.get("notas") or "",
         detalle.get("ajuste_pct") or 0, opciones=opciones,
         # Revalidar trae los precios de hoy, pero un total escrito a mano no es
-        # un precio de catálogo: lo puso el dueño y sigue valiendo.
+        # un precio de catálogo: lo puso el dueño y sigue valiendo. Y uno que
+        # falta cotizar sigue faltando: el precio de un repuesto no es el total.
         total_manual=detalle.get("total_manual"),
+        a_cotizar=detalle.get("total") is None,
     )
     # Los precios pasan a ser los de hoy, así que la semana de validez vuelve a
     # contar desde hoy — y coincide con la fecha que imprime el PDF.
@@ -979,12 +997,43 @@ def _total_manual(data, defecto=None):
     return valor, None
 
 
+def _motor_escrito(data):
+    """
+    El motor escrito a mano que viene en el payload, prolijo: en MAYÚSCULAS,
+    como todos los de la lista de la Cámara, así en el PDF, el historial y el
+    tablero del taller se leen igual ("ford falcon" y "FORD 188-221 NAF" uno
+    abajo del otro parecerían de dos sistemas distintos). Los espacios de más se
+    colapsan: "ford  292" y "ford 292" se guardan y se buscan igual. Es la misma
+    regla de prolijidad que ya se aplica al nombre del cliente.
+    """
+    return " ".join((data.get("motor_texto") or "").split()).upper()
+
+
+def _fecha_entrega(data):
+    """
+    La fecha de entrega prometida que viene en el payload ('YYYY-MM-DD').
+    Devuelve (fecha, error). Vacía es válida (no se prometió nada); una fecha
+    que no se entiende es un error y no se guarda: el taller ordena el tablero
+    por esta fecha, y un texto cualquiera ahí lo desordenaría sin aviso.
+    """
+    texto = (data.get("entrega_prometida") or "").strip()
+    if not texto:
+        return None, None
+    try:
+        return date.fromisoformat(texto).isoformat(), None
+    except ValueError:
+        return None, "La fecha de entrega no se entiende"
+
+
 @bp.post("")
 @login_required
 def crear():
     data = request.get_json(silent=True) or {}
     cliente_nombre = (data.get("cliente_nombre") or "").strip()
     motor_id = data.get("motor_id")
+    # El motor escrito a mano (presupuesto rápido desde el celular): se usa sólo
+    # si no vino uno de la lista. Ver _motor_escrito.
+    motor_texto = _motor_escrito(data) or None
     items_payload = data.get("items") or []
     try:
         ajuste_pct = float(data.get("ajuste_pct") or 0)
@@ -994,6 +1043,13 @@ def crear():
     total_manual, error_total = _total_manual(data)
     if error_total:
         return jsonify({"error": error_total}), 400
+    # "A cotizar": el rápido se guarda sin precio porque todavía no se sabe
+    # (hay que desarmar el motor). Con un total escrito no hay nada que cotizar.
+    a_cotizar = bool(data.get("a_cotizar")) and total_manual is None
+
+    entrega_prometida, error_entrega = _fecha_entrega(data)
+    if error_entrega:
+        return jsonify({"error": error_entrega}), 400
 
     cliente_tipo = data.get("cliente_tipo") or None
     if cliente_tipo is not None and cliente_tipo not in TIPOS_CLIENTE_VALIDOS:
@@ -1002,14 +1058,20 @@ def crear():
 
     if not cliente_nombre:
         return jsonify({"error": "Falta el nombre del cliente"}), 400
-    if not motor_id:
+    if not motor_id and not motor_texto:
         return jsonify({"error": "Falta el motor"}), 400
 
-    motor = db.get_motor(motor_id)
-    if not motor:
-        return jsonify({"error": "Motor no encontrado"}), 404
+    lista_num = None
+    if motor_id:
+        motor = db.get_motor(motor_id)
+        if not motor:
+            return jsonify({"error": "Motor no encontrado"}), 404
+        lista_num = motor.get("lista_num")
 
-    items_resueltos, descartados = _resolver_items(items_payload, motor.get("lista_num"), ajuste_pct)
+    items_resueltos, descartados = _resolver_items(
+        items_payload, lista_num, ajuste_pct,
+        total_a_mano=total_manual is not None or a_cotizar,
+    )
     items_grupos, opciones, descartados_grupos = _resolver_grupos(data.get("grupos_repuestos"))
     descartados += descartados_grupos
     if descartados:
@@ -1022,17 +1084,31 @@ def crear():
         return jsonify({"error": "Agregá al menos un servicio o repuesto"}), 400
 
     presupuesto_id = db.guardar_presupuesto(
-        cliente_nombre, motor_id, items_resueltos, ajuste_pct,
+        cliente_nombre, motor_id or None, items_resueltos, ajuste_pct,
         cliente_tipo=cliente_tipo, contacto_nombre=contacto_nombre,
         opciones=opciones, total_manual=total_manual,
+        motor_texto=motor_texto,
+        cliente_telefono=data.get("cliente_telefono"),
+        notas=data.get("notas"),
+        a_cotizar=a_cotizar,
+        aprobado=bool(data.get("aprobado")),
+        usuario=session.get("usuario"),
+        prioridad=bool(data.get("urgente")),
+        entrega_prometida=entrega_prometida,
     )
 
     # El motor queda cargado con lo que se acaba de presupuestar y con lo que se
     # marcó al pasar. El presupuesto NO arranca solo la próxima vez: la ficha es
-    # la lista de dónde elegir, no la selección hecha.
-    _aplicar_ficha(motor_id, opciones, data)
+    # la lista de dónde elegir, no la selección hecha. Un motor escrito a mano
+    # no tiene ficha: no es un motor de la lista.
+    if motor_id:
+        _aplicar_ficha(motor_id, opciones, data)
 
     detalle = db.get_presupuesto_detalle(presupuesto_id)
+    # El PDF sale también sin precio ("a cotizar"): dice qué se le va a hacer al
+    # motor y "A confirmar" en el total, que es justo lo que el cliente se lleva
+    # en el celular cuando deja el motor. Cuando se escriba el precio en el
+    # detalle, el PDF se reconstruye solo con el número.
     nombre_archivo = f"presupuesto_{presupuesto_id:04d}.pdf"
     items_servicios, items_repuestos, items_opcionales = _items_para_pdf(presupuesto_id)
     pdf_gen.generar_pdf(
@@ -1078,8 +1154,18 @@ def actualizar(presupuesto_id):
     if not items_resueltos:
         return jsonify({"error": "Agregá al menos un servicio o repuesto"}), 400
 
+    # Uno que estaba "a cotizar" (total en NULL) lo sigue estando hasta que la
+    # edición traiga el precio: corregir un renglón no le inventa un total.
+    a_cotizar = existente.get("total") is None and total_manual is None
     db.actualizar_presupuesto(presupuesto_id, items_resueltos, notas, ajuste_pct,
-                              opciones=opciones, total_manual=total_manual)
+                              opciones=opciones, total_manual=total_manual,
+                              a_cotizar=a_cotizar)
+    # El motor escrito a mano se puede corregir (en el celular se escribe
+    # rápido y con el pulgar). Sólo ese: uno elegido de la lista se cambia
+    # haciendo otro presupuesto, porque de él cuelgan los precios y la ficha.
+    motor_texto = _motor_escrito(data)
+    if motor_texto and not existente.get("motor_id"):
+        db.set_motor_texto(presupuesto_id, motor_texto)
     if existente.get("motor_id"):
         _aplicar_ficha(existente["motor_id"], opciones, data)
     return jsonify(db.get_presupuesto_detalle(presupuesto_id))

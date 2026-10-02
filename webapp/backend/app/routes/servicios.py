@@ -1,9 +1,24 @@
 from flask import Blueprint, jsonify
 
-from .. import db
+from .. import db, facra
 from ..auth import login_required
 
 bp = Blueprint("servicios", __name__, url_prefix="/api/servicios")
+
+
+@bp.get("")
+@login_required
+def listar():
+    """
+    La lista de mano de obra de la Cámara entera, SIN precio.
+
+    Es la que usa el presupuesto rápido cuando el motor se escribe a mano: los
+    trabajos son los mismos para cualquier motor (lo que cambia de un motor a
+    otro es la columna de precio, l1…l13), así que se pueden tildar igual aunque
+    el motor no esté en la lista. El precio no viaja porque sin motor de la
+    lista no hay de qué columna sacarlo.
+    """
+    return jsonify(facra.get_servicios_para_lista(None))
 
 
 @bp.get("/favoritos")

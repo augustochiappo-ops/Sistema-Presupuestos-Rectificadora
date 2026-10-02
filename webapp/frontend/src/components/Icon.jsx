@@ -5,6 +5,7 @@ import {
   FileUp, LogOut, Eye, EyeOff, History, Menu, Trash2, Share2, ListChecks,
   ShoppingCart, Copy, BadgeCheck, Layers, ArrowDown, ArrowUp, Ruler,
   HardHat, Printer, Clock, Play, Truck, Flame, CalendarDays, MessageSquare,
+  Phone, MessageCircle, Zap, CircleCheck,
 } from 'lucide-react'
 
 const MAP = {
@@ -20,6 +21,7 @@ const MAP = {
   'arrow-down': ArrowDown, 'arrow-up': ArrowUp, ruler: Ruler,
   'hard-hat': HardHat, printer: Printer, clock: Clock, play: Play, truck: Truck,
   flame: Flame, calendar: CalendarDays, 'message-square': MessageSquare,
+  phone: Phone, 'message-circle': MessageCircle, zap: Zap, 'circle-check': CircleCheck,
 }
 
 export function Icon({ n, s = 18, style, ...rest }) {

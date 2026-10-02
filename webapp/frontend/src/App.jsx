@@ -65,6 +65,9 @@ function App() {
         <Route path="presupuestos" element={<SoloOficina><HistorialPresupuestos /></SoloOficina>} />
         <Route path="presupuestos/nuevo" element={<SoloOficina><WizardPresupuesto /></SoloOficina>} />
         <Route path="presupuestos/nuevo/rapido" element={<SoloOficina><PresupuestoRapido /></SoloOficina>} />
+        {/* La misma pantalla con una dirección corta: es la que abre el ícono
+            de la app en el celular (ver public/manifest.webmanifest). */}
+        <Route path="rapido" element={<SoloOficina><PresupuestoRapido /></SoloOficina>} />
         <Route path="presupuestos/:id" element={<SoloOficina><DetallePresupuesto /></SoloOficina>} />
         <Route path="presupuestos/:id/pedido" element={<SoloOficina><PedidoRepuestos /></SoloOficina>} />
         <Route path="precios" element={<SoloOficina><PreciosScreen /></SoloOficina>} />
@@ -77,10 +80,17 @@ function App() {
 }
 
 // Cada rol arranca donde trabaja: la oficina en el listado de motores, el
-// taller en su panel.
+// taller en su panel. En el CELULAR la oficina arranca en el presupuesto
+// rápido: desde el teléfono lo que se hace es anotar el motor que acaba de
+// entrar, y el listado de motores es una tabla para la pantalla grande. El
+// corte es el mismo ancho en que el menú lateral se esconde (layout.css).
+const ANCHO_CELULAR = '(max-width: 860px)'
+
 function Inicio() {
   const { esTaller } = useAuth()
-  return <Navigate to={esTaller ? '/taller' : '/motores'} replace />
+  if (esTaller) return <Navigate to="/taller" replace />
+  const enCelular = typeof window !== 'undefined' && window.matchMedia?.(ANCHO_CELULAR).matches
+  return <Navigate to={enCelular ? '/rapido' : '/motores'} replace />
 }
 
 export default App

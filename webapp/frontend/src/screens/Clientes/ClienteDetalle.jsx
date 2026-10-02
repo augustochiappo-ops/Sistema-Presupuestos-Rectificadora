@@ -10,6 +10,7 @@ import { Icon } from '../../components/Icon'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
 import { formatPrecioARS, formatFechaAR } from '../../utils/format'
+import { enlaceWhatsApp, saludo } from '../../utils/whatsapp'
 import { useUndo } from '../../context/UndoContext'
 
 const TIPO_LABEL = { mecanico: 'Mecánico', dueno: 'Dueño del vehículo' }
@@ -24,6 +25,7 @@ export default function ClienteDetalle() {
   const [editando, setEditando] = React.useState(false)
   const [nombreEdit, setNombreEdit] = React.useState('')
   const [notasEdit, setNotasEdit] = React.useState('')
+  const [telefonoEdit, setTelefonoEdit] = React.useState('')
   const [tipoEdit, setTipoEdit] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
   const [error, setError] = React.useState('')
@@ -44,6 +46,7 @@ export default function ClienteDetalle() {
   const empezarEdicion = () => {
     setNombreEdit(cliente?.nombre || '')
     setNotasEdit(cliente?.notas || '')
+    setTelefonoEdit(cliente?.telefono || '')
     setTipoEdit(cliente?.tipo || '')
     setError('')
     setEditando(true)
@@ -55,7 +58,9 @@ export default function ClienteDetalle() {
     setGuardando(true)
     setError('')
     try {
-      const actualizado = await api.put(`/clientes/${id}`, { nombre: nombreEdit.trim(), notas: notasEdit, tipo: tipoEdit || null })
+      const actualizado = await api.put(`/clientes/${id}`, {
+        nombre: nombreEdit.trim(), notas: notasEdit, tipo: tipoEdit || null, telefono: telefonoEdit,
+      })
       setCliente(actualizado)
       setEditando(false)
     } catch (err) {
@@ -138,6 +143,16 @@ export default function ClienteDetalle() {
             <TextField value={nombreEdit} onChange={(e) => setNombreEdit(e.target.value)} autoFocus />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Teléfono</label>
+            <TextField
+              type="tel"
+              inputMode="tel"
+              value={telefonoEdit}
+              onChange={(e) => setTelefonoEdit(e.target.value)}
+              placeholder="Ej: 11 2345 6789 — con característica, para poder escribirle por WhatsApp"
+            />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <label style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-muted)' }}>Tipo</label>
             <select
               value={tipoEdit}
@@ -175,16 +190,34 @@ export default function ClienteDetalle() {
           </div>
         </form>
       ) : (
-        cliente?.notas && (
-          <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16 }}>
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: 6 }}>
-              Descripción interna
+        <>
+          {cliente?.telefono && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: '12px 16px' }}>
+              <Icon n="phone" s={16} style={{ color: 'var(--text-muted)' }} />
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-md)', fontWeight: 600, color: 'var(--text-strong)' }}>
+                {cliente.telefono}
+              </span>
+              <a
+                href={enlaceWhatsApp(cliente.telefono, saludo(cliente.nombre))}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--status-active-fg)', textDecoration: 'none' }}
+              >
+                <Icon n="message-circle" s={16} /> Escribirle por WhatsApp
+              </a>
             </div>
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-body)', whiteSpace: 'pre-wrap' }}>
-              {cliente.notas}
+          )}
+          {cliente?.notas && (
+            <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16 }}>
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: 6 }}>
+                Descripción interna
+              </div>
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-body)', whiteSpace: 'pre-wrap' }}>
+                {cliente.notas}
+              </div>
             </div>
-          </div>
-        )
+          )}
+        </>
       )}
 
       <DataTable
@@ -196,7 +229,13 @@ export default function ClienteDetalle() {
             key: 'cliente', header: 'Vínculo', width: 200, wrap: true,
             render: (v, row) => (row.rol === 'contacto' ? `Contraparte de ${v}` : '—'),
           },
-          { key: 'total', header: 'Total', align: 'right', width: 140, render: formatPrecioARS },
+          {
+            key: 'total', header: 'Total', align: 'right', width: 140,
+            // Sin total: un presupuesto rápido guardado "a cotizar".
+            render: (v) => (v === null || v === undefined
+              ? <StatusBadge status="pending">A cotizar</StatusBadge>
+              : formatPrecioARS(v)),
+          },
         ]}
         reorderKey="cliente-presupuestos"
         rows={presupuestos}

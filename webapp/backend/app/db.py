@@ -75,6 +75,11 @@ def init_db():
                 -- mecánico que lo trajo, y viceversa). NULL si no se cargó.
                 contacto_id INTEGER REFERENCES clientes(id),
                 motor_id   INTEGER REFERENCES motores(id),
+                -- Motor escrito a mano, cuando no se eligió de la lista de la
+                -- Cámara (presupuesto rápido desde el celular: "Ford 292 del
+                -- camión de Juan"). Con motor_id cargado manda motor_id y esto
+                -- queda en NULL; las consultas leen COALESCE(m.motor, motor_texto).
+                motor_texto TEXT,
                 fecha      TEXT,
                 total      REAL,
                 pdf_path   TEXT,
@@ -87,6 +92,9 @@ def init_db():
                 -- `total` es este número y no la suma de los ítems. Es la memoria
                 -- de que el número lo puso una persona, para que una edición
                 -- posterior no lo reemplace en silencio por una suma.
+                -- Un rápido guardado SIN precio ("a cotizar": el motor entró y
+                -- el precio se decide después de desarmarlo) tiene las dos
+                -- columnas en NULL: `total` NULL quiere decir eso y nada más.
                 total_manual REAL
             );
 
@@ -373,6 +381,10 @@ def init_db():
             # ("el cigüeñal va a 0,25", "falta la junta"). Lo escribe el taller,
             # lo lee la oficina en el detalle del presupuesto.
             conn.execute("ALTER TABLE presupuestos ADD COLUMN notas_taller TEXT")
+        if "motor_texto" not in cols_presupuestos:
+            # Motor escrito a mano (ver el CREATE TABLE). NULL en todo lo que ya
+            # existía: esos presupuestos tienen su motor_id, como siempre.
+            conn.execute("ALTER TABLE presupuestos ADD COLUMN motor_texto TEXT")
 
         cols_clientes = {r[1] for r in conn.execute("PRAGMA table_info(clientes)")}
         if "tipo" not in cols_clientes:
@@ -470,11 +482,17 @@ def init_db():
 _TIPO_OPUESTO = {"mecanico": "dueno", "dueno": "mecanico"}
 
 
-def _resolver_cliente(conn: sqlite3.Connection, nombre: str, tipo: str | None) -> int:
+def _resolver_cliente(conn: sqlite3.Connection, nombre: str, tipo: str | None,
+                      telefono: str | None = None) -> int:
     """Busca un cliente por nombre exacto (case-insensitive) o lo crea. Si ya
     existe pero todavía no tiene `tipo` clasificado y se pasa uno, lo clasifica
-    ahora (nunca pisa un tipo ya asignado)."""
+    ahora (nunca pisa un tipo ya asignado).
+
+    El `telefono`, en cambio, SÍ se actualiza si viene: es el número que el
+    cliente acaba de dar en el mostrador, y un número viejo que ya no usa no le
+    sirve a nadie. Si no viene, el que había se queda."""
     nombre_normalizado = formato_nombre_titulo(nombre.strip())
+    telefono = (telefono or "").strip() or None
     row = conn.execute(
         "SELECT id, nombre, tipo FROM clientes WHERE nombre = ? COLLATE NOCASE",
         (nombre_normalizado,),
@@ -488,11 +506,13 @@ def _resolver_cliente(conn: sqlite3.Connection, nombre: str, tipo: str | None) -
             conn.execute("UPDATE clientes SET nombre = ? WHERE id = ?", (nombre_normalizado, cliente_id))
         if tipo and not row[2]:
             conn.execute("UPDATE clientes SET tipo = ? WHERE id = ?", (tipo, cliente_id))
+        if telefono:
+            conn.execute("UPDATE clientes SET telefono = ? WHERE id = ?", (telefono, cliente_id))
         return cliente_id
 
     cur = conn.execute(
-        "INSERT INTO clientes (nombre, tipo) VALUES (?, ?)",
-        (nombre_normalizado, tipo),
+        "INSERT INTO clientes (nombre, tipo, telefono) VALUES (?, ?, ?)",
+        (nombre_normalizado, tipo, telefono),
     )
     return cur.lastrowid
 
@@ -507,7 +527,8 @@ def total_de_items(items: list[dict]) -> float:
     return sum((i.get("precio_aplicado") or 0.0) for i in items if not i.get("opcional"))
 
 
-def total_guardado(items: list[dict], total_manual: float | None) -> float:
+def total_guardado(items: list[dict], total_manual: float | None,
+                   a_cotizar: bool = False) -> float | None:
     """
     El número que va a la columna `total`, que es la que leen el historial, los
     clientes, el taller y el PDF.
@@ -517,8 +538,17 @@ def total_guardado(items: list[dict], total_manual: float | None) -> float:
     se tildan por categoría y van sin precio. Por eso `total_manual`, cuando
     está, MANDA — y queda guardado aparte para que una edición posterior sepa
     que ese número lo puso una persona y no lo reemplace por una suma.
+
+    `a_cotizar`: un rápido que se guardó sin precio todavía (el motor entró al
+    taller y el número se decide después de desarmarlo). Ahí el total es None:
+    la suma de unos renglones sin precio daría $0, y un "$0" en el historial se
+    leería como un trabajo gratis, no como uno que falta cotizar.
     """
-    return pesos(total_manual) if total_manual is not None else total_de_items(items)
+    if total_manual is not None:
+        return pesos(total_manual)
+    if a_cotizar:
+        return None
+    return total_de_items(items)
 
 
 _COLS_ITEM = (
@@ -582,13 +612,21 @@ def _insertar_opciones(conn: sqlite3.Connection, presupuesto_id: int, opciones: 
 
 def guardar_presupuesto(
     cliente_nombre: str,
-    motor_id: int,
+    motor_id: int | None,
     items: list[dict],
     ajuste_pct: float = 0,
     cliente_tipo: str | None = None,
     contacto_nombre: str | None = None,
     opciones: list[dict] | None = None,
     total_manual: float | None = None,
+    motor_texto: str | None = None,
+    cliente_telefono: str | None = None,
+    notas: str | None = None,
+    a_cotizar: bool = False,
+    aprobado: bool = False,
+    usuario: str | None = None,
+    prioridad: bool = False,
+    entrega_prometida: str | None = None,
 ) -> int:
     """
     Crea (o reutiliza) el cliente, inserta el presupuesto y sus ítems.
@@ -610,12 +648,23 @@ def guardar_presupuesto(
     tipo inverso al del cliente principal.
     total_manual: total escrito a mano (presupuesto rápido). Si viene, ese es el
     total del presupuesto y la suma de los ítems no se usa (ver total_guardado).
+
+    Lo que agrega el presupuesto rápido del celular, todo opcional:
+    motor_texto: el motor escrito a mano cuando no se eligió de la lista
+    (motor_id en None). cliente_telefono: se guarda en la ficha del cliente.
+    notas: lo que se anotó en el mostrador ("trae la tapa aparte").
+    a_cotizar: se guarda sin precio todavía (total en NULL, ver total_guardado).
+    aprobado / prioridad / entrega_prometida: el cliente ya dijo que sí, así que
+    el motor entra derecho al panel del taller, con la marca de urgente y la
+    fecha prometida si se pusieron. Va en la misma transacción que el alta: un
+    presupuesto que quedara creado pero sin aprobar porque falló el segundo
+    paso no aparecería en el taller, y nadie se enteraría.
     Retorna el id del presupuesto creado.
     """
-    total = total_guardado(items, total_manual)
+    total = total_guardado(items, total_manual, a_cotizar)
 
     with get_connection() as conn:
-        cliente_id = _resolver_cliente(conn, cliente_nombre, cliente_tipo)
+        cliente_id = _resolver_cliente(conn, cliente_nombre, cliente_tipo, cliente_telefono)
 
         contacto_id = None
         if contacto_nombre and contacto_nombre.strip():
@@ -626,17 +675,30 @@ def guardar_presupuesto(
             tipo_contraparte = _TIPO_OPUESTO.get(tipo_principal)
             contacto_id = _resolver_cliente(conn, contacto_nombre, tipo_contraparte)
 
+        hoy = date.today().isoformat()
         cur = conn.execute(
-            "INSERT INTO presupuestos (cliente_id, contacto_id, motor_id, fecha, total, ajuste_pct, total_manual)"
-            " VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (cliente_id, contacto_id, motor_id, date.today().isoformat(), total, ajuste_pct or 0,
-             pesos(total_manual) if total_manual is not None else None),
+            "INSERT INTO presupuestos (cliente_id, contacto_id, motor_id, motor_texto, fecha, total,"
+            " ajuste_pct, total_manual, notas, aprobado_en, estado_trabajo, prioridad, entrega_prometida)"
+            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (cliente_id, contacto_id, motor_id,
+             None if motor_id else ((motor_texto or "").strip() or None),
+             hoy, total, ajuste_pct or 0,
+             pesos(total_manual) if total_manual is not None else None,
+             (notas or "").strip() or None,
+             hoy if aprobado else None,
+             ESTADO_APROBADO if aprobado else None,
+             1 if prioridad else 0,
+             (entrega_prometida or "").strip() or None),
         )
         presupuesto_id = cur.lastrowid
 
         for item in items:
             _insertar_item(conn, presupuesto_id, item)
         _insertar_opciones(conn, presupuesto_id, opciones)
+        # Mismo registro que deja aprobar_presupuesto: el panel del taller cuenta
+        # "hace cuántos días está acá" desde este movimiento.
+        if aprobado:
+            _anotar_movimiento(conn, presupuesto_id, ESTADO_APROBADO, usuario)
 
         return presupuesto_id
 
@@ -653,7 +715,8 @@ def get_presupuestos() -> list[dict]:
     with get_connection() as conn:
         cur = conn.execute(
             """
-            SELECT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path, c.tipo AS cliente_tipo,
+            SELECT p.id, p.fecha, c.nombre, COALESCE(m.motor, p.motor_texto), p.total, p.pdf_path,
+                   c.tipo AS cliente_tipo,
                    p.aprobado_en, p.estado_trabajo, p.prioridad
             FROM presupuestos p
             LEFT JOIN clientes  c ON c.id = p.cliente_id
@@ -683,8 +746,8 @@ def buscar_presupuestos(
     por presupuesto si tiene varios repuestos que matchean el filtro.
     """
     query = """
-        SELECT DISTINCT p.id, p.fecha, c.nombre, m.motor, p.total, p.pdf_path, c.tipo AS cliente_tipo,
-               p.aprobado_en, p.estado_trabajo, p.prioridad
+        SELECT DISTINCT p.id, p.fecha, c.nombre, COALESCE(m.motor, p.motor_texto), p.total, p.pdf_path,
+               c.tipo AS cliente_tipo, p.aprobado_en, p.estado_trabajo, p.prioridad
         FROM presupuestos p
         LEFT JOIN clientes c ON c.id = p.cliente_id
         LEFT JOIN motores  m ON m.id = p.motor_id
@@ -703,7 +766,9 @@ def buscar_presupuestos(
             where.append(f"({cond})")
             params.extend(ps)
     if motor:
-        cond, ps = texto.condicion_like(["norm(m.motor)"], motor)
+        # El motor escrito a mano se busca igual que el de la lista: para quien
+        # busca "ford 292" no hay diferencia entre uno y otro.
+        cond, ps = texto.condicion_like(["norm(COALESCE(m.motor, p.motor_texto))"], motor)
         if cond:
             where.append(f"({cond})")
             params.extend(ps)
@@ -773,23 +838,27 @@ def get_clientes_lista() -> list[dict]:
 def get_cliente(cliente_id: int) -> dict | None:
     with get_connection() as conn:
         row = conn.execute(
-            "SELECT id, nombre, notas, tipo FROM clientes WHERE id = ?",
+            "SELECT id, nombre, notas, tipo, telefono FROM clientes WHERE id = ?",
             (cliente_id,),
         ).fetchone()
         if not row:
             return None
-        return {"id": row[0], "nombre": row[1], "notas": row[2], "tipo": row[3]}
+        return {"id": row[0], "nombre": row[1], "notas": row[2], "tipo": row[3], "telefono": row[4]}
 
 
-def actualizar_cliente(cliente_id: int, nombre: str, notas: str | None, tipo: str | None = None) -> bool:
-    """Renombra un cliente y/o actualiza su descripción interna (notas) y su
-    tipo (mecánico/dueño). No fusiona con otro cliente si el nuevo nombre
-    coincide con uno existente — caso borde que se deja para una limpieza
-    manual futura."""
+def actualizar_cliente(cliente_id: int, nombre: str, notas: str | None, tipo: str | None = None,
+                       telefono: str | None = None) -> bool:
+    """Renombra un cliente y/o actualiza su descripción interna (notas), su
+    tipo (mecánico/dueño) y su teléfono. Los cuatro se escriben tal cual vienen,
+    así que un None BORRA (igual que con el tipo): el PUT de clientes es el que
+    arrastra el teléfono que había cuando el pedido no lo trae. No fusiona con
+    otro cliente si el nuevo nombre coincide con uno existente — caso borde que
+    se deja para una limpieza manual futura."""
     with get_connection() as conn:
         cur = conn.execute(
-            "UPDATE clientes SET nombre = ?, notas = ?, tipo = ? WHERE id = ?",
-            (nombre.strip(), (notas or "").strip() or None, tipo, cliente_id),
+            "UPDATE clientes SET nombre = ?, notas = ?, tipo = ?, telefono = ? WHERE id = ?",
+            (nombre.strip(), (notas or "").strip() or None, tipo,
+             (telefono or "").strip() or None, cliente_id),
         )
         return cur.rowcount > 0
 
@@ -839,7 +908,7 @@ def get_presupuestos_por_cliente(cliente_id: int) -> list[dict]:
             SELECT p.id, p.fecha,
                    CASE WHEN p.cliente_id = ? THEN ct.nombre ELSE c.nombre END AS cliente,
                    CASE WHEN p.cliente_id = ? THEN 'cliente' ELSE 'contacto' END AS rol,
-                   m.motor, p.total, p.pdf_path
+                   COALESCE(m.motor, p.motor_texto), p.total, p.pdf_path
             FROM presupuestos p
             LEFT JOIN clientes c  ON c.id = p.cliente_id
             LEFT JOIN clientes ct ON ct.id = p.contacto_id
@@ -862,8 +931,10 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
             SELECT p.id, p.fecha, p.total, p.total_manual, p.notas, p.ajuste_pct, p.aprobado_en,
                    p.estado_trabajo, p.prioridad, p.entrega_prometida, p.notas_taller,
                    c.id AS cliente_id, c.nombre AS cliente, c.tipo AS cliente_tipo,
+                   c.telefono AS cliente_telefono,
                    ct.nombre AS contacto,
-                   m.id AS motor_id,   m.motor,  m.lista_num, m.cilindros
+                   m.id AS motor_id,   COALESCE(m.motor, p.motor_texto) AS motor,
+                   m.lista_num, m.cilindros, p.motor_texto
             FROM presupuestos p
             LEFT JOIN clientes c  ON c.id = p.cliente_id
             LEFT JOIN clientes ct ON ct.id = p.contacto_id
@@ -876,8 +947,8 @@ def get_presupuesto_detalle(presupuesto_id: int) -> dict | None:
             return None
         cols = ["id", "fecha", "total", "total_manual", "notas", "ajuste_pct", "aprobado_en",
                 "estado_trabajo", "prioridad", "entrega_prometida", "notas_taller",
-                "cliente_id", "cliente", "cliente_tipo", "contacto",
-                "motor_id", "motor", "lista_num", "cilindros"]
+                "cliente_id", "cliente", "cliente_tipo", "cliente_telefono", "contacto",
+                "motor_id", "motor", "lista_num", "cilindros", "motor_texto"]
         return dict(zip(cols, row))
 
 
@@ -922,7 +993,8 @@ def actualizar_presupuesto(
     ajuste_pct: float = 0,
     opciones: list[dict] | None = None,
     total_manual: float | None = None,
-) -> float:
+    a_cotizar: bool = False,
+) -> float | None:
     """
     items_data: [{servicio_id, descripcion_custom, precio_aplicado,
                   tipo, repuesto_codigo, cantidad, precio_unitario, stock_al_cotizar,
@@ -931,9 +1003,11 @@ def actualizar_presupuesto(
     total_manual: total escrito a mano, si el presupuesto tiene uno. El endpoint
     que llama acá lo arrastra del presupuesto existente cuando la edición no lo
     toca, así que editar un renglón NO convierte el número escrito en una suma.
+    a_cotizar: el presupuesto sigue sin precio (ver total_guardado). Mismo
+    criterio: agregarle un trabajo a uno que falta cotizar no le inventa un total.
     Elimina los ítems anteriores y los reinserta. Retorna el nuevo total.
     """
-    total = total_guardado(items_data, total_manual)
+    total = total_guardado(items_data, total_manual, a_cotizar)
     with get_connection() as conn:
         conn.execute(
             "DELETE FROM presupuesto_items WHERE presupuesto_id = ?",
@@ -1718,7 +1792,7 @@ def get_trabajos(incluir_entregados: bool = True) -> list[dict]:
         SELECT p.id, p.fecha, p.estado_trabajo, p.prioridad, p.entrega_prometida,
                p.notas_taller, p.notas,
                COALESCE(c.nombre, '—') AS cliente,
-               COALESCE(m.motor, '—')  AS motor,
+               COALESCE(m.motor, p.motor_texto, '—') AS motor,
                (SELECT MAX(h.fecha_hora) FROM trabajo_historial h
                  WHERE h.presupuesto_id = p.id AND h.estado = p.estado_trabajo) AS desde,
                (SELECT COUNT(*) FROM presupuesto_items pi
@@ -1838,6 +1912,16 @@ def set_notas_taller(presupuesto_id: int, notas: str | None) -> str | None:
             (valor, presupuesto_id),
         )
     return valor
+
+
+def set_motor_texto(presupuesto_id: int, motor_texto: str) -> None:
+    """Corrige el motor escrito a mano. Sólo toca presupuestos SIN motor de la
+    lista: en uno con motor_id, el texto no se lee nunca (manda el de la lista)."""
+    with get_connection() as conn:
+        conn.execute(
+            "UPDATE presupuestos SET motor_texto = ? WHERE id = ? AND motor_id IS NULL",
+            (motor_texto.strip(), presupuesto_id),
+        )
 
 
 def set_prioridad(presupuesto_id: int, prioridad: bool) -> bool:

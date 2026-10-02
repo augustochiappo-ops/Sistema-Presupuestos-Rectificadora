@@ -458,9 +458,16 @@ const montosEnRevision = await montosDeLaBarra()
 const precioRepuestoOriginal = await page.locator('table').nth(1)
   .locator('tbody tr').first().locator('input').nth(1)
   .inputValue()
+// En la Revisión el total es un RECUADRO (se escribe a mano desde el
+// 2026-09-09) y el valor de un <input> no es texto: montosDeLaBarra() no lo ve,
+// y su [2] ya no es el total. Se lee el recuadro. (Hasta el 2026-10-02 este
+// check comparaba el [2] de las dos listas y fallaba siempre; el mensaje,
+// además, imprimía dos veces la lista del paso Repuestos.)
+const totalRevision = (await page.locator('input[title^="Total final"]').first().inputValue())
+  .replace(/ /g, ' ').trim()
 check('el total de la revisión es el mismo que traía el paso Repuestos',
-  montosEnRevision[2] === montosEnRepuestos[2],
-  `${JSON.stringify(montosEnRepuestos)} vs ${JSON.stringify(montosEnRepuestos)}`)
+  totalRevision === montosEnRepuestos[2],
+  `${montosEnRepuestos[2]} en el paso Repuestos vs ${totalRevision} en la revisión`)
 await page.screenshot({ path: `${SHOT}/05b-revision.png`, fullPage: true })
 
 /* En la revisión también se puede sacar algo del total: se arrastra (o se toca

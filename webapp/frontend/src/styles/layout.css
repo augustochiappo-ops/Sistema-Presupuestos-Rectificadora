@@ -35,8 +35,31 @@
 .servicios-picker-grid{display:grid;grid-template-columns:1fr 700px;gap:14px;align-items:start}
 
 /* Presupuesto rápido: las dos listas para tildar, mano de obra y categorías de
-   repuestos, una al lado de la otra y del mismo ancho. */
+   repuestos, una al lado de la otra y del mismo ancho. Arriba, cliente /
+   teléfono / motor en una fila (el motor más ancho: es el texto más largo). */
 .rapido-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.rapido-datos{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:14px;align-items:start}
+/* El espacio de abajo es el de la barra fija, para que no tape lo último. */
+.rapido-pantalla{padding-bottom:130px}
+/* Letra de 16 px en todos los campos de la pantalla: con menos, el iPhone
+   agranda la página al tocar un campo y no la vuelve a achicar. El precio va
+   más grande todavía: es el número que se está decidiendo. */
+.rapido-pantalla input,.rapido-pantalla textarea{font-size:16px !important}
+.rapido-pantalla .rapido-total{font-size:18px !important}
+/* La barra negra de abajo, con el precio y el botón de guardar: fija, así se
+   ve desde cualquier parte de la pantalla mientras se tilda. Arranca donde
+   termina el menú lateral (en el celular el menú se esconde y va de borde a
+   borde). Queda por debajo de la barra de arriba y del menú del celular. */
+.rapido-barra{
+  position:fixed;left:var(--sidebar-width);right:0;bottom:0;z-index:15;
+  display:flex;align-items:center;justify-content:space-between;gap:8px 20px;
+  padding:12px 28px 14px;background:var(--surface-inverse);
+  box-shadow:0 -6px 24px rgba(20,22,25,.18);
+}
+/* En la compu: el resumen a la izquierda, el precio y el botón a la derecha
+   con un ancho que se lea como un precio (no un campo de 1.000 px). */
+.rapido-barra-info{display:flex;flex-direction:column;gap:4px;min-width:0}
+.rapido-barra-accion{display:flex;align-items:center;gap:10px;width:460px;max-width:100%;flex-shrink:0}
 
 @media (max-width: 860px){
   .shell-outer{padding:0}
@@ -76,6 +99,11 @@
   .repuestos-categorias-panel{max-height:none}
   .servicios-picker-grid{grid-template-columns:1fr}
   .rapido-grid{grid-template-columns:1fr}
+  .rapido-datos{grid-template-columns:1fr}
+  .rapido-barra{left:0;padding:10px 16px 12px;flex-direction:column;align-items:stretch}
+  .rapido-barra-info{flex-direction:row;justify-content:space-between;flex-wrap:wrap;gap:4px 10px}
+  .rapido-barra-accion{width:auto}
+  .rapido-pantalla{padding-bottom:120px}
   .categoria-chips-row{
     display:flex;flex-direction:row;gap:8px;
     overflow-x:auto;overflow-y:hidden;padding-bottom:4px;

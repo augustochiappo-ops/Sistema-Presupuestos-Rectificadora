@@ -1970,3 +1970,159 @@ apaga, y el aviso de siempre explica por qué el total no es el pedido.
 botón. El ajuste % se escribe en el paso de Servicios, así que el camino real es
 prender el redondeo, ir atrás a tocar el %, y volver — y si el estado viviera en
 la pantalla, ese viaje lo perdería justo cuando más hace falta.
+
+## El motor escrito a mano vive en el presupuesto, no en la lista de motores (2026-10-02)
+
+**Contexto.** El dueño pidió que en el presupuesto rápido, desde el celular, el
+motor "sea escrito, que no tenga que buscarlo en la lista".
+
+**La alternativa que se descartó:** crear una fila en `motores` con un `origen`
+propio ('manual') por cada motor escrito. Tenía a favor que ninguna consulta se
+enteraba. Se descartó por tres razones:
+
+* El "Listado de Motores" es la lista de la Cámara. Los motores escritos se
+  mezclarían con ella, repetidos por cada forma de escribirlos ("ford 292",
+  "FORD 292 V8", "Ford 292 del camión"), y encima **arriba de todo**, porque
+  `get_motores` ordena primero los que ya tienen presupuesto.
+* Un motor de la lista **es** su lista de precios (`lista_num`) y su ficha de
+  repuestos. Uno escrito no tiene ninguna de las dos: meterlo en la misma tabla
+  obligaría a que todo lo que lee motores aprenda que algunos no las tienen.
+* Lo que el dueño escribe es una anotación de ESE presupuesto, no un motor nuevo
+  del catálogo.
+
+**Lo que se hizo:** `presupuestos.motor_texto`, con `motor_id` en NULL. Las siete
+consultas que leen el nombre del motor pasaron a `COALESCE(m.motor,
+p.motor_texto)` — incluida la del buscador por motor, que lo encuentra igual que
+a uno de la lista. Con `motor_id` cargado, el texto no se lee nunca.
+
+**Se guarda en MAYÚSCULAS**, como los de la lista (`_motor_escrito` en
+`routes/presupuestos.py`): en el PDF, el historial y el tablero del taller los
+motores se leen todos iguales. El campo del celular ya muestra y teclea en
+mayúsculas, así que lo que se ve es lo que queda. Es la misma idea que el Title
+Case del nombre del cliente.
+
+**Se puede corregir** en el detalle (sólo el escrito; uno de la lista no, porque
+de él cuelgan los precios y la ficha).
+
+## Sin precio todavía es `total` NULL, no $0 (2026-10-02)
+
+**Contexto.** El presupuesto rápido pedía el precio para poder guardar. Pero "cuando
+entra un motor" muchas veces el precio se sabe recién después de desarmarlo, y el
+dueño pidió poder anotarlo igual.
+
+**Decisión:** el precio es opcional; sin él, el presupuesto se guarda con `total`
+y `total_manual` en NULL, y las pantallas dicen "A cotizar".
+
+**Por qué NULL y no 0.** Un "$ 0" en el historial se lee como un trabajo gratis, y
+un "—" como un dato que se perdió. NULL es exactamente lo que es: todavía no hay
+precio. Y como las consultas ya leían `total` tal cual, sólo hubo que enseñarles
+a mostrarlo (historial, ficha del cliente, detalle).
+
+**La regla vive en un solo lugar**, la misma que ya decidía el total:
+`db.total_guardado(items, total_manual, a_cotizar)`. Editar un "a cotizar" sin
+escribirle precio lo deja a cotizar (corregir un renglón no le inventa un total
+con la suma), y revalidarlo también. Escribirle el precio en el detalle lo
+convierte en un rápido común (`total_manual`), y el PDF se rehace solo.
+
+**El PDF sale igual**, con "TOTAL: A confirmar" y "El precio se confirma una vez
+revisado el motor" en vez de la validez de 7 días: es la constancia de lo que se
+le va a hacer al motor, que es lo que el cliente se lleva cuando lo deja.
+
+## Un servicio sin precio de lista: $0 en el rápido, aviso en el wizard (2026-10-02)
+
+Con un motor escrito no hay lista de la Cámara de dónde sacar el precio de la
+mano de obra (`get_servicios_para_lista(None)` da todo en None). `_resolver_items`
+hacía `None * factor` y el alta daba **500**. Ahora depende de quién manda el
+total:
+
+* **Total a mano** (rápido, con precio o a cotizar): el renglón va en $0. No se
+  cobra por sí solo — el total es el escrito — y el cliente nunca ve precios por
+  renglón.
+* **Total por suma** (wizard): se descarta y se avisa con 400 ("Algunos ítems no
+  se pudieron procesar"). Ahí el renglón SÍ suma, y un $0 inventado abarataría el
+  presupuesto sin que nadie lo note. Con los motores de hoy no pasa (todos tienen
+  lista), pero el 500 estaba ahí esperando.
+
+## La barra del precio, fija abajo (2026-10-02)
+
+El 2026-09-10 el dueño pidió subir la tarjeta negra (referencia de la lista,
+precio final, botón de generar) arriba de las listas, porque "el precio final es
+lo que se está decidiendo mientras se tilda" y tenerlo al pie obligaba a bajar.
+Con la pantalla pensada para el celular, arriba tampoco alcanza: en un teléfono
+la lista de mano de obra son varias pantallas, y el precio quedaba arriba de
+todo. Pasó a ser una **barra fija abajo**, que se ve desde cualquier parte de la
+pantalla — cumple mejor el motivo de aquel pedido. Lleva el resumen ("3 trabajos
+· 1 repuesto · sin precio: queda a cotizar"), la referencia de la lista cuando el
+motor es de la lista, el precio y "Guardar".
+
+Es `position: fixed` y no `sticky` porque el Shell tiene `overflow` en el
+contenedor del contenido, y con eso un `sticky` se pega al contenedor, no a la
+pantalla. En Android, para que no la tape el teclado, el viewport lleva
+`interactive-widget=resizes-content` (la pantalla se achica en vez de quedar
+tapada).
+
+## La app del celular: manifiesto sí, service worker no (2026-10-02)
+
+Para que el sistema "se pueda abrir directamente desde el celular" alcanza con un
+`manifest.webmanifest` (nombre, íconos, `display: standalone`, `start_url:
+/rapido`): Android lo instala como app y iPhone lo agrega a inicio, y el ícono
+abre directo en el presupuesto rápido sin barra del navegador. Chromium la da
+por instalable sin ningún error (`Page.getInstallabilityErrors` vacío).
+
+**No se puso service worker.** Un SW que guarda el `index.html` es la forma
+clásica de que, después de un deploy, los teléfonos sigan abriendo la versión
+vieja hasta que alguien adivine que hay que cerrar la app dos veces. Y no hay
+nada que ganar con él: el sistema no funciona sin el servidor (los motores, los
+precios y el guardado están allá).
+
+**La velocidad sale del caché HTTP**, que no tiene ese problema: los archivos de
+`/assets/` (JS y CSS con el hash en el nombre) van con `max-age` de un año e
+`immutable`, y el `index.html` con `no-cache` (se revisa siempre, así un deploy se
+ve en el acto). Antes Flask mandaba todo con `no-cache` y el navegador volvía a
+preguntar por cada archivo cada vez que se abría la app.
+
+## WhatsApp por link, no por API (2026-10-02)
+
+Mandarle el presupuesto al cliente es un link `https://wa.me/<número>?text=…`
+con el mensaje ya escrito: abre la app de WhatsApp en el chat del cliente y el
+dueño toca enviar. Sin WhatsApp Business API: no hay cuenta que aprobar, ni
+plantillas, ni costo por mensaje, y el mensaje sale del WhatsApp del taller, que
+es el que el cliente conoce.
+
+El número se pasa a formato internacional argentino (549 + característica sin 0
++ número sin 15) en `utils/whatsapp.js`. Si lo cargado no se puede pasar con
+seguridad (le falta la característica, por ejemplo), el link abre WhatsApp **sin
+número** y el chat se elige a mano: mandar a un número adivinado sería peor.
+
+El PDF, en cambio, viaja por el menú de compartir del teléfono
+(`navigator.share` con el archivo), que es lo que ya hacía el detalle; esa lógica
+se movió a `utils/compartirPdf.js` para que las dos pantallas fallen igual.
+
+## El teléfono que se da en el mostrador reemplaza al anterior (2026-10-02)
+
+`_resolver_cliente` nunca pisa un `tipo` ya asignado, pero el teléfono **sí** lo
+pisa si viene uno: es el número que el cliente acaba de dar, y uno viejo que ya
+no usa no le sirve a nadie. Si no viene, el que había se queda. En el PUT de
+clientes, igual: sin la clave `telefono` se conserva (una pantalla que no lo
+muestra no lo puede borrar de rebote).
+
+## En el celular, la oficina arranca en el presupuesto rápido (2026-10-02)
+
+"/" decide a dónde va cada uno: el taller a su panel, la oficina a Motores… y la
+oficina **en un teléfono** al presupuesto rápido, que es lo que se hace desde el
+teléfono. El corte es el mismo ancho en que el menú lateral se esconde (860 px),
+así que "celular" quiere decir lo mismo para el ruteo y para el diseño. El login
+sin pantalla pendiente ahora va a "/" (antes iba fijo a Motores), para que esa
+decisión sea una sola.
+
+## El borrador del rápido vive en el navegador del teléfono (2026-10-02)
+
+Con el cliente esperando, perder lo cargado es lo peor que puede pasar (la sesión
+vence, el teléfono se bloquea, se toca "atrás"). Cada cambio se guarda en
+`localStorage` y al volver se recupera, con "Empezar de cero" al lado.
+
+No va al servidor a propósito: es un borrador de ESE teléfono, no un presupuesto,
+y guardarlo allá obligaría a decidir qué es un presupuesto a medio cargar para el
+resto del sistema. Dura medio día (uno de ayer ya no es el cliente de hoy) y todo
+acceso va con try/catch: en modo incógnito el navegador puede negarlo, y la
+pantalla tiene que andar igual.

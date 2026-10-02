@@ -69,7 +69,7 @@ def generar_pdf(
     cliente: str,
     motor: str,
     items: list[dict],
-    total: float,
+    total: float | None,
     output_path: str,
     repuestos: list[dict] | None = None,
     opcionales: list[dict] | None = None,
@@ -213,7 +213,11 @@ def generar_pdf(
         story.append(tabla_repuestos)
         story.append(Spacer(1, 0.3 * cm))
 
-    total_data = [[Paragraph("TOTAL", E["total_label"]), Paragraph(_fmt_precio(total), E["total_valor"])]]
+    # Sin total todavía (presupuesto rápido "a cotizar": el motor entró y el
+    # precio se decide después de desarmarlo) el papel lo dice con palabras. Un
+    # "—" ahí se leería como un error, y un "$ 0" como un trabajo gratis.
+    texto_total = _fmt_precio(total) if total is not None else "A confirmar"
+    total_data = [[Paragraph("TOTAL", E["total_label"]), Paragraph(texto_total, E["total_valor"])]]
     total_table = Table(total_data, colWidths=[page_w * 0.7, page_w * 0.3])
     total_table.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), AZUL_OSCURO),
@@ -264,7 +268,9 @@ def generar_pdf(
     story.append(Spacer(1, 0.6 * cm))
     story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#cccccc"), spaceAfter=0.3 * cm))
     story.append(Paragraph(
-        "Este presupuesto tiene una validez de 7 días a partir de la fecha de emisión.",
+        "Este presupuesto tiene una validez de 7 días a partir de la fecha de emisión."
+        if total is not None
+        else "El precio se confirma una vez revisado el motor.",
         E["pie"],
     ))
 

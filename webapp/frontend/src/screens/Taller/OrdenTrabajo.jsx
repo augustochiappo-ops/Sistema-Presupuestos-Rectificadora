@@ -8,6 +8,7 @@ import { Icon } from '../../components/Icon'
 import { ErrorBanner } from '../../components/ErrorBanner'
 import { CodigoRepuesto } from '../../components/CodigoRepuesto'
 import { formatFechaAR, formatFechaHoraAR } from '../../utils/format'
+import { enlaceWhatsApp, saludo } from '../../utils/whatsapp'
 import { ESTADOS, estadoDe, haceCuanto, diasParaEntrega } from './estados'
 
 /**
@@ -131,6 +132,33 @@ export default function OrdenTrabajo() {
               >
                 {orden.prioridad ? 'Urgente' : 'Marcar urgente'}
               </Button>
+            )}
+            {/* Avisarle al cliente, desde el WhatsApp del que toca. Es la tarea
+                que deja un motor "Terminado" (el menú cuenta los terminados por
+                eso), así que con el motor listo el mensaje ya lo dice. Lo hace
+                la oficina, que es la que atiende al cliente. */}
+            {!esTaller && orden.telefono && (
+              <a
+                href={enlaceWhatsApp(
+                  orden.telefono,
+                  orden.estado_trabajo === 'terminado'
+                    ? `${saludo(orden.cliente)} Tu motor ${orden.motor} ya está listo para retirar.`
+                    : saludo(orden.cliente),
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6, height: 34, padding: '0 14px',
+                  borderRadius: 'var(--radius-md)', textDecoration: 'none', fontFamily: 'var(--font-body)',
+                  fontWeight: 'var(--weight-semibold)', fontSize: 'var(--text-sm)', whiteSpace: 'nowrap',
+                  background: orden.estado_trabajo === 'terminado' ? 'var(--status-active-fg)' : 'var(--surface-card)',
+                  color: orden.estado_trabajo === 'terminado' ? '#fff' : 'var(--text-strong)',
+                  border: `1px solid ${orden.estado_trabajo === 'terminado' ? 'var(--status-active-fg)' : 'var(--border-default)'}`,
+                }}
+              >
+                <Icon n="message-circle" s={16} />
+                {orden.estado_trabajo === 'terminado' ? 'Avisarle que está listo' : 'WhatsApp'}
+              </a>
             )}
             <Button
               variant="secondary"

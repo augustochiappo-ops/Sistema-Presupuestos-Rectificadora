@@ -85,6 +85,13 @@ Y las **tres de UI enteras corren solas los miércoles y viernes a las 7:00** de
 la mañana, en una Routine que trabaja sobre `master`: si algo falla, lo arregla,
 vuelve a correr la suite y pushea.
 
+> **Ojo (2026-10-02): esa Routine no aparece en la cuenta** (`list_triggers` no
+> devuelve ninguna) y un check de `ui_grupos` estuvo roto tres semanas sin que
+> nadie lo viera. Hasta que el dueño la vuelva a crear, **una tanda que toca
+> pantallas termina corriendo las tres de UI a mano** (hoy tardan unos 10
+> minutos en total, en segundo plano). Antes de confiar en la Routine, mirar
+> que exista.
+
 **El límite, que no se negocia:** que `rapido.sh` pase no quiere decir que el
 cambio esté bien, quiere decir que la app no se cayó. **Si el cambio toca lo que
 una suite de UI cubre —el agrupado de repuestos, los precios, un filtro de la
@@ -218,6 +225,16 @@ suites se corren enteras igual, y el resultado se informa con el número exacto.
 
 - **Selección de motor**: desplegable/buscador con todos los motores de la Cámara.
 - **Cálculo automático**: al elegir el motor se consultan la lista de la Cámara (mano de obra) y el Excel del proveedor (repuestos asociados al motor).
+- **Presupuesto rápido, desde el celular** (`/rapido`): para cuando entra un motor
+  con el cliente esperando. Cliente, teléfono y **motor escritos a mano** (con
+  sugerencias de la lista, opcionales), mano de obra tildada con cantidades por
+  cilindro, repuestos por categoría y el **precio escrito — o vacío, y queda "a
+  cotizar"**. Puede mandarlo derecho al taller (urgente, fecha prometida) y
+  después mandárselo al cliente por WhatsApp o compartir el PDF. Lo cargado no se
+  pierde (borrador en el navegador). El sistema se instala como app en el
+  teléfono (`public/manifest.webmanifest`) y el ícono abre directo ahí. El motor
+  escrito vive en `presupuestos.motor_texto` y "a cotizar" es `total` NULL: ver
+  `decisiones.md` (2026-10-02).
 - **Panel del taller**: la cuenta del taller entra al mismo sistema y ve un
   tablero con los motores aprobados, en cuatro columnas: *Para hacer → En proceso
   → Terminado → Entregado*. Los estados los mueven los dos roles. Cada motor abre

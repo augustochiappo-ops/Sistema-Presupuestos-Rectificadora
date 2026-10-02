@@ -2414,13 +2414,202 @@ ahí el total se guarda tal cual y no hay ningún % que buscar (igual que el aju
   bundle nuevo (`index-YV-imnvs.js`, el del commit).
 
 
+## Sesión 2026-10-02 — El presupuesto rápido, desde el celular
+
+**Lo que pidió el dueño**, con sus palabras: "un sistema que lo pueda abrir
+directamente desde el celular para cuando entra un nuevo producto". Anotar qué
+trabajos hay que hacerle (tildando la mano de obra), el **nombre escrito**, el
+**motor escrito — que no tenga que buscarlo en la lista**—, y opcionalmente los
+repuestos. Y lo que más importa: **que sea rápido**, "cosa de no hacerle esperar
+tanto al cliente". Pidió además que me fijara qué más se le podía sumar.
+
+**No se hizo una pantalla nueva: se rehízo el presupuesto rápido** que ya
+existía (2026-09-10). Dos pantallas para lo mismo ("¿cuál uso?") habrían sido
+peor. Sigue siendo el mismo presupuesto de siempre (mismo endpoint, misma tabla,
+mismo PDF, se edita y se aprueba igual) y sigue funcionando en la compu.
+
+### Lo que pidió
+
+* **Pensada primero para el celular.** Una sola columna, renglones de 52 px para
+  el pulgar, letra de 16 px en todos los campos (con menos, el iPhone agranda la
+  página al tocar un campo y no la vuelve a achicar), Enter pasa al campo que
+  sigue (en el teclado es "Siguiente") y el cursor arranca esperando en el
+  cliente. En la compu las dos listas van una al lado de la otra.
+* **El motor se escribe.** Mientras se escribe aparecen hasta cuatro motores de la
+  lista de la Cámara que coinciden; tocar uno es **opcional** (si se toca, la
+  barra muestra cuánto daría la mano de obra según la lista, como antes). Si no
+  se toca, el motor queda escrito tal cual — en mayúsculas, como los de la lista.
+* **La mano de obra** es la lista entera de la Cámara (los trabajos son los mismos
+  para cualquier motor; lo que cambia de un motor a otro es la columna de
+  precio), con buscador, los atajos de cantidad por cilindro de siempre, y una
+  **estrella en cada renglón** para marcar los de todos los días: quedan arriba y
+  la lista se achica. Son los mismos favoritos del wizard. (En la base de prueba
+  no hay ninguno marcado: sin favoritos la lista son 235 renglones, por eso la
+  estrella y el aviso arriba de la lista.)
+* **Los repuestos**, por categoría y sin precio como antes, ahora en fichas que se
+  tocan; se ven las favoritas y las tildadas, el resto buscando o con "Ver todas".
+
+### Lo que se sumó por decisión propia (el dueño pidió "fijate qué más")
+
+* **El precio es opcional: "A cotizar".** Muchas veces el precio se sabe recién
+  después de desarmar el motor. Vacío, el presupuesto se guarda igual con el
+  total en NULL, y en el historial, la ficha del cliente y el detalle dice "A
+  cotizar". Se cotiza después escribiendo el precio en el detalle (se guarda tal
+  cual, como cualquier rápido) y el PDF se rehace solo. El PDF sin precio dice
+  "TOTAL: A confirmar" y, en vez de la validez de 7 días, "El precio se confirma
+  una vez revisado el motor": sirve de constancia de lo que se le va a hacer.
+* **Teléfono del cliente** (opcional). Se guarda en la ficha del cliente —la
+  columna `clientes.telefono` existía desde el principio pero ninguna pantalla la
+  llenaba— y se puede editar en la ficha.
+* **WhatsApp, sin integraciones:** un link a `wa.me` con el mensaje escrito
+  (trabajos, repuestos y total, o "el precio te lo confirmamos"). Con teléfono
+  abre el chat del cliente; el número se pasa a formato internacional argentino
+  (549 + característica sin 0 + número sin 15, ver `utils/whatsapp.js`) y si no
+  se puede armar con seguridad abre WhatsApp para elegir el chat a mano. Está en
+  la pantalla de "Listo", en el detalle, en la ficha del cliente y en la **orden
+  de trabajo**: con el motor "Terminado" el botón pasa a ser verde y dice
+  "Avisarle que está listo" (el menú ya contaba los terminados "porque hay que
+  avisarle al cliente").
+* **Compartir el PDF** desde la pantalla de "Listo" con el menú del teléfono. Es
+  la misma lógica que tenía el detalle, que se movió a `utils/compartirPdf.js`
+  para que las dos pantallas fallen igual.
+* **"Ya lo aprobó: mandarlo al taller"**, con urgente y fecha prometida. Entra al
+  panel del taller en "Para hacer" **en el mismo guardado** (una sola
+  transacción: un presupuesto creado pero sin aprobar porque falló el segundo
+  paso no aparecería en el taller y nadie se enteraría).
+* **Notas** del mostrador ("trae la tapa aparte"): van a `presupuestos.notas`, que
+  ya salían en el detalle y en la orden de trabajo como "Notas de la oficina".
+* **La barra negra, fija abajo:** el precio, el resumen ("3 trabajos · 1 repuesto
+  · sin precio: queda a cotizar") y "Guardar", siempre a la vista. Reemplaza a la
+  tarjeta negra que el dueño había pedido arriba el 2026-09-10 — el motivo de
+  aquel pedido era no tener que ir a buscar el precio mientras se tilda, y fija
+  abajo se ve desde cualquier parte de la pantalla, también en el celular.
+* **El borrador no se pierde:** lo que se va cargando queda en el navegador del
+  teléfono (medio día). Si vence la sesión, se bloquea el teléfono o se toca
+  "atrás", al volver dice "Recuperé lo que estabas cargando" con "Empezar de
+  cero" al lado.
+* **App en la pantalla del celular.** `manifest.webmanifest` + íconos (la misma
+  marca del menú: cuadrado negro con la llave): en Android "Instalar app" o
+  "Agregar a la pantalla principal" del menú de Chrome; en iPhone, Compartir →
+  "Agregar a inicio". El ícono abre **directo en el presupuesto rápido**
+  (`/rapido`), sin barra del navegador. Tocándolo largo (Android) ofrece también
+  Taller y Presupuestos. Chromium la da por instalable sin ningún error.
+* **En el celular la oficina arranca en el presupuesto rápido** (el login sin
+  pantalla pendiente va a "/", y "/" decide: taller → panel, celular → rápido,
+  compu → motores, como siempre). Y en el menú hay un ítem "Presupuesto rápido",
+  segundo después de Taller.
+* **Abre más rápido:** Flask ahora manda los JS/CSS del build (`/assets/…`, con
+  el hash en el nombre) con caché de un año, y el `index.html` con `no-cache`.
+  Antes el navegador volvía a preguntar por cada archivo cada vez.
+
+### Cómo quedó por dentro
+
+* **`presupuestos.motor_texto`** (TEXT, migración `ALTER TABLE`): el motor
+  escrito a mano, con `motor_id` en NULL. Las siete consultas que leen el nombre
+  del motor pasaron a `COALESCE(m.motor, p.motor_texto)` (historial, buscador por
+  motor, ficha del cliente, detalle, tablero del taller). Por qué no se crea un
+  motor en la tabla `motores`: ver `decisiones.md`.
+* **"A cotizar" es `total` NULL** (y `total_manual` NULL). La regla vive en
+  `db.total_guardado(items, total_manual, a_cotizar)`; editar o revalidar un "a
+  cotizar" sin traer precio lo deja a cotizar.
+* **Un servicio sin precio de lista** (siempre, con un motor escrito): con el
+  total a mano va en $0; en el wizard —donde el renglón SÍ suma— se descarta y
+  se avisa con 400. Antes eso daba un **500** (`None * factor`), que con ningún
+  motor de la lista pasaba, pero estaba ahí.
+* `GET /api/servicios` (nuevo): la lista entera sin precio.
+* `POST /api/presupuestos` acepta, todos opcionales: `motor_texto`,
+  `cliente_telefono`, `notas`, `a_cotizar`, `aprobado`, `urgente`,
+  `entrega_prometida` (validada como fecha). El PUT acepta `motor_texto` para
+  corregirlo (sólo si el motor no es de la lista). El PUT de clientes acepta
+  `telefono` (sin la clave, conserva el que había).
+* `PageHeader`: los botones de arriba bajan de renglón en vez de empujar la
+  pantalla de costado (en el celular se salían; en el detalle de la compu de
+  1500 px también se salían 50 px, ahora van en dos filas).
+
+**Archivos:** `webapp/backend/app/db.py`, `routes/presupuestos.py`,
+`routes/servicios.py`, `routes/clientes.py`, `pdf_gen.py`, `static_frontend.py`;
+`webapp/frontend/src/screens/Presupuestos/PresupuestoRapido.jsx` (reescrito),
+`Detalle.jsx`, `Historial.jsx`, `Clientes/ClienteDetalle.jsx`,
+`Taller/OrdenTrabajo.jsx`, `App.jsx`, `Login.jsx`, `layout/Sidebar.jsx`,
+`components/PageHeader.jsx`, `components/Icon.jsx`, `styles/layout.css`,
+`utils/whatsapp.js` y `utils/compartirPdf.js` (nuevos), `index.html`,
+`public/manifest.webmanifest` y `public/icons/` (nuevos), `public/favicon.svg`
+(era el logo de Vite, que no usaba nadie: ahora es la marca);
+`scripts/iconos_app.mjs` (nuevo, genera los íconos con Chromium);
+`tests/backend_rapido.py` (de 32 a 74 verificaciones).
+
+### Un check de `ui_grupos` llevaba tres semanas roto, y por qué nadie lo vio
+
+`ui_grupos` falló en **un** check: "el total de la revisión es el mismo que traía
+el paso Repuestos". No era de esta sesión (la carpeta del wizard no tiene un solo
+cambio): desde el 2026-09-09 el total de la Revisión es un **recuadro** donde se
+escribe, y el check juntaba los montos como *texto* de la página — el valor de un
+`<input>` no es texto, así que su "tercer monto" ya no era el total. Fallaba
+siempre. Para colmo, el mensaje de error imprimía dos veces la lista del paso
+Repuestos, así que el diff que mostraba eran dos listas idénticas. Se arregló el
+check (lee el recuadro del total) y el mensaje. Es el tercer check que se queda
+viejo solo (ver "Un check hardcodeado que se quedó viejo, otra vez").
+
+**Por qué duró tres semanas:** la sesión del 2026-09-09 corrió `rapido.sh` y
+`ui_precios`, no `ui_grupos`, y la **Routine de los miércoles y viernes no
+existe**: `list_triggers` desde esta sesión no devuelve ninguna Routine, ni
+activa ni pausada. O sea que las tres suites de UI enteras no corren solas desde
+quién sabe cuándo, aunque `CLAUDE.md` diga que sí. Se le preguntó al dueño si la
+quiere (re)crear; no se creó sin su visto bueno.
+
+### Verificado
+
+* `tests/backend_rapido.py`: **74 verificaciones**, todas OK (eran 32). Incluye
+  el PDF leído de verdad con `pypdf`: el motor escrito, el total, y "A confirmar"
+  sin la leyenda de los 7 días.
+* `tests/rapido.sh` entero (las cinco de backend + humo): TODO OK, 46 s.
+* `tests/ui_precios.mjs` y `tests/ui_medidas.mjs` enteras: todas OK.
+  `tests/ui_grupos.mjs`: todo OK salvo el check viejo de arriba; arreglado, la
+  segunda corrida lo da OK (ver la línea de cierre más abajo).
+* **En Chromium con tamaño de celular** (iPhone 13 y Pixel 7, táctil; scripts
+  chicos en el scratchpad, regla 3), dos recorridos enteros: el login lleva
+  derecho al rápido, el cursor espera en el cliente, letra de 16 px, sin scroll
+  horizontal, Enter pasa de campo, aparecen sugerencias, tildar y fijar ×12, la
+  barra pegada abajo, el precio formateado al salir, **recargar la página
+  recupera todo**, guardar, el WhatsApp con 5491123456789 (cargado como "011 15
+  2345-6789"), el PDF listo para compartir, el borrador borrado y "Nuevo" vacío.
+  Y el otro: motor tocado de la lista con la referencia en la barra, sin precio,
+  aprobado + urgente + fecha → "A cotizar", en el tablero del taller y en el
+  historial.
+* **Las otras pantallas** (otro script): el historial con "A cotizar" y el motor
+  escrito; el detalle con el teléfono y su WhatsApp, el motor corregido en
+  mayúsculas, el precio escrito después (total 800.000 escrito a mano, PDF
+  versión 2); la orden de trabajo con WhatsApp y, al marcarlo terminado,
+  "Avisarle que está listo para retirar"; la ficha del cliente con el teléfono.
+* **En la compu**: el login sigue yendo a Motores, cliente/teléfono/motor en una
+  fila y la barra empezando donde termina el menú.
+* **La app instalable**: Chromium lee el manifiesto sin errores y
+  `Page.getInstallabilityErrors` da vacío con un perfil normal. Flask manda el
+  manifiesto como `application/manifest+json`, `/assets/…` con un año e
+  `immutable` y el `index.html` con `no-cache` (medido con `curl`).
+* `npm run build` + `oxlint` limpios (sólo los avisos de siempre).
+
 ## Próximo paso
 
-**Lo último, terminado (2026-09-10, tercera sesión):** las **cantidades por
+**Lo último, terminado (2026-10-02):** el **presupuesto rápido desde el
+celular** — motor y cliente escritos, precio opcional ("a cotizar"), teléfono y
+WhatsApp, aprobar y mandar al taller en el mismo guardado, borrador que no se
+pierde y la app instalable con un ícono que abre directo ahí. La sección "Sesión
+2026-10-02" más arriba tiene el detalle. Lo que queda abierto es del dueño:
+**probarlo en su teléfono** e instalar el ícono (Android: menú ⋮ de Chrome →
+"Instalar app"; iPhone: Compartir → "Agregar a inicio"), y **marcar con la
+estrella** los trabajos de todos los días, que es lo que achica la lista.
+
+**Y una que hay que resolver con él: la Routine de los miércoles y viernes no
+existe** (ver "Un check de `ui_grupos` llevaba tres semanas roto"). Hasta que la
+vuelva a crear, una tanda que toca pantallas termina con las tres de UI a mano.
+
+**Antes de eso (2026-09-10, tercera sesión):** las **cantidades por
 cilindro** del presupuesto rápido (los atajos 1 / N / N×2 / N×4, que ahora fijan
-en vez de sumar), la **tarjeta negra movida arriba** y el **redondeo del total
-hacia arriba a los cien pesos** en el presupuesto normal. La sección "Sesión
-2026-09-10 (tercera)" más arriba tiene el detalle. No dejó nada pendiente propio.
+en vez de sumar), la **tarjeta negra movida arriba** (hoy es la barra fija de
+abajo, ver 2026-10-02) y el **redondeo del total hacia arriba a los cien pesos**
+en el presupuesto normal. La sección "Sesión 2026-09-10 (tercera)" más arriba
+tiene el detalle. No dejó nada pendiente propio.
 
 **Antes de eso (2026-09-10, segunda sesión):** el
 **presupuesto rápido** — motor, tildes y el precio final escrito a mano. La

@@ -25,6 +25,8 @@ import {
   pctParaTotal, avisoDeTotalFijado, redondearArriba, estaRedondeado, PASO_REDONDEO,
 } from '../../utils/totalFinal'
 import { estadoDe } from '../Taller/estados'
+import { enlaceWhatsApp, saludo } from '../../utils/whatsapp'
+import { bajarPdf, compartirPdf as compartirArchivoPdf, nombreArchivoPdf as nombrePdf } from '../../utils/compartirPdf'
 import { CajaOpcionales, BotonOpcional } from '../../components/CajaOpcionales'
 import { useArrastreOpcionales } from '../../hooks/useArrastreOpcionales'
 import { useRepuestosAgrupados } from '../../hooks/useRepuestosAgrupados'
@@ -72,7 +74,7 @@ function fmtCantidad(cantidad) {
 // el payload real al guardar como para la "foto" inicial al entrar en modo
 // edición, así comparar ambas dice si hubo cambios de verdad (y por lo tanto
 // si hay que reconstruir el PDF).
-function construirPayload(lista, notas, ajustePct, lineasGrupos = [], totalManual = null) {
+function construirPayload(lista, notas, ajustePct, lineasGrupos = [], totalManual = null, motorTexto = null) {
   // cantidad/precio_unitario se normalizan a Number: los inputs numéricos del
   // formulario los guardan como string en cuanto el usuario toca el campo,
   // aunque el valor final sea igual — sin esto, comparar el payload contra la
@@ -114,6 +116,9 @@ function construirPayload(lista, notas, ajustePct, lineasGrupos = [], totalManua
     // En un presupuesto normal es null y el backend lo ignora (deja el que hay,
     // que también es null): el total sigue saliendo de la suma.
     total_manual: totalManual ?? null,
+    // El motor escrito a mano (rápido desde el celular), que se puede corregir.
+    // Con un motor de la lista va null y el backend no lo toca.
+    motor_texto: motorTexto || null,
   }
 }
 
@@ -147,6 +152,9 @@ export default function DetallePresupuesto() {
   const [modalRepuestos, setModalRepuestos] = React.useState(false)
   const [aprobando, setAprobando] = React.useState(false)
   const [editNotas, setEditNotas] = React.useState('')
+  // Sólo para un motor escrito a mano: en el celular se escribe rápido, y una
+  // letra de más en el motor sale en el PDF.
+  const [editMotor, setEditMotor] = React.useState('')
   const [guardando, setGuardando] = React.useState(false)
   const [reconstruyendo, setReconstruyendo] = React.useState(false)
   const [confirmarSalir, setConfirmarSalir] = React.useState(false)
@@ -223,8 +231,10 @@ export default function DetallePresupuesto() {
     setAvisoTotal(null)
     const manualInicial = detalle?.total_manual ?? null
     setTotalManual(manualInicial)
+    const motorInicial = detalle?.motor_id ? '' : (detalle?.motor_texto || '')
+    setEditMotor(motorInicial)
     payloadOriginalRef.current = JSON.stringify(
-      construirPayload(itemsIniciales, notasIniciales, ajusteInicial, lineasGrupos, manualInicial),
+      construirPayload(itemsIniciales, notasIniciales, ajusteInicial, lineasGrupos, manualInicial, motorInicial),
     )
     setEditMode(true)
     if (detalle?.motor_id) {
@@ -300,7 +310,12 @@ export default function DetallePresupuesto() {
    * un % capaz de dar cualquier total, y encima el número ya está decidido.
    */
   const [totalManual, setTotalManual] = React.useState(null)
-  const esRapido = totalManual !== null
+  // Un rápido guardado "a cotizar" todavía no tiene total (el motor entró y el
+  // precio se decide después de desarmarlo). Se edita igual que un rápido: el
+  // precio que se escriba se guarda tal cual, y mientras no se escriba sigue
+  // a cotizar (el backend no le inventa un total con la suma).
+  const aCotizar = Boolean(detalle) && detalle.total === null
+  const esRapido = totalManual !== null || aCotizar
   /*
    * Redondear el total para arriba, al múltiplo de cien que sigue. Mismo
    * interruptor que en la Revisión del wizard: queda puesto, así que si
@@ -558,7 +573,7 @@ export default function DetallePresupuesto() {
     setGuardando(true)
     setError('')
     try {
-      const payload = construirPayload(editItems, editNotas, ajustePct, editGrupos, totalManual)
+      const payload = construirPayload(editItems, editNotas, ajustePct, editGrupos, totalManual, editMotor.trim())
       // Si el payload es idéntico al que había al entrar en modo edición, no
       // hubo cambios de verdad: no tiene sentido generar una versión de PDF
       // nueva (y consumir un número de versión) por un guardado que no cambió nada.
@@ -678,22 +693,17 @@ export default function DetallePresupuesto() {
     }
   }
 
-  const nombreArchivoPdf = detalle
-    ? `Presupuesto ${String(detalle.id).padStart(4, '0')} - ${detalle.cliente || 'cliente'}.pdf`
-    : 'presupuesto.pdf'
+  const nombreArchivoPdf = detalle ? nombrePdf(detalle.id, detalle.cliente) : 'presupuesto.pdf'
 
   // El PDF se baja apenas se abre el detalle y queda guardado: navigator.share()
-  // exige el gesto del usuario, y si el fetch se hace recién dentro del click el
-  // navegador (iOS sobre todo) considera vencida la interacción y lo rechaza.
+  // exige el gesto del usuario (ver utils/compartirPdf.js, que es la misma
+  // acción del presupuesto rápido).
   React.useEffect(() => {
     pdfParaCompartir.current = null
     const version = pdfs[0]?.version
     if (!version) return undefined
     let vigente = true
-    fetch(`/api/presupuestos/${id}/pdf/${version}`, { credentials: 'include' })
-      .then((res) => (res.ok ? res.blob() : null))
-      .then((blob) => { if (vigente) pdfParaCompartir.current = blob })
-      .catch(() => {})
+    bajarPdf(id, version).then((blob) => { if (vigente) pdfParaCompartir.current = blob })
     return () => { vigente = false }
   }, [id, pdfs])
 
@@ -701,29 +711,11 @@ export default function DetallePresupuesto() {
     const version = pdfs[0]?.version
     if (!version) return
     setAviso('')
-    const blob = pdfParaCompartir.current
-    const archivo = blob ? new File([blob], nombreArchivoPdf, { type: 'application/pdf' }) : null
-
-    if (archivo && navigator.canShare?.({ files: [archivo] })) {
-      try {
-        await navigator.share({ files: [archivo], title: nombreArchivoPdf })
-      } catch (err) {
-        // El usuario cerró el menú de compartir: no es un error que mostrar.
-        if (err?.name !== 'AbortError') setAviso('No se pudo abrir el menú de compartir. Probá descargando el PDF.')
-      }
-      return
-    }
-
-    // Sin Web Share (Firefox de escritorio, navegadores viejos): se descarga y
-    // desde la carpeta de descargas se puede copiar y pegar en WhatsApp.
-    const enlace = document.createElement('a')
-    enlace.href = blob ? URL.createObjectURL(blob) : `/api/presupuestos/${id}/pdf/${version}?descargar=1`
-    enlace.download = nombreArchivoPdf
-    document.body.appendChild(enlace)
-    enlace.click()
-    document.body.removeChild(enlace)
-    if (blob) setTimeout(() => URL.revokeObjectURL(enlace.href), 10000)
-    setAviso('Este navegador no permite compartir archivos: se descargó el PDF. Copialo desde la carpeta Descargas y pegalo en WhatsApp.')
+    setAviso(await compartirArchivoPdf({
+      blob: pdfParaCompartir.current,
+      nombre: nombreArchivoPdf,
+      urlDescarga: `/api/presupuestos/${id}/pdf/${version}?descargar=1`,
+    }))
   }
 
   if (!detalle) {
@@ -876,7 +868,39 @@ export default function DetallePresupuesto() {
         {detalle.contacto && (
           <Campo label={TIPO_LABEL[TIPO_OPUESTO[detalle.cliente_tipo]] || 'Contacto'} valor={detalle.contacto} />
         )}
-        <Campo label="Motor" valor={detalle.motor} />
+        {editMode && !detalle.motor_id ? (
+          // Motor escrito a mano (presupuesto rápido): se corrige acá. Uno de
+          // la lista no, porque de él cuelgan los precios y la ficha.
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+              Motor
+            </div>
+            <TextField
+              value={editMotor}
+              onChange={(e) => setEditMotor(e.target.value)}
+              title="Motor escrito a mano: se guarda en mayúsculas, como los de la lista"
+              style={{ width: 260, height: 34, textTransform: 'uppercase', fontWeight: 600 }}
+            />
+          </div>
+        ) : (
+          <Campo label="Motor" valor={detalle.motor} />
+        )}
+        {detalle.cliente_telefono && (
+          <Campo
+            label="Teléfono"
+            valor={
+              <a
+                href={enlaceWhatsApp(detalle.cliente_telefono, saludo(detalle.cliente))}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Escribirle por WhatsApp"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--status-active-fg)', textDecoration: 'none' }}
+              >
+                <Icon n="message-circle" s={16} /> {detalle.cliente_telefono}
+              </a>
+            }
+          />
+        )}
         <Campo label="Fecha" valor={formatFechaAR(detalle.fecha)} />
         {detalle.aprobado_en && (
           <Campo label="Aprobado" valor={<StatusBadge status="active">{formatFechaAR(detalle.aprobado_en)}</StatusBadge>} />
@@ -903,7 +927,10 @@ export default function DetallePresupuesto() {
             que se tipee ahí manda: el ajuste % de abajo se acomoda solo para dar
             ese número (ver utils/totalFinal.js). */}
         {!editMode ? (
-          <Campo label="Total" valor={formatPrecioARS(detalle.total)} />
+          <Campo
+            label="Total"
+            valor={aCotizar ? <StatusBadge status="pending">A cotizar</StatusBadge> : formatPrecioARS(detalle.total)}
+          />
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <div style={{ fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
@@ -912,7 +939,10 @@ export default function DetallePresupuesto() {
             <input
               type="text"
               inputMode="decimal"
-              value={totalTexto ?? formatPrecioARS(esRapido ? totalManual : totalEditado)}
+              value={totalTexto ?? (esRapido
+                ? (totalManual === null ? '' : formatPrecioARS(totalManual))
+                : formatPrecioARS(totalEditado))}
+              placeholder={esRapido ? 'A cotizar' : undefined}
               onChange={(e) => setTotalTexto(e.target.value)}
               onFocus={(e) => setTotalTexto(e.target.value)}
               onBlur={aplicarTotalEscrito}
@@ -928,7 +958,7 @@ export default function DetallePresupuesto() {
             />
             {esRapido ? (
               <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--text-faint)' }}>
-                Escrito a mano
+                {totalManual === null ? 'Falta el precio: escribilo acá' : 'Escrito a mano'}
               </span>
             ) : (
               /* Redondear para arriba: sube el total al múltiplo de cien que

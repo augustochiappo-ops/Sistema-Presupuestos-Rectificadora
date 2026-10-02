@@ -433,9 +433,11 @@ Los cinco bloques que valen:
 
 ## 8. Backend — `backend_rapido.py`
 
-Cuatro segundos, 32 verificaciones. Cubre el **presupuesto rápido**: el atajo
+Cuatro segundos, 74 verificaciones. Cubre el **presupuesto rápido**: el atajo
 donde se tilda el motor, la mano de obra y las categorías de repuestos, y el
-total lo escribe el dueño.
+total lo escribe el dueño. Desde el 2026-10-02 también lo que se agregó para
+usarlo desde el celular: el motor escrito a mano, el "a cotizar" y el aprobar
+al guardar (bloques 5 a 7).
 
 ```bash
 source /tmp/rect-corrida/entorno.sh
@@ -460,3 +462,16 @@ Los cuatro bloques que valen:
 4. **El presupuesto normal no cambia**: sin total escrito, el total sigue siendo
    la suma de los renglones y `total_manual` queda en NULL. Más los rechazos:
    un total que no es número, uno negativo y un rápido sin un solo tilde.
+5. **El motor escrito a mano** (`motor_texto`, sin motor de la lista): queda en
+   mayúsculas y sin espacios de más, se ve en el historial, lo encuentra el
+   buscador por motor, sale en el PDF y se puede corregir al editar (y a uno de
+   la lista el texto no le cambia nada). La mano de obra entra igual, en $0
+   porque no hay lista de dónde sacar el precio. Y un presupuesto que SUMA con un
+   motor sin lista da 400 — antes daba 500.
+6. **"A cotizar"**: sin precio el total queda vacío (NULL, no $0), el PDF sale
+   igual con "A confirmar" (leído con `pypdf`), editarlo sin precio lo deja a
+   cotizar y escribirle el precio lo cotiza.
+7. **Aprobado al guardar**: entra al tablero del taller con el motor escrito,
+   urgente y con la fecha prometida, con su movimiento en el historial (de ahí
+   cuenta los días el panel), y la orden de trabajo trae el teléfono. Más el
+   teléfono en la ficha del cliente: editarla sin mandarlo lo conserva.

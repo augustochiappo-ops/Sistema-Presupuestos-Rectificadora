@@ -208,7 +208,15 @@ export default function HistorialPresupuestos() {
           { key: 'cliente', header: 'Cliente', width: 180 },
           { key: 'cliente_tipo', header: 'Tipo de cliente', width: 220, render: (v) => <StatusBadge status={v || 'sin_clasificar'} /> },
           { key: 'motor', header: 'Motor', wrap: true },
-          { key: 'total', header: 'Total', align: 'right', width: 140, render: formatPrecioARS },
+          // Sin total = presupuesto rápido guardado "a cotizar" (el motor entró
+          // y el precio se decide después de desarmarlo). Se dice con palabras:
+          // un "—" parecería un dato que se perdió.
+          {
+            key: 'total', header: 'Total', align: 'right', width: 140,
+            render: (v) => (v === null || v === undefined
+              ? <StatusBadge status="pending">A cotizar</StatusBadge>
+              : formatPrecioARS(v)),
+          },
           // key propia (no 'fecha' de nuevo): las columnas se identifican por key
           // para poder reordenarlas, así que no puede haber dos iguales.
           // Un presupuesto aprobado por el cliente ya no depende de la vigencia

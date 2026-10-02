@@ -21,7 +21,9 @@ export default function Login() {
     setCargando(true)
     try {
       await login(usuario, password)
-      const destino = location.state?.from || '/motores'
+      // Sin una pantalla pendiente, "/" decide: cada rol (y el celular) arranca
+      // donde trabaja (ver Inicio en App.jsx).
+      const destino = location.state?.from || '/'
       navigate(destino, { replace: true })
     } catch (err) {
       setError(err.message || 'No se pudo iniciar sesión')

@@ -27,7 +27,8 @@ def detalle(cliente_id):
 @bp.put("/<int:cliente_id>")
 @login_required
 def actualizar(cliente_id):
-    if not db.get_cliente(cliente_id):
+    actual = db.get_cliente(cliente_id)
+    if not actual:
         return jsonify({"error": "Cliente no encontrado"}), 404
 
     data = request.get_json(silent=True) or {}
@@ -39,7 +40,10 @@ def actualizar(cliente_id):
     if tipo is not None and tipo not in TIPOS_VALIDOS:
         return jsonify({"error": "Tipo de cliente inválido"}), 400
 
-    db.actualizar_cliente(cliente_id, formato_nombre_titulo(nombre), data.get("notas"), tipo)
+    # Sin "telefono" en el pedido se conserva el que había: una pantalla que no
+    # muestra el teléfono no puede borrarlo de rebote al guardar otra cosa.
+    telefono = data["telefono"] if "telefono" in data else actual.get("telefono")
+    db.actualizar_cliente(cliente_id, formato_nombre_titulo(nombre), data.get("notas"), tipo, telefono)
     return jsonify(db.get_cliente(cliente_id))
 
 
