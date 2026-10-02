@@ -2126,3 +2126,20 @@ y guardarlo allá obligaría a decidir qué es un presupuesto a medio cargar par
 resto del sistema. Dura medio día (uno de ayer ya no es el cliente de hoy) y todo
 acceso va con try/catch: en modo incógnito el navegador puede negarlo, y la
 pantalla tiene que andar igual.
+
+## Las suites de UI se corren a mano: no hay Routine (2026-10-02)
+
+`CLAUDE.md` decía desde el 2026-09-08 que las tres suites de UI enteras corrían
+solas los miércoles y viernes a las 7:00, en una Routine que arreglaba lo que
+fallara y pusheaba. **Esa Routine no existía en la cuenta** (`list_triggers` no
+devolvió ninguna, ni activa ni pausada), y se notó porque un check de
+`ui_grupos` llevaba tres semanas fallando siempre sin que nadie lo viera.
+
+Se le preguntó al dueño si la quería volver a crear, y **dijo que no**. Entonces
+la regla pasa a ser la de antes del 2026-09-08: **las tres de UI se corren a mano
+al cerrar cada tanda que toca pantallas**, en segundo plano mientras se escribe
+la memoria (hoy tardan unos 10 minutos entre las tres, no los 20 de entonces).
+El carril corto (`rapido.sh` en cada cambio) no cambia.
+
+Lo que no hay que hacer: proponer de nuevo la Routine, ni dar por cubierto un
+cambio de pantallas con "ya lo va a correr la Routine".

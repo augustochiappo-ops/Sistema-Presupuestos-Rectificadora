@@ -11,12 +11,14 @@ cada cambio chico era el mayor desperdicio de tiempo del proyecto. Desde el
 |---|---|---|---|
 | **Corto** | `tests/rapido.sh` — las cinco de backend + `humo.mjs` | **2 min 30 s** | en cada cambio |
 | | `tests/rapido.sh --backend` — solo las cinco de backend | **4 segundos** | cuando el cambio no toca el frontend |
-| **Profundo** | las tres de UI enteras | **~20 min** | miércoles y viernes 7:00, solo |
+| **Profundo** | las tres de UI enteras | **~10 min** | al final de cada tanda que toca pantallas, a mano |
 
-El carril profundo lo dispara una **Routine** que corre sola sobre `master`:
-levanta el entorno, corre `ui_medidas.mjs`, `ui_grupos.mjs` y `ui_precios.mjs`
-enteras, y si algo falla lo diagnostica, lo arregla, vuelve a correr la suite y
-pushea. Nadie tiene que acordarse de nada.
+El carril profundo **se corre a mano**, en segundo plano, al cerrar cada tanda
+que toca pantallas: `ui_medidas.mjs`, `ui_grupos.mjs` y `ui_precios.mjs`
+enteras. **No hay Routine que lo haga sola.** Hasta el 2026-10-02 este archivo
+decía que una Routine los corría los miércoles y viernes, pero no existía en la
+cuenta: un check de `ui_grupos` estuvo roto tres semanas sin que nadie lo viera.
+El dueño decidió no volver a crearla, así que es parte del cierre de la sesión.
 
 **Dónde está el límite, dicho claro.** Que `rapido.sh` pase NO significa que el
 cambio esté bien: significa que la app no se cayó y que ninguna tabla quedó

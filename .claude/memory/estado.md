@@ -2554,8 +2554,10 @@ viejo solo (ver "Un check hardcodeado que se quedó viejo, otra vez").
 `ui_precios`, no `ui_grupos`, y la **Routine de los miércoles y viernes no
 existe**: `list_triggers` desde esta sesión no devuelve ninguna Routine, ni
 activa ni pausada. O sea que las tres suites de UI enteras no corren solas desde
-quién sabe cuándo, aunque `CLAUDE.md` diga que sí. Se le preguntó al dueño si la
-quiere (re)crear; no se creó sin su visto bueno.
+quién sabe cuándo, aunque `CLAUDE.md` dijera que sí. Se le preguntó al dueño si
+la quería volver a crear y **dijo que no**: desde ahora las tres de UI se corren a
+mano al cerrar cada tanda que toca pantallas (`CLAUDE.md`, `tests/README.md` y el
+comentario de `tests/rapido.sh` ya lo dicen así). No hay que volver a proponerla.
 
 ### Verificado
 
@@ -2593,10 +2595,22 @@ quiere (re)crear; no se creó sin su visto bueno.
   `immutable` y el `index.html` con `no-cache` (medido con `curl`).
 * `npm run build` + `oxlint` limpios (sólo los avisos de siempre).
 
+### En producción
+
+Deploy corrido al cierre: **HTTP 200**, `git pull` en fast-forward
+`666cd22..8f39819` y el reload agendado. Verificado contra
+`chiapppo.pythonanywhere.com`: `/rapido` sirve el bundle del commit
+(`index-D1IOaFBJ.js`), el manifiesto sale como `application/manifest+json`, los
+`/assets/…` con `max-age=31536000, immutable` (o sea que ya corre el
+`static_frontend.py` nuevo) y `/api/servicios` responde 401 en JSON — la ruta
+nueva existe; antes del deploy esa dirección caía en la página de la app. La
+columna `motor_texto` la agrega sola `init_db` al arrancar, como todas las
+migraciones anteriores.
+
 ## Próximo paso
 
-**Lo último, terminado (2026-10-02):** el **presupuesto rápido desde el
-celular** — motor y cliente escritos, precio opcional ("a cotizar"), teléfono y
+**Lo último, terminado y EN PRODUCCIÓN (2026-10-02):** el **presupuesto rápido
+desde el celular** — motor y cliente escritos, precio opcional ("a cotizar"), teléfono y
 WhatsApp, aprobar y mandar al taller en el mismo guardado, borrador que no se
 pierde y la app instalable con un ícono que abre directo ahí. La sección "Sesión
 2026-10-02" más arriba tiene el detalle. Lo que queda abierto es del dueño:
@@ -2604,9 +2618,10 @@ pierde y la app instalable con un ícono que abre directo ahí. La sección "Ses
 "Instalar app"; iPhone: Compartir → "Agregar a inicio"), y **marcar con la
 estrella** los trabajos de todos los días, que es lo que achica la lista.
 
-**Y una que hay que resolver con él: la Routine de los miércoles y viernes no
-existe** (ver "Un check de `ui_grupos` llevaba tres semanas roto"). Hasta que la
-vuelva a crear, una tanda que toca pantallas termina con las tres de UI a mano.
+**La Routine de los miércoles y viernes no existe y no se recrea** (decisión del
+dueño, 2026-10-02): una tanda que toca pantallas termina con las tres de UI
+corridas a mano, en segundo plano. Ver "Un check de `ui_grupos` llevaba tres
+semanas roto".
 
 **Antes de eso (2026-09-10, tercera sesión):** las **cantidades por
 cilindro** del presupuesto rápido (los atajos 1 / N / N×2 / N×4, que ahora fijan

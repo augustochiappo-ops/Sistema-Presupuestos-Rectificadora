@@ -81,16 +81,13 @@ tests/rapido.sh              # en CADA cambio: backend + humo · 2 min 30 s
 tests/rapido.sh --backend    # si el cambio no toca el frontend · 4 segundos
 ```
 
-Y las **tres de UI enteras corren solas los miércoles y viernes a las 7:00** de
-la mañana, en una Routine que trabaja sobre `master`: si algo falla, lo arregla,
-vuelve a correr la suite y pushea.
-
-> **Ojo (2026-10-02): esa Routine no aparece en la cuenta** (`list_triggers` no
-> devuelve ninguna) y un check de `ui_grupos` estuvo roto tres semanas sin que
-> nadie lo viera. Hasta que el dueño la vuelva a crear, **una tanda que toca
-> pantallas termina corriendo las tres de UI a mano** (hoy tardan unos 10
-> minutos en total, en segundo plano). Antes de confiar en la Routine, mirar
-> que exista.
+Y las **tres de UI enteras se corren a mano, al final de cada tanda que toca
+pantallas**, en segundo plano (hoy tardan unos 10 minutos entre las tres).
+**No hay Routine que las corra solas:** la de los miércoles y viernes que
+figuraba acá no existía en la cuenta, un check de `ui_grupos` estuvo roto tres
+semanas sin que nadie lo viera, y el dueño decidió **no volver a crearla**
+(2026-10-02). No la crees ni la propongas de nuevo: si la tanda tocó pantallas,
+las tres de UI son parte del cierre.
 
 **El límite, que no se negocia:** que `rapido.sh` pase no quiere decir que el
 cambio esté bien, quiere decir que la app no se cayó. **Si el cambio toca lo que
@@ -112,8 +109,8 @@ minutos, 2026-08-19). Ninguna sacrifica cobertura: lo que atacan es desperdicio.
 2. **La suite de UI se corre entera, UNA vez, al final**, con todos los arreglos
    ya hechos. No una vez por arreglo. (Ver `decisiones.md`: entera siempre, sin
    filtros ni recortes de esperas — lo que se optimiza es cuándo se corre, no
-   qué cubre.) Desde el 2026-09-08 "al final" puede ser el miércoles o el
-   viernes: ver "Los dos carriles de verificación", arriba.
+   qué cubre.) "Al final" es al final de la tanda, en la misma sesión: no hay
+   Routine que lo haga después (ver "Los dos carriles de verificación", arriba).
 3. **Un check nuevo se prueba primero con un script chico** (un `.mjs` de veinte
    líneas en el scratchpad que abra Chromium y verifique solo eso: ~1 minuto).
    Meter un check sin probar y descubrir a los 7 minutos que estaba mal escrito

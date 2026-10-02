@@ -14,8 +14,10 @@
 #   * ESTE, en cada cambio. Las tres de backend tardan UN SEGUNDO cada una y
 #     cubren los datos, los cálculos y los endpoints; el humo tarda dos minutos
 #     y cubre que ninguna pantalla se cayó y que ninguna tabla quedó cortada.
-#   * LAS TRES DE UI ENTERAS, los miércoles y los viernes a las 7 de la mañana,
-#     en una Routine que corre sola sobre `master` (ver tests/README.md).
+#   * LAS TRES DE UI ENTERAS, a mano y en segundo plano, al cerrar cada tanda
+#     que toca pantallas. No hay Routine que las corra solas (ver
+#     tests/README.md: la que figuraba no existía, y el dueño decidió no
+#     volver a crearla el 2026-10-02).
 #
 # LO QUE ESTE SCRIPT NO HACE, dicho claro: no reemplaza a las suites de UI. Si
 # el cambio toca lo que una de ellas cubre —el agrupado de repuestos, los
