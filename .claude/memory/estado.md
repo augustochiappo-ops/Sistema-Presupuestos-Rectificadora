@@ -2563,9 +2563,13 @@ quiere (re)crear; no se creó sin su visto bueno.
   el PDF leído de verdad con `pypdf`: el motor escrito, el total, y "A confirmar"
   sin la leyenda de los 7 días.
 * `tests/rapido.sh` entero (las cinco de backend + humo): TODO OK, 46 s.
-* `tests/ui_precios.mjs` y `tests/ui_medidas.mjs` enteras: todas OK.
-  `tests/ui_grupos.mjs`: todo OK salvo el check viejo de arriba; arreglado, la
-  segunda corrida lo da OK (ver la línea de cierre más abajo).
+* Las **tres de UI enteras**: `tests/ui_precios.mjs` y `tests/ui_medidas.mjs`
+  todas OK; `tests/ui_grupos.mjs` falló sólo en el check viejo de arriba, y con
+  el check arreglado la segunda corrida dio **TODO OK, 211 verificaciones**.
+  Después del último retoque (el borde del contador) se corrieron de nuevo
+  `ui_precios`, `ui_grupos` y `rapido.sh`: todo OK.
+* Los tres scripts de pantalla de abajo, corridos de nuevo al final: **43
+  verificaciones** (17 + 11 + 15), ninguna falla.
 * **En Chromium con tamaño de celular** (iPhone 13 y Pixel 7, táctil; scripts
   chicos en el scratchpad, regla 3), dos recorridos enteros: el login lleva
   derecho al rápido, el cursor espera en el cliente, letra de 16 px, sin scroll
