@@ -1,0 +1,1 @@
+var e=/[\u0300-\u036f]/g;function t(t){return String(t??``).toLowerCase().normalize(`NFD`).replace(e,``).replace(/,/g,`.`).replace(/[^a-z0-9.]+/g,` `).trim()}function n(e){return t(e).split(` `).filter(Boolean)}function r(e,r){let i=n(r);if(!i.length)return!0;let a=(Array.isArray(e)?e:[e]).map(t).filter(Boolean).join(` `);return i.every(e=>a.includes(e))}export{t as n,r as t};

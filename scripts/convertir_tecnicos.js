@@ -5,23 +5,27 @@
  *
  *     node scripts/convertir_tecnicos.js /ruta/al/clon/de/Chiappo-Repuestos-
  *
- * ⚠ HOY ESTE SCRIPT NO SE PUEDE CORRER SIN PERDER DATOS (2026-09-09).
+ * Escribe DOS archivos que no son sólo suyos, y por eso FUSIONA en vez de
+ * regenerar (2026-10-05). Cada script reemplaza en su lugar sus propias fichas y
+ * no toca las de los demás (ver `decisiones.md`, "Un JSON de familia con dos
+ * productores se fusiona, no se sobrescribe"):
  *
- * Reescribe `subconjuntos.json` ENTERO con lo que sale del repo del buscador, y
- * ese archivo ya no es sólo suyo: `pistones_fm_desde_proveedor.py` le sumó 83
- * fichas de Federal Mogul el 2026-09-08. Correrlo se las lleva puestas sin avisar
- * — no falla, escribe 201 fichas donde había 284.
+ *   - `subconjuntos.json`: suyas son las de MAHLE. Las de FEDERAL MOGUL las
+ *     carga `pistones_fm_desde_proveedor.py` (83 fichas, 2026-09-08).
+ *   - `guias.json`: suyas son RYC, NUBO y las INDY de la hoja principal, que
+ *     traen el código con la marca adentro ("G IY1171 STD"). Las 36 de la hoja
+ *     "Indy - Últimas incorporaciones 2025" las carga
+ *     `convertir_guias_indy_2025.py` y llevan el código crudo de la hoja
+ *     ("G3664B"): ésas no se tocan.
  *
- * Lo mismo vale para `guias.json`: las 36 guías de la hoja "Indy - Últimas
- * incorporaciones 2025" las carga `convertir_guias_indy_2025.py`, que agrega en
- * vez de regenerar. Por eso esa hoja no se sumó acá.
+ * `camisas.json` YA NO LO ESCRIBE: desde el 2026-08-22 es de
+ * `convertir_camisas_fadecya.py`, que lee el Excel y el PDF de Fadecya y saca
+ * mucho más (húmeda/seca, bocas, notas, el "?"). La versión de acá era la pobre
+ * y pisaba aquélla entera.
  *
- * Para poder correrlo de nuevo hay que darle un `fusionar()` como el que tienen
- * `pistones_fm_desde_proveedor.py` y `convertir_pistones_persan.py`: reemplazar en
- * su lugar sólo las fichas de las marcas que este script produce y no tocar las
- * demás. Cómo verificarlo está en `decisiones.md` ("Un JSON de familia con dos
- * productores se fusiona, no se sobrescribe"): con la fuente vieja sin tocar, el
- * JSON tiene que quedar byte a byte idéntico.
+ * Cómo se verifica (lo que importa): con la fuente vieja sin tocar, los JSON
+ * tienen que quedar byte a byte idénticos. Si el merge está bien, un cambio que
+ * no cambia nada no cambia nada.
  *
  * Se corre A MANO, solo cuando allá se procesa un catálogo nuevo. La salida
  * (CRAC/tecnicos/*.json) se commitea: es lo que hace que producción tenga los
@@ -46,7 +50,7 @@ const SALIDA = path.join(RAIZ, 'CRAC', 'tecnicos')
 const CSV_PROVEEDOR = path.join(RAIZ, 'CRAC', 'precio-stock.csv')
 
 const origen = process.argv[2]
-if (!origen) {
+if (!origen && require.main === module) {
   console.error('Uso: node scripts/convertir_tecnicos.js /ruta/al/clon/de/Chiappo-Repuestos-')
   process.exit(1)
 }
@@ -77,7 +81,7 @@ function indiceProveedor() {
   return idx
 }
 
-const PROVEEDOR = indiceProveedor()
+const PROVEEDOR = require.main === module ? indiceProveedor() : null
 
 /** Devuelve el código exacto del proveedor, o null si esa pieza no está en la lista. */
 function resolver(codigo) {
@@ -85,33 +89,22 @@ function resolver(codigo) {
   return PROVEEDOR.get(normCod(codigo)) || null
 }
 
-const num = (v) => (v === null || v === undefined || v === '' || isNaN(parseFloat(v)) ? null : parseFloat(v))
+const num = (v) => (v === null || v === undefined || v === '' || isNaN(parseFloat(v)) ? null : comoFloat(parseFloat(v)))
 
-// ── Camisas (Fadecya) ────────────────────────────────────────────────────────
-function camisas() {
-  const catalogo = require(datos('camisas', 'Fadecya_camisas'))
-  const mapa = require(datos('camisas', 'Fadecya_crac_map'))
+// ── Los números, escritos como los escribe Python ────────────────────────────
+// Los JSON de familia los reescriben también scripts de Python, que guardan una
+// medida entera como float ("33.0"); JS la escribiría "33" y el diff ocuparía el
+// archivo entero sin que haya cambiado nada. Las medidas propias salen con el
+// ".0", y las fichas que ya estaban se releen guardando el texto de cada número
+// tal cual (JSON.rawJSON, Node 22+), así se escriben byte a byte como venían.
+function comoFloat(x) {
+  return Number.isInteger(x) ? JSON.rawJSON(x.toFixed(1)) : x
+}
 
-  return catalogo.map((r) => {
-    const crac = resolver(mapa[r.codigo])
-    return {
-      codigo: r.codigo,
-      codigo_fab: r.codigo,
-      marca: r.marca || 'FADECYA',
-      aplicacion: r.aplicacion || null,
-      descripcion: r.desc_crac || null,
-      medidas: {
-        diam_int: num(r.diam_int),
-        diam_ext_cil: num(r.diam_ext_cil),
-        alt_pest: num(r.alt_pest),
-        largo: num(r.largo),
-      },
-      extra: {
-        sobremedidas: Array.isArray(r.sobremedidas) ? r.sobremedidas : [],
-      },
-      codigos_crac: crac ? [{ codigo: crac, medida: null }] : [],
-    }
-  })
+function leerJSON(archivo) {
+  if (!fs.existsSync(archivo)) return []
+  return JSON.parse(fs.readFileSync(archivo, 'utf8'),
+    (clave, valor, contexto) => (typeof valor === 'number' ? JSON.rawJSON(contexto.source) : valor))
 }
 
 // ── Guías de válvulas (RYC + Indy + Nubo) ────────────────────────────────────
@@ -213,15 +206,54 @@ function subconjuntos() {
   })
 }
 
-// ── Escritura ────────────────────────────────────────────────────────────────
-fs.mkdirSync(SALIDA, { recursive: true })
+// ── Fusión ───────────────────────────────────────────────────────────────────
+// Las fichas viejas que son de este script se reemplazan, EN SU LUGAR y en
+// orden, por las nuevas; las de los demás quedan exactamente donde estaban.
+// Si la fuente trae más fichas que antes, las de más van después de la última
+// propia; si trae menos, sobran lugares propios y se sacan. No se indexa por
+// código: hay códigos repetidos a propósito (variantes del mismo código).
+function fusionar(previas, nuevas, esMia) {
+  const salida = []
+  let i = 0
+  let ultimaPropia = -1
+  for (const ficha of previas) {
+    if (!esMia(ficha)) { salida.push(ficha); continue }
+    if (i < nuevas.length) {
+      salida.push(nuevas[i++])
+      ultimaPropia = salida.length - 1
+    }
+  }
+  const resto = nuevas.slice(i)
+  if (resto.length) {
+    const donde = ultimaPropia === -1 ? salida.length : ultimaPropia + 1
+    salida.splice(donde, 0, ...resto)
+  }
+  return salida
+}
 
-for (const [nombre, fichas] of [
-  ['camisas', camisas()],
-  ['guias', guias()],
-  ['subconjuntos', subconjuntos()],
-]) {
-  const conCrac = fichas.filter((f) => f.codigos_crac.length).length
-  fs.writeFileSync(path.join(SALIDA, `${nombre}.json`), JSON.stringify(fichas, null, 1) + '\n')
-  console.log(`✓ ${nombre}: ${fichas.length} fichas · ${conCrac} con código del proveedor`)
+const DUENO = {
+  guias: (f) => ['RYC', 'NUBO'].includes(f.marca)
+    || (f.marca === 'INDY' && (f.codigo_fab || '').startsWith('G IY')),
+  subconjuntos: (f) => f.marca === 'MAHLE',
+}
+
+module.exports = { fusionar, DUENO, leerJSON }
+
+// ── Escritura ────────────────────────────────────────────────────────────────
+if (require.main === module) {
+  fs.mkdirSync(SALIDA, { recursive: true })
+
+  for (const [nombre, fichas] of [
+    ['guias', guias()],
+    ['subconjuntos', subconjuntos()],
+  ]) {
+    const archivo = path.join(SALIDA, `${nombre}.json`)
+    const previas = leerJSON(archivo)
+    const ajenas = previas.filter((f) => !DUENO[nombre](f)).length
+    const salida = fusionar(previas, fichas, DUENO[nombre])
+    const conCrac = fichas.filter((f) => f.codigos_crac.length).length
+    fs.writeFileSync(archivo, JSON.stringify(salida, null, 1) + '\n')
+    console.log(`✓ ${nombre}: ${fichas.length} fichas de este script (${conCrac} con código del proveedor)`
+      + ` · ${ajenas} de otros scripts, sin tocar · ${salida.length} en total`)
+  }
 }

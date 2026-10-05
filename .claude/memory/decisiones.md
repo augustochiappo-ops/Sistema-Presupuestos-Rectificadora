@@ -2143,3 +2143,74 @@ El carril corto (`rapido.sh` en cada cambio) no cambia.
 
 Lo que no hay que hacer: proponer de nuevo la Routine, ni dar por cubierto un
 cambio de pantallas con "ya lo va a correr la Routine".
+
+---
+
+## Caché en el cliente: lo viejo se muestra y se revisa, lo sucio no se muestra (2026-10-05)
+
+**Contexto:** el dueño pidió que cambiar de pestaña no tarde, y que las pestañas
+se vayan cargando solas en el fondo con prioridad para la que se abre. Cada
+pedido a PythonAnywhere son 0,2 a 0,5 s y van de a uno.
+
+**La decisión:** un caché en `api/client.js` + una cola de precarga en
+`api/precarga.js` + code splitting en `src/pantallas.js`. Las reglas del caché,
+que son las que importan:
+
+1. **Opt-in por pantalla.** Sólo usa el caché un `api.get(path, { alActualizar })`.
+   Un GET sin eso es el de siempre (y no llena la memoria con búsquedas sueltas).
+   Se pasó sólo en los datos de ENTRADA de las pestañas del menú; las pantallas
+   de detalle (un presupuesto, un cliente) siguen pidiendo siempre.
+2. **Stale-while-revalidate.** Un dato limpio se muestra al instante y, si tiene
+   más de 15 s, se vuelve a pedir por atrás; si cambió, `alActualizar` lo pone.
+3. **Toda escritura ensucia TODO el caché, antes y después de viajar.** Lo sucio
+   no se muestra: la pantalla espera el dato nuevo, como antes de esta sesión.
+   Se descartó invalidar sólo lo "relacionado": saber qué GET toca cada POST es
+   una lista a mantener a mano, y equivocarse muestra un dato viejo después de
+   guardar, que es justo lo que no puede pasar. El costo es que la cola vuelve a
+   traer todo (~16 pedidos livianos) 2,5 s después de la última escritura.
+4. **Generación.** Cada escritura sube un contador; lo que se pidió antes no se
+   guarda ni se le pasa a `alActualizar`, así una respuesta vieja no pisa lo que
+   la pantalla ya cambió. Por la misma razón las pantallas con filtros
+   (Historial, Precios, el selector de motores) descartan lo que llegue de un
+   filtro anterior (`vigente` / número de pedido).
+5. **Copias.** El caché guarda y devuelve copias (`structuredClone`): si una
+   pantalla ordena en el lugar lo que recibió, el caché no se entera.
+6. **Login, logout o 401 lo borran entero**: la cuenta del taller no puede ver
+   nada que haya quedado de la oficina en el mismo navegador.
+
+**La prioridad** no es una cola con pesos: la cola de precarga simplemente no
+larga nada mientras haya un pedido "de pantalla" en curso (más 150 ms de
+respiro, por si la pantalla encadena otro). En un servidor de un solo worker
+alcanza: lo peor que espera la pantalla es el pedido de la cola que ya estaba
+viajando.
+
+**Lo que hay que saber al tocar una pantalla:** si cambia lo que pide al
+abrirse, hay que cambiar también `PRECARGA_OFICINA` en `pantallas.js`. Si no,
+no se rompe nada, pero esa pestaña vuelve a tardar.
+
+**Fecha:** 2026-10-05
+
+---
+
+## Los dibujos de Persan se dibujan, no se extraen (2026-10-05)
+
+**Contexto:** en el PDF de Persan los pistones están dibujados con trazos, no
+son imágenes embebidas como en el de Federal Mogul.
+
+**La decisión:** dibujar la página con pypdfium2 a 300 DPI (viene con
+pdfplumber, que ya era dependencia de los lectores) y recortar la celda de la
+figura: de la raya vertical a la otra (se buscan en la grilla, porque las
+páginas impares están corridas unos diez puntos) y de la raya horizontal que
+cruza **toda** la tabla a la siguiente. Las letras de la celda (notas al pie) se
+tapan con su caja. El contraste y la proporción 13:20 son los de Mahle
+(`recortar` y `encuadrar`), para que los tres catálogos se vean iguales.
+
+**Se descartó** usar `pdftoppm` desde Python: es un binario del sistema que no
+está garantizado en todos lados; pypdfium2 viene con el venv.
+
+**Nombres:** `PS<número del catálogo>.png`. El script de Mahle barre los PNG que
+no son suyos salvo "FM" y "PS": cualquier catálogo nuevo que escriba en
+`public/pistones/` tiene que sumar su prefijo ahí, o la próxima corrida de Mahle
+se los lleva.
+
+**Fecha:** 2026-10-05

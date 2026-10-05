@@ -30,8 +30,9 @@ export default function TallerScreen() {
   const [moviendo, setMoviendo] = React.useState(null)
 
   const traer = React.useCallback(() => {
-    return api.get('/taller/trabajos')
-      .then((d) => setTrabajos(d.trabajos))
+    const poner = (d) => setTrabajos(d.trabajos)
+    return api.get('/taller/trabajos', { alActualizar: poner })
+      .then(poner)
       .catch((e) => setError(e.message))
       .finally(() => setCargando(false))
   }, [])

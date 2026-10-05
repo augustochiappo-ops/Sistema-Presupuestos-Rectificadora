@@ -1,0 +1,1 @@
+import{g as e,h as t,l as n}from"./index-BKoUT1Iu.js";var r=e(t(),1);function i(){let[e,t]=r.useState([]);return r.useEffect(()=>{let e=!0,r=n=>{e&&t(n)};return n.get(`/repuestos/categorias`,{alActualizar:r}).then(r).catch(()=>{}),()=>{e=!1}},[]),e}export{i as t};

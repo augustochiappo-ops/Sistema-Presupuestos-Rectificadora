@@ -30,7 +30,7 @@ export default function ClientesScreen() {
   const { borrarConDeshacer, estaPendiente } = useUndo()
 
   React.useEffect(() => {
-    api.get('/clientes').then(setClientes).finally(() => setCargando(false))
+    api.get('/clientes', { alActualizar: setClientes }).then(setClientes).finally(() => setCargando(false))
   }, [])
 
   // Lo que está esperando el "Deshacer" no se muestra (tampoco si la lista se

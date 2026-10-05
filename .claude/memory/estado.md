@@ -2607,9 +2607,112 @@ nueva existe; antes del deploy esa dirección caía en la página de la app. La
 columna `motor_texto` la agrega sola `init_db` al arrancar, como todas las
 migraciones anteriores.
 
+## Sesión 2026-10-05 — Pestañas que abren al instante, y los pendientes
+
+**Lo que pidió el dueño:** que pasar de una pestaña a otra no tarde. "Que cargue
+la primera pestaña y automáticamente empiece a cargar las otras; si abro una que
+no está cargada, que empiece a cargar ésa y después siga con el resto." Y que se
+hicieran todas las tareas pendientes.
+
+### Por qué tardaba (medido)
+
+El JS ya estaba bien cacheado (un año, con hash en el nombre, gzip). Lo lento era
+que **cada pantalla, al abrirse, le volvía a pedir todo al servidor**: en
+PythonAnywhere cada pedido son 0,2 a 0,5 s (medido desde el entorno: 0,19 a
+0,58 s sólo de ida y vuelta) y van de a uno. Una pestaña con tres pedidos era
+más de un segundo, cada vez que se entraba. Además el listado de motores
+esperaba 280 ms de "pausa de tipeo" antes de pedir la lista completa del
+principio, sin que nadie estuviera tipeando.
+
+### Lo que se hizo
+
+* **Caché con prioridad en `api/client.js`.** Las pantallas piden sus datos de
+  entrada con `api.get(path, { alActualizar })`: si están en el caché aparecen al
+  instante y por atrás se vuelven a pedir; si el servidor trae algo distinto,
+  `alActualizar` lo pone en pantalla. Cualquier POST/PUT/DELETE ensucia todo el
+  caché (lo sucio no se muestra nunca: se espera el dato nuevo, como antes), y
+  un login/logout o un 401 lo borra entero. Detalle y motivos en `decisiones.md`.
+* **Cola de precarga (`api/precarga.js`)**: con la primera pestaña ya en
+  pantalla, trae de a un pedido el código y los datos de las otras, en el orden
+  del menú. **Sólo avanza cuando la pantalla no está pidiendo nada**: si se entra
+  a una pestaña que todavía no se precargó, lo suyo sale primero (como mucho
+  espera el pedido de la cola que ya estaba en viaje) y la cola sigue atrás.
+  Vuelve a pasar 2,5 s después de cada escritura y al volver a la pestaña del
+  navegador tras más de 5 minutos.
+* **Code splitting (`src/pantallas.js`)**: cada pantalla es un archivo aparte.
+  El archivo principal bajó de 589 KB a 269 KB (87 KB con gzip). Si un deploy
+  cambió los nombres con la app abierta, la página se recarga sola una vez en
+  vez de quedar en blanco.
+* **Lo que se precarga** está en `PRECARGA_OFICINA` (`pantallas.js`): los paths
+  tienen que ser EXACTAMENTE los que pide cada pantalla al abrirse
+  (`/motores?`, `/presupuestos?`, `/repuestos/marcas?` llevan el `?`). Si se
+  cambia lo que pide una pantalla al entrar, hay que cambiarlo ahí también, o la
+  pestaña vuelve a tardar (no se rompe nada: sólo deja de estar precargada).
+
+**Medido** con un Chromium que simula el servidor de producción (un pedido a la
+vez, 300 ms cada uno): después de la precarga, entrar a Presupuestos 77 ms,
+Clientes 69, Editar Precios 287, Búsqueda por medidas 92, Taller 70, Presupuesto
+rápido 147, Listado de Motores 240. Entrando a "Búsqueda por medidas" apenas
+abierta la app (la última de la cola), sus datos se adelantaron a todo lo demás:
+895 ms en vez de esperar la cola entera.
+
+### Los pendientes que se hicieron
+
+1. **Los dibujos de los pistones Persan** — `scripts/dibujos_pistones_persan.py`,
+   **276 dibujos** que cubren **las 303 fichas** de Persan con número de catálogo
+   (las 11 sin número no tienen fila en el catálogo). Tercer manifiesto,
+   `dibujos-pistones-persan.js`, y `pistones.jsx` importa los tres. A diferencia
+   de Federal Mogul, en el PDF de Persan los dibujos **no son imágenes**: son
+   trazos. El script dibuja la página con pypdfium2 (viene con pdfplumber) y
+   recorta la celda. Dos cosas que se aprendieron:
+   - el borde de la fila es la raya que cruza **la tabla entera** (más de 400
+     puntos); el dibujo tiene sus propias horizontales de lado a lado de la
+     celda y, tomadas como borde, cortaban el círculo por la mitad (pasó en la
+     primera corrida: la mitad de los dibujos sin círculo);
+   - las notas al pie de la fila ("(1) (5)") se tapan con la caja de cada letra.
+   Se miró la lámina de control entera (`--hoja`): los 276 con corte y círculo.
+   **`recortar_pistones_mahle.py` borraba todo PNG que no empezara con "FM"**: se
+   habría llevado los de Persan en su próxima corrida. Ahora respeta "FM" y "PS".
+   `backend_medidas.py` controla los tres manifiestos.
+2. **`convertir_tecnicos.js` fusiona en vez de regenerar.** Ya no escribe
+   `camisas.json` (es de `convertir_camisas_fadecya.py` desde el 2026-08-22, que
+   saca la versión rica). En `guias.json` y `subconjuntos.json` reemplaza en su
+   lugar sólo las suyas (RYC, NUBO, INDY con "G IY" en el código; MAHLE) y deja
+   las 36 guías de Indy 2025 y los 83 subconjuntos de Federal Mogul. Además lee
+   los números conservando su texto (`JSON.rawJSON`, Node 22): sin eso un "33.0"
+   escrito por Python salía "33" y el diff ocupaba el archivo entero.
+   **Verificado sólo con datos sintéticos**: fusionar lo que ya está deja los dos
+   archivos byte a byte iguales, con una ficha más o dos menos las ajenas quedan
+   intactas. **La verificación con la fuente real falta**: el repo del buscador
+   (`Chiappo-Repuestos-`) no se pudo clonar en esta sesión (permiso denegado).
+   La próxima vez que se corra, hacerlo primero con la fuente vieja y `git diff`
+   tiene que dar vacío.
+3. **El login fallido decía "No autenticado".** Ahora muestra el mensaje del
+   servidor ("Usuario o contraseña incorrectos"). Verificado en el navegador.
+4. **`Motores Comerciales.pdf`** no se ejecutó: el dueño había pedido que primero
+   se le explique. Se le explicó en el chat de esta sesión (ver "Próximo paso").
+
+### Verificación
+
+* `rapido.sh` (backend + humo): TODO OK, también `--backend` después de los
+  dibujos.
+* Las tres de UI: ver "Próximo paso" (se corrieron al final de la tanda).
+
 ## Próximo paso
 
-**Lo último, terminado y EN PRODUCCIÓN (2026-10-02):** el **presupuesto rápido
+**Lo último (2026-10-05):** las **pestañas que abren al instante** (caché +
+cola de precarga + code splitting), los **276 dibujos de Persan**, el
+`fusionar()` de `convertir_tecnicos.js` y el mensaje del login. La sección
+"Sesión 2026-10-05" más arriba tiene el detalle. Queda abierto:
+
+* **`Motores Comerciales.pdf`**: se le explicó al dueño en qué consiste y cómo
+  se haría; **espera su decisión** antes de tocar nada.
+* **Verificar `convertir_tecnicos.js` con la fuente real** la próxima vez que se
+  corra (con la fuente vieja, `git diff` de los dos JSON tiene que dar vacío).
+* Los **76 dibujos de Mahle** siguen dependiendo de tomos que no tenemos (ver
+  más abajo).
+
+**Antes (2026-10-02), terminado y EN PRODUCCIÓN:** el **presupuesto rápido
 desde el celular** — motor y cliente escritos, precio opcional ("a cotizar"), teléfono y
 WhatsApp, aprobar y mandar al taller en el mismo guardado, borrador que no se
 pierde y la app instalable con un ícono que abre directo ahí. La sección "Sesión
@@ -2642,8 +2745,8 @@ bisección (presupuesto normal) y la columna `total_manual` que se guarda tal cu
 a mano y el ajuste % se acomoda solo para darlo. La sección "Sesión 2026-09-09"
 más arriba tiene el detalle. No dejó nada pendiente propio.
 
-**Los dibujos de Persan (2026-09-10).** Es la tanda que el dueño dejó para
-después de los datos, y es la que sigue. Van con un script espejo de
+**Los dibujos de Persan (2026-09-10).** HECHO el 2026-10-05 (ver esa sesión).
+Era la tanda que el dueño dejó para después de los datos. Van con un script espejo de
 `dibujos_pistones_fm2010.py`, un **tercer** manifiesto
 (`dibujos-pistones-persan.js`) y el import en `pistones.jsx`, que hoy importa
 dos. **Al contar dibujos faltantes hay que mirar los TRES manifiestos y las TRES
@@ -2661,7 +2764,7 @@ subconjunto / cojinetes / junta **organizada por motor**. Toca el corazón del
 sistema. El dueño pidió que primero se le explique bien en qué consiste y cómo se
 ejecutaría.
 
-**Y una que quedó anotada sin hacer:** `scripts/convertir_tecnicos.js` sigue
+**Y una que quedó anotada sin hacer (HECHA el 2026-10-05, ver esa sesión):** `scripts/convertir_tecnicos.js` sigue
 regenerando entero cada JSON que produce, y produce **tres** —`camisas.json`,
 `guias.json` y `subconjuntos.json`—, los tres con un segundo productor hoy.
 Correrlo se lleva puestas las 83 fichas de Federal Mogul de los subconjuntos, las
@@ -2852,7 +2955,7 @@ sesión dejó identificado todo (ver la sesión sexta, arriba). Por valor:
 | Taranto, Sabó | Juntas y retenes |
 | VMG, SABI, Schadek, Akuro | Bombas de agua y de aceite |
 
-**El mensaje de error del login no dice nada (2026-09-08).** Es lo único que
+**El mensaje de error del login no dice nada (2026-09-08).** ARREGLADO el 2026-10-05. Era lo único que
 quedó abierto de esta sesión, y salió de usarla: cuando el login falla, la
 pantalla muestra **"No autenticado"** en vez de "Usuario o contraseña
 incorrectos", que es lo que el servidor manda de verdad. El culpable es

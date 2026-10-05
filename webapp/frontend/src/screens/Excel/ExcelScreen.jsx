@@ -80,7 +80,7 @@ function FechaCatalogo() {
   const [info, setInfo] = React.useState(null)
 
   React.useEffect(() => {
-    api.get('/repuestos/catalogo-info').then(setInfo).catch(() => {})
+    api.get('/repuestos/catalogo-info', { alActualizar: setInfo }).then(setInfo).catch(() => {})
   }, [])
 
   if (!info) return null

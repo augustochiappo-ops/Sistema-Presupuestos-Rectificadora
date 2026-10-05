@@ -292,4 +292,5 @@ Estas skills deben usarse **proactivamente** cuando la tarea corresponda a su es
 - **Local-first**: toda la lógica y el almacenamiento son locales. Corre en PythonAnywhere, sin dependencia de servicios en la nube de terceros.
 - **Base de datos interna**: persiste las asociaciones motor → repuestos (códigos del proveedor). Se va enriqueciendo a medida que se usan presupuestos.
 - **Actualización de precios**: el sistema debe poder reimportar la lista de la Cámara y el Excel del proveedor sin perder las asociaciones guardadas.
+- **Pestañas precargadas (2026-10-05)**: el frontend tiene un caché de GET con prioridad (`api/client.js`), una cola que precarga el código y los datos de las otras pestañas en el fondo (`api/precarga.js`) y cada pantalla en su propio archivo (`src/pantallas.js`). Si una pantalla cambia lo que pide al abrirse, actualizar `PRECARGA_OFICINA` en `pantallas.js`. Reglas en `decisiones.md`.
 - **Stack**: Flask (backend) + React/Vite (frontend) en `webapp/`. pandas para leer el Excel del proveedor. reportlab (o similar) para generar PDF. SQLite como base de datos local.

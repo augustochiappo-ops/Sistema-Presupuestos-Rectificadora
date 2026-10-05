@@ -301,7 +301,7 @@ export default function BusquedaMedidasScreen() {
   const [dibujo, setDibujo] = React.useState(null)
 
   React.useEffect(() => {
-    api.get('/tecnicos/familias').then(setFamilias).catch(() => setFamilias([]))
+    api.get('/tecnicos/familias', { alActualizar: setFamilias }).then(setFamilias).catch(() => setFamilias([]))
   }, [])
 
   // Solo se muestran las familias que el backend dice tener cargadas, en el

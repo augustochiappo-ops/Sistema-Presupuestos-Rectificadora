@@ -566,12 +566,13 @@ def main():
         raise SystemExit("No salió ningún dibujo: revisá la carpeta de fuentes")
 
     os.makedirs(SALIDA, exist_ok=True)
-    # Los dibujos de Federal Mogul viven en esta misma carpeta pero son de otro
-    # script y de otro catálogo: no tienen foto en `fuentes/pistones/` y no hay
-    # que salir a borrarlos. Sin este filtro, una corrida de rutina de este
-    # script se llevaba puestos los 110 PNG de Federal Mogul en silencio.
+    # Los dibujos de Federal Mogul (FM…) y de Persan (PS…) viven en esta misma
+    # carpeta pero son de otros scripts y de otros catálogos: no tienen foto en
+    # `fuentes/pistones/` y no hay que salir a borrarlos. Sin este filtro, una
+    # corrida de rutina de este script se llevaba puestos los 110 PNG de Federal
+    # Mogul en silencio.
     viejos = {f for f in os.listdir(SALIDA)
-              if f.endswith(".png") and not f.startswith("FM")}
+              if f.endswith(".png") and not f.startswith(("FM", "PS"))}
     for archivo, (_, dibujo, _claves) in sorted(elegidos.items()):
         encuadrar(dibujo).save(os.path.join(SALIDA, f"{archivo}.png"))
         viejos.discard(f"{archivo}.png")

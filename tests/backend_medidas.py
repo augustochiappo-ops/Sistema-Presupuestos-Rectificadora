@@ -278,14 +278,15 @@ check("las 38 de conjuntos entraron sin verificar",
       len(sin_ver) == 38 and not any(r["extra"]["verificado"] for r in sin_ver),
       len(sin_ver))
 
-print("\n=== 5 quater. Los dibujos de pistón y sus dos manifiestos ===")
-# Los dibujos salen de DOS scripts que escriben en la MISMA carpeta:
-# recortar_pistones_mahle.py (fotos del catálogo Mahle) y
-# dibujos_pistones_fm2010.py (el PDF de Federal Mogul). Cada uno reescribe su
+print("\n=== 5 quater. Los dibujos de pistón y sus tres manifiestos ===")
+# Los dibujos salen de TRES scripts que escriben en la MISMA carpeta:
+# recortar_pistones_mahle.py (fotos del catálogo Mahle),
+# dibujos_pistones_fm2010.py (el PDF de Federal Mogul) y
+# dibujos_pistones_persan.py (el PDF de Persan, 2026-10-05). Cada uno reescribe su
 # manifiesto entero en cada corrida y barre los PNG que le sobran, así que un
 # script puede llevarse los archivos del otro sin que nadie se entere: pasó, y
 # una corrida de rutina del de Mahle borró los 110 dibujos de Federal Mogul.
-# Estos dos checks son el control: si un manifiesto nombra un archivo que no
+# Estos checks son el control: si un manifiesto nombra un archivo que no
 # está, la pantalla muestra un cuadrito roto y un 404 por fila.
 PISTONES_DIR = os.path.join(RAIZ, "webapp", "frontend", "public", "pistones")
 MANIFIESTOS = {
@@ -293,6 +294,8 @@ MANIFIESTOS = {
                           "BusquedaMedidas", "dibujos-pistones.js"),
     "Federal Mogul": os.path.join(RAIZ, "webapp", "frontend", "src", "screens",
                                   "BusquedaMedidas", "dibujos-pistones-fm.js"),
+    "Persan": os.path.join(RAIZ, "webapp", "frontend", "src", "screens",
+                           "BusquedaMedidas", "dibujos-pistones-persan.js"),
 }
 apuntados, rotos = set(), []
 for marca, ruta in MANIFIESTOS.items():
@@ -310,7 +313,7 @@ check("y no quedó ningún PNG que nadie nombre", not sobrantes, sobrantes[:5])
 
 # Todos con la MISMA PROPORCIÓN de cuadro (13:20, `LADOS` del script de Mahle):
 # es lo que hace que, pedidos con una altura fija, se vean todos del mismo
-# tamaño y ninguno empuje el alto de la fila. Los dos scripts pasan por el mismo
+# tamaño y ninguno empuje el alto de la fila. Los tres scripts pasan por el mismo
 # `encuadrar`, y este check es el que avisa si alguno deja de hacerlo.
 descuadrados = []
 for archivo in sorted(apuntados):

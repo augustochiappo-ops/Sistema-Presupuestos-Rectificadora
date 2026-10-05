@@ -35,20 +35,26 @@ export function MotorSelector({ onSelect }) {
   const [cargando, setCargando] = React.useState(true)
 
   React.useEffect(() => {
-    api.get('/motores/marcas').then(setMarcas).catch(() => {})
+    api.get('/motores/marcas', { alActualizar: setMarcas }).then(setMarcas).catch(() => {})
   }, [])
 
+  // La pausa es para no preguntar letra por letra mientras se escribe; la
+  // lista completa del principio (sin filtros) sale sin esperar, y si la
+  // precarga ya la trajo aparece al instante (api/client.js).
   React.useEffect(() => {
+    let vigente = true
+    const poner = (d) => { if (vigente) setMotores(d) }
+    const sinFiltro = marcaSel === 'Todos' && !busqueda
     const t = setTimeout(() => {
       setCargando(true)
       const params = new URLSearchParams()
       if (marcaSel !== 'Todos') params.set('marca', marcaSel)
       if (busqueda) params.set('busqueda', busqueda)
-      api.get(`/motores?${params.toString()}`)
-        .then(setMotores)
-        .finally(() => setCargando(false))
-    }, 280)
-    return () => clearTimeout(t)
+      api.get(`/motores?${params.toString()}`, sinFiltro ? { alActualizar: poner } : undefined)
+        .then(poner)
+        .finally(() => { if (vigente) setCargando(false) })
+    }, sinFiltro ? 0 : 280)
+    return () => { vigente = false; clearTimeout(t) }
   }, [marcaSel, busqueda])
 
   return (

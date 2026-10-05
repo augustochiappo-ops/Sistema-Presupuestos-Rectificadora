@@ -51,7 +51,9 @@ export default function PreciosScreen() {
   // motores tiene: es la que el taller va a querer tarifar primero, y evita el
   // paso muerto de elegir una lista antes de ver nada.
   React.useEffect(() => {
-    api.get('/precios/listas')
+    // Con el caché (api/client.js): si la precarga ya trajo las listas, la
+    // pantalla abre al instante. La lista elegida no cambia si llega una más nueva.
+    api.get('/precios/listas', { alActualizar: setListas })
       .then((data) => {
         setListas(data)
         const masUsada = [...data].sort((a, b) => b.motores - a.motores)[0]
@@ -60,22 +62,28 @@ export default function PreciosScreen() {
       .catch((e) => setError(e.message))
   }, [])
 
+  // Número del último pedido: al cambiar de lista, lo que llegue tarde de la
+  // anterior (incluida la revisión por atrás del caché) no pisa la nueva.
+  const ultimoPedido = React.useRef(0)
+
   const recargar = React.useCallback(() => {
     if (!listaNum) return
+    const mio = ++ultimoPedido.current
+    const si = (fn) => (d) => { if (mio === ultimoPedido.current) fn(d) }
     setCargando(true)
     Promise.all([
-      api.get(`/precios/mano-obra?lista=${listaNum}`),
-      api.get('/precios/mios'),
-      api.get('/precios/listas'),
+      api.get(`/precios/mano-obra?lista=${listaNum}`, { alActualizar: si(setDatos) }),
+      api.get('/precios/mios', { alActualizar: si(setMios) }),
+      api.get('/precios/listas', { alActualizar: si(setListas) }),
     ])
-      .then(([lista, propios, todasLasListas]) => {
+      .then(si(([lista, propios, todasLasListas]) => {
         setDatos(lista)
         setMios(propios)
         setListas(todasLasListas)
         setError('')
-      })
-      .catch((e) => setError(e.message))
-      .finally(() => setCargando(false))
+      }))
+      .catch(si((e) => setError(e.message)))
+      .finally(si(() => setCargando(false)))
   }, [listaNum])
 
   React.useEffect(() => { recargar() }, [recargar])

@@ -123,7 +123,14 @@ export default function HistorialPresupuestos() {
     if (filtros.cliente) params.set('cliente', filtros.cliente)
     if (filtros.desde) params.set('desde', filtros.desde)
     if (filtros.hasta) params.set('hasta', filtros.hasta)
-    api.get(`/presupuestos?${params.toString()}`).then(setPresupuestos).finally(() => setCargando(false))
+    // `vigente`: si los filtros cambian, lo que llegue tarde de la búsqueda
+    // anterior (incluida la revisión por atrás del caché) no pisa la nueva.
+    let vigente = true
+    const poner = (d) => { if (vigente) setPresupuestos(d) }
+    api.get(`/presupuestos?${params.toString()}`, { alActualizar: poner })
+      .then(poner)
+      .finally(() => { if (vigente) setCargando(false) })
+    return () => { vigente = false }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtros.repuesto, filtros.motor, filtros.cliente, filtros.desde, filtros.hasta])
 

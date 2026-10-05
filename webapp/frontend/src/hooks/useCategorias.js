@@ -2,9 +2,9 @@ import React from 'react'
 import { api } from '../api/client'
 
 // La lista de categorías cambia solo cuando se reimporta el catálogo, y la piden
-// varios componentes a la vez (el rail lateral y cada campo de categoría manual):
-// se pide una sola vez por sesión y todos comparten la misma promesa.
-let promesaCategorias = null
+// varios componentes a la vez (el rail lateral y cada campo de categoría manual).
+// Va por el caché de api/client.js: los pedidos simultáneos se comparten, y si
+// la precarga ya la trajo aparece al instante.
 
 /** Categorías del catálogo del proveedor: rail lateral y <datalist> manuales. */
 export function useCategorias() {
@@ -12,13 +12,8 @@ export function useCategorias() {
 
   React.useEffect(() => {
     let vigente = true
-    if (!promesaCategorias) {
-      promesaCategorias = api.get('/repuestos/categorias').catch(() => {
-        promesaCategorias = null   // que un error no deje la lista vacía para siempre
-        return []
-      })
-    }
-    promesaCategorias.then((data) => { if (vigente) setCategorias(data) })
+    const poner = (data) => { if (vigente) setCategorias(data) }
+    api.get('/repuestos/categorias', { alActualizar: poner }).then(poner).catch(() => {})
     return () => { vigente = false }
   }, [])
 

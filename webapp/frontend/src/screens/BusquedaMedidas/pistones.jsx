@@ -2,18 +2,19 @@ import React from 'react'
 import { Modal } from '../../components/Modal'
 import { DIBUJOS } from './dibujos-pistones'
 import { DIBUJOS_FM } from './dibujos-pistones-fm'
+import { DIBUJOS_PERSAN } from './dibujos-pistones-persan'
 
 /*
  * El dibujo del pistón de un subconjunto o de un conjunto.
  *
- * Los catálogos de Mahle y de Federal Mogul traen, al lado de cada código, el
+ * Los catálogos de Mahle, Federal Mogul y Persan traen, al lado de cada código, el
  * corte del pistón y su vista de abajo. Es lo que se mira para saber de una si el pistón que se está
  * buscando es el que se tiene en la mano: la cámara en la cabeza, el rebaje de
  * las válvulas, la forma de la falda. Las medidas de la fila dicen cuánto mide;
  * el dibujo dice qué es.
  *
- * Los archivos salen de dos scripts —scripts/recortar_pistones_mahle.py y
- * scripts/dibujos_pistones_fm2010.py—, uno por pistón, en
+ * Los archivos salen de tres scripts —scripts/recortar_pistones_mahle.py,
+ * scripts/dibujos_pistones_fm2010.py y scripts/dibujos_pistones_persan.py—, uno por pistón, en
  * /pistones/<archivo>.png. Todos vienen con la MISMA PROPORCIÓN de cuadro, así
  * que pedidos con una altura fija se ven todos del mismo tamaño y ninguno
  * empuja el alto de la fila.
@@ -24,7 +25,7 @@ import { DIBUJOS_FM } from './dibujos-pistones-fm'
  * mismo pistón y comparten el PNG. Salir a pedir la imagen para ver si está
  * deja un cuadrito roto en la tabla y un 404 por fila.
  *
- * Son DOS mapas y no uno porque cada script reescribe entero su archivo en cada
+ * Son TRES mapas y no uno porque cada script reescribe entero su archivo en cada
  * corrida: juntarlos en uno haría que el que corre segundo borre lo del primero.
  * Acá se los busca en orden y listo.
  */
@@ -34,7 +35,7 @@ export const claveDe = (codigo) => (codigo || '').replace(/\s+/g, '')
 
 /** El archivo que le toca a este código, o null si todavía no se recortó. */
 export const archivoDibujo = (codigo) =>
-  DIBUJOS[claveDe(codigo)] || DIBUJOS_FM[claveDe(codigo)] || null
+  DIBUJOS[claveDe(codigo)] || DIBUJOS_FM[claveDe(codigo)] || DIBUJOS_PERSAN[claveDe(codigo)] || null
 
 export const tieneDibujo = (codigo) => Boolean(archivoDibujo(codigo))
 

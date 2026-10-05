@@ -246,9 +246,12 @@ export default function PresupuestoRapido() {
   // La lista entera de la Cámara, sin precio: los trabajos son los mismos para
   // cualquier motor, así que se tildan igual aunque el motor se escriba a mano.
   React.useEffect(() => {
-    api.get('/servicios').then(setServicios).catch(() => setServicios([]))
-    api.get('/servicios/favoritos').then((ids) => setFavServicios(new Set(ids))).catch(() => {})
-    api.get('/repuestos/categorias/favoritos').then((ids) => setFavCategorias(new Set(ids))).catch(() => {})
+    // Con el caché (api/client.js): si la precarga ya los trajo, aparecen al instante.
+    const favS = (ids) => setFavServicios(new Set(ids))
+    const favC = (ids) => setFavCategorias(new Set(ids))
+    api.get('/servicios', { alActualizar: setServicios }).then(setServicios).catch(() => setServicios([]))
+    api.get('/servicios/favoritos', { alActualizar: favS }).then(favS).catch(() => {})
+    api.get('/repuestos/categorias/favoritos', { alActualizar: favC }).then(favC).catch(() => {})
   }, [])
 
   // Con un motor de la lista hay precios de referencia (los de SU lista).

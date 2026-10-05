@@ -41,12 +41,16 @@ export default function RepuestosScreen() {
   React.useEffect(() => {
     const params = new URLSearchParams()
     if (categoriaSel) params.set('categoria', categoriaSel)
-    api.get(`/repuestos/marcas?${params.toString()}`)
-      .then((data) => {
-        setMarcas(data)
-        setMarcaSel((prev) => (data.some((m) => m.prefijo === prev) ? prev : ''))
-      })
+    let vigente = true
+    const poner = (data) => {
+      if (!vigente) return
+      setMarcas(data)
+      setMarcaSel((prev) => (data.some((m) => m.prefijo === prev) ? prev : ''))
+    }
+    api.get(`/repuestos/marcas?${params.toString()}`, { alActualizar: poner })
+      .then(poner)
       .catch(() => {})
+    return () => { vigente = false }
   }, [categoriaSel])
 
   const hayFiltro = Boolean(categoriaSel || marcaSel || codigo || descripcion)

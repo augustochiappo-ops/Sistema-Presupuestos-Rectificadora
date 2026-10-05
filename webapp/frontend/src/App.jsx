@@ -2,20 +2,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import { Shell } from './layout/Shell'
 import Login from './screens/Login'
-import MotoresScreen from './screens/Motores/MotoresScreen'
-import ExcelScreen from './screens/Excel/ExcelScreen'
-import ClientesScreen from './screens/Clientes/ClientesScreen'
-import ClienteDetalle from './screens/Clientes/ClienteDetalle'
-import HistorialPresupuestos from './screens/Presupuestos/Historial'
-import WizardPresupuesto from './screens/Presupuestos/Wizard/WizardPresupuesto'
-import PresupuestoRapido from './screens/Presupuestos/PresupuestoRapido'
-import DetallePresupuesto from './screens/Presupuestos/Detalle'
-import PedidoRepuestos from './screens/Presupuestos/Pedido'
-import PreciosScreen from './screens/Precios/PreciosScreen'
-import RepuestosScreen from './screens/Repuestos/RepuestosScreen'
-import BusquedaMedidasScreen from './screens/BusquedaMedidas/BusquedaMedidasScreen'
-import TallerScreen from './screens/Taller/TallerScreen'
-import OrdenTrabajo from './screens/Taller/OrdenTrabajo'
+import { Pantalla } from './pantallas'
 
 function Cargando() {
   return (
@@ -56,23 +43,23 @@ function App() {
         }
       >
         <Route index element={<Inicio />} />
-        <Route path="taller" element={<TallerScreen />} />
-        <Route path="taller/:id" element={<OrdenTrabajo />} />
-        <Route path="motores" element={<SoloOficina><MotoresScreen /></SoloOficina>} />
-        <Route path="excel" element={<SoloOficina><ExcelScreen /></SoloOficina>} />
-        <Route path="clientes" element={<SoloOficina><ClientesScreen /></SoloOficina>} />
-        <Route path="clientes/:id" element={<SoloOficina><ClienteDetalle /></SoloOficina>} />
-        <Route path="presupuestos" element={<SoloOficina><HistorialPresupuestos /></SoloOficina>} />
-        <Route path="presupuestos/nuevo" element={<SoloOficina><WizardPresupuesto /></SoloOficina>} />
-        <Route path="presupuestos/nuevo/rapido" element={<SoloOficina><PresupuestoRapido /></SoloOficina>} />
+        <Route path="taller" element={<Pantalla.taller />} />
+        <Route path="taller/:id" element={<Pantalla.ordenTrabajo />} />
+        <Route path="motores" element={<SoloOficina><Pantalla.motores /></SoloOficina>} />
+        <Route path="excel" element={<SoloOficina><Pantalla.excel /></SoloOficina>} />
+        <Route path="clientes" element={<SoloOficina><Pantalla.clientes /></SoloOficina>} />
+        <Route path="clientes/:id" element={<SoloOficina><Pantalla.clienteDetalle /></SoloOficina>} />
+        <Route path="presupuestos" element={<SoloOficina><Pantalla.historial /></SoloOficina>} />
+        <Route path="presupuestos/nuevo" element={<SoloOficina><Pantalla.wizard /></SoloOficina>} />
+        <Route path="presupuestos/nuevo/rapido" element={<SoloOficina><Pantalla.rapido /></SoloOficina>} />
         {/* La misma pantalla con una dirección corta: es la que abre el ícono
             de la app en el celular (ver public/manifest.webmanifest). */}
-        <Route path="rapido" element={<SoloOficina><PresupuestoRapido /></SoloOficina>} />
-        <Route path="presupuestos/:id" element={<SoloOficina><DetallePresupuesto /></SoloOficina>} />
-        <Route path="presupuestos/:id/pedido" element={<SoloOficina><PedidoRepuestos /></SoloOficina>} />
-        <Route path="precios" element={<SoloOficina><PreciosScreen /></SoloOficina>} />
-        <Route path="repuestos" element={<SoloOficina><RepuestosScreen /></SoloOficina>} />
-        <Route path="busqueda-medidas" element={<SoloOficina><BusquedaMedidasScreen /></SoloOficina>} />
+        <Route path="rapido" element={<SoloOficina><Pantalla.rapido /></SoloOficina>} />
+        <Route path="presupuestos/:id" element={<SoloOficina><Pantalla.detalle /></SoloOficina>} />
+        <Route path="presupuestos/:id/pedido" element={<SoloOficina><Pantalla.pedido /></SoloOficina>} />
+        <Route path="precios" element={<SoloOficina><Pantalla.precios /></SoloOficina>} />
+        <Route path="repuestos" element={<SoloOficina><Pantalla.repuestos /></SoloOficina>} />
+        <Route path="busqueda-medidas" element={<SoloOficina><Pantalla.medidas /></SoloOficina>} />
         <Route path="*" element={<Inicio />} />
       </Route>
     </Routes>
