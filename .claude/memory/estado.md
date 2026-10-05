@@ -2699,12 +2699,12 @@ abierta la app (la última de la cola), sus datos se adelantaron a todo lo demá
 * Al final de la tanda, enteras y en segundo plano: humo 24 OK, `ui_medidas`
   148 OK, `ui_precios` todas las verificaciones pasaron, `ui_grupos` 211 OK.
   Cero fallas.
-* **Falta el deploy**: no había `DEPLOY_SECRET` en la sesión; se le pidió al
-  dueño. Hasta que se corra, producción sigue con la versión del 2026-10-02.
+* **Deploy hecho** al cierre: HTTP 200, y producción sirve el mismo
+  `index-BKoUT1Iu.js` que el build local; `/pistones/PS82.png` responde 200.
 
 ## Próximo paso
 
-**Lo último (2026-10-05):** las **pestañas que abren al instante** (caché +
+**Lo último (2026-10-05), EN PRODUCCIÓN:** las **pestañas que abren al instante** (caché +
 cola de precarga + code splitting), los **276 dibujos de Persan**, el
 `fusionar()` de `convertir_tecnicos.js` y el mensaje del login. La sección
 "Sesión 2026-10-05" más arriba tiene el detalle. Queda abierto:
