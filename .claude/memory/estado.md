@@ -2696,7 +2696,11 @@ abierta la app (la última de la cola), sus datos se adelantaron a todo lo demá
 
 * `rapido.sh` (backend + humo): TODO OK, también `--backend` después de los
   dibujos.
-* Las tres de UI: ver "Próximo paso" (se corrieron al final de la tanda).
+* Al final de la tanda, enteras y en segundo plano: humo 24 OK, `ui_medidas`
+  148 OK, `ui_precios` todas las verificaciones pasaron, `ui_grupos` 211 OK.
+  Cero fallas.
+* **Falta el deploy**: no había `DEPLOY_SECRET` en la sesión; se le pidió al
+  dueño. Hasta que se corra, producción sigue con la versión del 2026-10-02.
 
 ## Próximo paso
 
