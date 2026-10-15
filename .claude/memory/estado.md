@@ -2717,11 +2717,20 @@ abierta la app (la última de la cola), sus datos se adelantaron a todo lo demá
 * En el navegador: plegar, recargar (persiste, ancho 76 px), celular a 390 px
   (sin cambios). Capturas revisadas.
 * `rapido.sh` (backend + humo): TODO OK.
+* Las tres de UI, enteras: `ui_medidas` TODO OK, `ui_precios` todas pasaron.
+  `ui_grupos` dio 5 fallas la primera vez **por el test, no por la app**: el
+  bloque "Repuestos del motor separados por grupos" contaba todos los
+  `button[aria-expanded]` de la página y el ☰ nuevo del menú también lo tiene
+  (contó 3 grupos en vez de 2). Se acotó a `main button[aria-expanded]`; segunda
+  corrida 211 OK, cero fallas.
+* **Deploy hecho**: HTTP 200, producción sirve el mismo `index-B5jLqe9l.js` que
+  el build local.
 
 ## Próximo paso
 
-**Lo último (2026-10-15):** menú lateral plegable y más contraste (ver la
-sección de esa fecha).
+**Lo último (2026-10-15), EN PRODUCCIÓN:** menú lateral plegable y más
+contraste (ver la sección de esa fecha). Queda que el dueño lo mire y diga si el
+gris quedó bien o lo quiere más / menos oscuro (se toca sólo `colors.css`).
 
 **Lo último (2026-10-05), EN PRODUCCIÓN:** las **pestañas que abren al instante** (caché +
 cola de precarga + code splitting), los **276 dibujos de Persan**, el
