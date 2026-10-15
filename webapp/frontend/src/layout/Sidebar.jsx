@@ -31,7 +31,7 @@ function horaVencimiento(venceTs) {
   return `Sesión hasta las ${hora}`
 }
 
-export function Sidebar({ open = false, onClose }) {
+export function Sidebar({ open = false, onClose, compacto = false, onPlegar }) {
   const { user, rol, esTaller, logout, venceTs } = useAuth()
   const [conteo, setConteo] = React.useState(null)
 
@@ -56,15 +56,29 @@ export function Sidebar({ open = false, onClose }) {
     : (conteo?.terminado || 0)
 
   return (
-    <aside className={`sidebar ${open ? 'open' : ''}`}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '0 8px' }}>
+    <aside className={`sidebar ${open ? 'open' : ''} ${compacto ? 'compacto' : ''}`}>
+      {/* El botón para plegar / desplegar el menú. Sólo en la pantalla grande:
+          en el celular el menú ya sale y entra con el de la barra de arriba. */}
+      <button
+        onClick={onPlegar}
+        className="shell-topbar-toggle sidebar-plegar"
+        aria-label={compacto ? 'Desplegar menú' : 'Plegar menú'}
+        title={compacto ? 'Desplegar menú' : 'Plegar menú'}
+        aria-expanded={!compacto}
+      >
+        <Icon n="menu" s={22} />
+      </button>
+
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: compacto ? 'center' : 'space-between', gap: 12, padding: compacto ? 0 : '0 8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: 40, height: 40, borderRadius: 'var(--radius-md)', background: 'var(--brand-ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+          <div style={{ width: 40, height: 40, flexShrink: 0, borderRadius: 'var(--radius-md)', background: 'var(--brand-ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
             <Icon n="wrench" s={22} />
           </div>
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, lineHeight: 1.15, color: 'var(--text-strong)' }}>
-            Rectificaciones<br />Chiappo
-          </span>
+          {!compacto && (
+            <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 15, lineHeight: 1.15, color: 'var(--text-strong)' }}>
+              Rectificaciones<br />Chiappo
+            </span>
+          )}
         </div>
         <button
           onClick={onClose}
@@ -78,11 +92,12 @@ export function Sidebar({ open = false, onClose }) {
 
       <nav style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
         {items.map((it) => (
-          <NavLink key={it.to} to={it.to} style={{ textDecoration: 'none' }} onClick={onClose}>
+          <NavLink key={it.to} to={it.to} style={{ textDecoration: 'none' }} onClick={onClose} title={compacto ? it.label : undefined}>
             {({ isActive }) => (
               <NavItem
                 icon={<Icon n={it.icon} />}
                 active={isActive}
+                compacto={compacto}
                 badge={it.to === '/taller' && pendiente > 0 ? pendiente : null}
               >
                 {it.label}
@@ -92,19 +107,22 @@ export function Sidebar({ open = false, onClose }) {
         ))}
       </nav>
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 8px', borderTop: '1px solid var(--border-subtle)' }}>
-        <div>
-          <div style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: 14, color: 'var(--text-strong)' }}>
-            {user}
-            <span style={{ fontWeight: 500, fontSize: 12, color: 'var(--text-muted)' }}>
-              {rol ? ` · ${esTaller ? 'Taller' : 'Oficina'}` : ''}
-            </span>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: compacto ? 'center' : 'space-between', padding: compacto ? '12px 0' : '12px 8px', borderTop: '1px solid var(--border-subtle)' }}>
+        {!compacto && (
+          <div>
+            <div style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: 14, color: 'var(--text-strong)' }}>
+              {user}
+              <span style={{ fontWeight: 500, fontSize: 12, color: 'var(--text-muted)' }}>
+                {rol ? ` · ${esTaller ? 'Taller' : 'Oficina'}` : ''}
+              </span>
+            </div>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>{horaVencimiento(venceTs)}</div>
           </div>
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-muted)' }}>{horaVencimiento(venceTs)}</div>
-        </div>
+        )}
         <button
           onClick={logout}
           title="Cerrar sesión"
+          aria-label="Cerrar sesión"
           style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', padding: 8 }}
         >
           <Icon n="log-out" s={18} />

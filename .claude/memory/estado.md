@@ -2702,7 +2702,26 @@ abierta la app (la última de la cola), sus datos se adelantaron a todo lo demá
 * **Deploy hecho** al cierre: HTTP 200, y producción sirve el mismo
   `index-BKoUT1Iu.js` que el build local; `/pistones/PS82.png` responde 200.
 
+## Sesión 2026-10-15 — Menú lateral plegable y más contraste
+
+1. **Menú plegable**: botón ☰ arriba del menú lateral; plegado queda una franja
+   de íconos de 76 px (nombre en el `title`, el número del taller como puntito).
+   Se recuerda en `localStorage`. En el celular no cambia nada. Detalle en
+   `decisiones.md` (2026-10-15).
+2. **Grises bastante más oscuros**: texto secundario, rótulos, placeholders y
+   todas las líneas (bordes de casilleros, tarjetas, divisores), tocando sólo los
+   tokens de `colors.css`.
+
+### Verificación
+
+* En el navegador: plegar, recargar (persiste, ancho 76 px), celular a 390 px
+  (sin cambios). Capturas revisadas.
+* `rapido.sh` (backend + humo): TODO OK.
+
 ## Próximo paso
+
+**Lo último (2026-10-15):** menú lateral plegable y más contraste (ver la
+sección de esa fecha).
 
 **Lo último (2026-10-05), EN PRODUCCIÓN:** las **pestañas que abren al instante** (caché +
 cola de precarga + code splitting), los **276 dibujos de Persan**, el

@@ -27,11 +27,44 @@ function ArrancarPrecarga() {
   return null
 }
 
+// El menú lateral plegado (sólo íconos) se recuerda en este navegador. Si el
+// navegador no deja guardar, arranca abierto y listo.
+const CLAVE_MENU = 'menu-lateral-plegado'
+const ANCHO_CELULAR = '(max-width: 860px)'
+
+function leerPlegado() {
+  try { return window.localStorage.getItem(CLAVE_MENU) === '1' } catch { return false }
+}
+
+// En el celular el menú no se pliega: se esconde entero y sale con el botón de
+// la barra de arriba, como siempre. El plegado es cosa de la pantalla grande.
+function useEnCelular() {
+  const [en, setEn] = React.useState(() => typeof window !== 'undefined' && !!window.matchMedia?.(ANCHO_CELULAR).matches)
+  React.useEffect(() => {
+    const mq = window.matchMedia?.(ANCHO_CELULAR)
+    if (!mq) return undefined
+    const cambio = () => setEn(mq.matches)
+    mq.addEventListener('change', cambio)
+    return () => mq.removeEventListener('change', cambio)
+  }, [])
+  return en
+}
+
 export function Shell() {
   const [sidebarOpen, setSidebarOpen] = React.useState(false)
+  const [plegado, setPlegado] = React.useState(leerPlegado)
+  const enCelular = useEnCelular()
+  const compacto = plegado && !enCelular
+
+  const alternarPlegado = () => {
+    setPlegado((p) => {
+      try { window.localStorage.setItem(CLAVE_MENU, p ? '0' : '1') } catch { /* sin guardar */ }
+      return !p
+    })
+  }
 
   return (
-    <div className="shell-outer">
+    <div className={`shell-outer ${compacto ? 'menu-plegado' : ''}`}>
       <div className="shell-inner">
         <div className="shell-topbar">
           <button className="shell-topbar-toggle" onClick={() => setSidebarOpen(true)} aria-label="Abrir menú">
@@ -48,7 +81,7 @@ export function Shell() {
         </div>
 
         <div className={`sidebar-backdrop ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(false)} />
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} compacto={compacto} onPlegar={alternarPlegado} />
 
         <main className="shell-main">
           <React.Suspense fallback={<CargandoPantalla />}>

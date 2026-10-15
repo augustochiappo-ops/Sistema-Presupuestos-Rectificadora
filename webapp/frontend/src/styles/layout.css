@@ -8,6 +8,14 @@
 /* Sidebar */
 .sidebar{width:var(--sidebar-width);flex-shrink:0;padding:28px 20px;display:flex;flex-direction:column;gap:28px;border-right:1px solid var(--border-subtle);box-sizing:border-box}
 .sidebar-backdrop{display:none}
+.sidebar{transition:width .2s ease, padding .2s ease}
+/* Menú plegado: sólo los íconos. El ancho va en la variable para que lo que
+   se apoya en el borde del menú (la barra fija del presupuesto rápido) se
+   corra con él. */
+.shell-outer.menu-plegado{--sidebar-width:76px}
+.sidebar.compacto{padding:28px 10px}
+.sidebar-plegar{align-self:flex-start;margin:-14px 0 -14px 6px}
+.sidebar.compacto .sidebar-plegar{align-self:center;margin:-14px 0}
 
 /* Tablero del taller: una columna por estado. Las columnas se reparten el
    ancho en partes iguales y NO scrollean adentro: la página crece para abajo,
@@ -79,6 +87,7 @@
     width:280px;max-width:82vw;
   }
   .sidebar.open{transform:translateX(0)}
+  .sidebar-plegar{display:none}
 
   .sidebar-backdrop{
     display:block;position:fixed;inset:0;background:rgba(20,22,25,.4);

@@ -2214,3 +2214,27 @@ no son suyos salvo "FM" y "PS": cualquier catálogo nuevo que escriba en
 se los lleva.
 
 **Fecha:** 2026-10-05
+
+## Menú lateral plegable y grises más oscuros (2026-10-15)
+
+**Menú plegable.** El dueño pidió poder "guardar" el menú lateral para ganar
+ancho. Se eligió plegarlo a una **franja de íconos (76 px)** en vez de
+esconderlo entero: así se sigue navegando con un clic, y el nombre de cada
+pestaña sale al pasar el mouse (`title` del link). El botón ☰ va arriba de todo
+del menú. El estado se guarda en `localStorage` (`menu-lateral-plegado`), con
+try/catch: si el navegador no deja guardar, arranca abierto. El ancho vive en
+`--sidebar-width`, que se redefine en `.shell-outer.menu-plegado`, para que lo
+que se apoya en el borde del menú (la barra fija del presupuesto rápido) se
+corra solo. **En el celular no hay plegado**: el menú ya se esconde y sale con
+el ☰ de la barra de arriba; `Shell` decide con `matchMedia` (mismo corte de
+860 px que `layout.css` y `App.jsx`).
+
+**Contraste.** Todo el texto gris y todas las líneas de la UI salen de seis
+tokens de `styles/tokens/colors.css` (no hay hex sueltos en los `.jsx`), así
+que el oscurecimiento se hizo ahí y alcanza a todas las pantallas a la vez:
+`--text-body` #3a3e47→#22252b, `--text-muted` #7c818c→#40444d, `--text-faint`
+#a7abb4→#5c616b, `--border-subtle` #eceef0→#cdd0d6, `--border-default`
+#e2e4e8→#a3a8b1, `--border-strong` #cfd2d8→#767b85 (y `--chart-grid`). El
+dueño pidió "bastante" más contraste. `--text-faint` es también el color de los
+placeholders: quedó más oscuro pero todavía bien distinto del texto escrito
+(#141619). Si algún día pide volver atrás un poco, se toca sólo ese archivo.

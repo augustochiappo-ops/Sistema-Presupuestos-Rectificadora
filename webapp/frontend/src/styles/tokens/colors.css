@@ -67,20 +67,23 @@
   --surface-stripe:#f0e9d8;         /* alternating table rows (warmer beige, more contrast against white) */
   --surface-inverse:#141619;        /* black pill / active nav / primary btn */
 
+  /* Texto y líneas oscurecidos a pedido del dueño (2026-10-15): con los grises
+     claros de antes los rótulos (DIÁMETRO EXTERIOR…), los textos chicos y los
+     bordes de casilleros y tarjetas se perdían. */
   --text-strong:#141619;            /* headings, big numbers */
-  --text-body:#3a3e47;              /* default body */
-  --text-muted:#7c818c;             /* secondary / captions */
-  --text-faint:#a7abb4;             /* placeholder, disabled */
+  --text-body:#22252b;              /* default body */
+  --text-muted:#40444d;             /* secondary / captions */
+  --text-faint:#5c616b;             /* placeholder, disabled */
   --text-on-inverse:#ffffff;
 
-  --border-subtle:#eceef0;          /* row dividers */
-  --border-default:#e2e4e8;         /* card & input borders */
-  --border-strong:#cfd2d8;
+  --border-subtle:#cdd0d6;          /* row dividers */
+  --border-default:#a3a8b1;         /* card & input borders */
+  --border-strong:#767b85;
 
   --focus-ring:#141619;
 
   /* Chart */
   --chart-bar:#141619;              /* primary series (Presupuestos) */
   --chart-bar-alt:#d5d8dd;          /* secondary series (Aprobados) */
-  --chart-grid:#eceef0;
+  --chart-grid:#cdd0d6;
 }
