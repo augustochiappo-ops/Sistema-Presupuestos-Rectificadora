@@ -2735,9 +2735,15 @@ familias ya estaban bien. Detalle y criterio en `decisiones.md` (2026-10-15,
 "Guías: una ficha por código"). Tests: `backend_medidas` (sección 4b nueva y
 totales) y `ui_medidas` (876 y el código sin STD).
 
+Verificación: `backend_medidas` TODO OK, `rapido.sh` TODO OK, `ui_medidas`
+entera TODO OK (148 OK). `ui_grupos` y `ui_precios` no se corrieron de nuevo:
+el cambio no toca ni el agrupado ni los precios, sólo el catálogo de guías y
+su pantalla. **Deploy hecho**: HTTP 200, producción sirve `index-DfLVCLyP.js`,
+el mismo del build local.
+
 ## Próximo paso
 
-**Lo último (2026-10-15):** guías de Indy/Nubo en un solo ítem por código
+**Lo último (2026-10-15), EN PRODUCCIÓN:** guías de Indy/Nubo en un solo ítem por código
 (sección "Sesión 2026-10-15 (2)"). Antes, el mismo día, EN PRODUCCIÓN: menú lateral plegable y más
 contraste (ver la sección de esa fecha). Queda que el dueño lo mire y diga si el
 gris quedó bien o lo quiere más / menos oscuro (se toca sólo `colors.css`).
