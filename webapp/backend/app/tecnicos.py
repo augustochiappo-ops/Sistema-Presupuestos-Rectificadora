@@ -503,8 +503,9 @@ def _precios(fichas: list[dict]) -> dict[str, dict]:
 
 def _mejor_codigo(ficha: dict, precios: dict) -> dict:
     """
-    Cuál de los códigos del proveedor de esta ficha se muestra. Camisas y guías
-    tienen uno solo; un subconjunto Mahle tiene uno por sobremedida, y ahí se
+    Cuál de los códigos del proveedor de esta ficha se muestra. Una camisa o
+    una guía de RYC tienen uno solo; un subconjunto Mahle o una guía de Indy o
+    Nubo tienen uno por sobremedida, y ahí se
     elige el que más le sirve al taller: con stock y precio antes que con precio
     suelto, y con precio antes que sin nada.
     """
