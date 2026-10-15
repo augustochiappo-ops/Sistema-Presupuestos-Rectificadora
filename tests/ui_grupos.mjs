@@ -836,33 +836,33 @@ await esperar(1200)
 await page.locator('button', { hasText: /Siguiente.*Repuestos/i }).first().click()
 await esperar(2000)
 
-const cabeceras = page.locator('button[aria-expanded]')
+const cabeceras = page.locator('main button[aria-expanded]')
 check('los repuestos del motor salen separados por grupos', (await cabeceras.count()) === 2,
   `grupos=${await cabeceras.count()}`)
 check('las categorías se ven como títulos de grupo',
-  (await page.locator('button[aria-expanded]', { hasText: /Aros/ }).count()) === 1)
+  (await page.locator('main button[aria-expanded]', { hasText: /Aros/ }).count()) === 1)
 check('los grupos arrancan cerrados',
-  (await page.locator('button[aria-expanded="true"]').count()) === 0)
+  (await page.locator('main button[aria-expanded="true"]').count()) === 0)
 check('con los ítems escondidos', (await page.getByText(codigoAros, { exact: true }).count()) === 0)
 await page.screenshot({ path: `${SHOT}/13-grupos-cerrados.png`, fullPage: false })
 
-await page.locator('button[aria-expanded]', { hasText: /Aros/ }).click()
+await page.locator('main button[aria-expanded]', { hasText: /Aros/ }).click()
 await esperar(700)
 check('la flechita despliega ese grupo',
-  (await page.locator('button[aria-expanded="true"]').count()) === 1)
+  (await page.locator('main button[aria-expanded="true"]').count()) === 1)
 check('y muestra sus ítems', (await page.getByText(codigoAros, { exact: true }).count()) >= 1)
 check('el otro grupo sigue cerrado',
-  (await page.locator('button[aria-expanded="false"]').count()) === 1)
+  (await page.locator('main button[aria-expanded="false"]').count()) === 1)
 await page.screenshot({ path: `${SHOT}/14-grupo-abierto.png`, fullPage: false })
 
 await page.locator('button', { hasText: /^Expandir todo$/ }).click()
 await esperar(700)
 check('"Expandir todo" abre los dos',
-  (await page.locator('button[aria-expanded="true"]').count()) === 2)
+  (await page.locator('main button[aria-expanded="true"]').count()) === 2)
 await page.locator('button', { hasText: /^Colapsar todo$/ }).click()
 await esperar(700)
 check('"Colapsar todo" los cierra',
-  (await page.locator('button[aria-expanded="true"]').count()) === 0)
+  (await page.locator('main button[aria-expanded="true"]').count()) === 0)
 
 console.log('\n=== Eliminar cliente ===')
 // Un cliente sin presupuestos: en la app solo queda así después de borrarle los
