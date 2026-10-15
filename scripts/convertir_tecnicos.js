@@ -133,7 +133,7 @@ function guias() {
       extra: {
         forma: r.forma ?? null,
         material: r.material ?? null,
-        sobremedida: r.sobremedida ?? null,
+        sobremedidas: r.sobremedida ? [r.sobremedida] : [],
         nro_original: r.nro_original ?? null,
         cant_juego: r.cant_juego ?? null,
       },
@@ -146,9 +146,63 @@ function guias() {
       const entrada = mapaRyc[r.codigo]
       return ficha(r, entrada ? entrada.base : r.codigo, entrada ? entrada.key : null)
     }),
-    ...indy.map((r) => ficha(r, r.codigo, r.codigo)),
-    ...nubo.map((r) => ficha(r, r.codigo, r.codigo)),
+    ...juntarSobremedidas([
+      ...indy.map((r) => ficha(r, r.codigo, r.codigo)),
+      ...nubo.map((r) => ficha(r, r.codigo, r.codigo)),
+    ]),
   ]
+}
+
+// Indy y Nubo traen una fila por sobremedida, con la sobremedida pegada al
+// código ("G IY2017B STD", "G IY2017B 003"). Es la MISMA guía: mismas medidas,
+// mismo motor, y en el taller se pide por el código pelado y después se dice
+// la medida. Se juntan en una sola ficha con el código sin la etiqueta, la
+// lista de sobremedidas y un código del proveedor por cada una —igual que los
+// pernos o los cojinetes— (pedido del dueño, 2026-10-15: "un solo ítem").
+//
+// Se juntan sólo las que coinciden también en medidas, tipo, forma y material:
+// hay un código de Nubo (G NB533) que figura dos veces como STD con medidas
+// distintas, y ésas son dos guías distintas aunque el catálogo les dé el mismo
+// código. Una que viene sola ("G IY1171 STD") pierde igual la etiqueta del
+// código, para que todas se lean igual que las de RYC.
+const SUFIJO_SOBREMEDIDA = /^(.*\S)\s+(STD|\d{3})$/
+
+function ordenSobremedida(m) {
+  return m === 'STD' ? -1 : parseFloat(m)
+}
+
+function juntarSobremedidas(fichas) {
+  const salida = []
+  const grupos = new Map()
+  for (const f of fichas) {
+    const m = SUFIJO_SOBREMEDIDA.exec(f.codigo || '')
+    if (!m) { salida.push(f); continue }
+    const base = m[1]
+    const clave = JSON.stringify([f.marca, base, f.medidas, f.tipo, f.extra.forma, f.extra.material])
+    const grupo = grupos.get(clave)
+    if (grupo) { grupo.push(f); continue }
+    const nuevo = [f]
+    grupos.set(clave, nuevo)
+    // La ficha juntada queda donde estaba la primera de sus variantes.
+    salida.push({ base, variantes: nuevo })
+  }
+  return salida.map((f) => {
+    if (!f.variantes) return f
+    const variantes = [...f.variantes].sort((a, b) =>
+      ordenSobremedida(a.extra.sobremedidas[0]) - ordenSobremedida(b.extra.sobremedidas[0]))
+    // Los textos (motor, descripción) se toman de la STD si está.
+    const modelo = variantes[0]
+    return {
+      ...modelo,
+      codigo: f.base,
+      codigo_fab: f.base,
+      extra: {
+        ...modelo.extra,
+        sobremedidas: variantes.flatMap((v) => v.extra.sobremedidas),
+      },
+      codigos_crac: variantes.flatMap((v) => v.codigos_crac),
+    }
+  })
 }
 
 // ── Subconjuntos (Mahle) ─────────────────────────────────────────────────────
@@ -237,7 +291,7 @@ const DUENO = {
   subconjuntos: (f) => f.marca === 'MAHLE',
 }
 
-module.exports = { fusionar, DUENO, leerJSON }
+module.exports = { fusionar, DUENO, leerJSON, juntarSobremedidas }
 
 // ── Escritura ────────────────────────────────────────────────────────────────
 if (require.main === module) {

@@ -64,7 +64,7 @@ console.log('\n=== Estado inicial ===')
 check('las doce familias con su total',
   (await page.locator('button', { hasText: /^Camisas\s*396$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Válvulas\s*1782$/ }).count()) === 1
-  && (await page.locator('button', { hasText: /^Guías de válvulas\s*951$/ }).count()) === 1
+  && (await page.locator('button', { hasText: /^Guías de válvulas\s*876$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Asientos de válvulas\s*1108$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Subconjuntos\s*284$/ }).count()) === 1
   && (await page.locator('button', { hasText: /^Conjuntos\s*166$/ }).count()) === 1
@@ -173,7 +173,7 @@ await esperar(500)
 await page.fill('input[placeholder="Código…"]', 'iy1171')
 await esperar(1200)
 const guia = await textoDeFila(0)
-check('se encuentra la guía por su código', guia.includes('G IY1171 STD'), guia)
+check('se encuentra la guía por su código', guia.startsWith('G IY1171') && !guia.startsWith('G IY1171 STD'), guia)
 check('con su precio de la base', /\$\s?[\d.]+/.test(guia), guia)
 check('y con stock', /Sí|No/.test(guia), guia)
 await page.screenshot({ path: path.join(SHOT, 'medidas-guias.png'), fullPage: true })

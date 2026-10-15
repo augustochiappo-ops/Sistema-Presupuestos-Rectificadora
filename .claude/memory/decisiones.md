@@ -2238,3 +2238,31 @@ que el oscurecimiento se hizo ahí y alcanza a todas las pantallas a la vez:
 dueño pidió "bastante" más contraste. `--text-faint` es también el color de los
 placeholders: quedó más oscuro pero todavía bien distinto del texto escrito
 (#141619). Si algún día pide volver atrás un poco, se toca sólo ese archivo.
+
+## Guías: una ficha por código, no una por sobremedida (2026-10-15)
+
+Indy y Nubo traían una ficha por sobremedida con la etiqueta pegada al código
+("G IY2017B STD" y "G IY2017B 003", mismas medidas, mismo motor) y el dueño veía
+el mismo código dos veces. Pidió **un solo ítem, con el código pelado**, como ya
+se veían las de RYC. Se llevaron las guías al esquema de pernos y cojinetes: una
+ficha con `codigo` sin la etiqueta, `extra.sobremedidas` (lista, la STD primero)
+y un `codigos_crac` por sobremedida; la pantalla suma las columnas
+"Sobremedidas" y "Precio de", igual que pernos. `extra.sobremedida` (singular)
+ya no existe en ninguna guía.
+
+* **Se juntan sólo las que coinciden en marca, medidas, tipo, forma y
+  material.** `G NB533` figura dos veces como STD con medidas distintas (Toro
+  diésel 5 mm de vástago y Toro 2.0 D 7 mm): son dos guías distintas y quedan
+  dos filas.
+* Una que venía sola con " STD" pierde igual la etiqueta del código.
+* **Los repetidos de RYC no se tocan**: 41 códigos aparecen más de una vez, pero
+  es la misma guía listada para motores distintos (cambia la aplicación), no
+  sobremedidas. El dueño dijo que las de RYC están bien.
+* Las otras once familias se revisaron: ninguna tiene la sobremedida en el
+  código (ya eran una ficha con varios `codigos_crac`). El único "sufijo" que
+  encuentra la búsqueda es `F NB 344`, un asiento, y es parte del código.
+* Dónde vive: `juntarSobremedidas()` en `scripts/convertir_tecnicos.js` (RYC no
+  pasa por ahí), y `convertir_guias_indy_2025.py` arma una ficha con todas las
+  sobremedidas en vez de una por medida. El JSON se rehízo aplicando esa misma
+  función a las fichas cargadas (el clon del repo fuente no está en el entorno):
+  951 → 876 guías, los 790 códigos del proveedor siguen todos.

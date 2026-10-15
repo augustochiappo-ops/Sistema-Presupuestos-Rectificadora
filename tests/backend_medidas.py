@@ -1,6 +1,6 @@
 """
 Suite de verificación de la búsqueda por medidas (`app/tecnicos.py`), contra los
-catálogos técnicos del repo (396 camisas, 951 guías, 1.108 asientos de válvulas,
+catálogos técnicos del repo (396 camisas, 876 guías, 1.108 asientos de válvulas,
 284 subconjuntos, 166 conjuntos, 368 pistones, 252 pernos y 190 bujes de biela) y los 64.250
 repuestos del proveedor ya importados en la base.
 
@@ -11,6 +11,7 @@ Cómo se corre: ver tests/README.md. Resumen:
 No escribe nada: la búsqueda por medidas es de solo lectura. Igual DATA_DIR es
 obligatorio, para no correr nunca contra la base real por descuido.
 """
+import json
 import os
 import re
 import sys
@@ -65,7 +66,7 @@ check("396 camisas (secas y húmedas)",
 # Las guías sumaron las 36 de la hoja "Indy - Últimas incorporaciones 2025" el
 # 2026-09-08. Eran 915. Ninguna de las 36 está en la lista del proveedor y entran
 # igual: las guías son del grupo "catálogo completo" (ver la cabecera de ESPEC).
-check("951 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") == 951, familias.get("guias"))
+check("876 guías (RYC + Indy + Nubo)", familias.get("guias", {}).get("total") == 876, familias.get("guias"))
 check("1.108 asientos de válvulas (Indy + Nubo + RYC)",
       familias.get("asientos", {}).get("total") == 1108, familias.get("asientos"))
 # Las tres familias del pistón sumaron el catálogo Federal Mogul 2010 el
@@ -161,10 +162,10 @@ check("y 30 en el catálogo entero",
       tecnicos.buscar("guias", {"diam_vastago": "11", "tol_diam_vastago": "0.1",
                                 "solo_crac": "0"})["total"] == 30)
 check("sumar el largo achica el resultado", 0 < con_largo["total"] < solo_vastago["total"], con_largo["total"])
-check("y la guía buscada sigue estando", "G IY1171 STD" in codigos(con_largo), codigos(con_largo))
+check("y la guía buscada sigue estando", "G IY1171" in codigos(con_largo), codigos(con_largo))
 
 print("\n=== 4. Precio y stock salen de la base, no del catálogo técnico ===")
-guia = [r for r in con_largo["resultados"] if r["codigo"] == "G IY1171 STD"][0]
+guia = [r for r in con_largo["resultados"] if r["codigo"] == "G IY1171"][0]
 en_base = None
 with db.get_connection() as conn:
     en_base = conn.execute(
@@ -173,6 +174,27 @@ with db.get_connection() as conn:
 check("la guía trae el código exacto del proveedor", guia["codigo_crac"] == "G IY1171   STD", guia["codigo_crac"])
 check("el precio es el de la base", guia["precio"] == en_base["precio"], (guia["precio"], en_base["precio"]))
 check("el stock también", guia["stock"] == bool(en_base["stock"]), (guia["stock"], en_base["stock"]))
+
+print("\n=== 4b. Una guía en varias sobremedidas es UNA fila (2026-10-15) ===")
+# Indy y Nubo traían una ficha por sobremedida con la etiqueta pegada al código
+# ("G IY2017B STD" y "G IY2017B 003"): el dueño veía el mismo código dos veces.
+r = tecnicos.buscar("guias", {"codigo": "iy2017b", "solo_crac": "0"})
+check("G IY2017B sale una sola vez", r["total"] == 1, codigos(r))
+g2017 = r["resultados"][0] if r["resultados"] else {}
+check("con el código sin la sobremedida", g2017.get("codigo") == "G IY2017B", g2017.get("codigo"))
+check("y la lista de sus sobremedidas, la STD primero",
+      g2017.get("extra", {}).get("sobremedidas") == ["STD", "003"], g2017.get("extra"))
+check("el precio sale de una de las dos y dice de cuál",
+      g2017.get("medida_crac") in ("STD", "003"), g2017.get("medida_crac"))
+# Se mira el catálogo entero (la búsqueda corta en 100 resultados).
+with open(os.path.join(RAIZ, "CRAC", "tecnicos", "guias.json"), encoding="utf-8") as f:
+    todas = json.load(f)
+check("ninguna guía lleva la sobremedida en el código",
+      not [x["codigo"] for x in todas if re.search(r"\s(STD|\d{3})$", x["codigo"] or "")],
+      [x["codigo"] for x in todas if re.search(r"\s(STD|\d{3})$", x["codigo"] or "")][:5])
+r = tecnicos.buscar("guias", {"codigo": "NB533", "solo_crac": "0"})
+check("pero dos guías distintas con el mismo código no se juntan (G NB533)",
+      r["total"] == 2 and len({x["medidas"]["diam_vastago"] for x in r["resultados"]}) == 2, codigos(r))
 
 # UC 1694 no está en la lista del proveedor: hay que destildar el filtro para
 # verla (el filtro tiene su propia sección más abajo).
@@ -499,11 +521,11 @@ check("y ningún perno es menor al pedido",
 print("\n=== 6. Filtros de texto ===")
 r = tecnicos.buscar("guias", {"aplicacion": "fiat tractor"})
 check("la aplicación busca por palabras sueltas y en cualquier orden", r["total"] > 0, r["total"])
-check("y encuentra la guía del tractor Fiat", "G IY1171 STD" in codigos(r), codigos(r)[:5])
+check("y encuentra la guía del tractor Fiat", "G IY1171" in codigos(r), codigos(r)[:5])
 r = tecnicos.buscar("guias", {"aplicacion": "VÁLVULA"})
 check("ignora acentos y mayúsculas", r["total"] > 0, r["total"])
 r = tecnicos.buscar("guias", {"codigo": "iy1171"})
-check("el código se busca por fragmento", "G IY1171 STD" in codigos(r), codigos(r))
+check("el código se busca por fragmento", "G IY1171" in codigos(r), codigos(r))
 
 print("\n=== 7. Filtros propios de cada familia ===")
 r = tecnicos.buscar("guias", {"tipo": "A"})

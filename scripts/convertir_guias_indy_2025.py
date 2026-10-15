@@ -38,10 +38,10 @@ TRES COSAS QUE RESUELVE, Y POR ESO NO ES UN `pandas.to_json`:
    "G IY3666B  003": categoría G, marca IY pegada al número, y la sobremedida al
    final. La hoja del fabricante trae el número pelado ("G3666B"), así que el
    cruce es "G3666B" → "G IY3666B". Un código base con varias sobremedidas es
-   VARIAS fichas, una por sobremedida —así están las 155 guías de Indy que ya
-   estaban, y la pantalla de guías no tiene columna de sobremedida donde
-   mostrarlas juntas—. Sin renglón en la lista, la ficha sale con el código del
-   fabricante y sin precio.
+   UNA ficha, con el código sin la etiqueta, la lista de sobremedidas y un
+   código del proveedor por cada una (desde el 2026-10-15; antes era una ficha
+   por sobremedida y el dueño veía el mismo código dos veces). Sin renglón en la
+   lista, la ficha sale con el código del fabricante y sin precio.
 
 2. LA MULETILLA DE LA COLUMNA DEL MOTOR. Veinte de las 37 filas empiezan con
    "GUIA VALVULA" o "GUIA DE VALV.", que no dice nada —toda la pestaña son guías
@@ -180,7 +180,11 @@ def indice_proveedor() -> dict[str, list[dict]]:
     return indice
 
 
-def ficha(fila: list[str], codigo_crac: dict | None) -> dict:
+def orden_medida(medida: str) -> float:
+    return -1.0 if medida == "STD" else float(medida)
+
+
+def ficha(fila: list[str], base: str | None, codigos_crac: list[dict]) -> dict:
     """
     Una ficha como la lee `app/tecnicos.py`. El código que se muestra es el del
     proveedor cuando la pieza se puede pedir —es el que el taller escribe en el
@@ -189,7 +193,7 @@ def ficha(fila: list[str], codigo_crac: dict | None) -> dict:
     codigo_fab = celda(fila, COL_CODIGO).upper()
     material = MATERIALES.get(celda(fila, COL_MATERIAL).upper())
     return {
-        "codigo": codigo_crac["codigo"] if codigo_crac else codigo_fab,
+        "codigo": base if codigos_crac else codigo_fab,
         "codigo_fab": codigo_fab,
         "marca": MARCA,
         "aplicacion": aplicacion(celda(fila, COL_MARCA), celda(fila, COL_MOTOR)),
@@ -203,11 +207,11 @@ def ficha(fila: list[str], codigo_crac: dict | None) -> dict:
         "extra": {
             "forma": texto(celda(fila, COL_FORMA)),
             "material": material,
-            "sobremedida": codigo_crac["medida"] if codigo_crac else None,
+            "sobremedidas": [c["medida"] for c in codigos_crac],
             "nro_original": texto(celda(fila, COL_OEM)),
             "cant_juego": cant_juego(celda(fila, COL_CANT)),
         },
-        "codigos_crac": [codigo_crac] if codigo_crac else [],
+        "codigos_crac": codigos_crac,
     }
 
 
@@ -245,11 +249,10 @@ def main() -> int:
             continue
         if not del_proveedor:
             sin_proveedor.append(codigo_fab)
-            nuevas.append(ficha(fila, None))
+            nuevas.append(ficha(fila, None, []))
             continue
-        # Una ficha por sobremedida, como las guías de Indy que ya estaban.
-        for codigo_crac in del_proveedor:
-            nuevas.append(ficha(fila, codigo_crac))
+        # Una sola ficha con todas sus sobremedidas, la STD primero.
+        nuevas.append(ficha(fila, base, sorted(del_proveedor, key=lambda c: orden_medida(c["medida"]))))
 
     sin_medidas = [f["codigo_fab"] for f in nuevas if not any(f["medidas"].values())]
     salida = previas + nuevas

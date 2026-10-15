@@ -174,6 +174,11 @@ export const FAMILIAS = [
       // acuerda nadie.
       { key: 'forma', header: 'Forma', width: 130, tipo: 'forma' },
       { key: 'material', header: 'Material', width: 165 },
+      // Una guía de Indy o Nubo viene en varias sobremedidas del Ø exterior
+      // (STD, 003, 005…): es UNA fila con la lista acá, no una fila por medida
+      // (pedido del dueño, 2026-10-15). Igual que en los pernos.
+      { key: 'sobremedidas', header: 'Sobremedidas', width: 150, wrap: true, tipo: 'etiquetas' },
+      { key: 'medida_crac', header: 'Precio de', width: 90, tipo: 'medida' },
       { key: 'precio', header: 'Precio', width: 120, align: 'right', tipo: 'precio' },
       { key: 'stock', header: 'Stock', width: 90, align: 'center', tipo: 'stock' },
     ],

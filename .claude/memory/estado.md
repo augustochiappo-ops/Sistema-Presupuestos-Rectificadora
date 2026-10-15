@@ -2726,9 +2726,19 @@ abierta la app (la última de la cola), sus datos se adelantaron a todo lo demá
 * **Deploy hecho**: HTTP 200, producción sirve el mismo `index-B5jLqe9l.js` que
   el build local.
 
+## Sesión 2026-10-15 (2) — Guías: un solo ítem por código
+
+Indy y Nubo mostraban el mismo código dos o más veces ("G IY2017B STD" y
+"G IY2017B 003"). Ahora es una fila por código, sin la etiqueta, con columnas
+"Sobremedidas" y "Precio de" como los pernos. 951 → 876 guías; las demás
+familias ya estaban bien. Detalle y criterio en `decisiones.md` (2026-10-15,
+"Guías: una ficha por código"). Tests: `backend_medidas` (sección 4b nueva y
+totales) y `ui_medidas` (876 y el código sin STD).
+
 ## Próximo paso
 
-**Lo último (2026-10-15), EN PRODUCCIÓN:** menú lateral plegable y más
+**Lo último (2026-10-15):** guías de Indy/Nubo en un solo ítem por código
+(sección "Sesión 2026-10-15 (2)"). Antes, el mismo día, EN PRODUCCIÓN: menú lateral plegable y más
 contraste (ver la sección de esa fecha). Queda que el dueño lo mire y diga si el
 gris quedó bien o lo quiere más / menos oscuro (se toca sólo `colors.css`).
 
