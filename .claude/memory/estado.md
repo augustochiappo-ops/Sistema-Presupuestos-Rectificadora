@@ -2741,9 +2741,54 @@ el cambio no toca ni el agrupado ni los precios, sólo el catálogo de guías y
 su pantalla. **Deploy hecho**: HTTP 200, producción sirve `index-DfLVCLyP.js`,
 el mismo del build local.
 
+## Sesión 2026-10-16 — Renglón en blanco, cantidad a la derecha y trabajos guardados
+
+Todo en el paso Servicios del wizard (presupuesto nuevo). Pedido del dueño:
+
+1. **Renglón en blanco al final de cada tabla de la derecha** (Presupuesto y
+   Opcionales): descripción, cantidad, unitario y subtotal, fondo gris y un
+   lápiz. Escribir cualquier cosa lo convierte en un trabajo a mano y aparece
+   otro renglón en blanco abajo; el cursor no se pierde. Unitario y subtotal se
+   recalculan entre sí como en el resto de la tabla. El de Opcionales nace
+   opcional. Enter salta al renglón en blanco de la misma caja.
+2. **Cantidad editable en la tabla de la derecha**, para todas las líneas
+   (`CampoCantidad`). Borrar el número para escribir otro no saca la línea; la
+   ✕ nueva de cada renglón la saca (con "Deshacer").
+3. **Disquete en cada trabajo escrito a mano** → lo guarda (tabla nueva
+   `servicios_guardados`, endpoints `GET/POST /api/servicios/guardados` y
+   `DELETE /api/servicios/guardados/<id>`). **Botón con el disquete al lado del
+   buscador** → despliega los guardados: tocar uno lo agrega con su precio, el
+   tacho lo saca de la lista, y debajo de cada uno van los precios con que se
+   cobró antes (fecha y cliente). El buscador filtra también esa lista.
+4. **Parpadeo al arrastrar**: la zona se apagaba al cruzar la línea entre dos
+   renglones (`dragleave` de los hijos). Arreglado en `useArrastreOpcionales`
+   (vale también para Revisión y el detalle) y el resaltado pasó a `outline`.
+
+Detalle y por qué de cada cosa en `decisiones.md` (2026-10-16). El "Agregar
+ítem manual" de abajo de todo **se dejó**: hace lo mismo y no se pidió sacarlo;
+hay que preguntarle al dueño si lo quiere borrar.
+
+Tests: `backend_precios` sección 9b nueva (guardar, actualizar sin duplicar,
+usos anteriores con precio unitario, 400/401/404, borrar sin tocar
+presupuestos). `ui_grupos`: los checks de la tabla de la derecha buscan los
+recuadros por `title` (ahora son tres por fila) y hay un bloque nuevo con el
+renglón en blanco, la cantidad a la derecha, el arrastre sin parpadeo, el
+disquete y el desplegable. `ui_precios`: el recuadro del precio se busca en la
+primera tabla de la derecha (la de opcionales ahora está siempre).
+
+### Verificación
+
+VERIFICACION_PENDIENTE
+
 ## Próximo paso
 
-**Lo último (2026-10-15), EN PRODUCCIÓN:** guías de Indy/Nubo en un solo ítem por código
+**Lo último (2026-10-16), EN PRODUCCIÓN:** el renglón en blanco del paso
+Servicios, la cantidad editable a la derecha, los trabajos guardados con el
+disquete y el arreglo del parpadeo al arrastrar (sección "Sesión 2026-10-16").
+Queda preguntarle al dueño si saca la tarjeta "Agregar ítem manual" de abajo,
+que ahora repite lo del renglón en blanco.
+
+**Antes (2026-10-15), EN PRODUCCIÓN:** guías de Indy/Nubo en un solo ítem por código
 (sección "Sesión 2026-10-15 (2)"). Antes, el mismo día, EN PRODUCCIÓN: menú lateral plegable y más
 contraste (ver la sección de esa fecha). Queda que el dueño lo mire y diga si el
 gris quedó bien o lo quiere más / menos oscuro (se toca sólo `colors.css`).

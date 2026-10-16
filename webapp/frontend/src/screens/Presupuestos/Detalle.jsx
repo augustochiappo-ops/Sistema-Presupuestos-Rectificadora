@@ -1177,7 +1177,11 @@ export default function DetallePresupuesto() {
         <div
           {...propsZona(false)}
           style={{
-            border: zonaActiva === false ? '2px dashed var(--text-strong)' : '1px solid var(--border-default)',
+            // El borde no cambia de grosor al arrastrar: el resaltado es un
+            // outline, que no ocupa lugar y no corre los renglones.
+            border: '1px solid var(--border-default)',
+            outline: zonaActiva === false ? '2px dashed var(--text-strong)' : 'none',
+            outlineOffset: 3,
             borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16,
             display: 'flex', flexDirection: 'column', gap: 10,
           }}

@@ -42,6 +42,23 @@ export function useArrastreOpcionales(onMover) {
     }
   }, [desbloquearFila])
 
+  /*
+   * Cuántas veces "entró" el arrastre en cada zona sin haber salido todavía.
+   *
+   * Es el arreglo del parpadeo que vio el dueño el 2026-10-16: al pasar una
+   * línea arrastrada por encima de las otras, la zona se apagaba y se prendía
+   * en cada división entre renglones. El navegador manda `dragleave` a la zona
+   * cada vez que el mouse pasa a un hijo (de "Rectificar" a "Bruñir" son una
+   * celda que se deja y otra que se entra), y la zona lo tomaba como que el
+   * arrastre se había ido. Contando entradas y salidas, la zona se apaga recién
+   * cuando la última salida es la de ella misma.
+   */
+  const dentro = React.useRef({ true: 0, false: 0 })
+  const reiniciarZonas = React.useCallback(() => {
+    dentro.current = { true: 0, false: 0 }
+    setZonaActiva(null)
+  }, [])
+
   const propsFila = React.useCallback((clave) => ({
     draggable: true,
     onDragStart: (e) => {
@@ -49,22 +66,30 @@ export function useArrastreOpcionales(onMover) {
       e.dataTransfer.setData('text/plain', clave)
       e.dataTransfer.effectAllowed = 'move'
     },
-    onDragEnd: () => { arrastrando.current = null; setZonaActiva(null) },
+    onDragEnd: () => { arrastrando.current = null; reiniciarZonas() },
     style: { cursor: 'grab' },
-  }), [])
+  }), [reiniciarZonas])
 
   /** zona: true = caja de opcionales, false = caja del presupuesto. */
   const propsZona = React.useCallback((opcional) => ({
+    onDragEnter: (e) => {
+      e.preventDefault()
+      dentro.current[opcional] += 1
+      setZonaActiva(opcional)
+    },
     onDragOver: (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setZonaActiva(opcional) },
-    onDragLeave: () => setZonaActiva((z) => (z === opcional ? null : z)),
+    onDragLeave: () => {
+      dentro.current[opcional] = Math.max(0, dentro.current[opcional] - 1)
+      if (dentro.current[opcional] === 0) setZonaActiva((z) => (z === opcional ? null : z))
+    },
     onDrop: (e) => {
       e.preventDefault()
-      setZonaActiva(null)
+      reiniciarZonas()
       const clave = e.dataTransfer.getData('text/plain') || arrastrando.current
       arrastrando.current = null
       if (clave) onMover(clave, opcional)
     },
-  }), [onMover])
+  }), [onMover, reiniciarZonas])
 
   /*
    * Un recuadro editable adentro de una fila arrastrable. Sin esto, arrastrar

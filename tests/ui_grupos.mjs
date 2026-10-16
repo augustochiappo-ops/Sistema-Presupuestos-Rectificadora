@@ -102,7 +102,8 @@ async function montosDeLaBarra() {
 py(`for t in ("presupuesto_items", "presupuesto_item_opciones", "presupuesto_pdfs",
              "presupuestos", "clientes", "motor_repuesto_opciones", "motor_repuesto_grupos",
              "motor_repuestos_papelera"):
-    c.execute("DELETE FROM " + t)`)
+    c.execute("DELETE FROM " + t)
+c.execute("DELETE FROM servicios_guardados WHERE descripcion LIKE 'Trabajo UI%'")`)
 
 console.log('\n=== Login ===')
 await page.goto(BASE, { waitUntil: 'networkidle' })
@@ -146,7 +147,7 @@ check('el servicio elegido aparece en la previsualización',
    de la izquierda quede marcado como editado; después el ↺ lo devuelve a la
    lista, que es como sigue el resto de la suite (el bloque de revalidar mide
    la mano de obra contra el precio de la Cámara). */
-const precioEditable = page.locator('.servicios-picker-grid table tbody tr input').first()
+const precioEditable = page.locator('.servicios-picker-grid table tbody tr input[title^="Precio unitario"]').first()
 check('el precio unitario de la previsualización es editable',
   (await precioEditable.count()) === 1)
 await precioEditable.fill('1000')
@@ -169,14 +170,18 @@ check('y se va la marca de editado',
    la misma cuenta vista de los dos lados — se escribe una y la otra se
    recalcula sola. */
 const filaPreview = page.locator('.servicios-picker-grid table tbody tr').first()
-check('la fila tiene dos casillas editables: unitario y subtotal',
-  (await filaPreview.locator('input').count()) === 2)
-await filaPreview.locator('input').nth(1).fill('8000')
-await filaPreview.locator('input').nth(1).blur()
+// Desde el 2026-10-16 la cantidad también se edita en esta tabla: tres casillas.
+const unitarioPreview = filaPreview.locator('input[title^="Precio unitario"]')
+const subtotalPreview = filaPreview.locator('input[title^="Subtotal"]')
+check('la fila tiene tres casillas editables: cantidad, unitario y subtotal',
+  (await filaPreview.locator('input').count()) === 3
+  && (await filaPreview.locator('input[title^="Cantidad"]').count()) === 1)
+await subtotalPreview.fill('8000')
+await subtotalPreview.blur()
 await esperar(900)
 check('escribir el subtotal recalcula el precio unitario (8.000 ÷ 4)',
-  (await filaPreview.locator('input').nth(0).inputValue()).includes('2.000'),
-  await filaPreview.locator('input').nth(0).inputValue())
+  (await unitarioPreview.inputValue()).includes('2.000'),
+  await unitarioPreview.inputValue())
 const montosConSubtotal = await montosDeLaBarra()
 check('y el total toma ese subtotal', montosConSubtotal[0] === '$ 8.000',
   JSON.stringify(montosConSubtotal))
@@ -185,7 +190,7 @@ check('y el total toma ese subtotal', montosConSubtotal[0] === '$ 8.000',
    2026-08-19: el campo se reescribía en cada tecla, el cursor saltaba al final
    y aparecían centavos de la nada). Se teclea de a un dígito y el campo tiene
    que mostrar exactamente lo tecleado; recién al salir se ve formateado. */
-const campoSubtotal = filaPreview.locator('input').nth(1)
+const campoSubtotal = subtotalPreview
 await campoSubtotal.click()
 await campoSubtotal.press('Control+a')
 await campoSubtotal.press('Delete')
@@ -203,8 +208,8 @@ check('y al salir del campo queda formateado, sin centavos',
   (await campoSubtotal.inputValue()) === '$ 5.040',
   await campoSubtotal.inputValue())
 check('el unitario se recalcula entero (5.040 ÷ 4)',
-  (await filaPreview.locator('input').nth(0).inputValue()) === '$ 1.260',
-  await filaPreview.locator('input').nth(0).inputValue())
+  (await unitarioPreview.inputValue()) === '$ 1.260',
+  await unitarioPreview.inputValue())
 check('ningún monto de la barra lleva centavos',
   (await montosDeLaBarra()).every((m) => !m.includes(',')),
   JSON.stringify(await montosDeLaBarra()))
@@ -240,7 +245,7 @@ check('y la caja de opcionales vuelve a estar vacía',
    seleccionar el número arrastraría el renglón entero). Se suelta el botón
    afuera del recuadro —lo más común— y la fila tiene que volver a ser
    arrastrable: si no, no se la puede mandar más a opcionales con el mouse. */
-const celdaPrecio = filaPreview.locator('input').first()
+const celdaPrecio = unitarioPreview
 const caja = await celdaPrecio.boundingBox()
 await page.mouse.move(caja.x + caja.width / 2, caja.y + caja.height / 2)
 await page.mouse.down()
@@ -301,6 +306,145 @@ check('una palabra que no está deja la lista vacía',
   (await page.locator('text=/No se encontraron servicios/').count()) === 1)
 await buscadorMO.fill('')
 await esperar(600)
+
+/* El renglón en blanco de cada caja, la cantidad editable a la derecha y los
+   trabajos guardados con el disquete (pedido del dueño, 2026-10-16). Se carga
+   un trabajo a mano, se lo prueba y se lo saca: lo que sigue de la suite mide
+   la mano de obra contra la lista y no tiene que encontrar nada de esto. */
+const totalNumero = async () => Number((await montosDeLaBarra())[0].replace(/\D/g, ''))
+const tablaPresupuesto = page.locator('.servicios-picker-grid table').first()
+const renglonNuevo = page.locator('input[data-renglon-nuevo="cotiza"]')
+check('la tabla del presupuesto termina en un renglón en blanco', (await renglonNuevo.count()) === 1)
+check('y la de opcionales también, aunque esté vacía',
+  (await page.locator('input[data-renglon-nuevo="opcional"]').count()) === 1)
+const totalSinManual = await totalNumero()
+const filasSinManual = await tablaPresupuesto.locator('tbody tr').count()
+await renglonNuevo.click()
+await page.keyboard.type('Trabajo UI soldar', { delay: 25 })
+check('escribir en el renglón en blanco no pierde el cursor',
+  (await page.evaluate(() => document.activeElement?.value)) === 'Trabajo UI soldar',
+  await page.evaluate(() => document.activeElement?.value))
+check('y abajo aparece otro renglón en blanco',
+  (await tablaPresupuesto.locator('tbody tr').count()) === filasSinManual + 1
+  && (await renglonNuevo.count()) === 1)
+check('sin precio todavía, avisa qué falta',
+  (await page.locator('text=/Falta el precio de «Trabajo UI soldar»/').count()) === 1)
+check('y no deja seguir',
+  await page.locator('button', { hasText: /Siguiente.*Repuestos/i }).first().isDisabled())
+await page.keyboard.press('Tab')
+await page.keyboard.type('2')
+await page.keyboard.press('Tab')
+await page.keyboard.type('15000')
+await esperar(500)
+const filaManual = tablaPresupuesto.locator('tbody tr').nth(filasSinManual - 1)
+check('cantidad × unitario da el subtotal (2 × 15.000)',
+  (await filaManual.locator('input[title^="Subtotal"]').inputValue()) === '$ 30.000',
+  await filaManual.locator('input[title^="Subtotal"]').inputValue())
+await filaManual.locator('input[title^="Subtotal"]').fill('50000')
+await filaManual.locator('input[title^="Subtotal"]').blur()
+await esperar(600)
+check('y escribir el subtotal recalcula el unitario (50.000 ÷ 2)',
+  (await filaManual.locator('input[title^="Precio unitario"]').inputValue()) === '$ 25.000',
+  await filaManual.locator('input[title^="Precio unitario"]').inputValue())
+check('el total suma el trabajo escrito a mano',
+  (await totalNumero()) === totalSinManual + 50000, `${totalSinManual} → ${await totalNumero()}`)
+
+// La cantidad de un servicio de la lista, cambiada desde la derecha. Borrar el
+// número para escribir otro no puede sacar el renglón a mitad de camino.
+const cantidadDerecha = tablaPresupuesto.locator('tbody tr').first().locator('input[title^="Cantidad"]')
+await cantidadDerecha.click()
+await cantidadDerecha.press('Control+a')
+await cantidadDerecha.press('Backspace')
+await esperar(300)
+check('borrar la cantidad a la derecha no saca el renglón',
+  (await tablaPresupuesto.locator('tbody tr').count()) === filasSinManual + 1)
+await page.keyboard.type('6')
+await cantidadDerecha.blur()
+await esperar(600)
+check('la cantidad escrita a la derecha es la de la lista de la izquierda',
+  (await page.locator('.servicios-picker-grid input[type="number"]').first().inputValue()) === '6',
+  await page.locator('.servicios-picker-grid input[type="number"]').first().inputValue())
+await cantidadDerecha.fill('4')
+await cantidadDerecha.blur()
+await esperar(600)
+
+/* Arrastrar una línea por encima de las otras no hace parpadear la zona (bug
+   del 2026-10-16: al cruzar la división entre dos renglones la zona se apagaba
+   y se prendía). Se arrastra la primera fila hacia abajo, cruzando las demás,
+   y en cada paso se mira si la zona sigue resaltada. */
+const resaltadoZona = () => page.evaluate(() => {
+  let el = document.querySelector('.servicios-picker-grid table')
+  while (el && !el.style?.outlineOffset) el = el.parentElement
+  return Boolean(el && el.style.outline.includes('dashed'))
+})
+const cajaFila0 = await tablaPresupuesto.locator('tbody tr').nth(0).locator('td').first().boundingBox()
+const cajaFila2 = await tablaPresupuesto.locator('tbody tr').nth(2).locator('td').first().boundingBox()
+await page.mouse.move(cajaFila0.x + 30, cajaFila0.y + cajaFila0.height / 2)
+await page.mouse.down()
+const pasos = []
+for (let i = 0; i <= 24; i += 1) {
+  await page.mouse.move(cajaFila0.x + 30,
+    cajaFila0.y + cajaFila0.height / 2 + ((cajaFila2.y - cajaFila0.y) * i) / 24, { steps: 2 })
+  pasos.push(await resaltadoZona())
+}
+await page.mouse.up()
+await esperar(500)
+const desdePrendida = pasos.slice(pasos.indexOf(true))
+check('arrastrar por encima de los renglones no hace parpadear la zona',
+  pasos.includes(true) && desdePrendida.every(Boolean), pasos.map((p) => (p ? '#' : '.')).join(''))
+
+// El disquete del renglón: lo guarda para los próximos presupuestos.
+await filaManual.locator('button[title^="Guardar «Trabajo UI soldar»"]').click()
+await esperar(1200)
+check('el disquete deja el tilde de guardado',
+  (await filaManual.locator('span[title^="Guardado: está en el disquete"]').count()) === 1)
+await page.locator('button[title^="Trabajos guardados"]').click()
+await esperar(500)
+const guardadoEnLista = page.locator('div[title="Agregar este trabajo al presupuesto"]', { hasText: 'Trabajo UI soldar' })
+check('el botón del buscador lo muestra en los trabajos guardados', (await guardadoEnLista.count()) === 1)
+check('con su precio', (await guardadoEnLista.getByText('$ 25.000').count()) === 1)
+check('y marcado como que ya está en el presupuesto',
+  (await guardadoEnLista.getByText('en el presupuesto').count()) === 1)
+await page.screenshot({ path: `${SHOT}/00c-servicios-guardados.png`, fullPage: false })
+await guardadoEnLista.click()
+await esperar(700)
+check('tocarlo lo agrega al presupuesto con su precio',
+  (await totalNumero()) === totalSinManual + 50000 + 25000, String(await totalNumero()))
+await tablaPresupuesto.locator('tbody tr').nth(filasSinManual).locator('button[title="Sacar del presupuesto"]').click()
+await esperar(600)
+await guardadoEnLista.locator('button[title^="Sacar de los trabajos guardados"]').click()
+await esperar(600)
+check('el tacho lo saca de los guardados', (await guardadoEnLista.count()) === 0)
+await page.locator('button[title^="Trabajos guardados"]').click()
+await esperar(300)
+
+// El renglón en blanco de Opcionales nace opcional: no suma al total.
+await page.locator('input[data-renglon-nuevo="opcional"]').click()
+await page.keyboard.type('Trabajo UI bomba', { delay: 20 })
+await page.keyboard.press('Tab')
+await page.keyboard.press('Tab')
+await page.keyboard.type('80000')
+await esperar(600)
+check('un trabajo escrito en Opcionales va a la caja de opcionales',
+  (await page.locator('text=/Si se hacen todos/').count()) === 1)
+check('y no suma al total', (await totalNumero()) === totalSinManual + 50000, String(await totalNumero()))
+await page.locator('.servicios-picker-grid table').nth(1).locator('button[title="Sacar del presupuesto"]').first().click()
+await esperar(600)
+
+// Un renglón escrito y borrado entero se va solo al salir de él.
+await renglonNuevo.click()
+await page.keyboard.type('x')
+const filasConX = await tablaPresupuesto.locator('tbody tr').count()
+await page.keyboard.press('Backspace')
+await page.mouse.click(5, 5)
+await esperar(500)
+check('un renglón borrado entero desaparece al salir de él',
+  (await tablaPresupuesto.locator('tbody tr').count()) === filasConX - 1)
+
+await filaManual.locator('button[title="Sacar del presupuesto"]').click()
+await esperar(700)
+check('la ✕ saca el trabajo escrito a mano y el total vuelve',
+  (await totalNumero()) === totalSinManual, String(await totalNumero()))
 
 const btnRepuestos = page.locator('button', { hasText: /Siguiente.*Repuestos/i }).first()
 await btnRepuestos.click()

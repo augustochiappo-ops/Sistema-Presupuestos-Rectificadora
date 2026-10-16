@@ -478,8 +478,10 @@ export function PasoRevision({
         {...propsZona(false)}
         style={{
           display: 'flex', flexDirection: 'column', gap: 14,
-          padding: zonaActiva === false ? 8 : 0,
-          border: zonaActiva === false ? '2px dashed var(--text-strong)' : 'none',
+          // Outline: no ocupa lugar, así que prender la zona no corre los
+          // renglones mientras se arrastra (ver useArrastreOpcionales).
+          outline: zonaActiva === false ? '2px dashed var(--text-strong)' : 'none',
+          outlineOffset: 8,
           borderRadius: 'var(--radius-xl)',
         }}
       >

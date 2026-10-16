@@ -100,6 +100,10 @@ export function lineasServicios(servicios, seleccion, ajustePct) {
       servicioId: null,
       itemNum: null,
       descripcion: c.descripcion_custom,
+      // Ver esManualVacio: un renglón escrito a mano y borrado entero no es
+      // un error, es un renglón que todavía no se usó.
+      vacia: esManualVacio(c),
+      descripcionVacia: !(c.descripcion_custom || '').trim(),
       cantidad: c.cantidad,
       precioUnitario: c.precio_aplicado,
       subtotal: c.precio_aplicado === null || c.precio_aplicado === undefined
@@ -125,11 +129,55 @@ export function totalLineasOpcionales(lineas) {
   return lineas.reduce((acc, l) => acc + (l.opcional ? l.subtotal || 0 : 0), 0)
 }
 
-/** Hay algún unitario que no se entiende: no se puede avanzar ni confirmar. */
+/** Hay algún unitario que no se entiende: no se puede avanzar ni confirmar.
+ *  Un renglón manual vacío no cuenta: no se manda (itemsServiciosParaPayload)
+ *  y el paso Servicios lo saca solo al salir de él. */
 export function hayPreciosInvalidos(lineas) {
-  return lineas.some((l) => l.precioUnitario === null
+  return lineas.some((l) => !l.vacia && (l.precioUnitario === null
     || l.precioUnitario === undefined
-    || Number.isNaN(l.precioUnitario))
+    || Number.isNaN(l.precioUnitario)))
+}
+
+/*
+ * Un ítem manual que no tiene nada escrito: ni descripción ni precio.
+ *
+ * Existe desde el renglón en blanco de la tabla del paso Servicios (2026-10-16):
+ * escribir la primera letra ahí ya crea el ítem —para que aparezca abajo otro
+ * renglón en blanco y el cursor no se pierda—, así que borrar lo escrito deja un
+ * ítem sin nada. Eso no es un error que haya que corregir, es un renglón que no
+ * se usó: no frena "Siguiente", no viaja al backend y la pantalla lo saca.
+ */
+export function esManualVacio(c) {
+  return !(c.descripcion_custom || '').trim()
+    && (c.precio_aplicado === null || c.precio_aplicado === undefined)
+    && !String(c.precioTexto ?? '').trim()
+}
+
+/** Un ítem manual con precio y sin descripción: el backend lo descartaría en
+ *  silencio (no hay nada que imprimir en el PDF), así que no se deja avanzar. */
+export function hayDescripcionesVacias(lineas) {
+  return lineas.some((l) => l.esManual && !l.vacia && l.descripcionVacia)
+}
+
+/** Saca los ítems manuales vacíos (ver esManualVacio) y su marca de opcional. */
+export function sinManualesVacios(seleccion) {
+  const vacios = new Set((seleccion.customItems || []).filter(esManualVacio).map((c) => String(c.id)))
+  if (vacios.size === 0) return seleccion
+  return {
+    ...seleccion,
+    customItems: seleccion.customItems.filter((c) => !vacios.has(String(c.id))),
+    opcionales: (seleccion.opcionales || []).filter((c) => !vacios.has(String(c))),
+  }
+}
+
+/** Descripción de un ítem manual, escrita en la tabla de la derecha. */
+export function conDescripcionManual(seleccion, fila, texto) {
+  return {
+    ...seleccion,
+    customItems: (seleccion.customItems || []).map((c) => (
+      c.id === fila.id ? { ...c, descripcion_custom: texto } : c
+    )),
+  }
 }
 
 /*
@@ -270,7 +318,7 @@ export function itemsServiciosParaPayload(seleccion) {
     })
 
   const manuales = customItems
-    .filter((c) => (c.cantidad || 0) > 0)
+    .filter((c) => (c.cantidad || 0) > 0 && !esManualVacio(c))
     .map((c) => ({
       servicio_id: null,
       descripcion_custom: c.descripcion_custom,

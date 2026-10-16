@@ -241,6 +241,11 @@ suites se corren enteras igual, y el resultado se informa con el número exacto.
   la marca de *urgente* y la *fecha de entrega prometida*.
 - **Búsqueda por medidas**: sección propia del menú lateral que encuentra una pieza por sus medidas (Ø, largo, alto…) con tolerancia, cuando no se sabe el código. Los catálogos técnicos (camisas, válvulas, guías, asientos, subconjuntos, conjuntos, pistones, **pernos de pistón**, cojinetes de biela, cojinetes de bancada, cojinetes axiales y bujes de biela — **doce familias**) viven en `CRAC/tecnicos/*.json`; el precio y el stock salen del catálogo del proveedor ya importado. Cómo se leyó cada catálogo del fabricante está documentado al lado de los datos: `CRAC/tecnicos/CARGA-CONJUNTOS.md`, `CRAC/tecnicos/CARGA-COJINETES.md` y `CRAC/tecnicos/CARGA-PERNOS.md`.
 - **Buscador de repuestos**: ícono de lupa en cada ítem (ej. "válvulas") que abre una interfaz de búsqueda dentro del catálogo del proveedor. El código elegido queda guardado asociado al motor para próximos presupuestos.
+- **Trabajos a mano y guardados** (paso Servicios): cada tabla de la derecha
+  termina en un renglón en blanco para escribir un trabajo que no está en la
+  lista; su disquete lo guarda (`servicios_guardados`) y el disquete de al lado
+  del buscador los despliega, con los precios con que se cobraron antes. Ver
+  `decisiones.md` (2026-10-16).
 - **Edición post-creación**: los presupuestos se pueden modificar después de generados.
 - **Historial de clientes**: cada presupuesto queda vinculado a un cliente (nombre + motor + fecha).
 - **Generación de PDF**: presupuesto formal con nombre del cliente, motor, fecha y leyenda de validez de 1 semana.

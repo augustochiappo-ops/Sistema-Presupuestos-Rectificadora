@@ -2266,3 +2266,59 @@ ya no existe en ninguna guía.
   sobremedidas en vez de una por medida. El JSON se rehízo aplicando esa misma
   función a las fichas cargadas (el clon del repo fuente no está en el entorno):
   951 → 876 guías, los 790 códigos del proveedor siguen todos.
+
+## El renglón en blanco del paso Servicios, y los trabajos guardados (2026-10-16)
+
+El dueño pidió, en el paso Servicios del wizard: un renglón en blanco al final
+de la tabla del presupuesto y de la de opcionales (descripción, cantidad,
+unitario y subtotal, como el "Agregar ítem manual" de abajo, pero distinto de
+los renglones de arriba), que al usarlo aparezca otro en blanco abajo; la
+cantidad editable desde la tabla de la derecha; un disquete para guardar un
+trabajo escrito a mano y un botón con el disquete al lado del buscador que
+despliegue los guardados, con el tacho y los precios con que se cobraron antes;
+y que no parpadee la zona al arrastrar una línea por encima de las otras.
+
+* **La primera letra ya crea el ítem, con el id del renglón.** Cada caja tiene
+  su renglón en blanco con un id ya elegido (`idsNuevos`); escribir algo en
+  cualquiera de sus recuadros crea el ítem manual con ESE id y arma otro renglón
+  en blanco. Como `DataTable` usa el id de la fila como key, React reusa la
+  misma fila y los mismos `<input>`, y el cursor no se pierde. La condición es
+  que el renglón en blanco y el ítem manual dibujen exactamente los mismos
+  elementos en el mismo orden (por eso el lápiz va dentro de un lugar fijo que
+  en los demás queda vacío). Se descartó el borrador local que se agrega al
+  completar descripción y precio: el total no lo vería hasta completarlo, y
+  "Siguiente" con un borrador a medias lo perdería sin avisar.
+* **Un ítem manual sin descripción ni precio no es un error, es un renglón sin
+  usar** (`esManualVacio`): no frena "Siguiente", no viaja al backend, se va
+  solo cuando el cursor sale del renglón (no antes: sacarlo mientras se escribe
+  se llevaría el cursor) y "Siguiente" barre los que queden. Con precio y sin
+  descripción sí frena: el backend lo descartaría en silencio. Con descripción
+  y sin precio, el aviso dice "Falta el precio de «…»" y no "un precio que no se
+  entiende".
+* **La cantidad de la derecha no saca la línea al borrarla** (`CampoCantidad`,
+  mismo truco que `CampoMonto`): sólo avisa números > 0; vacío o 0 al salir
+  vuelve al valor anterior. Sacar una línea es la ✕ nueva del renglón (con
+  "Deshacer"). En la lista de la izquierda el 0 sigue sacando, como siempre.
+* **Trabajos guardados: tabla `servicios_guardados`, explícita y de a uno.**
+  Nada se guarda solo, por el mismo motivo que el precio propio de un servicio
+  de la lista: un trabajo de una vez no tiene que aparecer para siempre. La
+  clave es la descripción normalizada (`texto.normalizar`): guardar dos veces
+  el mismo trabajo con otras mayúsculas o sin acento actualiza el precio, no
+  duplica. Los "cobrado antes" se buscan en TODOS los ítems manuales de mano de
+  obra con esa clave, también los de antes de guardarlo; precio unitario, del
+  más nuevo al más viejo, hasta 8. Borrar un guardado no toca los presupuestos.
+  La cuenta del taller no lo ve (lista blanca de `create_app`). La "copia de
+  seguridad" ya lo incluye porque copia la base entera.
+* **El parpadeo al arrastrar era el `dragleave`.** El navegador lo manda a la
+  zona cada vez que el mouse pasa de una celda a otra (de "Rectificar…" a
+  "Bruñir…"), y la zona se apagaba hasta el `dragover` siguiente. Ahora el hook
+  cuenta entradas y salidas y se apaga cuando sale de verdad. Además el
+  resaltado pasó a `outline` (no ocupa lugar): antes era padding + borde, que al
+  prenderse corría los renglones debajo del mouse. Arreglado en el hook, así que
+  vale para las tres pantallas que lo usan (Servicios, Revisión y el detalle).
+  Se reprodujo antes de arreglarlo: con el hook viejo la zona se apagaba un paso
+  al cruzar la línea; el check está en `ui_grupos`.
+* **El "Agregar ítem manual" de abajo se dejó** (no se pidió sacarlo). Hace lo
+  mismo que el renglón en blanco; si el dueño dice que sobra, se borra la
+  tarjeta entera al final de `PasoServicios.jsx` (y el check de `ui_grupos` que
+  carga un repuesto manual en el paso Repuestos no depende de ella).

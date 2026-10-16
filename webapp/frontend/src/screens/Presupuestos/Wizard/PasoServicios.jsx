@@ -3,6 +3,7 @@ import { api } from '../../../api/client'
 import { SearchInput } from '../../../components/SearchInput'
 import { TextField } from '../../../components/TextField'
 import { CampoMonto } from '../../../components/CampoMonto'
+import { CampoCantidad } from '../../../components/CampoCantidad'
 import { Button } from '../../../components/Button'
 import { Icon } from '../../../components/Icon'
 import { ContadorServicio } from '../../../components/ContadorServicio'
@@ -13,17 +14,29 @@ import {
   lineasServicios, totalLineas, totalLineasOpcionales, hayPreciosInvalidos,
   precioEfectivo, estaPisado, esOpcional,
   conCantidadServicio, conPrecioServicio, conSubtotalServicio, sinPrecioPisado,
+  conDescripcionManual, esManualVacio, hayDescripcionesVacias, sinManualesVacios,
 } from '../../../utils/servicios'
-import { textoSubtotal } from '../../../utils/precios'
+import { textoSubtotal, unitarioDesdeSubtotal } from '../../../utils/precios'
 import { CajaOpcionales, BotonOpcional } from '../../../components/CajaOpcionales'
 import { useArrastreOpcionales } from '../../../hooks/useArrastreOpcionales'
-import { coincideBusqueda } from '../../../utils/texto'
+import { coincideBusqueda, normalizarTexto } from '../../../utils/texto'
 import { useUndo } from '../../../context/UndoContext'
+import { ServiciosGuardados } from './ServiciosGuardados'
 
 const tituloSeccion = {
   fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
   letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-faint)',
 }
+
+const botonIcono = {
+  border: 'none', background: 'transparent', cursor: 'pointer',
+  color: 'var(--text-faint)', display: 'flex', padding: 2,
+}
+
+// Id de un ítem manual. Lleva algo al azar además de la hora porque el renglón
+// en blanco de cada caja necesita el suyo ya armado ANTES de que se escriba
+// nada (ver idsNuevos), y los dos se arman en el mismo milisegundo.
+const nuevoIdManual = () => `custom-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
 
 const chipEditado = {
   fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
@@ -62,7 +75,25 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   // para mostrar el acuse y no ofrecer guardar dos veces lo mismo.
   const [preciosGuardados, setPreciosGuardados] = React.useState({})
   const [guardandoPrecio, setGuardandoPrecio] = React.useState(null)
-  const { avisarBorrado } = useUndo()
+  const { avisarBorrado, borrarConDeshacer, estaPendiente } = useUndo()
+
+  // Trabajos escritos a mano que se guardaron con el disquete (ver
+  // ServiciosGuardados). null = todavía no llegaron.
+  const [guardados, setGuardados] = React.useState(null)
+  const [verGuardados, setVerGuardados] = React.useState(false)
+  const [guardandoTrabajo, setGuardandoTrabajo] = React.useState(null)
+
+  /*
+   * El renglón en blanco de abajo de cada tabla (pedido del dueño, 2026-10-16).
+   *
+   * Cada caja tiene uno, con su id ya elegido. Escribir CUALQUIER cosa en él lo
+   * convierte en un ítem manual de verdad con ESE id, y se arma otro renglón en
+   * blanco con un id nuevo. Que el ítem herede el id del renglón es lo que
+   * permite seguir escribiendo sin que se pierda el cursor: la tabla usa el id
+   * como key, así que React reusa la misma fila y los mismos recuadros, y lo
+   * único que cambia es que abajo aparece otra fila en blanco.
+   */
+  const [idsNuevos, setIdsNuevos] = React.useState(() => ({ cotiza: nuevoIdManual(), opcional: nuevoIdManual() }))
 
   const cantidades = value.cantidades
   const customItems = value.customItems
@@ -75,6 +106,68 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
     // ausencia no puede romper el armado de un presupuesto.
     api.get('/precios/ajuste-general').then((d) => setAjusteGeneral(d.pct)).catch(() => {})
   }, [motor.id])
+
+  React.useEffect(() => {
+    // Mismo criterio que el ajuste general: si falla, el desplegable queda
+    // vacío y el presupuesto se arma igual.
+    api.get('/servicios/guardados', { alActualizar: setGuardados })
+      .then(setGuardados)
+      .catch(() => setGuardados([]))
+  }, [])
+
+  const guardadosVisibles = React.useMemo(
+    () => (guardados || []).filter((g) => !estaPendiente(`servicio-guardado-${g.id}`)),
+    [guardados, estaPendiente],
+  )
+
+  /** ¿Este renglón manual ya está guardado, y con este mismo precio? */
+  const trabajoGuardado = (fila) => {
+    const clave = normalizarTexto(fila.descripcion)
+    return guardadosVisibles.some((g) => normalizarTexto(g.descripcion) === clave && g.precio === fila.precioUnitario)
+  }
+
+  /*
+   * El disquete de un renglón escrito a mano: lo deja en la lista de trabajos
+   * guardados para los próximos presupuestos. Si ya había uno con la misma
+   * descripción, el backend le actualiza el precio (no lo duplica).
+   */
+  const guardarTrabajo = async (fila) => {
+    if (!fila.descripcion?.trim() || fila.precioUnitario == null) return
+    setGuardandoTrabajo(fila.id)
+    try {
+      await api.post('/servicios/guardados', { descripcion: fila.descripcion, precio: fila.precioUnitario })
+      setGuardados(await api.get('/servicios/guardados'))
+    } catch {
+      // No frena el presupuesto: el trabajo sigue en este renglón igual, y el
+      // disquete queda a la vista para volver a intentarlo.
+    } finally {
+      setGuardandoTrabajo(null)
+    }
+  }
+
+  /** Tocar un trabajo guardado: entra al presupuesto con su precio. */
+  const agregarGuardado = (g) => onChange((actual) => ({
+    ...actual,
+    customItems: [...(actual.customItems || []), {
+      id: nuevoIdManual(),
+      descripcion_custom: g.descripcion,
+      precio_aplicado: g.precio,
+      precioTexto: g.precio == null ? '' : formatPrecioARS(g.precio),
+      cantidad: 1,
+    }],
+  }))
+
+  // El tacho del desplegable. Es un borrado en el servidor, así que espera los
+  // segundos del cartel "Deshacer" antes de hacerse (mismo patrón que borrar
+  // un cliente).
+  const borrarGuardado = (g) => borrarConDeshacer({
+    mensaje: `Se sacó «${g.descripcion}» de los trabajos guardados.`,
+    clave: `servicio-guardado-${g.id}`,
+    ejecutar: async () => {
+      await api.del(`/servicios/guardados/${g.id}`)
+      setGuardados((prev) => (prev || []).filter((x) => x.id !== g.id))
+    },
+  })
 
   /*
    * Guardar un precio pisado como precio propio del taller.
@@ -203,7 +296,13 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
    * Vaciar el recuadro de un servicio de la Cámara devuelve el precio de lista:
    * es la misma salida que el botón ↺, escribiendo.
    */
-  const cambiarPrecio = (fila, texto) => onChange(conPrecioServicio(value, fila, texto))
+  const cambiarPrecio = (fila, texto) => {
+    if (fila.esNuevo) {
+      if (texto.trim()) crearDesdeRenglonNuevo(fila.opcional, { precio_aplicado: parsePrecioARS(texto), precioTexto: texto })
+      return
+    }
+    onChange(conPrecioServicio(value, fila, texto))
+  }
 
   /*
    * Subtotal editable. Es la misma casilla del unitario vista al revés: se
@@ -211,7 +310,93 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
    * el que se guarda. Con cantidad 0 no se puede repartir, así que el valor
    * queda inválido (recuadro rojo) en vez de inventar un número.
    */
-  const cambiarSubtotal = (fila, texto) => onChange(conSubtotalServicio(value, fila, texto))
+  const cambiarSubtotal = (fila, texto) => {
+    if (fila.esNuevo) {
+      // El renglón en blanco arranca con cantidad 1: el subtotal ES el unitario.
+      if (!texto.trim()) return
+      const { valor } = unitarioDesdeSubtotal(texto, 1)
+      crearDesdeRenglonNuevo(fila.opcional, {
+        precio_aplicado: valor, precioTexto: valor === null ? texto : formatPrecioARS(valor),
+      })
+      return
+    }
+    onChange(conSubtotalServicio(value, fila, texto))
+  }
+
+  /*
+   * Lo primero que se escribe en el renglón en blanco de una caja: crea el ítem
+   * manual con el id que ya tenía el renglón (ver idsNuevos) y arma otro renglón
+   * en blanco abajo. Un renglón de la caja de Opcionales nace opcional.
+   */
+  const crearDesdeRenglonNuevo = (opcional, campos) => {
+    const id = opcional ? idsNuevos.opcional : idsNuevos.cotiza
+    onChange((actual) => {
+      if ((actual.customItems || []).some((c) => c.id === id)) return actual
+      return {
+        ...actual,
+        customItems: [...(actual.customItems || []), {
+          id, descripcion_custom: '', precio_aplicado: null, precioTexto: '', cantidad: 1, ...campos,
+        }],
+        opcionales: opcional ? [...(actual.opcionales || []), id] : (actual.opcionales || []),
+      }
+    })
+    setIdsNuevos((ids) => ({ ...ids, [opcional ? 'opcional' : 'cotiza']: nuevoIdManual() }))
+  }
+
+  const escribirDescripcion = (fila, texto) => {
+    if (fila.esNuevo) {
+      if (texto.trim()) crearDesdeRenglonNuevo(fila.opcional, { descripcion_custom: texto })
+      return
+    }
+    onChange(conDescripcionManual(value, fila, texto))
+  }
+
+  /** La cantidad, escrita en la tabla de la derecha. CampoCantidad avisa sólo
+   *  números mayores que cero: sacar una línea es la ✕, no un recuadro en 0. */
+  const escribirCantidad = (fila, n) => {
+    if (fila.esNuevo) {
+      crearDesdeRenglonNuevo(fila.opcional, { cantidad: n })
+      return
+    }
+    onChange(conCantidadServicio(value, fila, n))
+  }
+
+  /** La ✕ de un renglón de la tabla de la derecha: lo saca del presupuesto. */
+  const quitarLinea = (fila) => {
+    const antes = value
+    onChange(conCantidadServicio(value, fila, 0))
+    if (fila.vacia) return
+    avisarBorrado({
+      mensaje: `Se quitó ${fila.descripcion || 'el renglón'} del presupuesto.`,
+      onDeshacer: () => onChange(antes),
+    })
+  }
+
+  /*
+   * Un renglón escrito a mano que se borró entero (sin descripción ni precio)
+   * desaparece cuando el cursor sale de él. No antes: mientras se está
+   * escribiendo, sacarlo se llevaría el cursor puesto.
+   */
+  const salirDelRenglon = (e, fila) => {
+    if (e.currentTarget.contains(e.relatedTarget)) return
+    onChange((actual) => {
+      const item = (actual.customItems || []).find((c) => c.id === fila.id)
+      if (!item || !esManualVacio(item)) return actual
+      return {
+        ...actual,
+        customItems: actual.customItems.filter((c) => c.id !== fila.id),
+        opcionales: (actual.opcionales || []).filter((c) => String(c) !== String(fila.id)),
+      }
+    })
+  }
+
+  /** Enter en un recuadro escrito a mano: salta al renglón en blanco de su caja,
+   *  para cargar varios trabajos seguidos sin tocar el mouse. */
+  const enterAlRenglonNuevo = (e, opcional) => {
+    if (e.key !== 'Enter') return
+    e.preventDefault()
+    document.querySelector(`input[data-renglon-nuevo="${opcional ? 'opcional' : 'cotiza'}"]`)?.focus()
+  }
 
   /* Pasar una línea a la caja de opcionales, o traerla de vuelta. Lo hacen el
      arrastre y la flechita del renglón: los dos terminan acá. */
@@ -257,14 +442,99 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
   const total = totalLineas(filasPreview)
   const totalOpcionales = totalLineasOpcionales(filasPreview)
   const preciosInvalidos = hayPreciosInvalidos(filasPreview)
+  const descripcionesVacias = hayDescripcionesVacias(filasPreview)
+  // Un trabajo escrito a mano al que todavía no se le puso precio: el aviso de
+  // "un precio que no se entiende" no le cabe, le falta, que es otra cosa.
+  const sinPrecio = filasPreview.find((l) => l.esManual && !l.vacia && !String(l.precioTexto ?? '').trim())
+  const bloqueado = preciosInvalidos || descripcionesVacias
+  let aviso = null
+  if (descripcionesVacias) aviso = 'Hay un trabajo escrito a mano sin descripción. Escribila, o sacá el renglón con la ✕, para poder seguir.'
+  else if (sinPrecio) aviso = `Falta el precio de «${sinPrecio.descripcion.trim()}». Escribilo para poder seguir.`
+  else if (preciosInvalidos) aviso = 'Hay un precio que no se entiende como número. Corregilo para poder seguir.'
+
+  // El renglón en blanco del final de cada tabla (ver idsNuevos). Lleva los
+  // mismos campos que una línea para que las columnas lo dibujen sin casos
+  // especiales salvo donde importa.
+  const renglonNuevo = (opcional) => ({
+    id: opcional ? idsNuevos.opcional : idsNuevos.cotiza,
+    esNuevo: true, esManual: true, opcional,
+    descripcion: '', cantidad: null, precioTexto: '', precioUnitario: undefined, subtotal: undefined,
+  })
+
+  // Pintar un recuadro en rojo: sólo en una línea de verdad. El renglón en
+  // blanco y uno manual borrado entero no tienen nada mal, están vacíos.
+  const rojoSi = (fila, condicion) => (!fila.esNuevo && !fila.vacia && condicion ? 'var(--status-expired-fg)' : undefined)
+
+  // Las filas de la tabla: arrastrables (salvo el renglón en blanco, que no
+  // es todavía nada que mover) y, las escritas a mano, con la limpieza de
+  // salirDelRenglon. El renglón en blanco va con fondo gris: es el lugar
+  // donde se escribe, no una línea más del presupuesto.
+  const propsDeFila = (fila) => {
+    if (fila.esNuevo) return {}
+    return {
+      ...propsFila(String(fila.id)),
+      ...(fila.esManual ? { onBlur: (e) => salirDelRenglon(e, fila) } : {}),
+    }
+  }
 
   // wrap:true en subtotal: aunque el ancho de columna no alcance para un monto
   // grande, el valor pasa a una segunda línea en vez de recortarse con "…".
   // Sin useMemo a propósito: las celdas editables capturan value/onChange, y
   // memorizarlas las dejaría escribiendo sobre una selección vieja.
   const columnasPreview = [
-    { key: 'descripcion', header: 'Descripción', wrap: true },
-    { key: 'cantidad', header: 'Cant.', align: 'right', width: 76 },
+    {
+      key: 'descripcion',
+      header: 'Descripción',
+      wrap: true,
+      // Los trabajos de la lista de la Cámara se leen y nada más: su nombre es
+      // el de la lista. Los escritos a mano (y el renglón en blanco) se
+      // escriben acá mismo.
+      //
+      // OJO al tocar esto: el renglón en blanco y el ítem manual que nace de él
+      // tienen que dibujar EXACTAMENTE los mismos elementos en el mismo orden
+      // (el lápiz va adentro de un lugar fijo que en los demás queda vacío).
+      // Si cambiaran, React no podría reusar el recuadro al convertir el
+      // renglón en ítem, y el cursor se perdería con la primera letra.
+      render: (_, fila) => (fila.esManual ? (
+        <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span
+            style={{ display: 'flex', flex: 'none', width: 14, color: 'var(--text-faint)' }}
+            title={fila.esNuevo ? 'Renglón nuevo: escribí un trabajo que no esté en la lista' : undefined}
+          >
+            {fila.esNuevo && <Icon n="pencil" s={14} />}
+          </span>
+          <TextField
+            value={fila.descripcion ?? ''}
+            onChange={(e) => escribirDescripcion(fila, e.target.value)}
+            onKeyDown={(e) => enterAlRenglonNuevo(e, fila.opcional)}
+            {...propsCampoEditable}
+            data-renglon-nuevo={fila.esNuevo ? (fila.opcional ? 'opcional' : 'cotiza') : undefined}
+            placeholder={fila.esNuevo ? 'Otro trabajo…' : 'Descripción'}
+            title={fila.esNuevo ? 'Escribí un trabajo que no está en la lista: queda como un renglón más' : 'Descripción — se puede editar'}
+            style={{ minWidth: 0, borderColor: rojoSi(fila, fila.descripcionVacia) }}
+          />
+        </span>
+      ) : fila.descripcion),
+    },
+    {
+      key: 'cantidad',
+      header: 'Cant.',
+      align: 'center',
+      width: 78,
+      // wrap:true para que la celda no recorte el recuadro con un "…".
+      wrap: true,
+      render: (_, fila) => (
+        <CampoCantidad
+          cantidad={fila.esNuevo ? '' : fila.cantidad}
+          onCambiar={(n) => escribirCantidad(fila, n)}
+          onKeyDown={fila.esManual ? (e) => enterAlRenglonNuevo(e, fila.opcional) : undefined}
+          {...propsCampoEditable}
+          placeholder={fila.esNuevo ? '1' : undefined}
+          title="Cantidad — se puede editar"
+          style={{ width: 48, textAlign: 'center', padding: '0 4px' }}
+        />
+      ),
+    },
     {
       key: 'precioUnitario',
       header: 'P. unitario',
@@ -279,12 +549,13 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
           <TextField
             value={fila.precioTexto ?? ''}
             onChange={(e) => cambiarPrecio(fila, e.target.value)}
+            onKeyDown={fila.esManual ? (e) => enterAlRenglonNuevo(e, fila.opcional) : undefined}
             {...propsCampoEditable}
+            placeholder={fila.esNuevo ? 'P. unitario' : undefined}
             title="Precio unitario — se puede editar"
             style={{
               width: 122, textAlign: 'right',
-              borderColor: fila.precioUnitario === null || fila.precioUnitario === undefined
-                ? 'var(--status-expired-fg)' : undefined,
+              borderColor: rojoSi(fila, fila.precioUnitario === null || fila.precioUnitario === undefined),
             }}
           />
           {/* Guardar este precio como el del taller, para que salga así en los
@@ -307,7 +578,31 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
                 onClick={() => guardarPrecioPropio(fila)}
                 disabled={guardandoPrecio === fila.servicioId || fila.precioUnitario == null}
                 title={`Guardar ${formatPrecioARS(fila.precioUnitario)} como tu precio para este trabajo (lista ${motor.lista_num}). Se usa en los próximos presupuestos; este no cambia.`}
-                style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex', padding: 2 }}
+                style={botonIcono}
+              >
+                <Icon n="save" s={14} />
+              </button>
+            )
+          )}
+          {/* El disquete de un trabajo escrito a mano: lo guarda para los
+              próximos presupuestos (aparece en el botón del disquete que está
+              al lado del buscador). Recién cuando tiene descripción y precio:
+              antes no hay nada que guardar. */}
+          {fila.esManual && !fila.esNuevo && !fila.descripcionVacia && fila.precioUnitario != null && (
+            trabajoGuardado(fila) ? (
+              <span
+                style={{ display: 'flex', color: 'var(--status-active-fg)', padding: 2 }}
+                title="Guardado: está en el disquete de al lado del buscador, para los próximos presupuestos."
+              >
+                <Icon n="check" s={14} />
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={() => guardarTrabajo(fila)}
+                disabled={guardandoTrabajo === fila.id}
+                title={`Guardar «${fila.descripcion.trim()}» a ${formatPrecioARS(fila.precioUnitario)} para usarlo en otros presupuestos (queda en el disquete de al lado del buscador)`}
+                style={botonIcono}
               >
                 <Icon n="save" s={14} />
               </button>
@@ -320,7 +615,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
               type="button"
               onClick={() => restaurarPrecio(fila)}
               title="Volver al precio de la lista"
-              style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)', display: 'flex', padding: 2 }}
+              style={botonIcono}
             >
               <Icon n="rotate-cw" s={14} />
             </button>
@@ -332,7 +627,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
       key: 'subtotal',
       header: 'Subtotal',
       align: 'right',
-      width: 178,
+      width: 150,
       wrap: true,
       // El subtotal también se edita: escribirlo recalcula el unitario. Manda
       // el último que se tocó (ver utils/precios.js).
@@ -340,12 +635,13 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
         <CampoMonto
           valor={textoSubtotal(fila.precioUnitario, fila.cantidad)}
           onEscribir={(texto) => cambiarSubtotal(fila, texto)}
+          onKeyDown={fila.esManual ? (e) => enterAlRenglonNuevo(e, fila.opcional) : undefined}
           {...propsCampoEditable}
+          placeholder={fila.esNuevo ? 'Subtotal' : undefined}
           title="Subtotal — se puede editar; el precio unitario se recalcula solo"
           style={{
-            width: 132, textAlign: 'right', fontWeight: 600,
-            borderColor: fila.subtotal === null || fila.subtotal === undefined
-              ? 'var(--status-expired-fg)' : undefined,
+            width: 120, textAlign: 'right', fontWeight: 600,
+            borderColor: rojoSi(fila, fila.subtotal === null || fila.subtotal === undefined),
           }}
         />
       ),
@@ -354,13 +650,26 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
       key: 'opcional',
       header: '',
       align: 'center',
-      width: 44,
-      render: (_, fila) => (
-        <BotonOpcional
-          opcional={fila.opcional}
-          onClick={() => moverOpcional(String(fila.id), !fila.opcional)}
-        />
-      ),
+      width: 72,
+      wrap: true,
+      // El renglón en blanco no lleva ni flechita ni ✕: todavía no es nada que
+      // mover ni que sacar.
+      render: (_, fila) => (fila.esNuevo ? null : (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
+          <BotonOpcional
+            opcional={fila.opcional}
+            onClick={() => moverOpcional(String(fila.id), !fila.opcional)}
+          />
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); quitarLinea(fila) }}
+            title="Sacar del presupuesto"
+            style={botonIcono}
+          >
+            <Icon n="x" s={15} />
+          </button>
+        </span>
+      )),
     },
   ]
 
@@ -461,17 +770,22 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
         <Button
           variant="secondary"
           iconRight={<Icon n="chevron-right" s={16} />}
-          disabled={preciosInvalidos}
-          onClick={() => onSiguiente(total, totalOpcionales)}
+          disabled={bloqueado}
+          onClick={() => {
+            // Los renglones escritos a mano y borrados enteros no pasan al
+            // paso siguiente: no son nada (ver esManualVacio).
+            onChange(sinManualesVacios(value))
+            onSiguiente(total, totalOpcionales)
+          }}
           style={{ background: '#fff', border: 'none', color: 'var(--text-strong)' }}
         >
           Siguiente: Repuestos
         </Button>
       </div>
 
-      {preciosInvalidos && (
+      {aviso && (
         <div style={{ textAlign: 'center', fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--status-expired-fg)' }}>
-          Hay un precio que no se entiende como número. Corregilo para poder seguir.
+          {aviso}
         </div>
       )}
 
@@ -479,7 +793,53 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
           Derecha: previsualización de cómo va quedando el presupuesto. */}
       <div className="servicios-picker-grid">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
-          <SearchInput icon={<Icon n="search" s={16} />} placeholder="Buscar por número o descripción…" value={busqueda} onChange={(e) => setBusqueda(e.target.value)} />
+          {/* Al lado del buscador, el disquete: los trabajos escritos a mano
+              que se guardaron en presupuestos anteriores (ver
+              ServiciosGuardados). aria-pressed y no aria-expanded: la suite
+              de UI cuenta los aria-expanded de la página como grupos. */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <SearchInput icon={<Icon n="search" s={16} />} placeholder="Buscar por número o descripción…" value={busqueda} onChange={(e) => setBusqueda(e.target.value)} />
+            <button
+              type="button"
+              onClick={() => setVerGuardados((v) => !v)}
+              aria-pressed={verGuardados}
+              title="Trabajos guardados: los que escribiste a mano y guardaste con el disquete"
+              style={{
+                position: 'relative', flex: 'none', width: 44, height: 44, borderRadius: 'var(--radius-pill)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+                border: `1px solid ${verGuardados ? 'var(--surface-inverse)' : 'var(--border-default)'}`,
+                background: verGuardados ? 'var(--surface-inverse)' : 'var(--surface-card)',
+                color: verGuardados ? '#fff' : 'var(--text-strong)',
+                boxShadow: 'var(--shadow-xs)',
+              }}
+            >
+              <Icon n="save" s={18} />
+              {guardadosVisibles.length > 0 && (
+                <span style={{
+                  position: 'absolute', top: -4, right: -4, minWidth: 18, height: 18, padding: '0 5px',
+                  borderRadius: 'var(--radius-pill)', background: 'var(--surface-inverse)', color: '#fff',
+                  border: '2px solid var(--surface-card)', fontFamily: 'var(--font-body)', fontSize: 10,
+                  fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1,
+                }}
+                >
+                  {guardadosVisibles.length}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {verGuardados && (
+            <ServiciosGuardados
+              guardados={guardados === null ? null : guardadosVisibles}
+              cargando={guardados === null}
+              busqueda={busqueda}
+              enPresupuesto={new Set(
+                (customItems || []).map((c) => normalizarTexto(c.descripcion_custom)).filter(Boolean),
+              )}
+              onAgregar={agregarGuardado}
+              onBorrar={borrarGuardado}
+            />
+          )}
 
           <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', maxHeight: 780, overflow: 'auto', padding: '8px 0' }}>
             {favoritosVisibles.map((s) => <Fila key={s.id} s={s} />)}
@@ -504,24 +864,35 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
             {...propsZona(false)}
             style={{
               display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0,
-              padding: zonaActiva === false ? 6 : 0,
-              border: zonaActiva === false ? '2px dashed var(--text-strong)' : 'none',
+              // Outline y no padding + borde: el outline no ocupa lugar, así
+              // que prender la zona no corre los renglones de abajo del mouse
+              // (correrlos era parte del parpadeo al arrastrar).
+              outline: zonaActiva === false ? '2px dashed var(--text-strong)' : 'none',
+              outlineOffset: 6,
               borderRadius: 'var(--radius-xl)',
             }}
           >
             <div style={tituloSeccion}>Presupuesto</div>
+            {filasCotizan.length === 0 && (
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)', color: 'var(--text-faint)' }}>
+                Todavía no elegiste servicios. Tocá un ítem de la lista para agregarlo acá, o escribí uno
+                en el renglón en blanco.
+              </div>
+            )}
             <DataTable
               columns={columnasPreview}
-              rows={filasCotizan}
-              getRowProps={(fila) => propsFila(String(fila.id))}
-              emptyMessage="Todavía no elegiste servicios. Tocá un ítem de la lista para agregarlo acá."
+              rows={[...filasCotizan, renglonNuevo(false)]}
+              getRowProps={propsDeFila}
+              getRowBackground={(fila) => (fila.esNuevo ? 'var(--surface-sunken)' : undefined)}
             />
             {filasCotizan.length > 0 && (
               <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>
-                El precio unitario y el subtotal se pueden editar acá mismo: el que escribís manda y el otro
-                se recalcula solo. Los precios van en pesos enteros, así que un subtotal que no se reparte
-                justo entre la cantidad sube al peso siguiente. Un precio editado no recibe el ajuste %;
-                el ↺ lo devuelve al de la lista.
+                La cantidad, el precio unitario y el subtotal se pueden editar acá mismo: entre el unitario y
+                el subtotal, el que escribís manda y el otro se recalcula solo. Los precios van en pesos
+                enteros, así que un subtotal que no se reparte justo entre la cantidad sube al peso
+                siguiente. Un precio editado no recibe el ajuste %; el ↺ lo devuelve al de la lista. En el
+                renglón gris de abajo se escribe un trabajo que no está en la lista, y su disquete lo guarda
+                para los próximos presupuestos.
               </div>
             )}
           </div>
@@ -531,11 +902,13 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
             cantidad={filasOpcionales.length}
             activa={zonaActiva === true}
             dropProps={propsZona(true)}
+            siempre
           >
             <DataTable
               columns={columnasPreview}
-              rows={filasOpcionales}
-              getRowProps={(fila) => propsFila(String(fila.id))}
+              rows={[...filasOpcionales, renglonNuevo(true)]}
+              getRowProps={propsDeFila}
+              getRowBackground={(fila) => (fila.esNuevo ? 'var(--surface-sunken)' : undefined)}
             />
           </CajaOpcionales>
         </div>
@@ -543,7 +916,7 @@ export function PasoServicios({ motor, value, onChange, ajustePct, onAjustePctCh
 
       <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-card)', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={tituloSeccion}>Agregar ítem manual</div>
-        {customItems.map((c) => (
+        {customItems.filter((c) => !esManualVacio(c)).map((c) => (
           <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <ContadorServicio cantidad={c.cantidad || 0} onChange={(n) => cambiarCantidadCustom(c.id, n)} />
             <span style={{ flex: 1, fontFamily: 'var(--font-body)', fontSize: 'var(--text-sm)' }}>

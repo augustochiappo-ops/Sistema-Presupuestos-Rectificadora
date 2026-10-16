@@ -73,6 +73,7 @@ def limpiar():
         conn.execute("DELETE FROM precios_mano_obra_historial")
         conn.execute("DELETE FROM servicios WHERE item_num = 99999")
         conn.execute("DELETE FROM app_meta WHERE clave = 'ajuste_mano_obra_pct'")
+        conn.execute("DELETE FROM servicios_guardados WHERE descripcion LIKE 'Suite Precios%'")
 
 
 print("\n=== 0. Preparar la base de prueba ===")
@@ -316,6 +317,57 @@ check("404 del ↺ con servicio inexistente",
 check("GET del ajuste general", c.get("/api/precios/ajuste-general").get_json()["pct"] == 0)
 check("PUT del ajuste general", c.put("/api/precios/ajuste-general", json={"pct": 15}).get_json()["pct"] == 15)
 check("y se lee de vuelta", c.get("/api/precios/ajuste-general").get_json()["pct"] == 15)
+
+
+print("\n=== 9b. Trabajos a mano guardados con el disquete ===")
+# Un ítem manual que se escribió en dos presupuestos con dos precios distintos.
+# Guardarlo tiene que traer esos dos usos, aunque fueran de ANTES de guardarlo:
+# es lo que el dueño quiere ver al abrir el desplegable ("qué precio le puse").
+TRABAJO = "Suite Precios soldar múltiple"
+for cliente_nombre, precio in (("Suite Precios Guardado A", 12000), ("Suite Precios Guardado B", 15000)):
+    r = c.post("/api/presupuestos", json={
+        "cliente_nombre": cliente_nombre, "motor_id": MOTOR_ID, "ajuste_pct": 0,
+        "items": [{"servicio_id": None, "descripcion_custom": TRABAJO,
+                   "precio_aplicado": precio, "cantidad": 2}],
+    })
+    check(f"presupuesto con el trabajo a mano a {precio}", r.status_code == 201, r.get_json())
+
+check("401 sin sesión (guardados)", app.test_client().get("/api/servicios/guardados").status_code == 401)
+check("400 sin descripción", c.post("/api/servicios/guardados", json={"precio": 1}).status_code == 400)
+check("400 con descripción en blanco",
+      c.post("/api/servicios/guardados", json={"descripcion": "   ", "precio": 1}).status_code == 400)
+check("400 con precio negativo",
+      c.post("/api/servicios/guardados", json={"descripcion": TRABAJO, "precio": -1}).status_code == 400)
+check("400 con precio que no es número",
+      c.post("/api/servicios/guardados", json={"descripcion": TRABAJO, "precio": "caro"}).status_code == 400)
+
+r = c.post("/api/servicios/guardados", json={"descripcion": TRABAJO, "precio": 15000})
+check("guardar responde 201", r.status_code == 201, r.get_json())
+guardados = [g for g in c.get("/api/servicios/guardados").get_json() if g["descripcion"].startswith("Suite Precios")]
+check("queda uno solo", len(guardados) == 1, guardados)
+g = guardados[0]
+check("con su precio", g["precio"] == 15000, g)
+check("y los dos usos anteriores, del más nuevo al más viejo",
+      [u["precio"] for u in g["usos"]] == [15000, 12000], g["usos"])
+check("el uso dice de qué cliente fue", g["usos"][0]["cliente"] == "Suite Precios Guardado B", g["usos"][0])
+check("y el precio del uso es el UNITARIO, no el subtotal (cantidad 2)",
+      g["usos"][1]["precio"] == 12000 and g["usos"][1]["cantidad"] == 2, g["usos"][1])
+
+# Mismo trabajo escrito con otras mayúsculas y sin acento: actualiza, no duplica.
+r = c.post("/api/servicios/guardados", json={"descripcion": "suite precios SOLDAR  multiple", "precio": 18000})
+guardados = [g for g in c.get("/api/servicios/guardados").get_json() if g["descripcion"].lower().startswith("suite precios")]
+check("guardarlo de nuevo con otra escritura no lo duplica", len(guardados) == 1, guardados)
+check("le actualiza el precio", guardados[0]["precio"] == 18000, guardados[0])
+check("y los usos se siguen encontrando", len(guardados[0]["usos"]) == 2, guardados[0]["usos"])
+
+check("borrarlo responde 200", c.delete(f"/api/servicios/guardados/{guardados[0]['id']}").status_code == 200)
+check("ya no aparece",
+      not [g for g in c.get("/api/servicios/guardados").get_json() if g["descripcion"].lower().startswith("suite precios")])
+check("borrarlo dos veces da 404", c.delete(f"/api/servicios/guardados/{guardados[0]['id']}").status_code == 404)
+with db.get_connection() as conn:
+    check("los presupuestos donde se usó no se tocaron",
+          conn.execute("SELECT COUNT(*) FROM presupuesto_items WHERE descripcion_custom = ?",
+                       (TRABAJO,)).fetchone()[0] == 2)
 
 
 print("\n=== 10. Limpieza ===")

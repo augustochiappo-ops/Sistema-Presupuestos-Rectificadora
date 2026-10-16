@@ -162,7 +162,9 @@ await page.locator('.servicios-picker-grid button[title="Elegir cantidad"]').fir
 await esperar(400)
 await page.locator('body > div').last().locator('button', { hasText: /^4$/ }).click()
 await esperar(900)
-const campoWizard = page.locator('table').last().locator('input').first()
+// La primera tabla de la derecha es la del presupuesto (la de opcionales, que
+// ahora está siempre por su renglón en blanco, va abajo).
+const campoWizard = page.locator('.servicios-picker-grid table').first().locator('input[title^="Precio unitario"]').first()
 await campoWizard.fill('999000')
 await esperar(700)
 const btnGuardar = page.locator('button[title*="como tu precio"]')

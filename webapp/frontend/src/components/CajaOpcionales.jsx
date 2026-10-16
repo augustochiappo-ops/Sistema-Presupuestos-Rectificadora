@@ -20,7 +20,7 @@ const titulo = {
  * y dibuja el borde punteado. `children` es la tabla con las líneas opcionales.
  */
 export function CajaOpcionales({
-  children, total = 0, cantidad = 0, activa = false, dropProps = {}, nota,
+  children, total = 0, cantidad = 0, activa = false, dropProps = {}, nota, siempre = false,
 }) {
   return (
     <div
@@ -46,16 +46,22 @@ export function CajaOpcionales({
         )}
       </div>
 
-      {cantidad === 0 ? (
+      {cantidad === 0 && (
         <div style={{
-          padding: '22px 12px', textAlign: 'center', fontFamily: 'var(--font-body)',
+          padding: siempre ? '8px 12px' : '22px 12px', textAlign: 'center', fontFamily: 'var(--font-body)',
           fontSize: 'var(--text-sm)', color: 'var(--text-faint)',
         }}>
           Arrastrá acá los servicios o repuestos que quedan fuera del total.
           <br />
           Salen en el PDF con su precio, aparte, para tenerlos en cuenta por si hacen falta.
         </div>
-      ) : children}
+      )}
+      {/* `siempre`: la tabla se muestra aunque no haya opcionales, porque trae
+          su propio renglón en blanco para escribir uno (paso Servicios). Va en
+          su lugar fijo, aparte del mensaje, para que al escribir la primera
+          letra —cuando el mensaje se va— la tabla no se vuelva a armar y el
+          cursor siga donde estaba. */}
+      {(cantidad > 0 || siempre) && children}
 
       {cantidad > 0 && (
         <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-faint)' }}>

@@ -135,6 +135,25 @@ def init_db():
                 cat_prefijo TEXT PRIMARY KEY
             );
 
+            -- Trabajos de mano de obra que NO están en la lista de la Cámara y
+            -- el taller escribió a mano en un presupuesto ("ítem manual") y
+            -- después guardó con el disquete del renglón, para no tener que
+            -- volver a escribirlos. Se ofrecen en el botón del disquete que
+            -- está al lado del buscador del paso Servicios.
+            --
+            -- `clave` es la descripción normalizada (texto.normalizar): es lo
+            -- que hace que "Cambiar retén" y "CAMBIAR RETEN" sean el mismo
+            -- trabajo, y lo que se cruza contra presupuesto_items para mostrar
+            -- con qué precios se usó antes. Guardar dos veces el mismo trabajo
+            -- actualiza el precio, no duplica.
+            CREATE TABLE IF NOT EXISTS servicios_guardados (
+                id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                descripcion TEXT NOT NULL,
+                clave       TEXT NOT NULL UNIQUE,
+                precio      REAL,
+                guardado_en TEXT NOT NULL
+            );
+
             -- Precios propios de mano de obra: lo que cobra EL TALLER, por
             -- encima de la lista de la Cámara. La lista de FACRA no se toca
             -- nunca (se reimporta cada 1-2 semanas y pisaría cualquier cosa que
@@ -1105,6 +1124,109 @@ def get_favoritos_ids() -> set[int]:
     with get_connection() as conn:
         cur = conn.execute("SELECT servicio_id FROM favoritos_servicios")
         return {row[0] for row in cur.fetchall()}
+
+
+# ─── Servicios guardados (ítems manuales que se reusan) ───────────────────────
+
+# Cuántos usos anteriores se devuelven por trabajo: alcanzan para ver cómo se
+# viene cobrando sin convertir el desplegable en un historial entero.
+USOS_POR_SERVICIO_GUARDADO = 8
+
+
+def get_servicios_guardados() -> list[dict]:
+    """
+    Los trabajos guardados, de la A a la Z, cada uno con los precios con que se
+    usó en presupuestos anteriores (`usos`, del más nuevo al más viejo).
+
+    Los usos se buscan por la descripción normalizada en TODOS los ítems
+    manuales de mano de obra, también los de antes de guardarlo: si "Cambiar
+    retén" se escribió a mano tres veces antes de tocar el disquete, esas tres
+    veces cuentan. Se cruza en Python y no en SQL porque los ítems manuales son
+    pocos (cientos) y así la comparación es exactamente texto.normalizar.
+    """
+    with get_connection() as conn:
+        guardados = [dict(r) for r in conn.execute(
+            "SELECT id, descripcion, clave, precio, guardado_en FROM servicios_guardados"
+        ).fetchall()]
+        if not guardados:
+            return []
+        claves = {g["clave"] for g in guardados}
+        filas = conn.execute(
+            """
+            SELECT pi.descripcion_custom, pi.cantidad,
+                   COALESCE(pi.precio_unitario,
+                            pi.precio_aplicado / NULLIF(pi.cantidad, 0)) AS precio,
+                   p.id AS presupuesto_id, p.fecha, c.nombre AS cliente
+            FROM presupuesto_items pi
+            JOIN presupuestos p ON p.id = pi.presupuesto_id
+            LEFT JOIN clientes c ON c.id = p.cliente_id
+            WHERE pi.servicio_id IS NULL
+              AND COALESCE(pi.tipo, 'servicio') = 'servicio'
+              AND pi.descripcion_custom IS NOT NULL
+            ORDER BY p.fecha DESC, p.id DESC
+            """
+        ).fetchall()
+
+    usos: dict[str, list[dict]] = {}
+    for f in filas:
+        clave = texto.normalizar(f["descripcion_custom"])
+        if clave not in claves or f["precio"] is None:
+            continue
+        lista = usos.setdefault(clave, [])
+        if len(lista) < USOS_POR_SERVICIO_GUARDADO:
+            lista.append({
+                "presupuesto_id": f["presupuesto_id"],
+                "fecha": f["fecha"],
+                "cliente": f["cliente"],
+                "precio": pesos(f["precio"]),
+                "cantidad": f["cantidad"],
+            })
+
+    for g in guardados:
+        g["usos"] = usos.get(g["clave"], [])
+        del g["clave"]
+    guardados.sort(key=lambda g: texto.normalizar(g["descripcion"]))
+    return guardados
+
+
+def guardar_servicio(descripcion: str, precio: float | None) -> dict:
+    """
+    Guarda un trabajo escrito a mano para reusarlo. Si ya había uno con la misma
+    descripción (sin importar mayúsculas ni acentos), le actualiza el precio y
+    el texto: guardar es "acordate de esto así", no "agregá otro más".
+    """
+    desc = " ".join((descripcion or "").split())
+    clave = texto.normalizar(desc)
+    if not clave:
+        raise ValueError("Falta la descripción del trabajo")
+    ahora = datetime.now().isoformat(timespec="seconds")
+    with get_connection() as conn:
+        conn.execute(
+            """
+            INSERT INTO servicios_guardados (descripcion, clave, precio, guardado_en)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(clave) DO UPDATE SET
+                descripcion = excluded.descripcion,
+                precio      = excluded.precio,
+                guardado_en = excluded.guardado_en
+            """,
+            (desc, clave, None if precio is None else pesos(precio), ahora),
+        )
+        fila = conn.execute(
+            "SELECT id, descripcion, precio, guardado_en FROM servicios_guardados WHERE clave = ?",
+            (clave,),
+        ).fetchone()
+    return dict(fila)
+
+
+def borrar_servicio_guardado(servicio_guardado_id: int) -> bool:
+    """Lo saca de la lista de guardados. Los presupuestos donde se usó no se
+    tocan: el ítem manual vive en cada presupuesto con su propio texto."""
+    with get_connection() as conn:
+        cur = conn.execute(
+            "DELETE FROM servicios_guardados WHERE id = ?", (servicio_guardado_id,)
+        )
+        return cur.rowcount > 0
 
 
 # ─── Motores (lookup puntual, no existía en la app de escritorio) ─────────────
