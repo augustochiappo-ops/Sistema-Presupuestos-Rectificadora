@@ -2778,7 +2778,20 @@ primera tabla de la derecha (la de opcionales ahora está siempre).
 
 ### Verificación
 
-VERIFICACION_PENDIENTE
+* Antes de tocar la suite, un script chico con Chromium: el cursor no se pierde
+  al escribir en el renglón en blanco, aparece otro abajo, cantidad/unitario/
+  subtotal se recalculan, el disquete y el desplegable andan, y el arrastre no
+  parpadea. **El parpadeo se reprodujo antes de arreglarlo**: con el hook viejo
+  la zona se apagaba un paso justo al cruzar la línea entre renglones.
+* `rapido.sh` (backend + humo): TODO OK (86 s). `backend_precios` con la 9b.
+* Las tres de UI, enteras: `ui_grupos` 233 OK, `ui_precios` 32 OK,
+  `ui_medidas` 148 OK, cero fallas.
+* **Deploy hecho**: HTTP 200, producción sirve `index-DGt6pCGF.js`, el mismo
+  del build local, y `/api/servicios/guardados` responde 401 sin sesión (la
+  ruta nueva está viva).
+* La sesión arrancó con HEAD suelto sobre `origin/master` y la `master` local
+  atrasada (sin commits propios): se adelantó con `git branch -f` y se trabajó
+  en `master`. No quedó ninguna otra rama.
 
 ## Próximo paso
 
